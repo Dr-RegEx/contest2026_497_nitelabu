@@ -8,7 +8,7 @@
 
 ## 二、目录结构
 
-- `board/contest_board/`：真实板级源码、Kconfig 和各测试配置，替换空模板。
+- `board/ESP32-S31 Function-CoreBoard-1/`：真实板级源码、Kconfig 和各测试配置，替换空模板。
 - `workspace/manifest-locked.xml`：232 个 openvela 公共源码项目的固定版本。
 - `workspace/patches/`、`workspace/openvela-untracked/`：公共基线之上的全部适配提交、工作区修改和新增源码。
 - `workspace/dependencies/`：HAL 修改、工具链下载地址与 SHA256、Python 依赖版本。

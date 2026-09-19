@@ -8,7 +8,7 @@
 `patches/` 包含相对公共基线的差异（包括原本只提交在开发机上的提交），
 `openvela-untracked/` 补齐新增文件。`source-sha256.json` 校验复现载荷。
 
-`board/contest_board/` 是板级源码的可读副本，和补丁应用后的
+`board/ESP32-S31 Function-CoreBoard-1/` 是板级源码的可读副本，和补丁应用后的
 `nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/` 对应。
 manifest 的 linkfile 把板级目录映射到 vendor 下供发现和审核；真正编译路径
 在 NuttX 中，由补丁安装，不要求手工复制任何源码。
