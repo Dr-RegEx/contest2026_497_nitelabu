@@ -18,5 +18,26 @@
   ],
   "title": "Kernel-Cxx测试",
   "original_line": 279,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/helloxx",
+      "origin": "apps/examples/helloxx"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-cxx/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts718-helloxx.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts718-helloxx.log"
+    }
+  ]
 }

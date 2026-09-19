@@ -1,0 +1,1 @@
+1564 development regressionPASS after sharedscheduler fix: SIMD preflight fullbank100/100 each, thenGATT exacttwo reads/13-byte write andWiFi20/20concurrent,3/3before+after; service cleanup/disable normal. No originalxTS newPASS. Currentboard1562 pair,NSH,WiFiassociated,BLEdisabled.

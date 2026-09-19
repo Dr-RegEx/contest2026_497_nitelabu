@@ -1,0 +1,20 @@
+{
+  "case": "4.1.127",
+  "result": "PASS",
+  "expected": "进入nxlooper后执行命令无报错",
+  "observation_seconds": 15.072,
+  "device_mapping": "pcm13c example -> actual pcm0c; playback pcm0p",
+  "commands": [
+    "nxlooper",
+    "device pcm0p",
+    "device pcm0c",
+    "loopback 2 16 48000",
+    "stop",
+    "q"
+  ],
+  "driver_errors": 0,
+  "host_exit": 0,
+  "audio_workers_exited": true,
+  "case_4.2.14": "PENDING audible loopback; not counted",
+  "notes": "No original application/workload changes. scanf EOF guarded; DEBUG_AUDIO_INFO disabled, errors enabled. Earlier 1196 failure retained. Logging interference suspected, not proven by complete causal isolation."
+}

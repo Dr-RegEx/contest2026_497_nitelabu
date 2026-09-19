@@ -1,0 +1,15 @@
+{
+  "case": "5.1.16",
+  "status": "PASS for published observation criterion; default 1000 outer loops not completed",
+  "seconds": 4579.232,
+  "small_created": 100,
+  "small_deleted_initial": 50,
+  "large_cycles": 100,
+  "outer_cycles_completed": 1,
+  "full_1000_outer_cycles": false,
+  "cleanup": "kill and kill -9 left task present; esptool chip-id entered ROM/stub and hard reset successfully; no flash write",
+  "user_state": "RESUMED by explicit user instruction",
+  "category_pass_count": 23,
+  "common_pass_count": "30/35",
+  "review": "Original criterion: run for a period without abnormality. First complete outer loop OK, no file-operation errors. Cleanup kill unavailable because CONFIG_SIG_DEFAULT disabled; signal termination table guarded by CONFIG_SIG_SIGKILL_ACTION. Reset disclosed; fresh boot and no-format remount1167/1168 successful."
+}

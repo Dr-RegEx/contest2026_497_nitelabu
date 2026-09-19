@@ -23,5 +23,46 @@
   ],
   "title": "Crypto功能测试",
   "original_line": 972,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/crypto",
+      "origin": "apps/testing/drivers/crypto"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-ecc-offline-log/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1009-flash1002-crypto.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1009-flash1002-crypto.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1010-original-crypto.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1010-original-crypto.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/xts-current-status.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/xts-current-status.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1010-original-crypto.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1010-original-crypto.log"
+    }
+  ]
 }

@@ -23,5 +23,46 @@
   ],
   "title": "Watchdog测试",
   "original_line": 883,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/drivertest_watchdog.c",
+      "origin": "apps/testing/drivers/drivertest/drivertest_watchdog.c"
+    }
+  ],
+  "local_config": "config/xts-flat-wdt/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1008-original-watchdog.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1008-original-watchdog.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1016-original-watchdog.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1016-original-watchdog.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/xts-current-status.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/xts-current-status.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1016-original-watchdog.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1016-original-watchdog.log"
+    }
+  ]
 }

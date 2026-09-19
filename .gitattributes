@@ -6,5 +6,8 @@ docs/acceptance/** -whitespace
 
 docs/reproduction/*.log -whitespace
 # Read-only demo source/standard excerpts preserve upstream formatting.
-board/**/demo/_sources/** -whitespace
+board/**/demo/*/src/** -whitespace
+board/**/demo/*/licenses/** -whitespace
+board/**/demo/*/evidence/** -whitespace
+board/**/demo/*/c6/** -whitespace
 board/**/demo/*/original-case.md -whitespace

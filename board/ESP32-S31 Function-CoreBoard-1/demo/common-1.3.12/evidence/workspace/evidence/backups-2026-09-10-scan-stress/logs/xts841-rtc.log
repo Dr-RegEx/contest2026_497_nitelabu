@@ -1,0 +1,38 @@
+XTS_COMMAND=uname -a
+uname -a
+NuttX 0.0.0 428252a08db-dirty Sep 15 2026 16:06:49 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [KXTS_COMMAND=free
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17237840    1042176   16195664    1053520   15753192     39      3 Umem
+nsh> [K
+nsh> [KXTS_COMMAND=mount
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [KXTS_COMMAND=ls /dev/rtc0
+ls /dev/rtc0
+ /dev/rtc0
+nsh> [K
+nsh> [KXTS_COMMAND=cmocka_driver_rtc
+cmocka_driver_rtc
+[==========] tests: Running 3 test(s).
+[ RUN      ] drivertest_rtc_api
+[       OK ] drivertest_rtc_api
+[ RUN      ] drivertest_rtc_alarm
+[       OK ] drivertest_rtc_alarm
+[ RUN      ] drivertest_rtc_periodic
+rtc periodic callback trigger!!!
+[       OK ] drivertest_rtc_periodic
+[==========] tests: 3 test(s) run.
+[  PASSED  ] 3 test(s).
+nsh> [K
+nsh> [KXTS_STANDARD=cmocka_driver_rtc PASS seconds=37.343
+XTS_COMMAND=free
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17237840    1042272   16195568    1053520   15753192     41      4 Umem
+nsh> [K
+nsh> [K

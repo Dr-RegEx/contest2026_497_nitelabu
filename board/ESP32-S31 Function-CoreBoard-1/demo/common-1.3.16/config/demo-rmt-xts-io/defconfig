@@ -1,0 +1,17 @@
+#include "../demo-rmt-xts-reboot/defconfig"
+
+# Original published pipe, popen and read-only MD5 test commands.
+# Current popen source requires POSIX timers, contrary to the old checklist.
+# CONFIG_DISABLE_POSIX_TIMERS is not set
+CONFIG_SYSTEM_POPEN=y
+CONFIG_SYSTEM_POPEN_SHPATH="/system/bin/sh"
+CONFIG_EXAMPLES_POPEN=y
+CONFIG_EXAMPLES_PIPE=y
+CONFIG_TESTS_TESTCASES=y
+CONFIG_FS_TEST=y
+CONFIG_FS_TEST_EDONLY=y
+
+# Execute the documented footprint commands with each CPU affinity.
+CONFIG_SYSTEM_SYSTEM=y
+CONFIG_SYSTEM_SYSTEM_SHPATH="/system/bin/sh"
+CONFIG_SYSTEM_TASKSET=y

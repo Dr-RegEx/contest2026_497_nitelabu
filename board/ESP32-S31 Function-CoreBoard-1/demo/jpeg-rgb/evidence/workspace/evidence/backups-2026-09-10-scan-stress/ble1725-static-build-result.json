@@ -1,0 +1,29 @@
+{
+  "case": "BLE command/configuration coverage",
+  "build_profile": "demo-rmt-bttool-kernel",
+  "output": "openvela-dev/out/esp32s31-ble-static1725",
+  "build": "PASS",
+  "receipt": "build1725-ble-static.sha256",
+  "config_coverage": {
+    "ble_adv": true,
+    "ble_scan": true,
+    "gatt_server": true,
+    "roles_peripheral_central_broadcaster_observer": true,
+    "extended_advertising": true,
+    "phy_update": true,
+    "data_length_update": true,
+    "smp_pairing": true,
+    "smp_mmu": true
+  },
+  "source_command_coverage": {
+    "advertising_start_stop": true,
+    "advertising_interval_range": true,
+    "public_random_address_types": true,
+    "scan_start_stop": true,
+    "scan_phy_1m_2m_coded": true,
+    "scan_mode_0_1_2": true
+  },
+  "board_execution": "NOT_RUN",
+  "xts_acceptance": "NOT_CLAIMED",
+  "limitation": "Phone/BLE peer and Wi-Fi coexistence procedures remain required for original xTS closure."
+}

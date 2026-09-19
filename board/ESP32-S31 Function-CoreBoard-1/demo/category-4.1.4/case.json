@@ -23,5 +23,46 @@
   ],
   "title": "文件系统异常场景--写入时掉电",
   "original_line": 3462,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/vela_fs_test",
+      "origin": "tests/testcases/vela_fs_test"
+    }
+  ],
+  "local_config": "config/xts-flat-category-fs-sync/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1584-write.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1584-write.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1586-write.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1586-write.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/power1589-recovery.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/power1589-recovery.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/power1589-recovery-result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/power1589-recovery-result.json"
+    }
+  ]
 }

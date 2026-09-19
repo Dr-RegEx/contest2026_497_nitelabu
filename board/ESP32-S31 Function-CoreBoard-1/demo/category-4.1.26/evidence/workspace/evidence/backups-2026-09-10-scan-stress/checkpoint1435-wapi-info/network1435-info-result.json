@@ -1,0 +1,26 @@
+{
+  "status": "CAPTURE_COMPLETE_REVIEW_REQUIRED",
+  "receipt": "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1430-wapi-info.sha256",
+  "case": [
+    "4.1.26",
+    "4.1.25"
+  ],
+  "captures": [
+    {
+      "command": "ifconfig",
+      "output": "ifconfig\r\nwlan0\tLink encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500\r\n\tinet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0\r\n\r\nnsh> \u001b[K\r\nnsh> \u001b[K"
+    },
+    {
+      "command": "wapi show wlan0",
+      "output": "wapi show wlan0\r\nwlan0 Configuration:\r\n       IP: 192.168.1.60\r\n  NetMask: 255.255.255.0\r\nFrequency: 2412\r\n     Flag: WAPI_FREQ_FIXED\r\n  Channel: 1\r\nFrequency: 2412\r\n    ESSID: <redacted>\r\n     Flag: WAPI_ESSID_ON\r\n     Mode: WAPI_MODE_MANAGED\r\n       AP: 60:ce:41:46:0e:ec\r\n  BitRate: 72\r\n     Flag: WAPI_BITRATE_FIXED\r\n  TxPower: 20\r\n     Flag: WAPI_TXPOWER_DBM\r\n    Sense: -71\r\n  Country: 01\r\n PTA prio: not supported\r\nnsh> \u001b[K\r\nnsh> \u001b[K"
+    },
+    {
+      "command": "wapi sense wlan0",
+      "output": "wapi sense wlan0\r\n-72\r\nnsh> \u001b[K\r\nnsh> \u001b[K"
+    },
+    {
+      "command": "wapi sense wlan0",
+      "output": "wapi sense wlan0\r\n-72\r\nnsh> \u001b[K\r\nnsh> \u001b[K"
+    }
+  ]
+}

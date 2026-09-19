@@ -25,5 +25,54 @@
   ],
   "title": "NetApp--设备支持通过scp方式向其他终端传输本地文件",
   "original_line": 4880,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/CMakeLists.txt",
+      "origin": "external/libssh/CMakeLists.txt"
+    },
+    {
+      "path": "src/examples",
+      "origin": "external/libssh/libssh/examples"
+    },
+    {
+      "path": "src/Kconfig",
+      "origin": "external/libssh/Kconfig"
+    }
+  ],
+  "local_config": "config/demo-rmt-netapps-competition/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/README.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/README.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1446-prepare.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1446-prepare.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1454-scp-upload.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1454-scp-upload.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1454-scp-upload.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1454-scp-upload.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1454-scp-upload-result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1454-scp-upload-result.json"
+    }
+  ]
 }

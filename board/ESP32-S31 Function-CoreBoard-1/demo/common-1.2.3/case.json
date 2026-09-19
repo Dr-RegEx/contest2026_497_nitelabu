@@ -19,5 +19,30 @@
   ],
   "title": "系统RAM资源占用统计",
   "original_line": 471,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/nsh_proccmds.c",
+      "origin": "apps/nshlib/nsh_proccmds.c"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-io/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts736-footprint.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts736-footprint.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/xts736-footprint.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/xts736-footprint.md"
+    }
+  ]
 }

@@ -1,0 +1,9 @@
+#include "../xts-flat-rtc/defconfig"
+
+# Awake controller, all OSAL allocations and stacks in internal SRAM.
+# CONFIG_ESPRESSIF_SPIRAM_USER_HEAP is not set
+CONFIG_MM_REGIONS=1
+CONFIG_USEC_PER_TICK=1000
+CONFIG_ESP32S31_BLE=y
+CONFIG_PTHREAD_STACK_MIN=4096
+CONFIG_UART_BTH4_RXBUFSIZE=8192

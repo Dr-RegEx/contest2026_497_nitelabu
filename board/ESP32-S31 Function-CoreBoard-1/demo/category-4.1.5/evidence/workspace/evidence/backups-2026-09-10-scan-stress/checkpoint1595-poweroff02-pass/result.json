@@ -1,0 +1,40 @@
+{
+  "case": "4.1.5",
+  "status": "PASS",
+  "rounds": [
+    {
+      "case": "4.1.5",
+      "round": 1,
+      "status": "ROUND_PASS",
+      "user_confirmation": "创建测试第1轮已断电并插回",
+      "receipt": "build1023-flat-category-fs-name.sha256",
+      "host_reset": false,
+      "formatted": false,
+      "persisted_created_files": 80
+    },
+    {
+      "case": "4.1.5",
+      "round": 2,
+      "status": "ROUND_PASS",
+      "user_confirmation": "创建测试第2轮已断电并插回",
+      "receipt": "build1023-flat-category-fs-name.sha256",
+      "host_reset": false,
+      "formatted": false,
+      "persisted_created_files": 80
+    },
+    {
+      "case": "4.1.5",
+      "round": 3,
+      "status": "ROUND_PASS",
+      "user_confirmation": "创建测试第3轮已断电并插回",
+      "receipt": "build1023-flat-category-fs-name.sha256",
+      "host_reset": false,
+      "formatted": false,
+      "persisted_created_files": 80
+    }
+  ],
+  "original_command": "power_off_test02 /data/p1583",
+  "filesystem": "1MiB physical Flash LittleFS at0xc00000",
+  "formatted": false,
+  "scope": "original create command completes; physical power loss then original recovery; not a claim of interruption inside open syscall"
+}

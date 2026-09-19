@@ -23,5 +23,38 @@
   ],
   "title": "RNG功能测试",
   "original_line": 918,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/nist-sts",
+      "origin": "apps/testing/drivers/nist-sts"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-rng/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts786-nist-rng-clock.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts786-nist-rng-clock.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts808-nist100.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts808-nist100.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/rng1682-user-acceptance.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/rng1682-user-acceptance.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/sprint1682-current-cases.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/sprint1682-current-cases.json"
+    }
+  ]
 }

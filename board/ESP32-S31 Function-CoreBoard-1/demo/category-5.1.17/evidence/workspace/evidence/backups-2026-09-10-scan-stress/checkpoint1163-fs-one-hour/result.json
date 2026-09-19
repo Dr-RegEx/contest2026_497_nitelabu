@@ -1,0 +1,16 @@
+{
+  "case": "5.1.17",
+  "status": "PASS",
+  "command": "vela_fs_stability_test01 -d /data/s17 -t 60",
+  "elapsed_seconds": 3921.87,
+  "host_exit": 0,
+  "target_exit": 0,
+  "workers": 3,
+  "errors": 0,
+  "mount": "3MiB LittleFS /data sync, no format",
+  "source_disclosure": "Previously disclosed test01 worker-join repair; three worker bodies unchanged.",
+  "timing_note": "Host measured 3921.870 seconds; longer than nominal hour, cause unproven.",
+  "free_blocks": 589,
+  "total_blocks": 768,
+  "category_pass_count": 22
+}

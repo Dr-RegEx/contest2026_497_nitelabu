@@ -36,5 +36,94 @@
     "docs/acceptance/xts-category-status.md"
   ],
   "title": "BLE GATT实机读写",
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/tools",
+      "origin": "frameworks/connectivity/bluetooth/tools"
+    }
+  ],
+  "local_config": "config/demo-rmt-bttool-coex-pie/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1544-kernel-gatt-result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1544-kernel-gatt-result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1551-coexistence-result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1551-coexistence-result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1551-handoff.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1551-handoff.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1564-coexistence-result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1564-coexistence-result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/host1544-ble-observation.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/host1544-ble-observation.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/review.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/review.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/review.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/review.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/review.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/review.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1544-kernel-gatt-observe.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1544-kernel-gatt-observe.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1551-coexistence-observe.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1551-coexistence-observe.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1564-affinity-coexistence-observe.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1564-affinity-coexistence-observe.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/host1544-ble-observation.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1544-ble-observation.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/host1551-ble-observation.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1551-ble-observation.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/host1564-ble-observation.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1564-ble-observation.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/simd1564-handoff.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/simd1564-handoff.json"
+    }
+  ]
 }

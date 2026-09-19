@@ -1,0 +1,33 @@
+--- CMD: uname -a ---
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 14 2026 22:40:36 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/ramtest ---
+ls /system/bin/ramtest
+ /system/bin/ramtest
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     304828      74524     230304     100792     209256    194      9 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+XTS_RAM_SIZE_SOURCE=free Kmem maxfree; test allocates its own user-heap buffer
+XTS_COMMAND=ramtest -b -s 209256
+ramtest -b -s 209256
+RAMTest: Marching ones: 61804808 209256
+RAMTest: Marching zeroes: 61804808 209256
+RAMTest: Pattern test: 61804808 209256 55555555 aaaaaaaa
+RAMTest: Pattern test: 61804808 209256 66666666 99999999
+RAMTest: Pattern test: 61804808 209256 33333333 cccccccc
+RAMTest: Address-in-address test: 61804808 209256
+nsh> [K
+nsh> [KXTS_STANDARD=ramtest -b -s 209256 PASS seconds=0.313

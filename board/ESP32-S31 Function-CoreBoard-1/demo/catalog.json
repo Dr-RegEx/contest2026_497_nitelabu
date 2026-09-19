@@ -612,7 +612,28 @@
       ],
       "title": "系统内存管理测试",
       "original_line": 25,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/mm",
+          "origin": "apps/testing/testsuites/kernel/mm"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-core/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts689-mm.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts689-mm.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.2",
@@ -634,7 +655,28 @@
       ],
       "title": "系统调度测试",
       "original_line": 60,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/sched",
+          "origin": "apps/testing/testsuites/kernel/sched"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-core/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts688-sched.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts688-sched.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.3",
@@ -656,7 +698,28 @@
       ],
       "title": "系统调用测试",
       "original_line": 96,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/syscall",
+          "origin": "apps/testing/testsuites/kernel/syscall"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-common/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts709-syscall.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts709-syscall.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.4",
@@ -680,7 +743,32 @@
       ],
       "title": "Kernel-ostest测试",
       "original_line": 142,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/ostest",
+          "origin": "apps/testing/ostest"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-ostest/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint771-xts.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint771-xts.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts775-ostest-sigpending.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts775-ostest-sigpending.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.5",
@@ -702,7 +790,28 @@
       ],
       "title": "Kernel-getprime测试",
       "original_line": 170,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/getprime",
+          "origin": "apps/testing/sched/getprime"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-common/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts693-getprime.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts693-getprime.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.6",
@@ -724,7 +833,28 @@
       ],
       "title": "Kernel-mm内存测试",
       "original_line": 197,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/heaptest",
+          "origin": "apps/testing/mm/heaptest"
+        }
+      ],
+      "local_config": "config/xts-flat-rtc/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts839-flat-heap-clean.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts839-flat-heap-clean.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.7",
@@ -746,7 +876,28 @@
       ],
       "title": "Kernel-scanftest扫描测试",
       "original_line": 224,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/scanftest",
+          "origin": "apps/testing/libc/scanftest"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-common/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts694-scanftest.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts694-scanftest.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.8",
@@ -768,7 +919,28 @@
       ],
       "title": "Kernel-C测试",
       "original_line": 252,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/hello",
+          "origin": "apps/examples/hello"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-common/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts695-hello.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts695-hello.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.9",
@@ -790,7 +962,28 @@
       ],
       "title": "Kernel-Cxx测试",
       "original_line": 279,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/helloxx",
+          "origin": "apps/examples/helloxx"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-cxx/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts718-helloxx.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts718-helloxx.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.10",
@@ -812,7 +1005,28 @@
       ],
       "title": "Kernel-popen测试",
       "original_line": 307,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/popen",
+          "origin": "apps/examples/popen"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-io/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts733-popen.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts733-popen.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.11",
@@ -834,7 +1048,28 @@
       ],
       "title": "Kernel-pipe测试",
       "original_line": 336,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/pipe",
+          "origin": "apps/examples/pipe"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-io/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts732-pipe.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts732-pipe.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.12",
@@ -856,7 +1091,28 @@
       ],
       "title": "Kernel-md5值测试",
       "original_line": 367,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/rdonly_fs",
+          "origin": "tests/testcases/vela_fs_test/rdonly_fs"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-io/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts734-md5.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts734-md5.log"
+        }
+      ]
     },
     {
       "name": "common-1.1.13",
@@ -878,7 +1134,28 @@
       ],
       "title": "Kernel-C++功能测试",
       "original_line": 397,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/cxx",
+          "origin": "apps/testing/cxx"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-cxx/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts797-cxx-sections.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts797-cxx-sections.log"
+        }
+      ]
     },
     {
       "name": "common-1.2.1",
@@ -901,7 +1178,32 @@
       ],
       "title": "Reboot启动异常测试",
       "original_line": 435,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/nsh_syscmds.c",
+          "origin": "apps/nshlib/nsh_syscmds.c"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-reboot/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log"
+        }
+      ]
     },
     {
       "name": "common-1.2.2",
@@ -926,7 +1228,40 @@
       ],
       "title": "Cold boot启动异常测试",
       "original_line": 453,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/nsh_syscmds.c",
+          "origin": "apps/nshlib/nsh_syscmds.c"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/physical1580-reset.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/physical1580-reset.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/physical1580-reset.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/physical1580-reset.log"
+        }
+      ]
     },
     {
       "name": "common-1.2.3",
@@ -949,7 +1284,32 @@
       ],
       "title": "系统RAM资源占用统计",
       "original_line": 471,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/nsh_proccmds.c",
+          "origin": "apps/nshlib/nsh_proccmds.c"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-io/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts736-footprint.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts736-footprint.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/xts736-footprint.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/xts736-footprint.md"
+        }
+      ]
     },
     {
       "name": "common-1.2.4",
@@ -972,7 +1332,32 @@
       ],
       "title": "系统Flash资源占用统计",
       "original_line": 488,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/nsh_fscmds.c",
+          "origin": "apps/nshlib/nsh_fscmds.c"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-io/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts736-footprint.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts736-footprint.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/xts736-footprint.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/xts736-footprint.md"
+        }
+      ]
     },
     {
       "name": "common-1.3.1",
@@ -995,7 +1380,28 @@
       ],
       "title": "烧写测试",
       "original_line": 506,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/esp32s31_simple_boot_digest.py",
+          "origin": "nuttx/tools/espressif/esp32s31_simple_boot_digest.py"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-core/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/demo669-mqueue-restored.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/demo669-mqueue-restored.log"
+        }
+      ]
     },
     {
       "name": "common-1.3.2",
@@ -1017,7 +1423,28 @@
       ],
       "title": "RAM读写测试",
       "original_line": 524,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/fstest",
+          "origin": "apps/testing/fs/fstest"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-memory/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts767-fstest.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts767-fstest.log"
+        }
+      ]
     },
     {
       "name": "common-1.3.3",
@@ -1043,7 +1470,36 @@
       ],
       "title": "RAM读写性能测试",
       "original_line": 551,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/ramtest",
+          "origin": "apps/testing/mm/ramtest"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-memory/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts705-ram-word.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts705-ram-word.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts706-ram-half.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts706-ram-half.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts707-ram-byte.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts707-ram-byte.log"
+        }
+      ]
     },
     {
       "name": "common-1.3.4",
@@ -1065,7 +1521,28 @@
       ],
       "title": "RAM随机读写测试",
       "original_line": 579,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/drivertest_block.c",
+          "origin": "apps/testing/drivers/drivertest/drivertest_block.c"
+        }
+      ],
+      "local_config": "config/xts-flat-rtc/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts840-ramblock.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts840-ramblock.log"
+        }
+      ]
     },
     {
       "name": "common-1.3.5",
@@ -1092,7 +1569,48 @@
       ],
       "title": "Flash功能测试",
       "original_line": 612,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/drivertest_block.c",
+          "origin": "apps/testing/drivers/drivertest/drivertest_block.c"
+        }
+      ],
+      "local_config": "config/xts-flat-flash/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/logs/xts991-flash946.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/logs/xts991-flash946.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/xts-category-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/xts-category-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/xts-current-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/xts-current-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts992-original-flash-block.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts992-original-flash-block.log"
+        }
+      ]
     },
     {
       "name": "common-1.3.10",
@@ -1115,7 +1633,32 @@
       ],
       "title": "Uart串口功能测试",
       "original_line": 719,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/drivertest_uart.c",
+          "origin": "apps/testing/drivers/drivertest/drivertest_uart.c"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-drivers/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint744-xts.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint744-xts.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts744-uart.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts744-uart.log"
+        }
+      ]
     },
     {
       "name": "common-1.3.11",
@@ -1138,7 +1681,32 @@
       ],
       "title": "Uart文件传输功能测试",
       "original_line": 764,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/ymodem",
+          "origin": "apps/system/ymodem"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-ymodem/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint805-xts.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint805-xts.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts805-ymodem.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts805-ymodem.log"
+        }
+      ]
     },
     {
       "name": "common-1.3.12",
@@ -1160,7 +1728,28 @@
       ],
       "title": "RTC时钟功能测试",
       "original_line": 781,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/drivertest_rtc.c",
+          "origin": "apps/testing/drivers/drivertest/drivertest_rtc.c"
+        }
+      ],
+      "local_config": "config/xts-flat-rtc/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts841-rtc.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts841-rtc.log"
+        }
+      ]
     },
     {
       "name": "common-1.3.13",
@@ -1182,7 +1771,28 @@
       ],
       "title": "Timer定时器功能测试",
       "original_line": 818,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/drivertest_timer.c",
+          "origin": "apps/testing/drivers/drivertest/drivertest_timer.c"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-drivers/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts743-timer.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts743-timer.log"
+        }
+      ]
     },
     {
       "name": "common-1.3.14",
@@ -1209,7 +1819,48 @@
       ],
       "title": "时间一致性测试",
       "original_line": 860,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/nsh_timcmds.c",
+          "origin": "apps/nshlib/nsh_timcmds.c"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-standby/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/board-only-after-longrun.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/board-only-after-longrun.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/clock864-acceptance-989.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/clock864-acceptance-989.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/xts-category-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/xts-current-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/clock864-acceptance-989.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/clock864-acceptance-989.md"
+        }
+      ]
     },
     {
       "name": "common-1.3.15",
@@ -1236,7 +1887,48 @@
       ],
       "title": "Watchdog测试",
       "original_line": 883,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/drivertest_watchdog.c",
+          "origin": "apps/testing/drivers/drivertest/drivertest_watchdog.c"
+        }
+      ],
+      "local_config": "config/xts-flat-wdt/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1008-original-watchdog.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1008-original-watchdog.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1016-original-watchdog.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1016-original-watchdog.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/xts-current-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/xts-current-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1016-original-watchdog.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1016-original-watchdog.log"
+        }
+      ]
     },
     {
       "name": "common-1.3.16",
@@ -1263,7 +1955,40 @@
       ],
       "title": "RNG功能测试",
       "original_line": 918,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/nist-sts",
+          "origin": "apps/testing/drivers/nist-sts"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-rng/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts786-nist-rng-clock.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts786-nist-rng-clock.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts808-nist100.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts808-nist100.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/rng1682-user-acceptance.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/rng1682-user-acceptance.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/sprint1682-current-cases.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/sprint1682-current-cases.json"
+        }
+      ]
     },
     {
       "name": "common-1.3.17",
@@ -1290,7 +2015,48 @@
       ],
       "title": "Crypto功能测试",
       "original_line": 972,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/crypto",
+          "origin": "apps/testing/drivers/crypto"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-ecc-offline-log/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1009-flash1002-crypto.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1009-flash1002-crypto.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1010-original-crypto.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1010-original-crypto.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/xts-current-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/xts-current-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1010-original-crypto.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1010-original-crypto.log"
+        }
+      ]
     },
     {
       "name": "common-2.1.3",
@@ -1317,7 +2083,48 @@
       ],
       "title": "Cold Boot启动时间测试",
       "original_line": 1020,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/nsh_main.c",
+          "origin": "apps/system/nsh/nsh_main.c"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round05/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round05/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round06/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round06/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round07/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round07/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round08/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round08/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round09/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round09/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round10/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round10/result.json"
+        }
+      ]
     },
     {
       "name": "common-2.1.4",
@@ -1340,7 +2147,32 @@
       ],
       "title": "Reboot启动时间测试",
       "original_line": 1039,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/nsh_syscmds.c",
+          "origin": "apps/nshlib/nsh_syscmds.c"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-reboot/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log"
+        }
+      ]
     },
     {
       "name": "common-3.1.1",
@@ -1367,7 +2199,48 @@
       ],
       "title": "12h待机稳定性测试",
       "original_line": 1062,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/resmonitor",
+          "origin": "apps/system/resmonitor"
+        }
+      ],
+      "local_config": "config/demo-rmt-xts-standby/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-kasan-longrun.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-kasan-longrun.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-standby12h/README.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-standby12h/README.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-standby12h/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-standby12h/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/clock864-acceptance-989.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/clock864-acceptance-989.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/clock864-final-assessment-988.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/clock864-final-assessment-988.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/clock864-host-audit.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/clock864-host-audit.md"
+        }
+      ]
     },
     {
       "name": "category-4.1.2",
@@ -1394,7 +2267,48 @@
       ],
       "title": "文件系统--romfs只读文件系统测试",
       "original_line": 4036,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/romfs",
+          "origin": "apps/examples/romfs"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/logs/xts1005-flash892-category-fs.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/logs/xts1005-flash892-category-fs.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-category-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-category-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-current-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-current-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1006-original-category-fs.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1006-original-category-fs.log"
+        }
+      ]
     },
     {
       "name": "category-4.1.3",
@@ -1421,7 +2335,48 @@
       ],
       "title": "fatutf8文件系统编码能力测试",
       "original_line": 3750,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/fatutf8",
+          "origin": "apps/testing/fs/fatutf8"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/logs/xts1005-flash892-category-fs.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/logs/xts1005-flash892-category-fs.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-category-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-category-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-current-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-current-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1006-original-category-fs.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1006-original-category-fs.log"
+        }
+      ]
     },
     {
       "name": "category-4.1.4",
@@ -1448,7 +2403,48 @@
       ],
       "title": "文件系统异常场景--写入时掉电",
       "original_line": 3462,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-sync/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1584-write.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1584-write.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1586-write.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1586-write.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/power1589-recovery.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/power1589-recovery.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/power1589-recovery-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/power1589-recovery-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.5",
@@ -1475,7 +2471,48 @@
       ],
       "title": "文件系统异常场景--创建文件时掉电",
       "original_line": 3157,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-sync/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1590-create.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1590-create.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1594-create.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1594-create.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/power1595-recovery.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/power1595-recovery.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/power1595-recovery-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/power1595-recovery-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.6",
@@ -1502,7 +2539,48 @@
       ],
       "title": "文件系统异常场景--掉电重启时磁盘空间变化",
       "original_line": 2953,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-sync/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1603-poweroff03-pass/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1603-poweroff03-pass/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1603-poweroff03-pass/power1598-space.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1603-poweroff03-pass/power1598-space.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1603-poweroff03-pass/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1603-poweroff03-pass/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/power1603-recovery.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/power1603-recovery.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/power1603-handoff.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/power1603-handoff.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/power1603-recovery-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/power1603-recovery-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.11",
@@ -1529,7 +2607,48 @@
       ],
       "title": "KVDB测试",
       "original_line": 5126,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/kv",
+          "origin": "apps/testing/testsuites/kernel/kv"
+        }
+      ],
+      "local_config": "config/xts-flat-category-kv/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/first-mount/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/first-mount/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/logs/xts1011-flash948-kv.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/logs/xts1011-flash948-kv.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/xts-category-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/xts-category-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1013-original-kvdb.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1013-original-kvdb.log"
+        }
+      ]
     },
     {
       "name": "category-4.1.21",
@@ -1556,7 +2675,48 @@
       ],
       "title": "WiFi--2.4G--Wapi连接为WPA2加密方式时加入2.4G网络",
       "original_line": 3984,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-finish.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-finish.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/uart-redacted.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/uart-redacted.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1310-wpa2-finish.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1310-wpa2-finish.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1310-wpa2-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1310-wpa2-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.25",
@@ -1583,7 +2743,48 @@
       ],
       "title": "WiFi--2.4G--Wapi Sense获取链接2.4G AP的RSSI",
       "original_line": 3881,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/network1458-sense-original.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/network1458-sense-original.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/network1458-sense-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/network1458-sense-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/review.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/review.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1458-sense-original.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1458-sense-original.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1458-sense-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1458-sense-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.26",
@@ -1610,7 +2811,48 @@
       ],
       "title": "WiFi--2.4G--Wapi Show获取2.4G AP的无线参数",
       "original_line": 3858,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/network1435-info-original.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/network1435-info-original.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/network1435-info-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/network1435-info-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/review.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/review.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1435-info-original.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1435-info-original.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1435-info-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1435-info-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.28",
@@ -1636,7 +2878,44 @@
       ],
       "title": "WiFi--2.4G--wapi config保存正常",
       "original_line": 3807,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/network1312-save-config-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/network1312-save-config-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/network1312-save-config.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/network1312-save-config.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1312-save-config.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1312-save-config.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1312-save-config-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1312-save-config-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.29",
@@ -1662,7 +2941,44 @@
       ],
       "title": "WiFi--2.4G--wapi config保存后设备reboot再reconnect",
       "original_line": 3778,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1325-reboot-reconnect.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1325-reboot-reconnect.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1325-reboot-reconnect-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1325-reboot-reconnect-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.30",
@@ -1689,7 +3005,48 @@
       ],
       "title": "WiFi--2.4G--wapi reconncet",
       "original_line": 3718,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/network1318-reconnect-fix.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/network1318-reconnect-fix.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/network1320-reconnect-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/network1320-reconnect-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/network1320-reconnect.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/network1320-reconnect.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1320-reconnect.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1320-reconnect.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1320-reconnect-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1320-reconnect-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.31",
@@ -1716,7 +3073,48 @@
       ],
       "title": "WiFi--2.4G--wapi disconnect后与外网不通",
       "original_line": 3689,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1340-ftp-cleanup.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1340-ftp-cleanup.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1341-disconnect.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1341-disconnect.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1342-disconnect-state.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1342-disconnect-state.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1342-disconnect-state.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1342-disconnect-state.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1342-disconnect-review.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1342-disconnect-review.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.57",
@@ -1739,7 +3137,32 @@
       ],
       "title": "WiFi--wapi CountryCode的设置和获取",
       "original_line": 2990,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1034-wifi-country.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1034-wifi-country.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1034-wifi-country.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1034-wifi-country.log"
+        }
+      ]
     },
     {
       "name": "category-4.1.113",
@@ -1767,7 +3190,52 @@
       ],
       "title": "NetApp--curl http文件下载测试",
       "original_line": 5087,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/src",
+          "origin": "external/curl/curl/src"
+        },
+        {
+          "path": "src/CMakeLists.txt",
+          "origin": "external/curl/CMakeLists.txt"
+        },
+        {
+          "path": "src/Kconfig",
+          "origin": "external/curl/Kconfig"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1331-http-download/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1331-http-download/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1331-http-download/network1331-http-download-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1331-http-download/network1331-http-download-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1331-http-download/network1331-http-download.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1331-http-download/network1331-http-download.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1331-http-download.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1331-http-download.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1331-http-download-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1331-http-download-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.114",
@@ -1796,7 +3264,56 @@
       ],
       "title": "NetApp--curl网页能力测试",
       "original_line": 5050,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/src",
+          "origin": "external/curl/curl/src"
+        },
+        {
+          "path": "src/CMakeLists.txt",
+          "origin": "external/curl/CMakeLists.txt"
+        },
+        {
+          "path": "src/Kconfig",
+          "origin": "external/curl/Kconfig"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1332-dns-fix.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1332-dns-fix.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1334-curl-web-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1334-curl-web-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1334-curl-web.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1334-curl-web.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1334-curl-web.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1334-curl-web.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1334-curl-web-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1334-curl-web-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.115",
@@ -1823,7 +3340,48 @@
       ],
       "title": "NetApp--设备支持通过scp方式从其他终端获取文件到本地",
       "original_line": 4924,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/CMakeLists.txt",
+          "origin": "external/libssh/CMakeLists.txt"
+        },
+        {
+          "path": "src/examples",
+          "origin": "external/libssh/libssh/examples"
+        },
+        {
+          "path": "src/Kconfig",
+          "origin": "external/libssh/Kconfig"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1453-scp-download-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1453-scp-download-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1453-scp-download.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1453-scp-download.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1453-scp-download.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1453-scp-download.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1453-scp-download-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1453-scp-download-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.116",
@@ -1852,7 +3410,56 @@
       ],
       "title": "NetApp--设备支持通过scp方式向其他终端传输本地文件",
       "original_line": 4880,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/CMakeLists.txt",
+          "origin": "external/libssh/CMakeLists.txt"
+        },
+        {
+          "path": "src/examples",
+          "origin": "external/libssh/libssh/examples"
+        },
+        {
+          "path": "src/Kconfig",
+          "origin": "external/libssh/Kconfig"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/README.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/README.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1446-prepare.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1446-prepare.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1454-scp-upload.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1454-scp-upload.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1454-scp-upload.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1454-scp-upload.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1454-scp-upload-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1454-scp-upload-result.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.117",
@@ -1878,7 +3485,44 @@
       ],
       "title": "NetApp--设备支持ftpd",
       "original_line": 4838,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/ftpd",
+          "origin": "apps/examples/ftpd"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/network1336-ftpd-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/network1336-ftpd-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/network1336-ftpd.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/network1336-ftpd.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/network1337-ftpd-review.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/network1337-ftpd-review.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1337-ftpd-review.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1337-ftpd-review.json"
+        }
+      ]
     },
     {
       "name": "category-4.1.127",
@@ -1905,7 +3549,48 @@
       ],
       "title": "Audio--nxlooper回环功能测试",
       "original_line": 4548,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/nxlooper",
+          "origin": "apps/system/nxlooper"
+        }
+      ],
+      "local_config": "config/xts-flat-audio-duplex/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-duplex-flash.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-duplex-flash.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-nxlooper-dma.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-nxlooper-dma.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-duplex-flash.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-duplex-flash.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-nxlooper-dma.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-nxlooper-dma.log"
+        }
+      ]
     },
     {
       "name": "category-4.2.12",
@@ -1932,7 +3617,48 @@
       ],
       "title": "Audio_DSP--Capture_cmoka_2channels",
       "original_line": 2878,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/drivertest_audio.c",
+          "origin": "apps/testing/drivers/drivertest/drivertest_audio.c"
+        }
+      ],
+      "local_config": "config/xts-flat-audio/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/audio1087-capture/pcm-review.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/audio1087-capture/pcm-review.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/audio1087-capture/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/audio1087-capture/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/audio1087-capture/uart.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/audio1087-capture/uart.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1087-audio-capture/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1087-audio-capture/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1087-audio-capture/audio1087-capture/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1087-audio-capture/audio1087-capture/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1087-audio-capture.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1087-audio-capture.log"
+        }
+      ]
     },
     {
       "name": "category-4.2.13",
@@ -1959,7 +3685,48 @@
       ],
       "title": "Audio_DSP--Capture_cmoka_1channels",
       "original_line": 2852,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/drivertest_audio.c",
+          "origin": "apps/testing/drivers/drivertest/drivertest_audio.c"
+        }
+      ],
+      "local_config": "config/xts-flat-audio-mono-args/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/audio1143-mono/pcm-review.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/audio1143-mono/pcm-review.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/audio1143-mono/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/audio1143-mono/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/audio1143-mono/uart.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/audio1143-mono/uart.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1143-audio-mono/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1143-audio-mono/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1143-audio-mono/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1143-audio-mono/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1143-audio-mono.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1143-audio-mono.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.1",
@@ -1986,7 +3753,48 @@
       ],
       "title": "文件系统分区写满异常测试",
       "original_line": 2311,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-name/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/manifest.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/manifest.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/mount-evidence.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/mount-evidence.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/fs1173-fill-running.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/fs1173-fill-running.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1173-fs-fill.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1173-fs-fill.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.2",
@@ -2013,7 +3821,48 @@
       ],
       "title": "文件系统文件写入速度测试vela_fs_stress_write_speed",
       "original_line": 1924,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-name/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/checkpoint1064-fs-remount/mount-evidence.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/checkpoint1064-fs-remount/mount-evidence.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/logs/xts1063-flash1032-fs.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/logs/xts1063-flash1032-fs.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/logs/xts1065-fs-write-speed.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/logs/xts1065-fs-write-speed.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1065-fs-write-speed.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1065-fs-write-speed.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.3",
@@ -2040,7 +3889,48 @@
       ],
       "title": "文件系统创建和删除压力测试vela_fs_stress_loop_create_delete_file_test",
       "original_line": 1739,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-name/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/logs/xts1022-fs-5.1.3.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/logs/xts1022-fs-5.1.3.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/mount/mount-evidence.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/mount/mount-evidence.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/mount/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/mount/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1022-fs-5.1.3.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1022-fs-5.1.3.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.4",
@@ -2067,7 +3957,48 @@
       ],
       "title": "文件系统反复创建和删除文件vela_fs_stress_maximum_file_name_test",
       "original_line": 1434,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-name/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/logs/xts1028-fs-5.1.4.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/logs/xts1028-fs-5.1.4.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/mount/mount-evidence.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/mount/mount-evidence.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/mount/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/mount/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1028-fs-5.1.4.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1028-fs-5.1.4.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.5",
@@ -2094,7 +4025,48 @@
       ],
       "title": "文件系统多线程文件读写测试vela_fs_stress_multi_thread_file_operate_test",
       "original_line": 1337,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-name/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/mount/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/mount/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts-category-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts-category-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1537-fs-5.1.8.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1537-fs-5.1.8.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1019-fs-5.1.5.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1019-fs-5.1.5.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.6",
@@ -2117,7 +4089,32 @@
       ],
       "title": "文件系统反复读写测试vela_fs_stress_read_and_write_loops_test",
       "original_line": 1286,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-name/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1535-fs-5.1.6.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1535-fs-5.1.6.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1535-fs-5.1.6.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1535-fs-5.1.6.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.8",
@@ -2144,7 +4141,48 @@
       ],
       "title": "文件系统多线程写文件测试vela_fs_multi_thread_write_test",
       "original_line": 1180,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-name/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1537-arp-window-negative/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1537-arp-window-negative/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1537-arp-window-negative/network1534-arp-window-review.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1537-arp-window-negative/network1534-arp-window-review.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1537-cold-tcp.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1537-cold-tcp.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1537-fs-5.1.8.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1537-fs-5.1.8.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1537-handoff.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1537-handoff.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1537-tcp-statistics-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1537-tcp-statistics-result.json"
+        }
+      ]
     },
     {
       "name": "category-5.1.9",
@@ -2167,7 +4205,32 @@
       ],
       "title": "文件系统多线程读文件vela_fs_multi_thread_read_test",
       "original_line": 1143,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-name/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1538-fs-5.1.9.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1538-fs-5.1.9.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1538-fs-5.1.9.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1538-fs-5.1.9.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.10",
@@ -2190,7 +4253,32 @@
       ],
       "title": "文件系统的多线程读写测试vela_fs_multi_thread_read_write_test",
       "original_line": 2277,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-name/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts6129-fs-5.1.10.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts6129-fs-5.1.10.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts6129-fs-5.1.10.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts6129-fs-5.1.10.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.13",
@@ -2217,7 +4305,48 @@
       ],
       "title": "裸设备读写性能测试",
       "original_line": 2173,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/dd",
+          "origin": "apps/system/dd"
+        }
+      ],
+      "local_config": "config/xts-flat-flash-raw/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/logs/xts993-flash947.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/logs/xts993-flash947.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/xts-category-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/xts-category-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/xts-current-status.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/xts-current-status.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts994-original-flash-raw.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts994-original-flash-raw.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.15",
@@ -2248,7 +4377,60 @@
       ],
       "title": "文件系统fstest执行1000次",
       "original_line": 2111,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/fstest",
+          "origin": "apps/testing/fs/fstest"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-name/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/fs1183-verdict-note.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/fs1183-verdict-note.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/postcheck.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/postcheck.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/xts1181-fstest1000.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/xts1181-fstest1000.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/fs1181-running.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/fs1181-running.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/fs1184-finish.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/fs1184-finish.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1181-fstest1000.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1181-fstest1000.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1184-fstest-finish.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1184-fstest-finish.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.16",
@@ -2276,7 +4458,48 @@
       ],
       "title": "文件系统碎片读写测试",
       "original_line": 2070,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-large/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/review1169.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/review1169.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/xts1165-fragment-stop.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/xts1165-fragment-stop.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/fs1164-fragment-running.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/fs1164-fragment-running.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1164-fragment-observe.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1164-fragment-observe.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.17",
@@ -2303,7 +4526,48 @@
       ],
       "title": "文件系统多线程操作文件测试",
       "original_line": 2033,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-large/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/mount-evidence.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/mount-evidence.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/xts1163-fs-one-hour.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/xts1163-fs-one-hour.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/fs1163-one-hour-running.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/fs1163-one-hour-running.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1163-fs-one-hour.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1163-fs-one-hour.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.18",
@@ -2335,7 +4599,64 @@
       ],
       "title": "文件系统crash后crc校验 vela_fs_stability_test03",
       "original_line": 1997,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-sync/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/mount-evidence.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/mount-evidence.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/uart.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/uart.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/mount-evidence.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/mount-evidence.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/uart.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/uart.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1081-fs-reboot.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1081-fs-reboot.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1082-fs-crash.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1082-fs-crash.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.19",
@@ -2362,7 +4683,48 @@
       ],
       "title": "文件系统crash后文件完整性校验vela_fs_stability_test04 文件",
       "original_line": 1959,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/vela_fs_test",
+          "origin": "tests/testcases/vela_fs_test"
+        }
+      ],
+      "local_config": "config/xts-flat-category-fs-sync/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/fs-sync-1102-preparation.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/fs-sync-1102-preparation.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/mount-evidence.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/mount-evidence.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/uart.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/uart.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1126-fs-sync-reset.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1126-fs-sync-reset.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.26",
@@ -2389,7 +4751,48 @@
       ],
       "title": "WiFi--2.4G网络---设备连接2.4G后wapi反复扫描周边无线AP",
       "original_line": 1799,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/network1346-renew-diagnostic.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/network1346-renew-diagnostic.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/network1347-associated-scan-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/network1347-associated-scan-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/network1347-associated-scan.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/network1347-associated-scan.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1347-associated-scan.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1347-associated-scan.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1347-associated-scan-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1347-associated-scan-result.json"
+        }
+      ]
     },
     {
       "name": "category-5.1.27",
@@ -2416,7 +4819,48 @@
       ],
       "title": "WiFi--2.4G网络---设备连接2.4G后wapi扫描指定2.4G AP",
       "original_line": 5307,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/README.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/README.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/original-case.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/original-case.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1606-directed-scan.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1606-directed-scan.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/scan1606-acceptance-rule.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/scan1606-acceptance-rule.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/sprint1606-handoff.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/sprint1606-handoff.json"
+        }
+      ]
     },
     {
       "name": "category-5.1.29",
@@ -2443,7 +4887,48 @@
       ],
       "title": "WiFi--2.4G网络---wapi反复disconnect 2.4G网络",
       "original_line": 5269,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/README.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/README.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/network1457-reconfigure100-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/network1457-reconfigure100-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/network1457-reconfigure100.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/network1457-reconfigure100.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1457-reconfigure100.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1457-reconfigure100.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1457-reconfigure100-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1457-reconfigure100-result.json"
+        }
+      ]
     },
     {
       "name": "category-5.1.41",
@@ -2470,7 +4955,48 @@
       ],
       "title": "WiFi--反复ifup&ifdown",
       "original_line": 1392,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1033-flash967-wifi.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1033-flash967-wifi.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1034-wifi-country.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1034-wifi-country.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1035-wifi-ifcycle.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1035-wifi-ifcycle.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1035-wifi-ifcycle.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1035-wifi-ifcycle.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.42",
@@ -2497,7 +5023,48 @@
       ],
       "title": "WiFi--设备未配网时反复扫描周边无线AP",
       "original_line": 1372,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/wapi",
+          "origin": "apps/wireless/wapi"
+        }
+      ],
+      "local_config": "config/demo-rmt-netapps-competition/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/checkpoint1078-wifi-mmu.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/checkpoint1078-wifi-mmu.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1111-wifi-mmu-flash.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1111-wifi-mmu-flash.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1112-wifi-scan.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1112-wifi-scan.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1112-wifi-scan.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1112-wifi-scan.log"
+        }
+      ]
     },
     {
       "name": "category-5.1.68",
@@ -2524,7 +5091,48 @@
       ],
       "title": "KVDB稳定性vela_kvdb_stability_test02测试",
       "original_line": 1258,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/kvtest",
+          "origin": "tests/testcases/kvtest"
+        }
+      ],
+      "local_config": "config/xts-flat-category-kv-large1144/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/mount-evidence.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/mount-evidence.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/xts1151-kv-large-flash.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/xts1151-kv-large-flash.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/xts1155-kv-large-stability.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/xts1155-kv-large-stability.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1155-kv-large-stability.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1155-kv-large-stability.log"
+        }
+      ]
     },
     {
       "name": "category-ble-switch",
@@ -2551,7 +5159,48 @@
       ],
       "title": "开关BLE蓝牙",
       "original_line": 4968,
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/tools",
+          "origin": "frameworks/connectivity/bluetooth/tools"
+        }
+      ],
+      "local_config": "config/xts-flat-bttool/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/checkpoint1077-bttool-disable.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/checkpoint1077-bttool-disable.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1084-flash1077-ble.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1084-flash1077-ble.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1085-ble-switch.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1085-ble-switch.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1085-ble-switch.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1085-ble-switch.log"
+        }
+      ]
     },
     {
       "name": "i2c-c6",
@@ -2572,7 +5221,41 @@
         "docs/acceptance/xts-current-status.md"
       ],
       "title": "I2C 通用主从通信（S31 ↔ C6）",
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/i2c",
+          "origin": "apps/system/i2c"
+        }
+      ],
+      "local_config": "config/xts-flat-i2c-c6/defconfig",
+      "local_fixture": "c6",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/i2c-generic-echo-result.md",
+          "origin": "docs/acceptance/i2c-generic-echo-result.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/spi-c6-result.md",
+          "origin": "docs/acceptance/spi-c6-result.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/i2c-generic-echo-result.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/i2c-generic-echo-result.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/i2c-generic-echo-validation.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/i2c-generic-echo-validation.log"
+        }
+      ]
     },
     {
       "name": "spi-c6",
@@ -2593,7 +5276,41 @@
         "docs/acceptance/xts-current-status.md"
       ],
       "title": "SPI 通用主从通信（S31 ↔ C6）",
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/spi",
+          "origin": "apps/system/spi"
+        }
+      ],
+      "local_config": "config/xts-flat-spi-c6/defconfig",
+      "local_fixture": "c6",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/i2c-generic-echo-result.md",
+          "origin": "docs/acceptance/i2c-generic-echo-result.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/spi-c6-result.md",
+          "origin": "docs/acceptance/spi-c6-result.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/xts-current-status.md",
+          "origin": "docs/acceptance/xts-current-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/spi-c6-result.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/spi-c6-result.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/spi-c6-validation-final.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/spi-c6-validation-final.log"
+        }
+      ]
     },
     {
       "name": "ble-gatt",
@@ -2633,7 +5350,96 @@
         "docs/acceptance/xts-category-status.md"
       ],
       "title": "BLE GATT实机读写",
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/tools",
+          "origin": "frameworks/connectivity/bluetooth/tools"
+        }
+      ],
+      "local_config": "config/demo-rmt-bttool-coex-pie/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1544-kernel-gatt-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1544-kernel-gatt-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1551-coexistence-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1551-coexistence-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1551-handoff.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1551-handoff.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1564-coexistence-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1564-coexistence-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/host1544-ble-observation.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/host1544-ble-observation.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/review.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/review.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/review.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/review.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/review.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/review.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1544-kernel-gatt-observe.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1544-kernel-gatt-observe.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1551-coexistence-observe.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1551-coexistence-observe.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1564-affinity-coexistence-observe.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1564-affinity-coexistence-observe.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/host1544-ble-observation.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1544-ble-observation.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/host1551-ble-observation.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1551-ble-observation.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/host1564-ble-observation.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1564-ble-observation.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/simd1564-handoff.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/simd1564-handoff.json"
+        }
+      ]
     },
     {
       "name": "simd-pie",
@@ -2672,7 +5478,92 @@
         "docs/acceptance/xts-category-status.md"
       ],
       "title": "SIMD指令集与PIE上下文保护",
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/s31simd",
+          "origin": "apps/examples/s31simd"
+        }
+      ],
+      "local_config": "config/demo-rmt-bttool-coex-pie/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/review.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/review.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/simd1566-target.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/simd1566-target.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1633-tick-catchup/SHA256SUMS",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1633-tick-catchup/SHA256SUMS"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1653-reobserve.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1653-reobserve.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/review.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/review.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/clock1633-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/clock1633-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-load.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-load.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-simd-regression.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-simd-regression.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-clock-load.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-clock-load.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-warm.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-warm.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1654-offline-isolation.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1654-offline-isolation.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/simd1566-target.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/simd1566-target.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1654-offline-isolation.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1654-offline-isolation.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/simd1566-handoff.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/simd1566-handoff.json"
+        }
+      ]
     },
     {
       "name": "jpeg-rgb",
@@ -2705,7 +5596,65 @@
         "docs/acceptance/xts-category-status.md"
       ],
       "title": "JPEG 编码/解码与 RGB888/RGB565",
-      "config_inheritance_verified": true
+      "config_inheritance_verified": true,
+      "local_sources": [
+        {
+          "path": "src/jpegtest",
+          "origin": "apps/examples/jpegtest"
+        }
+      ],
+      "local_config": "config/xts-flat-jpeg-rgb/defconfig",
+      "local_evidence": [
+        {
+          "path": "evidence/docs/acceptance/media1725-jpeg-rgb-board-build.md",
+          "origin": "docs/acceptance/media1725-jpeg-rgb-board-build.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/xts-category-status.md",
+          "origin": "docs/acceptance/xts-category-status.md"
+        },
+        {
+          "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+          "origin": "docs/acceptance/比赛必须适配清单.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1725-board-basic/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-board-basic/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1725-board-basic/uart.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-board-basic/uart.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1725-static-build-audit.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-static-build-audit.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1725-static-build-result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-static-build-result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/ble1728-mesh-build.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/ble1728-mesh-build.md"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/jpeg1728-board-test/result.json",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/jpeg1728-board-test/result.json"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/jpeg1728-board-test/uart.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/jpeg1728-board-test/uart.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1725-idf-export.log",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1725-idf-export.log"
+        },
+        {
+          "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/media1725-jpeg-rgb-board-build.md",
+          "origin": "workspace/evidence/backups-2026-09-10-scan-stress/media1725-jpeg-rgb-board-build.md"
+        }
+      ]
     }
-  ]
+  ],
+  "layout": "Each example contains regular source, configuration and evidence files; no symlinks."
 }

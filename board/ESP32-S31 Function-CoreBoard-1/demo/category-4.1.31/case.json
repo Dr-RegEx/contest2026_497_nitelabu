@@ -23,5 +23,46 @@
   ],
   "title": "WiFi--2.4G--wapi disconnect后与外网不通",
   "original_line": 3689,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/wapi",
+      "origin": "apps/wireless/wapi"
+    }
+  ],
+  "local_config": "config/demo-rmt-netapps-competition/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1340-ftp-cleanup.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1340-ftp-cleanup.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1341-disconnect.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1341-disconnect.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1342-disconnect-state.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1342-disconnect-state.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1342-disconnect-state.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1342-disconnect-state.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1342-disconnect-review.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1342-disconnect-review.json"
+    }
+  ]
 }

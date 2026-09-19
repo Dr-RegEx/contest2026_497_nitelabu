@@ -1,0 +1,5 @@
+#include "../xts-flat-rtc/defconfig"
+
+# Dedicated, unmounted 1 MiB scratch partition for original block tests.
+# Registration does not erase or write it; preserve its pretest contents.
+CONFIG_ESP32S31_XTS_FLASH=y

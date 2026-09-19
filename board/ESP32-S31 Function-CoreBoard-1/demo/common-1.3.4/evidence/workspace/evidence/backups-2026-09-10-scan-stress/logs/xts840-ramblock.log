@@ -1,0 +1,44 @@
+XTS_COMMAND=uname -a
+uname -a
+NuttX 0.0.0 428252a08db-dirty Sep 15 2026 16:06:49 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [KXTS_COMMAND=free
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17237840      18104   17219736     870792   16777200     36      3 Umem
+nsh> [K
+nsh> [KXTS_COMMAND=mount
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [KXTS_COMMAND=ls /dev/ram10
+ls /dev/ram10
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [KXTS_COMMAND=mkrd -m 10 -s 1000 1024
+mkrd -m 10 -s 1000 1024
+nsh> [K
+nsh> [KXTS_COMMAND=ls /dev/ram10
+ls /dev/ram10
+ /dev/ram10
+nsh> [K
+nsh> [KXTS_COMMAND=cmocka_driver_block -m /dev/ram10
+cmocka_driver_block -m /dev/ram10
+[==========] tests: Running 3 test(s).
+[ RUN      ] drivertest_block_stress
+[       OK ] drivertest_block_stress
+[ RUN      ] drivertest_block_single_write
+[       OK ] drivertest_block_single_write
+[ RUN      ] drivertest_block_cache_write
+[       OK ] drivertest_block_cache_write
+[==========] tests: 3 test(s) run.
+[  PASSED  ] 3 test(s).
+nsh> [K
+nsh> [KXTS_STANDARD=cmocka_driver_block -m /dev/ram10 PASS seconds=2.364
+XTS_COMMAND=free
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17237840    1042176   16195664    1053520   15753192     39      3 Umem
+nsh> [K
+nsh> [K

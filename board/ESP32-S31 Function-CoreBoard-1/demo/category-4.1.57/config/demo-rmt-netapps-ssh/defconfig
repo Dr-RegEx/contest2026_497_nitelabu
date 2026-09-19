@@ -1,0 +1,7 @@
+#include "../demo-rmt-netapps/defconfig"
+
+# Published SCP upload/download cases using the existing local libssh.
+CONFIG_LIB_SSH=y
+CONFIG_UTILS_SSH=y
+CONFIG_UTILS_SSH_SCP_ONLY=y
+CONFIG_UTILS_SSH_STACKSIZE=16384

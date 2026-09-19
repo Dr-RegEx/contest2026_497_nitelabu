@@ -1,0 +1,245 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae14  (110100)
+padd: lma 0x0003ae3c vma 0x00000000 len 0x52bc   (21180)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_BOOT=PASS seconds=0.694
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=36 data=0 fcs=5 abort=6 full=0 fifo=0 other=3
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=0 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/pipe ---
+ls /system/bin/pipe
+ /system/bin/pipe
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     304828      74972     229856      90064     209256    206     10 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+--- CMD: ls /var/testfifo-1 ---
+ls /var/testfifo-1
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: ls /var/testfifo-2 ---
+ls /var/testfifo-2
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+XTS_COMMAND=pipe
+pipe
+
+pipe_main: Performing FIFO test
+open_write_only: Opening FIFO for write access
+open_write_only: Waiting for open_write_only thread
+pipe_main: open_write_only returned 0
+transfer_test: fdin=4 fdout=3
+transfer_test: Starting transfer_reader thread
+transfer_test: Starting transfer_writer thread
+transfer_reader: started
+transfer_test: Waiting for transfer_writer thread
+transfer_writer: started
+transfer_writer: 18200 bytes written
+transfer_reader: 18200 bytes read
+transfer_test: transfer_writer returned 0
+transfer_test: Waiting for transfer_reader thread
+transfer_test: transfer_reader returned 0
+transfer_test: returning 0
+transfer_test: fdin=4 fdout=3
+transfer_test: Boost priority of transfer_readerthread to 101
+transfer_test: Starting transfer_reader thread
+transfer_reader: started
+transfer_test: Starting transfer_writer thread
+transfer_test: Waiting for transfer_writer thread
+transfer_writer: started
+transfer_writer: 18200 bytes written
+transfer_reader: 18200 bytes read
+transfer_test: transfer_writer returned 0
+transfer_test: Waiting for transfer_reader thread
+transfer_test: transfer_reader returned 0
+transfer_test: returning 0
+transfer_test: fdin=4 fdout=3
+transfer_test: Starting transfer_reader thread
+transfer_test: Boost priority of transfer_writerthread to 101
+transfer_reader: started
+transfer_test: Starting transfer_writer thread
+transfer_writer: started
+transfer_test: Waiting for transfer_writer thread
+transfer_writer: 18200 bytes written
+transfer_reader: 18200 bytes read
+transfer_test: transfer_writer returned 0
+transfer_test: Waiting for transfer_reader thread
+transfer_test: transfer_reader returned 0
+transfer_test: returning 0
+transfer_test: fdin=4 fdout=3
+transfer_test: Boost priority of transfer_readerthread to 101
+transfer_test: Starting transfer_reader thread
+transfer_reader: started
+transfer_test: Boost priority of transfer_writerthread to 101
+transfer_test: Starting transfer_writer thread
+transfer_writer: started
+transfer_test: Waiting for transfer_writer thread
+transfer_writer: 18200 bytes written
+transfer_reader: 18200 bytes read
+transfer_test: transfer_writer returned 0
+transfer_test: Waiting for transfer_reader thread
+transfer_test: transfer_reader returned 0
+transfer_test: returning 0
+
+pipe_main: Performing pipe interlock test
+interlock_test: Starting null_writer thread
+interlock_test: Opening FIFO for read access
+null_writer: started -- sleeping
+null_writer: Opening FIFO for write access
+null_writer: Opened /var/testfifo-2 for writing -- sleeping
+interlock_test: Reading from /var/testfifo-2
+null_writer: Closing /var/testfifo-2
+interlock_test: read returned
+interlock_test: Closing /var/testfifo-2
+interlock_test: Waiting for null_writer thread
+null_writer: Returning success
+interlock_test: writer returned 0
+interlock_test: Starting null_reader thread
+interlock_test: Opening FIFO for write access
+null_reader: started -- sleeping
+null_reader: Opening FIFO for read access
+null_reader: Opened /var/testfifo-2 for reading -- sleeping
+interlock_test: Writing to /var/testfifo-2
+interlock_test: Wrote 16 bytes of data
+interlock_test: write returned
+interlock_test: Closing /var/testfifo-2
+interlock_test: Waiting for null_reader thread
+null_reader: Closing /var/testfifo-2
+null_reader: Returning success
+interlock_test: reader returned 0
+interlock_test: Returning 0
+pipe_main: FIFO interlock test PASSED
+pipe_main: FIFO test PASSED
+
+pipe_main: Performing pipe test
+transfer_test: fdin=4 fdout=3
+transfer_test: Starting transfer_reader thread
+transfer_test: Starting transfer_writer thread
+transfer_reader: started
+transfer_test: Waiting for transfer_writer thread
+transfer_writer: started
+transfer_writer: 18200 bytes written
+transfer_reader: 18200 bytes read
+transfer_test: transfer_writer returned 0
+transfer_test: Waiting for transfer_reader thread
+transfer_test: transfer_reader returned 0
+transfer_test: returning 0
+transfer_test: fdin=4 fdout=3
+transfer_test: Boost priority of transfer_readerthread to 101
+transfer_test: Starting transfer_reader thread
+transfer_reader: started
+transfer_test: Starting transfer_writer thread
+transfer_test: Waiting for transfer_writer thread
+transfer_writer: started
+transfer_writer: 18200 bytes written
+transfer_reader: 18200 bytes read
+transfer_test: transfer_writer returned 0
+transfer_test: Waiting for transfer_reader thread
+transfer_test: transfer_reader returned 0
+transfer_test: returning 0
+transfer_test: fdin=4 fdout=3
+transfer_test: Starting transfer_reader thread
+transfer_test: Boost priority of transfer_writerthread to 101
+transfer_reader: started
+transfer_test: Starting transfer_writer thread
+transfer_writer: started
+transfer_test: Waiting for transfer_writer thread
+transfer_writer: 18200 bytes written
+transfer_reader: 18200 bytes read
+transfer_test: transfer_writer returned 0
+transfer_test: Waiting for transfer_reader thread
+transfer_test: transfer_reader returned 0
+transfer_test: returning 0
+transfer_test: fdin=4 fdout=3
+transfer_test: Boost priority of transfer_readerthread to 101
+transfer_test: Starting transfer_reader thread
+transfer_reader: started
+transfer_test: Boost priority of transfer_writerthread to 101
+transfer_test: Starting transfer_writer thread
+transfer_writer: started
+transfer_test: Waiting for transfer_writer thread
+transfer_writer: 18200 bytes written
+transfer_reader: 18200 bytes read
+transfer_test: transfer_writer returned 0
+transfer_test: Waiting for transfer_reader thread
+transfer_test: transfer_reader returned 0
+transfer_test: returning 0
+
+pipe_main: Performing redirection test
+redirection_test: Starting redirect_writer task with fd=3
+redirection_test: Starting redirect_reader task with fd=4
+redirect_writer: started with fdout=3
+redirection_test: Waiting for null_reader thread
+redirect_reader: started with fdin=4
+
+Four score and seven years ago our fathers broughtforth on this continent a new nation,
+conceived in Liberty, and dedicated to the propositionthat all men are created equal.
+
+Now we are engaged in a great civil war, testingwhether that nation, or any nation, so
+conceived and so dedicated, can long endure. We are meton a great battle-field of that war.
+We have come to dedicate a portion of that field, as afinal resting place for those who hredirect_writer: 1456 bytes written
+ere
+gave their lives that that nation might live. It isaltogether fitting redirect_writer: Returning success
+and proper that we
+should do this.
+
+But, in a larger sense, we can not dedicate - we cannot consecrate - we can not hallow - this ground.
+The brave men, living and dead, who struggled here, haveconsecrated it, far above our poor power
+to add or detract. The world will little note, nor longremember what we say here, but it can
+never forget what they did here. It is for us theliving, rather, to be dedicated here to the
+unfinished work which they who fought here have thus farso nobly advanced. It is rather for us to
+be here dedicated to the great task remaining before us- that from these honored dead we take
+increased devotion to that cause for which they gave thelast full measure of devotion - that we
+here highly resolve that these dead shall not have diedin vain - that this nation, under God,
+shall have a new birth of freedom - and that governmentof the people, by the people, for the
+people, shall not perish from the earth.
+
+redirect_reader: 1456 bytes read
+redirect_reader: Returning success
+redirection_test: Waiting...
+redirection_test: returning 0
+pipe_main: PIPE redirection test PASSED
+pipe_main: PIPE test PASSED
+nsh> [K
+nsh> [KXTS_STANDARD=pipe PASS seconds=33.542

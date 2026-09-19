@@ -23,5 +23,46 @@
   ],
   "title": "12h待机稳定性测试",
   "original_line": 1062,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/resmonitor",
+      "origin": "apps/system/resmonitor"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-standby/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-kasan-longrun.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-kasan-longrun.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-standby12h/README.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-standby12h/README.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-standby12h/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-standby12h/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/clock864-acceptance-989.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/clock864-acceptance-989.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/clock864-final-assessment-988.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/clock864-final-assessment-988.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/clock864-host-audit.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/clock864-host-audit.md"
+    }
+  ]
 }

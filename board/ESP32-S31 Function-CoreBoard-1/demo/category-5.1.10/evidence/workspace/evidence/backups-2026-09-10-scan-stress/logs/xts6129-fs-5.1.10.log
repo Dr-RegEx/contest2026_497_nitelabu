@@ -1,0 +1,338 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build976-flat-category-fs-perf.sha256
+XTS_MOUNT_EVIDENCE=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/checkpoint1018-fs-mount/mount-evidence.log
+XTS_MOUNT_EVIDENCE_SHA256=5fc2f61a1f5b76dd5bc5d9d662ac5e3b04f4c7166fbddf1f73c8fb5acd42ee6c
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls /dev/xtsflash
+--- CMD: ls /dev/xtsflash ---
+ls /dev/xtsflash
+ /dev/xtsflash
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256         14         242 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+ drwxrwxrwx           0 .
+ dr--r--r--           0 ..
+ -rw-r--r--       12288 persist.db
+ drwxrwxrwx           0 s05/
+ drwxrwxrwx           0 s06/
+ drwxrwxrwx           0 s08/
+ drwxrwxrwx           0 s09/
+ -rw-rw-rw-          27 test.prop
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/s10
+--- CMD: mkdir /data/s10 ---
+mkdir /data/s10
+nsh> [K
+nsh> [K
+XTS_COMMAND=vela_fs_multi_thread_read_write_test -d /data/s10
+--- CMD: vela_fs_multi_thread_read_write_test -d /data/s10 ---
+vela_fs_multi_thread_read_write_test -d /data/s10
+Test filename: /data/s10/test0
+Test filename: /data/s10/test1
+Test filename: /data/s10/test2
+Test filename: /data/s10/test3
+Test filename: /data/s10/test4
+/data/s10/test0: Remaining count 980
+/data/s10/test1: Remaining count 980
+/data/s10/test3: Remaining count 980
+/data/s10/test2: Remaining count 980
+/data/s10/test4: Remaining count 980
+/data/s10/test0: Remaining count 960
+/data/s10/test1: Remaining count 960
+/data/s10/test2: Remaining count 960
+/data/s10/test3: Remaining count 960
+/data/s10/test4: Remaining count 960
+/data/s10/test0: Remaining count 940
+/data/s10/test1: Remaining count 940
+/data/s10/test2: Remaining count 940
+/data/s10/test3: Remaining count 940
+/data/s10/test4: Remaining count 940
+/data/s10/test0: Remaining count 920
+/data/s10/test1: Remaining count 920
+/data/s10/test2: Remaining count 920
+/data/s10/test3: Remaining count 920
+/data/s10/test4: Remaining count 920
+/data/s10/test0: Remaining count 900
+/data/s10/test1: Remaining count 900
+/data/s10/test2: Remaining count 900
+/data/s10/test3: Remaining count 900
+/data/s10/test4: Remaining count 900
+/data/s10/test0: Remaining count 880
+/data/s10/test1: Remaining count 880
+/data/s10/test3: Remaining count 880
+/data/s10/test2: Remaining count 880
+/data/s10/test4: Remaining count 880
+/data/s10/test0: Remaining count 860
+/data/s10/test1: Remaining count 860
+/data/s10/test3: Remaining count 860
+/data/s10/test2: Remaining count 860
+/data/s10/test4: Remaining count 860
+/data/s10/test0: Remaining count 840
+/data/s10/test3: Remaining count 840
+/data/s10/test1: Remaining count 840
+/data/s10/test2: Remaining count 840
+/data/s10/test4: Remaining count 840
+/data/s10/test0: Remaining count 820
+/data/s10/test3: Remaining count 820
+/data/s10/test1: Remaining count 820
+/data/s10/test2: Remaining count 820
+/data/s10/test4: Remaining count 820
+/data/s10/test0: Remaining count 800
+/data/s10/test3: Remaining count 800
+/data/s10/test1: Remaining count 800
+/data/s10/test2: Remaining count 800
+/data/s10/test4: Remaining count 800
+/data/s10/test0: Remaining count 780
+/data/s10/test3: Remaining count 780
+/data/s10/test1: Remaining count 780
+/data/s10/test2: Remaining count 780
+/data/s10/test4: Remaining count 780
+/data/s10/test0: Remaining count 760
+/data/s10/test3: Remaining count 760
+/data/s10/test1: Remaining count 760
+/data/s10/test2: Remaining count 760
+/data/s10/test4: Remaining count 760
+/data/s10/test0: Remaining count 740
+/data/s10/test3: Remaining count 740
+/data/s10/test1: Remaining count 740
+/data/s10/test2: Remaining count 740
+/data/s10/test4: Remaining count 740
+/data/s10/test0: Remaining count 720
+/data/s10/test1: Remaining count 720
+/data/s10/test2: Remaining count 720
+/data/s10/test3: Remaining count 720
+/data/s10/test4: Remaining count 720
+/data/s10/test0: Remaining count 700
+/data/s10/test2: Remaining count 700
+/data/s10/test1: Remaining count 700
+/data/s10/test3: Remaining count 700
+/data/s10/test4: Remaining count 700
+/data/s10/test0: Remaining count 680
+/data/s10/test2: Remaining count 680
+/data/s10/test1: Remaining count 680
+/data/s10/test3: Remaining count 680
+/data/s10/test4: Remaining count 680
+/data/s10/test0: Remaining count 660
+/data/s10/test2: Remaining count 660
+/data/s10/test1: Remaining count 660
+/data/s10/test3: Remaining count 660
+/data/s10/test4: Remaining count 660
+/data/s10/test0: Remaining count 640
+/data/s10/test2: Remaining count 640
+/data/s10/test1: Remaining count 640
+/data/s10/test3: Remaining count 640
+/data/s10/test4: Remaining count 640
+/data/s10/test0: Remaining count 620
+/data/s10/test2: Remaining count 620
+/data/s10/test1: Remaining count 620
+/data/s10/test3: Remaining count 620
+/data/s10/test4: Remaining count 620
+/data/s10/test0: Remaining count 600
+/data/s10/test2: Remaining count 600
+/data/s10/test1: Remaining count 600
+/data/s10/test3: Remaining count 600
+/data/s10/test4: Remaining count 600
+/data/s10/test0: Remaining count 580
+/data/s10/test2: Remaining count 580
+/data/s10/test1: Remaining count 580
+/data/s10/test3: Remaining count 580
+/data/s10/test4: Remaining count 580
+/data/s10/test0: Remaining count 560
+/data/s10/test2: Remaining count 560
+/data/s10/test1: Remaining count 560
+/data/s10/test3: Remaining count 560
+/data/s10/test4: Remaining count 560
+/data/s10/test0: Remaining count 540
+/data/s10/test2: Remaining count 540
+/data/s10/test1: Remaining count 540
+/data/s10/test3: Remaining count 540
+/data/s10/test4: Remaining count 540
+/data/s10/test0: Remaining count 520
+/data/s10/test1: Remaining count 520
+/data/s10/test2: Remaining count 520
+/data/s10/test3: Remaining count 520
+/data/s10/test4: Remaining count 520
+/data/s10/test0: Remaining count 500
+/data/s10/test1: Remaining count 500
+/data/s10/test2: Remaining count 500
+/data/s10/test3: Remaining count 500
+/data/s10/test4: Remaining count 500
+/data/s10/test0: Remaining count 480
+/data/s10/test2: Remaining count 480
+/data/s10/test1: Remaining count 480
+/data/s10/test3: Remaining count 480
+/data/s10/test4: Remaining count 480
+/data/s10/test0: Remaining count 460
+/data/s10/test2: Remaining count 460
+/data/s10/test1: Remaining count 460
+/data/s10/test3: Remaining count 460
+/data/s10/test4: Remaining count 460
+/data/s10/test0: Remaining count 440
+/data/s10/test2: Remaining count 440
+/data/s10/test1: Remaining count 440
+/data/s10/test3: Remaining count 440
+/data/s10/test4: Remaining count 440
+/data/s10/test0: Remaining count 420
+/data/s10/test2: Remaining count 420
+/data/s10/test1: Remaining count 420
+/data/s10/test3: Remaining count 420
+/data/s10/test4: Remaining count 420
+/data/s10/test0: Remaining count 400
+/data/s10/test2: Remaining count 400
+/data/s10/test1: Remaining count 400
+/data/s10/test3: Remaining count 400
+/data/s10/test4: Remaining count 400
+/data/s10/test0: Remaining count 380
+/data/s10/test2: Remaining count 380
+/data/s10/test1: Remaining count 380
+/data/s10/test3: Remaining count 380
+/data/s10/test4: Remaining count 380
+/data/s10/test0: Remaining count 360
+/data/s10/test2: Remaining count 360
+/data/s10/test1: Remaining count 360
+/data/s10/test3: Remaining count 360
+/data/s10/test4: Remaining count 360
+/data/s10/test0: Remaining count 340
+/data/s10/test2: Remaining count 340
+/data/s10/test1: Remaining count 340
+/data/s10/test3: Remaining count 340
+/data/s10/test4: Remaining count 340
+/data/s10/test0: Remaining count 320
+/data/s10/test2: Remaining count 320
+/data/s10/test1: Remaining count 320
+/data/s10/test3: Remaining count 320
+/data/s10/test4: Remaining count 320
+/data/s10/test0: Remaining count 300
+/data/s10/test2: Remaining count 300
+/data/s10/test1: Remaining count 300
+/data/s10/test3: Remaining count 300
+/data/s10/test4: Remaining count 300
+/data/s10/test0: Remaining count 280
+/data/s10/test2: Remaining count 280
+/data/s10/test3: Remaining count 280
+/data/s10/test1: Remaining count 280
+/data/s10/test4: Remaining count 280
+/data/s10/test0: Remaining count 260
+/data/s10/test2: Remaining count 260
+/data/s10/test1: Remaining count 260
+/data/s10/test3: Remaining count 260
+/data/s10/test4: Remaining count 260
+/data/s10/test0: Remaining count 240
+/data/s10/test2: Remaining count 240
+/data/s10/test1: Remaining count 240
+/data/s10/test3: Remaining count 240
+/data/s10/test4: Remaining count 240
+/data/s10/test0: Remaining count 220
+/data/s10/test2: Remaining count 220
+/data/s10/test1: Remaining count 220
+/data/s10/test3: Remaining count 220
+/data/s10/test4: Remaining count 220
+/data/s10/test0: Remaining count 200
+/data/s10/test2: Remaining count 200
+/data/s10/test1: Remaining count 200
+/data/s10/test3: Remaining count 200
+/data/s10/test4: Remaining count 200
+/data/s10/test0: Remaining count 180
+/data/s10/test2: Remaining count 180
+/data/s10/test1: Remaining count 180
+/data/s10/test3: Remaining count 180
+/data/s10/test4: Remaining count 180
+/data/s10/test0: Remaining count 160
+/data/s10/test2: Remaining count 160
+/data/s10/test1: Remaining count 160
+/data/s10/test3: Remaining count 160
+/data/s10/test4: Remaining count 160
+/data/s10/test0: Remaining count 140
+/data/s10/test2: Remaining count 140
+/data/s10/test1: Remaining count 140
+/data/s10/test3: Remaining count 140
+/data/s10/test4: Remaining count 140
+/data/s10/test0: Remaining count 120
+/data/s10/test2: Remaining count 120
+/data/s10/test1: Remaining count 120
+/data/s10/test3: Remaining count 120
+/data/s10/test4: Remaining count 120
+/data/s10/test0: Remaining count 100
+/data/s10/test2: Remaining count 100
+/data/s10/test1: Remaining count 100
+/data/s10/test3: Remaining count 100
+/data/s10/test4: Remaining count 100
+/data/s10/test0: Remaining count 80
+/data/s10/test2: Remaining count 80
+/data/s10/test1: Remaining count 80
+/data/s10/test3: Remaining count 80
+/data/s10/test4: Remaining count 80
+/data/s10/test0: Remaining count 60
+/data/s10/test2: Remaining count 60
+/data/s10/test1: Remaining count 60
+/data/s10/test3: Remaining count 60
+/data/s10/test4: Remaining count 60
+/data/s10/test0: Remaining count 40
+/data/s10/test2: Remaining count 40
+/data/s10/test1: Remaining count 40
+/data/s10/test3: Remaining count 40
+/data/s10/test4: Remaining count 40
+/data/s10/test0: Remaining count 20
+/data/s10/test2: Remaining count 20
+/data/s10/test1: Remaining count 20
+/data/s10/test3: Remaining count 20
+/data/s10/test4: Remaining count 20
+/data/s10/test0: Remaining count 0
+/data/s10/test2: Remaining count 0
+/data/s10/test1: Remaining count 0
+/data/s10/test3: Remaining count 0
+/data/s10/test4: Remaining count 0
+TEST PASS
+nsh> [K
+nsh> [K
+XTS_CASE=5.1.10 PASS original_workload=1
+XTS_COMMAND=ls -l /data/s10
+--- CMD: ls -l /data/s10 ---
+ls -l /data/s10
+/data/s10:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256         16         240 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_CASE_POSTCHECK=COMPLETE retained_directory=/data/s10

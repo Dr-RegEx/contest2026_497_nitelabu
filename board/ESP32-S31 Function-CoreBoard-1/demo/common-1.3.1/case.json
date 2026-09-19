@@ -19,5 +19,26 @@
   ],
   "title": "烧写测试",
   "original_line": 506,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/esp32s31_simple_boot_digest.py",
+      "origin": "nuttx/tools/espressif/esp32s31_simple_boot_digest.py"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-core/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/demo669-mqueue-restored.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/demo669-mqueue-restored.log"
+    }
+  ]
 }

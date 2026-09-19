@@ -1,0 +1,94 @@
+{"status": "WAITING_FOR_1181", "timestamp": 1789585886.5498114, "collector_pid": 669451, "no_uart_while_running": true}
+{"status": "POSTCHECK", "timestamp": 1789591271.974526, "original_loops": 1000, "summary": [2000, 0]}
+XTS_COMMAND=echo $?
+--- CMD: echo $? ---
+echo $?
+0
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/fstest
+--- CMD: ls -l /data/fstest ---
+ls -l /data/fstest
+/data/fstest:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        332         436 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17226456      19256   17207200      73160   16777200     43      4 Umem
+nsh> [K
+nsh> [K
+XTS_COMMAND=rm -r /data/fstest
+--- CMD: rm -r /data/fstest ---
+rm -r /data/fstest
+nsh> [K
+nsh> [K
+XTS_COMMAND=echo $?
+--- CMD: echo $? ---
+echo $?
+0
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+ drwxrwxrwx           0 .
+ dr--r--r--           0 ..
+ drwxrwxrwx           0 frag1164/
+ -rw-r--r--      405504 persist.db
+ drwxrwxrwx           0 s01_1173/
+ drwxrwxrwx           0 s02/
+ drwxrwxrwx           0 s07b/
+ drwxrwxrwx           0 s07c/
+ drwxrwxrwx           0 s07/
+ drwxrwxrwx           0 s17/
+ drwxrwxrwx           0 s18c/
+ drwxrwxrwx           0 s18r/
+ drwxrwxrwx           0 s19s/
+ drwxrwxrwx           0 s19/
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        330         438 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_CASE=5.1.15 PASS original_loops=1000 cleanup=complete

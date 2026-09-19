@@ -23,5 +23,46 @@
   ],
   "title": "时间一致性测试",
   "original_line": 860,
-  "config_inheritance_verified": true
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/nsh_timcmds.c",
+      "origin": "apps/nshlib/nsh_timcmds.c"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-standby/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/board-only-after-longrun.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/board-only-after-longrun.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/clock864-acceptance-989.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/clock864-acceptance-989.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/xts-category-status.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/xts-current-status.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/clock864-acceptance-989.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/clock864-acceptance-989.md"
+    }
+  ]
 }
