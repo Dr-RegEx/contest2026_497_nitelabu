@@ -1,0 +1,23 @@
+{
+  "name": "common-1.2.3",
+  "keys": [
+    "common:1.2.3"
+  ],
+  "profile": "demo-rmt-xts-io",
+  "sources": [
+    "apps/nshlib/nsh_proccmds.c"
+  ],
+  "evidence_ids": [
+    736
+  ],
+  "note": "执行 free、ps，并区分 CPU0/CPU1 与共享堆，不能把共享内存重复相加。",
+  "original": "1.2.3",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/xts736-footprint.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts736-footprint.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "系统RAM资源占用统计",
+  "original_line": 471,
+  "config_inheritance_verified": true
+}

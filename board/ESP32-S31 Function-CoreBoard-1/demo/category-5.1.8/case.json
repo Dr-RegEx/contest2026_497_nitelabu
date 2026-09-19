@@ -1,0 +1,27 @@
+{
+  "name": "category-5.1.8",
+  "keys": [
+    "category:5.1.8"
+  ],
+  "profile": "xts-flat-category-fs-name",
+  "sources": [
+    "tests/testcases/vela_fs_test"
+  ],
+  "evidence_ids": [
+    1537
+  ],
+  "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+  "original": "5.1.8",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1537-arp-window-negative/network1534-arp-window-review.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1537-arp-window-negative/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/network1537-handoff.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1537-fs-5.1.8.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1537-cold-tcp.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/network1537-tcp-statistics-result.json",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "文件系统多线程写文件测试vela_fs_multi_thread_write_test",
+  "original_line": 1180,
+  "config_inheritance_verified": true
+}

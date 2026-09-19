@@ -1,0 +1,27 @@
+{
+  "name": "category-4.1.4",
+  "keys": [
+    "category:4.1.4"
+  ],
+  "profile": "xts-flat-category-fs-sync",
+  "sources": [
+    "tests/testcases/vela_fs_test"
+  ],
+  "evidence_ids": [
+    1589
+  ],
+  "note": "只在已备份的专用测试卷执行，真实断电 3 轮，恢复时不格式化；逐轮记录原文件和原始程序恢复结果。",
+  "original": "4.1.4",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/power1589-recovery.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/power1589-recovery-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1586-write.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1584-write.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "文件系统异常场景--写入时掉电",
+  "original_line": 3462,
+  "config_inheritance_verified": true
+}

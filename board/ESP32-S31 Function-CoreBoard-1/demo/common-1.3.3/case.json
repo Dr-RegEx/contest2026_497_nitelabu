@@ -1,0 +1,26 @@
+{
+  "name": "common-1.3.3",
+  "keys": [
+    "common:1.3.3"
+  ],
+  "profile": "demo-rmt-xts-memory",
+  "sources": [
+    "apps/testing/mm/ramtest"
+  ],
+  "evidence_ids": [
+    705,
+    706,
+    707
+  ],
+  "note": "历史参数分别为 `ramtest -w -s 209256`、`ramtest -h -s 209256`、`ramtest -b -s 209256`。",
+  "original": "1.3.3",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts705-ram-word.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts706-ram-half.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts707-ram-byte.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "RAM读写性能测试",
+  "original_line": 551,
+  "config_inheritance_verified": true
+}

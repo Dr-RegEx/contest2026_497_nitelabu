@@ -1,0 +1,21 @@
+{
+  "name": "i2c-c6",
+  "keys": [
+    "common:1.3.7"
+  ],
+  "profile": "xts-flat-i2c-c6",
+  "sources": [
+    "apps/system/i2c"
+  ],
+  "evidence_ids": [],
+  "note": "采用用户指定的 S31 主机 ↔ C6 从机通用通信验收；不声称原始传感器用例通过。",
+  "fixture": "workspace/tools/esp32c6-i2c-slave",
+  "original": null,
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/i2c-generic-echo-result.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/i2c-generic-echo-validation.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "I2C 通用主从通信（S31 ↔ C6）",
+  "config_inheritance_verified": true
+}

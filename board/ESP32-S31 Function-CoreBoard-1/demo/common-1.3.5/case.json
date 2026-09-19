@@ -1,0 +1,27 @@
+{
+  "name": "common-1.3.5",
+  "keys": [
+    "common:1.3.5"
+  ],
+  "profile": "xts-flat-flash",
+  "sources": [
+    "apps/testing/drivers/drivertest/drivertest_block.c"
+  ],
+  "evidence_ids": [
+    992
+  ],
+  "note": "测试会写块设备。只使用该配置注册的 `/dev/xtsflash`（0xc00000 起 1MiB），先按历史记录两次读取核验、备份；不能指向系统数据卷。",
+  "original": "1.3.5",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/xts-current-status.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/xts-category-status.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts992-original-flash-block.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/logs/xts991-flash946.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "Flash功能测试",
+  "original_line": 612,
+  "config_inheritance_verified": true
+}

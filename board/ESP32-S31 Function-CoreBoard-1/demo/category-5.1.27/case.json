@@ -1,0 +1,27 @@
+{
+  "name": "category-5.1.27",
+  "keys": [
+    "category:5.1.27"
+  ],
+  "profile": "demo-rmt-netapps-competition",
+  "sources": [
+    "apps/wireless/wapi"
+  ],
+  "evidence_ids": [
+    1606
+  ],
+  "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+  "original": "5.1.27",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/README.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/original-case.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/sprint1606-handoff.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/scan1606-acceptance-rule.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1606-directed-scan.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "WiFi--2.4G网络---设备连接2.4G后wapi扫描指定2.4G AP",
+  "original_line": 5307,
+  "config_inheritance_verified": true
+}

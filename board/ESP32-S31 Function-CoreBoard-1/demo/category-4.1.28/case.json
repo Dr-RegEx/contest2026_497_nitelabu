@@ -1,0 +1,26 @@
+{
+  "name": "category-4.1.28",
+  "keys": [
+    "category:4.1.28"
+  ],
+  "profile": "demo-rmt-netapps-competition",
+  "sources": [
+    "apps/wireless/wapi"
+  ],
+  "evidence_ids": [
+    1312
+  ],
+  "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+  "original": "4.1.28",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1312-save-config.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/network1312-save-config-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/network1312-save-config.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/network1312-save-config-result.json",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "WiFi--2.4G--wapi config保存正常",
+  "original_line": 3807,
+  "config_inheritance_verified": true
+}

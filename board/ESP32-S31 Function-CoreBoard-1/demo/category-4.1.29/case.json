@@ -1,0 +1,26 @@
+{
+  "name": "category-4.1.29",
+  "keys": [
+    "category:4.1.29"
+  ],
+  "profile": "demo-rmt-netapps-competition",
+  "sources": [
+    "apps/wireless/wapi"
+  ],
+  "evidence_ids": [
+    1325
+  ],
+  "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+  "original": "4.1.29",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1325-reboot-reconnect.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/network1325-reboot-reconnect-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect-result.json",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "WiFi--2.4G--wapi config保存后设备reboot再reconnect",
+  "original_line": 3778,
+  "config_inheritance_verified": true
+}

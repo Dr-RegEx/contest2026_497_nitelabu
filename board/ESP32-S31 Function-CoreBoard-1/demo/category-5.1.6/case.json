@@ -1,0 +1,23 @@
+{
+  "name": "category-5.1.6",
+  "keys": [
+    "category:5.1.6"
+  ],
+  "profile": "xts-flat-category-fs-name",
+  "sources": [
+    "tests/testcases/vela_fs_test"
+  ],
+  "evidence_ids": [
+    1535
+  ],
+  "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+  "original": "5.1.6",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1535-fs-5.1.6.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1535-fs-5.1.6.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "文件系统反复读写测试vela_fs_stress_read_and_write_loops_test",
+  "original_line": 1286,
+  "config_inheritance_verified": true
+}

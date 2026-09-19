@@ -1,0 +1,1 @@
+../../_sources/nuttx/tools/espressif/esp32s31_simple_boot_digest.py

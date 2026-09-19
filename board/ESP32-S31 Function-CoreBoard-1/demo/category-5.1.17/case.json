@@ -1,0 +1,27 @@
+{
+  "name": "category-5.1.17",
+  "keys": [
+    "category:5.1.17"
+  ],
+  "profile": "xts-flat-category-fs-large",
+  "sources": [
+    "tests/testcases/vela_fs_test"
+  ],
+  "evidence_ids": [
+    1163
+  ],
+  "note": "专用 3MiB 测试卷，碎片用例保持原观察标准，多线程操作保持原始 1 小时工作量。",
+  "original": "5.1.17",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/fs1163-one-hour-running.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1163-fs-one-hour.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/mount-evidence.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/xts1163-fs-one-hour.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "文件系统多线程操作文件测试",
+  "original_line": 2033,
+  "config_inheritance_verified": true
+}

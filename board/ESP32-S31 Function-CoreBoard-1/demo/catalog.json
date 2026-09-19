@@ -1,0 +1,2711 @@
+{
+  "basis": "docs/acceptance/比赛必须适配清单.md",
+  "source_snapshot_commit": "6c1859d",
+  "cases": {
+    "common:1.1.1": {
+      "id": "1.1.1",
+      "title": "系统内存管理测试",
+      "status": "🟢 已通过",
+      "result": "689：8/8通过",
+      "boundary": ""
+    },
+    "common:1.1.2": {
+      "id": "1.1.2",
+      "title": "系统调度测试",
+      "status": "🟢 已通过",
+      "result": "688：9/9通过；旧失败保留",
+      "boundary": ""
+    },
+    "common:1.1.3": {
+      "id": "1.1.3",
+      "title": "系统调用测试",
+      "status": "🟢 已通过",
+      "result": "709：83/83通过",
+      "boundary": ""
+    },
+    "common:1.1.4": {
+      "id": "1.1.4",
+      "title": "Kernel-ostest测试",
+      "status": "🟢 已通过",
+      "result": "771/775：原配置完整循环正常退出",
+      "boundary": ""
+    },
+    "common:1.1.5": {
+      "id": "1.1.5",
+      "title": "Kernel-getprime测试",
+      "status": "🟢 已通过",
+      "result": "693：1040ms",
+      "boundary": ""
+    },
+    "common:1.1.6": {
+      "id": "1.1.6",
+      "title": "Kernel-mm内存测试",
+      "status": "🟢 已通过",
+      "result": "839：原始分配/重分配/对齐测试完成，含16MiB PSRAM",
+      "boundary": ""
+    },
+    "common:1.1.7": {
+      "id": "1.1.7",
+      "title": "Kernel-scanftest扫描测试",
+      "status": "🟢 已通过",
+      "result": "694：164项成功、0失败",
+      "boundary": ""
+    },
+    "common:1.1.8": {
+      "id": "1.1.8",
+      "title": "Kernel-C测试",
+      "status": "🟢 已通过",
+      "result": "695：hello通过",
+      "boundary": ""
+    },
+    "common:1.1.9": {
+      "id": "1.1.9",
+      "title": "Kernel-Cxx测试",
+      "status": "🟢 已通过",
+      "result": "718：动态/栈/静态三类实例通过",
+      "boundary": ""
+    },
+    "common:1.1.10": {
+      "id": "1.1.10",
+      "title": "Kernel-popen测试",
+      "status": "🟢 已通过",
+      "result": "733：pclose及正常返回通过",
+      "boundary": ""
+    },
+    "common:1.1.11": {
+      "id": "1.1.11",
+      "title": "Kernel-pipe测试",
+      "status": "🟢 已通过",
+      "result": "732：FIFO、传输、互锁及重定向通过",
+      "boundary": ""
+    },
+    "common:1.1.12": {
+      "id": "1.1.12",
+      "title": "Kernel-md5值测试",
+      "status": "🟢 已通过",
+      "result": "734：100次哈希一致且正确",
+      "boundary": ""
+    },
+    "common:1.1.13": {
+      "id": "1.1.13",
+      "title": "Kernel-C++功能测试",
+      "status": "🟢 已通过",
+      "result": "797：容器、C++17、RTTI及异常处理通过",
+      "boundary": ""
+    },
+    "common:1.2.1": {
+      "id": "1.2.1",
+      "title": "Reboot启动异常测试",
+      "status": "🟢 已通过",
+      "result": "726：10/10次软件重启无异常",
+      "boundary": ""
+    },
+    "common:1.2.2": {
+      "id": "1.2.2",
+      "title": "Cold boot启动异常测试",
+      "status": "🟢 已通过",
+      "result": "1580：实体RESET按键启动日志无异常；不替代真实断电计时",
+      "boundary": ""
+    },
+    "common:1.2.3": {
+      "id": "1.2.3",
+      "title": "系统RAM资源占用统计",
+      "status": "🟢 已通过",
+      "result": "736：两核资源统计；共享内存解释见xts736-footprint.md",
+      "boundary": ""
+    },
+    "common:1.2.4": {
+      "id": "1.2.4",
+      "title": "系统Flash资源占用统计",
+      "status": "🟢 已通过",
+      "result": "736：两核df及物理Flash布局统计",
+      "boundary": ""
+    },
+    "common:1.3.1": {
+      "id": "1.3.1",
+      "title": "烧写测试",
+      "status": "🟢 已通过",
+      "result": "668/669：受保护刷写、哈希及NSH启动",
+      "boundary": ""
+    },
+    "common:1.3.2": {
+      "id": "1.3.2",
+      "title": "RAM读写测试",
+      "status": "🟢 已通过",
+      "result": "767：fstest原始10轮，20成功/0失败",
+      "boundary": ""
+    },
+    "common:1.3.3": {
+      "id": "1.3.3",
+      "title": "RAM读写性能测试",
+      "status": "🟢 已通过",
+      "result": "705/706/707：字/半字/字节模式通过",
+      "boundary": ""
+    },
+    "common:1.3.4": {
+      "id": "1.3.4",
+      "title": "RAM随机读写测试",
+      "status": "🟢 已通过",
+      "result": "840：RAM块设备原始3/3通过",
+      "boundary": ""
+    },
+    "common:1.3.5": {
+      "id": "1.3.5",
+      "title": "Flash功能测试",
+      "status": "🟢 已通过",
+      "result": "992：Flash块设备原始3/3通过",
+      "boundary": ""
+    },
+    "common:1.3.7": {
+      "id": "1.3.7",
+      "title": "I2C/SPI功能测试",
+      "status": "🟢 通用通信功能已通过",
+      "result": "按用户指定S31主机↔C6从机验收：[I2C](i2c-generic-echo-result.md)100/400kHz、32/32组回传一致；[SPI](spi-c6-result.md)100kHz/1MHz、C6接收14/14帧、S31回传13/13帧一致。独立测试配置，不采用原始传感器用例",
+      "boundary": ""
+    },
+    "common:1.3.10": {
+      "id": "1.3.10",
+      "title": "Uart串口功能测试",
+      "status": "🟢 已通过",
+      "result": "744：UART三模式及10次突发采样通过",
+      "boundary": ""
+    },
+    "common:1.3.11": {
+      "id": "1.3.11",
+      "title": "Uart文件传输功能测试",
+      "status": "🟢 已通过",
+      "result": "805：129字节/65573字节文件双向传输一致",
+      "boundary": ""
+    },
+    "common:1.3.12": {
+      "id": "1.3.12",
+      "title": "RTC时钟功能测试",
+      "status": "🟢 已通过",
+      "result": "841：RTC API/闹钟/周期原始3/3通过",
+      "boundary": ""
+    },
+    "common:1.3.13": {
+      "id": "1.3.13",
+      "title": "Timer定时器功能测试",
+      "status": "🟢 已通过",
+      "result": "743：原始timer0测试通过",
+      "boundary": ""
+    },
+    "common:1.3.14": {
+      "id": "1.3.14",
+      "title": "时间一致性测试",
+      "status": "🟢 已通过",
+      "result": "989项目验收：24h四次记录误差均在2秒内；早期采样间隔及记录缺口保留说明",
+      "boundary": ""
+    },
+    "common:1.3.15": {
+      "id": "1.3.15",
+      "title": "Watchdog测试",
+      "status": "🟢 已通过",
+      "result": "1016：原始模式0→1→2→3及真实看门狗复位通过",
+      "boundary": ""
+    },
+    "common:1.3.16": {
+      "id": "1.3.16",
+      "title": "RNG功能测试",
+      "status": "🟢 用户确认通过",
+      "result": "1682用户确认通过；786原始26项未定义统计输出及808补充记录保留，不重跑",
+      "boundary": ""
+    },
+    "common:1.3.17": {
+      "id": "1.3.17",
+      "title": "Crypto功能测试",
+      "status": "🟢 已通过",
+      "result": "1010：原始8个Crypto程序通过；部分算法软件实现，硬件范围见历史记录",
+      "boundary": ""
+    },
+    "common:2.1.3": {
+      "id": "2.1.3",
+      "title": "Cold Boot启动时间测试",
+      "status": "🟢 已通过",
+      "result": "1604：10次真实USB上下电，平均0.265831秒",
+      "boundary": ""
+    },
+    "common:2.1.4": {
+      "id": "2.1.4",
+      "title": "Reboot启动时间测试",
+      "status": "🟢 已通过",
+      "result": "726：10次软件重启，平均0.548秒",
+      "boundary": ""
+    },
+    "common:3.1.1": {
+      "id": "3.1.1",
+      "title": "12h待机稳定性测试",
+      "status": "🟢 已通过",
+      "result": "864：未配网12小时，资源无增长、无复位/异常",
+      "boundary": ""
+    },
+    "category:4.1.2": {
+      "id": "4.1.2",
+      "title": "文件系统--romfs只读文件系统测试",
+      "status": "🟢 已通过",
+      "result": "PASS1006",
+      "boundary": ""
+    },
+    "category:4.1.3": {
+      "id": "4.1.3",
+      "title": "fatutf8文件系统编码能力测试",
+      "status": "🟢 已通过",
+      "result": "PASS1006",
+      "boundary": ""
+    },
+    "category:4.1.4": {
+      "id": "4.1.4",
+      "title": "文件系统异常场景--写入时掉电",
+      "status": "🟢 已通过",
+      "result": "PASS1589 原始3轮真实掉电及一致性校验",
+      "boundary": ""
+    },
+    "category:4.1.5": {
+      "id": "4.1.5",
+      "title": "文件系统异常场景--创建文件时掉电",
+      "status": "🟢 已通过",
+      "result": "PASS1595 原始3轮创建阶段/真实掉电/恢复读写",
+      "boundary": ""
+    },
+    "category:4.1.6": {
+      "id": "4.1.6",
+      "title": "文件系统异常场景--掉电重启时磁盘空间变化",
+      "status": "🟢 已通过",
+      "result": "PASS1603 原始3轮真实掉电/四线程校验/空间统计",
+      "boundary": ""
+    },
+    "category:4.1.11": {
+      "id": "4.1.11",
+      "title": "KVDB测试",
+      "status": "🟢 已通过",
+      "result": "PASS1013 原始30/30",
+      "boundary": ""
+    },
+    "category:4.1.21": {
+      "id": "4.1.21",
+      "title": "WiFi--2.4G--Wapi连接为WPA2加密方式时加入2.4G网络",
+      "status": "🟢 已通过",
+      "result": "PASS1310 原始关联/DHCP/ping10/10",
+      "boundary": ""
+    },
+    "category:4.1.25": {
+      "id": "4.1.25",
+      "title": "WiFi--2.4G--Wapi Sense获取链接2.4G AP的RSSI",
+      "status": "🟢 已通过",
+      "result": "PASS1458 两次RSSI -59/-60 dBm，正常返回且动态变化",
+      "boundary": ""
+    },
+    "category:4.1.26": {
+      "id": "4.1.26",
+      "title": "WiFi--2.4G--Wapi Show获取2.4G AP的无线参数",
+      "status": "🟢 已通过",
+      "result": "PASS1435 original wapi show",
+      "boundary": ""
+    },
+    "category:4.1.28": {
+      "id": "4.1.28",
+      "title": "WiFi--2.4G--wapi config保存正常",
+      "status": "🟢 已通过",
+      "result": "PASS1312 配置字段逐项核对一致",
+      "boundary": ""
+    },
+    "category:4.1.29": {
+      "id": "4.1.29",
+      "title": "WiFi--2.4G--wapi config保存后设备reboot再reconnect",
+      "status": "🟢 已通过",
+      "result": "PASS1325 保存配置后原始reboot重连通过",
+      "boundary": ""
+    },
+    "category:4.1.30": {
+      "id": "4.1.30",
+      "title": "WiFi--2.4G--wapi reconncet",
+      "status": "🟢 已通过",
+      "result": "PASS1320 1318修复后原重连/DHCP/ping通过",
+      "boundary": ""
+    },
+    "category:4.1.31": {
+      "id": "4.1.31",
+      "title": "WiFi--2.4G--wapi disconnect后与外网不通",
+      "status": "🟢 已通过",
+      "result": "PASS1342 原始公网断网检查通过",
+      "boundary": ""
+    },
+    "category:4.1.57": {
+      "id": "4.1.57",
+      "title": "WiFi--wapi CountryCode的设置和获取",
+      "status": "🟢 已通过",
+      "result": "PASS1034",
+      "boundary": ""
+    },
+    "category:4.1.113": {
+      "id": "4.1.113",
+      "title": "NetApp--curl http文件下载测试",
+      "status": "🟢 已通过",
+      "result": "PASS1331 原始下载及大小核验通过",
+      "boundary": ""
+    },
+    "category:4.1.114": {
+      "id": "4.1.114",
+      "title": "NetApp--curl网页能力测试",
+      "status": "🟢 已通过",
+      "result": "PASS1334 原始公网网页命令通过",
+      "boundary": ""
+    },
+    "category:4.1.115": {
+      "id": "4.1.115",
+      "title": "NetApp--设备支持通过scp方式从其他终端获取文件到本地",
+      "status": "🟢 已通过",
+      "result": "PASS1453 original SCP download",
+      "boundary": ""
+    },
+    "category:4.1.116": {
+      "id": "4.1.116",
+      "title": "NetApp--设备支持通过scp方式向其他终端传输本地文件",
+      "status": "🟢 已通过",
+      "result": "PASS1454 original SCP upload",
+      "boundary": ""
+    },
+    "category:4.1.117": {
+      "id": "4.1.117",
+      "title": "NetApp--设备支持ftpd",
+      "status": "🟢 已通过",
+      "result": "PASS1337 复核原始1336双向传输通过",
+      "boundary": ""
+    },
+    "category:4.1.127": {
+      "id": "4.1.127",
+      "title": "Audio--nxlooper回环功能测试",
+      "status": "🟢 已通过",
+      "result": "PASS1198 原始命令无报错",
+      "boundary": ""
+    },
+    "category:4.2.12": {
+      "id": "4.2.12",
+      "title": "Audio_DSP--Capture_cmoka_2channels",
+      "status": "🟢 已通过",
+      "result": "PASS1087原始程序+用户试听",
+      "boundary": ""
+    },
+    "category:4.2.13": {
+      "id": "4.2.13",
+      "title": "Audio_DSP--Capture_cmoka_1channels",
+      "status": "🟢 已通过",
+      "result": "PASS1143原始命令+用户试听",
+      "boundary": ""
+    },
+    "category:5.1.1": {
+      "id": "5.1.1",
+      "title": "文件系统分区写满异常测试",
+      "status": "🟢 已通过",
+      "result": "PASS1173",
+      "boundary": ""
+    },
+    "category:5.1.2": {
+      "id": "5.1.2",
+      "title": "文件系统文件写入速度测试vela_fs_stress_write_speed",
+      "status": "🟢 已通过",
+      "result": "PASS1065 原始1000×1024字节",
+      "boundary": ""
+    },
+    "category:5.1.3": {
+      "id": "5.1.3",
+      "title": "文件系统创建和删除压力测试vela_fs_stress_loop_create_delete_file_test",
+      "status": "🟢 已通过",
+      "result": "PASS1022",
+      "boundary": ""
+    },
+    "category:5.1.4": {
+      "id": "5.1.4",
+      "title": "文件系统反复创建和删除文件vela_fs_stress_maximum_file_name_test",
+      "status": "🟢 已通过",
+      "result": "PASS1028",
+      "boundary": ""
+    },
+    "category:5.1.5": {
+      "id": "5.1.5",
+      "title": "文件系统多线程文件读写测试vela_fs_stress_multi_thread_file_operate_test",
+      "status": "🟢 已通过",
+      "result": "PASS 原始工作量",
+      "boundary": ""
+    },
+    "category:5.1.6": {
+      "id": "5.1.6",
+      "title": "文件系统反复读写测试vela_fs_stress_read_and_write_loops_test",
+      "status": "🟢 已通过",
+      "result": "PASS 原始工作量",
+      "boundary": ""
+    },
+    "category:5.1.8": {
+      "id": "5.1.8",
+      "title": "文件系统多线程写文件测试vela_fs_multi_thread_write_test",
+      "status": "🟢 已通过",
+      "result": "PASS 原始工作量",
+      "boundary": ""
+    },
+    "category:5.1.9": {
+      "id": "5.1.9",
+      "title": "文件系统多线程读文件vela_fs_multi_thread_read_test",
+      "status": "🟢 已通过",
+      "result": "PASS 原始工作量",
+      "boundary": ""
+    },
+    "category:5.1.10": {
+      "id": "5.1.10",
+      "title": "文件系统的多线程读写测试vela_fs_multi_thread_read_write_test",
+      "status": "🟢 已通过",
+      "result": "PASS 原始工作量",
+      "boundary": ""
+    },
+    "category:5.1.13": {
+      "id": "5.1.13",
+      "title": "裸设备读写性能测试",
+      "status": "🟢 已通过",
+      "result": "PASS994，原始dd实测通过",
+      "boundary": ""
+    },
+    "category:5.1.15": {
+      "id": "5.1.15",
+      "title": "文件系统fstest执行1000次",
+      "status": "🟢 已通过",
+      "result": "PASS：1181原始1000轮，1184收尾",
+      "boundary": ""
+    },
+    "category:5.1.16": {
+      "id": "5.1.16",
+      "title": "文件系统碎片读写测试",
+      "status": "🟢 已通过",
+      "result": "PASS1164/1169 按原文观察标准",
+      "boundary": ""
+    },
+    "category:5.1.17": {
+      "id": "5.1.17",
+      "title": "文件系统多线程操作文件测试",
+      "status": "🟢 已通过",
+      "result": "PASS1163 原始一小时",
+      "boundary": ""
+    },
+    "category:5.1.18": {
+      "id": "5.1.18",
+      "title": "文件系统crash后crc校验 vela_fs_stability_test03",
+      "status": "🟢 已通过",
+      "result": "PASS1081/1082 reboot及crash均通过",
+      "boundary": ""
+    },
+    "category:5.1.19": {
+      "id": "5.1.19",
+      "title": "文件系统crash后文件完整性校验vela_fs_stability_test04 文件",
+      "status": "🟢 已通过",
+      "result": "PASS1126，显式sync挂载",
+      "boundary": ""
+    },
+    "category:5.1.26": {
+      "id": "5.1.26",
+      "title": "WiFi--2.4G网络---设备连接2.4G后wapi反复扫描周边无线AP",
+      "status": "🟢 已通过",
+      "result": "PASS1347 原始100轮全部完成",
+      "boundary": ""
+    },
+    "category:5.1.27": {
+      "id": "5.1.27",
+      "title": "WiFi--2.4G网络---设备连接2.4G后wapi扫描指定2.4G AP",
+      "status": "🟢 已通过",
+      "result": "PASS1606，原始100轮同一组3AP，无报错；RSSI及排序变化保留，review明确口径",
+      "boundary": ""
+    },
+    "category:5.1.29": {
+      "id": "5.1.29",
+      "title": "WiFi--2.4G网络---wapi反复disconnect 2.4G网络",
+      "status": "🟢 已通过",
+      "result": "PASS1457 原始100/100轮，无自动重试；1425失败保留",
+      "boundary": ""
+    },
+    "category:5.1.41": {
+      "id": "5.1.41",
+      "title": "WiFi--反复ifup&ifdown",
+      "status": "🟢 已通过",
+      "result": "PASS1035",
+      "boundary": ""
+    },
+    "category:5.1.42": {
+      "id": "5.1.42",
+      "title": "WiFi--设备未配网时反复扫描周边无线AP",
+      "status": "🟢 已通过",
+      "result": "PASS1112，原始100轮",
+      "boundary": ""
+    },
+    "category:5.1.68": {
+      "id": "5.1.68",
+      "title": "KVDB稳定性vela_kvdb_stability_test02测试",
+      "status": "🟢 已通过",
+      "result": "PASS1155，3MiB卷原始10轮；1119失败保留",
+      "boundary": ""
+    },
+    "category:ble-switch": {
+      "id": "xTS原文未编号",
+      "title": "开关BLE蓝牙",
+      "status": "🟢 已通过",
+      "result": "PASS1085 原始完整开关",
+      "boundary": ""
+    },
+    "extra:1": {
+      "id": "用户自添加第1项",
+      "title": "BLE GATT实机读写",
+      "status": "🟢 已验证所列范围",
+      "result": "1544/1551/1564：FF05/FF02读取，13字节写入及清理",
+      "boundary": "所用xTS原文未找到独立GATT读写用例；蓝牙开关已有原文用例，已列在53项中，不重复编号"
+    },
+    "extra:2": {
+      "id": "用户自添加第2项",
+      "title": "SIMD指令集与PIE上下文保护",
+      "status": "🟢 已验证所列范围",
+      "result": "1566：两线程各100轮向量加法/INT8点积，200组点积一致；每线程20次CPU迁移；睡眠切换寄存器保护；1633/1654回归",
+      "boundary": "未找到独立SIMD原始用例；不等于AI框架/模型或加速倍数验证，按要求在蓝牙之后完成"
+    },
+    "extra:3": {
+      "id": "用户自添加第3项",
+      "title": "JPEG编码",
+      "status": "🟢 板级自测通过",
+      "result": "`jpegtest`在1725 JPEG/RGB镜像实板执行，JPEG SOI及编码输出通过；证据：[media1725](media1725-jpeg-rgb-board-build.md)、`jpeg1728-board-test/uart.log`",
+      "boundary": "仅验证固定样本编码，未替代Camera实物采集"
+    },
+    "extra:4": {
+      "id": "用户自添加第4项",
+      "title": "JPEG解码",
+      "status": "🟢 板级自测通过",
+      "result": "`jpegtest`实板解码2×2 RGB888并完成输出尺寸校验；证据：[media1725](media1725-jpeg-rgb-board-build.md)、`jpeg1728-board-test/uart.log`",
+      "boundary": "仅验证固定样本解码，未替代Camera实物采集"
+    },
+    "extra:6": {
+      "id": "用户自添加第6项",
+      "title": "RGB888像素格式支持",
+      "status": "🟢 板级自测通过",
+      "result": "`jpegtest`实板输出2×2 RGB888，逐像素参与JPEG往返；证据：[media1725](media1725-jpeg-rgb-board-build.md)、`jpeg1728-board-test/uart.log`",
+      "boundary": "尚无Camera/显示链路，当前为固定样本格式验证"
+    },
+    "extra:7": {
+      "id": "用户自添加第7项",
+      "title": "RGB565像素格式支持",
+      "status": "🟢 板级自测通过",
+      "result": "`jpegtest`实板执行RGB888→RGB565打包并校验8字节结果；证据：[media1725](media1725-jpeg-rgb-board-build.md)、`jpeg1728-board-test/uart.log`",
+      "boundary": "尚无Camera/显示链路，当前为固定样本格式验证"
+    }
+  },
+  "examples": [
+    {
+      "name": "common-1.1.1",
+      "keys": [
+        "common:1.1.1"
+      ],
+      "profile": "demo-rmt-xts-core",
+      "sources": [
+        "apps/testing/testsuites/kernel/mm"
+      ],
+      "evidence_ids": [
+        689
+      ],
+      "note": "",
+      "original": "1.1.1",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts689-mm.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "系统内存管理测试",
+      "original_line": 25,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.2",
+      "keys": [
+        "common:1.1.2"
+      ],
+      "profile": "demo-rmt-xts-core",
+      "sources": [
+        "apps/testing/testsuites/kernel/sched"
+      ],
+      "evidence_ids": [
+        688
+      ],
+      "note": "",
+      "original": "1.1.2",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts688-sched.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "系统调度测试",
+      "original_line": 60,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.3",
+      "keys": [
+        "common:1.1.3"
+      ],
+      "profile": "demo-rmt-xts-common",
+      "sources": [
+        "apps/testing/testsuites/kernel/syscall"
+      ],
+      "evidence_ids": [
+        709
+      ],
+      "note": "",
+      "original": "1.1.3",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts709-syscall.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "系统调用测试",
+      "original_line": 96,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.4",
+      "keys": [
+        "common:1.1.4"
+      ],
+      "profile": "demo-rmt-xts-ostest",
+      "sources": [
+        "apps/testing/ostest"
+      ],
+      "evidence_ids": [
+        771,
+        775
+      ],
+      "note": "保留原始循环与线程数量，等待 ostest 正常退出。",
+      "original": "1.1.4",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint771-xts.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts775-ostest-sigpending.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Kernel-ostest测试",
+      "original_line": 142,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.5",
+      "keys": [
+        "common:1.1.5"
+      ],
+      "profile": "demo-rmt-xts-common",
+      "sources": [
+        "apps/testing/sched/getprime"
+      ],
+      "evidence_ids": [
+        693
+      ],
+      "note": "",
+      "original": "1.1.5",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts693-getprime.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Kernel-getprime测试",
+      "original_line": 170,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.6",
+      "keys": [
+        "common:1.1.6"
+      ],
+      "profile": "xts-flat-rtc",
+      "sources": [
+        "apps/testing/mm/heaptest"
+      ],
+      "evidence_ids": [
+        839
+      ],
+      "note": "该记录使用 FLAT 镜像验证含 16MiB PSRAM 的堆，不换成 Kernel 配置复用数值。",
+      "original": "1.1.6",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts839-flat-heap-clean.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Kernel-mm内存测试",
+      "original_line": 197,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.7",
+      "keys": [
+        "common:1.1.7"
+      ],
+      "profile": "demo-rmt-xts-common",
+      "sources": [
+        "apps/testing/libc/scanftest"
+      ],
+      "evidence_ids": [
+        694
+      ],
+      "note": "",
+      "original": "1.1.7",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts694-scanftest.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Kernel-scanftest扫描测试",
+      "original_line": 224,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.8",
+      "keys": [
+        "common:1.1.8"
+      ],
+      "profile": "demo-rmt-xts-common",
+      "sources": [
+        "apps/examples/hello"
+      ],
+      "evidence_ids": [
+        695
+      ],
+      "note": "",
+      "original": "1.1.8",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts695-hello.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Kernel-C测试",
+      "original_line": 252,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.9",
+      "keys": [
+        "common:1.1.9"
+      ],
+      "profile": "demo-rmt-xts-cxx",
+      "sources": [
+        "apps/examples/helloxx"
+      ],
+      "evidence_ids": [
+        718
+      ],
+      "note": "",
+      "original": "1.1.9",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts718-helloxx.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Kernel-Cxx测试",
+      "original_line": 279,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.10",
+      "keys": [
+        "common:1.1.10"
+      ],
+      "profile": "demo-rmt-xts-io",
+      "sources": [
+        "apps/examples/popen"
+      ],
+      "evidence_ids": [
+        733
+      ],
+      "note": "",
+      "original": "1.1.10",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts733-popen.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Kernel-popen测试",
+      "original_line": 307,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.11",
+      "keys": [
+        "common:1.1.11"
+      ],
+      "profile": "demo-rmt-xts-io",
+      "sources": [
+        "apps/examples/pipe"
+      ],
+      "evidence_ids": [
+        732
+      ],
+      "note": "",
+      "original": "1.1.11",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts732-pipe.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Kernel-pipe测试",
+      "original_line": 336,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.12",
+      "keys": [
+        "common:1.1.12"
+      ],
+      "profile": "demo-rmt-xts-io",
+      "sources": [
+        "tests/testcases/vela_fs_test/rdonly_fs"
+      ],
+      "evidence_ids": [
+        734
+      ],
+      "note": "历史命令为 `md5_test -f /etc/1.txt -c 100`；先确认 ROMFS 中的测试文件存在。",
+      "original": "1.1.12",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts734-md5.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Kernel-md5值测试",
+      "original_line": 367,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.1.13",
+      "keys": [
+        "common:1.1.13"
+      ],
+      "profile": "demo-rmt-xts-cxx",
+      "sources": [
+        "apps/testing/cxx"
+      ],
+      "evidence_ids": [
+        797
+      ],
+      "note": "",
+      "original": "1.1.13",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts797-cxx-sections.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Kernel-C++功能测试",
+      "original_line": 397,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.2.1",
+      "keys": [
+        "common:1.2.1"
+      ],
+      "profile": "demo-rmt-xts-reboot",
+      "sources": [
+        "apps/nshlib/nsh_syscmds.c"
+      ],
+      "evidence_ids": [
+        726
+      ],
+      "note": "执行 10 次软件 reboot，每次保存从 ROM 到 NSH 的日志；不要把 reboot 当作物理掉电。",
+      "original": "1.2.1",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Reboot启动异常测试",
+      "original_line": 435,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.2.2",
+      "keys": [
+        "common:1.2.2"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/nshlib/nsh_syscmds.c"
+      ],
+      "evidence_ids": [
+        1580
+      ],
+      "note": "通过依据为用户按实体 RESET 后启动正常；不替代 2.1.3 的 10 次真实 USB 上下电计时。",
+      "original": "1.2.2",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/physical1580-reset.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/physical1580-reset.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Cold boot启动异常测试",
+      "original_line": 453,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.2.3",
+      "keys": [
+        "common:1.2.3"
+      ],
+      "profile": "demo-rmt-xts-io",
+      "sources": [
+        "apps/nshlib/nsh_proccmds.c"
+      ],
+      "evidence_ids": [
+        736
+      ],
+      "note": "执行 free、ps，并区分 CPU0/CPU1 与共享堆，不能把共享内存重复相加。",
+      "original": "1.2.3",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/xts736-footprint.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts736-footprint.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "系统RAM资源占用统计",
+      "original_line": 471,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.2.4",
+      "keys": [
+        "common:1.2.4"
+      ],
+      "profile": "demo-rmt-xts-io",
+      "sources": [
+        "apps/nshlib/nsh_fscmds.c"
+      ],
+      "evidence_ids": [
+        736
+      ],
+      "note": "执行 df、mount；文件系统容量和物理 Flash 分区容量分别记录。",
+      "original": "1.2.4",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/xts736-footprint.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts736-footprint.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "系统Flash资源占用统计",
+      "original_line": 488,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.1",
+      "keys": [
+        "common:1.3.1"
+      ],
+      "profile": "demo-rmt-xts-core",
+      "sources": [
+        "nuttx/tools/espressif/esp32s31_simple_boot_digest.py"
+      ],
+      "evidence_ids": [
+        668,
+        669
+      ],
+      "note": "这是烧写/启动操作例程。按根 README 备份 Flash，再写入同一次构建的内核和 AppFS，记录哈希与启动日志。",
+      "original": "1.3.1",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/demo669-mqueue-restored.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "烧写测试",
+      "original_line": 506,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.2",
+      "keys": [
+        "common:1.3.2"
+      ],
+      "profile": "demo-rmt-xts-memory",
+      "sources": [
+        "apps/testing/fs/fstest"
+      ],
+      "evidence_ids": [
+        767
+      ],
+      "note": "使用易失 /tmp：`fstest -n 10 -m /tmp`，保留原始 10 轮工作量。",
+      "original": "1.3.2",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts767-fstest.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "RAM读写测试",
+      "original_line": 524,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.3",
+      "keys": [
+        "common:1.3.3"
+      ],
+      "profile": "demo-rmt-xts-memory",
+      "sources": [
+        "apps/testing/mm/ramtest"
+      ],
+      "evidence_ids": [
+        705,
+        706,
+        707
+      ],
+      "note": "历史参数分别为 `ramtest -w -s 209256`、`ramtest -h -s 209256`、`ramtest -b -s 209256`。",
+      "original": "1.3.3",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts705-ram-word.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts706-ram-half.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts707-ram-byte.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "RAM读写性能测试",
+      "original_line": 551,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.4",
+      "keys": [
+        "common:1.3.4"
+      ],
+      "profile": "xts-flat-rtc",
+      "sources": [
+        "apps/testing/drivers/drivertest/drivertest_block.c"
+      ],
+      "evidence_ids": [
+        840
+      ],
+      "note": "历史准备：`mkrd -m 10 -s 1000 1024`，然后 `cmocka_driver_block -m /dev/ram10`。仅使用独立 RAM 块设备。",
+      "original": "1.3.4",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts840-ramblock.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "RAM随机读写测试",
+      "original_line": 579,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.5",
+      "keys": [
+        "common:1.3.5"
+      ],
+      "profile": "xts-flat-flash",
+      "sources": [
+        "apps/testing/drivers/drivertest/drivertest_block.c"
+      ],
+      "evidence_ids": [
+        992
+      ],
+      "note": "测试会写块设备。只使用该配置注册的 `/dev/xtsflash`（0xc00000 起 1MiB），先按历史记录两次读取核验、备份；不能指向系统数据卷。",
+      "original": "1.3.5",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/xts-current-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/xts-category-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts992-original-flash-block.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint992-flash-target/logs/xts991-flash946.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Flash功能测试",
+      "original_line": 612,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.10",
+      "keys": [
+        "common:1.3.10"
+      ],
+      "profile": "demo-rmt-xts-drivers",
+      "sources": [
+        "apps/testing/drivers/drivertest/drivertest_uart.c"
+      ],
+      "evidence_ids": [
+        744
+      ],
+      "note": "历史命令 `cmocka_driver_uart -d /dev/ttyS0 -n0`、`-n1`、`-n2`，主机按原文发送规定字符与 10 次突发数据，测试时独占串口。",
+      "original": "1.3.10",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint744-xts.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts744-uart.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Uart串口功能测试",
+      "original_line": 719,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.11",
+      "keys": [
+        "common:1.3.11"
+      ],
+      "profile": "demo-rmt-xts-ymodem",
+      "sources": [
+        "apps/system/ymodem"
+      ],
+      "evidence_ids": [
+        805
+      ],
+      "note": "在 NSH 与主机 YMODEM 客户端之间双向发送 129 字节和 65573 字节文件，并比对内容；不能只看传输退出码。",
+      "original": "1.3.11",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint805-xts.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts805-ymodem.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Uart文件传输功能测试",
+      "original_line": 764,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.12",
+      "keys": [
+        "common:1.3.12"
+      ],
+      "profile": "xts-flat-rtc",
+      "sources": [
+        "apps/testing/drivers/drivertest/drivertest_rtc.c"
+      ],
+      "evidence_ids": [
+        841
+      ],
+      "note": "使用 `/dev/rtc0`；该 FLAT 配置覆盖原始 API/闹钟/周期 3 项，不能替换成缺少完整 RTC 回调的 Kernel 驱动配置。",
+      "original": "1.3.12",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts841-rtc.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "RTC时钟功能测试",
+      "original_line": 781,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.13",
+      "keys": [
+        "common:1.3.13"
+      ],
+      "profile": "demo-rmt-xts-drivers",
+      "sources": [
+        "apps/testing/drivers/drivertest/drivertest_timer.c"
+      ],
+      "evidence_ids": [
+        743
+      ],
+      "note": "历史命令：`cmocka_driver_timer -d /dev/timer0`。",
+      "original": "1.3.13",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts743-timer.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Timer定时器功能测试",
+      "original_line": 818,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.14",
+      "keys": [
+        "common:1.3.14"
+      ],
+      "profile": "demo-rmt-xts-standby",
+      "sources": [
+        "apps/nshlib/nsh_timcmds.c"
+      ],
+      "evidence_ids": [
+        989
+      ],
+      "note": "沿用 24h 四次记录的项目验收口径；原始采样缺口与时间解释见 clock864-acceptance-989.md。新的计时任务需要单独建立连续记录，不能借用旧结果。",
+      "original": "1.3.14",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/clock864-acceptance-989.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/xts-current-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/xts-category-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/clock864-acceptance-989.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/board-only-after-longrun.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint989-clock-acceptance/SHA256SUMS",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "时间一致性测试",
+      "original_line": 860,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.15",
+      "keys": [
+        "common:1.3.15"
+      ],
+      "profile": "xts-flat-wdt",
+      "sources": [
+        "apps/testing/drivers/drivertest/drivertest_watchdog.c"
+      ],
+      "evidence_ids": [
+        1016
+      ],
+      "note": "按模式 0→1→2→3 执行，模式对应复位属于预期行为；保持串口日志跨复位采集。",
+      "original": "1.3.15",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/xts-current-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1016-original-watchdog.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1016-original-watchdog.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1008-original-watchdog.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Watchdog测试",
+      "original_line": 883,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.16",
+      "keys": [
+        "common:1.3.16"
+      ],
+      "profile": "demo-rmt-xts-rng",
+      "sources": [
+        "apps/testing/drivers/nist-sts"
+      ],
+      "evidence_ids": [
+        786,
+        808,
+        1682
+      ],
+      "note": "**用户确认通过**：保留原始 26 项未定义统计输出，不将其改写成统计套件全通过或社区认证。",
+      "original": "1.3.16",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts786-nist-rng-clock.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts808-nist100.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/rng1682-user-acceptance.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/sprint1682-current-cases.json",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "RNG功能测试",
+      "original_line": 918,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-1.3.17",
+      "keys": [
+        "common:1.3.17"
+      ],
+      "profile": "demo-rmt-xts-ecc-offline-log",
+      "sources": [
+        "apps/testing/drivers/crypto"
+      ],
+      "evidence_ids": [
+        1010
+      ],
+      "note": "原始 8 个 Crypto 程序分别执行；软件回退与硬件加速范围见日志，不能把 API 通过等同于全部硬件加速。",
+      "original": "1.3.17",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/xts-current-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1010-original-crypto.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1010-original-crypto.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1009-flash1002-crypto.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Crypto功能测试",
+      "original_line": 972,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-2.1.3",
+      "keys": [
+        "common:2.1.3"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/system/nsh/nsh_main.c"
+      ],
+      "evidence_ids": [
+        1604
+      ],
+      "note": "必须真实 USB 断电/上电 10 次；计时口径为 ROM 日志到 NSH，RESET 保持时间不计入。",
+      "original": "2.1.3",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round06/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round05/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round10/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round08/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round09/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round07/result.json",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Cold Boot启动时间测试",
+      "original_line": 1020,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-2.1.4",
+      "keys": [
+        "common:2.1.4"
+      ],
+      "profile": "demo-rmt-xts-reboot",
+      "sources": [
+        "apps/nshlib/nsh_syscmds.c"
+      ],
+      "evidence_ids": [
+        726
+      ],
+      "note": "复用同一次 10 轮软件 reboot 的时间记录，和 1.2.1 是同一测试过程的不同指标。",
+      "original": "2.1.4",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "Reboot启动时间测试",
+      "original_line": 1039,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "common-3.1.1",
+      "keys": [
+        "common:3.1.1"
+      ],
+      "profile": "demo-rmt-xts-standby",
+      "sources": [
+        "apps/system/resmonitor"
+      ],
+      "evidence_ids": [
+        864
+      ],
+      "note": "原始 12h 未配网待机，保留供电、UART 和镜像，定期记录资源。当前只整理例程，不启动或重跑长测。",
+      "original": "3.1.1",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-standby12h/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/clock864-host-audit.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/clock864-acceptance-989.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-kasan-longrun.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/clock864-final-assessment-988.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint864-standby12h/README.md",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "12h待机稳定性测试",
+      "original_line": 1062,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.2",
+      "keys": [
+        "category:4.1.2"
+      ],
+      "profile": "xts-flat-category-fs",
+      "sources": [
+        "apps/examples/romfs"
+      ],
+      "evidence_ids": [
+        1006
+      ],
+      "note": "",
+      "original": "4.1.2",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-current-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-category-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1006-original-category-fs.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/logs/xts1005-flash892-category-fs.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统--romfs只读文件系统测试",
+      "original_line": 4036,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.3",
+      "keys": [
+        "category:4.1.3"
+      ],
+      "profile": "xts-flat-category-fs",
+      "sources": [
+        "apps/testing/fs/fatutf8"
+      ],
+      "evidence_ids": [
+        1006
+      ],
+      "note": "",
+      "original": "4.1.3",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-current-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/xts-category-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1006-original-category-fs.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1006-category-fs-target/logs/xts1005-flash892-category-fs.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "fatutf8文件系统编码能力测试",
+      "original_line": 3750,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.4",
+      "keys": [
+        "category:4.1.4"
+      ],
+      "profile": "xts-flat-category-fs-sync",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1589
+      ],
+      "note": "只在已备份的专用测试卷执行，真实断电 3 轮，恢复时不格式化；逐轮记录原文件和原始程序恢复结果。",
+      "original": "4.1.4",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/power1589-recovery.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/power1589-recovery-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1586-write.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1589-poweroff01-pass/power1584-write.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统异常场景--写入时掉电",
+      "original_line": 3462,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.5",
+      "keys": [
+        "category:4.1.5"
+      ],
+      "profile": "xts-flat-category-fs-sync",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1595
+      ],
+      "note": "只在已备份的专用测试卷执行，真实断电 3 轮，恢复时不格式化；逐轮记录原文件和原始程序恢复结果。",
+      "original": "4.1.5",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/power1595-recovery.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/power1595-recovery-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1590-create.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1594-create.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统异常场景--创建文件时掉电",
+      "original_line": 3157,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.6",
+      "keys": [
+        "category:4.1.6"
+      ],
+      "profile": "xts-flat-category-fs-sync",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1603
+      ],
+      "note": "只在已备份的专用测试卷执行，真实断电 3 轮，恢复时不格式化；逐轮记录原文件和原始程序恢复结果。",
+      "original": "4.1.6",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1603-poweroff03-pass/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1603-poweroff03-pass/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/power1603-handoff.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/power1603-recovery.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/power1603-recovery-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1603-poweroff03-pass/power1598-space.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统异常场景--掉电重启时磁盘空间变化",
+      "original_line": 2953,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.11",
+      "keys": [
+        "category:4.1.11"
+      ],
+      "profile": "xts-flat-category-kv",
+      "sources": [
+        "apps/testing/testsuites/kernel/kv"
+      ],
+      "evidence_ids": [
+        1013
+      ],
+      "note": "使用专用可写 LittleFS 卷，逐项核对 30 个子用例。",
+      "original": "4.1.11",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/first-mount/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/xts-category-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1013-original-kvdb.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/logs/xts1011-flash948-kv.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "KVDB测试",
+      "original_line": 5126,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.21",
+      "keys": [
+        "category:4.1.21"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1310
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "4.1.21",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1310-wpa2-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1310-wpa2-finish.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/uart-redacted.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-finish.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--2.4G--Wapi连接为WPA2加密方式时加入2.4G网络",
+      "original_line": 3984,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.25",
+      "keys": [
+        "category:4.1.25"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1458
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "4.1.25",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1458-sense-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1458-sense-original.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/review.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/network1458-sense-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1458-sense-pass/network1458-sense-original.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--2.4G--Wapi Sense获取链接2.4G AP的RSSI",
+      "original_line": 3881,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.26",
+      "keys": [
+        "category:4.1.26"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1435
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "4.1.26",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1435-info-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1435-info-original.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/review.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/network1435-info-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1435-wapi-info/network1435-info-original.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--2.4G--Wapi Show获取2.4G AP的无线参数",
+      "original_line": 3858,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.28",
+      "keys": [
+        "category:4.1.28"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1312
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "4.1.28",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1312-save-config.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1312-save-config-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/network1312-save-config.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1312-wapi-save/network1312-save-config-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--2.4G--wapi config保存正常",
+      "original_line": 3807,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.29",
+      "keys": [
+        "category:4.1.29"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1325
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "4.1.29",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1325-reboot-reconnect.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1325-reboot-reconnect-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--2.4G--wapi config保存后设备reboot再reconnect",
+      "original_line": 3778,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.30",
+      "keys": [
+        "category:4.1.30"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1320
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "4.1.30",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/network1318-reconnect-fix.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1320-reconnect.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1320-reconnect-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/network1320-reconnect.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1320-wapi-reconnect/network1320-reconnect-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--2.4G--wapi reconncet",
+      "original_line": 3718,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.31",
+      "keys": [
+        "category:4.1.31"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1342
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "4.1.31",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1342-disconnect-review.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1342-disconnect-state.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1341-disconnect.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1340-ftp-cleanup.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1342-disconnect/network1342-disconnect-state.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--2.4G--wapi disconnect后与外网不通",
+      "original_line": 3689,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.57",
+      "keys": [
+        "category:4.1.57"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1034
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "4.1.57",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1034-wifi-country.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1034-wifi-country.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--wapi CountryCode的设置和获取",
+      "original_line": 2990,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.113",
+      "keys": [
+        "category:4.1.113"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "external/curl/curl/src",
+        "external/curl/CMakeLists.txt",
+        "external/curl/Kconfig"
+      ],
+      "evidence_ids": [
+        1331
+      ],
+      "note": "联网后使用自己可访问的 HTTP 地址，下载文件核对长度/内容；网页请求需核对实际响应。",
+      "original": "4.1.113",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1331-http-download/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1331-http-download.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1331-http-download-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1331-http-download/network1331-http-download.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1331-http-download/network1331-http-download-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "NetApp--curl http文件下载测试",
+      "original_line": 5087,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.114",
+      "keys": [
+        "category:4.1.114"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "external/curl/curl/src",
+        "external/curl/CMakeLists.txt",
+        "external/curl/Kconfig"
+      ],
+      "evidence_ids": [
+        1334
+      ],
+      "note": "联网后使用自己可访问的 HTTP 地址，下载文件核对长度/内容；网页请求需核对实际响应。",
+      "original": "4.1.114",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1332-dns-fix.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1334-curl-web.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1334-curl-web-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1334-curl-web.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1334-curl-web-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "NetApp--curl网页能力测试",
+      "original_line": 5050,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.115",
+      "keys": [
+        "category:4.1.115"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "external/libssh/libssh/examples",
+        "external/libssh/CMakeLists.txt",
+        "external/libssh/Kconfig"
+      ],
+      "evidence_ids": [
+        1453
+      ],
+      "note": "主机准备允许连接的 SSH/SCP 服务、临时测试账号和文件，分别上传/下载比对；仓库不提供测试密码。",
+      "original": "4.1.115",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1453-scp-download.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1453-scp-download-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1453-scp-download.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1453-scp-download-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "NetApp--设备支持通过scp方式从其他终端获取文件到本地",
+      "original_line": 4924,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.116",
+      "keys": [
+        "category:4.1.116"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "external/libssh/libssh/examples",
+        "external/libssh/CMakeLists.txt",
+        "external/libssh/Kconfig"
+      ],
+      "evidence_ids": [
+        1454
+      ],
+      "note": "主机准备允许连接的 SSH/SCP 服务、临时测试账号和文件，分别上传/下载比对；仓库不提供测试密码。",
+      "original": "4.1.116",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/README.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1454-scp-upload.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1454-scp-upload-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1446-prepare.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1454-scp-upload.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "NetApp--设备支持通过scp方式向其他终端传输本地文件",
+      "original_line": 4880,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.117",
+      "keys": [
+        "category:4.1.117"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/examples/ftpd"
+      ],
+      "evidence_ids": [
+        1337
+      ],
+      "note": "主机使用 FTP 客户端完成双向文件传输并比对；历史 1336/1337 为实际传输及复核。",
+      "original": "4.1.117",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1337-ftpd-review.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/network1336-ftpd.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/network1337-ftpd-review.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1337-ftpd-review/network1336-ftpd-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "NetApp--设备支持ftpd",
+      "original_line": 4838,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.1.127",
+      "keys": [
+        "category:4.1.127"
+      ],
+      "profile": "xts-flat-audio-duplex",
+      "sources": [
+        "apps/system/nxlooper"
+      ],
+      "evidence_ids": [
+        1198
+      ],
+      "note": "**通过范围仅为原始命令执行无报错**。日志明确 AUDIBLE_LOOPBACK=PENDING；未完成外接扬声器听验，不等同于声音质量通过。",
+      "original": "4.1.127",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-duplex-flash.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-nxlooper-dma.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-duplex-flash.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-nxlooper-dma.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "Audio--nxlooper回环功能测试",
+      "original_line": 4548,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.2.12",
+      "keys": [
+        "category:4.2.12"
+      ],
+      "profile": "xts-flat-audio",
+      "sources": [
+        "apps/testing/drivers/drivertest/drivertest_audio.c"
+      ],
+      "evidence_ids": [
+        1087
+      ],
+      "note": "历史录音为 2 通道、16bit、44100Hz、10 秒；通过结论包括后续用户试听确认，早期日志中的 LISTENING_PENDING 原样保留。",
+      "original": "4.2.12",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/audio1087-capture/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1087-audio-capture/audio1087-capture/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1087-audio-capture/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/audio1087-capture/uart.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1087-audio-capture.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/audio1087-capture/pcm-review.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "Audio_DSP--Capture_cmoka_2channels",
+      "original_line": 2878,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-4.2.13",
+      "keys": [
+        "category:4.2.13"
+      ],
+      "profile": "xts-flat-audio-mono-args",
+      "sources": [
+        "apps/testing/drivers/drivertest/drivertest_audio.c"
+      ],
+      "evidence_ids": [
+        1143
+      ],
+      "note": "历史录音为 1 通道、16bit、16000Hz、10 秒；通过结论包括用户试听。录音文件导出后试听，不以文件存在作为声音正常的判据。",
+      "original": "4.2.13",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/audio1143-mono/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1143-audio-mono/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1143-audio-mono/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/audio1143-mono/uart.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1143-audio-mono.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/audio1143-mono/pcm-review.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "Audio_DSP--Capture_cmoka_1channels",
+      "original_line": 2852,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.1",
+      "keys": [
+        "category:5.1.1"
+      ],
+      "profile": "xts-flat-category-fs-name",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1173
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "original": "5.1.1",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/fs1173-fill-running.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1173-fs-fill.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/manifest.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1173-fs-fill/mount-evidence.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统分区写满异常测试",
+      "original_line": 2311,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.2",
+      "keys": [
+        "category:5.1.2"
+      ],
+      "profile": "xts-flat-category-fs-name",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1065
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "original": "5.1.2",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1065-fs-write-speed.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/logs/xts1063-flash1032-fs.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/logs/xts1065-fs-write-speed.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1065-fs-write-speed/checkpoint1064-fs-remount/mount-evidence.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统文件写入速度测试vela_fs_stress_write_speed",
+      "original_line": 1924,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.3",
+      "keys": [
+        "category:5.1.3"
+      ],
+      "profile": "xts-flat-category-fs-name",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1022
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "original": "5.1.3",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/mount/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1022-fs-5.1.3.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/mount/mount-evidence.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/logs/xts1022-fs-5.1.3.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统创建和删除压力测试vela_fs_stress_loop_create_delete_file_test",
+      "original_line": 1739,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.4",
+      "keys": [
+        "category:5.1.4"
+      ],
+      "profile": "xts-flat-category-fs-name",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1028
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "original": "5.1.4",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/mount/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1028-fs-5.1.4.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/mount/mount-evidence.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/logs/xts1028-fs-5.1.4.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统反复创建和删除文件vela_fs_stress_maximum_file_name_test",
+      "original_line": 1434,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.5",
+      "keys": [
+        "category:5.1.5"
+      ],
+      "profile": "xts-flat-category-fs-name",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1019
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "original": "5.1.5",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/mount/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts-category-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1019-fs-5.1.5.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1537-fs-5.1.8.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统多线程文件读写测试vela_fs_stress_multi_thread_file_operate_test",
+      "original_line": 1337,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.6",
+      "keys": [
+        "category:5.1.6"
+      ],
+      "profile": "xts-flat-category-fs-name",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1535
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "original": "5.1.6",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1535-fs-5.1.6.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1535-fs-5.1.6.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统反复读写测试vela_fs_stress_read_and_write_loops_test",
+      "original_line": 1286,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.8",
+      "keys": [
+        "category:5.1.8"
+      ],
+      "profile": "xts-flat-category-fs-name",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1537
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "original": "5.1.8",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1537-arp-window-negative/network1534-arp-window-review.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1537-arp-window-negative/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1537-handoff.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1537-fs-5.1.8.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1537-cold-tcp.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1537-tcp-statistics-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统多线程写文件测试vela_fs_multi_thread_write_test",
+      "original_line": 1180,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.9",
+      "keys": [
+        "category:5.1.9"
+      ],
+      "profile": "xts-flat-category-fs-name",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1538
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "original": "5.1.9",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1538-fs-5.1.9.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1538-fs-5.1.9.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统多线程读文件vela_fs_multi_thread_read_test",
+      "original_line": 1143,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.10",
+      "keys": [
+        "category:5.1.10"
+      ],
+      "profile": "xts-flat-category-fs-name",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        6129
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "original": "5.1.10",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts6129-fs-5.1.10.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts6129-fs-5.1.10.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统的多线程读写测试vela_fs_multi_thread_read_write_test",
+      "original_line": 2277,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.13",
+      "keys": [
+        "category:5.1.13"
+      ],
+      "profile": "xts-flat-flash-raw",
+      "sources": [
+        "apps/system/dd"
+      ],
+      "evidence_ids": [
+        994
+      ],
+      "note": "写入会覆盖 `/dev/xtsraw` 的测试区。先核验分区和备份，历史命令为 4096 字节 ×64 块的双向 dd。",
+      "original": "5.1.13",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/xts-current-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/xts-category-status.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts994-original-flash-raw.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/logs/xts993-flash947.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "裸设备读写性能测试",
+      "original_line": 2173,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.15",
+      "keys": [
+        "category:5.1.15"
+      ],
+      "profile": "xts-flat-category-fs-name",
+      "sources": [
+        "apps/testing/fs/fstest"
+      ],
+      "evidence_ids": [
+        1181,
+        1184
+      ],
+      "note": "保留原始 1000 轮，不以少量循环替代；测试使用独立卷和目录。",
+      "original": "5.1.15",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/fs1181-running.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1181-fstest1000.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/xts1181-fstest1000.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/fs1183-verdict-note.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/fs1184-finish.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1184-fstest-finish.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/postcheck.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统fstest执行1000次",
+      "original_line": 2111,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.16",
+      "keys": [
+        "category:5.1.16"
+      ],
+      "profile": "xts-flat-category-fs-large",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1164,
+        1169
+      ],
+      "note": "专用 3MiB 测试卷，碎片用例保持原观察标准，多线程操作保持原始 1 小时工作量。",
+      "original": "5.1.16",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/fs1164-fragment-running.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1164-fragment-observe.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/review1169.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/xts1165-fragment-stop.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统碎片读写测试",
+      "original_line": 2070,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.17",
+      "keys": [
+        "category:5.1.17"
+      ],
+      "profile": "xts-flat-category-fs-large",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1163
+      ],
+      "note": "专用 3MiB 测试卷，碎片用例保持原观察标准，多线程操作保持原始 1 小时工作量。",
+      "original": "5.1.17",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/fs1163-one-hour-running.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1163-fs-one-hour.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/mount-evidence.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1163-fs-one-hour/xts1163-fs-one-hour.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统多线程操作文件测试",
+      "original_line": 2033,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.18",
+      "keys": [
+        "category:5.1.18"
+      ],
+      "profile": "xts-flat-category-fs-sync",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1081,
+        1082
+      ],
+      "note": "先备份测试卷；crash/reboot 属于步骤的一部分。test04 使用显式 sync 挂载，恢复时不能格式化清空待检查文件。",
+      "original": "5.1.18",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1081-fs-reboot.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/uart.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/mount-evidence.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1082-fs-crash.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/uart.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/mount-evidence.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统crash后crc校验 vela_fs_stability_test03",
+      "original_line": 1997,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.19",
+      "keys": [
+        "category:5.1.19"
+      ],
+      "profile": "xts-flat-category-fs-sync",
+      "sources": [
+        "tests/testcases/vela_fs_test"
+      ],
+      "evidence_ids": [
+        1126
+      ],
+      "note": "先备份测试卷；crash/reboot 属于步骤的一部分。test04 使用显式 sync 挂载，恢复时不能格式化清空待检查文件。",
+      "original": "5.1.19",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/fs-sync-1102-preparation.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1126-fs-sync-reset.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/uart.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1126-fs-sync-reset/mount-evidence.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "文件系统crash后文件完整性校验vela_fs_stability_test04 文件",
+      "original_line": 1959,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.26",
+      "keys": [
+        "category:5.1.26"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1347
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "5.1.26",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1347-associated-scan.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1347-associated-scan-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/network1347-associated-scan.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/network1346-renew-diagnostic.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1347-associated-scan/network1347-associated-scan-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--2.4G网络---设备连接2.4G后wapi反复扫描周边无线AP",
+      "original_line": 1799,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.27",
+      "keys": [
+        "category:5.1.27"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1606
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "5.1.27",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/README.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/original-case.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1606-directed-scan-pass/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/sprint1606-handoff.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/scan1606-acceptance-rule.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1606-directed-scan.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--2.4G网络---设备连接2.4G后wapi扫描指定2.4G AP",
+      "original_line": 5307,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.29",
+      "keys": [
+        "category:5.1.29"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1457
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "5.1.29",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/README.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1457-reconfigure100.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1457-reconfigure100-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/network1457-reconfigure100.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/network1457-reconfigure100-result.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--2.4G网络---wapi反复disconnect 2.4G网络",
+      "original_line": 5269,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.41",
+      "keys": [
+        "category:5.1.41"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1035
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "5.1.41",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1035-wifi-ifcycle.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1034-wifi-country.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1035-wifi-ifcycle.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1035-wifi-target/logs/xts1033-flash967-wifi.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--反复ifup&ifdown",
+      "original_line": 1392,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.42",
+      "keys": [
+        "category:5.1.42"
+      ],
+      "profile": "demo-rmt-netapps-competition",
+      "sources": [
+        "apps/wireless/wapi"
+      ],
+      "evidence_ids": [
+        1112
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "original": "5.1.42",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/checkpoint1078-wifi-mmu.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1112-wifi-scan.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1112-wifi-scan.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1111-wifi-mmu-flash.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "WiFi--设备未配网时反复扫描周边无线AP",
+      "original_line": 1372,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-5.1.68",
+      "keys": [
+        "category:5.1.68"
+      ],
+      "profile": "xts-flat-category-kv-large1144",
+      "sources": [
+        "tests/testcases/kvtest"
+      ],
+      "evidence_ids": [
+        1155
+      ],
+      "note": "独立 3MiB 卷，原始 10 轮全部完成；1119 等较小卷失败证据保留，不替换成新 PASS。",
+      "original": "5.1.68",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1155-kv-large-stability.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/mount-evidence.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/xts1151-kv-large-flash.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1155-kv-large-stability/xts1155-kv-large-stability.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "KVDB稳定性vela_kvdb_stability_test02测试",
+      "original_line": 1258,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "category-ble-switch",
+      "keys": [
+        "category:ble-switch"
+      ],
+      "profile": "xts-flat-bttool",
+      "sources": [
+        "frameworks/connectivity/bluetooth/tools"
+      ],
+      "evidence_ids": [
+        1085
+      ],
+      "note": "NSH 启动 bttool 后在 bttool 提示符依次 enable、state、disable、state、quit；state 应完成 2→0。蓝牙开关通过不等同于其他 BLE 用例通过。",
+      "original": "ble-switch",
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/checkpoint1077-bttool-disable.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1085-ble-switch.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1085-ble-switch.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1084-flash1077-ble.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "开关BLE蓝牙",
+      "original_line": 4968,
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "i2c-c6",
+      "keys": [
+        "common:1.3.7"
+      ],
+      "profile": "xts-flat-i2c-c6",
+      "sources": [
+        "apps/system/i2c"
+      ],
+      "evidence_ids": [],
+      "note": "采用用户指定的 S31 主机 ↔ C6 从机通用通信验收；不声称原始传感器用例通过。",
+      "fixture": "workspace/tools/esp32c6-i2c-slave",
+      "original": null,
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/i2c-generic-echo-result.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/i2c-generic-echo-validation.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "I2C 通用主从通信（S31 ↔ C6）",
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "spi-c6",
+      "keys": [
+        "common:1.3.7"
+      ],
+      "profile": "xts-flat-spi-c6",
+      "sources": [
+        "apps/system/spi"
+      ],
+      "evidence_ids": [],
+      "note": "采用用户指定的 S31 主机 ↔ C6 从机通用通信验收；不声称原始传感器用例通过。",
+      "fixture": "workspace/tools/esp32c6-spi-slave",
+      "original": null,
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/spi-c6-result.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/spi-c6-validation-final.log",
+        "docs/acceptance/xts-current-status.md"
+      ],
+      "title": "SPI 通用主从通信（S31 ↔ C6）",
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "ble-gatt",
+      "keys": [
+        "extra:1"
+      ],
+      "profile": "demo-rmt-bttool-coex-pie",
+      "sources": [
+        "frameworks/connectivity/bluetooth/tools"
+      ],
+      "evidence_ids": [
+        1544,
+        1551,
+        1564
+      ],
+      "note": "需 BLE 对端；已验证 FF05/FF02 读取、13 字节写入及服务清理。此为开发自测范围，不新增 xTS 编号。",
+      "original": null,
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/ble1544-kernel-gatt-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1544-ble-observation.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1544-kernel-gatt-observe.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/review.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/host1544-ble-observation.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/review.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/ble1551-handoff.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/ble1551-coexistence-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1551-ble-observation.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1551-coexistence-observe.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/review.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/simd1564-handoff.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/ble1564-coexistence-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1564-ble-observation.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1564-affinity-coexistence-observe.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "BLE GATT实机读写",
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "simd-pie",
+      "keys": [
+        "extra:2"
+      ],
+      "profile": "demo-rmt-bttool-coex-pie",
+      "sources": [
+        "apps/examples/s31simd"
+      ],
+      "evidence_ids": [
+        1566,
+        1633,
+        1654
+      ],
+      "note": "NSH 执行 s31simd；两线程各 100 轮向量加法/INT8 点积和 PIE 全寄存器保护，各 20 次绑核迁移。200 组点积须与标量对照一致；不宣称 AI 模型或加速倍数。",
+      "original": null,
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/review.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/simd1566-handoff.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/simd1566-target.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/simd1566-target.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1633-tick-catchup/SHA256SUMS",
+        "workspace/evidence/backups-2026-09-10-scan-stress/clock1633-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-warm.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-load.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-clock-load.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-simd-regression.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/review.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/network1654-offline-isolation.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1654-offline-isolation.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1653-reobserve.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.json",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "SIMD指令集与PIE上下文保护",
+      "config_inheritance_verified": true
+    },
+    {
+      "name": "jpeg-rgb",
+      "keys": [
+        "extra:3",
+        "extra:4",
+        "extra:6",
+        "extra:7"
+      ],
+      "profile": "xts-flat-jpeg-rgb",
+      "sources": [
+        "apps/examples/jpegtest"
+      ],
+      "evidence_ids": [
+        1725,
+        1728
+      ],
+      "note": "NSH 执行 jpegtest，预期 `PASS JPEG bytes=713 decode=2x2 RGB888=12 bytes RGB565=8 bytes`。只验证固定 2×2 样本 JPEG 编解码和 RGB888/RGB565，不依赖摄像头，也不代表 Camera 实采通过。",
+      "original": null,
+      "evidence": [
+        "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-board-basic/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-static-build-audit.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/media1725-jpeg-rgb-board-build.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1725-idf-export.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-board-basic/uart.log",
+        "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-static-build-result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/jpeg1728-board-test/result.json",
+        "workspace/evidence/backups-2026-09-10-scan-stress/ble1728-mesh-build.md",
+        "workspace/evidence/backups-2026-09-10-scan-stress/jpeg1728-board-test/uart.log",
+        "docs/acceptance/xts-category-status.md"
+      ],
+      "title": "JPEG 编码/解码与 RGB888/RGB565",
+      "config_inheritance_verified": true
+    }
+  ]
+}

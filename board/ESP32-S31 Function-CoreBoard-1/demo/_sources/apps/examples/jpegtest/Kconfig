@@ -1,0 +1,27 @@
+#
+# JPEG/RGB software smoke test for the S31 board.
+#
+
+config EXAMPLES_JPEGTEST
+	tristate "JPEG and RGB pixel-format test"
+	default n
+	depends on LIB_JPEG_TURBO
+	---help---
+		Enable the jpegtest command.  It encodes a small RGB888 image,
+		decodes it as RGB565, and checks the RGB565 packing helpers.
+
+if EXAMPLES_JPEGTEST
+
+config EXAMPLES_JPEGTEST_PROGNAME
+	string "Program name"
+	default "jpegtest"
+
+config EXAMPLES_JPEGTEST_PRIORITY
+	int "Task priority"
+	default 100
+
+config EXAMPLES_JPEGTEST_STACKSIZE
+	int "Task stack size"
+	default 8192
+
+endif

@@ -1,0 +1,23 @@
+{
+  "name": "common-1.3.11",
+  "keys": [
+    "common:1.3.11"
+  ],
+  "profile": "demo-rmt-xts-ymodem",
+  "sources": [
+    "apps/system/ymodem"
+  ],
+  "evidence_ids": [
+    805
+  ],
+  "note": "在 NSH 与主机 YMODEM 客户端之间双向发送 129 字节和 65573 字节文件，并比对内容；不能只看传输退出码。",
+  "original": "1.3.11",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint805-xts.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts805-ymodem.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "Uart文件传输功能测试",
+  "original_line": 764,
+  "config_inheritance_verified": true
+}

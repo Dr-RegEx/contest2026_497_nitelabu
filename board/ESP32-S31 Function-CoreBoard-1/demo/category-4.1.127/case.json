@@ -1,0 +1,27 @@
+{
+  "name": "category-4.1.127",
+  "keys": [
+    "category:4.1.127"
+  ],
+  "profile": "xts-flat-audio-duplex",
+  "sources": [
+    "apps/system/nxlooper"
+  ],
+  "evidence_ids": [
+    1198
+  ],
+  "note": "**通过范围仅为原始命令执行无报错**。日志明确 AUDIBLE_LOOPBACK=PENDING；未完成外接扬声器听验，不等同于声音质量通过。",
+  "original": "4.1.127",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-duplex-flash.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-nxlooper-dma.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-duplex-flash.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-nxlooper-dma.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "Audio--nxlooper回环功能测试",
+  "original_line": 4548,
+  "config_inheritance_verified": true
+}

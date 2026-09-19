@@ -1,0 +1,27 @@
+{
+  "name": "common-1.3.15",
+  "keys": [
+    "common:1.3.15"
+  ],
+  "profile": "xts-flat-wdt",
+  "sources": [
+    "apps/testing/drivers/drivertest/drivertest_watchdog.c"
+  ],
+  "evidence_ids": [
+    1016
+  ],
+  "note": "按模式 0→1→2→3 执行，模式对应复位属于预期行为；保持串口日志跨复位采集。",
+  "original": "1.3.15",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/xts-current-status.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1016-original-watchdog.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1016-original-watchdog.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1016-watchdog-target/logs/xts1008-original-watchdog.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "Watchdog测试",
+  "original_line": 883,
+  "config_inheritance_verified": true
+}

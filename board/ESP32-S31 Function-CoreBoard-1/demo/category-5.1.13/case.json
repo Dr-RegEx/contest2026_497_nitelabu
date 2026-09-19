@@ -1,0 +1,27 @@
+{
+  "name": "category-5.1.13",
+  "keys": [
+    "category:5.1.13"
+  ],
+  "profile": "xts-flat-flash-raw",
+  "sources": [
+    "apps/system/dd"
+  ],
+  "evidence_ids": [
+    994
+  ],
+  "note": "写入会覆盖 `/dev/xtsraw` 的测试区。先核验分区和备份，历史命令为 4096 字节 ×64 块的双向 dd。",
+  "original": "5.1.13",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/xts-current-status.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/xts-category-status.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts994-original-flash-raw.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint994-flash-target/logs/xts993-flash947.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "裸设备读写性能测试",
+  "original_line": 2173,
+  "config_inheritance_verified": true
+}

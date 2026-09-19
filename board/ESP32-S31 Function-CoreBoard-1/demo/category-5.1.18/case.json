@@ -1,0 +1,32 @@
+{
+  "name": "category-5.1.18",
+  "keys": [
+    "category:5.1.18"
+  ],
+  "profile": "xts-flat-category-fs-sync",
+  "sources": [
+    "tests/testcases/vela_fs_test"
+  ],
+  "evidence_ids": [
+    1081,
+    1082
+  ],
+  "note": "先备份测试卷；crash/reboot 属于步骤的一部分。test04 使用显式 sync 挂载，恢复时不能格式化清空待检查文件。",
+  "original": "5.1.18",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1081-fs-reboot.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/uart.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1081-fs-reboot/mount-evidence.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1082-fs-crash.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/uart.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1082-fs-crash/mount-evidence.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "文件系统crash后crc校验 vela_fs_stability_test03",
+  "original_line": 1997,
+  "config_inheritance_verified": true
+}

@@ -1,0 +1,29 @@
+{
+  "name": "category-4.1.116",
+  "keys": [
+    "category:4.1.116"
+  ],
+  "profile": "demo-rmt-netapps-competition",
+  "sources": [
+    "external/libssh/libssh/examples",
+    "external/libssh/CMakeLists.txt",
+    "external/libssh/Kconfig"
+  ],
+  "evidence_ids": [
+    1454
+  ],
+  "note": "主机准备允许连接的 SSH/SCP 服务、临时测试账号和文件，分别上传/下载比对；仓库不提供测试密码。",
+  "original": "4.1.116",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/README.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1454-scp-upload.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/network1454-scp-upload-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1446-prepare.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1454-scp-bidirectional/network1454-scp-upload.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "NetApp--设备支持通过scp方式向其他终端传输本地文件",
+  "original_line": 4880,
+  "config_inheritance_verified": true
+}

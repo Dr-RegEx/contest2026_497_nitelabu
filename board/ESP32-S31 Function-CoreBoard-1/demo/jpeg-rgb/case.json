@@ -1,0 +1,33 @@
+{
+  "name": "jpeg-rgb",
+  "keys": [
+    "extra:3",
+    "extra:4",
+    "extra:6",
+    "extra:7"
+  ],
+  "profile": "xts-flat-jpeg-rgb",
+  "sources": [
+    "apps/examples/jpegtest"
+  ],
+  "evidence_ids": [
+    1725,
+    1728
+  ],
+  "note": "NSH 执行 jpegtest，预期 `PASS JPEG bytes=713 decode=2x2 RGB888=12 bytes RGB565=8 bytes`。只验证固定 2×2 样本 JPEG 编解码和 RGB888/RGB565，不依赖摄像头，也不代表 Camera 实采通过。",
+  "original": null,
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-board-basic/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-static-build-audit.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/media1725-jpeg-rgb-board-build.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1725-idf-export.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-board-basic/uart.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/ble1725-static-build-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/jpeg1728-board-test/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/ble1728-mesh-build.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/jpeg1728-board-test/uart.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "JPEG 编码/解码与 RGB888/RGB565",
+  "config_inheritance_verified": true
+}

@@ -1,0 +1,22 @@
+{
+  "name": "common-1.3.12",
+  "keys": [
+    "common:1.3.12"
+  ],
+  "profile": "xts-flat-rtc",
+  "sources": [
+    "apps/testing/drivers/drivertest/drivertest_rtc.c"
+  ],
+  "evidence_ids": [
+    841
+  ],
+  "note": "使用 `/dev/rtc0`；该 FLAT 配置覆盖原始 API/闹钟/周期 3 项，不能替换成缺少完整 RTC 回调的 Kernel 驱动配置。",
+  "original": "1.3.12",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts841-rtc.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "RTC时钟功能测试",
+  "original_line": 781,
+  "config_inheritance_verified": true
+}

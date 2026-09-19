@@ -1,0 +1,40 @@
+{
+  "name": "ble-gatt",
+  "keys": [
+    "extra:1"
+  ],
+  "profile": "demo-rmt-bttool-coex-pie",
+  "sources": [
+    "frameworks/connectivity/bluetooth/tools"
+  ],
+  "evidence_ids": [
+    1544,
+    1551,
+    1564
+  ],
+  "note": "需 BLE 对端；已验证 FF05/FF02 读取、13 字节写入及服务清理。此为开发自测范围，不新增 xTS 编号。",
+  "original": null,
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/ble1544-kernel-gatt-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1544-ble-observation.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1544-kernel-gatt-observe.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/review.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt/host1544-ble-observation.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/review.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1551-coex-gatt-observed/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/ble1551-handoff.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/ble1551-coexistence-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1551-ble-observation.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1551-coexistence-observe.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/review.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1564-affinity-ble-wifi/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/simd1564-handoff.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/ble1564-coexistence-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1564-ble-observation.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/ble1564-affinity-coexistence-observe.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "BLE GATT实机读写",
+  "config_inheritance_verified": true
+}

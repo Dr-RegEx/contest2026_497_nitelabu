@@ -1,0 +1,27 @@
+{
+  "name": "category-5.1.29",
+  "keys": [
+    "category:5.1.29"
+  ],
+  "profile": "demo-rmt-netapps-competition",
+  "sources": [
+    "apps/wireless/wapi"
+  ],
+  "evidence_ids": [
+    1457
+  ],
+  "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+  "original": "5.1.29",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/README.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1457-reconfigure100.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/network1457-reconfigure100-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/network1457-reconfigure100.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1457-reconfigure100-pass/network1457-reconfigure100-result.json",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "WiFi--2.4G网络---wapi反复disconnect 2.4G网络",
+  "original_line": 5269,
+  "config_inheritance_verified": true
+}

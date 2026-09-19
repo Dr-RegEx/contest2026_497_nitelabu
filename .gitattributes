@@ -5,3 +5,6 @@ workspace/evidence/** -whitespace
 docs/acceptance/** -whitespace
 
 docs/reproduction/*.log -whitespace
+# Read-only demo source/standard excerpts preserve upstream formatting.
+board/**/demo/_sources/** -whitespace
+board/**/demo/*/original-case.md -whitespace

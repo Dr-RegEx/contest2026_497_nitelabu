@@ -1,3 +1,5 @@
+已通过测试例程见 [demo/README.md](demo/README.md)，按用例编号整理源码、构建配置、运行步骤和验收依据。
+
 复刻仓构建请先阅读 [根目录 README](../../README.md)。本目录为实际板级源码副本，以下是原移植说明与历史状态。
 
 # ESP32-S31 Function-CoreBoard-1

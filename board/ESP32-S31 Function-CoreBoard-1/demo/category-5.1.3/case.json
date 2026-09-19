@@ -1,0 +1,27 @@
+{
+  "name": "category-5.1.3",
+  "keys": [
+    "category:5.1.3"
+  ],
+  "profile": "xts-flat-category-fs-name",
+  "sources": [
+    "tests/testcases/vela_fs_test"
+  ],
+  "evidence_ids": [
+    1022
+  ],
+  "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+  "original": "5.1.3",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/mount/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1022-fs-5.1.3.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/mount/mount-evidence.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1022-fs-internal-target/logs/xts1022-fs-5.1.3.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "文件系统创建和删除压力测试vela_fs_stress_loop_create_delete_file_test",
+  "original_line": 1739,
+  "config_inheritance_verified": true
+}

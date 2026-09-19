@@ -1,0 +1,29 @@
+{
+  "name": "category-4.1.114",
+  "keys": [
+    "category:4.1.114"
+  ],
+  "profile": "demo-rmt-netapps-competition",
+  "sources": [
+    "external/curl/curl/src",
+    "external/curl/CMakeLists.txt",
+    "external/curl/Kconfig"
+  ],
+  "evidence_ids": [
+    1334
+  ],
+  "note": "联网后使用自己可访问的 HTTP 地址，下载文件核对长度/内容；网页请求需核对实际响应。",
+  "original": "4.1.114",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1332-dns-fix.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1334-curl-web.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/network1334-curl-web-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1334-curl-web.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1334-curl-web/network1334-curl-web-result.json",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "NetApp--curl网页能力测试",
+  "original_line": 5050,
+  "config_inheritance_verified": true
+}
