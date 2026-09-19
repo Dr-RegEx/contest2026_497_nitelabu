@@ -1,0 +1,32 @@
+--- CMD: wapi save_config wlan0 ---
+wapi save_config wlan0
+nsh> [K
+nsh> [K
+--- CMD: wapi reconnect wlan0 ---
+wapi reconnect wlan0
+[CPU0] esp_event_post_wrapper: S31 associated: channel=11 auth=3 bssid=60:ce:41:ab:02:d0
+[CPU0] esp_evt_work_cb: S31 driver STA MAC: 30:ed:a0:f3:f7:b0
+[CPU0] esp_evt_work_cb: S31 driver power save: ret=0 mode=0
+[CPU0] esp_evt_work_cb: S31 driver protocol: ret=0 bitmap=7
+[CPU0] esp_evt_work_cb: S31 negotiated PHY: ret=0 mode=4
+[CPU0] esp_evt_work_cb: S31 HE SU beamformee disabled: ret=0 value=0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks connected: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters connected: ret=0 mpdu=40993 data=990 fcs=22894 abort=32487 full=0 fifo=0 other=60111
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=320 sigb=0 format=0 unsupported=0 siga=39 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=375 ht=39 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=47 complete=47 succ=38 ack=7 ba=31 retry=13 nomem=0 timeout=0
+nsh> [K
+nsh> [K
+--- CMD: renew wlan0 ---
+renew wlan0
+[CPU1] dhcp_obtain_statefuladdr: ERROR: dhcpc request failed: -1
+ERROR: netlib_obtain_ipv4addr() failed
+nsh> [K
+nsh> [K
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: command failed

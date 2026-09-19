@@ -1,0 +1,17 @@
+# Isolated BLE Mesh application-entry candidate.  This profile exercises the
+# real bt_enable() -> bt_mesh_init() path without changing production configs.
+# Provisioning and model traffic still require a second node.
+#include "../xts-flat-ble-mesh/defconfig"
+
+CONFIG_BT_SHELL=y
+CONFIG_BT_MESH_SHELL=y
+CONFIG_BT_MESH_SHELL_PROV_CTX_INSTANCE=y
+CONFIG_BT_MESH_SHELL_HEALTH_SRV_INSTANCE=y
+CONFIG_BT_MESH_CFG_CLI=y
+CONFIG_BT_MESH_HEALTH_CLI=y
+CONFIG_BT_COMPANY_ID=0x05F1
+
+# Mesh 1.1 SAR Configuration models and their existing shell commands.
+CONFIG_BT_MESH_SAR_CFG_SRV=y
+CONFIG_BT_MESH_SAR_CFG_CLI=y
+CONFIG_BT_MESH_SHELL_SAR_CFG_CLI=y

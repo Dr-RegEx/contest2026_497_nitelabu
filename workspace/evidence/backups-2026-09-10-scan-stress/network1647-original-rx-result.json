@@ -1,0 +1,14 @@
+{
+  "status": "INCOMPLETE",
+  "case": "5.1.24",
+  "receipt": "build1631-spawn-parent-env.sha256",
+  "duration_seconds": 300,
+  "protocol": "udp",
+  "rate_acceptance": "Published numeric criterion absent",
+  "target_file": "/tmp/r1647",
+  "host_binary_sha256": "edcb6d8da79d597e4fecdf8b534753731ceecc2a94bc250cbc2f247249003a83",
+  "ps_before": "ps\r\n  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND\r\n    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE\r\n    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE\r\n    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c\r\n    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer\r\n    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl\r\n    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi\r\n    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "network_before": "ifconfig\r\nwlan0\tLink encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500\r\n\tinet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0\r\n\r\n\tRX: Received Fragment Errors   Bytes   \r\n\t    0000cd49 00000000 00000000 3084603         \r\n\t    IPv4     ARP      Dropped \r\n\t    00000000 00000000 00001499\r\n\tTX: Queued   Sent     Errors   Timeouts Bytes   \r\n\t    00021df2 00021df4 00000000 00000000 a8fccb6          \r\n\tTotal Errors: 00000000\r\n\r\n             IPv4   TCP   UDP  ICMP\r\nReceived     c6fa  5a53  6c08  008f\r\nDropped      0010  0000  0000  0000\r\n  IPv4        VHL: 0000   Frg: 0000\r\n  Checksum   0000  0000  0000  0000\r\n  TCP         ACK: 0000   SYN: 0000\r\n              RST: 0000  0000\r\n              HDR: 0000\r\n  Type       0000  ----  ----  0000\r\nSent         0170  f2b0  0e31  008f\r\n  Rexmit     ----  0005  ----  ----\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "server_command": "iperf2 -s -p 5003 -i 1 -u",
+  "error": "iperf2 -s -p 5003 -i 1 -u > /tmp/r1647 &\r\n"
+}

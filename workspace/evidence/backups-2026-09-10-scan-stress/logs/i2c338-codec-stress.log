@@ -1,0 +1,193 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x13ab0
+entry 0x2f00fede
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x13ab0  (80560)
+padd: lma 0x00015b28 vma 0x00000000 len 0xa4f0   (42224)
+imap: lma 0x00020020 vma 0x400c0020 len 0x19abc  (105148)
+padd: lma 0x00039ae4 vma 0x00000000 len 0x6614   (26132)
+imap: lma 0x00040100 vma 0x40000100 len 0xb42e4  (738020)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+I2C_STRESS_BOOT=PASS seconds=0.633
+--- CMD: i2c reset ---
+i2c reset
+Reset command sent successfully
+nsh> [K
+nsh> [K
+--- CMD: i2c get -b 0 -a 18 -r fd -w 8 -f 100000 10 ---
+i2c get -b 0 -a 18 -r fd -w 8 -f 100000 10
+nsh: i2c: too many arguments
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=100000 register=0xfd reads=16
+--- CMD: i2c get -b 0 -a 18 -r fe -w 8 -f 100000 10 ---
+i2c get -b 0 -a 18 -r fe -w 8 -f 100000 10
+nsh: i2c: too many arguments
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=100000 register=0xfe reads=16
+--- CMD: i2c reset ---
+i2c reset
+Reset command sent successfully
+nsh> [K
+nsh> [K
+--- CMD: i2c get -b 0 -a 18 -r fd -w 8 -f 400000 10 ---
+i2c get -b 0 -a 18 -r fd -w 8 -f 400000 10
+nsh: i2c: too many arguments
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=400000 register=0xfd reads=16
+--- CMD: i2c get -b 0 -a 18 -r fe -w 8 -f 400000 10 ---
+i2c get -b 0 -a 18 -r fe -w 8 -f 400000 10
+nsh: i2c: too many arguments
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=400000 register=0xfe reads=16
+--- CMD: i2c reset ---
+i2c reset
+Reset command sent successfully
+nsh> [K
+nsh> [K
+--- CMD: i2c get -b 0 -a 18 -r fd -w 8 -f 100000 10 ---
+i2c get -b 0 -a 18 -r fd -w 8 -f 100000 10
+nsh: i2c: too many arguments
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=100000 register=0xfd reads=16
+--- CMD: i2c get -b 0 -a 18 -r fe -w 8 -f 100000 10 ---
+i2c get -b 0 -a 18 -r fe -w 8 -f 100000 10
+nsh: i2c: too many arguments
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=100000 register=0xfe reads=16
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=1358 replay=1358 ack=1908 drop=0 pending=0x0 sreplay=4
+MONLAT: cpu=0 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0
+MONIRQ: cpu=1 defer=9687 replay=9687 ack=9691 drop=0 pending=0x0 sreplay=1
+MONLAT: cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0
+ADDRENV: created=10 fail=0 destroyed=9 live=1 livemax=2 pages=1251 pgt=36
+WAIT: pid=2 object=0x2f010b14
+LPTRACE: 0x40024860
+WAIT: pid=4 object=0x2f010b6c
+nsh> [K
+nsh> [K
+ES8311_I2C_RECOVERY_STRESS=PASS resets=3 reads=96 audio=untested

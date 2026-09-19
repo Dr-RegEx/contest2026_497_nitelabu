@@ -1,0 +1,83 @@
+diff --git a/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h b/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
+index 63e763ca97b..200714764b3 100644
+--- a/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
++++ b/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
+@@ -110,6 +110,7 @@ struct sd_host_sdmmc_slot_t {
+ 
+     struct {
+         int                        width;
++        int                        active_width;
+         sd_host_sdmmc_slot_state_t width_state;
+     } width;
+     struct {
+diff --git a/components/upper_hal_sdmmc/src/sd_host_sdmmc.c b/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
+index 8429f300be9..c22dfe3473d 100644
+--- a/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
++++ b/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
+@@ -256,12 +256,19 @@ static esp_err_t sd_host_slot_sdmmc_configure(sd_host_slot_handle_t slot, const
+ #endif
+ 
+     sd_host_sdmmc_slot_t *slot_ctx = __containerof(slot, sd_host_sdmmc_slot_t, drv);
++    ESP_RETURN_ON_FALSE(config->width == 0 ||
++                       ((config->width == SD_BUS_WIDTH_1_BIT ||
++                         config->width == SD_BUS_WIDTH_4_BIT ||
++                         config->width == SD_BUS_WIDTH_8_BIT) &&
++                        config->width <= slot_ctx->width.width),
++                       ESP_ERR_INVALID_ARG, TAG, "unsupported bus width");
+     portENTER_CRITICAL(&slot_ctx->ctlr->spinlock);
+     if (config->freq_hz != 0) {
+         slot_ctx->freq.freq_hz = config->freq_hz;
+         slot_ctx->freq.freq_state = SD_HOST_SLOT_STATE_READY;
+     }
+     if (config->width != 0) {
++        slot_ctx->width.active_width = config->width;
+         slot_ctx->width.width_state = SD_HOST_SLOT_STATE_READY;
+     }
+     if (config->sampling_mode != 0) {
+@@ -668,7 +675,7 @@ esp_err_t sd_host_slot_set_bus_width(sd_host_sdmmc_slot_t *slot)
+ {
+     ESP_RETURN_ON_FALSE(slot, ESP_ERR_INVALID_ARG, TAG, "invalid argument: null pointer");
+ 
+-    int width = slot->width.width_state == SD_HOST_SLOT_STATE_READY ? slot->width.width : 1;
++    int width = slot->width.width_state == SD_HOST_SLOT_STATE_READY ? slot->width.active_width : 1;
+     ESP_LOGD(TAG, "width: %d, state: %d", width, slot->width.width_state);
+     sd_host_sdmmc_slot_io_cfg_t *slot_gpio = &slot->io_config;
+ 
+@@ -694,7 +701,7 @@ esp_err_t sd_host_slot_set_bus_sampling_mode(sd_host_sdmmc_slot_t *slot)
+ {
+     ESP_RETURN_ON_FALSE(slot, ESP_ERR_INVALID_ARG, TAG, "invalid argument: null pointer");
+     if (slot->sampling_mode.sampling_mode_state == SD_HOST_SLOT_STATE_READY) {
+-        ESP_RETURN_ON_FALSE((slot->width.width != 8), ESP_ERR_NOT_SUPPORTED, TAG, "DDR mode with 8-bit bus width is not supported yet");
++        ESP_RETURN_ON_FALSE((slot->width.active_width != 8), ESP_ERR_NOT_SUPPORTED, TAG, "DDR mode with 8-bit bus width is not supported yet");
+     }
+ 
+     bool ddr = false;
+@@ -1301,6 +1308,7 @@ static esp_err_t sdmmc_slot_io_config(sd_host_sdmmc_slot_t *slot, const sd_host_
+     slot->io_config.d6_io = GPIO_NUM_NC;
+     slot->io_config.d7_io = GPIO_NUM_NC;
+     slot->width.width = slot_width;
++    slot->width.active_width = SD_BUS_WIDTH_1_BIT;
+     slot->width.width_state = SD_HOST_SLOT_STATE_INIT;
+     slot_gpio->cd_io = io_config->cd_io;
+     slot_gpio->wp_io = io_config->wp_io;
+diff --git a/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c b/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
+index b26e7e43c80..be61f8a3873 100644
+--- a/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
++++ b/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
+@@ -578,9 +578,13 @@ esp_err_t sd_host_slot_sdmmc_do_transaction(sd_host_slot_handle_t slot, sdmmc_co
+     if (cmdinfo->data) {
+         bool needs_sync = esp_cache_get_line_size_by_addr(cmdinfo->data) > 0;
+         if (needs_sync) {
+-            ret = esp_cache_msync((void *)cmdinfo->data, cache_sync_len, ESP_CACHE_MSYNC_FLAG_DIR_M2C);
+-            if (ret != ESP_OK) {
+-                goto out;
++            esp_err_t sync_ret = esp_cache_msync((void *)cmdinfo->data, cache_sync_len, ESP_CACHE_MSYNC_FLAG_DIR_M2C);
++            /* Cache maintenance must not turn a failed transfer or busy
++             * timeout into success.  Report its error only if no earlier
++             * transaction error is being returned.
++             */
++            if (ret == ESP_OK) {
++                ret = sync_ret;
+             }
+         }
+     }

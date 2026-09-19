@@ -1,0 +1,45 @@
+/tmp/procfs-meminfo-_1_hiwfd/test.c:37:1: error: return type defaults to ‘int’ [-Werror=implicit-int]
+   37 | meminfo_release_entry_locked(FAR struct procfs_meminfo_entry_s *entry)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/procfs-meminfo-_1_hiwfd/test.c: In function ‘meminfo_release_entry_locked’:
+/tmp/procfs-meminfo-_1_hiwfd/test.c:58:10: error: returning ‘struct procfs_meminfo_entry_s *’ from a function with return type ‘int’ makes integer from pointer without a cast [-Werror=int-conversion]
+   58 |   return next;
+      |          ^~~~
+/tmp/procfs-meminfo-_1_hiwfd/test.c: At top level:
+/tmp/procfs-meminfo-_1_hiwfd/test.c:59:2: error: return type defaults to ‘int’ [-Werror=implicit-int]
+   59 | }procfs_register_meminfo(FAR const char *name, FAR struct mm_heap_s *heap,
+      |  ^~~~~~~~~~~~~~~~~~~~~~~
+/tmp/procfs-meminfo-_1_hiwfd/test.c: In function ‘procfs_register_meminfo’:
+/tmp/procfs-meminfo-_1_hiwfd/test.c:71:14: error: returning ‘void *’ from a function with return type ‘int’ makes integer from pointer without a cast [-Werror=int-conversion]
+   71 |       return NULL;
+      |              ^~~~
+/tmp/procfs-meminfo-_1_hiwfd/test.c:96:10: error: returning ‘struct procfs_meminfo_entry_s *’ from a function with return type ‘int’ makes integer from pointer without a cast [-Werror=int-conversion]
+   96 |   return entry;
+      |          ^~~~~
+In file included from /tmp/procfs-meminfo-_1_hiwfd/test.c:2:
+/tmp/procfs-meminfo-_1_hiwfd/test.c: In function ‘main’:
+/tmp/procfs-meminfo-_1_hiwfd/test.c:116:61: error: comparison between pointer and integer [-Werror]
+  116 |     assert(procfs_register_meminfo(NULL, &heap, NULL, NULL) == NULL);
+      |                                                             ^~
+/tmp/procfs-meminfo-_1_hiwfd/test.c:121:61: error: comparison between pointer and integer [-Werror]
+  121 |   assert(procfs_register_meminfo("Kmem", &heap, NULL, NULL) == NULL);
+      |                                                             ^~
+/tmp/procfs-meminfo-_1_hiwfd/test.c:125:7: error: assignment to ‘struct procfs_meminfo_entry_s *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+  125 |   one = procfs_register_meminfo("Kmem", &heap, handler, handler);
+      |       ^
+/tmp/procfs-meminfo-_1_hiwfd/test.c:126:7: error: assignment to ‘struct procfs_meminfo_entry_s *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+  126 |   two = procfs_register_meminfo("Pool", &heap, NULL, NULL);
+      |       ^
+In file included from /tmp/procfs-meminfo-_1_hiwfd/test.c:2:
+/tmp/procfs-meminfo-_1_hiwfd/test.c:145:44: error: comparison between pointer and integer [-Werror]
+  145 |   assert(meminfo_release_entry_locked(one) == NULL);
+      |                                            ^~
+cc1: all warnings being treated as errors
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_procfs_meminfo_lifecycle.py", line 117, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_procfs_meminfo_lifecycle.py", line 109, in main
+    subprocess.run(['cc', '-std=c11', '-Wall', '-Wextra', '-Werror',
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '-fsanitize=undefined', '-fno-sanitize-recover=all', '/tmp/procfs-meminfo-_1_hiwfd/test.c', '-o', '/tmp/procfs-meminfo-_1_hiwfd/test']' returned non-zero exit status 1.

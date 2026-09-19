@@ -1,0 +1,557 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x13fa8
+entry 0x2f010388
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x13fa8  (81832)
+padd: lma 0x00016018 vma 0x00000000 len 0xa000   (40960)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae04  (110084)
+padd: lma 0x0003ae2c vma 0x00000000 len 0x52cc   (21196)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2a60  (797280)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_BOOT=PASS seconds=0.696
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=78 data=0 fcs=3 abort=9 full=0 fifo=0 other=4
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=5 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/cmocka_syscall_test ---
+ls /system/bin/cmocka_syscall_test
+ /system/bin/cmocka_syscall_test
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     304828      74524     230304      89648     209256    194      9 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls /tmp/CM_syscall_testdir ---
+ls /tmp/CM_syscall_testdir
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: ls /fcntl05_fifo ---
+ls /fcntl05_fifo
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: ls /Lstat01_tst_syml ---
+ls /Lstat01_tst_syml
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: ls /Symlink02_file ---
+ls /Symlink02_file
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: ls /var/Test_Fifo_SyscallFsync02 ---
+ls /var/Test_Fifo_SyscallFsync02
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+XTS_COMMAND=cmocka_syscall_test
+cmocka_syscall_test
+[CPU1] [==========] nuttx_syscall_test_suites: Running 83 test(s).
+[CPU1] [ RUN      ] test_nuttx_syscall_chdir01
+[CPU1] [       OK ] test_nuttx_syscall_chdir01
+[CPU1] [ RUN      ] test_nuttx_syscall_chdir02
+[CPU1] [       OK ] test_nuttx_syscall_chdir02
+[CPU1] [ RUN      ] test_nuttx_syscall_getitimer01
+[CPU1] [       OK ] test_nuttx_syscall_getitimer01
+[CPU1] [ RUN      ] test_nuttx_syscall_clockgettime01
+[CPU1] [       OK ] test_nuttx_syscall_clockgettime01
+[CPU1] [ RUN      ] test_nuttx_syscall_clocknanosleep01
+[CPU0] [       OK ] test_nuttx_syscall_clocknanosleep01
+[CPU0] [ RUN      ] test_nuttx_syscall_clocksettime01
+[CPU0] [       OK ] test_nuttx_syscall_clocksettime01
+[CPU0] [ RUN      ] test_nuttx_syscall_close01
+[CPU0] [       OK ] test_nuttx_syscall_close01
+[CPU0] [ RUN      ] test_nuttx_syscall_close02
+[CPU0] [       OK ] test_nuttx_syscall_close02
+[CPU0] [ RUN      ] test_nuttx_syscall_close03
+[CPU0] [       OK ] test_nuttx_syscall_close03
+[CPU0] [ RUN      ] test_nuttx_syscall_creat01
+[CPU0] [       OK ] test_nuttx_syscall_creat01
+[CPU0] [ RUN      ] test_nuttx_syscall_creat02
+[CPU0] [       OK ] test_nuttx_syscall_creat02
+[CPU0] [ RUN      ] test_nuttx_syscall_fcntl02
+[CPU0] [       OK ] test_nuttx_syscall_fcntl02
+[CPU0] [ RUN      ] test_nuttx_syscall_fcntl03
+[CPU0] [       OK ] test_nuttx_syscall_fcntl03
+[CPU0] [ RUN      ] test_nuttx_syscall_fcntl04
+[CPU0] [       OK ] test_nuttx_syscall_fcntl04
+[CPU0] [ RUN      ] test_nuttx_syscall_fcntl06
+[CPU0] [       OK ] test_nuttx_syscall_fcntl06
+[CPU0] [ RUN      ] test_nuttx_syscall_fstatfs01
+[CPU0] [       OK ] test_nuttx_syscall_fstatfs01
+[CPU0] [ RUN      ] test_nuttx_syscall_fsync01
+[CPU0] [       OK ] test_nuttx_syscall_fsync01
+[CPU0] [ RUN      ] test_nuttx_syscall_fsync02
+[CPU0] [       OK ] test_nuttx_syscall_fsync02
+[CPU0] [ RUN      ] test_nuttx_syscall_fsync03
+[CPU0] [       OK ] test_nuttx_syscall_fsync03
+[CPU0] [ RUN      ] test_nuttx_syscall_getpeername01
+[CPU0] [       OK ] test_nuttx_syscall_getpeername01
+[CPU0] [ RUN      ] test_nuttx_syscall_getsockopt01
+[CPU0] ipv4_getsockopt: ERROR: Unrecognized IPv4 option: -1
+[CPU0] tcp_getsockopt: ERROR: Unrecognized TCP option: -1
+[CPU0] [       OK ] test_nuttx_syscall_getsockopt01
+[CPU0] [ RUN      ] test_nuttx_syscall_setsockopt01
+[CPU0] ipv4_setsockopt: ERROR: Unrecognized IPv4 option: -1
+[CPU0] tcp_setsockopt: ERROR: Unrecognized TCP option: -1
+[CPU0] [       OK ] test_nuttx_syscall_setsockopt01
+[CPU0] [ RUN      ] test_nuttx_syscall_listen01
+[CPU0] listen(-400, 0) failed
+[CPU0] bad file descriptor successful
+[CPU0] listen(3, 0) failed
+[CPU0] not a socket successful
+[CPU0] inet_listen: ERROR:  Unsupported socket type: 2
+[CPU0] psock_listen: ERROR: si_listen failed: -95
+[CPU0] listen(4, 0) failed
+[CPU0] UDP listen successful
+[CPU0] [       OK ] test_nuttx_syscall_listen01
+[CPU0] [ RUN      ] test_nuttx_syscall_socketpair02
+[CPU0] [       OK ] test_nuttx_syscall_socketpair02
+[CPU0] [ RUN      ] test_nuttx_syscall_ftruncate01
+[CPU0] [       OK ] test_nuttx_syscall_ftruncate01
+[CPU0] [ RUN      ] test_nuttx_syscall_getcwd01
+[CPU0] [       OK ] test_nuttx_syscall_getcwd01
+[CPU0] [ RUN      ] test_nuttx_syscall_getcwd02
+[CPU0] [       OK ] test_nuttx_syscall_getcwd02
+[CPU0] [ RUN      ] test_nuttx_syscall_getpid01
+[CPU0] [       OK ] test_nuttx_syscall_getpid01
+[CPU0] [ RUN      ] test_nuttx_syscall_getppid01
+[CPU0] [       OK ] test_nuttx_syscall_getppid01
+[CPU0] [ RUN      ] test_nuttx_syscall_gethostname01
+[CPU0] [       OK ] test_nuttx_syscall_gethostname01
+[CPU0] [ RUN      ] test_nuttx_syscall_gettimeofday01
+[CPU0] [       OK ] test_nuttx_syscall_gettimeofday01
+[CPU0] [ RUN      ] test_nuttx_syscall_lseek01
+[CPU0] [       OK ] test_nuttx_syscall_lseek01
+[CPU0] [ RUN      ] test_nuttx_syscall_lseek07
+[CPU0] [       OK ] test_nuttx_syscall_lseek07
+[CPU0] [ RUN      ] test_nuttx_syscall_lstat01
+[CPU0] [       OK ] test_nuttx_syscall_lstat01
+[CPU0] [ RUN      ] test_nuttx_syscall_dup01
+[CPU0] [       OK ] test_nuttx_syscall_dup01
+[CPU0] [ RUN      ] test_nuttx_syscall_dup02
+[CPU0] [       OK ] test_nuttx_syscall_dup02
+[CPU0] [ RUN      ] test_nuttx_syscall_dup03
+[CPU0] [       OK ] test_nuttx_syscall_dup03
+[CPU0] [ RUN      ] test_nuttx_syscall_dup04
+[CPU0] [       OK ] test_nuttx_syscall_dup04
+[CPU0] [ RUN      ] test_nuttx_syscall_dup05
+[CPU0] [       OK ] test_nuttx_syscall_dup05
+[CPU0] [ RUN      ] test_nuttx_syscall_dup201
+[CPU0] [       OK ] test_nuttx_syscall_dup201
+[CPU0] [ RUN      ] test_nuttx_syscall_dup202
+[CPU0] [       OK ] test_nuttx_syscall_dup202
+[CPU0] [ RUN      ] test_nuttx_syscall_fpathconf01
+[CPU0] [       OK ] test_nuttx_syscall_fpathconf01
+[CPU0] [ RUN      ] test_nuttx_syscall_getegid01
+[CPU0] [       OK ] test_nuttx_syscall_getegid01
+[CPU0] [ RUN      ] test_nuttx_syscall_getegid02
+[CPU0] [       OK ] test_nuttx_syscall_getegid02
+[CPU0] [ RUN      ] test_nuttx_syscall_geteuid01
+[CPU0] [       OK ] test_nuttx_syscall_geteuid01
+[CPU0] [ RUN      ] test_nuttx_syscall_getgid01
+[CPU0] [       OK ] test_nuttx_syscall_getgid01
+[CPU0] [ RUN      ] test_nuttx_syscall_getgid02
+[CPU0] [       OK ] test_nuttx_syscall_getgid02
+[CPU0] [ RUN      ] test_nuttx_syscall_getuid01
+[CPU0] [       OK ] test_nuttx_syscall_getuid01
+[CPU0] [ RUN      ] test_nuttx_syscall_pathconf01
+[CPU0] [       OK ] test_nuttx_syscall_pathconf01
+[CPU0] [ RUN      ] test_nuttx_syscall_pipe01
+[CPU0] [       OK ] test_nuttx_syscall_pipe01
+[CPU0] [ RUN      ] test_nuttx_syscall_pipe02
+[CPU0] [       OK ] test_nuttx_syscall_pipe02
+[CPU0] [ RUN      ] test_nuttx_syscall_pread01
+[CPU0] [       OK ] test_nuttx_syscall_pread01
+[CPU0] [ RUN      ] test_nuttx_syscall_pwrite01
+[CPU0] [       OK ] test_nuttx_syscall_pwrite01
+[CPU0] [ RUN      ] test_nuttx_syscall_pwrite02
+[CPU0] [       OK ] test_nuttx_syscall_pwrite02
+[CPU0] [ RUN      ] test_nuttx_syscall_rmdir01
+[CPU0] [       OK ] test_nuttx_syscall_rmdir01
+[CPU0] [ RUN      ] test_nuttx_syscall_rmdir02
+[CPU0] [       OK ] test_nuttx_syscall_rmdir02
+[CPU0] [ RUN      ] test_nuttx_syscall_truncate01
+[CPU0] [       OK ] test_nuttx_syscall_truncate01
+[CPU0] [ RUN      ] test_nuttx_syscall_unlink01
+[CPU0] [       OK ] test_nuttx_syscall_unlink01
+[CPU0] [ RUN      ] test_nuttx_syscall_nansleep01
+[CPU0] [       OK ] test_nuttx_syscall_nansleep01
+[CPU0] [ RUN      ] test_nuttx_syscall_nansleep02
+[CPU0] [       OK ] test_nuttx_syscall_nansleep02
+[CPU0] [ RUN      ] test_nuttx_syscall_time01
+[CPU0] [       OK ] test_nuttx_syscall_time01
+[CPU0] [ RUN      ] test_nuttx_syscall_time02
+[CPU0] [       OK ] test_nuttx_syscall_time02
+[CPU0] [ RUN      ] test_nuttx_syscall_timercreate01
+[CPU0] [       OK ] test_nuttx_syscall_timercreate01
+[CPU0] [ RUN      ] test_nuttx_syscall_timerdelete01
+[CPU0] [       OK ] test_nuttx_syscall_timerdelete01
+[CPU0] [ RUN      ] test_nuttx_syscall_timergettime01
+[CPU0] [       OK ] test_nuttx_syscall_timergettime01
+[CPU0] [ RUN      ] test_nuttx_syscall_mkdir01
+[CPU0] [       OK ] test_nuttx_syscall_mkdir01
+[CPU0] [ RUN      ] test_nuttx_syscall_mkdir02
+[CPU0] [       OK ] test_nuttx_syscall_mkdir02
+[CPU0] [ RUN      ] test_nuttx_syscall_mkdir03
+[CPU0] [       OK ] test_nuttx_syscall_mkdir03
+[CPU0] [ RUN      ] test_nuttx_syscall_sched01
+[CPU0] [       OK ] test_nuttx_syscall_sched01
+[CPU0] [ RUN      ] test_nuttx_syscall_sched02
+[CPU0] [       OK ] test_nuttx_syscall_sched02
+[CPU0] [ RUN      ] test_nuttx_syscall_sched03
+[CPU0] [       OK ] test_nuttx_syscall_sched03
+[CPU0] [ RUN      ] test_nuttx_syscall_sched04
+[CPU0] [       OK ] test_nuttx_syscall_sched04
+[CPU0] [ RUN      ] test_nuttx_syscall_write01
+[CPU0] [       OK ] test_nuttx_syscall_write01
+[CPU0] [ RUN      ] test_nuttx_syscall_write02
+[CPU0] [       OK ] test_nuttx_syscall_write02
+[CPU0] [ RUN      ] test_nuttx_syscall_write03
+[CPU0] [       OK ] test_nuttx_syscall_write03
+[CPU0] [ RUN      ] test_nuttx_syscall_read01
+[CPU0] [       OK ] test_nuttx_syscall_read01
+[CPU0] [ RUN      ] test_nuttx_syscall_read02
+[CPU0] [       OK ] test_nuttx_syscall_read02
+[CPU0] [ RUN      ] test_nuttx_syscall_read03
+[CPU0] [       OK ] test_nuttx_syscall_read03
+[CPU0] [ RUN      ] test_nuttx_syscall_read04
+[CPU0] [       OK ] test_nuttx_syscall_read04
+[CPU0] [ RUN      ] test_nuttx_syscall_symlink01
+[CPU0] [       OK ] test_nuttx_syscall_symlink01
+[CPU0] [ RUN      ] test_nuttx_syscall_symlink02
+[CPU0] [       OK ] test_nuttx_syscall_symlink02
+[CPU0] [ RUN      ] test_nuttx_syscall_sockettest01
+[CPU0] net_sockif: ERROR: Address family unsupported: 0
+[CPU0] psock_socket: ERROR: socket address family unsupported: 0
+[CPU0] socket: ERROR: psock_socket() failed: -97
+[CPU0] socket: ERROR: psock_socket() failed: -22
+[CPU0] NO.1 do socket() test, ret=-1  erron=22 experrno=97
+[CPU0] inet_setup: ERROR: Unsupported type: 3
+[CPU0] psock_socket: ERROR: socket si_setup() failed: -93
+[CPU0] socket: ERROR: psock_socket() failed: -93
+[CPU0] NO.2 do socket() test, ret=-1  erron=93 experrno=97
+[CPU0] inet_setup: ERROR: Unsupported stream protocol: 17
+[CPU0] psock_socket: ERROR: socket si_setup() failed: -93
+[CPU0] socket: ERROR: psock_socket() failed: -93
+[CPU0] NO.3 do socket() test, ret=-1  erron=93 experrno=97
+[CPU0] inet_setup: ERROR: Unsupported datagram protocol: 6
+[CPU0] psock_socket: ERROR: socket si_setup() failed: -93
+[CPU0] socket: ERROR: psock_socket() failed: -93
+[CPU0] NO.4 do socket() test, ret=-1  erron=93 experrno=97
+[CPU0] inet_setup: ERROR: Unsupported stream protocol: 1
+[CPU0] psock_socket: ERROR: socket si_setup() failed: -93
+[CPU0] socket: ERROR: psock_socket() failed: -93
+[CPU0] NO.6 do socket() test, ret=-1  erron=93 experrno=97
+[CPU0] [       OK ] test_nuttx_syscall_sockettest01
+[CPU0] [ RUN      ] test_nuttx_syscall_sockettest02
+[CPU0] [       OK ] test_nuttx_syscall_sockettest02
+[CPU0] [==========] nuttx_syscall_test_suites: 83 test(s) run.
+[CPU0] [  PASSED  ] 83 test(s).
+[CPU1] dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 14 2026 22:40:40 risc-v
+[CPU1] dump_assert_info: Assertion failed : at file: /mm/mm_heap/mm_free.c:315 task(CPU1): cmocka_syscall_test process: cmocka_syscall_test 0x61006c00
+[CPU1] up_dump_register: PC: 40025ff6
+[CPU1] up_dump_register: A0: 2f01c91c A1: 0000013b A2: 00000000 A3: 2f0528e8
+[CPU1] up_dump_register: A4: 00000000 A5: 2f0181c8 A6: 00000001 A7: 2f04a250
+[CPU1] up_dump_register: T0: 2f018bd0 T1: 2f0183d0 T2: 10000000 T3: fefefefe
+[CPU1] up_dump_register: T4: 0000003d T5: 80808080 T6: 3d3d3d3d
+[CPU1] up_dump_register: S0: 0000010c S1: 2f01c810 S2: 00000001 S3: 2f04a008
+[CPU1] up_dump_register: S4: 00000000 S5: 400d0d90 S6: 2f018000 S7: 00000006
+[CPU1] up_dump_register: S8: 00000000 S9: 00000000 S10: 00000000 S11: 0000013b
+[CPU1] up_dump_register: SP: 2f018a70 FP: 0000010c TP: 2f04a008 RA: 40025ff6
+[CPU1] dump_stackinfo: IRQ Stack:
+[CPU1] dump_stackinfo:   base: 0x2f0183d0
+[CPU1] dump_stackinfo:   size: 00002048
+[CPU1] dump_stackinfo:     sp: 0x2f018a70
+[CPU1] stack_dump:  2f018a50: 2f018000 400d0d90 400d6e44 2f04a008 00044020 2f01c810 2f01c91c 4002627a
+[CPU1] stack_dump:  2f018a70: 2f04a0d8 61006c00 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f018a90: 00000000 00000000 2f04a008 2f01c91c 00000000 400d0d90 0000013b 7474754e
+[CPU1] stack_dump:  2f018ab0: 00000058 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f018ad0: 00000000 00000000 00000000 00000000 302e3000 0000302e 00000000 00000000
+[CPU1] stack_dump:  2f018af0: 00010002 32340000 32353238 64383061 69642d62 20797472 20706553 32203431
+[CPU1] stack_dump:  2f018b10: 20363230 343a3232 30343a30 2f018100 00044101 40028850 73697200 00762d63
+[CPU1] stack_dump:  2f018b30: 00010002 00000000 00000000 00000053 2f0181d4 2f018080 00000004 00000000
+[CPU1] stack_dump:  2f018b50: 00000000 00000000 00000000 00000000 00000000 00000000 2f04a008 2f0528e8
+[CPU1] stack_dump:  2f018b70: 00000003 400d0d90 2f0528e8 40002b16 00000000 00000000 00000000 0000013b
+[CPU1] stack_dump:  2f018b90: 00000000 90000015 00000000 2f0528e8 2f018080 00000004 2f0181c4 4003ac2c
+[CPU1] stack_dump:  2f018bb0: 00000000 00000000 00000000 2f04a008 400d0d90 00000100 2f0529f4 2f000f24
+[CPU1] stack_dump:  2f018bd0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] dump_stackinfo: Kernel Stack:
+[CPU1] dump_stackinfo:   base: 0x2f052020
+[CPU1] dump_stackinfo:   size: 00003072
+[CPU1] stack_dump:  2f052020: d28f44e6 0f1d9cc7 9070d4b2 b29c9513 f8f3da63 aaeb2cd7 c182c10f 02ef16cd
+[CPU1] stack_dump:  2f052040: c745b255 3f5d90ba b0b19871 6c449ddd 7eb85fa5 36123675 8836cc73 a710bde9
+[CPU1] stack_dump:  2f052060: a4e15317 2e2d7fdf 3181e075 88da178e 8801d1c7 f35a6b5f edf98331 6691132c
+[CPU1] stack_dump:  2f052080: 517e8e88 83189b7a 2b8e9e8e efd9b5a7 85d751ad 2a11a1d8 e727d301 c2fb7bb5
+[CPU1] stack_dump:  2f0520a0: 23b9896d 1ecd7645 a450c8f4 0aa6a548 78d4bc77 573ee65e 6d5ad5ef 83aea665
+[CPU1] stack_dump:  2f0520c0: fbf3b688 b6397b9d 44ee0a50 a4fdfbed 706b95fe 07875899 5cb406f1 3d8f31c4
+[CPU1] stack_dump:  2f0520e0: a5d74d22 33c87fa7 62e875de 5a9d918d b27f0b3c 9d0f5ebf f6b08c59 fc43668c
+[CPU1] stack_dump:  2f052100: 609fc9f6 bc88d753 f8d3ba7b 36c69df2 d4c1c687 675d2568 fc722650 938fcfc1
+[CPU1] stack_dump:  2f052120: 066dd550 a1178be7 3fd20b47 5ade8519 d3c1d174 865ce013 083f0d87 e042154d
+[CPU1] stack_dump:  2f052140: b936cfea 7ad64d93 13e43527 6aefaad5 d4ffa36b 69fab0bf 8a4e53ef 6716a74e
+[CPU1] stack_dump:  2f052160: 61da9b63 c483b4f8 deae658a 1b952bf0 6c5e534c d2f07c84 4999852f 825d45b8
+[CPU1] stack_dump:  2f052180: 263c5dbe cdd3fc3c 017719ce 56ec30eb 70c30115 1f9be74e 9746018c 0cf16919
+[CPU1] stack_dump:  2f0521a0: f848ac79 6467c1f0 4662c820 4c35dbc7 c5af21b2 73920a56 b03c14fa 877700b3
+[CPU1] stack_dump:  2f0521c0: 7bc34fe8 064e87ce de9ba225 0d4ae663 3e619abf 8f7f6543 346f0080 d526454d
+[CPU1] stack_dump:  2f0521e0: 826d1588 c2df53c8 e9d40252 1cea98f6 1565a870 dcb048ad 29f14210 fb7036a9
+[CPU1] stack_dump:  2f052200: e95d2dd4 e6baa2cf 8e3dafc7 5261a720 ebaf61e0 6a0e6d40 297e63c0 f00ee4f7
+[CPU1] stack_dump:  2f052220: 7302dd0f ec17b18e 44a40434 d1835523 669d567a 1bb32ee4 8624c816 b0d7a349
+[CPU1] stack_dump:  2f052240: 88ce61d2 b7202494 5dfcc9d5 da3b4b8c 91f7277a 86864bbf 5e2a7ceb 75d752f2
+[CPU1] stack_dump:  2f052260: ad32d187 69beb213 5ef6b136 d91778c0 580aedb0 332f2d21 cc53b6c9 3c6b8e41
+[CPU1] stack_dump:  2f052280: 96b3710a 1c75cc8d f54bbcad 7107350d f23aac4b 4ed5d523 b9729fef 29a21de0
+[CPU1] stack_dump:  2f0522a0: 53eeb444 5a6486c6 f0316068 42e29780 7aad19c9 a190fec8 46224c5b 54c84d16
+[CPU1] stack_dump:  2f0522c0: e8129bef d6cdda88 23de2916 a93805f2 cfc03a6d f66cea72 07a75238 f14fb940
+[CPU1] stack_dump:  2f0522e0: ceb98137 cfb9d484 01042ffb 3c62dc1d 18ec7864 82f4b6a1 39437814 34c7820b
+[CPU1] stack_dump:  2f052300: e05f1d0e ec6990b0 5bba7725 e8ef3e0b b4a7afb5 b9ccd92f 662434b7 a1fd9108
+[CPU1] stack_dump:  2f052320: 9982780d 304d27d0 c2d1f015 449b6005 c2840e8d 0908ab3d f2ed7a77 d64397dd
+[CPU1] stack_dump:  2f052340: 593939d4 3cb2fc76 258f634e a8f84382 1686f7b1 331f1a5c 3a1ebd3f 677bf12a
+[CPU1] stack_dump:  2f052360: c736919b 2bd7f58c 3fa7996f 90e20c67 174eec26 057e2c20 c58b89fb 11e11efc
+[CPU1] stack_dump:  2f052380: 16d7c66b 74fb8675 5a4b9505 560e6691 4228c145 05f38ac6 f08e2344 266ba2a6
+[CPU1] stack_dump:  2f0523a0: 9e366277 27813d34 3b0c572c 6561e40e 08850ae3 0fc69c48 83b308ee 3508a605
+[CPU1] stack_dump:  2f0523c0: b8eee213 1d8b12de 953d2696 d722fc3e e6ed377a b54f0556 42cbe733 f21893d1
+[CPU1] stack_dump:  2f0523e0: 004e2257 34ec18f2 507185ad 194ca703 bf0f728c 89fafac0 15c431d6 26235916
+[CPU1] stack_dump:  2f052400: 82f05524 f53109ee c7bbc2f9 5e3a1aa0 db64f375 abd202d1 99582625 3bab6a31
+[CPU1] stack_dump:  2f052420: 1918d3cd 01dc9bb4 4d8a7e3e 81cfea1f 08c49818 350f8277 c04708ea 6fbd1c71
+[CPU1] stack_dump:  2f052440: 60f5f498 a0c565b6 3d18710d f0aa16d1 f27bd68f 8ec971cb 99ffba48 db637bcc
+[CPU1] stack_dump:  2f052460: 317ffa88 de44ba13 3d02f9fd d08aa68d 8364855d a3831609 3f4dd0c8 cd7d6154
+[CPU1] stack_dump:  2f052480: 92957643 ae8e74ff 28cc5b74 e39eef47 b4b5b9ef 6b271614 c1ff17b0 9ff362f2
+[CPU1] stack_dump:  2f0524a0: 2f196320 7db0fbba d69ce3d7 033a7274 16d3a063 3c508265 9a4a60a6 49446468
+[CPU1] stack_dump:  2f0524c0: 84f56e7d d9e01dc5 dd43ae47 e90969b6 c4b350e9 a14b8694 250a8cf7 995f9fbf
+[CPU1] stack_dump:  2f0524e0: 15cf4f75 afeb7dbd b4e02a9a 06942f89 00d603f2 2cbeed60 aeb5671c f76c3bed
+[CPU1] stack_dump:  2f052500: 8220aee1 3a2fa86f 173e4fd1 ebf25297 dee24806 1edfa92e cb1a2f6c b853d6f3
+[CPU1] stack_dump:  2f052520: 25af1636 4a6aaa10 dedd9ffd 98476e10 5ffa3553 6f004c35 fd6c8b89 a1a61d18
+[CPU1] stack_dump:  2f052540: 733dca49 549d70e6 22ff9fb0 dc4a8b8e c5171a5a 02c58439 ca0f61bb de5498d0
+[CPU1] stack_dump:  2f052560: 24fe93a1 20cd6f4d 456787e6 cd52a8fe c4d40e33 3313e50c c215d9bb 1fa85392
+[CPU1] stack_dump:  2f052580: f5874020 adc01d36 1184add6 63da546f a2aa976c 6b2196e4 40768a3c cadb6479
+[CPU1] stack_dump:  2f0525a0: 68ddc22d 10d79f1b 64841a10 2ffb1f7e d52b4c00 f6072cac 57788ca9 baa8be41
+[CPU1] stack_dump:  2f0525c0: a6fc0d5f 2b2aa0e0 979fda71 ea810e66 8155665e 804f96df 051c0fb8 666500dd
+[CPU1] stack_dump:  2f0525e0: a187bf7b 0c704710 a0825416 6b2ece25 1142db84 12cc766c d77333a9 4e7cdf27
+[CPU1] stack_dump:  2f052600: 5faee6e3 636c8c0b 8180da8a a9006cff e917ee2c 64e72f8a b1a9d577 7daeaf4c
+[CPU1] stack_dump:  2f052620: 1549a10f 26183cf3 25ea7513 267dd0fc 37c4ee72 0388180f 355a0b28 b0328525
+[CPU1] stack_dump:  2f052640: 34e98fd2 e964a252 6b6b5559 624d61f1 96f666e2 0b82ff3c 99234fa6 cbc0dbcd
+[CPU1] stack_dump:  2f052660: 6dde0605 23bb0af5 64a2e11e 668e34f5 d6ecc0e0 9ab20143 a7bde947 09728780
+[CPU1] stack_dump:  2f052680: 1e6befee 88133964 e28fcfc3 6a660474 cd2d4d5d 404ac031 c1dec6e6 8da8bced
+[CPU1] stack_dump:  2f0526a0: 28a5140b 0863bc32 de50cdc1 dda88ef2 445439d8 304c9d53 4d187dd8 96c27127
+[CPU1] stack_dump:  2f0526c0: de9c1406 4c4ee0a9 fc887b5c cbe42287 71743d3e 95eaf38b 8714e0c0 551e6592
+[CPU1] stack_dump:  2f0526e0: 37257dbb 0f474b52 175cc26f 3f92c5b5 3281ced0 6dded36a 5e7a63f7 1d4b2a6c
+[CPU1] stack_dump:  2f052700: d63a72cd 81c26c52 bff8b7d1 d54bb113 66306ef4 b399450a f56ef177 74fe9ea4
+[CPU1] stack_dump:  2f052720: 262b7c3d 303eea6d d3c03847 fb712940 521dd4c2 01832562 96685fad 531cf88a
+[CPU1] stack_dump:  2f052740: 30ad05a2 cdcacfe9 b50d1e18 8feb697f 7abe9d73 9fff1c2a d9273c9d 4021ca5f
+[CPU1] stack_dump:  2f052760: 20e604f0 9018459e c295cb17 603ec839 22f0944a 746f0aa9 2342dda9 023f51a0
+[CPU1] stack_dump:  2f052780: e1c5ff2f 532d965e a5a05a96 713ef9ee 4e96d6ad c2fddcb0 543cbeff 393879e5
+[CPU1] stack_dump:  2f0527a0: 00b1cc40 47cb18d5 892f02a5 3d118d30 1a3fe852 b0c1461f 315f248d cec21fcf
+[CPU1] stack_dump:  2f0527c0: bd0948db faabdb6c 2fc52db1 00010001 00000000 729e0b0c d9a67e25 00010001
+[CPU1] stack_dump:  2f0527e0: 00000000 2f052980 2f04a218 00000313 2f04a4e0 00000000 2f04a218 00001801
+[CPU1] stack_dump:  2f052800: 400079b8 03e8a907 0b832f8d 0bbbbba0 e1840a4d 08d4c4a5 f17466be 2091121d
+[CPU1] stack_dump:  2f052820: 3d3c1e7d cae9f3d0 716fcb03 69db2e8d 606b8000 0022a403 42551c14 bdc202f6
+[CPU1] stack_dump:  2f052840: 2073abb5 0ec0f7eb a26c761a 0869bd05 607f8000 cd2d7614 263974c8 468b9732
+[CPU1] stack_dump:  2f052860: 200043d8 be7e1681 be58eb3d 00010001 00000000 f36493a1 00000000 2f052918
+[CPU1] stack_dump:  2f052880: 607f8000 00000002 00000000 2f01091c 607f8000 2f04a008 00000000 2f01091c
+[CPU1] stack_dump:  2f0528a0: 20000001 00000002 00000000 2f052958 4000af78 2f000f3a 40031962 40031962
+[CPU1] stack_dump:  2f0528c0: 2f0043d8 2f011000 00000000 2f052958 80044100 2f000f3a 400286e4 400286e4
+[CPU1] stack_dump:  2f0528e0: 2f0529e4 618077e4 4000a2d0 4000a2d0 2f0529f4 00000000 2f04a008 00000008
+[CPU1] stack_dump:  2f052900: 00000000 00000000 00000000 00000000 00000003 400d0d90 0000013b 00000000
+[CPU1] stack_dump:  2f052920: 7fffffff 00000006 00000001 2f04a250 400d0d90 2f04a008 00000000 00000000
+[CPU1] stack_dump:  2f052940: 00000000 00000000 00000000 00000000 00000000 00000000 fefefefe 0000003d
+[CPU1] stack_dump:  2f052960: 80808080 3d3d3d3d 00044100 10000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f052980: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f0529a0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f0529c0: 00000000 00000000 00000000 2f04a158 400096ae 00000000 00000000 2f034ab0
+[CPU1] stack_dump:  2f0529e0: ffffffff ffffffff 2f04a158 2f04a158 40009bd2 00000000 00000000 00000000
+[CPU1] stack_dump:  2f052a00: 0000013b 2f0181d4 61801078 2f034ab0 4000cb5e 00000000 2f04a10c 61800180
+[CPU1] stack_dump:  2f052a20: 40031fca 2f0181d4 00000000 2f04adf8 4005a436 2f0181d4 00000000 2f04a10c
+[CPU1] stack_dump:  2f052a40: 4002f766 2f0181d4 00000000 2f04a008 40031df8 00000000 00000007 4002f926
+[CPU1] stack_dump:  2f052a60: 00000007 00000000 00000011 00000005 00000000 00000000 00000007 00000000
+[CPU1] stack_dump:  2f052a80: 00000000 00000000 00000000 00000000 2f052b14 00000000 2f04a008 00000000
+[CPU1] stack_dump:  2f052aa0: 4002e1b4 00000000 00000000 00010001 00000000 00000006 2f04a008 ffffffda
+[CPU1] stack_dump:  2f052ac0: 40032492 0000003f 2f04a008 00000020 40002872 00000000 00000002 00000043
+[CPU1] stack_dump:  2f052ae0: 00000007 7fffffff 00000007 00000000 00000000 2f04a008 00000000 4002da52
+[CPU1] stack_dump:  2f052b00: 00000000 00000008 61008ac4 80046000 2f000ee0 61008ac4 61006c32 61807fe0
+[CPU1] stack_dump:  2f052b20: 00000000 00000000 ff78696c fefefeff 00000000 00000000 00000000 00000006
+[CPU1] stack_dump:  2f052b40: 00000000 00000000 00000007 7fffffff 00000007 00000043 00000000 00000000
+[CPU1] stack_dump:  2f052b60: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f052b80: 00000000 fefefefe 0000003d 80808080 3d3d3d3d 80046000 00000008 00000000
+[CPU1] stack_dump:  2f052ba0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f052bc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f052be0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f052c00: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f052c20: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] dump_stackinfo: User Stack:
+[CPU1] dump_stackinfo:   base: 0x61804050
+[CPU1] dump_stackinfo:   size: 00016304
+[CPU1] stack_dump:  61804050: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804070: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804090: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618040b0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618040d0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618040f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804110: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804130: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804150: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804170: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804190: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618041b0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618041d0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618041f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804210: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804230: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804250: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804270: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804290: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618042b0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618042d0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618042f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804310: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804330: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804350: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804370: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804390: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618043b0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618043d0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618043f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804410: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804430: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804450: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804470: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804490: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618044b0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618044d0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618044f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804510: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804530: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804550: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804570: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804590: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618045b0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618045d0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618045f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804610: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804630: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804650: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804670: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804690: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618046b0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618046d0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618046f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804710: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804730: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804750: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804770: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804790: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618047b0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618047d0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618047f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804810: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804830: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804850: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804870: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804890: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618048b0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618048d0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618048f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804910: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804930: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804950: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804970: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804990: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618049b0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618049d0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  618049f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804a10: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804a30: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804a50: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804a70: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804a90: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804ab0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804ad0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804af0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804b10: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804b30: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804b50: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804b70: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804b90: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804bb0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804bd0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804bf0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804c10: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804c30: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804c50: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804c70: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804c90: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804cb0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804cd0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804cf0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804d10: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804d30: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804d50: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804d70: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804d90: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804db0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804dd0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804df0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804e10: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804e30: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804e50: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804e70: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804e90: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804eb0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804ed0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804ef0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804f10: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804f30: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804f50: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804f70: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804f90: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804fb0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804fd0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61804ff0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61805010: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61805030: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  61805050: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] sched_dumpstack: backtrace| 7: 0x4000a2d0
+nsh> [K
+nsh> [KTraceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-run-standard.py", line 76, in <module>
+    raise RuntimeError('target fatal failure; log retained')
+RuntimeError: target fatal failure; log retained

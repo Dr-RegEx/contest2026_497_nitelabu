@@ -1,0 +1,358 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xee8c
+load:0x2f00ef00,len:0x368c
+entry 0x2f00ea54
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xee8c   (61068)
+dram: lma 0x00010ed4 vma 0x2f00ef00 len 0x368c   (13964)
+padd: lma 0x00014598 vma 0x00000000 len 0xba80   (47744)
+imap: lma 0x00020020 vma 0x400c0020 len 0x1953c  (103740)
+padd: lma 0x00039564 vma 0x00000000 len 0x6b94   (27540)
+imap: lma 0x00040100 vma 0x40000100 len 0xb1cb4  (728244)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] esp_wifi_adapter_init: S31 diagnostic: AMPDU RX disabled
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_BOOT=PASS seconds=0.584
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=0 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=12 id=128
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=52 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=12
+bssid / frequency / signal level / encode / ssid
+08:f4:58:ab:bf:e8	2437	-88	0800	HDMRC
+c0:a4:76:e8:e1:eb	2437	-85	0800	@Ruijie-s9599
+98:0d:51:96:33:54	2437	-81	0800	HDMRC
+10:9f:4f:43:b2:ca	2437	-80	0800	CMCC-C2C9
+a4:ba:70:3a:61:31	2412	-80	0800	CU-C4F4_plus
+24:69:68:38:77:70	2412	-79	0800	wlj
+50:78:b3:a3:c4:f4	2412	-78	0800	CU-C4F4
+bc:54:fc:36:e1:c2	2462	-73	0800	MERCURY_E1C2
+94:bf:80:7e:6f:c9	2427	-73	0800	CU_rfNY
+7c:39:85:2a:50:04	2462	-71	0800	<redacted>
+60:ce:41:ab:02:d2	2462	-61	0800	STB_T4Zp
+60:ce:41:ab:02:d0	2462	-61	0800	<redacted>
+nsh> [K
+nsh> [K
+SCAN_SECONDS=2.631
+SCAN_IOCTL=PASS
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=1 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=12 id=129
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=90 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=12
+bssid / frequency / signal level / encode / ssid
+b8:f8:83:2d:54:eb	2412	-88	0800	GS5.0
+c2:a4:76:28:e1:eb	2437	-86	0800	@Ruijie-s9599_iot
+7a:11:dc:4d:90:10	2437	-85	0800	chunmi-cooker-normal2_miap9010
+68:dd:b7:77:db:38	2462	-84	0800	JSL
+ca:33:e5:05:fe:88	2432	-83	0800	阳光
+90:7e:43:c9:d4:3c	2427	-82	0800	XXN3M
+60:ce:41:46:0e:ec	2437	-76	0800	<redacted>
+94:bf:80:7e:6f:c9	2427	-73	0800	CU_rfNY
+bc:54:fc:36:e1:c2	2462	-72	0800	MERCURY_E1C2
+7c:39:85:2a:50:04	2462	-64	0800	<redacted>
+60:ce:41:ab:02:d0	2462	-63	0800	<redacted>
+60:ce:41:ab:02:d2	2462	-62	0800	STB_T4Zp
+nsh> [K
+nsh> [K
+PSCAN_SECONDS=5.271
+PSCAN_IOCTL=PASS
+--- CMD: wapi psk wlan0 <redacted> 3 2 ---
+wapi psk wlan0 <redacted> 3 2
+nsh> [K
+nsh> [K
+--- CMD: wapi essid wlan0 <redacted> 1 ---
+wapi essid wlan0 <redacted> 1
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+[CPU0] esp_event_post_wrapper: S31 associated: channel=6 auth=3 bssid=60:ce:41:46:0e:ec
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+nsh> [K
+nsh> [K
+--- CMD: sleep 2 ---
+sleep 2
+[CPU0] wlan_sta_ip_poll: S31 station IP published
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.1 dst=192.168.1.60
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=60:ce:41:ab:02:ca tha=00:00:00:00:00:00 len=60
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.1 dst=192.168.1.60
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=60:ce:41:ab:02:ca tha=00:00:00:00:00:00 len=60
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=1712 replay=1712 ack=1909 drop=0 pending=0x0 sreplay=2
+MONIRQ: cpu=1 defer=6288 replay=6288 ack=8951 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=5 fail=0 destroyed=4 live=1 livemax=2 pages=604 pgt=16
+WAIT: pid=2 object=0x2f00f694
+LPTRACE: 0x400245c8
+WAIT: pid=4 object=0x2f00f6ec
+nsh> [K
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:10.0.0.2 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.1 dst=192.168.1.60
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=60:ce:41:ab:02:ca tha=00:00:00:00:00:00 len=60
+--- CMD: ifconfig wlan0 0.0.0.0 gw 10.0.0.1 ---
+ifconfig wlan0 0.0.0.0 gw 10.0.0.1
+nsh> [K
+nsh> [K
+--- CMD: renew wlan0 ---
+renew wlan0
+[CPU0] wlan_dhcp_diag: S31 DHCP TX: len=307 multicast=1 dst=255.255.255.255
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.1 dst=192.168.1.60
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=60:ce:41:ab:02:ca tha=00:00:00:00:00:00 len=60
+[CPU0] wlan_dhcp_diag: S31 DHCP RX: len=590 multicast=1 dst=255.255.255.255
+[CPU0] wlan_dhcp_diag: S31 DHCP RX: len=590 multicast=1 dst=255.255.255.255
+[CPU0] wlan_dhcp_diag: S31 DHCP TX: len=314 multicast=1 dst=255.255.255.255
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+[CPU0] wlan_dhcp_diag: S31 DHCP RX: len=590 multicast=1 dst=255.255.255.255
+[CPU0] wlan_dhcp_diag: S31 DHCP RX: len=590 multicast=1 dst=255.255.255.255
+nsh> [K
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+DHCP=PASS address=192.168.1.60
+HOST_TO_BOARD: status=TimedOut ms=0
+HOST_TO_BOARD: status=TimedOut ms=0
+HOST_TO_BOARD: status=TimedOut ms=0
+HOST_TO_BOARD: status=TimedOut ms=0
+
+
+--- SERIAL DURING HOST PROBE ---
+
+--- CMD: ping -c 4 192.168.1.29 ---
+ping -c 4 192.168.1.29
+PING 192.168.1.29 56 bytes of data
+[CPU0] wlan_dhcp_diag: S31 ARP TX: op=1 src=192.168.1.60 dst=192.168.1.29
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=30:ed:a0:f3:f7:b0 tha=00:00:0[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+0:00:00:00 len=42
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+CPU0] wlan_dhcp_diag: S31 ARP TX: op=1 src=192.168.1.60 dst=192.168.1.29
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=30:ed:a0:f3:f7:b0 tha=00:00:00:00:00:00 len=42
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=2 src=192.168.1.29 dst=192.168.1.60
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=a8:e2:91:97:1c:b4 tha=30:ed:a0:f3:f7:b0 len=60
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=2 src=192.168.1.29 dst=192.168.1.60
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=a8:e2:91:97:1c:b4 tha=30:ed:a0:f3:f7:[b0 len=60
+CPU1] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=0 dst=192.168.1.29
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=a8:e2:91:97:1c:b4 src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.29 dst=192.168.1.60
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=a8:e2:91:97:1c:b4 tha=30:ed:a0:f3:f7:b0 len=60
+[CPU1] wlan_dhcp_diag: S31 ARP TX: op=2 src=192.168.1.60 dst=192.168.1.29
+[CPU1] wlan_dhcp_diag[:C PU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+S31 ARP MAC: sha=30:ed:a0:f3:f7:b0 tha=a8:e2:91:97:1c:b4 len=60
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+No response from 192.168.1.29: icmp_seq=0 time=1000 ms
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=1 dst=192.168.1.29
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=a8:e2:91:97:1c:b4 src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+No response from 192.168.1.29: icmp_seq=1 time=1000 ms
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=2 dst=192.168.1.29
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=a8:e2:91:97:1c:b4 src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+No response from 192.168.1.29: icmp_seq=2 time=1000 ms
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=3 dst=192.168.1.29
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=a8:e2:91:97:1c:b4 src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+No response from 192.168.1.29: icmp_seq=3 time=1000 ms
+4 packets transmitted, 0 received, 100% packet loss, time 4230 ms
+nsh> [K
+nsh> [K
+--- CMD: arp -i wlan0 -a 192.168.1.1 ---
+arp -i wlan0 -a 192.168.1.1
+nsh: arp: no such ARP entry: 192.168.1.1
+nsh> [K
+nsh> [K
+--- CMD: ping -c 4 192.168.1.1 ---
+ping -c 4 192.168[CPU0] wlan_dhcp_diag: S31 ARP RX: op=2 src=192.168.1.29 dst=192.168.1.60
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=a8:e2:91:97:1c:b4 tha=30:ed:a0:f3:f7:b0 len=60
+.1.1
+PING 192.168.1.1 56 bytes of data
+[CPU0] wlan_dhcp_diag: S31 ARP TX: op=1 src=192.168.1.60 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=30:ed:a0:f3:f7:b0 tha=00:00:00:00:00:00 len=42
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=2 src=192.168.1.1 dst=192.168.1.60
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=60:ce:41:ab:02:ca tha=30:ed:a0:f3:f7:b0 len=60
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=0 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=60:ce:41:ab:02:ca src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.7 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=32:91:30:98:3a:d7 tha=00:00:00:00:00:00 len=44
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.3 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=7c:39:85:2a:4f:ff tha=ff:ff:ff:ff:ff:ff len=60
+No response from 192.168.1.1: icmp_seq=0 time=1000 ms
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=1 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=60:ce:41:ab:02:ca src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.3 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=7c:39:85:2a:4f:ff tha=ff:ff:ff:ff:ff:ff len=60
+No response from 192.168.1.1: icmp_seq=1 time=1000 ms
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=2 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=60:ce:41:ab:02:ca src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.3 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=7c:39:85:2a:4f:ff tha=ff:ff:ff:ff:ff:ff len=60
+No response from 192.168.1.1: icmp_seq=2 time=1000 ms
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=3 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=60:ce:41:ab:02:ca src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+No response from 192.168.1.1: icmp_seq=3 time=1000 ms
+4 packets transmitted, 0 received, 100% packet loss, time 4150 ms
+nsh> [K
+nsh> [K[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.3 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=7c:39:85:2a:4f:ff tha=ff:ff:ff:ff:ff:ff len=60
+--- CMD: arp -i wlan0 -a 192.168.1.1 ---
+arp -i wlan0 -a 192.168.1.1
+HWaddr: 60:ce:41:ab:02:ca
+nsh> [K
+nsh> [K
+--- CMD: ping -c 4 192.168.1.1 ---
+ping -c 4 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=0 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=60:ce:41:ab:02:ca src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+No response from 192.168.1.1: icmp_seq=0 time=1000 ms
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=1 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=60:ce:41:ab:02:ca src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+No response from 192.168.1.1: icmp_seq=1 time=1000 ms
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=2 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=60:ce:41:ab:02:ca src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+No response from 192.168.1.1: icmp_seq=2 time=1000 ms
+[CPU0] wlan_dhcp_diag: S31 ICMP TX: type=8 seq=3 dst=192.168.1.1
+[CPU0] wlan_dhcp_diag: S31 ICMP L2 dst=60:ce:41:ab:02:ca src=30:ed:a0:f3:f7:b0
+[CPU0] wlan_dhcp_diag: S31 ICMP verify: ipsum=ffff icmpsum=ffff src=192.168.1.60 iplen=84 framelen=98
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+[CPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+No response from 192.168.1.1: icmp_seq=3 time=1000 ms
+4 packets transmitted, 0 received, 100% packet loss, time 4120 ms
+nsh> [K
+nsh> [K
+WARM_ARP_PING=FAIL
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31sta[CPU0] wlan_dhcp_diag: S31 ARP RX: op=1 src=192.168.1.1 dst=192.168.1.60
+[CPU0] wlan_dhcp_diag: S31 ARP MAC: sha=60:ce:41:ab:02:ca tha=00:00:00:00:00:00 len=44
+[CPU1] wlan_dhcp_diag: S31 ARP TX: op=2 src=192.168.1.60 dst=192.168.1.1
+[CP[UCPU0] wlan_sta_tx_done: S31 TX done: if=0 status=1
+1] wlan_dhcp_diag: S31 ARP MAC: sha=30:ed:a0:f3:f7:b0 tha=60:ce:41:ab:02:ca len=44
+[CPU0] wlan_transmit: S31 DHCP TX submit: ret=0
+t
+MONIRQ: cpu=0 defer=4849 replay=4849 ack=5077 drop=0 pending=0x0 sreplay=10
+MONIRQ: cpu=1 defer=10278 replay=10278 ack=12942 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=9 fail=0 destroyed=8 live=1 livemax=2 pages=1170 pgt=32
+WAIT: pid=2 object=0x2f00f694
+LPTRACE: 0x400245c8
+WAIT: pid=4 object=0x2f00f6ec
+nsh> [K
+nsh> [K
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xee8c
+load:0x2f00ef00,len:0x368c
+entry 0x2f00ea54
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xee8c   (61068)
+dram: lma 0x00010ed4 vma 0x2f00ef00 len 0x368c   (13964)
+padd: lma 0x00014598 vma 0x00000000 len 0xba80   (47744)
+imap: lma 0x00020020 vma 0x400c0020 len 0x1953c  (103740)
+padd: lma 0x00039564 vma 0x00000000 len 0x6b94   (27540)
+imap: lma 0x00040100 vma 0x40000100 len 0xb1cb4  (728244)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] esp_wifi_adapter_init: S31 diagnostic: AMPDU RX disabled
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_CLEANUP_BOOT=PASS seconds=0.586
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+NETWORK_PROBE=FAIL: gateway ping did not pass

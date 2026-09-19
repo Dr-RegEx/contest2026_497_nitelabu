@@ -1,0 +1,46 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1575-audio-kernel.sha256
+XTS_COMMAND=ls /dev/audio
+--- CMD: ls /dev/audio ---
+ls /dev/audio
+/dev/audio:
+ pcm0c
+ pcm0p
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     277412      94244     183168     226128     123448    202     13 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+AUDIO_COMMAND=nxrecorder
+nxrecorder
+NxRecorder version 1.00
+h for commands, q to exit
+
+nxrecorder> [KAUDIO_COMMAND=device /dev/audio/pcm0c
+device /dev/audio/pcm0c
+nxrecorder> [KAUDIO_COMMAND=recordraw /apps/audio1578-0.pcm 2 16 44100
+recordraw /apps/audio1578-0.pcm 2 16 44100
+nxrecorder> [KAUDIO_COMMAND=stop
+stop
+nxrecorder> [KAUDIO_COMMAND=quit
+quit
+nsh> [KXTS_COMMAND=ls -l /apps/audio1578-0.pcm
+--- CMD: ls -l /apps/audio1578-0.pcm ---
+ls -l /apps/audio1578-0.pcm
+ -rw-rw-rw-        4096 /apps/audio1578-0.pcm
+nsh> [K
+nsh> [K
+{"status": "FAIL", "scope": "MMU_AUDIO_LIFECYCLE_DIAGNOSTIC", "receipt": "build1575-audio-kernel.sha256", "captures": [], "error": "missing captured PCM"}

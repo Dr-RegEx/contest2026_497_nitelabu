@@ -1,0 +1,9 @@
+test: /tmp/esp-rmt-write-nkhdpp7v/test.c:68: main: Assertion `esp_rmt_write(dev, (char *)data, sizeof(data)) == result' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_rmt_write.py", line 90, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_rmt_write.py", line 86, in main
+    subprocess.run([str(path / 'test')], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-rmt-write-nkhdpp7v/test']' died with <Signals.SIGABRT: 6>.

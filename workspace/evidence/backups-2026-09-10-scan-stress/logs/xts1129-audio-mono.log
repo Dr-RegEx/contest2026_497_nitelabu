@@ -1,0 +1,9 @@
+{"status": "FAILED", "audio_acceptance": "NOT_TESTED", "direction": "capture-and-export", "remote": "/data/mic1129.pcm", "image_sha256": "4bf2776f07da68b266bb78f0df6af801fc4f750932ec79d0f11b3f3ce8da301e", "explicit_reset": false, "started_unix": 1789561879.0195851, "heap_free_before": 17208952, "heap_largest_before": 16777200, "original_program_elapsed_host_seconds": 11.938220500946045, "error": "RuntimeError: original audio program incomplete/failed; no rerecord or reset", "finished_unix": 1789561891.788544}
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/audio-file-transfer.py", line 263, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/audio-file-transfer.py", line 180, in main
+    require('Start Capture.' in audio and (args.capture or 'Start Playback.' in audio)
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/audio-file-transfer.py", line 30, in require
+    raise RuntimeError(message)
+RuntimeError: original audio program incomplete/failed; no rerecord or reset

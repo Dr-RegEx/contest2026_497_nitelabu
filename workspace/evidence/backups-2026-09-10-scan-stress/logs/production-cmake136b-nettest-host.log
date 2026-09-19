@@ -1,0 +1,52 @@
++ '[' '' = olddefconfig ']'
++ '[' '' = reconfigure ']'
++ '[' '' = resetconfig ']'
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6 -j8
+[0/9] Performing build step for 'nettest'
+[0/1] Re-running CMake...
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/apps/examples/nettest/nettest-prefix/src/nettest-build
+[1/2] Building C object CMakeFiles/tcpclient.dir/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c.o
+FAILED: CMakeFiles/tcpclient.dir/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c.o 
+/usr/bin/cc -DCONFIG_EXAMPLES_NETTEST_SERVER=1 -DCONFIG_EXAMPLES_NETTEST_SERVERIP=\"0x0a000002\" -DNETTEST_HOST=1 -I/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/include/nuttx  -MD -MT CMakeFiles/tcpclient.dir/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c.o -MF CMakeFiles/tcpclient.dir/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c.o.d -o CMakeFiles/tcpclient.dir/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c.o -c /home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c
+In file included from /home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c:25:
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/include/nuttx/config.h:621: warning: "CONFIG_EXAMPLES_NETTEST_SERVERIP" redefined
+  621 | #define CONFIG_EXAMPLES_NETTEST_SERVERIP 0x0a000002
+      | 
+<command-line>: note: this is the location of the previous definition
+In file included from /home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c:31:
+/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest.h:45:26: error: initializer element is not constant
+   45 | #  define HTONL(a)       htonl(a)
+      |                          ^~~~~
+/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c:67:33: note: in expansion of macro ‘HTONL’
+   67 | uint32_t g_nettestserver_ipv4 = HTONL(CONFIG_EXAMPLES_NETTEST_SERVERIP);
+      |                                 ^~~~~
+/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c:80:24: error: unknown type name ‘FAR’
+   80 | static void show_usage(FAR const char *progname)
+      |                        ^~~
+/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c: In function ‘nettest_cmdline’:
+/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c:114:11: warning: implicit declaration of function ‘show_usage’ [-Wimplicit-function-declaration]
+  114 |           show_usage(argv[0]);
+      |           ^~~~~~~~~~
+ninja: build stopped: subcommand failed.
+[3/9] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/syscall && cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/bin_host --target mksyscall
+[ 50%] Built target csvparser
+[100%] Built target mksyscall
+FAILED: apps/examples/nettest/nettest-prefix/src/nettest-stamp/nettest-build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/apps/examples/nettest/nettest-prefix/src/nettest-stamp/nettest-build 
+cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/apps/examples/nettest/nettest-prefix/src/nettest-build && /usr/bin/cmake --build . && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/apps/examples/nettest/nettest-prefix/src/nettest-stamp/nettest-build
+[5/9] Generating System.map
+[6/9] Generating nuttx.hex
+[7/9] Generating ESP32-S31 simple-boot image for offset 0x2000
+esptool v5.4.0
+Creating ESP32-S31 image...
+Image has only RAM segments visible. ROM segments are hidden and SHA256 digest is not appended.
+Merged 1 ELF section.
+Successfully created ESP32-S31 image.
+ninja: build stopped: subcommand failed.
++ restore_cfg
++ '[' -f /tmp/esp32s31-source-config.Fyzdib/.config ']'
++ mv /tmp/esp32s31-source-config.Fyzdib/.config .config
++ '[' -f /tmp/esp32s31-source-config.Fyzdib/config.h ']'
++ mv /tmp/esp32s31-source-config.Fyzdib/config.h include/nuttx/config.h
++ rmdir /tmp/esp32s31-source-config.Fyzdib

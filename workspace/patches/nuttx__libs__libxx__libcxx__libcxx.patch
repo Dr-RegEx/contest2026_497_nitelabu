@@ -1,0 +1,36 @@
+diff --git a/include/__type_traits/decay.h b/include/__type_traits/decay.h
+index 95dccaa29..dd33eeaac 100644
+--- a/include/__type_traits/decay.h
++++ b/include/__type_traits/decay.h
+@@ -26,14 +26,14 @@
+ _LIBCPP_BEGIN_NAMESPACE_STD
+ 
+ #if __has_builtin(__decay)
+-template <class _Tp>
+-using __decay_t _LIBCPP_NODEBUG = __decay(_Tp);
+-
+ template <class _Tp>
+ struct decay {
+-  using type _LIBCPP_NODEBUG = __decay_t<_Tp>;
++  using type _LIBCPP_NODEBUG = __decay(_Tp);
+ };
+ 
++template <class _Tp>
++using __decay_t _LIBCPP_NODEBUG = typename decay<_Tp>::type;
++
+ #else
+ template <class _Up, bool>
+ struct __decay {
+diff --git a/include/__type_traits/remove_pointer.h b/include/__type_traits/remove_pointer.h
+index 54390a193..690a58068 100644
+--- a/include/__type_traits/remove_pointer.h
++++ b/include/__type_traits/remove_pointer.h
+@@ -24,7 +24,7 @@ struct remove_pointer {
+ };
+ 
+ template <class _Tp>
+-using __remove_pointer_t = __remove_pointer(_Tp);
++using __remove_pointer_t = typename remove_pointer<_Tp>::type;
+ #else
+ // clang-format off
+ template <class _Tp> struct _LIBCPP_TEMPLATE_VIS remove_pointer                      {typedef _LIBCPP_NODEBUG _Tp type;};

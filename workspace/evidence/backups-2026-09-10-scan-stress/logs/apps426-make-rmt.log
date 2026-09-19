@@ -1,0 +1,8 @@
++ '[' apps = configure ']'
++ '[' apps = export ']'
++ '[' apps = apps ']'
++ make -C ../apps -j8 import
+make: Entering directory '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps'
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/Make.defs:24: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/scripts/Make.defs: No such file or directory
+make: *** No rule to make target '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/scripts/Make.defs'.  Stop.
+make: Leaving directory '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps'

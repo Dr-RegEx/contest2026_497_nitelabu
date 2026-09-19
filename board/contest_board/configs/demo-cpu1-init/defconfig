@@ -1,0 +1,3 @@
+# Diagnostic only: default tasks on CPU1, Wi-Fi worker explicitly on CPU0.
+#include "../demo/defconfig"
+CONFIG_SMP_DEFAULT_CPUSET=0x2

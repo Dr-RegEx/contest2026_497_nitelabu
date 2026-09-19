@@ -1,0 +1,1474 @@
+{
+  "summary": {
+    "basis": "35 common headings +161 category title instances; workflow classification with existing board/PC/AP, not final mandatory applicability",
+    "category_counts": {
+      "需要人工": 80,
+      "无需人工": 48,
+      "硬件不适用": 29,
+      "口径待核定": 4
+    },
+    "category_pass": {
+      "无需人工": 33,
+      "需要人工": 2
+    },
+    "common_counts": {
+      "无需人工": 31,
+      "需要人工": 4
+    },
+    "common_pass": {
+      "无需人工": 30,
+      "需要人工": 0
+    }
+  },
+  "category_rows": [
+    {
+      "line": 1094,
+      "id": "未编号/特殊编号",
+      "title": "全包升级--升级成功后启动到bl2进行avb_verify过程中断电",
+      "group": "需要人工",
+      "passed": false,
+      "status": "板级升级链路缺失，未实测",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 1127,
+      "id": "6.1.1",
+      "title": "6.1.1 路由器兼容性",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 1143,
+      "id": "5.1.9",
+      "title": "5.1.9 文件系统多线程读文件vela_fs_multi_thread_read_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS 原始工作量",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1180,
+      "id": "5.1.8",
+      "title": "5.1.8 文件系统多线程写文件测试vela_fs_multi_thread_write_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS 原始工作量",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1217,
+      "id": "5.1.7",
+      "title": "5.1.7 文件系统随机读写测试vela_fs_random_read_and_write_test",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1094执行完成，随机写性能未验收",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1258,
+      "id": "5.1.68",
+      "title": "5.1.68 KVDB稳定性vela_kvdb_stability_test02测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1155，3MiB卷原始10轮；1119失败保留",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1286,
+      "id": "5.1.6",
+      "title": "5.1.6 文件系统反复读写测试vela_fs_stress_read_and_write_loops_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS 原始工作量",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1321,
+      "id": "5.1.58",
+      "title": "5.1.58 全包升级总耗时",
+      "group": "无需人工",
+      "passed": false,
+      "status": "板级升级链路缺失，未实测",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1337,
+      "id": "5.1.5",
+      "title": "5.1.5 文件系统多线程文件读写测试vela_fs_stress_multi_thread_file_operate_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS 原始工作量",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1372,
+      "id": "5.1.42",
+      "title": "5.1.42 WiFi--设备未配网时反复扫描周边无线AP",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1112，原始100轮",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1392,
+      "id": "5.1.41",
+      "title": "5.1.41 WiFi--反复ifup&ifdown",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1035",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1411,
+      "id": "5.1.40",
+      "title": "5.1.40 WiFi--屏蔽箱中更换设备时的吞吐变化",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 1434,
+      "id": "5.1.4",
+      "title": "5.1.4 文件系统反复创建和删除文件vela_fs_stress_maximum_file_name_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1028",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1472,
+      "id": "5.1.39",
+      "title": "5.1.39 WiFi--5G网络---wapi反复disconnect 5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1510,
+      "id": "5.1.38",
+      "title": "5.1.38 WiFi--5G网络---设备连接5G后wapi扫描指定2.4G AP",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1535,
+      "id": "5.1.37",
+      "title": "5.1.37 WiFi-5G网络---设备连接5G后wapi扫描指定5G AP",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1560,
+      "id": "5.1.36",
+      "title": "5.1.36 WiFi--5G网络---设备连接5G后wapi反复扫描周边无线AP",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1585,
+      "id": "5.1.35",
+      "title": "5.1.35 WiFi--5G网络---设备作为Client端时的UDP Tx平均速率",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1613,
+      "id": "5.1.34",
+      "title": "5.1.34 WiFi--5G网络---设备作为Server端时的UDP Rx平均速率",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1641,
+      "id": "5.1.33",
+      "title": "5.1.33 WiFi--5G网络---设备作为Client端时的TCP Tx平均速率",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1669,
+      "id": "5.1.32",
+      "title": "5.1.32 WiFi--5G网络---设备作为Server端时的TCP Rx平均速率",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1697,
+      "id": "5.1.31",
+      "title": "5.1.31 WiFi--5G网络---屏蔽箱环境STA连接成功率",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1713,
+      "id": "5.1.30",
+      "title": "5.1.30 WiFi--5G网络---屏蔽箱环境ping包时延",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1739,
+      "id": "5.1.3",
+      "title": "5.1.3 文件系统创建和删除压力测试vela_fs_stress_loop_create_delete_file_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1022",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1774,
+      "id": "5.1.28",
+      "title": "5.1.28 WiFi--2.4G网络---设备连接2.4G后wapi扫描指定5G AP",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 1799,
+      "id": "5.1.26",
+      "title": "5.1.26 WiFi--2.4G网络---设备连接2.4G后wapi反复扫描周边无线AP",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1347 原始100轮全部完成",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1824,
+      "id": "5.1.25",
+      "title": "5.1.25 WiFi--2.4G网络---设备作为Client端时的UDP Tx平均速率",
+      "group": "无需人工",
+      "passed": false,
+      "status": "原始300秒实测完成，速率验收待定",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1852,
+      "id": "5.1.24",
+      "title": "5.1.24 WiFi--2.4G网络---设备作为Server端时的UDP Rx平均速率",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1372原始工作量完成，性能未通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1880,
+      "id": "5.1.22",
+      "title": "5.1.22 WiFi--2.4G网络---设备作为Server端时的TCP Rx平均速率",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1361原始300秒客户端完成，速率记录待验收",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1908,
+      "id": "5.1.21",
+      "title": "5.1.21 WiFi--2.4G网络---屏蔽箱环境STA连接成功率",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 1924,
+      "id": "5.1.2",
+      "title": "5.1.2 文件系统文件写入速度测试vela_fs_stress_write_speed",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1065 原始1000×1024字节",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1959,
+      "id": "5.1.19",
+      "title": "5.1.19 文件系统crash后文件完整性校验vela_fs_stability_test04 文件",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1126，显式sync挂载",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1997,
+      "id": "5.1.18",
+      "title": "5.1.18 文件系统crash后crc校验 vela_fs_stability_test03",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1081/1082 reboot及crash均通过",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2033,
+      "id": "5.1.17",
+      "title": "文件系统多线程操作文件测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1163 原始一小时",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2070,
+      "id": "5.1.16",
+      "title": "文件系统碎片读写测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1164/1169 按原文观察标准",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2111,
+      "id": "5.1.15",
+      "title": "5.1.15 文件系统fstest执行1000次",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS：1181原始1000轮，1184收尾",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2142,
+      "id": "5.1.14",
+      "title": "5.1.14 只读文件系统性能测试",
+      "group": "口径待核定",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "原文无特殊要求不测"
+    },
+    {
+      "line": 2173,
+      "id": "5.1.13",
+      "title": "5.1.13 裸设备读写性能测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS994，原始dd实测通过",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2205,
+      "id": "5.1.12",
+      "title": "5.1.12 文件系统读写速率测试dd",
+      "group": "无需人工",
+      "passed": false,
+      "status": "厂商自测记录完成1030，速率待社区验收",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2237,
+      "id": "5.1.11",
+      "title": "5.1.11 文件系统读写速率测试performance_test",
+      "group": "无需人工",
+      "passed": false,
+      "status": "厂商自测记录完成1030，速率待社区验收",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2277,
+      "id": "5.1.10",
+      "title": "5.1.10 文件系统的多线程读写测试vela_fs_multi_thread_read_write_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS 原始工作量",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2311,
+      "id": "5.1.1",
+      "title": "文件系统分区写满异常测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1173",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2350,
+      "id": "4.2.9",
+      "title": "4.2.9 Audio_DSP--Playback_cmoka_2channels",
+      "group": "需要人工",
+      "passed": false,
+      "status": "968已补原默认44.1kHz，待上板",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2376,
+      "id": "4.2.8",
+      "title": "4.2.8 Audio_DSP--Playback_nxplayer",
+      "group": "需要人工",
+      "passed": false,
+      "status": "968已含nxplayer，未上板",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2396,
+      "id": "4.2.7",
+      "title": "4.2.7 Touch Panel测试2",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2435,
+      "id": "4.2.6",
+      "title": "4.2.6 Touch Panel测试1",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2462,
+      "id": "4.2.5",
+      "title": "4.2.5 Lcd测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2499,
+      "id": "4.2.4",
+      "title": "4.2.4 Framebuffer测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2536,
+      "id": "4.2.3",
+      "title": "4.2.3 2D-GPU测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "PPA/LVGL加速接入未实现，显示条件待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2553,
+      "id": "4.2.25",
+      "title": "4.2.25 AC 底座",
+      "group": "需要人工",
+      "passed": false,
+      "status": "未完成/当前无相应夹具",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2585,
+      "id": "4.2.24",
+      "title": "4.2.24 电源按键",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始电源按键适用性/映射未核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2617,
+      "id": "4.2.23",
+      "title": "4.2.23 马达",
+      "group": "需要人工",
+      "passed": false,
+      "status": "未完成/当前无相应夹具",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2647,
+      "id": "4.2.22",
+      "title": "4.2.22 Relay",
+      "group": "需要人工",
+      "passed": false,
+      "status": "未完成/当前无相应夹具",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2677,
+      "id": "4.2.20",
+      "title": "4.2.20 PWM",
+      "group": "需要人工",
+      "passed": false,
+      "status": "898已编译通过，待API与波形实测",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2708,
+      "id": "4.2.2",
+      "title": "4.2.2 USB（ADB）测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "965软件候选编译通过，未实测",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2724,
+      "id": "4.2.17",
+      "title": "4.2.17 PMU ADC",
+      "group": "需要人工",
+      "passed": false,
+      "status": "954原始采样候选已编译，未实测",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 2749,
+      "id": "4.2.16",
+      "title": "4.2.16 Audio",
+      "group": "无需人工",
+      "passed": false,
+      "status": "968已编译；原无参数步骤存在空跑限制，待实测",
+      "reason": "原文无参数cmocka程序仅要求日志PASS；空跑有效性仍待处理，不计已通过"
+    },
+    {
+      "line": 2779,
+      "id": "4.2.15",
+      "title": "4.2.15 Audio_DSP--Looper_cmoka",
+      "group": "需要人工",
+      "passed": false,
+      "status": "1059麦克风试听通过；外接扬声器播放待验收",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2805,
+      "id": "4.2.14",
+      "title": "4.2.14 Audio_DSP--Looper_nxlooper",
+      "group": "需要人工",
+      "passed": false,
+      "status": "1186/1187启动停滞，待修复",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2826,
+      "id": "4.2.13",
+      "title": "4.2.13 Audio_DSP--Capture_cmoka_3channels",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原文3ch/32bit未支持",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2852,
+      "id": "4.2.13",
+      "title": "4.2.13 Audio_DSP--Capture_cmoka_1channels",
+      "group": "需要人工",
+      "passed": true,
+      "status": "PASS1143原始命令+用户试听",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2878,
+      "id": "4.2.12",
+      "title": "4.2.12 Audio_DSP--Capture_cmoka_2channels",
+      "group": "需要人工",
+      "passed": true,
+      "status": "PASS1087原始程序+用户试听",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2904,
+      "id": "4.2.11",
+      "title": "4.2.11 Audio_DSP--Capture_nxrecorder",
+      "group": "需要人工",
+      "passed": false,
+      "status": "968已含nxrecorder，原参数未支持",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2925,
+      "id": "4.2.10",
+      "title": "4.2.10 Audio_DSP--Playback_cmoka_1channels",
+      "group": "需要人工",
+      "passed": false,
+      "status": "待外接扬声器原始播放实测",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2953,
+      "id": "4.1.6",
+      "title": "4.1.6 文件系统异常场景--掉电重启时磁盘空间变化",
+      "group": "需要人工",
+      "passed": false,
+      "status": "949已编译通过，待真实掉电实测",
+      "reason": "真实掉电，尚无自动断电夹具"
+    },
+    {
+      "line": 2990,
+      "id": "4.1.57",
+      "title": "4.1.57 WiFi--wapi CountryCode的设置和获取",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1034",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3013,
+      "id": "4.1.56",
+      "title": "4.1.56 WiFi--设备连接至双频合一的网络",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3040,
+      "id": "4.1.55",
+      "title": "4.1.55 WiFi--无线模式支持802.11b/g/n/ax混合",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3059,
+      "id": "4.1.54",
+      "title": "4.1.54 WiFi--无线模式支持802.11b/g/n混合",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3078,
+      "id": "4.1.53",
+      "title": "4.1.53 WiFi--无线模式支持802.11b/g混合",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3097,
+      "id": "4.1.52",
+      "title": "4.1.52 WiFi--无线模式支持802.11n only",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3116,
+      "id": "4.1.51",
+      "title": "4.1.51 WiFi--无线模式支持802.11g only",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3135,
+      "id": "4.1.50",
+      "title": "4.1.50 WiFi--5G--5G网络全信道扫描测试",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3157,
+      "id": "4.1.5",
+      "title": "4.1.5 文件系统异常场景--创建文件时掉电",
+      "group": "需要人工",
+      "passed": false,
+      "status": "949已编译通过，待真实掉电实测",
+      "reason": "真实掉电，尚无自动断电夹具"
+    },
+    {
+      "line": 3194,
+      "id": "4.1.49",
+      "title": "4.1.49 WiFi--5G--wapi disconncet后与外网不通",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3224,
+      "id": "4.1.48",
+      "title": "4.1.48 WiFi--5G--wapi reconncet",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3256,
+      "id": "4.1.47",
+      "title": "4.1.47 WiFi--5G--wapi config保存后设备reboot再reconnect",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3285,
+      "id": "4.1.46",
+      "title": "4.1.46 WiFi--5G--wapi config保存正常",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3311,
+      "id": "4.1.45",
+      "title": "4.1.45 WiFi--5G--遍历5G无线信道连接",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3336,
+      "id": "4.1.44",
+      "title": "4.1.44 WiFi--5G--Wapi Show获取5G AP的无线参数",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3359,
+      "id": "4.1.43",
+      "title": "4.1.43 WiFi--5G--Wapi Sense获取链接5G AP的RSSI",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3384,
+      "id": "4.1.42",
+      "title": "4.1.42 WiFi--5G--Wapi连接为WPA3加密方式时加入5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3410,
+      "id": "4.1.41",
+      "title": "4.1.41 WiFi--5G--Wapi连接为WPA2/WPA3混合加密方式时加入5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3436,
+      "id": "4.1.40",
+      "title": "4.1.40 WiFi--5G--Wapi连接为WPA/WPA2混合加密方式时加入5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3462,
+      "id": "4.1.4",
+      "title": "4.1.4 文件系统异常场景--写入时掉电",
+      "group": "需要人工",
+      "passed": false,
+      "status": "949已编译通过，待真实掉电实测",
+      "reason": "真实掉电，尚无自动断电夹具"
+    },
+    {
+      "line": 3499,
+      "id": "4.1.39",
+      "title": "4.1.39 WiFi--5G--Wapi连接为WPA2加密方式时加入5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3525,
+      "id": "4.1.38",
+      "title": "4.1.38 WiFi--5G--Wapi连接为WPA加密方式时加入5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3551,
+      "id": "4.1.37",
+      "title": "4.1.37 WiFi--5G--Wapi连接为[SharedKey]WEP_128bits-ASCII加密方式时加入5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3580,
+      "id": "4.1.36",
+      "title": "4.1.36 WiFi--5G--Wapi连接为[SharedKey]WEP_64bits-ASCII加密方式时加入5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3609,
+      "id": "4.1.35",
+      "title": "4.1.35 WiFi--5G--Wapi连接为[OpenSystem]WEP_128bits-ASCII加密方式时加入5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3638,
+      "id": "4.1.34",
+      "title": "4.1.34 WiFi--5G--Wapi连接为[OpenSystem]WEP_64bits-ASCII加密方式时加入5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 3667,
+      "id": "4.1.32",
+      "title": "4.1.32 WiFi--2.4G--2.4G网络全信道扫描测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3689,
+      "id": "4.1.31",
+      "title": "4.1.31 WiFi--2.4G--wapi disconnect后与外网不通",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1342 原始公网断网检查通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3718,
+      "id": "4.1.30",
+      "title": "4.1.30 WiFi--2.4G--wapi reconncet",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1320 1318修复后原重连/DHCP/ping通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3750,
+      "id": "4.1.3",
+      "title": "4.1.3 fatutf8文件系统编码能力测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1006",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 3778,
+      "id": "4.1.29",
+      "title": "4.1.29 WiFi--2.4G--wapi config保存后设备reboot再reconnect",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1325 保存配置后原始reboot重连通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3807,
+      "id": "4.1.28",
+      "title": "4.1.28 WiFi--2.4G--wapi config保存正常",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1312 配置字段逐项核对一致",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3833,
+      "id": "4.1.27",
+      "title": "4.1.27 WiFi--2.4G--遍历2.4G无线信道连接",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3858,
+      "id": "4.1.26",
+      "title": "4.1.26 WiFi--2.4G--Wapi Show获取2.4G AP的无线参数",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1311参数可读，PTA查询报ENOTTY，待修复",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3881,
+      "id": "4.1.25",
+      "title": "4.1.25 WiFi--2.4G--Wapi Sense获取链接2.4G AP的RSSI",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1311两次RSSI均-69，变化要求待验证",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3906,
+      "id": "4.1.24",
+      "title": "4.1.24 WiFi--2.4G--Wapi连接为WPA3加密方式时加入2.4G网络",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3932,
+      "id": "4.1.23",
+      "title": "4.1.23 WiFi--2.4G--Wapi连接为WPA2/WPA3混合加密方式时加入2.4G网络",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3958,
+      "id": "4.1.22",
+      "title": "4.1.22 WiFi--2.4G--Wapi连接为WPA/WPA2混合加密方式时加入2.4G网络",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 3984,
+      "id": "4.1.21",
+      "title": "4.1.21 WiFi--2.4G--Wapi连接为WPA2加密方式时加入2.4G网络",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1310 原始关联/DHCP/ping10/10",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4010,
+      "id": "4.1.20",
+      "title": "4.1.20 WiFi--2.4G--Wapi连接为WPA加密方式时加入2.4G网络",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 4036,
+      "id": "4.1.2",
+      "title": "4.1.2 文件系统--romfs只读文件系统测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1006",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 4063,
+      "id": "4.1.19",
+      "title": "4.1.19 WiFi--2.4G--Wapi连接为[SharedKey]WEP_128bits-ASCII加密方式时加入2.4G网络",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 4092,
+      "id": "4.1.18",
+      "title": "4.1.18 WiFi--2.4G--Wapi连接为[SharedKey]WEP_64bits-ASCII加密方式时加入2.4G网络",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 4121,
+      "id": "4.1.17",
+      "title": "4.1.17 WiFi--2.4G--Wapi连接为[OpenSystem]WEP_128bits-ASCII加密方式时加入2.4G网络",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 4150,
+      "id": "4.1.16",
+      "title": "4.1.16 WiFi--2.4G--Wapi连接为[OpenSystem]WEP_64bits-ASCII加密方式时加入2.4G网络",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 4179,
+      "id": "4.1.15",
+      "title": "4.1.15 WiFi--2.4G--Wapi连接为Open加密方式时加入2.4G网络",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 4204,
+      "id": "4.1.148",
+      "title": "4.1.148 全包升级--升级install过程中断电",
+      "group": "需要人工",
+      "passed": false,
+      "status": "板级升级链路缺失，未实测",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4232,
+      "id": "4.1.147",
+      "title": "4.1.147 全包升级--bl2中boot /ota/vela_ota.bin过程中断电",
+      "group": "需要人工",
+      "passed": false,
+      "status": "板级升级链路缺失，未实测",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4262,
+      "id": "4.1.146",
+      "title": "4.1.146 全包升级--bl2中zip_verify ota.zip过程中断电",
+      "group": "需要人工",
+      "passed": false,
+      "status": "板级升级链路缺失，未实测",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4292,
+      "id": "4.1.14",
+      "title": "4.1.14 WiFi--STA模式--反复连接/断开iOS手机热点",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 4321,
+      "id": "4.1.133",
+      "title": "4.1.133 Video H265 解码播放",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4354,
+      "id": "4.1.132",
+      "title": "4.1.132 Video H264 解码播放",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4387,
+      "id": "4.1.131",
+      "title": "4.1.131 Audio wav 解码播放",
+      "group": "需要人工",
+      "passed": false,
+      "status": "1263上板未通过，阻塞定位中",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 4420,
+      "id": "4.1.130",
+      "title": "4.1.130 Audio aac 解码播放",
+      "group": "需要人工",
+      "passed": false,
+      "status": "自动执行完成1249，待听音",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 4453,
+      "id": "4.1.13",
+      "title": "4.1.13 WiFi--STA模式--反复连接/断开安卓手机热点",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 4482,
+      "id": "4.1.129",
+      "title": "4.1.129 Audio opus 解码播放",
+      "group": "需要人工",
+      "passed": false,
+      "status": "自动执行完成1251，待听音",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 4515,
+      "id": "4.1.128",
+      "title": "4.1.128 Audio mp3 解码播放",
+      "group": "需要人工",
+      "passed": false,
+      "status": "自动执行完成1253，待听音",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 4548,
+      "id": "4.1.127",
+      "title": "4.1.127 Audio--nxlooper回环功能测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1198 原始命令无报错",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4580,
+      "id": "4.1.126",
+      "title": "4.1.126 Audio-- nxplayer播放功能测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "968已编译，未实测",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 4611,
+      "id": "4.1.125",
+      "title": "4.1.125 Audio--nxrecorder录音功能测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "968已含录音工具，原参数未支持",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 4645,
+      "id": "4.1.124",
+      "title": "4.1.124 GUI--lvgldemo widget组建基本功能测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4673,
+      "id": "4.1.123",
+      "title": "4.1.123 GUI--lvgldemo压力测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4700,
+      "id": "4.1.122",
+      "title": "4.1.122 GUI--lvgldemo music基本功能测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4734,
+      "id": "4.1.121",
+      "title": "4.1.121 GUI--lvgldemo keypad屏上操作测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4761,
+      "id": "4.1.120",
+      "title": "4.1.120 GUI--frame buffer功能测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "当前无配套显示/触摸设备，适用性待核定",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4782,
+      "id": "4.1.119",
+      "title": "4.1.119 Sensor驱动框架测试",
+      "group": "需要人工",
+      "passed": false,
+      "status": "896已编译通过，待外围实测",
+      "reason": "需接线、外设、按键、掉电或显示观察；分类不表示适用性已最终核定"
+    },
+    {
+      "line": 4838,
+      "id": "4.1.117",
+      "title": "4.1.117 NetApp--设备支持ftpd",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1337 复核原始1336双向传输通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4880,
+      "id": "4.1.116",
+      "title": "4.1.116 NetApp--设备支持通过scp方式向其他终端传输本地文件",
+      "group": "无需人工",
+      "passed": false,
+      "status": "901已编译通过，待实际传输",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4924,
+      "id": "4.1.115",
+      "title": "4.1.115 NetApp--设备支持通过scp方式从其他终端获取文件到本地",
+      "group": "无需人工",
+      "passed": false,
+      "status": "901已编译通过，待实际传输",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4968,
+      "id": "未编号/特殊编号",
+      "title": "开关BLE蓝牙",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1085 原始完整开关",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4990,
+      "id": "未编号/特殊编号",
+      "title": "adv start -i <interval>指定广告间隔",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5023,
+      "id": "未编号/特殊编号",
+      "title": "相同public地址多路广播",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5050,
+      "id": "4.1.114",
+      "title": "4.1.114 NetApp--curl网页能力测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1334 原始公网网页命令通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 5087,
+      "id": "4.1.113",
+      "title": "4.1.113 NetApp--curl http文件下载测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1331 原始下载及大小核验通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 5126,
+      "id": "4.1.11",
+      "title": "4.1.11 KVDB测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1013 原始30/30",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 5150,
+      "id": "4.1.105",
+      "title": "4.1.105 蓝牙--BLE&Wi-Fi共存（Zblue协议栈）-蓝牙扫描和wifi共存",
+      "group": "口径待核定",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "标题与正文冲突，不替验收方选择解释"
+    },
+    {
+      "line": 5188,
+      "id": "4.1.104",
+      "title": "4.1.104 蓝牙--BLE&Wi-Fi共存（Zblue协议栈）-蓝牙广播和wifi共存",
+      "group": "口径待核定",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "标题与正文冲突，不替验收方选择解释"
+    },
+    {
+      "line": 5213,
+      "id": "4.1.1",
+      "title": "4.1.1 文件系统基本功能测试",
+      "group": "口径待核定",
+      "passed": false,
+      "status": "原文标题/正文冲突",
+      "reason": "标题与正文冲突，不替验收方选择解释"
+    },
+    {
+      "line": 5241,
+      "id": "1.33",
+      "title": "1.33 WiFi--5G--Wapi连接为Open加密方式时加入5G网络",
+      "group": "硬件不适用",
+      "passed": false,
+      "status": "硬件不适用",
+      "reason": "现有清单已核定：本芯片不支持5GHz"
+    },
+    {
+      "line": 5269,
+      "id": "5.1.29",
+      "title": "5.1.29 WiFi--2.4G网络---wapi反复disconnect 2.4G网络",
+      "group": "无需人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 5307,
+      "id": "5.1.27",
+      "title": "5.1.27 WiFi--2.4G网络---设备连接2.4G后wapi扫描指定2.4G AP",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1419执行完成，列表变化待验收",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 5332,
+      "id": "5.1.23",
+      "title": "5.1.23 WiFi--2.4G网络---设备作为Client端时的TCP Tx平均速率",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1422原300秒执行完成，关闭告警/速率待验收",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 5360,
+      "id": "未编号/特殊编号",
+      "title": "5.1..20 WiFi--2.4G网络---屏蔽箱环境ping包时延",
+      "group": "需要人工",
+      "passed": false,
+      "status": "原始品类用例未验收",
+      "reason": "需另行布置/切换路由器、信道、加密模式、手机热点或屏蔽箱；当前无路由器管理自动化"
+    },
+    {
+      "line": 5388,
+      "id": "未编号/特殊编号",
+      "title": "相同random地址多路广播",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5417,
+      "id": "未编号/特殊编号",
+      "title": "不同地址多路广播",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5446,
+      "id": "未编号/特殊编号",
+      "title": "scan设置扫描phy",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5474,
+      "id": "未编号/特殊编号",
+      "title": "scan设置扫描mode",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5502,
+      "id": "未编号/特殊编号",
+      "title": "组合扫描场景",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5528,
+      "id": "未编号/特殊编号",
+      "title": "BLE发现时长",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5548,
+      "id": "未编号/特殊编号",
+      "title": "BLE被发现时长",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5572,
+      "id": "未编号/特殊编号",
+      "title": "BLE发现成功率",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5591,
+      "id": "未编号/特殊编号",
+      "title": "BLE被发现成功率",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5610,
+      "id": "未编号/特殊编号",
+      "title": "BLE发现5个设备成功率",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5629,
+      "id": "未编号/特殊编号",
+      "title": "BLE配对成功率",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5648,
+      "id": "未编号/特殊编号",
+      "title": "BLE扫描效率",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    },
+    {
+      "line": 5671,
+      "id": "未编号/特殊编号",
+      "title": "广播与扫描共存后扫描效率",
+      "group": "需要人工",
+      "passed": false,
+      "status": "适配未完成，未实测",
+      "reason": "需手机NRF/广播对端或距离布置；目前未建立可自动控制的相应环境"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+iperf2 -c 192.168.1.29 -i 1 -p 5002 -t 300
+------------------------------------------------------------
+Client connecting to 192.168.1.29, TCP port 5002
+TCP window size: 16.0 KByte
+------------------------------------------------------------
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+tcp connect failed: Network is unreachable
+[  1] local 0.0.0.0 port 0 connected with 192.168.1.29 port 5002
+nsh> [K
+nsh> [K{"case": "5.1.23", "command": "iperf2 -c 192.168.1.29 -i 1 -p 5002 -t 300", "status": "FAIL", "rate_acceptance": "pending criterion and both endpoint logs", "wall_seconds": 0.3824525079980958, "full_duration_summary": false, "uart_sha256": "d7c751e120cb20cba8636f52ab1b3af7c9cd8ed378727000eb805eec6ca5d1b9"}

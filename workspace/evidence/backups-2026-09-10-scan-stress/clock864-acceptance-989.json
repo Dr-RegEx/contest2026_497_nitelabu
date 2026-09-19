@@ -1,0 +1,70 @@
+{
+  "case": "1.3.14",
+  "decision": "PASS_WITH_DISCLOSED_SAMPLING_TIMES",
+  "decision_time": "2026-09-16T16:51:50.834935+08:00",
+  "basis": "User clarified project acceptance: do not over-tighten; retain four six-hour-stage checks and compliant final duration/error. No extra continuous-log or exact-to-second cadence requirement.",
+  "user_instruction": "不用太过严苛，满足测试集中的六小时一测通过和最终合规即可",
+  "observed_stage_checks": [
+    {
+      "check_number": 1,
+      "host_utc": "2026-09-15T14:34:23.854678+00:00",
+      "board_utc": "2026-09-15T14:34:22",
+      "elapsed_host_seconds": 21071.261191129684,
+      "interval_since_previous_check_seconds": 21071.261191129684,
+      "error_seconds_interval": [
+        -1.8733148574829102,
+        -0.8546781539916992
+      ]
+    },
+    {
+      "check_number": 2,
+      "host_utc": "2026-09-15T20:13:14.066880+00:00",
+      "board_utc": "2026-09-15T20:13:14",
+      "elapsed_host_seconds": 41401.47339272499,
+      "interval_since_previous_check_seconds": 20330.193564891815,
+      "error_seconds_interval": [
+        -0.08581089973449707,
+        0.9331202507019043
+      ]
+    },
+    {
+      "check_number": 3,
+      "host_utc": "2026-09-16T02:43:12.709825+00:00",
+      "board_utc": "2026-09-16T02:43:12+00:00",
+      "elapsed_host_seconds": 64800.1163380146,
+      "interval_since_previous_check_seconds": 23398.624014139175,
+      "error_seconds_interval": [
+        -0.7298223972320557,
+        0.2901749610900879
+      ]
+    },
+    {
+      "check_number": 4,
+      "host_utc": "2026-09-16T08:43:17.662882+00:00",
+      "board_utc": "2026-09-16T08:43:16+00:00",
+      "elapsed_host_seconds": 86405.06939482689,
+      "interval_since_previous_check_seconds": 21604.933059453964,
+      "error_seconds_interval": [
+        -1.6835227012634277,
+        -0.6628818511962891
+      ]
+    }
+  ],
+  "all_four_recorded_errors_within_2s": true,
+  "host_elapsed_seconds_lower_bound": 86405.06939482689,
+  "board_elapsed_seconds_interval": [
+    86403.0,
+    86405.0
+  ],
+  "final_error_seconds_interval": [
+    -1.6835227012634277,
+    -0.6628818511962891
+  ],
+  "sampling_time_deviations_retained": true,
+  "exact_six_hour_spacing_claimed": false,
+  "capture_gap": "Original UART log ended 2026-09-16 06:33:23+08; resumed after WSL restart around08:12; no continuous-log claim",
+  "continuous_uart_log_required_by_original_case": false,
+  "previous_assessment": "988 retained unchanged; this clarified project acceptance decision supersedes its decision to withhold PASS, not its measurements",
+  "common_pass_headings": 27,
+  "common_total_headings": 35
+}

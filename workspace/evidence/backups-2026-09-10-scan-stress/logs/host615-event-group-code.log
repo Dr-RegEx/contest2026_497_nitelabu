@@ -1,0 +1,22 @@
+
+openvela-dev/out/esp32s31-cmake-demo/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+40033f0e <event_group_create_wrapper>:
+40033f0e:	400c0637          	lui	a2,0x400c0
+40033f12:	6585                	lui	a1,0x1
+40033f14:	400c4537          	lui	a0,0x400c4
+40033f18:	1141                	addi	sp,sp,-16
+40033f1a:	8e850513          	addi	a0,a0,-1816 # 400c38e8 <_flash_rodata_start+0x38c8>
+40033f1e:	1d860613          	addi	a2,a2,472 # 400c01d8 <_flash_rodata_start+0x1b8>
+40033f22:	c1a58593          	addi	a1,a1,-998 # c1a <_rtc_reserved_length+0xc02>
+40033f26:	c606                	sw	ra,12(sp)
+40033f28:	b99d50ef          	jal	40009ac0 <__assert>
+40033f2c:	40b2                	lw	ra,12(sp)
+40033f2e:	4501                	li	a0,0
+40033f30:	0141                	addi	sp,sp,16
+40033f32:	8082                	ret

@@ -1,0 +1,19 @@
+{
+  "state": "1612_BOOTED_ASSOCIATED_UART_FREE",
+  "receipt": "build1612-spawn-parent-env.sha256",
+  "board_ip": "192.168.1.60",
+  "latest_checks": [
+    "checkpoint1614-spawn-foreground-pass",
+    "checkpoint1613-background-tcp"
+  ],
+  "failures_preserved": [
+    "checkpoint1609-spawn-open-fault",
+    "checkpoint1611-spawn-partial",
+    "checkpoint1612-spawn-background-incomplete"
+  ],
+  "next": "Create separate statistics-enabled profile for TCP queue sampling. Check /proc/net/tcp availability before workload. Existing1565 and1612 images stay frozen; do not rerun original300s until change/evidence justifies it.",
+  "sprint": "76/88",
+  "simd_limit": "Background SIMD/concurrentcat incomplete; foreground arithmetic and context checks pass.",
+  "serial_owner": null,
+  "host_sink": "Exited; per-socket setting gone; no global changes"
+}

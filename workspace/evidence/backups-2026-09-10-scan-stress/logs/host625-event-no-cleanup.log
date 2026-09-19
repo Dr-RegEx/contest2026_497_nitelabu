@@ -1,0 +1,9 @@
+test: /tmp/s31-wifi-event-2end266u/test.c:659: main: Assertion `allocations == 1 && semaphores == 1' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_event.py", line 253, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_event.py", line 249, in main
+    subprocess.run([str(path / 'test')], check=True, timeout=30)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/s31-wifi-event-2end266u/test']' died with <Signals.SIGABRT: 6>.

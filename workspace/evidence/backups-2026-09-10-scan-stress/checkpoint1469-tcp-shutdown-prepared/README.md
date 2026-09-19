@@ -1,0 +1,3 @@
+# TCP shutdown drain candidate1469
+
+Original1467 failed at30.6s with Windows receiver timeout. Diagnostic1468 ten seconds returned but receiver timed out; only shutdown callback observed state7/how3/queues empty after shell. Source: callbacks appended behind sndcb; sndcb consumes TCP_POLL upon transmission; shutdown subscribed only TCP_POLL. Candidate subscribes ACKDATA too and preserves send callback until write/unacked queues and tx_unacked drain, without overwriting a prepared outgoing packet. S31-only scope; no iperf source or original workload changed. Build/target acceptance pending. SIMD disabled.

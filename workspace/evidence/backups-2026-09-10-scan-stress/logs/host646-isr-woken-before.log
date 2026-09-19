@@ -1,0 +1,9 @@
+/tmp/esp-wifi-isr-woken-r2ffjlc8/test.c:23:16: runtime error: store to null pointer of type 'int'
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_isr_woken.py", line 86, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_isr_woken.py", line 82, in main
+    subprocess.run([str(path / 'test')], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-wifi-isr-woken-r2ffjlc8/test']' returned non-zero exit status 1.

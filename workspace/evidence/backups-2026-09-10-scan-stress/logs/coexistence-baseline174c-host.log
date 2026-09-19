@@ -1,0 +1,17 @@
+/tmp/s31-modem-status-fxbscxob/config.c:3:1: error: static assertion failed: "coex config"
+    3 | _Static_assert(CONFIG_ESP_COEX_SW_COEXIST_ENABLE == EXPECTED_COEX, "coex config");
+      | ^~~~~~~~~~~~~~
+/tmp/s31-modem-status-fxbscxob/config.c:4:1: error: static assertion failed: "coex alias"
+    4 | _Static_assert(CONFIG_SW_COEXIST_ENABLE == EXPECTED_COEX, "coex alias");
+      | ^~~~~~~~~~~~~~
+/tmp/s31-modem-status-fxbscxob/config.c:5:1: error: static assertion failed: "wifi alias"
+    5 | _Static_assert(CONFIG_ESP_WIFI_SW_COEXIST_ENABLE == EXPECTED_COEX, "wifi alias");
+      | ^~~~~~~~~~~~~~
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_modem_status.py", line 165, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_modem_status.py", line 142, in main
+    subprocess.run(['cc', '-std=c11', '-Wall', '-Werror',
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Werror', '-DCONFIG_ESPRESSIF_WIFI=1', '-DCONFIG_ESPRESSIF_FLASH_FREQ_80M=1', '-DEXPECTED_COEX=0', '-I', '/tmp/s31-modem-status-fxbscxob', '/tmp/s31-modem-status-fxbscxob/config.c', '-o', '/tmp/s31-modem-status-fxbscxob/config']' returned non-zero exit status 1.

@@ -1,0 +1,89 @@
+{
+  "scope": "Final monitoring and recovered clock evidence; no strict xTS PASS claim",
+  "collector_status": "COMPLETE_REVIEW_REQUIRED",
+  "host_elapsed_seconds_lower_bound": 86405.06939482689,
+  "board_elapsed_seconds_interval": [
+    86403.0,
+    86405.0
+  ],
+  "final_error_seconds_interval": [
+    -1.6835227012634277,
+    -0.6628818511962891
+  ],
+  "final_absolute_error_upper_bound_seconds": 1.6835227012634277,
+  "scheduled_checks": [
+    {
+      "check_number": 1,
+      "host_utc": "2026-09-15T14:34:23.854678+00:00",
+      "board_utc": "2026-09-15T14:34:22",
+      "elapsed_host_seconds": 21071.261191129684,
+      "interval_since_previous_check_seconds": 21071.261191129684,
+      "error_seconds_interval": [
+        -1.8733148574829102,
+        -0.8546781539916992
+      ]
+    },
+    {
+      "check_number": 2,
+      "host_utc": "2026-09-15T20:13:14.066880+00:00",
+      "board_utc": "2026-09-15T20:13:14",
+      "elapsed_host_seconds": 41401.47339272499,
+      "interval_since_previous_check_seconds": 20330.193564891815,
+      "error_seconds_interval": [
+        -0.08581089973449707,
+        0.9331202507019043
+      ]
+    },
+    {
+      "check_number": 3,
+      "host_utc": "2026-09-16T02:43:12.709825+00:00",
+      "board_utc": "2026-09-16T02:43:12+00:00",
+      "elapsed_host_seconds": 64800.1163380146,
+      "interval_since_previous_check_seconds": 23398.624014139175,
+      "error_seconds_interval": [
+        -0.7298223972320557,
+        0.2901749610900879
+      ]
+    },
+    {
+      "check_number": 4,
+      "host_utc": "2026-09-16T08:43:17.662882+00:00",
+      "board_utc": "2026-09-16T08:43:16+00:00",
+      "elapsed_host_seconds": 86405.06939482689,
+      "interval_since_previous_check_seconds": 21604.933059453964,
+      "error_seconds_interval": [
+        -1.6835227012634277,
+        -0.6628818511962891
+      ]
+    }
+  ],
+  "four_scheduled_checks_recorded": true,
+  "original_six_hour_cadence_met": false,
+  "strict_original_case_pass": false,
+  "disposition": "TIME_METRIC_SATISFIED_WITH_PROCEDURE_DEVIATIONS; formal case remains pending",
+  "capture_gap": "Original UART log ended 2026-09-16 06:33:23+08; resumed after WSL restart around08:12; no continuous-log claim",
+  "recovery_resource_rows": 508,
+  "recovery_fault_markers": [],
+  "recovery_minimum_free_bytes": 522728,
+  "recovery_maximum_used_bytes": 5652,
+  "host_monitor_records": 26,
+  "host_monitor_interval_seconds": 600,
+  "monitor_last_record": {
+    "host_time": "2026-09-16T16:43:20.603173+08:00",
+    "collector_pid": 6841,
+    "collector_alive": false,
+    "status": "COMPLETE_REVIEW_REQUIRED",
+    "log_age_seconds": 2.9,
+    "log_bytes": 87697,
+    "remaining_seconds": -3.0,
+    "samples": 3
+  },
+  "monitoring_goal_completed": true,
+  "uart_released": true,
+  "target_reset_flash_or_provisioning_during_monitoring": false,
+  "regular_host_monitor_intervals_seconds_min_max": [
+    600.002697,
+    600.038824
+  ],
+  "last_terminal_check_interval_seconds": 311.481004
+}

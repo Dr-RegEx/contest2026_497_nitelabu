@@ -1,0 +1,75 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build948-flat-category-kv.sha256
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009600 0x2f009648
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009580 0x2f0095c8
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008120 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/s11/performance_test
+--- CMD: ls -l /data/s11/performance_test ---
+ls -l /data/s11/performance_test
+ -rwx------      262144 /data/s11/performance_test
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/s12/payload
+--- CMD: ls -l /data/s12/payload ---
+ls -l /data/s12/payload
+ -rw-r--r--      262144 /data/s12/payload
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/persist.db
+--- CMD: ls -l /data/persist.db ---
+ls -l /data/persist.db
+ -rw-r--r--      147456 /data/persist.db
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256        197          59 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=rm /data/s11/performance_test
+--- CMD: rm /data/s11/performance_test ---
+rm /data/s11/performance_test
+nsh> [K
+nsh> [K
+XTS_COMMAND=rm /data/s12/payload
+--- CMD: rm /data/s12/payload ---
+rm /data/s12/payload
+nsh> [K
+nsh> [K
+XTS_COMMAND=rm /data/persist.db
+--- CMD: rm /data/persist.db ---
+rm /data/persist.db
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256         30         226 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+PUBLISHED_5.1.68_DB_REMOVED archived_old_performance_payloads_released
+NEXT_REQUIRED=original_reboot_and_nofmt_mount_before_stability10

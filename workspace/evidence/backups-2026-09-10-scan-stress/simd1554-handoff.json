@@ -1,0 +1,15 @@
+{
+  "status": "BUILD_RUNNING_CHECK_PROCESS",
+  "session_id": 36612,
+  "build_log": "backups/2026-09-10-scan-stress/logs/build1554-pie-context.log",
+  "profile": "demo-rmt-bttool-coex-pie",
+  "output": "openvela-dev/out/esp32s31-ble-kernel1554",
+  "board": "unchanged1550 pair; WiFi associated; BLE disabled; last1552 TCP failed ARP",
+  "changes": [
+    "preserve a2/a3/a4 across PIE exception save/restore; syscall argument safety",
+    "split exception CFI spans before/after extended context to avoid assembler one-byte advance overflow"
+  ],
+  "prior_failure": "1553 CFI300 overflow; raw log preserved",
+  "next": "check full build, prepare actual SIMD arithmetic and context-switch target test before acceptance",
+  "count": "70/88"
+}

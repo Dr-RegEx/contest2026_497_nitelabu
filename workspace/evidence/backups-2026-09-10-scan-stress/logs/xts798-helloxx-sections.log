@@ -1,0 +1,41 @@
+--- CMD: uname -a ---
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 15 2026 11:57:34 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/helloxx ---
+ls /system/bin/helloxx
+ /system/bin/helloxx
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     290492      92556     197936     115192     176488    200     11 Kmem
+   16777216     712704   16064512   16064512 Page
+nsh> [K
+nsh> [K
+XTS_COMMAND=helloxx
+helloxx
+[CPU1] CHelloWorld: Constructor: mSecret=42
+[CPU1] CHelloWorld: Constructor: mSecret=42
+[CPU1] HelloWorld: HelloWorld: mSecret=42
+[CPU1] CHelloWorld: Constructor: mSecret=42
+[CPU1] HelloWorld: HelloWorld: mSecret=42
+helloxx_main: Saying hello from the dynamically constructed instance
+CHelloWorld::HelloWorld: Hello, World!!
+helloxx_[CPU0] HelloWorld: HelloWorld: mSecret=42
+[CPU0] ~CHelloWorld: Destructor
+[CPU0] ~CHelloWorld: Destructor
+[CPU0] ~CHelloWorld: Destructor
+main: Saying hello from the instance constructed on the stack
+CHelloWorld::HelloWorld: Hello, World!!
+helloxx_main: Saying hello from the statically constructed instance
+CHelloWorld::HelloWorld: Hello, World!!
+nsh> [K
+nsh> [KXTS_STANDARD=helloxx PASS seconds=0.201

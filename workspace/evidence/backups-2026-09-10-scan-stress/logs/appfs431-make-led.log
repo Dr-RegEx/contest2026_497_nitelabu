@@ -1,0 +1,6 @@
++ '[' appfs = configure ']'
++ '[' appfs = export ']'
++ '[' appfs = apps ']'
++ '[' appfs = appfs ']'
++ python3 tools/espressif/esp32s31_prepare_appfs.py --source ../apps/bin --output appfs-root --max-size 524288
++ genromfs -f appfs.img -d appfs-root -V S31AppFS

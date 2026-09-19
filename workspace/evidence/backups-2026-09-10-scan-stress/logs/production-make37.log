@@ -1,0 +1,18 @@
++ '[' '' = configure ']'
++ make -j8
+Create version.h
+[1KDownloading: littlefs/v2.5.1.tar.gz curl: (6) Could not resolve host: github.com
+make[1]: *** [littlefs/Make.defs:54: v2.5.1.tar.gz] Error 6
+make: *** [tools/Unix.mk:472: fs/.context] Error 2
+make: *** Waiting for unfinished jobs....
+Copying local Espressif HAL: /home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty
+Downloading: https://github.com/ARMmbed/mbedtls/archive/v3.6.4.zip
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: github.com
+make[3]: *** [Makefile:63: v3.6.4.zip] Error 6
+make[2]: *** [Makefile:56: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-production-verify/apps/crypto/mbedtls_context] Error 2
+make[2]: *** Waiting for unfinished jobs....
+LN: platform/board to /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-production-verify/apps/platform/dummy
+make[1]: *** [Makefile:190: context] Error 2
+make: *** [tools/Unix.mk:472: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-production-verify/apps/.context] Error 2

@@ -1,0 +1,10 @@
+VARIANT spiram=False pingpong=False
+test: /tmp/esp-rmt-install-rmi1uwh4/test.c:245: main: Assertion `rmt_driver_install(mode, size, flags) == (failure ? -ECANCELED : -EIO)' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_rmt_install.py", line 204, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_rmt_install.py", line 200, in main
+    subprocess.run([str(path / 'test')], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-rmt-install-rmi1uwh4/test']' died with <Signals.SIGABRT: 6>.

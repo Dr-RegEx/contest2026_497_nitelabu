@@ -1,0 +1,59 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1032-flat-category-fs-large.sha256
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        267         501 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/s07b
+--- CMD: mkdir /data/s07b ---
+mkdir /data/s07b
+nsh> [K
+nsh> [K
+XTS_COMMAND=cd /data/s07b
+--- CMD: cd /data/s07b ---
+cd /data/s07b
+nsh> [K
+nsh> [K
+XTS_COMMAND=vela_fs_random_read_and_write_test writeCount=10 readCount=1000 mountPath=.
+--- CMD: vela_fs_random_read_and_write_test writeCount=10 readCount=1000 mountPath=. ---
+vela_fs_random_read_and_write_test writeCount=10 readCount=1000 mountPath=.
+writecount=10  readcount=1000  mountPath=.
+randomReadTest : read count=1000, takes 0.540000 seconds
+ERROR: randomWriteTest cannot fseek file! errno=28
+The test is complete, the data list is as follows：
+nsh> [K
+nsh> [K
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/run1090-fs-random-count10.py", line 20, in <module>
+    out=cmd('vela_fs_random_read_and_write_test writeCount=10 readCount=1000 mountPath=.',1800)
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/run1090-fs-random-count10.py", line 16, in cmd
+    out=k.command(p,x,t);k.require(not re.search(r'\b(fail|skip)\b',out,re.I),'test error');return out
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 115, in command
+    require(not re.search(r'ERROR|failed|timed out', result, re.I),
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: precondition command failed: vela_fs_random_read_and_write_test writeCount=10 readCount=1000 mountPath=.

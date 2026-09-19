@@ -1,0 +1,818 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 59d6ab16..047d0f9b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -888,21 +888,23 @@ if(CONFIG_BLUETOOTH)
+       DEPENDS
+       libbluetooth)
+ 
+-    nuttx_add_application(
+-      NAME
+-      adapter_test
+-      SRCS
+-      ${BLUETOOTH_DIR}/tests/adapter_test.c
+-      INCLUDE_DIRECTORIES
+-      ${INCDIR}
+-      STACKSIZE
+-      8192
+-      PRIORITY
+-      ${SCHED_PRIORITY_DEFAULT}
+-      COMPILE_FLAGS
+-      ${CFLAGS}
+-      DEPENDS
+-      libbluetooth)
++    if(CONFIG_BLUETOOTH_ADAPTER_TEST)
++      nuttx_add_application(
++        NAME
++        adapter_test
++        SRCS
++        ${BLUETOOTH_DIR}/tests/adapter_test.c
++        INCLUDE_DIRECTORIES
++        ${INCDIR}
++        STACKSIZE
++        8192
++        PRIORITY
++        ${SCHED_PRIORITY_DEFAULT}
++        COMPILE_FLAGS
++        ${CFLAGS}
++        DEPENDS
++        libbluetooth)
++    endif()
+   endif()
+ 
+   if(CONFIG_BLUETOOTH_UPGRADE)
+diff --git a/Kconfig b/Kconfig
+index 72eccd06..70836f80 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -826,6 +826,15 @@ config BLUETOOTH_TOOLS
+ 	default n
+ 	select BLUETOOTH_FRAMEWORK
+ 
++config BLUETOOTH_ADAPTER_TEST
++	bool "Standalone Bluetooth adapter test application"
++	depends on BLUETOOTH_TOOLS
++	default y
++	help
++		Build adapter_test in addition to the interactive bttool.
++		Disable on images with limited application storage when bttool
++		provides the required adapter and profile commands.
++
+ menuconfig APP_BT_SAMPLE_CODE
+ 	bool "Sample Code"
+ 	default n
+diff --git a/Makefile b/Makefile
+index 017b3273..a92845cb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -630,9 +630,11 @@ endif #CONFIG_APP_BT_SAMPLE_CODE
+ ifeq ($(CONFIG_BLUETOOTH_TOOLS), y)
+ 	PROGNAME += bttool
+ 	MAINSRC  += tools/bt_tools.c
++ifeq ($(CONFIG_BLUETOOTH_ADAPTER_TEST), y)
+ 	PROGNAME += adapter_test
+ 	MAINSRC  += tests/adapter_test.c
+ endif
++endif
+ 
+ ifeq ($(CONFIG_BLUETOOTH_UPGRADE), y)
+ 	PROGNAME += bt_upgrade
+diff --git a/framework/api/bt_adapter.c b/framework/api/bt_adapter.c
+index c38d3433..0c023f80 100644
+--- a/framework/api/bt_adapter.c
++++ b/framework/api/bt_adapter.c
+@@ -82,7 +82,7 @@ bt_status_t BTSYMBOLS(bt_adapter_start_limited_discovery)(bt_instance_t* ins, ui
+     return adapter_start_discovery(timeout, true);
+ }
+ 
+-bt_status_t BTSYMBOLS(bt_adapter_set_debug_mode)(bt_instance_t* ins, uint8_t mode, uint8_t operation)
++bt_status_t BTSYMBOLS(bt_adapter_set_debug_mode)(bt_instance_t* ins, bt_debug_mode_t mode, uint8_t operation)
+ {
+     return adapter_set_debug_mode(mode, operation);
+ }
+diff --git a/framework/api/bt_device.c b/framework/api/bt_device.c
+index cf1bc155..ceb7e3ba 100644
+--- a/framework/api/bt_device.c
++++ b/framework/api/bt_device.c
+@@ -204,4 +204,14 @@ bt_status_t BTSYMBOLS(bt_device_set_le_sc_remote_oob_data)(bt_instance_t* ins, b
+ bt_status_t BTSYMBOLS(bt_device_get_le_sc_local_oob_data)(bt_instance_t* ins, bt_address_t* addr)
+ {
+     return adapter_le_get_local_oob_data(addr);
+-}
+\ No newline at end of file
++}
++
++bt_status_t BTSYMBOLS(bt_device_enable_enhanced_mode)(bt_instance_t* ins, bt_address_t* addr, bt_enhanced_mode_t mode)
++{
++    return BT_STATUS_NOT_SUPPORTED;
++}
++
++bt_status_t BTSYMBOLS(bt_device_disable_enhanced_mode)(bt_instance_t* ins, bt_address_t* addr, bt_enhanced_mode_t mode)
++{
++    return BT_STATUS_NOT_SUPPORTED;
++}
+diff --git a/service/src/adapter_service.c b/service/src/adapter_service.c
+index c3553f9a..2b2be764 100644
+--- a/service/src/adapter_service.c
++++ b/service/src/adapter_service.c
+@@ -1636,9 +1636,11 @@ static void handle_link_event(void* data)
+ {
+     adapter_remote_event_t* evt = (adapter_remote_event_t*)data;
+     switch (evt->evt_id) {
++#ifdef CONFIG_BLUETOOTH_BREDR_SUPPORT
+     case LINK_MODE_CHANGED_EVT:
+         bt_pm_remote_link_mode_changed(&evt->addr, evt->link_mode.mode, evt->link_mode.sniff_interval);
+         break;
++#endif
+     case LINK_ROLE_CHANGED_EVT:
+         process_link_role_changed_evt(&evt->addr, evt->link_role.role);
+         break;
+diff --git a/service/src/manager_service.c b/service/src/manager_service.c
+index 9a064efd..bcd85e7c 100644
+--- a/service/src/manager_service.c
++++ b/service/src/manager_service.c
+@@ -196,7 +196,9 @@ void manager_init(void)
+         g_instance_id = index_allocator_create(10);
+ #if defined(CONFIG_BLUETOOTH_SERVICE) && defined(__NuttX__)
+     service_manager_init();
++#ifdef CONFIG_BLUETOOTH_BREDR_SUPPORT
+     bt_pm_init();
++#endif
+ #ifdef CONFIG_BLUETOOTH_CONNECTION_MANAGER
+     bt_cm_init();
+ #endif
+@@ -222,7 +224,9 @@ void manager_cleanup(void)
+ 
+ #if defined(CONFIG_BLUETOOTH_SERVICE) && defined(__NuttX__)
+     service_manager_cleanup();
++#ifdef CONFIG_BLUETOOTH_BREDR_SUPPORT
+     bt_pm_cleanup();
++#endif
+ #ifdef CONFIG_BLUETOOTH_CONNECTION_MANAGER
+     bt_cm_cleanup();
+ #endif
+diff --git a/service/src/scan_manager.c b/service/src/scan_manager.c
+index da822f15..796674da 100644
+--- a/service/src/scan_manager.c
++++ b/service/src/scan_manager.c
+@@ -25,7 +25,9 @@
+ #include "bt_hash.h"
+ #include "bt_le_scan.h"
+ #include "bt_list.h"
++#ifdef CONFIG_BLUETOOTH_FRAMEWORK_SOCKET_IPC
+ #include "bt_socket.h"
++#endif
+ #include "bt_time.h"
+ #include "sal_interface.h"
+ #include "scan_filter.h"
+@@ -249,10 +251,12 @@ static void notify_scanners_scan_result(void* data)
+     scanner_device_t* device;
+     uint32_t timestamp_ms;
+ 
++#ifdef CONFIG_BLUETOOTH_FRAMEWORK_SOCKET_IPC
+     if (bt_socket_server_is_busy()) {
+         do_in_service_loop_deffered(notify_scanners_scan_result, data, true);
+         return;
+     }
++#endif
+ 
+     timestamp_ms = bt_get_os_timestamp_ms();
+     list_for_every(&scanner_manager.scanning_list, node)
+diff --git a/service/stacks/zephyr/hci_h4.c b/service/stacks/zephyr/hci_h4.c
+index 9206c0c4..57fdeb7e 100644
+--- a/service/stacks/zephyr/hci_h4.c
++++ b/service/stacks/zephyr/hci_h4.c
+@@ -67,6 +67,7 @@ struct h4_data {
+     pthread_mutex_t mutex;
+     bt_hci_recv_t recv;
+     void* hci_data;
++    size_t frame_size;
+ };
+ 
+ static const struct device* bt_dev;
+@@ -96,9 +97,13 @@ static int h4_send_data(int fd, uint8_t* buf, int count)
+             if (errno == EAGAIN) {
+                 usleep(1000);
+                 continue;
++            } else if (errno == EINTR) {
++                continue;
+             } else
+-                return ret;
++                return -errno;
+         }
++        if (ret == 0)
++            return -EIO;
+ 
+         nwritten += ret;
+     }
+@@ -225,9 +230,8 @@ static void bt_sal_hci_transport_recv(void)
+     size_t buf_add_len;
+     ssize_t len;
+     const uint8_t* frame_start = frame;
+-    static ssize_t frame_size = 0;
+ 
+-    len = read(h4->fd, frame + frame_size, sizeof(frame) - frame_size);
++    len = read(h4->fd, frame + h4->frame_size, sizeof(frame) - h4->frame_size);
+     if (len < 0) {
+         BT_LOGE("Reading hci failed, errno %d", errno);
+         close(h4->fd);
+@@ -235,27 +239,27 @@ static void bt_sal_hci_transport_recv(void)
+         return;
+     }
+ 
+-    frame_size += len;
++    h4->frame_size += len;
+ 
+-    while (frame_size > 0) {
++    while (h4->frame_size > 0) {
+         const uint8_t* buf_add;
+         const uint8_t packet_type = frame_start[0];
+-        const int32_t decoded_len = hci_packet_complete(frame_start, frame_size);
++        const int32_t decoded_len = hci_packet_complete(frame_start, h4->frame_size);
+ 
+         if (decoded_len == -1) {
+             BT_LOGE("HCI Packet type is invalid, length could not be decoded");
+-            frame_size = 0; /* Drop buffer */
++            h4->frame_size = 0; /* Drop buffer */
+             break;
+         }
+ 
+         if (decoded_len == 0) {
+-            if (frame_size == sizeof(frame)) {
++            if (h4->frame_size == sizeof(frame)) {
+                 BT_LOGE("HCI Packet is too big for frame");
+-                frame_size = 0; /* Drop buffer */
++                h4->frame_size = 0; /* Drop buffer */
+                 break;
+             }
+             if (frame_start != frame) {
+-                memmove(frame, frame_start, frame_size);
++                memmove(frame, frame_start, h4->frame_size);
+             }
+             /* Read more */
+             break;
+@@ -266,7 +270,7 @@ static void bt_sal_hci_transport_recv(void)
+ 
+         buf = get_rx(frame_start);
+ 
+-        frame_size -= decoded_len;
++        h4->frame_size -= decoded_len;
+         frame_start += decoded_len;
+ 
+         if (!buf) {
+@@ -338,6 +342,7 @@ static int h4_open(const struct device* dev, bt_hci_recv_t recv, void* hci_data)
+     h4->fd = fd;
+     h4->recv = recv;
+     h4->hci_data = hci_data;
++    h4->frame_size = 0;
+ 
+     bt_dev = dev;
+     BT_LOGE("H4: %s opened as fd:%d", CONFIG_BT_UART_ON_DEV_NAME, h4->fd);
+@@ -345,17 +350,45 @@ static int h4_open(const struct device* dev, bt_hci_recv_t recv, void* hci_data)
+     hci_handle = service_loop_poll_fd(h4->fd, POLL_READABLE, hci_poll_recv, NULL);
+     if (!hci_handle) {
+         BT_LOGD("hci fd:%d add poll failed", h4->fd);
+-        return -1;
++        close(h4->fd);
++        h4->fd = -1;
++        h4->recv = NULL;
++        h4->hci_data = NULL;
++        return -EIO;
+     }
+ 
+     return 0;
+ }
+ 
++static int h4_close(const struct device* dev)
++{
++    struct h4_data* h4 = dev->data;
++    service_loop_t* loop = get_service_uv_loop()->data;
++    uv_thread_t current = uv_thread_self();
++    int ret = 0;
++
++    /* Stop receiving on the service loop before the host frees its state. */
++    if (uv_thread_equal(&current, &loop->thread))
++        hci_remove_recv(NULL);
++    else
++        do_in_service_loop_sync(hci_remove_recv, NULL);
++
++    pthread_mutex_lock(&h4->mutex);
++    if (h4->fd >= 0 && close(h4->fd) < 0)
++        ret = -errno;
++    h4->fd = -1;
++    h4->recv = NULL;
++    h4->hci_data = NULL;
++    h4->frame_size = 0;
++    pthread_mutex_unlock(&h4->mutex);
++    return ret;
++}
++
+ static int h4_send(const struct device* dev, struct net_buf* buf)
+ {
+     int len;
+     int ret;
+-    struct h4_data* h4 = bt_dev->data;
++    struct h4_data* h4 = dev->data;
+ 
+     switch (bt_buf_get_type(buf)) {
+     case BT_BUF_ACL_OUT:
+@@ -369,6 +402,7 @@ static int h4_send(const struct device* dev, struct net_buf* buf)
+             net_buf_push_u8(buf, BT_HCI_H4_ISO);
+             break;
+         }
++        /* fall through */
+     default:
+         BT_LOGE("Unknown buffer type");
+         return -EINVAL;
+@@ -377,10 +411,14 @@ static int h4_send(const struct device* dev, struct net_buf* buf)
+     h4_data_dump("BT TX", buf->data[0], buf->data, buf->len);
+ 
+     len = buf->len;
+-    ret = h4_send_data(h4->fd, buf->data, buf->len);
++    pthread_mutex_lock(&h4->mutex);
++    ret = h4->fd >= 0 ? h4_send_data(h4->fd, buf->data, buf->len) : -ENODEV;
++    pthread_mutex_unlock(&h4->mutex);
+     if (ret != len) {
+         BT_LOGE("H4: Failed to send %u bytes: %d", len, ret);
+-        ret = -EINVAL;
++        /* The host retains ownership on failure and unrefs the buffer. */
++        net_buf_pull_u8(buf);
++        return ret < 0 ? ret : -EIO;
+     }
+ 
+     net_buf_unref(buf);
+@@ -390,6 +428,7 @@ static int h4_send(const struct device* dev, struct net_buf* buf)
+ 
+ const struct bt_hci_driver_api h4_drv_api = {
+     .open = h4_open,
++    .close = h4_close,
+     .send = h4_send,
+ };
+ 
+diff --git a/service/stacks/zephyr/sal_adapter_interface.c b/service/stacks/zephyr/sal_adapter_interface.c
+index d28026e8..2b04ddef 100644
+--- a/service/stacks/zephyr/sal_adapter_interface.c
++++ b/service/stacks/zephyr/sal_adapter_interface.c
+@@ -116,6 +116,43 @@ struct device_context {
+     int cnt;
+ };
+ 
++static sal_adapter_req_t* sal_adapter_req(bt_controller_id_t id, bt_address_t* addr, sal_func_t func)
++{
++    sal_adapter_req_t* req = calloc(sizeof(sal_adapter_req_t), 1);
++
++    if (req) {
++        req->id = id;
++        req->func = func;
++        if (addr)
++            memcpy(&req->addr, addr, sizeof(bt_address_t));
++    }
++
++    return req;
++}
++
++static void sal_invoke_async(service_work_t* work, void* userdata)
++{
++    sal_adapter_req_t* req = userdata;
++
++    SAL_ASSERT(req);
++    req->func(req);
++    free(userdata);
++}
++
++static bt_status_t sal_send_req(sal_adapter_req_t* req)
++{
++    if (!req)
++        return BT_STATUS_PARM_INVALID;
++
++    if (!service_loop_work((void*)req, sal_invoke_async, NULL)) {
++        BT_LOGE("%s, service_loop_work failed", __func__);
++        free(req);
++        return BT_STATUS_FAIL;
++    }
++
++    return BT_STATUS_SUCCESS;
++}
++
+ #ifdef CONFIG_BLUETOOTH_BREDR_SUPPORT
+ extern int zblue_main(void);
+ static void sal_pending_connect_init(void);
+@@ -191,43 +228,6 @@ static struct bt_conn_auth_cb g_conn_auth_cbs = {
+     .pincode_entry = zblue_on_pincode_entry
+ };
+ 
+-static sal_adapter_req_t* sal_adapter_req(bt_controller_id_t id, bt_address_t* addr, sal_func_t func)
+-{
+-    sal_adapter_req_t* req = calloc(sizeof(sal_adapter_req_t), 1);
+-
+-    if (req) {
+-        req->id = id;
+-        req->func = func;
+-        if (addr)
+-            memcpy(&req->addr, addr, sizeof(bt_address_t));
+-    }
+-
+-    return req;
+-}
+-
+-static void sal_invoke_async(service_work_t* work, void* userdata)
+-{
+-    sal_adapter_req_t* req = userdata;
+-
+-    SAL_ASSERT(req);
+-    req->func(req);
+-    free(userdata);
+-}
+-
+-static bt_status_t sal_send_req(sal_adapter_req_t* req)
+-{
+-    if (!req)
+-        return BT_STATUS_PARM_INVALID;
+-
+-    if (!service_loop_work((void*)req, sal_invoke_async, NULL)) {
+-        BT_LOGE("%s, service_loop_work failed", __func__);
+-        free(req);
+-        return BT_STATUS_FAIL;
+-    }
+-
+-    return BT_STATUS_SUCCESS;
+-}
+-
+ static void zblue_conn_get_addr(struct bt_conn* conn, bt_address_t* addr)
+ {
+     struct bt_conn_info info;
+diff --git a/service/stacks/zephyr/sal_adapter_le_interface.c b/service/stacks/zephyr/sal_adapter_le_interface.c
+index 8733e4a7..02c41e1c 100644
+--- a/service/stacks/zephyr/sal_adapter_le_interface.c
++++ b/service/stacks/zephyr/sal_adapter_le_interface.c
+@@ -1458,7 +1458,7 @@ static void zblue_on_ready_cb(bt_controller_id_t dev_id, int err)
+ 
+     if (err) {
+         BT_LOGD("zblue init failed (err %d)\n", err);
+-        adapter_on_adapter_state_changed(BT_BREDR_STACK_STATE_OFF);
++        adapter_on_adapter_state_changed(BLE_STACK_STATE_OFF);
+         return;
+     }
+ 
+@@ -1586,8 +1586,23 @@ bt_status_t bt_sal_le_enable(bt_controller_id_t id)
+ 
+ static void STACK_CALL(le_disable)(void* args)
+ {
++    int ret;
++
++    /* bt_disable() clears the host device, including its callback-list
++     * context. Unregister while that context is still alive.
++     */
+     zblue_unregister_callback();
+-    bt_disable();
++    ret = bt_disable();
++
++    if (ret != 0) {
++        if (bt_is_ready()) {
++            zblue_register_callback();
++        }
++        BT_LOGE("%s: controller disable failed: %d", __func__, ret);
++        return;
++    }
++
++    adapter_on_adapter_state_changed(BLE_STACK_STATE_OFF);
+ }
+ 
+ bt_status_t bt_sal_le_disable(bt_controller_id_t id)
+@@ -1603,10 +1618,7 @@ bt_status_t bt_sal_le_disable(bt_controller_id_t id)
+     if (!req) {
+         return BT_STATUS_NOMEM;
+     }
+-    sal_send_req(req);
+-    adapter_on_adapter_state_changed(BLE_STACK_STATE_OFF);
+-
+-    return BT_STATUS_SUCCESS;
++    return sal_send_req(req);
+ }
+ 
+ #ifdef CONFIG_BT_SMP
+diff --git a/service/stacks/zephyr/sal_connection_manager.c b/service/stacks/zephyr/sal_connection_manager.c
+index 8285edeb..60f982da 100644
+--- a/service/stacks/zephyr/sal_connection_manager.c
++++ b/service/stacks/zephyr/sal_connection_manager.c
+@@ -450,6 +450,9 @@ void bt_sal_cm_acl_disconnected_callback(cm_data_t* data)
+ 
+ bt_status_t bt_sal_cm_try_disconnect_profiles(bt_address_t* addr, bool is_unpair)
+ {
++#ifndef CONFIG_BLUETOOTH_BREDR_SUPPORT
++    return BT_STATUS_UNSUPPORTED;
++#else
+     bt_profile_connection_manager_t* manager;
+     struct bt_conn* conn;
+     struct bt_conn_info info;
+@@ -508,10 +511,14 @@ bt_status_t bt_sal_cm_try_disconnect_profiles(bt_address_t* addr, bool is_unpair
+     bt_list_add_tail(bt_sal_disconnecting_list, manager);
+ 
+     return bt_sal_disconnect_internal(PRIMARY_ADAPTER, addr, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
++#endif
+ }
+ 
+ static bt_status_t bt_sal_try_profile_connect(bt_address_t* addr)
+ {
++#ifndef CONFIG_BLUETOOTH_BREDR_SUPPORT
++    return BT_STATUS_UNSUPPORTED;
++#else
+     bt_profile_connection_manager_t* manager;
+     struct bt_conn* conn;
+     struct bt_conn_info info;
+@@ -548,6 +555,7 @@ static bt_status_t bt_sal_try_profile_connect(bt_address_t* addr)
+     }
+ 
+     return bt_sal_trigger_profile_conn_act(manager, bt_sal_connecting_list);
++#endif
+ }
+ 
+ bt_status_t bt_sal_profile_connect_request(bt_address_t* addr, uint8_t profile_id, uint16_t conn_id, bt_controller_id_t id,
+diff --git a/service/stacks/zephyr/sal_gatt_server_interface.c b/service/stacks/zephyr/sal_gatt_server_interface.c
+index 5146fd50..302f36c9 100644
+--- a/service/stacks/zephyr/sal_gatt_server_interface.c
++++ b/service/stacks/zephyr/sal_gatt_server_interface.c
+@@ -149,11 +149,14 @@ typedef struct {
+     sal_adapter_args_t adpt;
+ } sal_adapter_req_t;
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ typedef struct {
+     struct bt_gatt_service* srv;
+     struct bt_sdp_record* record;
+ } sal_gatt_sdp_record_t;
+ 
++#endif
++
+ /* Request struct for async notify/indicate dispatch.
+  * First four fields mirror sal_adapter_req_t so sal_invoke_async can cast safely.
+  */
+@@ -183,8 +186,13 @@ static size_t svc_attr_count;
+ 
+ static struct bt_gatt_service server_svcs[CONFIG_GATT_SERVER_MAX_SERVICES];
+ static struct bt_gatt_attr server_db[CONFIG_GATT_SERVER_MAX_ATTRIBUTES];
++/* Zero-length user data is borrowed from the framework element table. */
++static bool server_db_owns_data[CONFIG_GATT_SERVER_MAX_ATTRIBUTES];
++#ifdef CONFIG_BT_ATT_OVER_BR
+ static sal_gatt_sdp_record_t gatt_sdp_records[CONFIG_GATT_SERVER_MAX_SERVICES];
+ 
++#endif
++
+ static int find_free_service_index(void)
+ {
+     int i;
+@@ -219,19 +227,26 @@ static void remove_from_server_db(const struct bt_gatt_attr* start, size_t count
+     }
+ 
+     for (i = 0; i < count; i++) {
+-        free(start[i].user_data);
++        if (server_db_owns_data[index + i]) {
++            free(start[i].user_data);
++        }
+         free((void*)start[i].uuid);
+     }
+ 
+     if (index + count < attr_count) {
+         memmove(&server_db[index], &server_db[index + count],
+             (attr_count - index - count) * sizeof(struct bt_gatt_attr));
++        memmove(&server_db_owns_data[index], &server_db_owns_data[index + count],
++            (attr_count - index - count) * sizeof(server_db_owns_data[0]));
+     }
+ 
+     memset(&server_db[attr_count - count], 0, count * sizeof(struct bt_gatt_attr));
++    memset(&server_db_owns_data[attr_count - count], 0,
++        count * sizeof(server_db_owns_data[0]));
+     attr_count -= count;
+ }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ /* Generic ATT SDP record */
+ static struct bt_sdp_attribute gatt_attrs_template[] = {
+     BT_SDP_NEW_SERVICE,
+@@ -273,6 +288,8 @@ static struct bt_sdp_attribute gatt_attrs_template[] = {
+                     }, ) }, )),
+ };
+ 
++#endif
++
+ static ssize_t read_value(struct bt_conn* conn, const struct bt_gatt_attr* attr,
+     void* buf, uint16_t len, uint16_t offset)
+ {
+@@ -366,12 +383,14 @@ static struct bt_gatt_attr* gatt_db_add(const struct bt_gatt_attr* pattern, size
+ 
+     BT_LOGD("user_data 0x%p, user_data_len: %zu", attr->user_data, user_data_len);
+ 
++    server_db_owns_data[attr_count] = user_data_len != 0;
+     attr_count++;
+     svc_attr_count++;
+ 
+     return attr;
+ }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ static int gatt_sdp_set_srv_cls(struct bt_sdp_attribute* attr, union uuid* uuid)
+ {
+     struct bt_sdp_data_elem *element, *tmp_elem;
+@@ -613,11 +632,15 @@ static void gatt_sdp_delete_record(struct bt_sdp_record* record)
+     free(record);
+ }
+ 
++#endif
++
+ static bt_status_t register_service(bool is_over_br)
+ {
+     int err;
+     int service_index;
++#ifdef CONFIG_BT_ATT_OVER_BR
+     struct bt_sdp_record* record;
++#endif
+     bt_status_t status = BT_STATUS_SUCCESS;
+ 
+     service_index = find_free_service_index();
+@@ -639,6 +662,7 @@ static bt_status_t register_service(bool is_over_br)
+         goto out;
+     }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+     if (!is_over_br) {
+         goto out;
+     }
+@@ -657,6 +681,8 @@ static bt_status_t register_service(bool is_over_br)
+         goto out;
+     }
+ 
++#endif
++
+ out:
+     svc_attr_count = 0U;
+     if (status != BT_STATUS_SUCCESS) {
+@@ -860,6 +886,8 @@ static int alloc_descriptor(const struct bt_gatt_attr* attr, struct add_descript
+             return -EINVAL;
+         }
+ 
++        /* CCC storage was allocated above, rather than copied by gatt_db_add. */
++        server_db_owns_data[attr_desc - server_db] = true;
+         desc->desc_id = attr_desc->handle;
+     } else {
+         user_data.element = desc->element;
+@@ -943,6 +971,7 @@ static struct bt_gatt_cb zblue_gatt_callbacks = {
+     .att_mtu_updated = zblue_gatts_mtu_updated_callback
+ };
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ static bt_status_t do_gatts_disconnect(bt_controller_id_t id, bt_address_t* bd_addr, void* user_data)
+ {
+     struct bt_conn* conn;
+@@ -1022,6 +1051,8 @@ static struct bt_att_conn_cb zblue_att_callbacks = {
+     .disconnected = zblue_gatts_disconnected_callback,
+ };
+ 
++#endif
++
+ static sal_adapter_req_t* sal_adapter_req(bt_controller_id_t id, bt_address_t* addr, sal_func_t func)
+ {
+     sal_adapter_req_t* req = calloc(sizeof(sal_adapter_req_t), 1);
+@@ -1082,7 +1113,9 @@ static void sal_gatts_elements_callback(void* args)
+ bt_status_t bt_sal_gatt_server_enable(void)
+ {
+     bt_gatt_cb_register(&zblue_gatt_callbacks);
++#ifdef CONFIG_BT_ATT_OVER_BR
+     bt_att_conn_cb_register(&zblue_att_callbacks);
++#endif
+ 
+     return BT_STATUS_SUCCESS;
+ }
+@@ -1090,7 +1123,9 @@ bt_status_t bt_sal_gatt_server_enable(void)
+ bt_status_t bt_sal_gatt_server_disable(void)
+ {
+     bt_gatt_cb_unregister(&zblue_gatt_callbacks);
++#ifdef CONFIG_BT_ATT_OVER_BR
+     bt_att_conn_cb_unregister(&zblue_att_callbacks);
++#endif
+ 
+     return BT_STATUS_SUCCESS;
+ }
+@@ -1105,6 +1140,17 @@ bt_status_t bt_sal_gatt_server_add_elements(gatt_element_t* elements, uint16_t s
+     if (!elements || size == 0)
+         return BT_STATUS_PARM_INVALID;
+ 
++#ifndef CONFIG_BT_ATT_OVER_BR
++    /* Reject unsupported bearers before changing the shared attribute DB. */
++    for (index = 0; index < size; index++) {
++        if ((elements[index].type == GATT_PRIMARY_SERVICE
++                || elements[index].type == GATT_SECONDARY_SERVICE)
++            && (elements[index].properties & GATT_PROP_EXPOSED_OVER_BREDR)) {
++            return BT_STATUS_UNSUPPORTED;
++        }
++    }
++#endif
++
+     for (index = 0; index < size; index++) {
+         switch (elements[index].type) {
+         case GATT_PRIMARY_SERVICE:
+@@ -1146,6 +1192,7 @@ bt_status_t bt_sal_gatt_server_add_elements(gatt_element_t* elements, uint16_t s
+     return sal_send_req((void*)req);
+ }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ static sal_gatt_sdp_record_t* get_sdp_from_service(struct bt_gatt_service* srv)
+ {
+     sal_gatt_sdp_record_t* record;
+@@ -1167,6 +1214,8 @@ static sal_gatt_sdp_record_t* get_sdp_from_service(struct bt_gatt_service* srv)
+     return NULL;
+ }
+ 
++#endif
++
+ static struct bt_gatt_service* get_primary_service_from_element(gatt_element_t* element)
+ {
+     struct bt_gatt_service* srv;
+@@ -1202,18 +1251,23 @@ static void remove_service(gatt_element_t* element)
+     size_t i, count, index;
+     struct bt_gatt_attr* start;
+     struct bt_gatt_service* svc = get_primary_service_from_element(element);
++#ifdef CONFIG_BT_ATT_OVER_BR
+     sal_gatt_sdp_record_t* record;
++#endif
+     if (!svc) {
+         BT_LOGW("%s, service not found", __func__);
+         return;
+     }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+     record = get_sdp_from_service(svc);
+     if (record && record->record) {
+         bt_sdp_unregister_service(record->record);
+         gatt_sdp_delete_record(record->record);
+     }
+ 
++#endif
++
+     bt_gatt_service_unregister(svc);
+ 
+     start = svc->attrs;
+@@ -1294,6 +1348,7 @@ static void STACK_CALL(conn_connect)(void* args)
+     }
+ }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ static bt_status_t gatts_br_profile_connect(bt_controller_id_t id, bt_address_t* addr, void* user_data)
+ {
+     struct bt_conn* conn;
+@@ -1339,6 +1394,8 @@ static void STACK_CALL(conn_br_connect)(void* args)
+     }
+ }
+ 
++#endif
++
+ bt_status_t bt_sal_gatt_server_connect_bear(bt_controller_id_t id, bt_address_t* addr, ble_addr_type_t addr_type, uint8_t bear_type)
+ {
+     sal_adapter_req_t* req;
+@@ -1348,9 +1405,12 @@ bt_status_t bt_sal_gatt_server_connect_bear(bt_controller_id_t id, bt_address_t*
+     case ATT_BEAR_TYPE_LE_ATT:
+         req = sal_adapter_req(id, addr, STACK_CALL(conn_connect));
+         break;
++#ifdef CONFIG_BT_ATT_OVER_BR
+     case ATT_BEAR_TYPE_BR_ATT:
+         req = sal_adapter_req(id, addr, STACK_CALL(conn_br_connect));
+         break;
++#endif
++
+     default:
+         BT_LOGE("%s, unsupported bear_type:%d", __func__, bear_type);
+         return BT_STATUS_UNSUPPORTED;
+@@ -1456,7 +1516,11 @@ static void STACK_CALL(conn_cancel)(void* args)
+     }
+ 
+ br_disconn:
++#ifdef CONFIG_BT_ATT_OVER_BR
+     bt_sal_profile_disconnect_request(&req->addr, PROFILE_GATTS, CONN_ID_DEFAULT, PRIMARY_ADAPTER, do_gatts_disconnect, NULL);
++#else
++    return;
++#endif
+ }
+ 
+ bt_status_t bt_sal_gatt_server_cancel_connection(bt_controller_id_t id, bt_address_t* addr)
+diff --git a/service/utils/log_server.c b/service/utils/log_server.c
+index 33ba3c85..9d91e906 100644
+--- a/service/utils/log_server.c
++++ b/service/utils/log_server.c
+@@ -283,14 +283,17 @@ void bt_log_server_init(void)
+ 
+ void bt_log_server_cleanup(void)
+ {
++#if defined(CONFIG_KVDB) && defined(__NuttX__)
+     /** stop log property monitor */
+     service_loop_remove_poll(g_logger.poll);
+     g_logger.poll = NULL;
+-    if (g_logger.monitor_fd)
++    if (g_logger.monitor_fd >= 0)
+         property_monitor_close(g_logger.monitor_fd);
+ 
+     g_logger.monitor_fd = -1;
+ 
++#endif
++
+     /** snoop log deinit */
+     if (g_logger.snoop_enable)
+         btsnoop_log_disable();

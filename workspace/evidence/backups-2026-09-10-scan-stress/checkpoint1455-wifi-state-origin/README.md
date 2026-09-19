@@ -1,0 +1,1 @@
+1455 diagnostic-only addition: report non-ENOMEM vendor TX errors with function origin and packet length before unchanged esp_wifi_to_errno. No dropped/suppressed error; no acceptance change. Build/flash/boot passed. Original100-round case1457 is running, no PASS yet.1444 remains archived as SCP passing firmware.

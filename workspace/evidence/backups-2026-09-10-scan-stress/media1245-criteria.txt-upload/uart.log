@@ -1,0 +1,35 @@
+
+HOST_COMMAND mount
+mount
+  /data type tmpfs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+HOST_COMMAND ls /dev/audio/pcm0p
+ls /dev/audio/pcm0p
+ /dev/audio/pcm0p
+nsh> [K
+HOST_COMMAND ls /dev/audio/pcm0c
+ls /dev/audio/pcm0c
+ /dev/audio/pcm0c
+nsh> [K
+HOST_COMMAND ls -l /data/criteria.txt
+ls -l /data/criteria.txt
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+HOST_COMMAND rb -f /data
+rb -f /data
+Ignored unexpected text: CC
+name:criteria.txt filesize:41
+     100.0% 41:41 left:00h00m00s
+time used:0.0s speed 1.1kB/s
+
+ all time:11.45s average speed:0.00kB/snsh> [K
+HOST_COMMAND echo $?
+echo $?
+0
+nsh> [K
+HOST_COMMAND ls -l /data/criteria.txt
+ls -l /data/criteria.txt
+ -rwxrwxrwx          41 /data/criteria.txt
+nsh> [K

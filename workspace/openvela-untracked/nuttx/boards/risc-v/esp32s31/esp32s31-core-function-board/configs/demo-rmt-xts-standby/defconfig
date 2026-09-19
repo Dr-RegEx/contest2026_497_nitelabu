@@ -1,0 +1,17 @@
+#include "../demo-rmt-xts-rng/defconfig"
+
+# Idle monitoring does not need the large fstest tmpfs heap. Keep allocator
+# shadow metadata in internal SRAM: the PSRAM-backed FS heap is unavailable
+# while the shared external-memory cache is suspended for Flash operations.
+# The process page pool still uses PSRAM; kernel KASAN remains enabled below.
+
+# Published12h idle test requires KASAN plus resource monitoring.
+# This tree supplies showinfo under SYSTEM_RESMONITOR; the older document's
+# LOW_RESOURCE_TEST/show_info names are absent. Do not enable fill utilities.
+CONFIG_MM_KASAN=y
+CONFIG_MM_KASAN_GENERIC=y
+CONFIG_MM_KASAN_INSTRUMENT_ALL=y
+CONFIG_SYSTEM_RESMONITOR=y
+# CONFIG_SYSTEM_RESMONITOR_FILL is not set
+CONFIG_SCHED_CPULOAD_SYSCLK=y
+CONFIG_STACK_COLORATION=y

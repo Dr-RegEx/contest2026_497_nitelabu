@@ -1,0 +1,56 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x13f58
+entry 0x2f010368
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x13f58  (81752)
+padd: lma 0x00015fc8 vma 0x00000000 len 0xa050   (41040)
+imap: lma 0x00020020 vma 0x400c0020 len 0x19fa4  (106404)
+padd: lma 0x00039fcc vma 0x00000000 len 0x612c   (24876)
+imap: lma 0x00040100 vma 0x40000100 len 0xb6464  (746596)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+RMT_BOOT=PASS seconds=0.661
+--- CMD: ls /dev/leds0 ---
+ls /dev/leds0
+ /dev/leds0
+nsh> [K
+nsh> [K
+--- CMD: s31led 3 ---
+s31led 3
+S31_LED=PASS frames=12 brightness=8 final=off optical=unverified
+nsh> [K
+nsh> [K
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=855 replay=855 ack=1059 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+MONIRQ: cpu=1 defer=3426 replay=3426 ack=3427 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=2 fail=0 destroyed=1 live=1 livemax=2 pages=138 pgt=4
+WAIT: pid=2 object=0x2f010f94
+LPTRACE: 0x40024858
+WAIT: pid=4 object=0x2f010fec
+nsh> [K
+nsh> [K
+S31_LED_SMOKE=PASS optical=unverified

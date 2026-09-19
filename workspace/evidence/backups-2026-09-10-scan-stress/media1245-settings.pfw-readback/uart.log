@@ -1,0 +1,30 @@
+
+HOST_COMMAND mount
+mount
+  /data type tmpfs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+HOST_COMMAND ls /dev/audio/pcm0p
+ls /dev/audio/pcm0p
+ /dev/audio/pcm0p
+nsh> [K
+HOST_COMMAND ls /dev/audio/pcm0c
+ls /dev/audio/pcm0c
+ /dev/audio/pcm0c
+nsh> [K
+HOST_COMMAND ls -l /data/settings.pfw
+ls -l /data/settings.pfw
+ -rwxrwxrwx         117 /data/settings.pfw
+nsh> [K
+HOST_COMMAND sb /data/settings.pfw
+sb /data/settings.pfw
+name:settings.pfw size:117
+100.00% 117:117 left:00h00m00s
+time used:0.0s speed 3.5kB/s
+
+ all time:0.05s average speed:2.24kB/snsh> [K
+HOST_COMMAND echo $?
+echo $?
+0
+nsh> [K

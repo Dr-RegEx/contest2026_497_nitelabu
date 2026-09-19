@@ -1,0 +1,9 @@
+test: /tmp/esp-rmt-completion-v7r_5h5v/test.c:37: nxsem_post: Assertion `ch < 4 && (reset & (1u << ch)) && !(pending & (1u << ch))' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_rmt_completion.py", line 98, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_rmt_completion.py", line 94, in main
+    subprocess.run([str(path / "test")], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-rmt-completion-v7r_5h5v/test']' died with <Signals.SIGABRT: 6>.

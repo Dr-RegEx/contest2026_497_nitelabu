@@ -1,0 +1,130 @@
+
+openvela-dev/out/esp32s31-xts-flat-bttool1055/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+4003b1b8 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz>:
+4003b1b8:	7179                	addi	sp,sp,-48
+4003b1ba:	ca56                	sw	s5,20(sp)
+4003b1bc:	00452a83          	lw	s5,4(a0)
+4003b1c0:	d04a                	sw	s2,32(sp)
+4003b1c2:	d226                	sw	s1,36(sp)
+4003b1c4:	004aa903          	lw	s2,4(s5)
+4003b1c8:	84aa                	mv	s1,a0
+4003b1ca:	d422                	sw	s0,40(sp)
+4003b1cc:	854a                	mv	a0,s2
+4003b1ce:	ce4e                	sw	s3,28(sp)
+4003b1d0:	cc52                	sw	s4,24(sp)
+4003b1d2:	d606                	sw	ra,44(sp)
+4003b1d4:	eefc8097          	auipc	ra,0xeefc8
+4003b1d8:	296080e7          	jalr	662(ra) # 2f00346a <r_btdm_get_le16>
+4003b1dc:	842a                	mv	s0,a0
+4003b1de:	00294a03          	lbu	s4,2(s2)
+4003b1e2:	00a45993          	srli	s3,s0,0xa
+4003b1e6:	00390513          	addi	a0,s2,3
+4003b1ea:	09c2                	slli	s3,s3,0x10
+4003b1ec:	01410423          	sb	s4,8(sp)
+4003b1f0:	c62a                	sw	a0,12(sp)
+4003b1f2:	0109d993          	srli	s3,s3,0x10
+4003b1f6:	478d                	li	a5,3
+4003b1f8:	00f98c63          	beq	s3,a5,4003b210 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x58>
+4003b1fc:	4501                	li	a0,0
+4003b1fe:	50b2                	lw	ra,44(sp)
+4003b200:	5422                	lw	s0,40(sp)
+4003b202:	5492                	lw	s1,36(sp)
+4003b204:	5902                	lw	s2,32(sp)
+4003b206:	49f2                	lw	s3,28(sp)
+4003b208:	4a62                	lw	s4,24(sp)
+4003b20a:	4ad2                	lw	s5,20(sp)
+4003b20c:	6145                	addi	sp,sp,48
+4003b20e:	8082                	ret
+4003b210:	6785                	lui	a5,0x1
+4003b212:	c3378713          	addi	a4,a5,-973 # c33 <_rtc_reserved_length+0xc1b>
+4003b216:	04e40363          	beq	s0,a4,4003b25c <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0xa4>
+4003b21a:	c3578713          	addi	a4,a5,-971
+4003b21e:	02e40663          	beq	s0,a4,4003b24a <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x92>
+4003b222:	c3178793          	addi	a5,a5,-975
+4003b226:	4501                	li	a0,0
+4003b228:	fcf41be3          	bne	s0,a5,4003b1fe <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x46>
+4003b22c:	4785                	li	a5,1
+4003b22e:	04fa0663          	beq	s4,a5,4003b27a <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0xc2>
+4003b232:	4649                	li	a2,18
+4003b234:	6585                	lui	a1,0x1
+4003b236:	8556                	mv	a0,s5
+4003b238:	00c48023          	sb	a2,0(s1)
+4003b23c:	4681                	li	a3,0
+4003b23e:	c3158593          	addi	a1,a1,-975 # c31 <_rtc_reserved_length+0xc19>
+4003b242:	7c6010ef          	jal	4003ca08 <r_sym_bt_1VRWPaL5CxOam1ZtpDdE>
+4003b246:	4505                	li	a0,1
+4003b248:	bf5d                	j	4003b1fe <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x46>
+4003b24a:	85d2                	mv	a1,s4
+4003b24c:	ed9ff0ef          	jal	4003b124 <r_sym_bt_fCFGJbjtXc3xtDVWSBia>
+4003b250:	892a                	mv	s2,a0
+4003b252:	e125                	bnez	a0,4003b2b2 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0xfa>
+4003b254:	01248023          	sb	s2,0(s1)
+4003b258:	4505                	li	a0,1
+4003b25a:	b755                	j	4003b1fe <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x46>
+4003b25c:	479d                	li	a5,7
+4003b25e:	4649                	li	a2,18
+4003b260:	06fa0063          	beq	s4,a5,4003b2c0 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x108>
+4003b264:	6585                	lui	a1,0x1
+4003b266:	8556                	mv	a0,s5
+4003b268:	00c48023          	sb	a2,0(s1)
+4003b26c:	4681                	li	a3,0
+4003b26e:	c3358593          	addi	a1,a1,-973 # c33 <_rtc_reserved_length+0xc1b>
+4003b272:	796010ef          	jal	4003ca08 <r_sym_bt_1VRWPaL5CxOam1ZtpDdE>
+4003b276:	4505                	li	a0,1
+4003b278:	b759                	j	4003b1fe <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x46>
+4003b27a:	3d7010ef          	jal	4003ce50 <r_sym_bt_UdVhXVOOBnMerv3fZsbT>
+4003b27e:	800005b7          	lui	a1,0x80000
+4003b282:	0030                	addi	a2,sp,8
+4003b284:	0599                	addi	a1,a1,6 # 80000006 <_esp_system_init_fn_array_end+0x3fef0f7a>
+4003b286:	eefc8097          	auipc	ra,0xeefc8
+4003b28a:	114080e7          	jalr	276(ra) # 2f00339a <r_sym_bt_3DcjgYC1ikQrP7jNyXGR>
+4003b28e:	0ff57613          	zext.b	a2,a0
+4003b292:	f14d                	bnez	a0,4003b234 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x7c>
+4003b294:	00394603          	lbu	a2,3(s2)
+4003b298:	2f0187b7          	lui	a5,0x2f018
+4003b29c:	73c7a783          	lw	a5,1852(a5) # 2f01873c <r_sym_bt_lRdavKxt45o0gicEyznn>
+4003b2a0:	f8c9e9e3          	bltu	s3,a2,4003b232 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x7a>
+4003b2a4:	00c780a3          	sb	a2,1(a5)
+4003b2a8:	d651                	beqz	a2,4003b234 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x7c>
+4003b2aa:	01478023          	sb	s4,0(a5)
+4003b2ae:	4601                	li	a2,0
+4003b2b0:	b751                	j	4003b234 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x7c>
+4003b2b2:	862a                	mv	a2,a0
+4003b2b4:	4681                	li	a3,0
+4003b2b6:	85a2                	mv	a1,s0
+4003b2b8:	8556                	mv	a0,s5
+4003b2ba:	74e010ef          	jal	4003ca08 <r_sym_bt_1VRWPaL5CxOam1ZtpDdE>
+4003b2be:	bf59                	j	4003b254 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0x9c>
+4003b2c0:	eefc8097          	auipc	ra,0xeefc8
+4003b2c4:	1aa080e7          	jalr	426(ra) # 2f00346a <r_btdm_get_le16>
+4003b2c8:	842a                	mv	s0,a0
+4003b2ca:	00690513          	addi	a0,s2,6
+4003b2ce:	00594983          	lbu	s3,5(s2)
+4003b2d2:	eefc8097          	auipc	ra,0xeefc8
+4003b2d6:	198080e7          	jalr	408(ra) # 2f00346a <r_btdm_get_le16>
+4003b2da:	87aa                	mv	a5,a0
+4003b2dc:	00890513          	addi	a0,s2,8
+4003b2e0:	893e                	mv	s2,a5
+4003b2e2:	eefc8097          	auipc	ra,0xeefc8
+4003b2e6:	188080e7          	jalr	392(ra) # 2f00346a <r_btdm_get_le16>
+4003b2ea:	3fc00793          	li	a5,1020
+4003b2ee:	4645                	li	a2,17
+4003b2f0:	f687fae3          	bgeu	a5,s0,4003b264 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0xac>
+4003b2f4:	0ff00793          	li	a5,255
+4003b2f8:	f6f996e3          	bne	s3,a5,4003b264 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0xac>
+4003b2fc:	2f0187b7          	lui	a5,0x2f018
+4003b300:	73c7a783          	lw	a5,1852(a5) # 2f01873c <r_sym_bt_lRdavKxt45o0gicEyznn>
+4003b304:	577d                	li	a4,-1
+4003b306:	4601                	li	a2,0
+4003b308:	00879123          	sh	s0,2(a5)
+4003b30c:	01279223          	sh	s2,4(a5)
+4003b310:	00e78423          	sb	a4,8(a5)
+4003b314:	00a79523          	sh	a0,10(a5)
+4003b318:	00078023          	sb	zero,0(a5)
+4003b31c:	b7a1                	j	4003b264 <r_sym_bt_RlxCyY0wWN1G2GoSNTUz+0xac>

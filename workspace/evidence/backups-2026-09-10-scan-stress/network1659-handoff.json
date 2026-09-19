@@ -1,0 +1,14 @@
+{
+  "status": "TCP_ORIGINAL_300S_RUNNING",
+  "exec_session": 41616,
+  "receipt": "build1631-spawn-parent-env.sha256",
+  "script": "network1659-original-tcp-rx.py tcp",
+  "log": "logs/network1659-original-tcp-rx.log",
+  "host_log": "logs/host1659-original-rx.log",
+  "previous_result": "checkpoint1658-tcp-byte-match",
+  "host_fix_evidence": "checkpoint1657-host-tcp-accounting",
+  "manual": "User sleeping; no physical requests",
+  "sprint": "76/88",
+  "next": "Poll41616 before UART. Review TCP1659 finalendpoint totals/durations; then1661boundUDP20s to isolateMeta interaction. OriginalUDP Tx1649 with1641hostreceiver still prepared/notrun.",
+  "independent_finding": "checkpoint1660-meta-route:UDP1651 hasWLAN+Meta peers; explicit-B WLAN diagnostic1661 prepared, NOTRUN"
+}

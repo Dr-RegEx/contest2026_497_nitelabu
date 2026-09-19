@@ -1,0 +1,27 @@
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892      83932     226960     109800     156552    220     17 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /data type tmpfs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+nsh> [K
+nsh> [K
+--- CMD: scp -vvv xts@192.168.1.29:/x1348.bin /data/scp1439 ---
+scp -vvv xts@192.168.1.29:/x1348.bin /data/scp1439
+SSH initialization failed
+nsh> [K
+nsh> [K
+{"case": "DIAGNOSTIC_ONLY", "status": "FAIL", "receipt": "build1430-wapi-info.sha256", "host_fingerprint": "SHA256:4nAe7/uKJkVehh55aqbo0G9lS8tJYKz8LKUrTOMFF3g", "error": "authentication not reached"}

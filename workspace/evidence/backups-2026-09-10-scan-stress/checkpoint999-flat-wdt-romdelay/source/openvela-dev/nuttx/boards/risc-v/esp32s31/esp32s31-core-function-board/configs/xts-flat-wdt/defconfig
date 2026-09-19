@@ -1,0 +1,10 @@
+#include "../xts-flat-rtc/defconfig"
+
+# Original watchdog test directly masks interrupts and spins in an ISR.
+# Use M-mode FLAT with CLIC threshold masking and fatal level-7 delivery.
+CONFIG_ESP32S31_RWDT=y
+CONFIG_BOARDCTL_RESET_CAUSE=y
+# Let the hardware second stage reset the RTC system after the panic dump.
+CONFIG_BOARD_RESET_ON_ASSERT=0
+CONFIG_ARCH_INTERRUPTSTACK=8192
+CONFIG_SCHED_BACKTRACE=y

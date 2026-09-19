@@ -1,0 +1,11 @@
+{
+  "status": "INCOMPLETE",
+  "receipt": "build1631-spawn-parent-env.sha256",
+  "command": "iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M",
+  "case": "5.1.25",
+  "rate_acceptance": "Pending published numerical criterion",
+  "samples": [],
+  "network_before": "ifconfig\r\nwlan0\tLink encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500\r\n\tinet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0\r\n\r\n\tRX: Received Fragment Errors   Bytes   \r\n\t    000047b2 00000000 00000000 119bbf          \r\n\t    IPv4     ARP      Dropped \r\n\t    00000000 00000000 00000000\r\n\tTX: Queued   Sent     Errors   Timeouts Bytes   \r\n\t    0000e60a 0000e60c 00000000 00000000 4113589          \r\n\tTotal Errors: 00000000\r\n\r\n             IPv4   TCP   UDP  ICMP\r\nReceived     4591  44c6  008c  003b\r\nDropped      0004  0000  0000  0000\r\n  IPv4        VHL: 0000   Frg: 0000\r\n  Checksum   0000  0000  0000  0000\r\n  TCP         ACK: 0000   SYN: 0000\r\n              RST: 0000  0000\r\n              HDR: 0000\r\n  Type       0000  ----  ----  0000\r\nSent         e5dc  e59f  0002  003b\r\n  Rexmit     ----  0005  ----  ----\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "uptime_before": "cat /proc/uptime\r\n    588.78\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "error": "NSH command is 73 characters, the console truncates past 63: iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M > /tmp/udp1635.log &"
+}

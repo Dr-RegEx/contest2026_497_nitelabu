@@ -1,0 +1,77 @@
+/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/idf170-flash-backup/before-a.bin: OK
+/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/idf170-flash-backup/before-b.bin: OK
+COMMAND=/home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/esptool --chip esp32s31 --port /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0 --baud 460800 write-flash --flash-mode keep --flash-size keep --flash-freq keep 0x2000 /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/idf170-flash-backup/transaction/idf-0.bin 0x8000 /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/idf170-flash-backup/transaction/idf-1.bin 0x10000 /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/idf170-flash-backup/transaction/idf-2.bin
+esptool v5.4.0
+Serial port /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0:
+Connecting...
+Connected to ESP32-S31 on /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0:
+Chip type:          ESP32-S31 (revision v0.0)
+Features:           Wi-Fi 6, BT 5.4 (LE), IEEE802.15.4, Dual Core + LP Core, 300MHz
+Crystal frequency:  40MHz
+MAC:                30:ed:a0:f3:f7:b0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/idf170-flash-backup/transaction/idf-0.bin' at 0x00002000...
+Flash will be erased from 0x00002000 to 0x00006fff...
+Compressed 19376 bytes to 12649...
+Writing at 0x00006bb0 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 12.35kB/12.35kB [0s] 
+Wrote 19376 bytes (12649 compressed) at 0x00002000 in 0.4 seconds (427.3 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Writing '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/idf170-flash-backup/transaction/idf-1.bin' at 0x00008000...
+Flash will be erased from 0x00008000 to 0x00008fff...
+Compressed 3072 bytes to 69...
+Writing at 0x00008c00 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 69B/69B [0s] 
+Wrote 3072 bytes (69 compressed) at 0x00008000 in 0.0 seconds (2295.9 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Writing '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/idf170-flash-backup/transaction/idf-2.bin' at 0x00010000...
+Flash will be erased from 0x00010000 to 0x000e7fff...
+Compressed 882096 bytes to 521563...
+Writing at 0x0001c690 ╸                                3.1% 16.00kB/509.34kB [0s] 
+Writing at 0x000252e7 ━╸                               6.3% 32.00kB/509.34kB [0s] 
+Writing at 0x0002d125 ━━╸                              9.4% 48.00kB/509.34kB [1s] 
+Writing at 0x000338c1 ━━━╸                            12.6% 64.00kB/509.34kB [1s] 
+Writing at 0x0003b04e ━━━━╸                           15.7% 80.00kB/509.34kB [1s] 
+Writing at 0x00042072 ━━━━━╸                          18.8% 96.00kB/509.34kB [2s] 
+Writing at 0x0004965b ━━━━━━╸                         22.0% 112.00kB/509.34kB [2s] 
+Writing at 0x00050043 ━━━━━━━╸                        25.1% 128.00kB/509.34kB [2s] 
+Writing at 0x0005722b ━━━━━━━━                        28.3% 144.00kB/509.34kB [3s] 
+Writing at 0x0005dfbb ━━━━━━━━━                       31.4% 160.00kB/509.34kB [3s] 
+Writing at 0x00064a14 ━━━━━━━━━━                      34.6% 176.00kB/509.34kB [3s] 
+Writing at 0x0006a41b ━━━━━━━━━━━                     37.7% 192.00kB/509.34kB [4s] 
+Writing at 0x00070506 ━━━━━━━━━━━━                    40.8% 208.00kB/509.34kB [4s] 
+Writing at 0x000760f1 ━━━━━━━━━━━━━                   44.0% 224.00kB/509.34kB [5s] 
+Writing at 0x0007bcdb ━━━━━━━━━━━━━━                  47.1% 240.00kB/509.34kB [5s] 
+Writing at 0x00081c2a ━━━━━━━━━━━━━━━                 50.3% 256.00kB/509.34kB [5s] 
+Writing at 0x0008778b ━━━━━━━━━━━━━━━━                53.4% 272.00kB/509.34kB [6s] 
+Writing at 0x0008da37 ━━━━━━━━━━━━━━━━╸               56.5% 288.00kB/509.34kB [6s] 
+Writing at 0x0009415d ━━━━━━━━━━━━━━━━━╸              59.7% 304.00kB/509.34kB [6s] 
+Writing at 0x0009a2c6 ━━━━━━━━━━━━━━━━━━╸             62.8% 320.00kB/509.34kB [7s] 
+Writing at 0x000a0295 ━━━━━━━━━━━━━━━━━━━╸            66.0% 336.00kB/509.34kB [7s] 
+Writing at 0x000a6163 ━━━━━━━━━━━━━━━━━━━━╸           69.1% 352.00kB/509.34kB [7s] 
+Writing at 0x000abf98 ━━━━━━━━━━━━━━━━━━━━━╸          72.3% 368.00kB/509.34kB [8s] 
+Writing at 0x000b25aa ━━━━━━━━━━━━━━━━━━━━━━╸         75.4% 384.00kB/509.34kB [8s] 
+Writing at 0x000b8e4c ━━━━━━━━━━━━━━━━━━━━━━━╸        78.5% 400.00kB/509.34kB [8s] 
+Writing at 0x000bf02a ━━━━━━━━━━━━━━━━━━━━━━━━╸       81.7% 416.00kB/509.34kB [9s] 
+Writing at 0x000c526c ━━━━━━━━━━━━━━━━━━━━━━━━━       84.8% 432.00kB/509.34kB [9s] 
+Writing at 0x000cb10f ━━━━━━━━━━━━━━━━━━━━━━━━━━      88.0% 448.00kB/509.34kB [9s] 
+Writing at 0x000d19d5 ━━━━━━━━━━━━━━━━━━━━━━━━━━━     91.1% 464.00kB/509.34kB [10s] 
+Writing at 0x000d8c30 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━    94.2% 480.00kB/509.34kB [10s] 
+Writing at 0x000df676 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   97.4% 496.00kB/509.34kB [11s] 
+Writing at 0x000e75b0 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 509.34kB/509.34kB [11s] 
+Wrote 882096 bytes (521563 compressed) at 0x00010000 in 11.5 seconds (614.4 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Hard resetting via RTS pin...
+INSTALL_FLASH=PASS

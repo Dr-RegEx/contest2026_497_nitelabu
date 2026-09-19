@@ -1,0 +1,15 @@
++ git -C /home/regex/work/esp32s31-openvela/openvela-dev/nuttx rev-parse HEAD
++ git -C /home/regex/work/esp32s31-openvela/openvela-dev/nuttx status --short
++ git -C /home/regex/work/esp32s31-openvela/openvela-dev/nuttx diff --binary
++ git -C /home/regex/work/esp32s31-openvela/openvela-dev/apps rev-parse HEAD
++ git -C /home/regex/work/esp32s31-openvela/openvela-dev/apps status --short
++ git -C /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-production-verify/nuttx diff --binary
++ tar -czf /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/checkpoint268/diagnostic-configs.tar.gz -C /home/regex/work/esp32s31-openvela/openvela-dev/nuttx .config boards/risc-v/esp32s31/esp32s31-core-function-board/configs/wifi-flat boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production-cpu0 boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production-regression
++ tar -czf /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/progress249-268-checkpoint.tar.gz '--exclude=logs/*268*' -C /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress checkpoint268 README.md logs build-regression-wifi.sh build-production-make.sh build-minimal-make.sh flash-regression-pair.sh restore-production180-pair.sh verify-wifi-artifact.py network-probe.py network-repeat.py save-progress268.sh monlat262-diagnostic.patch heap-callbacks-index.patch firmware249-clean-iram-he-coherent.tar.gz firmware253-clean-iram-bgn-coherent.tar.gz firmware257-heap-bgn-coherent.tar.gz firmware262-monlat-bgn-coherent.tar.gz firmware265-monlat-he-coherent.tar.gz esp32s31-port-5040-to-60af.bundle esp32s31-port-60af-to-4282.bundle build249.sha256 build253.sha256 build257.sha256 build262.sha256 build265.sha256
++ cd /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress
++ sha256sum progress249-268-checkpoint.tar.gz
++ sha256sum -c SHA256SUMS-progress268
+progress249-268-checkpoint.tar.gz: OK
++ tar -tzf progress249-268-checkpoint.tar.gz
++ echo PROGRESS268_BACKUP=PASS
+PROGRESS268_BACKUP=PASS

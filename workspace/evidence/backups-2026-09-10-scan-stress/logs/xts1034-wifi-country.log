@@ -1,0 +1,115 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build967-competition-wapi.sha256
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x10820
+load:0x2f010880,len:0x3a90
+entry 0x2f0103b4
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x10820  (67616)
+dram: lma 0x00012868 vma 0x2f010880 len 0x3a90   (14992)
+padd: lma 0x00016328 vma 0x00000000 len 0x9cf0   (40176)
+imap: lma 0x00020020 vma 0x400e0020 len 0x21784  (137092)
+padd: lma 0x000417ac vma 0x00000000 len 0xe94c   (59724)
+imap: lma 0x00050100 vma 0x40000100 len 0xd06dc  (853724)
+total segments stored 7
+ABC[CPU0] S31 hardware crypto: SHA1/SHA256/SHA512 PIO
+[CPU0] S31 hardware crypto: HMAC-SHA1/256 via SHA PIO
+[CPU0] S31 hardware crypto: ECDSA P256 verify only
+[CPU0] S31 hardware crypto: AES-CBC 128/256-bit PIO
+[CPU0] S31 hardware crypto: AES-CTR/XTS full-block PIO
+[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at DOWN mtu 1500
+	inet addr:0.0.0.0 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: ifup wlan0 ---
+ifup wlan0
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: wapi country wlan0 ---
+wapi country wlan0
+01
+nsh> [K
+nsh> [K
+wapi country wlan0
+01
+nsh> [K
+nsh> [K
+--- CMD: wapi country wlan0 US ---
+wapi country wlan0 US
+nsh> [K
+nsh> [K
+wapi country wlan0 US
+nsh> [K
+nsh> [K
+--- CMD: wapi country wlan0 ---
+wapi country wlan0
+US
+nsh> [K
+nsh> [K
+wapi country wlan0
+US
+nsh> [K
+nsh> [K
+--- CMD: wapi country wlan0 CN ---
+wapi country wlan0 CN
+nsh> [K
+nsh> [K
+wapi country wlan0 CN
+nsh> [K
+nsh> [K
+--- CMD: wapi country wlan0 ---
+wapi country wlan0
+CN
+nsh> [K
+nsh> [K
+wapi country wlan0
+CN
+nsh> [K
+nsh> [K
+XTS_CASE=4.1.57 PASS
+XTS_4.1.57_COUNTRY=PASS
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=64 data=0 fcs=6 abort=9 full=0 fifo=0 other=7
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=2 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+XTS_WIFI_CLEANUP=FAIL command failed: ifdown wlan0
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-wifi-lifecycle.py", line 148, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-wifi-lifecycle.py", line 138, in main
+    require('ifdown wlan0...OK' in command(port, 'ifdown wlan0'),
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-wifi-lifecycle.py", line 51, in command
+    require(not re.search(r'ERROR|nsh:|failed|timed out', diagnostics, re.I),
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-wifi-lifecycle.py", line 42, in require
+    raise RuntimeError(message)
+RuntimeError: command failed: ifdown wlan0

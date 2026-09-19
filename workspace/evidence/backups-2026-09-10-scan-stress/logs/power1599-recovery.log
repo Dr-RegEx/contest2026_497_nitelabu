@@ -1,0 +1,113 @@
+UART_LINE_CODING_ONLY; NO_DTR_RTS; NO_HOST_RESET
+
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir -p /data
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount -t littlefs /dev/xtsflash /data
+--- CMD: mount -t littlefs /dev/xtsflash /data ---
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256        143         113 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/p1583/testDir/testdir01
+--- CMD: ls -l /data/p1583/testDir/testdir01 ---
+ls -l /data/p1583/testDir/testdir01
+/data/p1583/testDir/testdir01:
+ drwx------           0 .
+ drwx------           0 ..
+ -rwxrwxrwx        5376 powerOffTestFile01
+ -rwxrwxrwx           0 powerOffTestFile02
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/p1583/testDir/testdir02
+--- CMD: ls -l /data/p1583/testDir/testdir02 ---
+ls -l /data/p1583/testDir/testdir02
+/data/p1583/testDir/testdir02:
+ drwx------           0 .
+ drwx------           0 ..
+ -rwxrwxrwx      107520 powerOffTestFile03
+ -rwxrwxrwx           0 powerOffTestFile04
+nsh> [K
+nsh> [K
+XTS_COMMAND=cat /data/p1583/emmcfile.txt
+--- CMD: cat /data/p1583/emmcfile.txt ---
+cat /data/p1583/emmcfile.txt
+ Totalsize:       1024k         Freesize:        592k    
+nsh> [K
+nsh> [K
+XTS_COMMAND=power_off_test03 /data/p1583
+--- CMD: power_off_test03 /data/p1583 ---
+power_off_test03 /data/p1583
+SUCCESS:Thread 0 pthread_create success.
+SUCCESS:Thread 1 pthread_create success.
+SUCCESS:Thread 2 pthread_create success.
+SUCCESS:Thread 3 pthread_create success.
+test file: /data/p1583/testDir/testdir01/powerOffTestFile01 test size:256 isfsync: true
+test file: /data/p1583/testDir/testdir01/powerOffTestFile02 test size:3072 isfsync: false
+test file: /data/p1583/testDir/testdir02/powerOffTestFile03 test size:5120 isfsync: true
+test file: /data/p1583/testDir/testdir02/powerOffTestFile04 test size:10240 isfsync: false
+SUCCESS:Thread 0 pthread_join success.
+SUCCESS:Thread 1 pthread_join success.
+SUCCESS:Thread 2 pthread_join success.
+SUCCESS:Thread 3 pthread_join success.
+/data/p1583/testDir
+/data/p1583/testDir/testdir01
+/data/p1583/testDir/testdir01
+/data/p1583/testDir/testdir01/powerOffTestFile01
+/data/p1583/testDir/testdir01/powerOffTestFile02
+/data/p1583/testDir/testdir02
+/data/p1583/testDir/testdir02
+/data/p1583/testDir/testdir02/powerOffTestFile03
+/data/p1583/testDir/testdir02/powerOffTestFile04
+Before process start emmc size Total: 1024k  Free: 592k
+After process end emmc size Total: 1024k  Free: 592k
+Emmc size TEST PASS
+TestPowerOffCase03 TEST  PASS
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/p1583
+--- CMD: ls -l /data/p1583 ---
+ls -l /data/p1583
+/data/p1583:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256        108         148 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+{"case": "4.1.6", "round": 1, "status": "ROUND_PASS", "user_confirmation": "空间测试第1轮已断电并插回", "receipt": "build1023-flat-category-fs-name.sha256", "host_reset": false, "formatted": false, "original_recovery_pass": true}

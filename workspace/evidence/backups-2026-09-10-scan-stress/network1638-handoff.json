@@ -1,0 +1,22 @@
+{
+  "status": "INCOMPLETE_TCP_CONNECT_TIMEOUT",
+  "case": "5.1.22 TCP Rx original300s",
+  "exec_session": 42780,
+  "receipt": "build1631-spawn-parent-env.sha256",
+  "script": "network1637-original-rx.py tcp",
+  "result": "network1638-original-rx-result.json",
+  "log": "logs/network1638-original-rx.log",
+  "host_log": "logs/host1638-original-rx.log",
+  "target_file": "/tmp/r1638",
+  "serial_owner": null,
+  "radio_before": {
+    "channel": 6,
+    "bssid": "60:ce:41:46:0e:ec",
+    "sense_dbm": -73,
+    "link_rate": "72 per wapi",
+    "ssid": "user-selected same network"
+  },
+  "next": "Original1638 terminated: hostconnecttimeout, targetserver stopped, IOB96free. Archive preserved. Diagnose weakAP selection and PC/boardneighbor before further300s runs. Targetfile/tmp/r1638 preserved.",
+  "manual": "User asleep, no manual actions",
+  "sprint": "76/88"
+}

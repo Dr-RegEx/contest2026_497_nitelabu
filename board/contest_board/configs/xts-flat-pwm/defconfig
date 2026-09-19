@@ -1,0 +1,8 @@
+#include "../xts-flat-rtc/defconfig"
+
+# Original PWM driver test, LEDC0 channel0 on J2 GPIO48.
+CONFIG_ESP32S31_XTS_PWM=y
+CONFIG_PWM=y
+# CONFIG_ESPRESSIF_LEDC is not set
+# CONFIG_PWM_MULTICHAN is not set
+# CONFIG_PWM_PULSECOUNT is not set

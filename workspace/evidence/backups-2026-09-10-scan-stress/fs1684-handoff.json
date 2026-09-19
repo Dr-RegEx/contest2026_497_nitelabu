@@ -1,0 +1,17 @@
+{
+  "status": "ORIGINAL_RANDOM_RW1689_RUNNING",
+  "session": 41802,
+  "script": "build1684-fs-copy.sh",
+  "log": "logs/build1684-fs-copy.log",
+  "receipt_expected": "build1684-fs-copy.sha256",
+  "build_directory": "openvela-dev/out/esp32s31-xts-flat-category-fs-large-1684",
+  "patch": "fs1684-suffix-copy.patch",
+  "host_checks": "fs1683-copy-experiment/boundary-{256,1024,4096}.log; ASAN/UBSAN; whole800000B remount compare",
+  "loaded_board": "1684 FLAT candidate; /data original3MiB mounted without format",
+  "next": "Poll41802; inspectfs1689-result.json; requireall3fixturesrestored. Keep goal active and77/88.",
+  "scratch_backup": "fs1685-scratch-before.bin",
+  "scratch_receipt": "fs1685-scratch-before.sha256",
+  "active_log": "logs/fs1689-copy-original.log",
+  "temporary_fixtures": "audio_file.aac, persist.db, frag1164/Fragment_test_largefile staged in /tmp/fs1689-*; runner restores after normal return including test error. Do not reset.",
+  "prior_attempt": "1686 and1687 ENOSPC retained.1687 audio+persist restored and compared.1688 offline original and candidate bothENOSPC; movingfragment fixture too enablesfullfilecheck."
+}

@@ -1,0 +1,37 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x8d20
+load:0x2f008d80,len:0x1344
+entry 0x2f008998
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x8d20   (36128)
+dram: lma 0x0000ad68 vma 0x2f008d80 len 0x1344   (4932)
+padd: lma 0x0000c0d8 vma 0x00000000 len 0x3f40   (16192)
+imap: lma 0x00010020 vma 0x40040020 len 0x8bac   (35756)
+padd: lma 0x00018bd4 vma 0x00000000 len 0x7524   (29988)
+imap: lma 0x00020100 vma 0x40000100 len 0x32aa8  (207528)
+total segments stored 7
+ABC
+NuttShell (NSH)
+nsh> [K
+--- CMD: ls /dev/watchdog0 ---
+ls /dev/watchdog0
+ /dev/watchdog0
+nsh> [K
+nsh> [K
+XTS_COMMAND=cmocka_driver_watchdog -r 0
+cmocka_driver_watchdog -r 0
+[==========] tests: Running 4 test(s).
+[ RUN      ] drivertest_watchdog_feeding
+[  ERROR   ] --- false
+[   LINE   ] --- /testing/drivers/drivertest/drivertest_watchdog.c:353: error: Failure!
+[  FAILED  ] drTraceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-watchdog.py", line 70, in <module>
+    require('[  FAILED  ]' not in output and 'S31SM:M-TRAP' not in output,
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-watchdog.py", line 23, in require
+    raise RuntimeError(message)
+RuntimeError: original watchdog mode failed or machine trap occurred

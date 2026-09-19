@@ -1,0 +1,24 @@
+
+HOST_BEFORE=1789517582.5298378 COMMAND=ps
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK    USED FILLED    CPU COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 0000724  23.9%  48.4% CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 0000460  15.2%  50.2% CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 0001008  51.6%   0.0% lpwork 0x2f015fc0 0x2f01600c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 0000576  29.2%   0.0% hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 0001488  42.2%   0.0% wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 0001668  41.5%   2.1% /system/bin/init
+    7     7 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0004016 0001316  32.7%   0.0% showinfo -i 60
+nsh> [K
+HOST_AFTER=1789517582.6551363
+
+HOST_BEFORE=1789517582.6552436 COMMAND=date -u
+date -u
+Wed, Sep 16 00:13:02 2026
+nsh> [K
+HOST_AFTER=1789517582.7437143
+
+HOST_BEFORE=1789517582.7437916 COMMAND=cat /proc/uptime
+cat /proc/uptime
+-41614946528188nsh> [K
+HOST_AFTER=1789517582.9226432

@@ -1,0 +1,136 @@
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00018290 00000000 00000000 876dff6         
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    0000d147 0000d149 00000000 00000000 2c3753           
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     7ef2  7d93  00e7  006e
+Dropped      000a  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         d0f8  d088  0002  006e
+  Rexmit     ----  0002  ----  ----
+nsh> [K
+nsh> [Kiperf2 -c 192.168.1.29 -i 1 -p 5002 -t 300 > /tmp/tcp1720tx.log &
+iperf2 [19:101]
+nsh> [K
+nsh> [K[CPU1] psock_tcp_send: ERROR: No longer connected
+[CPU1] psock_tcp_send: ERROR: Not connected
+tcp write failed: Transport endpoint is not connected
+cat /tmp/tcp1720tx.log
+------------------------------------------------------------
+Client connecting to 192.168.1.29, TCP port 5002
+TCP window size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 192.168.1.60 port 13007 connected with 192.168.1.29 port 5002
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.00-1.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 1.00-2.00 sec   352 KBytes  2.88 Mbits/sec
+[  1] 2.00-3.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 3.00-4.00 sec   400 KBytes  3.28 Mbits/sec
+[  1] 4.00-5.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 5.00-6.00 sec   464 KBytes  3.80 Mbits/sec
+[  1] 6.00-7.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 7.00-8.00 sec   400 KBytes  3.28 Mbits/sec
+[  1] 8.00-9.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 9.00-10.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 10.00-11.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 11.00-12.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 12.00-13.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 13.00-14.00 sec   400 KBytes  3.28 Mbits/sec
+[  1] 14.00-15.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 15.00-16.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 16.00-17.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 17.00-18.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 18.00-19.00 sec   400 KBytes  3.28 Mbits/sec
+[  1] 19.00-20.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 20.00-21.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 21.00-22.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 22.00-23.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 23.00-24.00 sec   464 KBytes  3.80 Mbits/sec
+[  1] 24.00-25.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 25.00-26.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 26.00-27.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 27.00-28.00 sec   368 KBytes  3.01 Mbits/sec
+[  1] 28.00-29.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 29.00-30.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 30.00-31.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 31.00-32.00 sec   464 KBytes  3.80 Mbits/sec
+[  1] 32.00-33.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 33.00-34.00 sec   368 KBytes  3.01 Mbits/sec
+[  1] 34.00-35.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 35.00-36.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 36.00-37.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 37.00-38.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 38.00-39.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 39.00-40.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 40.00-41.00 sec   464 KBytes  3.80 Mbits/sec
+[  1] 41.00-42.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 42.00-43.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 43.00-44.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 44.00-45.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 45.00-46.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 46.00-47.00 sec   208 KBytes  1.70 Mbits/sec
+[  1] 47.00-48.00 sec   224 KBytes  1.84 Mbits/sec
+[  1] 48.00-49.00 sec   272 KBytes  2.23 Mbits/sec
+[  1] 49.00-50.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 50.00-51.00 sec   352 KBytes  2.88 Mbits/sec
+[  1] 51.00-52.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 52.00-53.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 53.00-54.00 sec   352 KBytes  2.88 Mbits/sec
+[  1] 54.00-55.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 55.00-56.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 56.00-57.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 57.00-58.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 58.00-59.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 59.00-60.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 60.00-61.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 61.00-62.00 sec   464 KBytes  3.80 Mbits/sec
+[  1] 62.00-63.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 63.00-64.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 64.00-65.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 65.00-66.00 sec   400 KBytes  3.28 Mbits/sec
+[  1] 66.00-67.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 67.00-68.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 68.00-69.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 69.00-70.00 sec   464 KBytes  3.80 Mbits/sec
+[  1] 70.00-71.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 71.00-72.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 72.00-73.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 73.00-74.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 74.00-75.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 75.00-76.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 76.00-77.00 sec   400 KBytes  3.28 Mbits/sec
+[  1] 77.00-78.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 78.00-79.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 79.00-80.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 80.00-81.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 81.00-82.00 sec   208 KBytes  1.70 Mbits/sec
+[  1] 82.00-83.00 sec  96.0 KBytes   786 Kbits/sec
+[  1] 83.00-83.28 sec  27.4 KBytes   791 Kbits/sec
+[  1] 0.00-83.28 sec  33.2 MBytes  3.34 Mbits/sec
+nsh> [K
+nsh> [Kps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [Krm /tmp/tcp1720tx.log
+nsh> [K
+nsh> [K

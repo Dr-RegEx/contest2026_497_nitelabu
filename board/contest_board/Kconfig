@@ -1,11 +1,331 @@
 #
-# Contest 2026 team 000 board placeholder
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
 #
 
-if ARCH_BOARD_CONTEST2026_000_BOARD
+if ARCH_BOARD_ESP32S31_CORE_FUNCTION_BOARD
 
-config ARCH_BOARD_CONTEST2026_000_BOARD_TAG
-	string "Board tag"
-	default "contest2026_000_board"
+config ESP32S31_XTS_ADC
+	bool "Expose ADC1 raw samples on J2 GPIO47"
+	depends on ADC && BUILD_FLAT && !SMP
+	depends on !ESPRESSIF_WIFI && !ESP32S31_BLE && !ESP32S31_XTS_GPIO
+	default n
+	help
+		Isolated polling ADC1 channel5 on GPIO47 (J2 pin13). Register
+		/dev/adc0 for the original ADC application. No calibrated millivolt
+		conversion is claimed; the pinned S31 reference has no calibration
+		scheme. The ADC clock/power block is exclusive to this profile.
+
+config ESP32S31_AUDIO
+	bool "Board ES8311 raw PCM playback and capture"
+	depends on ESP32S31_I2S && ESPRESSIF_I2C0 && AUDIO
+	depends on ESPRESSIF_I2C0_SCLPIN = 50 && ESPRESSIF_I2C0_SDAPIN = 51
+	select DRIVERS_AUDIO
+	select AUDIO_ES8311
+	select ES8311_SHARED_DUPLEX if ESP32S31_I2S_DUPLEX
+	default n
+	help
+		Register pcm0p and pcm0c for the onboard codec at I2C address 0x18.
+		The default isolated profile supports half-duplex raw PCM.
+		The dedicated duplex option enables shared codec ownership.
+		GPIO57 controls the amplifier and remains off while idle.
+
+config ESP32S31_CAMERA_OV2640
+	bool "Probe an external OV2640 over the isolated SCCB bus"
+	depends on BUILD_FLAT && DRIVERS_VIDEO && VIDEO_OV2640
+	depends on ESPRESSIF_I2C0 && I2C_DRIVER
+	depends on ESPRESSIF_I2C0_SCLPIN = 1 && ESPRESSIF_I2C0_SDAPIN = 0
+	default n
+	---help---
+		Without DVP this SCCB-only option requires an external XCLK source.
+		Probe and apply the NuttX OV2640 register profile during board
+		bring-up.  This is only an isolated camera fixture option: it does
+		not register a capture device or claim DVP frame acquisition.  Keep
+		it disabled in production images until the external sensor wiring and
+		S31 DVP lower-half are verified.
+
+config ESP32S31_CAMERA_OV3660
+	bool "External OV3660 VGA RGB565 sensor"
+	depends on BUILD_FLAT && DRIVERS_VIDEO && !ESP32S31_CAMERA_OV2640
+	depends on ESPRESSIF_I2C0 && I2C_DRIVER && !SMP && SCHED_HPWORK
+	depends on ESPRESSIF_I2C0_SCLPIN = 1 && ESPRESSIF_I2C0_SDAPIN = 0
+	help
+		Initialize an external OV3660 with 16-bit SCCB register addresses,
+		640x480 RGB565 and 16 MHz XCLK. Requires DVP clock before probing.
+		No JPEG or dynamic resolution/frame-rate control is implemented.
+
+config ESP32S31_CAMERA_DVP
+	bool "Prepare the S31 DVP controller for the external camera"
+	depends on (ESP32S31_CAMERA_OV2640 || ESP32S31_CAMERA_OV3660) && !SMP && SCHED_HPWORK
+	default n
+	help
+		Build the locked Espressif Camera Controller, CAM HAL and GDMA path,
+		then create a real DVP controller and DMA frame buffer before the
+		sensor SCCB probe, supplying its required XCLK.  This option only prepares the controller;
+		it does not register /dev/video0 or claim that frames were captured.
+		Keep it disabled until every pin below matches the external fixture.
+
+config ESP32S31_CAMERA_V4L2
+	bool "Register the S31 DVP camera as /dev/video0"
+	depends on ESP32S31_CAMERA_DVP && VIDEO_STREAM && !SMP
+	default n
+	help
+		Expose the sensor/S31 DVP pair through the NuttX V4L2 capture
+		interface.  The bridge copies the controller's DMA-safe frame into
+		the V4L2 buffer and reports completion only after a real sensor probe.
+		This option remains isolated until the external camera fixture is
+		wired and a frame is captured on hardware.
+
+if ESP32S31_CAMERA_DVP
+
+config ESP32S31_CAMERA_DVP_HRES
+	int "DVP frame width"
+	range 1 4096
+	default 640
+
+config ESP32S31_CAMERA_DVP_VRES
+	int "DVP frame height"
+	range 1 4096
+	default 480
+
+config ESP32S31_CAMERA_DVP_XCLK_FREQ
+	int "DVP sensor clock frequency (Hz)"
+	range 1000000 40000000
+	default 20000000
+
+config ESP32S31_CAMERA_DVP_D0
+	int "DVP D0 GPIO"
+	range 0 62
+	default 46
+
+config ESP32S31_CAMERA_DVP_D1
+	int "DVP D1 GPIO"
+	range 0 62
+	default 47
+
+config ESP32S31_CAMERA_DVP_D2
+	int "DVP D2 GPIO"
+	range 0 62
+	default 48
+
+config ESP32S31_CAMERA_DVP_D3
+	int "DVP D3 GPIO"
+	range 0 62
+	default 49
+
+config ESP32S31_CAMERA_DVP_D4
+	int "DVP D4 GPIO"
+	range 0 62
+	default 50
+
+config ESP32S31_CAMERA_DVP_D5
+	int "DVP D5 GPIO"
+	range 0 62
+	default 51
+
+config ESP32S31_CAMERA_DVP_D6
+	int "DVP D6 GPIO"
+	range 0 62
+	default 52
+
+config ESP32S31_CAMERA_DVP_D7
+	int "DVP D7 GPIO"
+	range 0 62
+	default 53
+
+config ESP32S31_CAMERA_DVP_XCLK
+	int "DVP XCLK GPIO"
+	range 0 62
+	default 55
+
+config ESP32S31_CAMERA_DVP_PCLK
+	int "DVP PCLK GPIO"
+	range 0 62
+	default 54
+
+config ESP32S31_CAMERA_DVP_DE
+	int "DVP DE/HREF GPIO"
+	range 0 62
+	default 57
+
+config ESP32S31_CAMERA_DVP_VSYNC
+	int "DVP VSYNC GPIO"
+	range 0 62
+	default 56
+
+endif # ESP32S31_CAMERA_DVP
+
+config ESP32S31_XTS_PWM
+	bool "Expose S31 PWM on J2 GPIO48"
+	depends on BUILD_FLAT && PWM && !PWM_MULTICHAN && !PWM_PULSECOUNT
+	depends on !ESPRESSIF_LEDC
+	default n
+	---help---
+		Register /dev/pwm0 using S31 LEDC0 timer0 channel0, on GPIO48.
+		The dedicated fixture profile supports continuous single-channel
+		output. Registering the device does not start pulses.
+
+config ESP32S31_XTS_GPIO
+	bool "Expose J2 GPIO47/48 for the original GPIO xTS"
+	depends on BUILD_FLAT && DEV_GPIO && !GPIO_LOWER_HALF
+	select ESPRESSIF_GPIO_IRQ
+	default n
+	---help---
+		Register GPIO47 (J2 pin13) as /dev/gpio0 input and GPIO48
+		(J2 pin14) as /dev/gpio1 output. Connect these two pins only
+		when running the original GPIO loopback and interrupt tests.
+
+config ESP32S31_XTS_BMI160
+	bool "Bind an external BMI160 to I2C0 for the original sensor xTS"
+	depends on BUILD_FLAT && ESPRESSIF_I2C0 && I2C_DRIVER
+	depends on SENSORS_BMI160_I2C && !SENSORS_BMI160_UORB
+	default n
+	---help---
+		Register the external BMI160 character interface at /dev/accel0.
+		The xts-flat-bmi160 profile routes I2C0 to J2 GPIO45/46 instead
+		of the onboard codec bus. Missing sensors are reported and do
+		not prevent the diagnostic shell from starting.
+
+config ESP32S31_XTS_BMI160_UORB
+	bool "Bind an external BMI160 to the uORB sensor framework"
+	depends on BUILD_FLAT && ESPRESSIF_I2C0 && I2C_DRIVER
+	depends on SENSORS_BMI160_I2C && SENSORS_BMI160_UORB
+	default n
+	---help---
+		Register BMI160 acceleration and gyroscope topics on I2C0.
+		The dedicated fixture profile uses J2 GPIO45/46 at address 0x68.
+		Missing sensors do not prevent the diagnostic shell from starting.
+
+config ESP32S31_XTS_FLASH
+	bool "Expose the dedicated Flash xTS scratch partition"
+	depends on BUILD_FLAT
+	select ESPRESSIF_SPIFLASH
+	select ESPRESSIF_MTD
+	default n
+	---help---
+		Register /dev/xtsflash at Flash offset 0xc00000, size 0x100000,
+		outside the kernel, AppFS and writable /apps partitions. Startup
+		only registers the device. The original cmocka_driver_block test
+		will erase and overwrite it when explicitly invoked. Verify and
+		back up this exact range before running the test.
+
+config ESP32S31_XTS_FLASH_LARGE
+	bool "Use the separate 3 MiB filesystem xTS scratch partition"
+	depends on ESP32S31_XTS_FLASH && !ESP32S31_XTS_MEDIA_VOLUME
+	default n
+	help
+		Move /dev/xtsflash to 0xd00000, size 0x300000, preserving the
+		original 1 MiB scratch at 0xc00000. Registration never writes.
+		This range overlaps the WAV volume backing Flash: never use
+		both at once. Require exact-range double backup and all-FF
+		verification before initial use. Archive FS evidence and restore
+		verified original blank contents before switching to WAV use.
+
+config ESP32S31_XTS_MEDIA_VOLUME
+	bool "Expose the dedicated volatile original-WAV volume"
+	depends on BUILD_FLAT && ESPRESSIF_SPIRAM_USER_HEAP
+	select ESPRESSIF_SPIFLASH
+	select ESPRESSIF_MTD
+	select RAMMTD
+	default n
+	help
+		Reserve 14 MiB of PSRAM and concatenate a fixed 3 MiB Flash
+		partition at 0xd00000. Register /dev/wavvol without formatting,
+		mounting or writing Flash. Its RAM contents are lost at reboot.
+		Back up the exact Flash interval before explicit formatting.
+
+config ESP32S31_FLASH_AUDIO_TRACE
+	bool "Temporary first Flash read trace during audio DMA"
+	depends on ESP32S31_XTS_FLASH && ESP32S31_I2S_DUPLEX
+	default n
+	help
+		Diagnostic only. Emit bounded ROM UART stage characters for the first
+		Flash read after audio DMA starts. Never enable in acceptance images.
+
+config ESP32S31_XTS_FLASH_RAW
+	bool "Expose the xTS scratch partition through FTL and BCH"
+	depends on ESP32S31_XTS_FLASH && BCH
+	default n
+	---help---
+		Register /dev/xtsblock and /dev/xtsraw over the same fixed scratch
+		partition for the published raw dd throughput case. Registration
+		does not erase or format Flash. Never mount the scratch filesystem
+		while using these raw aliases for writes.
+
+config ESP32S31_MQUEUE_TEST
+	bool "Run the bounded kernel message-queue boot test"
+	depends on BUILD_KERNEL && ESP32S31_SMP && !DISABLE_MQUEUE
+	default n
+	---help---
+		Test full-queue zero and finite waits, nonblocking return values
+		and message preservation on each CPU before starting Wi-Fi.
+		Diagnostic only; no persistent data or external pins accessed.
+
+config ESP32S31_WIFI_EVENT_TEST
+	bool "Run the bounded kernel Wi-Fi event-group boot test"
+	depends on BUILD_KERNEL && ESPRESSIF_WIFI && ESP32S31_SMP
+	default n
+	---help---
+		Exercise actual event waits, timeout, group deletion and forced
+		task deletion in both CPU directions before starting Wi-Fi.
+		Diagnostic only; omitted from the normal demo and production.
+
+config ESP32S31_SMP_TEST
+	bool "Run the G.2.0 cross-core scheduler boot diagnostic"
+	depends on ESP32S31_SMP
+	default n
+	---help---
+		Run the bounded CPU0-to-CPU1 and CPU1-to-CPU0 semaphore wakeup
+		diagnostic during board bring-up.  This is retained by the cpu1-smp
+		regression profile but omitted from normal production boots.
+
+config ESP32S31_SMP_TEST_ROUNDS
+	int "G.2.0 cross-core scheduler test rounds"
+	depends on ESP32S31_SMP_TEST
+	default 64
+	range 1 1024
+	---help---
+		Number of bounded CPU0-to-CPU1 and CPU1-to-CPU0 semaphore wakeup
+		rounds executed by the G.2.0 SMP diagnostic.
+
+config ESP32S31_FLASH_APPFS
+	bool "Load Kernel Build applications from SPI Flash AppFS"
+	depends on BUILD_KERNEL
+	select ESPRESSIF_SPIFLASH
+	select ESPRESSIF_MTD
+	select FS_ROMFS
+	select FS_LITTLEFS
+	---help---
+		Generate a read-only seed image from the separately linked Kernel
+		Build applications and place it outside the NuttX image.  The first
+		part of the configured MTD region is mounted at /system/bin as ROMFS;
+		the remainder is a writable, power-loss-resilient LittleFS mounted at
+		/apps.  No application bytes are embedded in internal SRAM.
+
+if ESP32S31_FLASH_APPFS
+
+config ESP32S31_FLASH_APPFS_SEED_SIZE
+	hex "Read-only AppFS seed partition size"
+	default 0x100000
+	---help---
+		Size of the ROMFS seed partition at the beginning of the configured
+		application MTD region.  The remaining bytes are used by LittleFS.
+
+config ESP32S31_FLASH_APPFS_SEED_INSTALL
+	bool "Install sv32test into writable AppFS on first boot"
+	default y
+	---help---
+		Atomically copy sv32test and its SHA-256 manifest from /system/bin to
+		/apps when the writable copy is absent.
+
+config ESP32S31_FLASH_APPFS_E0_CORPUS
+	bool "Include E.0 malformed-ELF validation corpus"
+	default n
+	---help---
+		Include the large oversize and malformed sv32test images used by the
+		E.0 loader validation.  Later stage images can omit this corpus while
+		retaining the normal sv32test regression application.
 
 endif
+
+endif # ARCH_BOARD_ESP32S31_CORE_FUNCTION_BOARD

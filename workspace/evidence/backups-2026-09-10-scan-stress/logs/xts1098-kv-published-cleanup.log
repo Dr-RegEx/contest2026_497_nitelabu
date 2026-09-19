@@ -1,0 +1,52 @@
+ARCHIVED_VOLUME_SHA256=4d0f3dc8c144c57265390aefe89de27c41c0be65a4f6280a19649d9ee59bee4c
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009600 0x2f009648
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009580 0x2f0095c8
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008120 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/persist.db
+--- CMD: ls -l /data/persist.db ---
+ls -l /data/persist.db
+ -rw-r--r--       12288 /data/persist.db
+nsh> [K
+nsh> [K
+XTS_COMMAND=rm /data/persist.db
+--- CMD: rm /data/persist.db ---
+rm /data/persist.db
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+ drwxrwxrwx           0 .
+ dr--r--r--           0 ..
+ drwxrwxrwx           0 s03/
+ drwxrwxrwx           0 s04r/
+ drwxrwxrwx           0 s04/
+ drwxrwxrwx           0 s05/
+ drwxrwxrwx           0 s06/
+ drwxrwxrwx           0 s07/
+ drwxrwxrwx           0 s08/
+ drwxrwxrwx           0 s09/
+ drwxrwxrwx           0 s10/
+ drwxrwxrwx           0 s11/
+ drwxrwxrwx           0 s12/
+ -rw-rw-rw-          27 test.prop
+nsh> [K
+nsh> [K
+PUBLISHED_5.1.68_DB_REMOVED prior_volume_archived reboot_required_next

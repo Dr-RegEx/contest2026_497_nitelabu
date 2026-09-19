@@ -1,0 +1,13 @@
+/tmp/esp-wifi-ba-window-5dv8w790/test.c: In function ‘main’:
+/tmp/esp-wifi-ba-window-5dv8w790/test.c:26:33: error: ‘CONFIG_ESPRESSIF_WIFI_TX_BA_WIN’ undeclared (first use in this function)
+   26 |   wifi_cfg.rx_ba_win          = CONFIG_ESPRESSIF_WIFI_TX_BA_WIN;
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/esp-wifi-ba-window-5dv8w790/test.c:26:33: note: each undeclared identifier is reported only once for each function it appears in
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_ba_window.py", line 59, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_ba_window.py", line 51, in main
+    subprocess.run(['cc', '-std=c11', '-Wall', '-Wextra', '-Werror',
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '/tmp/esp-wifi-ba-window-5dv8w790/test.c', '-o', '/tmp/esp-wifi-ba-window-5dv8w790/test']' returned non-zero exit status 1.

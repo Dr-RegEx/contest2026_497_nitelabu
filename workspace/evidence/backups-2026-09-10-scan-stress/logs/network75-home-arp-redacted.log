@@ -1,0 +1,135 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xee8c
+load:0x2f00ef00,len:0x368c
+entry 0x2f00ea54
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xee8c   (61068)
+dram: lma 0x00010ed4 vma 0x2f00ef00 len 0x368c   (13964)
+padd: lma 0x00014598 vma 0x00000000 len 0xba80   (47744)
+imap: lma 0x00020020 vma 0x400c0020 len 0x19204  (102916)
+padd: lma 0x0003922c vma 0x00000000 len 0x6ecc   (28364)
+imap: lma 0x00040100 vma 0x40000100 len 0xb1480  (726144)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_BOOT=PASS seconds=0.588
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=0 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=13 id=128
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=58 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=13
+bssid / frequency / signal level / encode / ssid
+8c:de:f9:a0:3f:6c	2442	-86	0800	Xiaomi_DDB3
+64:75:20:ad:ed:3e	2442	-86	0800	CU_6hQR
+24:5a:5f:78:74:42	2462	-85	0800	falcom219
+c0:a4:76:e8:e1:eb	2437	-84	0800	@Ruijie-s9599
+98:0d:51:96:33:54	2437	-83	0800	HDMRC
+b4:7c:a6:58:15:fe	2432	-81	0800	Home-Wireless
+24:69:68:38:77:70	2412	-79	0800	wlj
+bc:54:fc:36:e1:c2	2462	-76	0800	MERCURY_E1C2
+94:bf:80:7e:6f:c9	2422	-75	0800	CU_rfNY
+60:ce:41:46:0e:ec	2412	-74	0800	<redacted>
+7c:39:85:2a:50:04	2462	-65	0800	<redacted>
+60:ce:41:ab:02:d0	2462	-62	0800	<redacted>
+60:ce:41:ab:02:d2	2462	-61	0800	STB_T4Zp
+nsh> [K
+nsh> [K
+SCAN_SECONDS=2.672
+SCAN_IOCTL=PASS
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=1 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=19 id=129
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=107 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=19
+bssid / frequency / signal level / encode / ssid
+60:53:75:8f:74:64	2462	-90	0800	CU_WsA8
+c2:a4:76:2e:95:9b	2462	-90	0800	@Ruijie-s9599_iot
+c2:b9:cc:e7:e8:db	2412	-89	0800	HomeStation
+24:5a:5f:8b:30:90	2462	-87	0800	TP-LINK_3090
+d8:31:39:80:18:b0	2457	-86	0800	CU_9wN9
+08:f4:58:ab:bf:e8	2437	-86	0800	HDMRC
+0c:4b:54:16:c5:f5	2412	-85	0800	lcwx
+68:dd:b7:77:db:38	2462	-84	0800	JSL
+64:75:20:ad:ed:3e	2442	-83	0800	CU_6hQR
+ca:33:e5:05:fe:88	2432	-83	0800	阳光
+c4:16:c8:5a:e5:6c	2462	-82	0800	HUAWEI-J
+98:0d:51:96:33:54	2437	-81	0800	HDMRC
+24:69:68:38:77:70	2412	-80	0800	wlj
+bc:54:fc:36:e1:c2	2462	-75	0800	MERCURY_E1C2
+94:bf:80:7e:6f:c9	2422	-72	0800	CU_rfNY
+7c:39:85:2a:50:04	2462	-68	0800	<redacted>
+60:ce:41:46:0e:ec	2412	-66	0800	<redacted>
+60:ce:41:ab:02:d2	2462	-61	0800	STB_T4Zp
+60:ce:41:ab:02:d0	2462	-61	0800	<redacted>
+nsh> [K
+nsh> [K
+PSCAN_SECONDS=5.395
+PSCAN_IOCTL=PASS
+--- CMD: wapi psk wlan0 <redacted> 3 2 ---
+wapi psk wlan0 <redacted> 3 2
+nsh> [K
+nsh> [K
+--- CMD: wapi essid wlan0 <redacted> 1 ---
+wapi essid wlan0 <redacted> 1
+nsh> [K
+nsh> [K
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xee8c
+load:0x2f00ef00,len:0x368c
+entry 0x2f00ea54
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xee8c   (61068)
+dram: lma 0x00010ed4 vma 0x2f00ef00 len 0x368c   (13964)
+padd: lma 0x00014598 vma 0x00000000 len 0xba80   (47744)
+imap: lma 0x00020020 vma 0x400c0020 len 0x19204  (102916)
+padd: lma 0x0003922c vma 0x00000000 len 0x6ecc   (28364)
+imap: lma 0x00040100 vma 0x40000100 len 0xb1480  (726144)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_CLEANUP_BOOT=PASS seconds=0.585
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+NETWORK_PROBE=FAIL: ifconfig wlan0 0.0.0.0
+

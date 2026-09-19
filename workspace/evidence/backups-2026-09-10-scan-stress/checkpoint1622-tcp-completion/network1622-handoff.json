@@ -1,0 +1,66 @@
+{
+  "status": "DIAGNOSTIC_COMPLETE",
+  "receipt": "build1621-spawn-parent-env.sha256",
+  "samples": [
+    {
+      "tcp": [
+        "1: 04  61   1   3 1460   0  17520      0  1460      65535     192.168.1.60:14817      192.168.1.29:5002"
+      ],
+      "queued": 58,
+      "done": 60
+    },
+    {
+      "tcp": [
+        "1: 04  61   1   3 1460   0  18980      0  1460      65535     192.168.1.60:14817      192.168.1.29:5002"
+      ],
+      "queued": 106,
+      "done": 108
+    },
+    {
+      "tcp": [
+        "1: 04  61   1   0    0   0  16544      0  1460      65535     192.168.1.60:14817      192.168.1.29:5002"
+      ],
+      "queued": 154,
+      "done": 156
+    },
+    {
+      "tcp": [
+        "1: 04  61   1   3 1460   0  18980      0  1460      65535     192.168.1.60:14817      192.168.1.29:5002"
+      ],
+      "queued": 206,
+      "done": 207
+    },
+    {
+      "tcp": [
+        "1: 04  61   1   3 1460   0  17520      0  1460      65535     192.168.1.60:14817      192.168.1.29:5002"
+      ],
+      "queued": 249,
+      "done": 250
+    },
+    {
+      "tcp": [
+        "1: 04  61   1   3 1460   0  18980      0  1460      65535     192.168.1.60:14817      192.168.1.29:5002"
+      ],
+      "queued": 302,
+      "done": 304
+    },
+    {
+      "tcp": [
+        "1: 04  61   1   3 1460   0  18980      0  1460      65535     192.168.1.60:14817      192.168.1.29:5002"
+      ],
+      "queued": 354,
+      "done": 355
+    },
+    {
+      "tcp": [
+        "1: 04  61   1   3 1460   0  18980      0  1460      65535     192.168.1.60:14817      192.168.1.29:5002"
+      ],
+      "queued": 395,
+      "done": 397
+    }
+  ],
+  "finding": "TX completion callbacks continue. Peer window65535. Source review shows d_polltype consumed with wlan_txpoll return0; TX completion does not rearm protocol bit. Candidate1623 uses return1 with bounded8poll budget.",
+  "next": "1623 build then1624 bounded test; not a PASS yet.",
+  "manual_cooperation": "Unavailable while user resting",
+  "sprint": "76/88"
+}

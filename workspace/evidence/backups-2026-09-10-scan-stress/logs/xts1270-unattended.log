@@ -1,0 +1,17 @@
+START xts1268-media-config
+COMPLETE xts1268-media-config
+START xts1270-aac-upload
+COMPLETE xts1270-aac-upload
+START xts1270-aac-readback
+COMPLETE xts1270-aac-readback
+START xts1269-media-start
+COMPLETE xts1269-media-start
+START xts1271-media-flash-aac
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/flash1270-unattended.py", line 51, in <module>
+    step('xts1271-media-flash-aac', 'run1271-media-flash-aac.py')
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/flash1270-unattended.py", line 29, in step
+    subprocess.run([str(P), str(D / script), *map(str, args)],
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/bin/python', '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/run1271-media-flash-aac.py']' returned non-zero exit status 1.

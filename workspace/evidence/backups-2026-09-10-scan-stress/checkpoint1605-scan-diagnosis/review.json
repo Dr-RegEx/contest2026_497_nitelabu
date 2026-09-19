@@ -1,0 +1,14 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "old_case": "5.1.27",
+  "old_rounds": 100,
+  "event_count_equals_sdk_count_equals_displayed_rows": true,
+  "old_ap_count_distribution": {
+    "3": 53,
+    "2": 47
+  },
+  "current_diagnostic_rounds": 3,
+  "current_ap_count_each": 3,
+  "conclusion": "Old AP variation already exists in Wi-Fi scan event/AP records; no evidence that WAPI drops the missing AP. This does not prove RF/environment as sole root cause.",
+  "next": "network1606-directed-scan.py runs unchanged original 100 rounds on current1565 firmware; no scan result caching/filtering added."
+}

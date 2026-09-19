@@ -1,0 +1,30 @@
+COLD_BOOT_CAPTURE_READY round=6 NO_HOST_RESET
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x58 (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x1c150
+entry 0x2f017f84
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x1c150  (115024)
+padd: lma 0x0001e1c8 vma 0x00000000 len 0x1e50   (7760)
+imap: lma 0x00020020 vma 0x40140020 len 0x258dc  (153820)
+padd: lma 0x00045904 vma 0x00000000 len 0xa7f4   (42996)
+imap: lma 0x00050100 vma 0x40000100 len 0x137f78 (1277816)
+total segments stored 6
+ABC[CPU0] S31 hardware crypto: SHA1/SHA256/SHA512 PIO
+[CPU0] S31 hardware crypto: HMAC-SHA1/256 via SHA PIO
+[CPU0] S31 hardware crypto: ECDSA P256 verify only
+[CPU0] S31 hardware crypto: AES-CBC 128/256-bit PIO
+[CPU0] S31 hardware crypto: AES-CTR/XTS full-block PIO
+[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K{"case": "common2.1.3", "round": 6, "receipt": "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1565-simd-int8.sha256", "status": "BOOT_CAPTURED_PHYSICAL_CONFIRMATION_PENDING", "elapsed_seconds": 0.266088773, "first_byte_utc": "2026-09-17T17:43:15.283231+00:00", "boot_complete_utc": "2026-09-17T17:43:15.549310+00:00", "faults": [], "physical_power_cycle_confirmed": false, "timing": "Host receipt of ROM marker through NSH marker; not power-on instant"}

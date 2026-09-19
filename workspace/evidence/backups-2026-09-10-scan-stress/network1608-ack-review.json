@@ -1,0 +1,35 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "summary": [
+    {
+      "ack_mode": 0,
+      "ioctl_return": null,
+      "bytes": 344560,
+      "host_seconds": 11.2781562,
+      "host_mbit_s": 0.2444087447556366,
+      "recv_calls": 196,
+      "median_recv_interval_ms": 60.72129999999998,
+      "max_recv_interval_ms": 1287.254299999999
+    },
+    {
+      "ack_mode": 1,
+      "ioctl_return": 0,
+      "bytes": 1359932,
+      "host_seconds": 11.3476082,
+      "host_mbit_s": 0.958744416290298,
+      "recv_calls": 656,
+      "median_recv_interval_ms": 13.614300000000412,
+      "max_recv_interval_ms": 187.62780000000046
+    }
+  ],
+  "target_report_kbit_s": [
+    251,
+    1050
+  ],
+  "limitation": "Single sequential pair; custom TCP sink not original iperf server; received data includes protocol header; no packet capture, no root-cause proof.",
+  "initial_failure": "1607 cold ARP timeout; no connection. Host initiated ping warmed neighbor before1608. Cold ARP remains unresolved.",
+  "state": "Both host and UART sessions exited, test sockets closed, ACK setting was per-socket only, no global network changes.",
+  "hypothesis": "ACK cadence may constrain sender throughput; investigate target TCP scheduling/window before any permanent host workaround.",
+  "primary_reference": "https://sourceware.org/pipermail/cygwin-cvs/2020q3/014475.html",
+  "sprint_count": "76/88 unchanged"
+}

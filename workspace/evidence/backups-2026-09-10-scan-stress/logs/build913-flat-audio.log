@@ -1,0 +1,412 @@
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:xts-flat-audio -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- Processing includes: /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-audio/defconfig → /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.defconfig.processed
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/bin_host
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio --target resetconfig
+[1/1] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.defconfig.processed /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config && /usr/bin/cmake -E env KCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config EXTERNALDIR=dummy APPSDIR=/home/regex/work/esp32s31-openvela/openvela-dev/apps DRIVERS_PLATFORM_DIR=dummy APPSBINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/apps BINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio olddefconfig && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config.orig && /usr/bin/cmake -E remove -f /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/include/nuttx/config.h && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/CMakeLists.txt
+Loaded configuration '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config'
+Configuration saved to '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config'
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:xts-flat-audio -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- Processing includes: /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-audio/defconfig → /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.defconfig.processed
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/bin_host
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_ARCH_CHIP_ESP32S31=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_ESPRESSIF_ESP32S31=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_BUILD_FLAT=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_TESTING_MM=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_TESTING_CMOCKA=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_TESTING_DRIVER_TEST=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_BCH=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_ESPRESSIF_SPIRAM_USE_8LINE_MODE=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config
++ rg -q '^CONFIG_BUILD_(KERNEL|PROTECTED)=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.config
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio -j8
+[1/1320] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/libs/libc/misc && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/libs/libc/misc/lib_utsname.c
+[2/1320] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -DKCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/.defconfig.processed -DNUTTX_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx -DCMAKE_BINARY_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio -P /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/cmake/nuttx_generate_dts.cmake
+[3/1320] Building C object CMakeFiles/nuttx.dir/empty.c.o
+[4/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/esp32s31/rtc_io_periph.c.o
+[5/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_dma/esp32s31/gdma_periph.c.o
+[6/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_efuse.c.o
+[7/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/esp32s31/esp_efuse_utility.c.o
+[8/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_clock/esp32s31/clk_tree_hal.c.o
+[9/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/src/efuse_controller/keys/with_key_purposes/esp_efuse_api_key.c.o
+[10/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/src/esp_efuse_utility.c.o
+[11/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/esp32s31/esp_efuse_fields.c.o
+[12/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/esp32s31/esp_efuse_table.c.o
+[13/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/src/esp_efuse_api.c.o
+[14/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/flash_encrypt.c.o
+[15/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_init.c.o
+[16/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_mspi/spi_flash_encrypt_hal_iram.c.o
+[17/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/gpio_hal.c.o
+[18/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_pmu/esp32s31/pmu_hal.c.o
+[19/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/esp_image_format.c.o
+[20/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_dma/gdma_hal_crc_gen.c.o
+[21/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_dma/gdma_hal_top.c.o
+[22/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/esp32s31/dedic_gpio_periph.c.o
+[23/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_dma/gdma_hal_axi.c.o
+[24/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_dma/gdma_hal_ahb_v2.c.o
+[25/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/esp32s31/sdm_periph.c.o
+[26/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_mspi/spi_flash_hal.c.o
+[27/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_mspi/spi_flash_hal_gpspi.c.o
+[28/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/sdm_hal.c.o
+[29/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/rtc_io_hal.c.o
+[30/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_systimer/systimer_hal.c.o
+[31/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_mspi/spi_flash_hal_iram.c.o
+[32/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_rtc_gpio.c.o
+[33/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/clk_ctrl_os.c.o
+[34/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_timg/esp32s31/timer_periph.c.o
+[35/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_wdt/wdt_hal_iram.c.o
+[36/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_gpio.c.o
+[37/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_timg/timer_hal.c.o
+[38/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_uart/esp32s31/uart_periph.c.o
+[39/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_uart/uart_hal.c.o
+[40/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/clk_utils.c.o
+[41/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/cpu.c.o
+[42/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_uart/uart_hal_iram.c.o
+[43/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/esp_clk.c.o
+[44/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/mac_addr.c.o
+[45/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/periph_ctrl.c.o
+[46/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/cpu_region_protect.c.o
+[47/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/hal_backports/esp_gpio_reserve.c.o
+[48/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/ldo/esp_ldo_regulator.c.o
+[49/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/esp_cpu_intr.c.o
+[50/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/mspi/mspi_timing_tuning/mspi_timing_tuning.c.o
+[51/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/esp_memory_utils.c.o
+[52/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/hw_random.c.o
+[53/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/systimer.c.o
+[54/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/hal_backports/rtc_clk_init.c.o
+[55/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/rtc_time.c.o
+[56/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/esp_clk_tree.c.o
+[57/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/regi2c_ctrl.c.o
+[58/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/rtc_module.c.o
+[59/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/io_mux.c.o
+[60/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_crc.c.o
+[61/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_efuse.c.o
+[62/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/pmu_param.c.o
+[63/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/intr_alloc.c.o
+[64/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_gpio.c.o
+[65/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp_clk_tree_common.c.o
+[66/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/pmu_init.c.o
+[67/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_mm/port/esp32s31/ext_mem_layout.c.o
+[68/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_spiflash.c.o
+[69/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_serial_output.c.o
+[70/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_print.c.o
+[71/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_mm/esp_cache_msync.c.o
+[72/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_clic.c.o
+[73/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_mm/esp_cache_utils.c.o
+[74/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/port/soc/esp32s31/reset_reason.c.o
+[75/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/startup.c.o
+[76/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/rtc_clk.c.o
+[77/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_sys.c.o
+[78/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/port/soc/esp32s31/system_internal.c.o
+[79/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_common/src/esp_err_to_name.c.o
+[80/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/esp_err.c.o
+[81/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/port/soc/esp32s31/clk.c.o
+[82/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/log_level/log_level.c.o
+[83/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/startup_funcs.c.o
+[84/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/system_time.c.o
+[85/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/esp_system.c.o
+[86/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_mm/esp_mmu_map.c.o
+[87/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/log_level/tag_log_level/linked_list/log_linked_list.c.o
+[88/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/log_level/tag_log_level/tag_log_level.c.o
+[89/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_timer/src/system_time.c.o
+[90/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/noos/log_timestamp.c.o
+[91/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/log.c.o
+[92/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/os/log_write.c.o
+[93/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/noos/log_lock.c.o
+[94/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_timer/src/esp_timer_init.c.o
+[95/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/hal/esp32s31/efuse_hal.c.o
+[96/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/hal/efuse_hal.c.o
+[97/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_timer/src/esp_timer_impl_common.c.o
+[98/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/soc/esp32s31/gpio_periph.c.o
+[99/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/riscv/rv_utils.c.o
+[100/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/soc/esp32s31/interrupts.c.o
+[101/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_timer/src/esp_timer_impl_systimer.c.o
+[102/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/hal/hal_utils.c.o
+[103/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/soc/lldesc.c.o
+[104/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/riscv/instruction_decode.c.o
+[105/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_timer/src/esp_timer.c.o
+[106/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/hal/cache_hal.c.o
+[107/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/riscv/interrupt_clic.c.o
+[108/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/os/util.c.o
+[109/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/riscv/interrupt.c.o
+[110/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/hal/mmu_hal.c.o
+[111/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_chip_drivers.c.o
+[112/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_chip_gd.c.o
+[113/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/cache_utils.c.o
+[114/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_chip_winbond.c.o
+[115/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/flash_brownout_hook.c.o
+[116/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_hpm_enable.c.o
+[117/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_spi_init.c.o
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_spi_init.c: In function 'acquire_spi_device':
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_spi_init.c:234:35: warning: declaration of 'config' shadows a parameter [-Wshadow]
+  234 |         spi_bus_lock_dev_config_t config = {.flags = SPI_BUS_LOCK_DEV_FLAG_CS_REQUIRED};
+      |                                   ^~~~~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_spi_init.c:226:74: note: shadowed declaration is here
+  226 | static esp_err_t acquire_spi_device(const esp_flash_spi_device_config_t *config, int* out_dev_id, spi_bus_lock_dev_handle_t* out_dev_handle)
+      |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+[118/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c.o
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c: In function 'esp_flash_write':
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:57:23: warning: declaration of 'ret' shadows a previous local [-Wshadow]
+   57 |             esp_err_t ret = CHIP->os_func->region_protected(CHIP->os_func_data, ADDR, SIZE); \
+      |                       ^~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:1121:5: note: in expansion of macro 'CHECK_WRITE_ADDRESS'
+ 1121 |     CHECK_WRITE_ADDRESS(chip, address, length);
+      |     ^~~~~~~~~~~~~~~~~~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:1113:15: note: shadowed declaration is here
+ 1113 |     esp_err_t ret = ESP_FAIL;
+      |               ^~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c: In function 'esp_flash_write_encrypted':
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:57:23: warning: declaration of 'ret' shadows a previous local [-Wshadow]
+   57 |             esp_err_t ret = CHIP->os_func->region_protected(CHIP->os_func_data, ADDR, SIZE); \
+      |                       ^~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:1362:5: note: in expansion of macro 'CHECK_WRITE_ADDRESS'
+ 1362 |     CHECK_WRITE_ADDRESS(chip, address, length);
+      |     ^~~~~~~~~~~~~~~~~~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:1350:15: note: shadowed declaration is here
+ 1350 |     esp_err_t ret = ESP_FAIL;
+      |               ^~~
+[119/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_os_func_app.c.o
+[120/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_chip_generic.c.o
+[121/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/flash_mmap.c.o
+[122/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/flash_ops.c.o
+[123/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/nuttx/src/components/newlib/newlib/libc/misc/init.c.o
+[124/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/memspi_host_driver.c.o
+[125/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp32s31_pm_stubs.c.o
+[126/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_uart/src/uart_wakeup.c.o
+[127/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_os_func_noos.c.o
+[128/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/nuttx/src/heap_caps.c.o
+[129/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_dma/src/esp_dma_utils.c.o
+[130/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_gpio/src/rtc_io.c.o
+[131/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_clock_loader.c.o
+[132/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/esp32s31/bootloader_soc.c.o
+[133/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_dma/src/gdma_link.c.o
+[134/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp32s31_os_adapter.c.o
+[135/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_clock_init.c.o
+[136/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/bootloader_flash/src/flash_qio_mode.c.o
+[137/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_regi2c/esp32s31/regi2c_impl.c.o
+[138/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_gpio/src/gpio.c.o
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_gpio/src/gpio.c: In function 'gpio_dump_io_configuration':
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_gpio/src/gpio.c:1105:29: warning: format '%lu' expects argument of type 'long unsigned int', but argument 3 has type 'int' [-Wformat=]
+ 1105 |         fprintf(out_stream, "  FuncSel: %"PRIu32" (%s)\n", io_config.fun_sel, (io_config.fun_sel == PIN_FUNC_GPIO) ? "GPIO" : "IOMUX");
+      |                             ^~~~~~~~~~~~~~                 ~~~~~~~~~~~~~~~~~
+      |                                                                     |
+      |                                                                     int
+In file included from /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include/stdint.h:37,
+                 from /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include/sys/types.h:34,
+                 from /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/include/esp32s31/rom/ets_sys.h:15,
+                 from <command-line>:
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include/arch/inttypes.h:79:35: note: format string is defined here
+   79 | #define PRIu32      _PRI32PREFIX "u"
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_gpio/src/gpio.c:1107:33: warning: format '%lu' expects argument of type 'long unsigned int', but argument 3 has type 'int' [-Wformat=]
+ 1107 |             fprintf(out_stream, "  GPIO Matrix SigOut ID: %"PRIu32"%s\n", io_config.sig_out, (io_config.sig_out == SIG_GPIO_OUT_IDX) ? " (simple GPIO output)" : "");
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~              ~~~~~~~~~~~~~~~~~
+      |                                                                                    |
+      |                                                                                    int
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include/arch/inttypes.h:79:35: note: format string is defined here
+   79 | #define PRIu32      _PRI32PREFIX "u"
+[139/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_mem.c.o
+[140/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/hal_backports/bootloader_random_esp32s31.c.o
+[141/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_dma/src/gdma.c.o
+[142/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_reset_common.c.o
+[143/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_sha.c.o
+[144/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/esp32s31/bootloader_esp32s31.c.o
+[145/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/nuttx/src/bootloader_banner_wrap.c.o
+[146/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_console_loader.c.o
+[147/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_mspi/esp32s31/mspi_periph.c.o
+[148/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/bootloader_flash/src/bootloader_flash_config_esp32s31.c.o
+[149/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_common_loader.c.o
+[150/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/src/esp_efuse_fields.c.o
+[151/1320] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_vectors.S.o
+[152/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_random.c.o
+[153/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_i2c/esp32s31/i2c_periph.c.o
+[154/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_i2c/i2c_hal_iram.c.o
+[155/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_console.c.o
+[156/1320] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_head.S.o
+[157/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/bootloader_flash/src/bootloader_flash.c.o
+[158/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_i2c/i2c_hal.c.o
+[159/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/mspi/mspi_timing_tuning/port/esp32s31/mspi_timing_config.c.o
+[160/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_common.c.o
+[161/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_psram/system_layer/esp_psram_mspi.c.o
+[162/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_allocateheap.c.o
+[163/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/mspi/mspi_timing_tuning/tuning_scheme_impl/mspi_timing_by_dqs.c.o
+[164/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_lowputc.c.o
+[165/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_psram/device/esp_psram_impl_ap_hex.c.o
+[166/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_idle.c.o
+[167/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_psram/system_layer/esp_psram.c.o
+[168/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_libc_stubs.c.o
+[169/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp_chip_rev.c.o
+[170/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_systemreset.c.o
+[171/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_serial.c.o
+[172/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_irq.c.o
+[173/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp32s31_heap.c.o
+[174/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_timerisr.c.o
+[175/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp32s31_rtc_periodic.c.o
+[176/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_random.c.o
+[177/1320] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_i2s/i2s_hal.c.o
+[178/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_start.c.o
+[179/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_i2c.c.o
+[180/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_ets_timer_legacy.c.o
+[181/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_cpuidlestack.c.o
+[182/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_rtc.c.o
+[183/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_cpuinfo.c.o
+[184/1320] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_exception_common.S.o
+[185/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_createstack.c.o
+[186/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_hr_timer.c.o
+[187/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp32s31_i2s.c.o
+[188/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_doirq.c.o
+[189/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_exception.c.o
+[190/1320] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_mhartid.S.o
+[191/1320] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_saveusercontext.S.o
+[192/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_exit.c.o
+[193/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_getintstack.c.o
+[194/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_getnewintctx.c.o
+[195/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_tcbinfo.c.o
+[196/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_allocateheap.c.o
+[197/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_registerdump.c.o
+[198/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_releasestack.c.o
+[199/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_stackframe.c.o
+[200/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_swint.c.o
+[201/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_switchcontext.c.o
+[202/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_initialize.c.o
+[203/1320] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/fork.S.o
+[204/1320] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_fpu.S.o
+[205/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_initialstate.c.o
+[206/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_usestack.c.o
+[207/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_nputs.c.o
+[208/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_modifyreg32.c.o
+[209/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_schedulesigaction.c.o
+[210/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_fpucmp.c.o
+[211/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_fork.c.o
+[212/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_idle.c.o
+[213/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_mdelay.c.o
+[214/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_udelay.c.o
+[215/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_sigdeliver.c.o
+[216/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_globals.c.o
+[217/1320] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_pmp.c.o
+[218/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_initialize.c.o
+[219/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_register.c.o
+[220/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_unregister.c.o
+[221/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_loadmodule.c.o
+[222/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_unloadmodule.c.o
+[223/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_copyargv.c.o
+[224/1320] Building C object audio/CMakeFiles/audio.dir/pcm_decode.c.o
+[225/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_exec.c.o
+[226/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_copyattr.c.o
+[227/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_copyactions.c.o
+[228/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_execmodule.c.o
+[229/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_dumpmodule.c.o
+[230/1320] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_execsymtab.c.o
+[231/1320] Building C object binfmt/CMakeFiles/binfmt.dir/builtin.c.o
+[232/1320] Building C object drivers/CMakeFiles/drivers.dir/bch/bchlib_setup.c.o
+[233/1320] Building C object drivers/CMakeFiles/drivers.dir/bch/bchlib_teardown.c.o
+[234/1320] Building C object drivers/CMakeFiles/drivers.dir/audio/es8311.c.o
+FAILED: drivers/CMakeFiles/drivers.dir/audio/es8311.c.o 
+/home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-gcc -D__KERNEL__ -D__NuttX__ -I/home/regex/work/esp32s31-openvela/openvela-dev/apps/frameworks/security/include -I/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/sched -I/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/vhost -I/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/virtio -I/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers -isystem /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include -isystem /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-audio/include -Os -fno-strict-aliasing -fomit-frame-pointer -fno-common -Wall -Wshadow -Wundef -Wno-attributes -Wno-unknown-pragmas -Wstrict-prototypes -ffunction-sections -fdata-sections -march=rv32imafc_zicsr_zifencei -mabi=ilp32f -fdiagnostics-color=always -fmacro-prefix-map=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx= -fmacro-prefix-map=/home/regex/work/esp32s31-openvela/openvela-dev/apps= -fmacro-prefix-map=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board= -fmacro-prefix-map=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31= -MD -MT drivers/CMakeFiles/drivers.dir/audio/es8311.c.o -MF drivers/CMakeFiles/drivers.dir/audio/es8311.c.o.d -o drivers/CMakeFiles/drivers.dir/audio/es8311.c.o -c /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c
+In file included from /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include/debug.h:44,
+                 from /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:34:
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c: In function 'es8311_getcoeff':
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:502:19: warning: format '%d' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  502 |           audinfo("MCLK: %d, samplerate: %d\n", priv->mclk, samplerate);
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~
+      |                                                     |
+      |                                                     uint32_t {aka long unsigned int}
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:502:27: note: format string is defined here
+  502 |           audinfo("MCLK: %d, samplerate: %d\n", priv->mclk, samplerate);
+      |                          ~^
+      |                           |
+      |                           int
+      |                          %ld
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:502:19: warning: format '%d' expects argument of type 'int', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  502 |           audinfo("MCLK: %d, samplerate: %d\n", priv->mclk, samplerate);
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~              ~~~~~~~~~~
+      |                                                             |
+      |                                                             uint32_t {aka long unsigned int}
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:502:43: note: format string is defined here
+  502 |           audinfo("MCLK: %d, samplerate: %d\n", priv->mclk, samplerate);
+      |                                          ~^
+      |                                           |
+      |                                           int
+      |                                          %ld
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:507:10: warning: format '%d' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  507 |   auderr("MCLK = %d and samplerate = %d not supported.\n",
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  508 |          priv->mclk, samplerate);
+      |          ~~~~~~~~~~
+      |              |
+      |              uint32_t {aka long unsigned int}
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:507:19: note: format string is defined here
+  507 |   auderr("MCLK = %d and samplerate = %d not supported.\n",
+      |                  ~^
+      |                   |
+      |                   int
+      |                  %ld
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:507:10: warning: format '%d' expects argument of type 'int', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  507 |   auderr("MCLK = %d and samplerate = %d not supported.\n",
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  508 |          priv->mclk, samplerate);
+      |                      ~~~~~~~~~~
+      |                      |
+      |                      uint32_t {aka long unsigned int}
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:507:39: note: format string is defined here
+  507 |   auderr("MCLK = %d and samplerate = %d not supported.\n",
+      |                                      ~^
+      |                                       |
+      |                                       int
+      |                                      %ld
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c: In function 'es8311_setsamplerate':
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:779:15: warning: format '%d' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  779 |       audinfo("Sample rate set to: %d.\n", priv->samprate);
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~
+      |                                                |
+      |                                                uint32_t {aka long unsigned int}
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:779:37: note: format string is defined here
+  779 |       audinfo("Sample rate set to: %d.\n", priv->samprate);
+      |                                    ~^
+      |                                     |
+      |                                     int
+      |                                    %ld
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c: In function 'es8311_processbegin':
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:1346:9: error: implicit declaration of function 'nxmutex_lock'; did you mean 'nxsched_lock'? [-Wimplicit-function-declaration]
+ 1346 |   ret = nxmutex_lock(&priv->pendlock);
+      |         ^~~~~~~~~~~~
+      |         nxsched_lock
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:1411:3: error: implicit declaration of function 'nxmutex_unlock'; did you mean 'nxsched_unlock'? [-Wimplicit-function-declaration]
+ 1411 |   nxmutex_unlock(&priv->pendlock);
+      |   ^~~~~~~~~~~~~~
+      |   nxsched_unlock
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c: In function 'es8311_initialize':
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/audio/es8311.c:2283:7: error: implicit declaration of function 'nxmutex_init' [-Wimplicit-function-declaration]
+ 2283 |       nxmutex_init(&priv->pendlock);
+      |       ^~~~~~~~~~~~
+[235/1320] Linking C static library binfmt/libbinfmt.a
+[236/1320] Building C object audio/CMakeFiles/audio.dir/audio.c.o
+[237/1320] Building C object drivers/CMakeFiles/drivers.dir/bch/bchlib_read.c.o
+[238/1320] Linking C static library arch/libarch.a
+[239/1320] Building C object drivers/CMakeFiles/drivers.dir/bch/bchlib_write.c.o
+[240/1320] Building C object drivers/CMakeFiles/drivers.dir/bch/bchdev_register.c.o
+[241/1320] Building C object drivers/CMakeFiles/drivers.dir/bch/bchlib_cache.c.o
+ninja: build stopped: subcommand failed.
++ restore_config
++ '[' -f /tmp/s31-flat-source-config.o3oxQ0/.config ']'
++ mv /tmp/s31-flat-source-config.o3oxQ0/.config .config
++ '[' -f /tmp/s31-flat-source-config.o3oxQ0/config.h ']'
++ mv /tmp/s31-flat-source-config.o3oxQ0/config.h include/nuttx/config.h
++ rmdir /tmp/s31-flat-source-config.o3oxQ0

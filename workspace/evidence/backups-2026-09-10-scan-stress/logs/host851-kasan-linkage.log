@@ -1,0 +1,8 @@
+mm/CMakeFiles/kmm.dir/kasan/hook.c.o: ASAN calls present=False expected=False
+mm/CMakeFiles/kmm.dir/mm_heap/mm_initialize.c.o: ASAN calls present=False expected=False
+sched/CMakeFiles/sched.dir/task/task_create.c.o: ASAN calls present=True expected=True
+__asan_load4_noabort: IRAM 0x2f006b64
+__asan_store4_noabort: IRAM 0x2f006b76
+kasan_check_report: IRAM 0x2f0068f0
+kasan_stop: IRAM 0x2f006af0
+KASAN_LINKAGE=PASS; runtime validation still required

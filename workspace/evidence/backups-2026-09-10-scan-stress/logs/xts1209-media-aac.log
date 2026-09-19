@@ -1,0 +1,431 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1203-media.sha256
+SCOPE=original file decode/driver execution; audible acceptance pending
+XTS_COMMAND=mediatool
+mediatool
+mediatool> 
+XTS_COMMAND=open Music
+open Music
+[media][media_player_handler:1937] cmd: open, arg Music, target NULL.
+[media][media_player_handler:1970] ctx 0x2f0774d0 open Music success...
+[media][media_player_thread:1858] ctx 0x2f0774d0 create player thread.
+[media][media_proxy_once:441] player:local:0x2f0707b0 _ open Music _ ret:0 resp:0 response:_
+[media][media_proxy_once:441] player:local:0x2f0707b0 _ set_event _ _ ret:0 resp:0 response:_
+[media][media_proxy_once:441] session:local:0x5018c780 _ register _ _ ret:0 resp:0 response:_
+player ID 0
+mediatool> 
+XTS_COMMAND=prepare 0 url /data/audio_file.aac
+prepare 0 url /data/audio_file.aac
+[media][media_player_process_cmd:1516] ctx 0x2f0774d0 cmd: prepare, arg /data/audio_file.aac, target NULL. ret 0
+[media][media_player_proc_cmd:1397] ctx 0x2f0774d0 name Music proc cmd PREPARE (ID:5)
+[media][media_player_open_demuxer:909] protocol_map NOT found in options!
+[media][media_player_map_protocol:697] No protocol_map set or invalid proto.
+[media][media_player_open_demuxer:913] ctx 0x2f0774d0 url /data/audio_file.aac start open input.
+[media][media_player_open_demuxer:920] ctx 0x2f0774d0 open input done.
+[media][media_player_open_demuxer:928] ctx 0x2f0774d0 find stream info done.
+media_player_init_stream:784 stream 0, type 1.
+[media][media_player_open_demuxer:936] ctx 0x2f0774d0 open decoder done.
+[media][media_proxy_once:441] player:local:0x2f0707b0 _ prepare /data/audio_file.aac _ ret:0 resp:0 response:_
+mediatool> [mediatool_event_callback][307] id:0, event:PREPARED(1) ret:0 extra:(null)
+
+XTS_COMMAND=start 0
+start 0
+[media][media_player_process_cmd:1516] ctx 0x2f0774d0 cmd: start, arg NULL, target NULL. ret 0
+[media][media_player_proc_cmd:1397] ctx 0x2f0774d0 name Music proc cmd START (ID:6)
+process abufsrc@Music0 link 0x40040eb0 0x2f0774d0 fmt=8:rate=44100:ch=2
+cmd:link args:0x40040eb0 0x2f0774d0 fmt=8:rate=44100:ch=2
+asubgraph@Convert cannot find /output format.
+graph_inst query_formats: aresample=48000:osf=s16:ochl=stereo
+.
+asubgraph@Convert init inst success
+[media][audio_negotiation_enabled_outputs:750] Negotiated source: fmt=fltp, rate=44100, ch=2
+[media][audio_negotiation_enabled_outputs:753] Negotiated sink:   fmt=s16, rate=48000, ch=2
+[media][audio_set_format_config:181] Setting format for link: src='asubgraph@Convert' ---> dst='alsasink@pcm0p' | format='s16', sample_rate=48000, channels=2
+[media][audio_set_format_config:181] Setting format for link: src='abufsrc@Music0' ---> dst='asubgraph@Convert' | format='fltp', sample_rate=44100, channels=2
+Pending command: link 0x40040eb0 0x2f0774d0 fmt=8:rate=44100:ch=2
+asubgraph@Convert graph_inst init parms:
+src: format=fltp sample_rate=44100 ch_layout=2.
+sink: format=s16 sample_rate=48000 ch_layout=2.
+asubgraph@Convert init inst success
+asubgraph@Convert open success.
+[amix_input_alloc 247]input 0x501b4b20 alloc, resample: 0, first size: 1024 total inputs:1
+[SND][snd_pcm_hw_hw_params:482] configure. f:10, ch:2, rate:48000
+[SND][snd_pcm_hw_hw_params:520] config buffer info. n:4, size:4096
+[SND][snd_pcm_hw_params_internal:376] format:10, ch:2, rate:48000, periods:4, period_time:21333
+[SND][snd_pcm_set_volume:448] set volume:1.000000
+[SND][snd_pcm_dump:473] device         : pcm0p
+[SND][snd_pcm_dump:474] stream         : PLAYBACK
+[SND][snd_pcm_dump:475] access         : RW_INTERLEAVED
+[SND][snd_pcm_dump:476] format         : S16_LE
+[SND][snd_pcm_dump:477] channels       : 2
+[SND][snd_pcm_dump:478] rate           : 48000
+[SND][snd_pcm_dump:479] period         : 4
+[SND][snd_pcm_dump:480] period_time    : 21333
+[SND][snd_pcm_dump:481] period_frames  : 1024
+[SND][snd_pcm_dump:485] start_threshold: 4096
+cmd:set_parameter args:player_volume=1.000000
+Parsing args: player_volume=1.000000
+Parsed Key: player_volume, Value: 1.000000
+[media][media_proxy_once:441] player:local:0x2f0707b0 _ start _ _ ret:0 resp:0 response:_
+[media][media_proxy_once:441] session:local:0x5018c780 _ update 1:1:0:0:0:(null)	(null) _ rmediatool> [mediatool_event_callback][307] id:0, event:STARTED(2) ret:0 extra:(null)
+et:0 resp:0 response:_
+ALSA buffer XRUN ret=-32.
+[SND][snd_pcm_hw_reset:665] device:pcm0p head:5 tail:5
+[SND][snd_pcm_hw_reset:676] reset appl:5
+
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+[media][media_player_on_event_cb:307] player Music xrun, pause audio output.
+Pending command: pause _
+process abufsrc@Music0 pause _
+cmd:pause args:(null)
+abufsrc@Music0 xrun
+input 0x501b4b20 blocking, link size:0 fifo size:0 nb_inputs:1
+process abufsrc@Music0 resume _
+cmd:resume args:(null)
+Pending command: resume _
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/run1209-media-aac.py", line 23, in <module>
+    chunk = port.read(port.in_waiting or 1)
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 42, in read
+    if select.select([fd], [], [], 0.05)[0]:
+KeyboardInterrupt

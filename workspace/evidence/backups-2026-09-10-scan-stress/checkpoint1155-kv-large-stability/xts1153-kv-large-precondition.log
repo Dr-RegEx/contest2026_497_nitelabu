@@ -1,0 +1,36 @@
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009600 0x2f009648
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009580 0x2f0095c8
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008120 nsh_main
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data/persist.db ---
+ls -l /data/persist.db
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768         77         691 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+PUBLISHED_5.1.68_DB_ALREADY_ABSENT
+NEXT_REQUIRED=original_reboot_and_nofmt_mount_before_stability10

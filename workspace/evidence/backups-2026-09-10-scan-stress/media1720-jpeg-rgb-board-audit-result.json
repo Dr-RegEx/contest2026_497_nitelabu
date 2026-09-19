@@ -1,0 +1,20 @@
+{
+  "candidate": "1720",
+  "scope": ["jpeg_encode", "jpeg_decode", "rgb888", "rgb565", "camera"],
+  "status": "BLOCKED_IMAGE_CAPABILITY",
+  "board_commands": {
+    "media": "command not found",
+    "jpeg": "command not found",
+    "camera": "command not found"
+  },
+  "dev_nodes": ["/dev/i2c0", "/dev/leds0", "/dev/ttyHCI0", "/dev/ttyS0"],
+  "required_config": {
+    "CONFIG_LIB_JPEG_TURBO": false,
+    "CONFIG_MEDIA": false,
+    "CONFIG_VIDEO": false,
+    "CONFIG_DRIVERS_VIDEO": false,
+    "CONFIG_EXAMPLES_MEDIA": false
+  },
+  "evidence_log": "media1720-jpeg-rgb-board-audit.log",
+  "note": "Host smoke 1711/1715 remains valid; no board-level pass claimed."
+}

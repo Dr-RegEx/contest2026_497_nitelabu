@@ -1,0 +1,11 @@
+{
+  "case": "5.1.27",
+  "original_rounds": 100,
+  "rule": "All100 scans complete without scan error, each returns specifiedSSID, association remains RUNNING, sorted sets of (BSSID,frequency,encryption,SSID) identical across100 rounds. Preserve rawRSSI and ordering, do not require constant received signal strength.",
+  "excluded_from_identity": [
+    "signal level",
+    "RSSI-dependent row ordering"
+  ],
+  "old1419": "Remains incomplete: distinct AP identity sets, not just RSSI/ordering changes.",
+  "note": "Applied before current1606 completion; original scan workload and driver results unmodified. Raw runner verdict based on byte-identical rows is preserved separately."
+}

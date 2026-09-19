@@ -1,0 +1,183 @@
+2026-09-19 14:59:40.745419+08:00
+[S31 boot] ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x5b (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xa034
+entry 0x2f0088d8
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xa034   (41012)
+padd: lma 0x0000c0a8 vma 0x00000000 len 0x3f70   (16240)
+imap: lma 0x00010020 vma 0x40040020 len 0x8e9c   (36508)
+padd: lma 0x00018ec4 vma 0x00000000 len 0x7234   (29236)
+imap: lma 0x00020100 vma 0x40000100 len 0x338e8  (211176)
+total segments stored 6
+ABC
+NuttShell (NSH)
+nsh> [K
+[C6 boot] load:0x40875730,len:0x1648
+load:0x4086b910,len:0xdbc
+load:0x4086e610,len:0x31e0
+entry 0x4086b91a
+I (23) boot: ESP-IDF v6.1-beta1-497-g14f663f00-dirty 2nd stage bootloader
+I (23) boot: compile time Sep 19 2026 14:24:07
+I (24) boot: chip revision: v0.2
+I (25) boot: efuse block revision: v0.3
+I (29) boot.esp32c6: SPI Speed      : 80MHz
+I (32) boot.esp32c6: SPI Mode       : DIO
+I (36) boot.esp32c6: SPI Flash Size : 2MB
+I (40) boot: Enabling RNG early entropy source...
+I (44) boot: Partition Table:
+I (47) boot: ## Label            Usage          Type ST Offset   Length
+I (53) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (60) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (66) boot:  2 factory          factory app      00 00 00010000 00100000
+I (73) boot: End of partition table
+I (76) esp_image: segment 0: paddr=00010020 vaddr=42018020 size=074e0h ( 29920) map
+I (90) esp_image: segment 1: paddr=00017508 vaddr=40800000 size=00b10h (  2832) load
+I (92) esp_image: segment 2: paddr=00018020 vaddr=42000020 size=136c8h ( 79560) map
+I (114) esp_image: segment 3: paddr=0002b6f0 vaddr=40800b10 size=08b7ch ( 35708) load
+I (123) esp_image: segment 4: paddr=00034274 vaddr=40809690 size=01b50h (  6992) load
+I (127) boot: Loaded app from partition at offset 0x10000
+I (128) boot: Disabling RNG early entropy source...
+I (140) cpu_start: Unicore app
+I (149) cpu_start: GPIO 17 and 16 are used as console UART I/O pins
+I (149) cpu_start: Pro cpu start user code
+I (149) cpu_start: cpu freq: 160000000 Hz
+I (151) app_init: Application information:
+I (155) app_init: Project name:     esp32c6_spi_slave
+I (160) app_init: App version:      1
+I (163) app_init: Compile time:     Sep 19 2026 14:19:06
+I (168) app_init: ELF file SHA256:  d313fbbf1...
+I (172) app_init: ESP-IDF:          v6.1-beta1-497-g14f663f00-dirty
+I (178) efuse_init: Min chip rev:     v0.0
+I (182) efuse_init: Max chip rev:     v0.99 
+I (186) efuse_init: Chip rev:         v0.2
+I (190) heap_init: Initializing. RAM available for dynamic allocation:
+I (196) heap_init: At 4080C1F0 len 00070420 (449 KiB): RAM
+I (201) heap_init: At 4087C610 len 00002F54 (11 KiB): RAM
+I (207) heap_init: At 50000000 len 00003FE8 (15 KiB): RTCRAM
+I (213) spi_flash: detected chip: generic
+I (216) spi_flash: flash io: dio
+W (219) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (231) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (237) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (244) main_task: Started on CPU0
+I (244) main_task: Calling app_main()
+I (244) spi_fixture: READY mode=0 CLK=4 MOSI=5 MISO=6 CS=7; 16-byte frames
+
+[S31] spi exch -b2 -m0 -w8 -f100000 -x16 000102030405060708090a0b0c0d0e0f
+nsh: spi: too many arguments
+Sending:	00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+Received:	A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF 
+nsh> [K
+[C6] I (2884) spi_fixture: RX txn=1 bits=128
+I (2884) spi_fixture: 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f
+
+[S31] spi exch -b2 -m0 -w8 -f100000 -x16 55555555555555555555555555555555
+nsh: spi: too many arguments
+Sending:	55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 
+Received:	00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+nsh> [K
+[C6] I (3134) spi_fixture: RX txn=2 bits=128
+I (3134) spi_fixture: 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55
+
+[S31] spi exch -b2 -m0 -w8 -f100000 -x16 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+nsh: spi: too many arguments
+Sending:	AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA 
+Received:	55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 
+nsh> [K
+[C6] I (3384) spi_fixture: RX txn=3 bits=128
+I (3384) spi_fixture: aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa
+
+[S31] spi exch -b2 -m0 -w8 -f100000 -x16 00000000000000000000000000000000
+nsh: spi: too many arguments
+Sending:	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+Received:	AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA 
+nsh> [K
+[C6] I (3624) spi_fixture: RX txn=4 bits=128
+I (3624) spi_fixture: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+[S31] spi exch -b2 -m0 -w8 -f100000 -x16 ffffffffffffffffffffffffffffffff
+nsh: spi: too many arguments
+Sending:	FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+Received:	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+nsh> [K
+[C6] I (3874) spi_fixture: RX txn=5 bits=128
+I (3874) spi_fixture: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+
+[S31] spi exch -b2 -m0 -w8 -f100000 -x16 fffefdfcfbfaf9f8f7f6f5f4f3f2f1f0
+nsh: spi: too many arguments
+Sending:	FF FE FD FC FB FA F9 F8 F7 F6 F5 F4 F3 F2 F1 F0 
+Received:	FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+nsh> [K
+[C6] I (4114) spi_fixture: RX txn=6 bits=128
+I (4114) spi_fixture: ff fe fd fc fb fa f9 f8 f7 f6 f5 f4 f3 f2 f1 f0
+
+[S31] spi exch -b2 -m0 -w8 -f100000 -x16 000102030405060708090a0b0c0d0e0f
+nsh: spi: too many arguments
+Sending:	00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+Received:	FF FE FD FC FB FA F9 F8 F7 F6 F5 F4 F3 F2 F1 F0 
+nsh> [K
+[C6] I (4364) spi_fixture: RX txn=7 bits=128
+I (4364) spi_fixture: 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f
+
+[S31] spi exch -b2 -m0 -w8 -f1000000 -x16 000102030405060708090a0b0c0d0e0f
+nsh: spi: too many arguments
+Sending:	00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+Received:	00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+nsh> [K
+[C6] I (4604) spi_fixture: RX txn=8 bits=128
+I (4614) spi_fixture: 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f
+
+[S31] spi exch -b2 -m0 -w8 -f1000000 -x16 55555555555555555555555555555555
+nsh: spi: too many arguments
+Sending:	55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 
+Received:	00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+nsh> [K
+[C6] I (4854) spi_fixture: RX txn=9 bits=128
+I (4854) spi_fixture: 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55
+
+[S31] spi exch -b2 -m0 -w8 -f1000000 -x16 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+nsh: spi: too many arguments
+Sending:	AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA 
+Received:	55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 
+nsh> [K
+[C6] I (5104) spi_fixture: RX txn=10 bits=128
+I (5104) spi_fixture: aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa
+
+[S31] spi exch -b2 -m0 -w8 -f1000000 -x16 00000000000000000000000000000000
+nsh: spi: too many arguments
+Sending:	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+Received:	AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA 
+nsh> [K
+[C6] I (5354) spi_fixture: RX txn=11 bits=128
+I (5354) spi_fixture: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+[S31] spi exch -b2 -m0 -w8 -f1000000 -x16 ffffffffffffffffffffffffffffffff
+nsh: spi: too many arguments
+Sending:	FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+Received:	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+nsh> [K
+[C6] I (5604) spi_fixture: RX txn=12 bits=128
+I (5604) spi_fixture: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+
+[S31] spi exch -b2 -m0 -w8 -f1000000 -x16 fffefdfcfbfaf9f8f7f6f5f4f3f2f1f0
+nsh: spi: too many arguments
+Sending:	FF FE FD FC FB FA F9 F8 F7 F6 F5 F4 F3 F2 F1 F0 
+Received:	FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 
+nsh> [K
+[C6] I (5844) spi_fixture: RX txn=13 bits=128
+I (5844) spi_fixture: ff fe fd fc fb fa f9 f8 f7 f6 f5 f4 f3 f2 f1 f0
+
+[S31] spi exch -b2 -m0 -w8 -f1000000 -x16 000102030405060708090a0b0c0d0e0f
+nsh: spi: too many arguments
+Sending:	00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+Received:	FF FE FD FC FB FA F9 F8 F7 F6 F5 F4 F3 F2 F1 F0 
+nsh> [K
+[C6] I (6094) spi_fixture: RX txn=14 bits=128
+I (6094) spi_fixture: 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f
+
+PASS: 14 C6 frames verified, 13 S31 readbacks verified

@@ -1,0 +1,27 @@
+{
+  "case": "common2.1.3",
+  "status": "PASS",
+  "sample_count": 10,
+  "seconds": [
+    0.265929917,
+    0.265819332,
+    0.265796453,
+    0.265688396,
+    0.26570454,
+    0.266088773,
+    0.265877976,
+    0.2656866,
+    0.265712441,
+    0.266007592
+  ],
+  "mean_seconds": 0.26583120200000004,
+  "min_seconds": 0.2656866,
+  "max_seconds": 0.266088773,
+  "mean_limit_seconds": 4,
+  "firmware_receipt": "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1565-simd-int8.sha256",
+  "original_source_sha256": "5e0eaa7a20cdedbddbd930edc1d6a05f1a10d71a1bdeaea365eeb3bab6752f9c",
+  "method": "USB removed for power cycle; RESET held during reattachment, released only after UART capture ready; ROM-to-NSH timing excludes held-reset wait",
+  "timing": "Host receipt of ROM marker through NSH marker; not power-on instant",
+  "tool": "Raw UART capture at 115200 with per-read monotonic timestamps; equivalent serial-log timing, not minicom",
+  "scope": "1565 paired kernel/AppFS; ten user-confirmed actual USB power cycles; no host reset during captures"
+}

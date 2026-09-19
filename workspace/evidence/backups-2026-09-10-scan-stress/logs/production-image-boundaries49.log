@@ -1,0 +1,78 @@
+++ stat -c %s nuttx.bin
++ test 980060 -le 2088960
+++ stat -c %s appfs.img
++ test 1538048 -le 3145728
++ test -f appfs-root/init
++ for app in init sh wapi ping renew
+++ stat -c %s appfs-root/init
++ test 472012 -le 524288
+++ sha256sum appfs-root/init
+++ cut -d ' ' -f 1
+++ head -1 appfs-root/init.sha256
++ test 8b58b6594fdfe92a82298201d2c85a5d5edcef8ce365358af08ebc9308c0706d = 8b58b6594fdfe92a82298201d2c85a5d5edcef8ce365358af08ebc9308c0706d
++ for app in init sh wapi ping renew
+++ stat -c %s appfs-root/sh
++ test 400264 -le 524288
+++ sha256sum appfs-root/sh
+++ cut -d ' ' -f 1
+++ head -1 appfs-root/sh.sha256
++ test a6d0c3c023acc10c5eefd8b8e06b902ec8b2035e4ae0dd15b9ff8306eb6937ba = a6d0c3c023acc10c5eefd8b8e06b902ec8b2035e4ae0dd15b9ff8306eb6937ba
++ for app in init sh wapi ping renew
+++ stat -c %s appfs-root/wapi
++ test 388924 -le 524288
+++ sha256sum appfs-root/wapi
+++ cut -d ' ' -f 1
+++ head -1 appfs-root/wapi.sha256
++ test 000554c632be1427c072bb494b801b6a2a0884dfe30d18c85a39dd1e216b0842 = 000554c632be1427c072bb494b801b6a2a0884dfe30d18c85a39dd1e216b0842
++ for app in init sh wapi ping renew
+++ stat -c %s appfs-root/ping
++ test 146244 -le 524288
+++ sha256sum appfs-root/ping
+++ cut -d ' ' -f 1
+++ head -1 appfs-root/ping.sha256
++ test c9d8f29b4074a60b809daf0d7badc9675cb5e0d77d52a534241ca7b5d0d3019e = c9d8f29b4074a60b809daf0d7badc9675cb5e0d77d52a534241ca7b5d0d3019e
++ for app in init sh wapi ping renew
+++ stat -c %s appfs-root/renew
++ test 129160 -le 524288
+++ sha256sum appfs-root/renew
+++ cut -d ' ' -f 1
+++ head -1 appfs-root/renew.sha256
++ test 8cb24e3b52e22b93b6fb1e29f56c3a7ef8b884a38842850f13fa4ac68ca25908 = 8cb24e3b52e22b93b6fb1e29f56c3a7ef8b884a38842850f13fa4ac68ca25908
++ /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/esptool --chip esp32s31 image-info nuttx.bin
+esptool v5.4.0
+Image size: 980060 bytes
+
+ESP32-S31 Image Header
+======================
+Image version: 1
+Entry point: 0x2f00c45e
+Segments: 3
+Flash size: 16MB
+Flash freq: 80m
+Flash mode: DIO
+
+ESP32-S31 Extended Image Header
+===============================
+WP pin: 0xee (disabled)
+Flash pins drive settings: clk_drv: 0x0, q_drv: 0x0, d_drv: 0x0, cs0_drv: 0x0, hd_drv: 0x0, wp_drv: 0x0
+Chip ID: 32 (ESP32-S31)
+Minimal chip revision: v0.0, (legacy min_rev = 0)
+Maximal chip revision: v655.35
+
+Segments Information
+====================
+Segment   Length   Load addr   File offs  Memory types
+-------  -------  ----------  ----------  ------------
+      0  0x00018  0x2e000000  0x00000018  RTC_IRAM, RTC_DRAM
+      1  0x0c898  0x2f000000  0x00000038  DRAM, BYTE_ACCESSIBLE, IRAM
+      2  0x03050  0x2f00c900  0x0000c8d8  DRAM, BYTE_ACCESSIBLE, IRAM
+
+ESP32-S31 Image Footer
+======================
+Checksum: 0x7a (valid)
+Validation hash: ff9411153f73bcb7c970657091bc0a65bf447346c55834e092239a65fda66d74 (valid)
++ sha256sum nuttx.bin appfs.img
+309616e35cd2ada0154d0df7d22ccf50b5f2c8a3ca22500ac8cc43d1e00d2554  nuttx.bin
+a702896e14a3313167650639cbc19624d3ea1706209fe20f6e2e5bf2eb6da237  appfs.img
++ printf 'MAKE_IMAGE_BOUNDARIES_AND_APP_HASHES=PASS\n'
+MAKE_IMAGE_BOUNDARIES_AND_APP_HASHES=PASS

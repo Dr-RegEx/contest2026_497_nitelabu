@@ -1,0 +1,163 @@
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011140 0x2f01118c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: iperf2 -s -p 5003 -i 1 -u & ---
+iperf2 -s -p 5003 -i 1 -u &
+iperf2 [30:101]
+nsh> [K
+nsh> [K------------------------------------------------------------
+Server listening on UDP port 5003
+UDP buffer size: -1.00 Byte (WARNING: requested 16.0 KByte)
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 5003 connected with 192.168.1.29 port 49238
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-1.00 sec   762 KBytes  6.24 Mbits/sec   2.243 ms 39/570 (6.8%)
+[  1] 0.00-1.00 sec  26 datagrams received out-of-order
+[  1] 1.00-2.00 sec   515 KBytes  4.22 Mbits/sec   2.702 ms 1/360 (0.28%)
+[  1] 1.00-2.00 sec  25 datagrams received out-of-order
+[  1] 2.00-3.00 sec   622 KBytes  5.09 Mbits/sec   9.198 ms 0/433 (0%)
+[  1] 2.00-3.00 sec  18 datagrams received out-of-order
+[  1] 3.00-4.00 sec   721 KBytes  5.90 Mbits/sec   2.293 ms 0/502 (0%)
+[  1] 3.00-4.00 sec  20 datagrams received out-of-order
+[  1] 4.00-5.00 sec   548 KBytes  4.49 Mbits/sec   6.256 ms 0/382 (0%)
+[  1] 4.00-5.00 sec  29 datagrams received out-of-order
+[  1] 5.00-6.00 sec   589 KBytes  4.82 Mbits/sec   1.343 ms 1/411 (0.24%)
+[  1] 5.00-6.00 sec  19 datagrams received out-of-order
+[  1] 6.00-7.00 sec  1.16 MBytes  9.71 Mbits/sec   0.952 ms 75/901 (8.3%)
+[  1] 6.00-7.00 sec  20 datagrams received out-of-order
+[  1] 7.00-8.00 sec  1.24 MBytes  10.4 Mbits/sec   3.719 ms 109/992 (11%)
+[  1] 7.00-8.00 sec  9 datagrams received out-of-order
+[  1] 8.00-9.00 sec   711 KBytes  5.82 Mbits/sec   3.601 ms 23/518 (4.4%)
+[  1] 8.00-9.00 sec  15 datagrams received out-of-order
+[  1] 9.00-10.00 sec  1.04 MBytes  8.75 Mbits/sec   1.272 ms 36/780 (4.6%)
+[  1] 9.00-10.00 sec  22 datagrams received out-of-order
+[  1] 10.00-10.39 sec   530 KBytes  11.1 Mbits/sec   4.497 ms 77/446 (17%)
+[  1] 10.00-10.39 sec  1 datagrams received out-of-order
+[  1] 0.00-10.39 sec  8.32 MBytes  6.72 Mbits/sec   4.497 ms 361/6295 (5.7%)
+[  1] 0.00-10.39 sec  204 datagrams received out-of-order
+[CPU0] riscv_exception: EXCEPTION: Store/AMO page fault. MCAUSE: 0000000f, EPC: 4002a3fa, MTVAL: 61401394
+[CPU0] esp32s31_dump_mmu_fault: S31 MMU: satp=8002f015 status=00042100 saved=00042100 kernel=2f015000 kernel_pte=00000000
+[CPU0] esp32s31_dump_mmu_fault: S31 MMU: root=2f015000 index=389 pte=00000000
+[CPU0] riscv_exception: PANIC!!! Exception = 0000000f
+[CPU0] dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 17 2026 20:58:08 risc-v
+[CPU0] dump_assert_info: Assertion failed panic: at file: /arch/risc-v/src/common/riscv_exception.c:139 task(CPU0): CPU0 IDLE process: Kernel 0x400259e6
+[CPU0] up_dump_register: PC: 400263fa
+[CPU0] up_dump_register: A0: 2f01ca60 A1: 0000008b A2: 400e01d8 A3: 2f01920c
+[CPU0] up_dump_register: A4: 00000001 A5: 2f0181c0 A6: 20810000 A7: 2038a000
+[CPU0] up_dump_register: T0: 4d7c7b2c T1: 00000000 T2: 10000000 T3: 9a115d6f
+[CPU0] up_dump_register: T4: d9920d39 T5: b0d0a572 T6: 487b9369
+[CPU0] up_dump_register: S0: 0000010c S1: 2f01ca60 S2: 00000001 S3: 2f01c090
+[CPU0] up_dump_register: S4: 400e01d8 S5: 400e0468 S6: 2f018000 S7: 00000006
+[CPU0] up_dump_register: S8: 00000003 S9: 40025de4 S10: 00000001 S11: 0000008b
+[CPU0] up_dump_register: SP: 2f019084 FP: 0000010c TP: 00000000 RA: 400263fa
+[CPU0] dump_stackinfo: IRQ Stack:
+[CPU0] dump_stackinfo:   base: 0x2f018c00
+[CPU0] dump_stackinfo:   size: 00002048
+[CPU0] dump_stackinfo:     sp: 0x2f019084
+[CPU0] stack_dump:  2f019064: 2f018000 400e0468 400e01d8 2f01c090 00042100 2f01ca60 2f01ca60 4002667e
+[CPU0] stack_dump:  2f019084: 400e28d8 400259e6 2f01912c 4000b900 00000001 2f0190cc 00000281 0a000000
+[CPU0] stack_dump:  2f0190a4: 0000002f 00000002 2f01c090 2f01ca60 400e01d8 400e0468 0000008b 7474754e
+[CPU0] stack_dump:  2f0190c4: 00000058 0000000f 2f019266 400e9000 2f010060 400e0448 0000000f 4000b7b6
+[CPU0] stack_dump:  2f0190e4: 00000185 0007f000 00000000 00000104 302e3000 4000302e 00000003 2f01c090
+[CPU0] stack_dump:  2f019104: 00000001 3234000f 32353238 64383061 69642d62 20797472 20706553 32203731
+[CPU0] stack_dump:  2f019124: 20363230 353a3032 38303a38 4000b800 4000b86c 00000000 736972a2 00762d63
+[CPU0] stack_dump:  2f019144: 00000002 2f01c090 0000000f 40006daa 00000000 d08aeb7c 400e8bfc 00000104
+[CPU0] stack_dump:  2f019164: 00000022 40025de4 00000003 2f01c090 00000001 0000000f 2f01920c 400e9000
+[CPU0] stack_dump:  2f019184: 00042100 2f01c090 0000000f 4000280c 00000000 00000000 2f01c090 2f018080
+[CPU0] stack_dump:  2f0191a4: 2f01920c 00000000 2f01920c 2f008356 00000000 00000000 00000000 2f01c090
+[CPU0] stack_dump:  2f0191c4: 00000000 00000032 2f01c090 0000000f 2f01920c ffffffff 0000000f 2f001e94
+[CPU0] stack_dump:  2f0191e4: 00000000 00000000 00000000 00000008 0000000f 4002a3fa 2f01920c 2f000f1e
+[CPU0] stack_dump:  2f019204: 2f048ef0 4002a3fa 4002a3fa 4002a3f4 2f019318 00000000 00000000 2f801fc2
+[CPU0] stack_dump:  2f019224: 2f018c00 10000000 2f048ef0 61401394 00000000 00000003 00000000 00000000
+[CPU0] stack_dump:  2f019244: 2c000000 00000001 2f018270 2f0333fc 00000000 0000006e 2f01c090 00000032
+[CPU0] stack_dump:  2f019264: 00000000 2f01c090 00000003 40025de4 00000022 00000104 00001000 00000000
+[CPU0] stack_dump:  2f019284: 2050237c 2f0104e4 00042100 1000000f 00000000 00000000 00000000 00010001
+[CPU0] stack_dump:  2f0192a4: 2f080000 2f080000 00001000 2010e000 2f07fd14 20105000 00000000 00000000
+[CPU0] stack_dump:  2f0192c4: 2f080000 00000000 2f018000 00042100 400025ac 2f0181e4 2f018190 00042100
+[CPU0] stack_dump:  2f0192e4: 4003c560 2f0181e4 00000002 00010001 4002568c 2f080000 00000000 2f0181d0
+[CPU0] stack_dump:  2f019304: 0000006e 00000000 61401394 2f048ef0 4002a3f4 2f0109b8 00000000 00000000
+[CPU0] stack_dump:  2f019324: 00000000 00004000 00004000 2f0181d0 00017150 2f048ef0 2f018000 00042100
+[CPU0] stack_dump:  2f019344: 40029d28 00000000 00000032 2f0181d0 00010001 2f018254 2f018000 00042100
+[CPU0] stack_dump:  2f019364: 4002eb6c 00000022 40025de4 00010001 00000000 00000000 00000089 2f0181d0
+[CPU0] stack_dump:  2f019384: 2f018080 00000000 2f0181c0 2f032500 4003365a 00000000 2f0181c0 2f032500
+[CPU0] stack_dump:  2f0193a4: 2f0083e8 80046000 4003c560 00000000 2f018000 2f018000 2f018000 2f0181d0
+[CPU0] stack_dump:  2f0193c4: 90000012 2f032500 00000002 00000032 2f001e94 2f0181c0 4003b408 00000002
+[CPU0] stack_dump:  2f0193e4: 2f03260c 90000012 2f001e00 2f019400 2f000f1e 00000002 2f001e00 00000000
+[CPU0] dump_stackinfo: User Stack:
+[CPU0] dump_stackinfo:   base: 0x2f031b2c
+[CPU0] dump_stackinfo:   size: 00003024
+[CPU0] dump_stackinfo:     sp: 0x2f03260c
+[CPU0] stack_dump:  2f0325ec: 2f018000 2f018000 00010001 00000000 00000001 2f018000 2f0181d0 00000002
+[CPU0] stack_dump:  2f03260c: 00000001 00000001 00000002 40025ce8 2f01a2b8 00000000 00010001 2f01c090
+[CPU0] stack_dump:  2f03262c: 2f012f3c 00000000 50000000 01000000 00000001 00000140 00000010 00124448
+[CPU0] stack_dump:  2f03264c: 00000003 00000002 00000007 40000000 400e0000 400e0020 00020000 00050000
+[CPU0] stack_dump:  2f03266c: 2f01a2b8 00000202 00000202 2f01090a 7801625e d7eebe53 a1c76a81 00022048
+[CPU0] stack_dump:  2f03268c: 4c35af7a 7a912755 f9875dd7 00000001 43505519 000d4348 00000000 20801000
+[CPU0] stack_dump:  2f0326ac: 000000ee 00000020 00ffff00 01000000 a7e1185e 13e22800 0e55c17f 2f849000
+[CPU0] stack_dump:  2f0326cc: 2f849000 00003b50 2f010980 2f080000 2f07a000 2f080000 00000000 000164b0
+[CPU0] stack_dump:  2f0326ec: ffffffff 0000002e 00000000 2f0104e2 00000000 00000000 00000000 00000000
+[CPU0] sched_dumpstack: backtrace| 0: 0x2f001e00
+[CPU0] dump_fatal_info: Dump CPU1: PAUSED
+[CPU0] up_dump_register: PC: 2f001e00
+[CPU0] up_dump_register: A0: 00000003 A1: 00000005 A2: 00000000 A3: 00010002
+[CPU0] up_dump_register: A4: 2f0181e4 A5: 00000000 A6: 00000000 A7: 2f0181e0
+[CPU0] up_dump_register: T0: 2f012d2c T1: 00000001 T2: 2f07e5d4 T3: 00000000
+[CPU0] up_dump_register: T4: 00000000 T5: 00000000 T6: 2f000ac0
+[CPU0] up_dump_register: S0: 00000002 S1: 2f018000 S2: 00000001 S3: 00000000
+[CPU0] up_dump_register: S4: 00000000 S5: 00000000 S6: 00000000 S7: 00000000
+[CPU0] up_dump_register: S8: 00000000 S9: 00000000 S10: 00000000 S11: 00000000
+[CPU0] up_dump_register: SP: 2f0332b0 FP: 00000002 TP: 2f01c194 RA: 40033592
+[CPU0] dump_stackinfo: User Stack:
+[CPU0] dump_stackinfo:   base: 0x2f03272c
+[CPU0] dump_stackinfo:   size: 00003024
+[CPU0] dump_stackinfo:     sp: 0x2f0332b0
+[CPU0] stack_dump:  2f033290: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU0] stack_dump:  2f0332b0: 00000001 2f018000 00000002 40025e56 00000000 00000000 00000000 2f01c194
+[CPU0] stack_dump:  2f0332d0: 00000001 00000000 2f018000 2f00224e 00000000 00000000 2f000a00 2f000b14
+[CPU0] stack_dump:  2f0332f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU0] sched_dumpstack: backtrace| 1: 0x2f001e00
+[CPU0] dump_tasks:    PID GROUP   CPU PRI POLICY   TYPE    NPX STATE   EVENT      SIGMASK          STACKBASE  STACKSIZE   COMMAND
+[CPU0] dump_tasks:   ----   ---     0 --- -------- ------- --- ------- ---------- ---------------- 0x2f018c00      2048   irq
+[CPU0] dump_tasks:   ----   ---     1 --- -------- ------- --- ------- ---------- ---------------- 0x2f018400      2048   irq
+[CPU0] dump_task:       0     0     0   0 FIFO     Kthread -   Running            0000000000000000 0x2f031b2c      3024   CPU0 IDLE
+[CPU0] dump_task:       1     0     1   0 FIFO     Kthread -   Running            0000000000000000 0x2f03272c      3024   CPU1 IDLE
+[CPU0] dump_task:       2     0     0 100 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f038060      1952   lpwork 0x2f011140 0x2f01118c
+[CPU0] dump_task:      35    30     0 100 RR       pthread -   Waiting Semaphore  0000000000000000 0x6180c030      8144   iperf2 0x6100d684 0x61800550
+[CPU0] dump_task:       4     0     0 223 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f040050      1968   hr_timer
+[CPU0] dump_task:       5     0     0 253 RR       Kthread -   Waiting MQ empty   0000000000000000 0x2f044040      3520   wifi
+[CPU0] dump_task:       6     6     0 101 RR       Task    -   Waiting Semaphore  0000000000000000 0x61804050      4016   /system/bin/init
+[CPU0] dump_task:      39    30     1 100 RR       pthread -   Waiting Semaphore  0000000000000000 0x61810030      8144   iperf2 0x6100d684 0x6180a298
+[CPU0] dump_task:      30    30     0 100 RR       Task    -   Waiting Semaphore  0000000000000000 0x61804070      8080   iperf2 -s -p 5003 -i 1 -u
+[CPU0] dump_task:      31    30     0 101 RR       pthread -   Waiting Semaphore  0000000000000000 0x61808030      8144   iperf2 0x6100d684 0x61800db8
+[CPU0] sched_dumpstack: backtrace| 0: 0x2f001e00
+[CPU0] sched_dumpstack: backtrace| 1: 0x2f001e00
+[CPU0] sched_dumpstack: backtrace| 2: 0x40028ae8
+[CPU0] riscv_exception: EXCEPTION: Load page fault. MCAUSE: 0000000d, EPC: 4003bf32, MTVAL: 6180e004
+[CPU0] esp32s31_dump_mmu_fault: S31 MMU: satp=8002f015 status=00042100 saved=00042100 kernel=2f015000 kernel_pte=00000000
+[CPU0] esp32s31_dump_mmu_fault: S31 MMU: root=2f015000 index=390 pte=00000000
+[CPU0] riscv_exception: PANIC!!! Exception = 0000000d
+Reset board on recursive assert:
+0x2f01ca60: 400263fa 400263fa 2f018c80 00000000 00000000 b5d0d817 00000000 10000000
+0x2f01ca80: 0000010c 2f01ca60 2f01ca60 0000008b 400e01d8 2f018e08 00000001 2f0181c0
+0x2f01caa0: 20810000 2038a000 00000001 2f01c090 400e01d8 400e0468 2f018000 00000008
+0x2f01cac0: 400e0de8 400e9290 00000001 0000008b 565bf683 0b199b96 762a2fbc f617c814
+0x2f01cae0: 00042100 1000000d 00000000 00000000 00000000 00000000 00000000 00000000
+0x2f01cb00: 00000000 00000000 00000000 00000000 00000000 00000000 c287f3c8 467e7400
+0x2f01cb20: c2874e55 c2874e58 00000000 00000000 00000000 00000000 00000000 00000000
+0x2f01cb40: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+0x2f01cb60: 00000000 00000000 00000001{"case": "5.1.24", "scope": "DIAGNOSTIC_ONLY", "status": "FAIL", "receipt": "build1469-tcp-shutdown-drain.sha256", "duration_seconds": 10, "offered_load": "40M", "host_topology": "Native Windows iperf2 on WLAN192.168.1.29, direct LAN; diagnostic10s40M", "server_pid": 30, "client_exit": 0, "wall_seconds": 13.413636848010356, "error": "", "board_capture_sha256": "37b9e5b06c8afcc9dbd80c319c69d5a0bc28b3ec2547fc3952a5ebc0e772ed7d"}

@@ -1,0 +1,45 @@
++ cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx
++ python3 tools/test_elf_default_heapsize.py
+ELF_DEFAULT_HEAPSIZE=PASS present/absent priority-preserved
++ python3 tools/test_esp_hr_timer_lifecycle.py
+ESP_HR_TIMER_LIFECYCLE=PASS periodic/delete/restart/cancel
++ python3 tools/test_esp32s31_wifi_task.py
+S31_WIFI_TASK_LIFECYCLE=PASS reuse=1000
++ python3 tools/test_esp32s31_irq_completion.py
+S31_IRQ_COMPLETION=PASS 65 cases; hardware timing not modeled
++ python3 tools/test_esp32s31_irq_unmap.py
+ESP_IRQ_UNMAP=PASS 169 sources; register fields/neighbours preserved
+ESP_IRQ_UNMAP=PASS 169 sources; register fields/neighbours preserved
+ESP_IRQ_UNMAP=PASS 169 sources; register fields/neighbours preserved
+ESP_IRQ_UNMAP=PASS 169 sources; register fields/neighbours preserved
++ python3 tools/test_esp_wifi_scan_results.py
+ESP_WIFI_SCAN_RESULTS=PASS empty/nonempty/status/retry/collect/null/timeout
++ tools/nxstyle -r 257,34 -r 308,5 -r 664,5 -r 756,27 arch/risc-v/src/common/espressif/esp_irq.c
++ tools/nxstyle -r 272,110 arch/risc-v/src/common/espressif/esp_wifi_utils.c
++ git diff --check
++ git status --short
+ M arch/risc-v/src/common/espressif/Make.defs
+ M arch/risc-v/src/esp32s31/hal_esp32s31.mk
+?? arch/risc-v/src/esp32s31/esp32s31_wireless.mk
+?? tools/test_esp32s31_wireless_make.py
++ git log -2 '--format=%H %s'
+3a2a6817aae4692bfb3b45d8d79be90265d64d2d arch/risc-v: load S31 capabilities before vector constants
+d877b922dda6077f097f513a553ce7f79712f588 wireless: release station lock and report connection failures
++ cd /home/regex/work/esp32s31-openvela/s31-reference
++ python3 platform/tools/verify_f0_dependencies.py
+nuttx: PASS (nuttx)
+nuttx-apps: PASS (nuttx-apps)
+esp-hal: PASS (deps/esp-hal-3rdparty)
+esp-idf: PASS (tmp/esp-idf-clean)
+F0_DEPENDENCY_LOCK=PASS
++ git -C nuttx status --short
++ git -C deps/esp-hal-3rdparty status --short
+ m components/mbedtls/mbedtls
++ git -C tmp/esp-idf-clean status --short
+ M components/openthread/lib
+ M components/openthread/openthread
+ M components/protobuf-c/protobuf-c
+ M components/spiffs/spiffs
+ M components/unity/unity
+ESP_WIFI_CONNECT=PASS connected/config-error/start-error/timeout/success
+ESP32S31_WIRELESS_MAKE=PASS sources=137 manifests/late-paths/crypto-header-precedence/definitions/libraries

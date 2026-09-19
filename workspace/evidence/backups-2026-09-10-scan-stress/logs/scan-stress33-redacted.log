@@ -1,0 +1,573 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7d (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xee94
+load:0x2f00ef00,len:0x368c
+entry 0x2f00ea5a
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xee94   (61076)
+dram: lma 0x00010edc vma 0x2f00ef00 len 0x368c   (13964)
+padd: lma 0x00014598 vma 0x00000000 len 0xba80   (47744)
+imap: lma 0x00020020 vma 0x400c0020 len 0x19054  (102484)
+padd: lma 0x0003907c vma 0x00000000 len 0x707c   (28796)
+imap: lma 0x00040100 vma 0x40000100 len 0xb137c  (725884)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+STRESS_BOOT=PASS seconds=0.588
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      73324     270728      95368     238952    159     11 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.157
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.202
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=2.766
+STRESS_1_scan=PASS AP_COUNT=0
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=5.593
+STRESS_1_pscan=PASS AP_COUNT=0
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+ELAPSED=2.171
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=10.200
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      75076     268976     115824     189800    158     18 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.170
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.203
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=2.731
+STRESS_2_scan=PASS AP_COUNT=0
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=5.547
+STRESS_2_pscan=PASS AP_COUNT=0
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+ELAPSED=2.132
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=10.231
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      71556     272496     116384     238216    157     16 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.185
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.202
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+50:78:b3:a3:c4:f4	2412	-86	0800	CU-C4F4
+nsh> [K
+nsh> [K
+ELAPSED=2.748
+STRESS_3_scan=PASS AP_COUNT=1
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=5.505
+STRESS_3_pscan=PASS AP_COUNT=0
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+ELAPSED=2.170
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=10.174
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      75204     268848     116432     189800    162     17 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.198
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.202
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+24:69:68:38:77:70	2412	-78	0800	wlj
+nsh> [K
+nsh> [K
+ELAPSED=2.727
+STRESS_4_scan=PASS AP_COUNT=1
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=5.606
+STRESS_4_pscan=PASS AP_COUNT=0
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+ELAPSED=2.170
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=10.177
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      75268     268784     116504     197992    164     20 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.212
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.202
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+a4:ba:70:3a:61:31	2412	-83	0800	CU-C4F4_plus
+nsh> [K
+nsh> [K
+ELAPSED=2.719
+STRESS_5_scan=PASS AP_COUNT=1
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=5.507
+STRESS_5_pscan=PASS AP_COUNT=0
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+ELAPSED=2.154
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=10.286
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      75332     268720     116584     181608    166     20 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.227
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.205
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+18:f2:2c:f3:7b:a3	2412	-87	0800	mandy
+nsh> [K
+nsh> [K
+ELAPSED=2.741
+STRESS_6_scan=PASS AP_COUNT=1
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=5.540
+STRESS_6_pscan=PASS AP_COUNT=0
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+ELAPSED=2.161
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=10.169
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      71812     272240     116640     238216    165     19 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.239
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.202
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+24:69:68:38:77:70	2412	-81	0800	wlj
+nsh> [K
+nsh> [K
+ELAPSED=2.717
+STRESS_7_scan=PASS AP_COUNT=1
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=5.515
+STRESS_7_pscan=PASS AP_COUNT=0
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+ELAPSED=2.155
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=10.180
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      75460     268592     116688     189800    170     23 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.253
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.202
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+24:69:68:38:77:70	2412	-82	0800	wlj
+nsh> [K
+nsh> [K
+ELAPSED=2.716
+STRESS_8_scan=PASS AP_COUNT=1
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=5.519
+STRESS_8_pscan=PASS AP_COUNT=0
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+ELAPSED=2.166
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=10.463
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      75524     268528     116760     197992    172     23 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.267
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.204
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+a4:ba:70:3a:61:31	2412	-81	0800	CU-C4F4_plus
+nsh> [K
+nsh> [K
+ELAPSED=2.751
+STRESS_9_scan=PASS AP_COUNT=1
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=5.556
+STRESS_9_pscan=PASS AP_COUNT=0
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+ELAPSED=2.164
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=10.112
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      75588     268464     116816     181608    174     25 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.280
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.202
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+24:69:68:38:77:70	2412	-80	0800	wlj
+nsh> [K
+nsh> [K
+ELAPSED=2.680
+STRESS_10_scan=PASS AP_COUNT=1
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=5.513
+STRESS_10_pscan=PASS AP_COUNT=0
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+ELAPSED=2.163
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=10.240
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      75660     268392     116880     189800    176     26 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.291
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+ELAPSED=0.179
+--- CMD: echo STRESS_ALIVE ---
+echo STRESS_ALIVE
+STRESS_ALIVE
+nsh> [K
+nsh> [K
+ELAPSED=0.273
+SCAN_STRESS=PASS cycles=10 scans=20; no networking acceptance

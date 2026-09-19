@@ -1,0 +1,9 @@
+test: /tmp/esp-i2c-command-w9b9z9xk/test.c:125: main: Assertion `commands[0] == (6u << 11)' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_i2c_commands.py", line 119, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_i2c_commands.py", line 115, in main
+    subprocess.run([str(path / "test")], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-i2c-command-w9b9z9xk/test']' died with <Signals.SIGABRT: 6>.

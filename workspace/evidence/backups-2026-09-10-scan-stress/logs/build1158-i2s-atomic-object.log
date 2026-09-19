@@ -1,0 +1,166 @@
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:66:3:[m[K [01;31m[Kerror: [m[Kunknown type name '[01m[Ki2s_callback_t[m[K'; did you mean '[01m[Kdebug_callback_t[m[K'?
+   66 |   [01;31m[Ki2s_callback_t[m[K callback;
+      |   [01;31m[K^~~~~~~~~~~~~~[m[K
+      |   [32m[Kdebug_callback_t[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:81:20:[m[K [01;31m[Kerror: [m[Kfield '[01m[Kdev[m[K' has incomplete type
+   81 |   struct i2s_dev_s [01;31m[Kdev[m[K;
+      |                    [01;31m[K^~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:[m[K In function '[01m[Kdup_service[m[K':
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:370:30:[m[K [01;31m[Kerror: [m[Kinvalid use of undefined type '[01m[Kstruct ap_buffer_s[m[K'
+  370 |               memcpy(req->apb[01;31m[K->[m[Ksamp + req->completed, buffer + offset,
+      |                              [01;31m[K^~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:409:38:[m[K [01;31m[Kerror: [m[Kinvalid use of undefined type '[01m[Kstruct ap_buffer_s[m[K'
+  409 |               memcpy(buffer, req->apb[01;31m[K->[m[Ksamp + req->apb->curbyte +
+      |                                      [01;31m[K^~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:409:55:[m[K [01;31m[Kerror: [m[Kinvalid use of undefined type '[01m[Kstruct ap_buffer_s[m[K'
+  409 |               memcpy(buffer, req->apb->samp + req->apb[01;31m[K->[m[Kcurbyte +
+      |                                                       [01;31m[K^~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:[m[K In function '[01m[Kdup_worker[m[K':
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:512:31:[m[K [01;31m[Kerror: [m[Kinvalid use of undefined type '[01m[Kstruct ap_buffer_s[m[K'
+  512 |                       req->apb[01;31m[K->[m[Knbytes = req->bytes;
+      |                               [01;31m[K^~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:513:31:[m[K [01;31m[Kerror: [m[Kinvalid use of undefined type '[01m[Kstruct ap_buffer_s[m[K'
+  513 |                       req->apb[01;31m[K->[m[Kcurbyte = 0;
+      |                               [01;31m[K^~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:517:31:[m[K [01;31m[Kerror: [m[Kinvalid use of undefined type '[01m[Kstruct ap_buffer_s[m[K'
+  517 |                       req->apb[01;31m[K->[m[Kcurbyte = req->apb->nbytes;
+      |                               [01;31m[K^~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:517:51:[m[K [01;31m[Kerror: [m[Kinvalid use of undefined type '[01m[Kstruct ap_buffer_s[m[K'
+  517 |                       req->apb->curbyte = req->apb[01;31m[K->[m[Knbytes;
+      |                                                   [01;31m[K^~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:521:15:[m[K [01;31m[Kerror: [m[Kcalled object is not a function or function pointer
+  521 |               [01;31m[Kreq[m[K->callback(&ep->dev, req->apb, req->arg, req->result);
+      |               [01;31m[K^~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:522:15:[m[K [01;31m[Kerror: [m[Kimplicit declaration of function '[01m[Kapb_free[m[K'; did you mean '[01m[Klib_free[m[K'? [[01;31m[K-Wimplicit-function-declaration[m[K]
+  522 |               [01;31m[Kapb_free[m[K(req->apb);
+      |               [01;31m[K^~~~~~~~[m[K
+      |               [32m[Klib_free[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:[m[K At top level:
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:536:24:[m[K [01;31m[Kerror: [m[Kunknown type name '[01m[Ki2s_callback_t[m[K'; did you mean '[01m[Kdebug_callback_t[m[K'?
+  536 |                        [01;31m[Ki2s_callback_t[m[K callback, void *arg, uint32_t timeout,
+      |                        [01;31m[K^~~~~~~~~~~~~~[m[K
+      |                        [32m[Kdebug_callback_t[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:636:24:[m[K [01;31m[Kerror: [m[Kunknown type name '[01m[Ki2s_callback_t[m[K'; did you mean '[01m[Kdebug_callback_t[m[K'?
+  636 |                        [01;31m[Ki2s_callback_t[m[K cb, void *arg, uint32_t timeout)
+      |                        [01;31m[K^~~~~~~~~~~~~~[m[K
+      |                        [32m[Kdebug_callback_t[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:642:21:[m[K [01;31m[Kerror: [m[Kunknown type name '[01m[Ki2s_callback_t[m[K'; did you mean '[01m[Kdebug_callback_t[m[K'?
+  642 |                     [01;31m[Ki2s_callback_t[m[K cb, void *arg, uint32_t timeout)
+      |                     [01;31m[K^~~~~~~~~~~~~~[m[K
+      |                     [32m[Kdebug_callback_t[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:[m[K In function '[01m[Kdup_ioctl[m[K':
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:685:12:[m[K [01;31m[Kerror: [m[K'[01m[KAUDIOIOC_START[m[K' undeclared (first use in this function)
+  685 |       case [01;31m[KAUDIOIOC_START[m[K:
+      |            [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:685:12:[m[K [01;36m[Knote: [m[Keach undeclared identifier is reported only once for each function it appears in
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:713:12:[m[K [01;31m[Kerror: [m[K'[01m[KAUDIOIOC_STOP[m[K' undeclared (first use in this function)
+  713 |       case [01;31m[KAUDIOIOC_STOP[m[K:
+      |            [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:714:12:[m[K [01;31m[Kerror: [m[K'[01m[KAUDIOIOC_SHUTDOWN[m[K' undeclared (first use in this function)
+  714 |       case [01;31m[KAUDIOIOC_SHUTDOWN[m[K:
+      |            [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:721:12:[m[K [01;31m[Kerror: [m[K'[01m[KAUDIOIOC_ALLOCBUFFER[m[K' undeclared (first use in this function)
+  721 |       case [01;31m[KAUDIOIOC_ALLOCBUFFER[m[K:
+      |            [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:722:41:[m[K [01;31m[Kerror: [m[Kimplicit declaration of function '[01m[Kapb_alloc[m[K'; did you mean '[01m[Klib_calloc[m[K'? [[01;31m[K-Wimplicit-function-declaration[m[K]
+  722 |         return desc == NULL ? -EINVAL : [01;31m[Kapb_alloc[m[K(desc);
+      |                                         [01;31m[K^~~~~~~~~[m[K
+      |                                         [32m[Klib_calloc[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:724:12:[m[K [01;31m[Kerror: [m[K'[01m[KAUDIOIOC_FREEBUFFER[m[K' undeclared (first use in this function)
+  724 |       case [01;31m[KAUDIOIOC_FREEBUFFER[m[K:
+      |            [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:725:33:[m[K [01;31m[Kerror: [m[Kinvalid use of undefined type '[01m[Kstruct audio_buf_desc_s[m[K'
+  725 |         if (desc == NULL || desc[01;31m[K->[m[Ku.buffer == NULL)
+      |                                 [01;31m[K^~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:730:22:[m[K [01;31m[Kerror: [m[Kinvalid use of undefined type '[01m[Kstruct audio_buf_desc_s[m[K'
+  730 |         apb_free(desc[01;31m[K->[m[Ku.buffer);
+      |                      [01;31m[K^~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:731:22:[m[K [01;31m[Kerror: [m[Kinvalid application of '[01m[Ksizeof[m[K' to incomplete type '[01m[Kstruct audio_buf_desc_s[m[K'
+  731 |         return sizeof[01;31m[K([m[K*desc);
+      |                      [01;31m[K^[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:[m[K At top level:
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:739:1:[m[K [01;31m[Kerror: [m[Kvariable '[01m[Kg_dup_ops[m[K' has initializer but incomplete type
+  739 | [01;31m[K{[m[K
+      | [01;31m[K^[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:740:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_rxchannels[m[K'
+  740 |   .[01;31m[Ki2s_rxchannels[m[K = dup_channels,
+      |    [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:740:21:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+  740 |   .i2s_rxchannels = [01;35m[Kdup_channels[m[K,
+      |                     [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:740:21:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:741:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_rxsamplerate[m[K'
+  741 |   .[01;31m[Ki2s_rxsamplerate[m[K = dup_rate,
+      |    [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:741:23:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+  741 |   .i2s_rxsamplerate = [01;35m[Kdup_rate[m[K,
+      |                       [01;35m[K^~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:741:23:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:742:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_rxdatawidth[m[K'
+  742 |   .[01;31m[Ki2s_rxdatawidth[m[K = dup_width,
+      |    [01;31m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:742:22:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+  742 |   .i2s_rxdatawidth = [01;35m[Kdup_width[m[K,
+      |                      [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:742:22:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:743:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_receive[m[K'
+  743 |   .[01;31m[Ki2s_receive[m[K = dup_receive,
+      |    [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:743:18:[m[K [01;31m[Kerror: [m[K'[01m[Kdup_receive[m[K' undeclared here (not in a function)
+  743 |   .i2s_receive = [01;31m[Kdup_receive[m[K,
+      |                  [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:743:18:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:743:18:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:744:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_txchannels[m[K'
+  744 |   .[01;31m[Ki2s_txchannels[m[K = dup_channels,
+      |    [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:744:21:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+  744 |   .i2s_txchannels = [01;35m[Kdup_channels[m[K,
+      |                     [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:744:21:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:745:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_txsamplerate[m[K'
+  745 |   .[01;31m[Ki2s_txsamplerate[m[K = dup_rate,
+      |    [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:745:23:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+  745 |   .i2s_txsamplerate = [01;35m[Kdup_rate[m[K,
+      |                       [01;35m[K^~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:745:23:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:746:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_txdatawidth[m[K'
+  746 |   .[01;31m[Ki2s_txdatawidth[m[K = dup_width,
+      |    [01;31m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:746:22:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+  746 |   .i2s_txdatawidth = [01;35m[Kdup_width[m[K,
+      |                      [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:746:22:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:747:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_send[m[K'
+  747 |   .[01;31m[Ki2s_send[m[K = dup_send,
+      |    [01;31m[K^~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:747:15:[m[K [01;31m[Kerror: [m[K'[01m[Kdup_send[m[K' undeclared here (not in a function)
+  747 |   .i2s_send = [01;31m[Kdup_send[m[K,
+      |               [01;31m[K^~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:747:15:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:747:15:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:748:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_getmclkfrequency[m[K'
+  748 |   .[01;31m[Ki2s_getmclkfrequency[m[K = dup_getmclk,
+      |    [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:748:27:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+  748 |   .i2s_getmclkfrequency = [01;35m[Kdup_getmclk[m[K,
+      |                           [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:748:27:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:749:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_setmclkfrequency[m[K'
+  749 |   .[01;31m[Ki2s_setmclkfrequency[m[K = dup_setmclk,
+      |    [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:749:27:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+  749 |   .i2s_setmclkfrequency = [01;35m[Kdup_setmclk[m[K,
+      |                           [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:749:27:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:750:4:[m[K [01;31m[Kerror: [m[K'[01m[Kconst struct i2s_ops_s[m[K' has no member named '[01m[Ki2s_ioctl[m[K'
+  750 |   .[01;31m[Ki2s_ioctl[m[K = dup_ioctl,
+      |    [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:750:16:[m[K [01;35m[Kwarning: [m[Kexcess elements in struct initializer
+  750 |   .i2s_ioctl = [01;35m[Kdup_ioctl[m[K,
+      |                [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:750:16:[m[K [01;36m[Knote: [m[K(near initialization for '[01m[Kg_dup_ops[m[K')
+[01m[K/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_i2s_duplex.c:738:31:[m[K [01;31m[Kerror: [m[Kstorage size of '[01m[Kg_dup_ops[m[K' isn[m[K't known
+  738 | static const struct i2s_ops_s [01;31m[Kg_dup_ops[m[K =
+      |                               [01;31m[K^~~~~~~~~[m[K

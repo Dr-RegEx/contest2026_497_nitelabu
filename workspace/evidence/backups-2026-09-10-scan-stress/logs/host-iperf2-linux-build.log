@@ -1,0 +1,545 @@
+make  all-recursive
+make[1]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2-linux'
+Making all in compat
+make[2]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2-linux/compat'
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall -O2  -MT Thread.o -MD -MP -MF .deps/Thread.Tpo -c -o Thread.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/Thread.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall -O2  -MT error.o -MD -MP -MF .deps/error.Tpo -c -o error.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/error.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall -O2  -MT delay.o -MD -MP -MF .deps/delay.Tpo -c -o delay.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/delay.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall -O2  -MT gettimeofday.o -MD -MP -MF .deps/gettimeofday.Tpo -c -o gettimeofday.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/gettimeofday.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall -O2  -MT gettcpinfo.o -MD -MP -MF .deps/gettcpinfo.Tpo -c -o gettcpinfo.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/gettcpinfo.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall -O2  -MT inet_ntop.o -MD -MP -MF .deps/inet_ntop.Tpo -c -o inet_ntop.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/inet_ntop.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall -O2  -MT inet_pton.o -MD -MP -MF .deps/inet_pton.Tpo -c -o inet_pton.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/inet_pton.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall -O2  -MT signal.o -MD -MP -MF .deps/signal.Tpo -c -o signal.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/signal.c
+mv -f .deps/gettimeofday.Tpo .deps/gettimeofday.Po
+mv -f .deps/error.Tpo .deps/error.Po
+mv -f .deps/gettcpinfo.Tpo .deps/gettcpinfo.Po
+mv -f .deps/inet_ntop.Tpo .deps/inet_ntop.Po
+mv -f .deps/inet_pton.Tpo .deps/inet_pton.Po
+mv -f .deps/signal.Tpo .deps/signal.Po
+mv -f .deps/delay.Tpo .deps/delay.Po
+mv -f .deps/Thread.Tpo .deps/Thread.Po
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall -O2  -MT snprintf.o -MD -MP -MF .deps/snprintf.Tpo -c -o snprintf.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/snprintf.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall -O2  -MT string.o -MD -MP -MF .deps/string.Tpo -c -o string.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/string.c
+mv -f .deps/snprintf.Tpo .deps/snprintf.Po
+mv -f .deps/string.Tpo .deps/string.Po
+rm -f libcompat.a
+ar cru libcompat.a Thread.o error.o delay.o gettimeofday.o gettcpinfo.o inet_ntop.o inet_pton.o signal.o snprintf.o string.o 
+ar: `u' modifier ignored since `D' is the default (see `U')
+ranlib libcompat.a
+make[2]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2-linux/compat'
+Making all in doc
+make[2]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2-linux/doc'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2-linux/doc'
+Making all in include
+make[2]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2-linux/include'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2-linux/include'
+Making all in src
+make[2]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2-linux/src'
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT Client.o -MD -MP -MF .deps/Client.Tpo -c -o Client.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Client.cpp
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT Extractor.o -MD -MP -MF .deps/Extractor.Tpo -c -o Extractor.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Extractor.c
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT isochronous.o -MD -MP -MF .deps/isochronous.Tpo -c -o isochronous.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/isochronous.cpp
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT Launch.o -MD -MP -MF .deps/Launch.Tpo -c -o Launch.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Launch.cpp
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT active_hosts.o -MD -MP -MF .deps/active_hosts.Tpo -c -o active_hosts.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/active_hosts.cpp
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT Listener.o -MD -MP -MF .deps/Listener.Tpo -c -o Listener.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Listener.cpp
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT Locale.o -MD -MP -MF .deps/Locale.Tpo -c -o Locale.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Locale.c
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT PerfSocket.o -MD -MP -MF .deps/PerfSocket.Tpo -c -o PerfSocket.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/PerfSocket.cpp
+mv -f .deps/Locale.Tpo .deps/Locale.Po
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT Reporter.o -MD -MP -MF .deps/Reporter.Tpo -c -o Reporter.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Reporter.c
+mv -f .deps/Extractor.Tpo .deps/Extractor.Po
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT Reports.o -MD -MP -MF .deps/Reports.Tpo -c -o Reports.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Reports.c
+mv -f .deps/active_hosts.Tpo .deps/active_hosts.Po
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT ReportOutputs.o -MD -MP -MF .deps/ReportOutputs.Tpo -c -o ReportOutputs.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/ReportOutputs.c
+mv -f .deps/isochronous.Tpo .deps/isochronous.Po
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT Server.o -MD -MP -MF .deps/Server.Tpo -c -o Server.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Server.cpp
+mv -f .deps/PerfSocket.Tpo .deps/PerfSocket.Po
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT Settings.o -MD -MP -MF .deps/Settings.Tpo -c -o Settings.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp
+mv -f .deps/Launch.Tpo .deps/Launch.Po
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include/gnu_getopt.h -Wall  -O2 -O2  -MT SocketAddr.o -MD -MP -MF .deps/SocketAddr.Tpo -c -o SocketAddr.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/SocketAddr.c
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Client.cpp: In member function ‘void Client::AwaitServerFinPacket()’:
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Client.cpp:1593:50: error: ‘MIN’ was not declared in this scope; did you mean ‘CMIN’?
+ 1593 |             rc = read(mySocket, mSettings->mBuf, MIN(MAXUDPBUF, mSettings->mBufLen));
+      |                                                  ^~~
+      |                                                  CMIN
+make[2]: *** [Makefile:538: Client.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+mv -f .deps/Listener.Tpo .deps/Listener.Po
+mv -f .deps/Reports.Tpo .deps/Reports.Po
+mv -f .deps/SocketAddr.Tpo .deps/SocketAddr.Po
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:139:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  139 | {"singleclient",     no_argument, NULL, '1'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:144:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  144 | {"bandwidth",  required_argument, NULL, 'b'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:145:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  145 | {"client",     required_argument, NULL, 'c'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:146:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  146 | {"dualtest",         no_argument, NULL, 'd'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:147:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  147 | {"enhanced",         no_argument, NULL, 'e'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:148:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  148 | {"format",     required_argument, NULL, 'f'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:149:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  149 | {"help",             no_argument, NULL, 'h'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:150:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  150 | {"interval",   required_argument, NULL, 'i'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:151:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  151 | {"len",        required_argument, NULL, 'l'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:152:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  152 | {"print_mss",        no_argument, NULL, 'm'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:153:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  153 | {"num",        required_argument, NULL, 'n'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:154:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  154 | {"output",     required_argument, NULL, 'o'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:155:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  155 | {"port",       required_argument, NULL, 'p'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:156:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  156 | {"tradeoff",         no_argument, NULL, 'r'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:157:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  157 | {"server",           no_argument, NULL, 's'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:158:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  158 | {"time",       required_argument, NULL, 't'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:159:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  159 | {"udp",              no_argument, NULL, 'u'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:160:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  160 | {"version",          no_argument, NULL, 'v'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:161:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  161 | {"window",     required_argument, NULL, 'w'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:162:19: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  162 | {"reportexclude", required_argument, NULL, 'x'},
+      |                   ^~~~~~~~~~~~~~~~~
+      |                   gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:163:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  163 | {"reportstyle",required_argument, NULL, 'y'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:164:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  164 | {"realtime",         no_argument, NULL, 'z'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:167:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  167 | {"awdl",             no_argument, NULL, 'A'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:168:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  168 | {"bind",       required_argument, NULL, 'B'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:169:16: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  169 | {"bounceback", optional_argument, &bounceback, 1},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:170:24: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  170 | {"bounceback-congest", optional_argument, &workingload, 1},
+      |                        ^~~~~~~~~~~~~~~~~
+      |                        gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:171:24: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  171 | {"bounceback-txdelay", required_argument, &bouncebackdelaystart, 1},
+      |                        ^~~~~~~~~~~~~~~~~
+      |                        gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:172:21: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  172 | {"bounceback-hold", required_argument, &bouncebackhold, 1},
+      |                     ^~~~~~~~~~~~~~~~~
+      |                     gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:173:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  173 | {"bounceback-no-quickack", no_argument, &notcpbbquickack, 1},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:174:23: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  174 | {"bounceback-period", required_argument, &bouncebackperiod, 1},
+      |                       ^~~~~~~~~~~~~~~~~
+      |                       gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:175:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  175 | {"compatibility",    no_argument, NULL, 'C'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:176:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  176 | {"daemon",           no_argument, NULL, 'D'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:177:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  177 | {"file_input", required_argument, NULL, 'F'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:178:14: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  178 | {"ssm-host", required_argument, NULL, 'H'},
+      |              ^~~~~~~~~~~~~~~~~
+      |              gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:179:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  179 | {"stdin_input",      no_argument, NULL, 'I'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:180:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  180 | {"mss",        required_argument, NULL, 'M'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:181:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  181 | {"nodelay",          no_argument, NULL, 'N'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:182:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  182 | {"listenport", required_argument, NULL, 'L'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:183:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  183 | {"parallel",   required_argument, NULL, 'P'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:187:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  187 | {"reverse",          no_argument, NULL, 'R'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:189:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  189 | {"tos",        required_argument, NULL, 'S'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:190:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  190 | {"ttl",        required_argument, NULL, 'T'},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:191:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  191 | {"single_udp",       no_argument, NULL, 'U'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:192:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  192 | {"ipv6_domain",      no_argument, NULL, 'V'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:193:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  193 | {"suggest_win_size", no_argument, NULL, 'W'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:194:22: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  194 | {"peer-detect",      no_argument, NULL, 'X'},
+      |                      ^~~~~~~~~~~
+      |                      gnu_no_argument
+mv -f .deps/Reporter.Tpo .deps/Reporter.Po
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:195:20: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  195 | {"tcp-congestion", required_argument, NULL, 'Z'},
+      |                    ^~~~~~~~~~~~~~~~~
+      |                    gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:196:16: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  196 | {"histograms", optional_argument, &histogram, 1},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:197:14: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  197 | {"hide-ips", no_argument, &hideips, 1},
+      |              ^~~~~~~~~~~
+      |              gnu_no_argument
+mv -f .deps/Server.Tpo .deps/Server.Po
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:198:20: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  198 | {"udp-histograms", optional_argument, &histogram, 1}, // keep support per 2.0.13 usage
+      |                    ^~~~~~~~~~~~~~~~~
+      |                    gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:199:14: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  199 | {"l2checks", no_argument, &l2checks, 1},
+      |              ^~~~~~~~~~~
+      |              gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:200:16: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  200 | {"incr-dstip", no_argument, &incrdstip, 1},
+      |                ^~~~~~~~~~~
+      |                gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:201:16: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  201 | {"incr-srcip", no_argument, &incrsrcip, 1},
+      |                ^~~~~~~~~~~
+      |                gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:202:18: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  202 | {"incr-dstport", no_argument, &incrdstport, 1},
+      |                  ^~~~~~~~~~~
+      |                  gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:203:18: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  203 | {"incr-srcport", no_argument, &incrsrcport, 1},
+      |                  ^~~~~~~~~~~
+      |                  gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:204:15: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  204 | {"sum-dstip", no_argument, &sumdstip, 1},
+      |               ^~~~~~~~~~~
+      |               gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:205:18: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  205 | {"txstart-time", required_argument, &txstarttime, 1},
+      |                  ^~~~~~~~~~~~~~~~~
+      |                  gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:206:18: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  206 | {"txdelay-time", required_argument, &txholdback, 1},
+      |                  ^~~~~~~~~~~~~~~~~
+      |                  gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:207:13: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  207 | {"fq-rate", required_argument, &fqrate, 1},
+      |             ^~~~~~~~~~~~~~~~~
+      |             gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:208:16: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  208 | {"trip-times", no_argument, &triptime, 1},
+      |                ^~~~~~~~~~~
+      |                gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:209:16: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  209 | {"no-udp-fin", no_argument, &noudpfin, 1},
+      |                ^~~~~~~~~~~
+      |                gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:210:18: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  210 | {"connect-only", optional_argument, &connectonly, 1},
+      |                  ^~~~~~~~~~~~~~~~~
+      |                  gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:211:21: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  211 | {"connect-retries", required_argument, &connectretry, 1},
+      |                     ^~~~~~~~~~~~~~~~~
+      |                     gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:212:21: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  212 | {"no-connect-sync", no_argument, &noconnectsync, 1},
+      |                     ^~~~~~~~~~~
+      |                     gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:213:17: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  213 | {"full-duplex", no_argument, &fullduplextest, 1},
+      |                 ^~~~~~~~~~~
+      |                 gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:214:9: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  214 | {"ipg", required_argument, &burstipg, 1},
+      |         ^~~~~~~~~~~~~~~~~
+      |         gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:215:17: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  215 | {"isochronous", optional_argument, &isochronous, 1},
+      |                 ^~~~~~~~~~~~~~~~~
+      |                 gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:216:14: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  216 | {"sum-only", no_argument, &sumonly, 1},
+      |              ^~~~~~~~~~~
+      |              gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:217:16: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  217 | {"local-only", optional_argument, &so_dontroute, 1},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:218:21: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  218 | {"near-congestion", optional_argument, &nearcongest, 1},
+      |                     ^~~~~~~~~~~~~~~~~
+      |                     gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:219:16: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  219 | {"permit-key", optional_argument, &permitkey, 1},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:220:24: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  220 | {"permit-key-timeout", required_argument, &permitkeytimeout, 1},
+      |                        ^~~~~~~~~~~~~~~~~
+      |                        gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:221:16: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  221 | {"burst-size", required_argument, &burstsize, 1},
+      |                ^~~~~~~~~~~~~~~~~
+      |                gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:222:18: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  222 | {"burst-period", required_argument, &burstperiodic, 1},
+      |                  ^~~~~~~~~~~~~~~~~
+      |                  gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:223:18: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  223 | {"tos-override", required_argument, &overridetos, 1},
+      |                  ^~~~~~~~~~~~~~~~~
+      |                  gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:224:25: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  224 | {"tcp-rx-window-clamp", required_argument, &rxwinclamp, 1},
+      |                         ^~~~~~~~~~~~~~~~~
+      |                         gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:225:18: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  225 | {"tcp-quickack", no_argument, &tcpquickack, 1},
+      |                  ^~~~~~~~~~~
+      |                  gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:226:24: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  226 | {"tcp-write-prefetch", required_argument, &txnotsentlowwater, 1}, // see doc/DESIGN_NOTES
+      |                        ^~~~~~~~~~~~~~~~~
+      |                        gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:227:21: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  227 | {"tcp-write-times", no_argument, &tcpwritetimes, 1},
+      |                     ^~~~~~~~~~~
+      |                     gnu_no_argument
+mv -f .deps/ReportOutputs.Tpo .deps/ReportOutputs.Po
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:228:13: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  228 | {"tap-dev", optional_argument, &tapif, 1},
+      |             ^~~~~~~~~~~~~~~~~
+      |             gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:229:13: error: ‘optional_argument’ was not declared in this scope; did you mean ‘gnu_optional_argument’?
+  229 | {"tun-dev", optional_argument, &tunif, 1},
+      |             ^~~~~~~~~~~~~~~~~
+      |             gnu_optional_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:230:24: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  230 | {"NUM_REPORT_STRUCTS", required_argument, &numreportstructs, 1},
+      |                        ^~~~~~~~~~~~~~~~~
+      |                        gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:234:11: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  234 | {"cport", required_argument, &setcport, 1},
+      |           ^~~~~~~~~~~~~~~~~
+      |           gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:242:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  242 | {"IPERF_IPV6_DOMAIN",      no_argument, NULL, 'V'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:243:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  243 | {"IPERF_SINGLECLIENT",     no_argument, NULL, '1'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:244:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  244 | {"IPERF_BANDWIDTH",  required_argument, NULL, 'b'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:245:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  245 | {"IPERF_CLIENT",     required_argument, NULL, 'c'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:246:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  246 | {"IPERF_DUALTEST",         no_argument, NULL, 'd'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:247:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  247 | {"IPERF_ENHANCEDREPORTS",  no_argument, NULL, 'e'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:248:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  248 | {"IPERF_FORMAT",     required_argument, NULL, 'f'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:250:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  250 | {"IPERF_INTERVAL",   required_argument, NULL, 'i'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:251:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  251 | {"IPERF_LEN",        required_argument, NULL, 'l'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:252:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  252 | {"IPERF_PRINT_MSS",        no_argument, NULL, 'm'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:253:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  253 | {"IPERF_NUM",        required_argument, NULL, 'n'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:254:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  254 | {"IPERF_PORT",       required_argument, NULL, 'p'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:255:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  255 | {"IPERF_TRADEOFF",         no_argument, NULL, 'r'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:256:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  256 | {"IPERF_SERVER",           no_argument, NULL, 's'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:257:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  257 | {"IPERF_TIME",       required_argument, NULL, 't'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:258:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  258 | {"IPERF_UDP",              no_argument, NULL, 'u'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:260:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  260 | {"TCP_WINDOW_SIZE",  required_argument, NULL, 'w'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:261:25: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  261 | {"IPERF_REPORTEXCLUDE", required_argument, NULL, 'x'},
+      |                         ^~~~~~~~~~~~~~~~~
+      |                         gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:262:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  262 | {"IPERF_REPORTSTYLE",required_argument, NULL, 'y'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:265:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  265 | {"IPERF_BIND",       required_argument, NULL, 'B'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:266:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  266 | {"IPERF_COMPAT",           no_argument, NULL, 'C'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:267:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  267 | {"IPERF_DAEMON",           no_argument, NULL, 'D'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:268:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  268 | {"IPERF_FILE_INPUT", required_argument, NULL, 'F'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:269:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  269 | {"IPERF_STDIN_INPUT",      no_argument, NULL, 'I'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:270:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  270 | {"IPERF_MSS",        required_argument, NULL, 'M'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:271:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  271 | {"IPERF_NODELAY",          no_argument, NULL, 'N'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:272:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  272 | {"IPERF_LISTENPORT", required_argument, NULL, 'L'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:273:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  273 | {"IPERF_PARALLEL",   required_argument, NULL, 'P'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:274:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  274 | {"IPERF_TOS",        required_argument, NULL, 'S'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:275:22: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  275 | {"IPERF_TTL",        required_argument, NULL, 'T'},
+      |                      ^~~~~~~~~~~~~~~~~
+      |                      gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:276:28: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  276 | {"IPERF_SINGLE_UDP",       no_argument, NULL, 'U'},
+      |                            ^~~~~~~~~~~
+      |                            gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:277:28: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  277 | {"IPERF_SUGGEST_WIN_SIZE", required_argument, NULL, 'W'},
+      |                            ^~~~~~~~~~~~~~~~~
+      |                            gnu_required_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:278:23: error: ‘no_argument’ was not declared in this scope; did you mean ‘gnu_no_argument’?
+  278 | {"IPERF_PEER_DETECT", no_argument, NULL, 'X'},
+      |                       ^~~~~~~~~~~
+      |                       gnu_no_argument
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:279:31: error: ‘required_argument’ was not declared in this scope; did you mean ‘gnu_required_argument’?
+  279 | {"IPERF_CONGESTION_CONTROL",  required_argument, NULL, 'Z'},
+      |                               ^~~~~~~~~~~~~~~~~
+      |                               gnu_required_argument
+make[2]: *** [Makefile:538: Settings.o] Error 1
+make[2]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2-linux/src'
+make[1]: *** [Makefile:596: all-recursive] Error 1
+make[1]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2-linux'
+make: *** [Makefile:536: all] Error 2

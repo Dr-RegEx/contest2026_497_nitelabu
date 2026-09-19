@@ -1,0 +1,26 @@
+--- CMD: s31demo --status ---
+s31demo --status
+S31_DEMO_INTERFACE=wlan0
+S31_DEMO_UPTIME_SECONDS=40
+S31_DEMO_INTERFACE_UP=1
+S31_DEMO_IPV4=192.168.1.60
+S31_DEMO_DEVICE=/dev/leds0 STATE=PRESENT
+S31_DEMO_DEVICE=/dev/buttons STATE=PRESENT
+S31_DEMO_DEVICE=/dev/i2c0 STATE=PRESENT
+S31_DEMO_DEVICE=/dev/audio/pcm0p STATE=ABSENT
+S31_DEMO_DEVICE=/dev/audio/pcm0c STATE=ABSENT
+S31_DEMO_DEVICE=/dev/ttyHCI0 STATE=ABSENT
+S31_DEMO_STATUS=OK
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011140 0x2f01118c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K

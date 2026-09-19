@@ -1,0 +1,640 @@
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f0096c0 0x2f009708
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009640 0x2f009688
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f0096c0 0x2f009708
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009640 0x2f009688
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+--- CMD: cp /data/audio_file.aac /tmp/fs1702-audio ---
+cp /data/audio_file.aac /tmp/fs1702-audio
+nsh> [K
+nsh> [K
+cp /data/audio_file.aac /tmp/fs1702-audio
+nsh> [K
+nsh> [K
+--- CMD: cmp /data/audio_file.aac /tmp/fs1702-audio ---
+cmp /data/audio_file.aac /tmp/fs1702-audio
+nsh> [K
+nsh> [K
+cmp /data/audio_file.aac /tmp/fs1702-audio
+nsh> [K
+nsh> [K
+--- CMD: rm /data/audio_file.aac ---
+rm /data/audio_file.aac
+nsh> [K
+nsh> [K
+rm /data/audio_file.aac
+nsh> [K
+nsh> [K
+--- CMD: cp /data/persist.db /tmp/fs1702-db ---
+cp /data/persist.db /tmp/fs1702-db
+nsh> [K
+nsh> [K
+cp /data/persist.db /tmp/fs1702-db
+nsh> [K
+nsh> [K
+--- CMD: cmp /data/persist.db /tmp/fs1702-db ---
+cmp /data/persist.db /tmp/fs1702-db
+nsh> [K
+nsh> [K
+cmp /data/persist.db /tmp/fs1702-db
+nsh> [K
+nsh> [K
+--- CMD: rm /data/persist.db ---
+rm /data/persist.db
+nsh> [K
+nsh> [K
+rm /data/persist.db
+nsh> [K
+nsh> [K
+--- CMD: cp /data/frag1164/Fragment_test_largefile /tmp/fs1702-frag ---
+cp /data/frag1164/Fragment_test_largefile /tmp/fs1702-frag
+nsh> [K
+nsh> [K
+cp /data/frag1164/Fragment_test_largefile /tmp/fs1702-frag
+nsh> [K
+nsh> [K
+--- CMD: cmp /data/frag1164/Fragment_test_largefile /tmp/fs1702-frag ---
+cmp /data/frag1164/Fragment_test_largefile /tmp/fs1702-frag
+nsh> [K
+nsh> [K
+cmp /data/frag1164/Fragment_test_largefile /tmp/fs1702-frag
+nsh> [K
+nsh> [K
+--- CMD: rm /data/frag1164/Fragment_test_largefile ---
+rm /data/frag1164/Fragment_test_largefile
+nsh> [K
+nsh> [K
+rm /data/frag1164/Fragment_test_largefile
+nsh> [K
+nsh> [K
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768         95         673 /data
+     0          0          0           0 /proc
+   512       4844       4842           2 /tmp
+nsh> [K
+nsh> [K
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768         95         673 /data
+     0          0          0           0 /proc
+   512       4844       4842           2 /tmp
+nsh> [K
+nsh> [K
+--- CMD: mkdir /data/s07_1702 ---
+mkdir /data/s07_1702
+nsh> [K
+nsh> [K
+mkdir /data/s07_1702
+nsh> [K
+nsh> [K
+--- CMD: cd /data/s07_1702 ---
+cd /data/s07_1702
+nsh> [K
+nsh> [K
+cd /data/s07_1702
+nsh> [K
+nsh> [K
+--- CMD: vela_fs_random_read_and_write_test writeCount=10 readCount=1000 mountPath=. ---
+vela_fs_random_read_and_write_test writeCount=10 readCount=1000 mountPath=.
+writecount=10  readcount=1000  mountPath=.
+randomReadTest : read count=1000, takes 0.570000 seconds
+randomWriteTest : write count=10, takes 0.200000 seconds
+The test is complete, the data list is as follows：
+-1 : XXXXXXXXXX-0000
+1 : ABCDEFGHIJ-   1
+2 : ABCDEFGHIJ-   2
+3 : ABCDEFGHIJ-   3
+4 : ABCDEFGHIJ-   4
+5 : ABCDEFGHIJ-   5
+6 : ABCDEFGHIJ-   6
+7 : ABCDEFGHIJ-   7
+8 : ABCDEFGHIJ-   8
+9 : ABCDEFGHIJ-   9
+10 : ABCDEFGHIJ-  10
+11 : ABCDEFGHIJ-  11
+12 : ABCDEFGHIJ-  12
+13 : ABCDEFGHIJ-  13
+14 : ABCDEFGHIJ-  14
+15 : ABCDEFGHIJ-  15
+16 : ABCDEFGHIJ-  16
+17 : ABCDEFGHIJ-  17
+18 : ABCDEFGHIJ-  18
+19 : ABCDEFGHIJ-  19
+20 : ABCDEFGHIJ-  20
+21 : ABCDEFGHIJ-  21
+22 : ABCDEFGHIJ-  22
+23 : ABCDEFGHIJ-  23
+24 : ABCDEFGHIJ-  24
+25 : ABCDEFGHIJ-  25
+26 : ABCDEFGHIJ-  26
+27 : ABCDEFGHIJ-  27
+28 : ABCDEFGHIJ-  28
+29 : ABCDEFGHIJ-  29
+30 : ABCDEFGHIJ-  30
+31 : ABCDEFGHIJ-  31
+32 : ABCDEFGHIJ-  32
+33 : ABCDEFGHIJ-  33
+34 : ABCDEFGHIJ-  34
+35 : ABCDEFGHIJ-  35
+36 : ABCDEFGHIJ-  36
+37 : ABCDEFGHIJ-  37
+38 : ABCDEFGHIJ-  38
+39 : ABCDEFGHIJ-  39
+40 : ABCDEFGHIJ-  40
+41 : ABCDEFGHIJ-  41
+42 : ABCDEFGHIJ-  42
+43 : ABCDEFGHIJ-  43
+44 : ABCDEFGHIJ-  44
+45 : ABCDEFGHIJ-  45
+46 : ABCDEFGHIJ-  46
+47 : ABCDEFGHIJ-  47
+48 : ABCDEFGHIJ-  48
+49 : ABCDEFGHIJ-  49
+50 : ABCDEFGHIJ-  50
+51 : ABCDEFGHIJ-  51
+52 : ABCDEFGHIJ-  52
+53 : ABCDEFGHIJ-  53
+-1 : XXXXXXXXXX-0000
+55 : ABCDEFGHIJ-  55
+56 : ABCDEFGHIJ-  56
+57 : ABCDEFGHIJ-  57
+58 : ABCDEFGHIJ-  58
+59 : ABCDEFGHIJ-  59
+60 : ABCDEFGHIJ-  60
+-1 : XXXXXXXXXX-0000
+62 : ABCDEFGHIJ-  62
+63 : ABCDEFGHIJ-  63
+64 : ABCDEFGHIJ-  64
+65 : ABCDEFGHIJ-  65
+66 : ABCDEFGHIJ-  66
+67 : ABCDEFGHIJ-  67
+-1 : XXXXXXXXXX-0000
+69 : ABCDEFGHIJ-  69
+70 : ABCDEFGHIJ-  70
+71 : ABCDEFGHIJ-  71
+72 : ABCDEFGHIJ-  72
+73 : ABCDEFGHIJ-  73
+74 : ABCDEFGHIJ-  74
+-1 : XXXXXXXXXX-0000
+76 : ABCDEFGHIJ-  76
+77 : ABCDEFGHIJ-  77
+78 : ABCDEFGHIJ-  78
+79 : ABCDEFGHIJ-  79
+80 : ABCDEFGHIJ-  80
+81 : ABCDEFGHIJ-  81
+82 : ABCDEFGHIJ-  82
+83 : ABCDEFGHIJ-  83
+84 : ABCDEFGHIJ-  84
+85 : ABCDEFGHIJ-  85
+86 : ABCDEFGHIJ-  86
+87 : ABCDEFGHIJ-  87
+88 : ABCDEFGHIJ-  88
+89 : ABCDEFGHIJ-  89
+90 : ABCDEFGHIJ-  90
+91 : ABCDEFGHIJ-  91
+92 : ABCDEFGHIJ-  92
+93 : ABCDEFGHIJ-  93
+94 : ABCDEFGHIJ-  94
+95 : ABCDEFGHIJ-  95
+96 : ABCDEFGHIJ-  96
+97 : ABCDEFGHIJ-  97
+98 : ABCDEFGHIJ-  98
+99 : ABCDEFGHIJ-  99
+100 : ABCDEFGHIJ- 100
+101 : ABCDEFGHIJ- 101
+102 : ABCDEFGHIJ- 102
+103 : ABCDEFGHIJ- 103
+104 : ABCDEFGHIJ- 104
+105 : ABCDEFGHIJ- 105
+106 : ABCDEFGHIJ- 106
+107 : ABCDEFGHIJ- 107
+108 : ABCDEFGHIJ- 108
+109 : ABCDEFGHIJ- 109
+110 : ABCDEFGHIJ- 110
+111 : ABCDEFGHIJ- 111
+112 : ABCDEFGHIJ- 112
+113 : ABCDEFGHIJ- 113
+114 : ABCDEFGHIJ- 114
+115 : ABCDEFGHIJ- 115
+116 : ABCDEFGHIJ- 116
+117 : ABCDEFGHIJ- 117
+118 : ABCDEFGHIJ- 118
+119 : ABCDEFGHIJ- 119
+120 : ABCDEFGHIJ- 120
+121 : ABCDEFGHIJ- 121
+122 : ABCDEFGHIJ- 122
+123 : ABCDEFGHIJ- 123
+124 : ABCDEFGHIJ- 124
+125 : ABCDEFGHIJ- 125
+126 : ABCDEFGHIJ- 126
+-1 : XXXXXXXXXX-0000
+128 : ABCDEFGHIJ- 128
+129 : ABCDEFGHIJ- 129
+130 : ABCDEFGHIJ- 130
+131 : ABCDEFGHIJ- 131
+132 : ABCDEFGHIJ- 132
+133 : ABCDEFGHIJ- 133
+-1 : XXXXXXXXXX-0000
+135 : ABCDEFGHIJ- 135
+136 : ABCDEFGHIJ- 136
+137 : ABCDEFGHIJ- 137
+138 : ABCDEFGHIJ- 138
+139 : ABCDEFGHIJ- 139
+140 : ABCDEFGHIJ- 140
+-1 : XXXXXXXXXX-0000
+142 : ABCDEFGHIJ- 142
+143 : ABCDEFGHIJ- 143
+144 : ABCDEFGHIJ- 144
+145 : ABCDEFGHIJ- 145
+146 : ABCDEFGHIJ- 146
+147 : ABCDEFGHIJ- 147
+-1 : XXXXXXXXXX-0000
+149 : ABCDEFGHIJ- 149
+150 : ABCDEFGHIJ- 150
+151 : ABCDEFGHIJ- 151
+152 : ABCDEFGHIJ- 152
+153 : ABCDEFGHIJ- 153
+154 : ABCDEFGHIJ- 154
+-1 : XXXXXXXXXX-0000
+156 : ABCDEFGHIJ- 156
+157 : ABCDEFGHIJ- 157
+158 : ABCDEFGHIJ- 158
+159 : ABCDEFGHIJ- 159
+160 : ABCDEFGHIJ- 160
+161 : ABCDEFGHIJ- 161
+162 : ABCDEFGHIJ- 162
+163 : ABCDEFGHIJ- 163
+164 : ABCDEFGHIJ- 164
+165 : ABCDEFGHIJ- 165
+166 : ABCDEFGHIJ- 166
+167 : ABCDEFGHIJ- 167
+168 : ABCDEFGHIJ- 168
+169 : ABCDEFGHIJ- 169
+170 : ABCDEFGHIJ- 170
+171 : ABCDEFGHIJ- 171
+172 : ABCDEFGHIJ- 172
+173 : ABCDEFGHIJ- 173
+174 : ABCDEFGHIJ- 174
+175 : ABCDEFGHIJ- 175
+176 : ABCDEFGHIJ- 176
+177 : ABCDEFGHIJ- 177
+178 : ABCDEFGHIJ- 178
+179 : ABCDEFGHIJ- 179
+180 : ABCDEFGHIJ- 180
+181 : ABCDEFGHIJ- 181
+182 : ABCDEFGHIJ- 182
+183 : ABCDEFGHIJ- 183
+184 : ABCDEFGHIJ- 184
+185 : ABCDEFGHIJ- 185
+186 : ABCDEFGHIJ- 186
+187 : ABCDEFGHIJ- 187
+188 : ABCDEFGHIJ- 188
+189 : ABCDEFGHIJ- 189
+190 : ABCDEFGHIJ- 190
+191 : ABCDEFGHIJ- 191
+192 : ABCDEFGHIJ- 192
+193 : ABCDEFGHIJ- 193
+194 : ABCDEFGHIJ- 194
+195 : ABCDEFGHIJ- 195
+196 : ABCDEFGHIJ- 196
+197 : ABCDEFGHIJ- 197
+198 : ABCDEFGHIJ- 198
+199 : ABCDEFGHIJ- 199
+nsh> [K
+nsh> [K
+vela_fs_random_read_and_write_test writeCount=10 readCount=1000 mountPath=.
+writecount=10  readcount=1000  mountPath=.
+randomReadTest : read count=1000, takes 0.570000 seconds
+randomWriteTest : write count=10, takes 0.200000 seconds
+The test is complete, the data list is as follows：
+-1 : XXXXXXXXXX-0000
+1 : ABCDEFGHIJ-   1
+2 : ABCDEFGHIJ-   2
+3 : ABCDEFGHIJ-   3
+4 : ABCDEFGHIJ-   4
+5 : ABCDEFGHIJ-   5
+6 : ABCDEFGHIJ-   6
+7 : ABCDEFGHIJ-   7
+8 : ABCDEFGHIJ-   8
+9 : ABCDEFGHIJ-   9
+10 : ABCDEFGHIJ-  10
+11 : ABCDEFGHIJ-  11
+12 : ABCDEFGHIJ-  12
+13 : ABCDEFGHIJ-  13
+14 : ABCDEFGHIJ-  14
+15 : ABCDEFGHIJ-  15
+16 : ABCDEFGHIJ-  16
+17 : ABCDEFGHIJ-  17
+18 : ABCDEFGHIJ-  18
+19 : ABCDEFGHIJ-  19
+20 : ABCDEFGHIJ-  20
+21 : ABCDEFGHIJ-  21
+22 : ABCDEFGHIJ-  22
+23 : ABCDEFGHIJ-  23
+24 : ABCDEFGHIJ-  24
+25 : ABCDEFGHIJ-  25
+26 : ABCDEFGHIJ-  26
+27 : ABCDEFGHIJ-  27
+28 : ABCDEFGHIJ-  28
+29 : ABCDEFGHIJ-  29
+30 : ABCDEFGHIJ-  30
+31 : ABCDEFGHIJ-  31
+32 : ABCDEFGHIJ-  32
+33 : ABCDEFGHIJ-  33
+34 : ABCDEFGHIJ-  34
+35 : ABCDEFGHIJ-  35
+36 : ABCDEFGHIJ-  36
+37 : ABCDEFGHIJ-  37
+38 : ABCDEFGHIJ-  38
+39 : ABCDEFGHIJ-  39
+40 : ABCDEFGHIJ-  40
+41 : ABCDEFGHIJ-  41
+42 : ABCDEFGHIJ-  42
+43 : ABCDEFGHIJ-  43
+44 : ABCDEFGHIJ-  44
+45 : ABCDEFGHIJ-  45
+46 : ABCDEFGHIJ-  46
+47 : ABCDEFGHIJ-  47
+48 : ABCDEFGHIJ-  48
+49 : ABCDEFGHIJ-  49
+50 : ABCDEFGHIJ-  50
+51 : ABCDEFGHIJ-  51
+52 : ABCDEFGHIJ-  52
+53 : ABCDEFGHIJ-  53
+-1 : XXXXXXXXXX-0000
+55 : ABCDEFGHIJ-  55
+56 : ABCDEFGHIJ-  56
+57 : ABCDEFGHIJ-  57
+58 : ABCDEFGHIJ-  58
+59 : ABCDEFGHIJ-  59
+60 : ABCDEFGHIJ-  60
+-1 : XXXXXXXXXX-0000
+62 : ABCDEFGHIJ-  62
+63 : ABCDEFGHIJ-  63
+64 : ABCDEFGHIJ-  64
+65 : ABCDEFGHIJ-  65
+66 : ABCDEFGHIJ-  66
+67 : ABCDEFGHIJ-  67
+-1 : XXXXXXXXXX-0000
+69 : ABCDEFGHIJ-  69
+70 : ABCDEFGHIJ-  70
+71 : ABCDEFGHIJ-  71
+72 : ABCDEFGHIJ-  72
+73 : ABCDEFGHIJ-  73
+74 : ABCDEFGHIJ-  74
+-1 : XXXXXXXXXX-0000
+76 : ABCDEFGHIJ-  76
+77 : ABCDEFGHIJ-  77
+78 : ABCDEFGHIJ-  78
+79 : ABCDEFGHIJ-  79
+80 : ABCDEFGHIJ-  80
+81 : ABCDEFGHIJ-  81
+82 : ABCDEFGHIJ-  82
+83 : ABCDEFGHIJ-  83
+84 : ABCDEFGHIJ-  84
+85 : ABCDEFGHIJ-  85
+86 : ABCDEFGHIJ-  86
+87 : ABCDEFGHIJ-  87
+88 : ABCDEFGHIJ-  88
+89 : ABCDEFGHIJ-  89
+90 : ABCDEFGHIJ-  90
+91 : ABCDEFGHIJ-  91
+92 : ABCDEFGHIJ-  92
+93 : ABCDEFGHIJ-  93
+94 : ABCDEFGHIJ-  94
+95 : ABCDEFGHIJ-  95
+96 : ABCDEFGHIJ-  96
+97 : ABCDEFGHIJ-  97
+98 : ABCDEFGHIJ-  98
+99 : ABCDEFGHIJ-  99
+100 : ABCDEFGHIJ- 100
+101 : ABCDEFGHIJ- 101
+102 : ABCDEFGHIJ- 102
+103 : ABCDEFGHIJ- 103
+104 : ABCDEFGHIJ- 104
+105 : ABCDEFGHIJ- 105
+106 : ABCDEFGHIJ- 106
+107 : ABCDEFGHIJ- 107
+108 : ABCDEFGHIJ- 108
+109 : ABCDEFGHIJ- 109
+110 : ABCDEFGHIJ- 110
+111 : ABCDEFGHIJ- 111
+112 : ABCDEFGHIJ- 112
+113 : ABCDEFGHIJ- 113
+114 : ABCDEFGHIJ- 114
+115 : ABCDEFGHIJ- 115
+116 : ABCDEFGHIJ- 116
+117 : ABCDEFGHIJ- 117
+118 : ABCDEFGHIJ- 118
+119 : ABCDEFGHIJ- 119
+120 : ABCDEFGHIJ- 120
+121 : ABCDEFGHIJ- 121
+122 : ABCDEFGHIJ- 122
+123 : ABCDEFGHIJ- 123
+124 : ABCDEFGHIJ- 124
+125 : ABCDEFGHIJ- 125
+126 : ABCDEFGHIJ- 126
+-1 : XXXXXXXXXX-0000
+128 : ABCDEFGHIJ- 128
+129 : ABCDEFGHIJ- 129
+130 : ABCDEFGHIJ- 130
+131 : ABCDEFGHIJ- 131
+132 : ABCDEFGHIJ- 132
+133 : ABCDEFGHIJ- 133
+-1 : XXXXXXXXXX-0000
+135 : ABCDEFGHIJ- 135
+136 : ABCDEFGHIJ- 136
+137 : ABCDEFGHIJ- 137
+138 : ABCDEFGHIJ- 138
+139 : ABCDEFGHIJ- 139
+140 : ABCDEFGHIJ- 140
+-1 : XXXXXXXXXX-0000
+142 : ABCDEFGHIJ- 142
+143 : ABCDEFGHIJ- 143
+144 : ABCDEFGHIJ- 144
+145 : ABCDEFGHIJ- 145
+146 : ABCDEFGHIJ- 146
+147 : ABCDEFGHIJ- 147
+-1 : XXXXXXXXXX-0000
+149 : ABCDEFGHIJ- 149
+150 : ABCDEFGHIJ- 150
+151 : ABCDEFGHIJ- 151
+152 : ABCDEFGHIJ- 152
+153 : ABCDEFGHIJ- 153
+154 : ABCDEFGHIJ- 154
+-1 : XXXXXXXXXX-0000
+156 : ABCDEFGHIJ- 156
+157 : ABCDEFGHIJ- 157
+158 : ABCDEFGHIJ- 158
+159 : ABCDEFGHIJ- 159
+160 : ABCDEFGHIJ- 160
+161 : ABCDEFGHIJ- 161
+162 : ABCDEFGHIJ- 162
+163 : ABCDEFGHIJ- 163
+164 : ABCDEFGHIJ- 164
+165 : ABCDEFGHIJ- 165
+166 : ABCDEFGHIJ- 166
+167 : ABCDEFGHIJ- 167
+168 : ABCDEFGHIJ- 168
+169 : ABCDEFGHIJ- 169
+170 : ABCDEFGHIJ- 170
+171 : ABCDEFGHIJ- 171
+172 : ABCDEFGHIJ- 172
+173 : ABCDEFGHIJ- 173
+174 : ABCDEFGHIJ- 174
+175 : ABCDEFGHIJ- 175
+176 : ABCDEFGHIJ- 176
+177 : ABCDEFGHIJ- 177
+178 : ABCDEFGHIJ- 178
+179 : ABCDEFGHIJ- 179
+180 : ABCDEFGHIJ- 180
+181 : ABCDEFGHIJ- 181
+182 : ABCDEFGHIJ- 182
+183 : ABCDEFGHIJ- 183
+184 : ABCDEFGHIJ- 184
+185 : ABCDEFGHIJ- 185
+186 : ABCDEFGHIJ- 186
+187 : ABCDEFGHIJ- 187
+188 : ABCDEFGHIJ- 188
+189 : ABCDEFGHIJ- 189
+190 : ABCDEFGHIJ- 190
+191 : ABCDEFGHIJ- 191
+192 : ABCDEFGHIJ- 192
+193 : ABCDEFGHIJ- 193
+194 : ABCDEFGHIJ- 194
+195 : ABCDEFGHIJ- 195
+196 : ABCDEFGHIJ- 196
+197 : ABCDEFGHIJ- 197
+198 : ABCDEFGHIJ- 198
+199 : ABCDEFGHIJ- 199
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f0096c0 0x2f009708
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009640 0x2f009688
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+    7     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 flash_io
+nsh> [K
+nsh> [K
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f0096c0 0x2f009708
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009640 0x2f009688
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+    7     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 flash_io
+nsh> [K
+nsh> [K
+--- CMD: cd / ---
+cd /
+nsh> [K
+nsh> [K
+cd /
+nsh> [K
+nsh> [K
+--- CMD: cp /tmp/fs1702-audio /data/audio_file.aac ---
+cp /tmp/fs1702-audio /data/audio_file.aac
+nsh> [K
+nsh> [K
+cp /tmp/fs1702-audio /data/audio_file.aac
+nsh> [K
+nsh> [K
+--- CMD: cmp /tmp/fs1702-audio /data/audio_file.aac ---
+cmp /tmp/fs1702-audio /data/audio_file.aac
+nsh> [K
+nsh> [K
+cmp /tmp/fs1702-audio /data/audio_file.aac
+nsh> [K
+nsh> [K
+--- CMD: cp /tmp/fs1702-db /data/persist.db ---
+cp /tmp/fs1702-db /data/persist.db
+nsh> [K
+nsh> [K
+cp /tmp/fs1702-db /data/persist.db
+nsh> [K
+nsh> [K
+--- CMD: cmp /tmp/fs1702-db /data/persist.db ---
+cmp /tmp/fs1702-db /data/persist.db
+nsh> [K
+nsh> [K
+cmp /tmp/fs1702-db /data/persist.db
+nsh> [K
+nsh> [K
+--- CMD: cp /tmp/fs1702-frag /data/frag1164/Fragment_test_largefile ---
+cp /tmp/fs1702-frag /data/frag1164/Fragment_test_largefile
+nsh> [K
+nsh> [K
+cp /tmp/fs1702-frag /data/frag1164/Fragment_test_largefile
+nsh> [K
+nsh> [K
+--- CMD: cmp /tmp/fs1702-frag /data/frag1164/Fragment_test_largefile ---
+cmp /tmp/fs1702-frag /data/frag1164/Fragment_test_largefile
+nsh> [K
+nsh> [K
+cmp /tmp/fs1702-frag /data/frag1164/Fragment_test_largefile
+nsh> [K
+nsh> [K
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        705          63 /data
+     0          0          0           0 /proc
+   512       4844       4842           2 /tmp
+nsh> [K
+nsh> [K
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        705          63 /data
+     0          0          0           0 /proc
+   512       4844       4842           2 /tmp
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17221912    2499568   14722344    2537512   14703024     55      5 Umem
+nsh> [K
+nsh> [K
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17221912    2499568   14722344    2537512   14703024     55      5 Umem
+nsh> [K
+nsh> [K
+{"status": "EXECUTION_COMPLETE_PERFORMANCE_PENDING", "receipt": "build1702-fs-worker.sha256", "case": "5.1.7", "staged": ["/data/audio_file.aac", "/data/persist.db", "/data/frag1164/Fragment_test_largefile"], "restored": ["/data/audio_file.aac", "/data/persist.db", "/data/frag1164/Fragment_test_largefile"], "free_blocks_before": 673, "read_seconds": 0.57, "write_seconds": 0.2, "worker_observed": true}

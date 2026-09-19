@@ -1,0 +1,46 @@
+#include "../xts-flat-audio-duplex/defconfig"
+
+# Original mediatool audio tests on one local CPU; no radio or provisioning.
+CONFIG_ES8311_PCM_CAPS=y
+# FFmpeg requests PTHREAD_MUTEX_ERRORCHECK when assertions are enabled.
+CONFIG_PTHREAD_MUTEX_TYPES=y
+CONFIG_EVENT_FD=y
+CONFIG_NET=y
+CONFIG_NETDEV_LATEINIT=y
+CONFIG_NET_IPv4=n
+CONFIG_NET_IPv6=n
+CONFIG_NET_LOCAL=y
+CONFIG_NET_LOCAL_STREAM=y
+CONFIG_NET_LOCAL_NONBLOCKING=y
+CONFIG_NET_SOCKOPTS=y
+CONFIG_NET_NSOCKET_DESCRIPTORS=32
+CONFIG_MEDIA=y
+CONFIG_MEDIA_SERVER=y
+CONFIG_MEDIA_GRAPH=y
+CONFIG_MEDIA_TOOL=y
+CONFIG_MEDIA_POLICY=y
+CONFIG_MEDIA_SERVER_CPUNAME="local"
+CONFIG_MEDIA_SERVER_CONFIG_PATH="/data/media/"
+CONFIG_MEDIA_PLAYER_MAX_CNT=1
+CONFIG_MEDIA_RECORDER_MAX_CNT=1
+CONFIG_LIB_PFW=y
+CONFIG_LIB_PFW_DEBUG=n
+CONFIG_KVDB=y
+CONFIG_KVDB_DIRECT=y
+CONFIG_KVDB_FILE=y
+CONFIG_KVDB_PERSIST_PATH="/tmp/media-kv"
+CONFIG_KVDB_TEMPORARY_STORAGE=n
+CONFIG_AUDIOUTILS_ALSA_LIB=y
+CONFIG_AUDIOUTILS_ALSA_LIB_DEVICE_HW=y
+CONFIG_LIB_FFMPEG=y
+CONFIG_LIB_FFMPEG_AUDIO_TABLEGEN=y
+CONFIG_LIB_FFMPEG_CONFIGURATION="--disable-asm --disable-inline-asm --disable-rvv --disable-tx-double --disable-tx-int32 --enable-avcodec --enable-avdevice --enable-avfilter --enable-avformat --enable-swresample --enable-alsa --enable-decoder='aac,mp3float,opus,pcm_s16le' --enable-demuxer='aac,mov,mp3,ogg,wav' --enable-parser='aac,mpegaudio,opus' --enable-filter='abufsrc,asubgraph,abuffer,abuffersink,aresample,alsasink' --enable-protocol=file --enable-hardcoded-tables"
+
+# Keep real-time UART logging bounded; retain warnings and errors.
+CONFIG_MEDIA_LOG_WARN=y
+CONFIG_AUDIOUTILS_ALSA_LIB_LOG_WARN=y
+CONFIG_ESP32S31_I2S_DUPLEX_WORKER_PRIORITY=253
+CONFIG_DEBUG_AUDIO=y
+CONFIG_DEBUG_AUDIO_ERROR=y
+CONFIG_DEBUG_AUDIO_WARN=y
+# CONFIG_DEBUG_AUDIO_INFO is not set

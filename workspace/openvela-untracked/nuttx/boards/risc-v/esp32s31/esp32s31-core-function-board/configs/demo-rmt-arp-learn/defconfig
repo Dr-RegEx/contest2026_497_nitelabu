@@ -1,0 +1,4 @@
+#include "../demo-rmt-tcpdiag/defconfig"
+# Diagnostic only: learn same-subnet peer mappings from incoming IPv4 frames.
+# Not yet a production choice; cold-cache and ARP expiry tests are required.
+CONFIG_NET_ARP_IPIN=y

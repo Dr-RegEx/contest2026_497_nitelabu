@@ -1,0 +1,13 @@
++ '[' '' = resetconfig ']'
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6 -j8
+[1/3] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/libs/libc/misc && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/libs/libc/misc/lib_utsname.c
+[2/3] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -DKCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production/defconfig -DNUTTX_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx -DCMAKE_BINARY_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6 -P /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/cmake/nuttx_generate_dts.cmake
+[3/3] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/syscall && cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/bin_host --target mksyscall
+[ 50%] Built target csvparser
+[100%] Built target mksyscall
++ restore_cfg
++ '[' -f /tmp/esp32s31-source-config.clFhAR/.config ']'
++ mv /tmp/esp32s31-source-config.clFhAR/.config .config
++ '[' -f /tmp/esp32s31-source-config.clFhAR/config.h ']'
++ mv /tmp/esp32s31-source-config.clFhAR/config.h include/nuttx/config.h
++ rmdir /tmp/esp32s31-source-config.clFhAR

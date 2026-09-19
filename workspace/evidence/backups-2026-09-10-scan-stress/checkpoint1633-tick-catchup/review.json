@@ -1,0 +1,11 @@
+{
+  "status": "BOUNDED_REGRESSION_PASS",
+  "scope": "S31 loaded periodic tick accounting, idle20s and loaded20s bracket, TCP30s completion and SIMD2worker regression",
+  "before_load": "Windows20.0565s vs board16.12s",
+  "after_idle": "Windows20.0584s vs board20.60s including command overhead",
+  "after_load": "Windows20.0441s vs board20.59s including command overhead",
+  "tcp30": "board30.14s vs Windows30.0979s; both5528444B (~5.27MiB)",
+  "simd": "2 workers, each20affinityswitches and100INT8dot16 checks, full-bank sleep-switch PASS",
+  "limitation": "Not repeat of12h/24h original longcases; no exact oscillator calibration claim. Original300s1634 running.",
+  "sprint": "76/88"
+}

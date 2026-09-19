@@ -1,0 +1,14 @@
++ git -C /home/regex/work/esp32s31-openvela/openvela-dev/nuttx rev-parse HEAD
++ git -C /home/regex/work/esp32s31-openvela/openvela-dev/nuttx status --short
++ git -C /home/regex/work/esp32s31-openvela/openvela-dev/nuttx diff --binary
++ git -C /home/regex/work/esp32s31-openvela/openvela-dev/apps status --short
++ tar -czf /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/checkpoint222/diagnostic-configs-and-tests.tar.gz -C /home/regex/work/esp32s31-openvela/openvela-dev/nuttx boards/risc-v/esp32s31/esp32s31-core-function-board/configs/wifi-flat boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production-cpu0 boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production-regression tools/test_esp32s31_wifi_iram.py
++ tar -czf /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/checkpoint222/firmware220-fpu-diagnostic.tar.gz -C /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209 nuttx nuttx.bin nuttx.map .config appfs.img
++ tar -czf /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/progress184-222-checkpoint.tar.gz '--exclude=logs/*222*' -C /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress checkpoint222 README.md logs build-flat-wifi.sh build-cpu0-wifi.sh build-regression-wifi.sh flash-regression-pair.sh restore-production180-pair.sh compare-wifi-init.py flat-boot-probe.py network-probe.py network-repeat.py trapped-instruction.S save-progress222.sh s31-flat190-clic-candidate.patch sleep-defaults205-candidate.patch iram215-candidate.patch appfs-before198.bin appfs-after202-restore.bin appfs-after213-restore.bin firmware198b-cpu0-he.tar.gz firmware209-sleep-defaults-candidate.tar.gz firmware215-iram-candidate.tar.gz
++ cd /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress
++ sha256sum progress184-222-checkpoint.tar.gz
++ sha256sum -c SHA256SUMS-progress222
+progress184-222-checkpoint.tar.gz: OK
++ tar -tzf progress184-222-checkpoint.tar.gz
++ echo PROGRESS222_BACKUP=PASS
+PROGRESS222_BACKUP=PASS

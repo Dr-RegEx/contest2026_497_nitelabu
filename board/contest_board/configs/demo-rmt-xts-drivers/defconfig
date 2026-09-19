@@ -1,0 +1,12 @@
+#include "../demo-rmt-xts-io/defconfig"
+
+# Existing original timer and UART suites.
+CONFIG_TESTING_DRIVER_TEST=y
+CONFIG_TESTING_DRIVER_TEST_STACKSIZE=16384
+
+# S31 already supplies its RTC counter and system-tick arch interfaces.
+# Do not replace them with the alternative generic RTC/TIMER arch adapters.
+# CONFIG_RTC_ARCH is not set
+# CONFIG_RTC_DATETIME is not set
+# CONFIG_TIMER_ARCH is not set
+CONFIG_TIMER=y

@@ -1,0 +1,412 @@
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+--- mkdir -p /data 
+ mkdir -p /data
+nsh> [K
+nsh> [K
+--- CMD: mount -t littlefs /dev/xtsflash /data ---
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+--- mount -t littlefs /dev/xtsflash /data 
+ mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- mount 
+ mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        705          63 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+--- df 
+ df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        705          63 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+--- CMD: ls /data ---
+ls /data
+/data:
+ .
+ ..
+ audio_file.aac
+ frag1164/
+ persist.db
+ s01_1173/
+ s02/
+ s07_1686/
+ s07_1687/
+ s07_1689/
+ s07_1694/
+ s07_1700/
+ s07_1701/
+ s07_1702/
+ s07b/
+ s07c/
+ s07/
+ s17/
+ s18c/
+ s18r/
+ s19s/
+ s19/
+nsh> [K
+nsh> [K
+--- ls /data 
+ ls /data
+/data:
+ .
+ ..
+ audio_file.aac
+ frag1164/
+ persist.db
+ s01_1173/
+ s02/
+ s07_1686/
+ s07_1687/
+ s07_1689/
+ s07_1694/
+ s07_1700/
+ s07_1701/
+ s07_1702/
+ s07b/
+ s07c/
+ s07/
+ s17/
+ s18c/
+ s18r/
+ s19s/
+ s19/
+nsh> [K
+nsh> [K
+--- CMD: mkdir /data/s11_1705 ---
+mkdir /data/s11_1705
+nsh> [K
+nsh> [K
+--- mkdir /data/s11_1705 
+ mkdir /data/s11_1705
+nsh> [K
+nsh> [K
+--- CMD: performance_test -d/data/s11_1705 -b4096 -c64 -m1 ---
+performance_test -d/data/s11_1705 -b4096 -c64 -m1
+write failed , errno 28, i 60, block 4096
+write speed is 162.162162
+nsh> [K
+nsh> [K
+--- performance_test -d/data/s11_1705 -b4096 -c64 -m1 
+ performance_test -d/data/s11_1705 -b4096 -c64 -m1
+write failed , errno 28, i 60, block 4096
+write speed is 162.162162
+nsh> [K
+nsh> [K
+RATE 1 write 162.162162
+--- CMD: performance_test -d/data/s11_1705 -b4096 -c64 -m2 ---
+performance_test -d/data/s11_1705 -b4096 -c64 -m2
+read failed , errno 0, i 0, block 4096
+read speed is nan
+nsh> [K
+nsh> [K
+--- performance_test -d/data/s11_1705 -b4096 -c64 -m2 
+ performance_test -d/data/s11_1705 -b4096 -c64 -m2
+read failed , errno 0, i 0, block 4096
+read speed is nan
+nsh> [K
+nsh> [K
+RATE 2 read nan
+--- CMD: performance_test -d/data/s11_1705 -b4096 -c64 -m3 ---
+performance_test -d/data/s11_1705 -b4096 -c64 -m3
+write failed , errno 28, i 4, block 4096
+random write speed is 8.602151
+nsh> [K
+nsh> [K
+--- performance_test -d/data/s11_1705 -b4096 -c64 -m3 
+ performance_test -d/data/s11_1705 -b4096 -c64 -m3
+write failed , errno 28, i 4, block 4096
+random write speed is 8.602151
+nsh> [K
+nsh> [K
+RATE 3 random write 8.602151
+--- CMD: performance_test -d/data/s11_1705 -b4096 -c64 -m4 ---
+performance_test -d/data/s11_1705 -b4096 -c64 -m4
+read failed , errno 0, i 0, block 4096
+random read speed is nan
+nsh> [K
+nsh> [K
+--- performance_test -d/data/s11_1705 -b4096 -c64 -m4 
+ performance_test -d/data/s11_1705 -b4096 -c64 -m4
+read failed , errno 0, i 0, block 4096
+random read speed is nan
+nsh> [K
+nsh> [K
+RATE 4 random read nan
+--- CMD: ls -l /data/s11_1705 ---
+ls -l /data/s11_1705
+/data/s11_1705:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+ -rwx------           0 performance_test
+nsh> [K
+nsh> [K
+--- ls -l /data/s11_1705 
+ ls -l /data/s11_1705
+/data/s11_1705:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+ -rwx------           0 performance_test
+nsh> [K
+nsh> [K
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        707          61 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+--- df 
+ df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        707          61 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+--- CMD: performance_test -d/data/s11_1705 -b4096 -c64 -m1 ---
+performance_test -d/data/s11_1705 -b4096 -c64 -m1
+write speed is 180.281690
+nsh> [K
+nsh> [K
+performance_test -d/data/s11_1705 -b4096 -c64 -m1
+write speed is 180.281690
+nsh> [K
+nsh> [K
+RATE 1 write 180.281690
+--- CMD: performance_test -d/data/s11_1705 -b4096 -c64 -m2 ---
+performance_test -d/data/s11_1705 -b4096 -c64 -m2
+read speed is 1969.230769
+nsh> [K
+nsh> [K
+performance_test -d/data/s11_1705 -b4096 -c64 -m2
+read speed is 1969.230769
+nsh> [K
+nsh> [K
+RATE 2 read 1969.230769
+--- CMD: performance_test -d/data/s11_1705 -b4096 -c64 -m3 ---
+performance_test -d/data/s11_1705 -b4096 -c64 -m3
+dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 18 2026 10:59:00 risc-v
+dump_assert_info: Assertion failed : at file: /mm/mm_heap/mm_malloc.c:236 task: performance_test process: performance_test 0x4003a186
+up_dump_register: PC: 4000acb6
+up_dump_register: A0: 2f00d1b0 A1: 000000ec A2: 00000000 A3: 2f020628
+up_dump_register: A4: 00000000 A5: 2f00c000 A6: 000000ec A7: 4005098c
+up_dump_register: T0: 2f00c490 T1: 2f00bc90 T2: 00000200 T3: 01400000
+up_dump_register: T4: 9c960800 T5: 00000000 T6: 0000dfdc
+up_dump_register: S0: 2f013828 S1: 00000000 S2: 4005098c S3: 2f00c000
+up_dump_register: S4: 00000000 S5: 2f00c000 S6: 2f013cd0 S7: 00000006
+up_dump_register: S8: 2f00c000 S9: 2f00d000 S10: 00000000 S11: 00000000
+up_dump_register: SP: 2f00c348 FP: 2f013828 TP: 00000000 RA: 4000acb6
+dump_stackinfo: IRQ Stack:
+dump_stackinfo:   base: 0x2f00bc90
+dump_stackinfo:   size: 00002048
+dump_stackinfo:     sp: 0x2f00c348
+stack_dump:  2f00c328: 2f00d000 00000000 4005b34c 80007880 2f00bc90 2f0189b8 00007f88 4000ae8c
+stack_dump:  2f00c348: 4003a186 00000000 00000000 00000000 00000000 00000000 00000000 2f00c348
+stack_dump:  2f00c368: 00000000 00000000 2f013828 2f00d1b0 00000000 4005098c 000000ec 7474754e
+stack_dump:  2f00c388: 00000058 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f00c3a8: 00000000 00000000 00000000 00000000 302e3000 0000302e 00000000 00000000
+stack_dump:  2f00c3c8: 00000000 32340000 32353238 64383061 69642d62 20797472 20706553 32203831
+stack_dump:  2f00c3e8: 20363230 353a3031 30303a39 40003400 00005880 2f0092a4 73697204 00762d63
+stack_dump:  2f00c408: 00003880 00000002 2f0092a4 400043dc 2f009280 00004002 00000100 00000000
+stack_dump:  2f00c428: 00000000 2f018968 00000005 400581dc 2f013cd0 0000000b 00000000 2f00c000
+stack_dump:  2f00c448: 2f009c90 2f00c000 2f013828 40002caa 2f009c90 2f00c000 2f020628 2f001ac4
+stack_dump:  2f00c468: 00000000 2f00c000 00005000 2f020730 3800000b 40006f4a 2f00c490 2f000182
+stack_dump:  2f00c488: 2f020628 400096f8 00000000 00000000 00000000 00000000 00000000 00000000
+dump_stackinfo: User Stack:
+dump_stackinfo:   base: 0x2f0189b8
+dump_stackinfo:   size: 00032648
+dump_stackinfo:     sp: 0x2f020730
+stack_dump:  2f020710: 36393034 00000000 2f020850 2f020950 2f0208c2 2f013408 2f020950 2f020950
+stack_dump:  2f020730: 00000002 2f013420 00000000 400096f8 0000001a 00000000 2f0207d8 00001000
+stack_dump:  2f020750: 000001b6 2f0208bc ffffffff 00001000 2f0134b0 2f020950 ffffffe5 40008dc4
+stack_dump:  2f020770: 2f00c000 2f009c90 ffffffe5 4002bb34 000001b6 2f0208bc ffffffff 00040000
+stack_dump:  2f020790: 2f013408 00000002 00000000 2f020950 00001000 2f00c000 2f013cd0 2f020950
+stack_dump:  2f0207b0: 2f013408 2f013420 00000000 4002928a 2f013408 7fffffff 00000001 00000000
+stack_dump:  2f0207d0: 2f0133d8 2f020848 00000000 40005e48 00000000 00000000 00005000 2f00c000
+stack_dump:  2f0207f0: 4005166c 00004347 2f013cd0 00000003 00000001 2f020848 00000000 40005e98
+stack_dump:  2f020810: 00000000 00005000 2f013408 2f013408 00000040 00000000 00001000 40005ece
+stack_dump:  2f020830: 00000040 00000000 00001000 40005efa 00000040 00000000 2f013cd0 00001000
+stack_dump:  2f020850: 00000040 00000000 00001000 4003a566 00000000 00000000 00000000 00000000
+stack_dump:  2f020870: 000000ff 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f020890: 00000000 00000000 00001000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f0208b0: 00000000 00000000 00003880 7461642f 31732f61 37315f31 702f3530 6f667265
+stack_dump:  2f0208d0: 6e616d72 745f6563 00747365 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f0208f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f020910: 00000000 4003a186 00000000 4002efb4 00000000 00000000 00000000 4000cee2
+stack_dump:  2f020930: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+dump_tasks:    PID GROUP PRI POLICY   TYPE    NPX STATE   EVENT      SIGMASK          STACKBASE  STACKSIZE   COMMAND
+dump_tasks:   ----   --- --- -------- ------- --- ------- ---------- ---------------- 0x2f00bc90      2048   irq
+dump_task:       0     0   0 FIFO     Kthread -   Ready              0000000000000000 0x2f012078      2016   CPU0 IDLE
+dump_task:       1     0 224 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f00eb20      4016   hpwork 0x2f0096c0 0x2f009708
+dump_task:       2     0 100 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f00db20      4016   lpwork 0x2f009640 0x2f009688
+dump_task:       4     0 223 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f015428      4024   hr_timer
+dump_task:       5     5 100 RR       Task    -   Ready              0000000000000000 0x2f016980      8128   nsh_main
+dump_task:      12    12 255 RR       Task    -   Running            0000000000000000 0x2f0189b8     32648   performance_test -d/data/s11_1705 -b4096 -c64 -m3
+reboot status=1
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7f (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x2f001924
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xba68
+entry 0x2f008ec0
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xba68   (47720)
+padd: lma 0x0000dad8 vma 0x00000000 len 0x2540   (9536)
+imap: lma 0x00010020 vma 0x40050020 len 0xd6f8   (55032)
+padd: lma 0x0001d720 vma 0x00000000 len 0x29d8   (10712)
+imap: lma 0x00020100 vma 0x40000100 len 0x491d4  (299476)
+total segments stored 6
+ABCxTS Flash scratch: /dev/xtsflash offset=0xd00000 size=0x300000
+
+NuttShell (NSH)
+nsh> [K
+performance_test -d/data/s11_1705 -b4096 -c64 -m3
+dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 18 2026 10:59:00 risc-v
+dump_assert_info: Assertion failed : at file: /mm/mm_heap/mm_malloc.c:236 task: performance_test process: performance_test 0x4003a186
+up_dump_register: PC: 4000acb6
+up_dump_register: A0: 2f00d1b0 A1: 000000ec A2: 00000000 A3: 2f020628
+up_dump_register: A4: 00000000 A5: 2f00c000 A6: 000000ec A7: 4005098c
+up_dump_register: T0: 2f00c490 T1: 2f00bc90 T2: 00000200 T3: 01400000
+up_dump_register: T4: 9c960800 T5: 00000000 T6: 0000dfdc
+up_dump_register: S0: 2f013828 S1: 00000000 S2: 4005098c S3: 2f00c000
+up_dump_register: S4: 00000000 S5: 2f00c000 S6: 2f013cd0 S7: 00000006
+up_dump_register: S8: 2f00c000 S9: 2f00d000 S10: 00000000 S11: 00000000
+up_dump_register: SP: 2f00c348 FP: 2f013828 TP: 00000000 RA: 4000acb6
+dump_stackinfo: IRQ Stack:
+dump_stackinfo:   base: 0x2f00bc90
+dump_stackinfo:   size: 00002048
+dump_stackinfo:     sp: 0x2f00c348
+stack_dump:  2f00c328: 2f00d000 00000000 4005b34c 80007880 2f00bc90 2f0189b8 00007f88 4000ae8c
+stack_dump:  2f00c348: 4003a186 00000000 00000000 00000000 00000000 00000000 00000000 2f00c348
+stack_dump:  2f00c368: 00000000 00000000 2f013828 2f00d1b0 00000000 4005098c 000000ec 7474754e
+stack_dump:  2f00c388: 00000058 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f00c3a8: 00000000 00000000 00000000 00000000 302e3000 0000302e 00000000 00000000
+stack_dump:  2f00c3c8: 00000000 32340000 32353238 64383061 69642d62 20797472 20706553 32203831
+stack_dump:  2f00c3e8: 20363230 353a3031 30303a39 40003400 00005880 2f0092a4 73697204 00762d63
+stack_dump:  2f00c408: 00003880 00000002 2f0092a4 400043dc 2f009280 00004002 00000100 00000000
+stack_dump:  2f00c428: 00000000 2f018968 00000005 400581dc 2f013cd0 0000000b 00000000 2f00c000
+stack_dump:  2f00c448: 2f009c90 2f00c000 2f013828 40002caa 2f009c90 2f00c000 2f020628 2f001ac4
+stack_dump:  2f00c468: 00000000 2f00c000 00005000 2f020730 3800000b 40006f4a 2f00c490 2f000182
+stack_dump:  2f00c488: 2f020628 400096f8 00000000 00000000 00000000 00000000 00000000 00000000
+dump_stackinfo: User Stack:
+dump_stackinfo:   base: 0x2f0189b8
+dump_stackinfo:   size: 00032648
+dump_stackinfo:     sp: 0x2f020730
+stack_dump:  2f020710: 36393034 00000000 2f020850 2f020950 2f0208c2 2f013408 2f020950 2f020950
+stack_dump:  2f020730: 00000002 2f013420 00000000 400096f8 0000001a 00000000 2f0207d8 00001000
+stack_dump:  2f020750: 000001b6 2f0208bc ffffffff 00001000 2f0134b0 2f020950 ffffffe5 40008dc4
+stack_dump:  2f020770: 2f00c000 2f009c90 ffffffe5 4002bb34 000001b6 2f0208bc ffffffff 00040000
+stack_dump:  2f020790: 2f013408 00000002 00000000 2f020950 00001000 2f00c000 2f013cd0 2f020950
+stack_dump:  2f0207b0: 2f013408 2f013420 00000000 4002928a 2f013408 7fffffff 00000001 00000000
+stack_dump:  2f0207d0: 2f0133d8 2f020848 00000000 40005e48 00000000 00000000 00005000 2f00c000
+stack_dump:  2f0207f0: 4005166c 00004347 2f013cd0 00000003 00000001 2f020848 00000000 40005e98
+stack_dump:  2f020810: 00000000 00005000 2f013408 2f013408 00000040 00000000 00001000 40005ece
+stack_dump:  2f020830: 00000040 00000000 00001000 40005efa 00000040 00000000 2f013cd0 00001000
+stack_dump:  2f020850: 00000040 00000000 00001000 4003a566 00000000 00000000 00000000 00000000
+stack_dump:  2f020870: 000000ff 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f020890: 00000000 00000000 00001000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f0208b0: 00000000 00000000 00003880 7461642f 31732f61 37315f31 702f3530 6f667265
+stack_dump:  2f0208d0: 6e616d72 745f6563 00747365 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f0208f0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f020910: 00000000 4003a186 00000000 4002efb4 00000000 00000000 00000000 4000cee2
+stack_dump:  2f020930: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+dump_tasks:    PID GROUP PRI POLICY   TYPE    NPX STATE   EVENT      SIGMASK          STACKBASE  STACKSIZE   COMMAND
+dump_tasks:   ----   --- --- -------- ------- --- ------- ---------- ---------------- 0x2f00bc90      2048   irq
+dump_task:       0     0   0 FIFO     Kthread -   Ready              0000000000000000 0x2f012078      2016   CPU0 IDLE
+dump_task:       1     0 224 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f00eb20      4016   hpwork 0x2f0096c0 0x2f009708
+dump_task:       2     0 100 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f00db20      4016   lpwork 0x2f009640 0x2f009688
+dump_task:       4     0 223 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f015428      4024   hr_timer
+dump_task:       5     5 100 RR       Task    -   Ready              0000000000000000 0x2f016980      8128   nsh_main
+dump_task:      12    12 255 RR       Task    -   Running            0000000000000000 0x2f0189b8     32648   performance_test -d/data/s11_1705 -b4096 -c64 -m3
+reboot status=1
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7f (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x2f001924
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xba68
+entry 0x2f008ec0
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xba68   (47720)
+padd: lma 0x0000dad8 vma 0x00000000 len 0x2540   (9536)
+imap: lma 0x00010020 vma 0x40050020 len 0xd6f8   (55032)
+padd: lma 0x0001d720 vma 0x00000000 len 0x29d8   (10712)
+imap: lma 0x00020100 vma 0x40000100 len 0x491d4  (299476)
+total segments stored 6
+ABCxTS Flash scratch: /dev/xtsflash offset=0xd00000 size=0x300000
+
+NuttShell (NSH)
+nsh> [K
+RATE 3 random write MISSING
+--- CMD: performance_test -d/data/s11_1705 -b4096 -c64 -m4 ---
+performance_test -d/data/s11_1705 -b4096 -c64 -m4
+open /data/s11_1705/performance_test fail ! errno=2
+random read speed is 0.000000
+nsh> [K
+nsh> [K
+performance_test -d/data/s11_1705 -b4096 -c64 -m4
+open /data/s11_1705/performance_test fail ! errno=2
+random read speed is 0.000000
+nsh> [K
+nsh> [K
+RATE 4 random read 0.000000
+--- CMD: ls -l /data/s11_1705 ---
+ls -l /data/s11_1705
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+ls -l /data/s11_1705
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K

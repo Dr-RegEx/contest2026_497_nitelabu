@@ -1,0 +1,8 @@
+# AMPDU-12 follow-up to the isolated 1719 window candidate.
+# Espressif recommends RX BA 9-12 for maximum iperf UDP throughput.
+# Keep this profile independent; do not change the formal SACK profile.
+#include "../demo-rmt-bttool-coex-pie-netdiag-sack-window128/defconfig"
+
+CONFIG_ESPRESSIF_WIFI_STATIC_RX_BUFFER_NUM=12
+CONFIG_ESPRESSIF_WIFI_RX_BA_WIN=12
+CONFIG_ESPRESSIF_WIFI_TX_BA_WIN=12

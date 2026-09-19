@@ -1,0 +1,38 @@
+before-a.bin: OK
+before-b.bin: OK
++ /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/esptool --chip esp32s31 --port /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0 --baud 460800 write-flash --flash-size 16MB --flash-mode dio --flash-freq 80m 0x2000 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-rtc/nuttx.bin
+esptool v5.4.0
+Serial port /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0:
+Connecting....
+Connected to ESP32-S31 on /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0:
+Chip type:          ESP32-S31 (revision v0.0)
+Features:           Wi-Fi 6, BT 5.4 (LE), IEEE802.15.4, Dual Core + LP Core, 300MHz
+Crystal frequency:  40MHz
+MAC:                30:ed:a0:f3:f7:b0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+SHA digest in image updated.
+Flash will be erased from 0x00002000 to 0x00051fff...
+Compressed 324792 bytes to 172212...
+Writing at 0x00007e9c ━━╸                              9.5% 16.00kB/168.18kB [0s] 
+Writing at 0x000140a1 ━━━━━╸                          19.0% 32.00kB/168.18kB [0s] 
+Writing at 0x00022ada ━━━━━━━━╸                       28.5% 48.00kB/168.18kB [1s] 
+Writing at 0x00028b2c ━━━━━━━━━━━                     38.1% 64.00kB/168.18kB [1s] 
+Writing at 0x0002f113 ━━━━━━━━━━━━━━                  47.6% 80.00kB/168.18kB [1s] 
+Writing at 0x00035195 ━━━━━━━━━━━━━━━━━               57.1% 96.00kB/168.18kB [2s] 
+Writing at 0x0003b695 ━━━━━━━━━━━━━━━━━━━╸            66.6% 112.00kB/168.18kB [2s] 
+Writing at 0x000429c0 ━━━━━━━━━━━━━━━━━━━━━━╸         76.1% 128.00kB/168.18kB [3s] 
+Writing at 0x00048582 ━━━━━━━━━━━━━━━━━━━━━━━━━╸      85.6% 144.00kB/168.18kB [3s] 
+Writing at 0x0004d8bf ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸   95.1% 160.00kB/168.18kB [3s] 
+Writing at 0x000514b8 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 168.18kB/168.18kB [3s] 
+Wrote 324792 bytes (172212 compressed) at 0x00002000 in 4.1 seconds (640.9 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Hard resetting via RTS pin...

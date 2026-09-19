@@ -1,0 +1,86 @@
++ cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_elf_default_heapsize.py
+ELF_DEFAULT_HEAPSIZE=PASS present/absent priority-preserved
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_elf_unnamed_symbols.py
+ELF_UNNAMED_SYMBOLS=PASS null/stale/empty/found/missing/io-errors
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_esp_hr_timer_lifecycle.py
+ESP_HR_TIMER_LIFECYCLE=PASS periodic/delete/restart/cancel
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_esp32s31_wifi_task.py
+S31_WIFI_TASK_LIFECYCLE=PASS reuse=1000
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_esp32s31_irq_completion.py
+S31_IRQ_COMPLETION=PASS 65 cases; hardware timing not modeled
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_esp32s31_irq_unmap.py
+ESP_IRQ_UNMAP=PASS 169 sources; register fields/neighbours preserved
+ESP_IRQ_UNMAP=PASS 169 sources; register fields/neighbours preserved
+ESP_IRQ_UNMAP=PASS 169 sources; register fields/neighbours preserved
+ESP_IRQ_UNMAP=PASS 169 sources; register fields/neighbours preserved
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_esp_wifi_scan_results.py
+ESP_WIFI_SCAN_RESULTS=PASS empty/nonempty/status/retry/collect/null/timeout
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_esp_wifi_connect.py
+ESP_WIFI_CONNECT=PASS connected/config-error/start-error/timeout/success
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_procfs_meminfo_lifecycle.py
+PROCFS_MEMINFO_LIFECYCLE=PASS unnamed/oom/named/readers/backtrace
+PROCFS_MEMINFO_LIFECYCLE=PASS unnamed/oom/named/readers/backtrace
+PROCFS_MEMINFO_LIFECYCLE=PASS unnamed/oom/named/readers/backtrace
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_esp32s31_phy_clock.py
+PHY_CLOCK_ORDER=PASS lock/clock/reset/unlock/hooks/phy/wifi
+PHY_CLOCK_ORDER=PASS lock/clock/reset/unlock/hooks/phy/wifi
++ for test in test_elf_default_heapsize test_elf_unnamed_symbols test_esp_hr_timer_lifecycle test_esp32s31_wifi_task test_esp32s31_irq_completion test_esp32s31_irq_unmap test_esp_wifi_scan_results test_esp_wifi_connect test_procfs_meminfo_lifecycle test_esp32s31_phy_clock test_esp32s31_dhcp_probe
++ python3 tools/test_esp32s31_dhcp_probe.py
+DHCP_PROBE=PASS single-client/stale-IP/errors/retry/zero-address
++ for test in test_esp32s31_wifi_tx_budget test_esp_wifi_rx_queue test_esp_wifi_ba_window test_esp32s31_wifi_got_ip test_esp32s31_wifi_modem_status test_esp32s31_ping_probe
++ python3 tools/test_esp32s31_wifi_tx_budget.py
+S31_WIFI_TX_BUDGET=PASS static/dynamic with 1/16/64 configured buffers
++ for test in test_esp32s31_wifi_tx_budget test_esp_wifi_rx_queue test_esp_wifi_ba_window test_esp32s31_wifi_got_ip test_esp32s31_wifi_modem_status test_esp32s31_ping_probe
++ python3 tools/test_esp_wifi_rx_queue.py
+ESP_WIFI_RX_QUEUE=PASS empty/packet serialized, wakeup deferred until unlock
++ for test in test_esp32s31_wifi_tx_budget test_esp_wifi_rx_queue test_esp_wifi_ba_window test_esp32s31_wifi_got_ip test_esp32s31_wifi_modem_status test_esp32s31_ping_probe
++ python3 tools/test_esp_wifi_ba_window.py
+ESP_WIFI_BA_WINDOW=PASS TX/RX on/off independently, RX windows 2/16/32
++ for test in test_esp32s31_wifi_tx_budget test_esp_wifi_rx_queue test_esp_wifi_ba_window test_esp32s31_wifi_got_ip test_esp32s31_wifi_modem_status test_esp32s31_ping_probe
++ python3 tools/test_esp32s31_wifi_got_ip.py
+S31_WIFI_GOT_IP=PASS down/no-address/retry/success/disconnect/reconnect
++ for test in test_esp32s31_wifi_tx_budget test_esp_wifi_rx_queue test_esp_wifi_ba_window test_esp32s31_wifi_got_ip test_esp32s31_wifi_modem_status test_esp32s31_ping_probe
++ python3 tools/test_esp32s31_wifi_modem_status.py
+S31_COEX_CONFIG=PASS BLE=0
+S31_COEX_CONFIG=PASS BLE=1
+C6
+WIFI_MODEM_STATUS=PASS init/failures/busy/deinit/retry/reinit
+S31_WIFI_ONLY
+WIFI_MODEM_STATUS=PASS init/failures/busy/deinit/retry/reinit
+S31_SW_COEX
+WIFI_MODEM_STATUS=PASS init/failures/busy/deinit/retry/reinit
+S31_EXTERNAL_COEX
+WIFI_MODEM_STATUS=PASS init/failures/busy/deinit/retry/reinit
++ for test in test_esp32s31_wifi_tx_budget test_esp_wifi_rx_queue test_esp_wifi_ba_window test_esp32s31_wifi_got_ip test_esp32s31_wifi_modem_status test_esp32s31_ping_probe
++ python3 tools/test_esp32s31_ping_probe.py
+PING_PROBE=PASS exact-count/exact-zero/partial-loss/empty/duplicate-summary
++ '[' -n HEAD ']'
++ echo 'Protocol unit source revision: HEAD (temporary frame statistics are not covered)'
+Protocol unit source revision: HEAD (temporary frame statistics are not covered)
++ python3 tools/test_esp32s31_wifi_protocol.py --revision HEAD
+S31_WIFI_PROTOCOL=PASS station/APSTA and mode/protocol/start errors
+S31_WIFI_PROTOCOL=PASS station/APSTA and mode/protocol/start errors
+S31_WIFI_PROTOCOL=PASS station/APSTA and mode/protocol/start errors
++ python3 tools/test_esp32s31_wireless_make.py --hal /home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty
+ESP32S31_WIRELESS_MAKE=PASS sources=137 manifests/late-paths/crypto-header-precedence/definitions/libraries
++ tools/nxstyle -r 707,23 libs/libc/elf/elf_symbols.c
++ tools/nxstyle -r 750,4 -r 772,17 -r 834,10 fs/procfs/fs_procfsmeminfo.c
++ git diff --check
++ cd /home/regex/work/esp32s31-openvela/s31-reference
++ python3 platform/tools/verify_f0_dependencies.py
+nuttx: PASS (nuttx)
+nuttx-apps: PASS (nuttx-apps)
+esp-hal: PASS (deps/esp-hal-3rdparty)
+esp-idf: PASS (tmp/esp-idf-clean)
+F0_DEPENDENCY_LOCK=PASS

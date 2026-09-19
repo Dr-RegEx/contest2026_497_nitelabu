@@ -1,0 +1,18 @@
+{
+  "status": "RECOVERY_BOOT_OK_NETWORK_COMMAND_NO_PROMPT",
+  "loaded_receipt": "build1631-spawn-parent-env.sha256",
+  "boot_log": "logs/boot1650-same-pair-recovery.log",
+  "prepare_log": "logs/network1650-prepare.log",
+  "serial_owner": null,
+  "current_command": "wapi reconnect wlan0,75s observation timed out after echo; no new workload started",
+  "next": [
+    "Reobserve existing board before any reset: sourceconnecttimeout10s, task_delay_wrapper usesNuttXticks, so75s is not ordinaryconfiguredwait. Need discriminate kernel/WiFi/SMP/ELF hang.",
+    "StrongAP runtime setting lost onreset; prepsequencewapi reconnect thenwapi ap60:ce:41:ab:02:d0 thenrenew.1650 stalledbeforeAPswitch.",
+    "TCP1646 byte mismatch likely Windows500msSO_SNDTIMEO NONFATALTCPWRITERR retry: investigateClient.cpp InitTrafficLoop/RunTCP before changingboardTCPstack.",
+    "Host1641exe UDPselect/clearedemptyreportID regressionpassed; UDPoriginalTx1649 prepared butNOTRUN.",
+    "OriginalUDP Rx1651 prepared butNOTRUN;1647 neverstartedPCclient.1637rawparserfalsepositive overriddenbyreview."
+  ],
+  "sprint": "76/88",
+  "manual": "User sleeping; no physicalrequests",
+  "evidence": "checkpoint1644-ap-and1647-launch and checkpoint1650-recovery-network-wait"
+}

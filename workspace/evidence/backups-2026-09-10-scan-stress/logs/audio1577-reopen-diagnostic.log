@@ -1,0 +1,65 @@
+--- CMD: ls -l /system/bin/nxrecorder ---
+ls -l /system/bin/nxrecorder
+ -r--r--r--       63020 /system/bin/nxrecorder
+nsh> [K
+nsh> [K
+ls -l /system/bin/nxrecorder
+ -r--r--r--       63020 /system/bin/nxrecorder
+nsh> [K
+nsh> [K
+--- CMD: echo $PATH ---
+echo $PATH
+/apps:/system/bin
+nsh> [K
+nsh> [K
+echo $PATH
+/apps:/system/bin
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     277412     197260      80152     226128      27680    205     13 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     277412     197260      80152     226128      27680    205     13 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+--- CMD: s31stat ---
+s31stat
+nsh: s31stat: command not found
+nsh> [K
+nsh> [K
+s31stat
+nsh: s31stat: command not found
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018dc0 0x2f018e0c
+    4     0 ---(0x00000003) 240 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 s31_duplex
+    5     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    6     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    7     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    8     8 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018dc0 0x2f018e0c
+    4     0 ---(0x00000003) 240 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 s31_duplex
+    5     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    6     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    7     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    8     8 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K

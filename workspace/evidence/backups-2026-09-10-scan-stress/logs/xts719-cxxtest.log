@@ -1,0 +1,42 @@
+--- CMD: uname -a ---
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 14 2026 22:58:28 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/cxxtest ---
+ls /system/bin/cxxtest
+ /system/bin/cxxtest
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     304828      78236     226592     107064     181576    200     11 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+XTS_COMMAND=cxxtest
+cxxtest
+Test std::vector =============================
+v1=1 2 3
+s1=Hello, World!
+Hello World Good Luck 
+Test std::map ===============================
+Test C++17 features [CPU0] riscv_exception: EXCEPTION: Store/AMO page fault. MCAUSE: 0000000f, EPC: 4007b29e, MTVAL: 61015000
+[CPU0] riscv_exception: Segmentation fault in PID 8: cxxtest
+==========================
+File /proc/meminfo exists!
+File /invalid does not exist!
+File /proc/version exists!
+Test RTTI =============================
+extend
+Test Exception ===============================
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-run-standard.py", line 85, in <module>
+    raise RuntimeError('target fatal failure; log retained')
+RuntimeError: target fatal failure; log retained

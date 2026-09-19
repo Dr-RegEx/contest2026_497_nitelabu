@@ -1,0 +1,7 @@
+#include "../xts-flat-rtc/defconfig"
+
+# Isolated host candidate: no device/ADB, no enumeration evidence.
+CONFIG_USBHOST=y
+CONFIG_ESP32S31_USBHOST=y
+CONFIG_ESP32S31_USBHOST_HCD_SKELETON=y
+CONFIG_USBHOST_MSC=y

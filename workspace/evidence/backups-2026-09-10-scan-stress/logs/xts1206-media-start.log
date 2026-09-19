@@ -1,0 +1,55 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1203-media.sha256
+XTS_COMMAND=mv /data/graph.conf /data/media/graph.conf
+--- CMD: mv /data/graph.conf /data/media/graph.conf ---
+mv /data/graph.conf /data/media/graph.conf
+nsh> [K
+nsh> [K
+XTS_COMMAND=mv /data/criteria.txt /data/media/criteria.txt
+--- CMD: mv /data/criteria.txt /data/media/criteria.txt ---
+mv /data/criteria.txt /data/media/criteria.txt
+nsh> [K
+nsh> [K
+XTS_COMMAND=mv /data/settings.pfw /data/media/settings.pfw
+--- CMD: mv /data/settings.pfw /data/media/settings.pfw ---
+mv /data/settings.pfw /data/media/settings.pfw
+nsh> [K
+nsh> [K
+XTS_COMMAND=mediad &
+--- CMD: mediad & ---
+mediad &
+[media][audio_graph_load:232] audio_graph_load, loadgraph from file: /data/media/graph.conf
+[media][audio_graph_load:249] audio_graph_load, graph_desc:
+abufsrc@Music0=outputs=1:map=1,asubgraph@Convert=inputs=1:outputs=1:map=1,alsasink@pcm0p=inputs=1:devname=pcm0p:format=s16:sample_rate=48000:ch_layout=stereo
+<subgraph>Convert:aresample=48000:osf=s16:ochl=stereo
+
+[media][audio_graph_load:304] Found subgraph Convert with config: aresample=48000:osf=s16:ochl=stereo
+
+asubgraph@Convert init inst success
+[media][audio_graph_load:318] Successfully parsed subgraph config for asubgraph@Convert:aresample=48000:osf=s16:ochl=stereo
+
+[media][audio_graph_load:350] audio_graph_load, loadgraph succeed
+pfw domain:S31Music switch to conf:Speaker
+[media][audio_graph_handler:820] cookie 0 target abufsrc@Music0 cmd map arg 1 flags 0 res 0 res_len 0
+Pending command: map 1
+process abufsrc@Music0 map 1
+cmd:map args:1
+asubgraph@Convert cannot find / format.
+graph_inst query_formats: aresample=48000:osf=s16:ochl=stereo
+.
+asubgraph@Convert init inst success
+[media][audio_negotiation_enabled_outputs:750] Negotiated source: fmt=u8, rate=0, ch=0
+[media][audio_negotiation_enabled_outputs:753] Negotiated sink:   fmt=s16, rate=48000, ch=2
+[media][audio_set_format_config:181] Setting format for link: src='asubgraph@Convert' ---> dst='alsasink@pcm0p' | format='s16', sample_rate=48000, channels=2
+[media][audio_set_format_config:177] Invalid format: fmt=0, rate=0, ch=0
+[media][audio_negotiation_enabled_outputs:787] Failed to set format for enabled_output
+mediad [13:100]
+nsh> [K
+nsh> [K
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/start1206-media.py", line 15, in <module>
+    k.command(port, 'mediad &')
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 115, in command
+    require(not re.search(r'ERROR|failed|timed out', result, re.I),
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: precondition command failed: mediad &

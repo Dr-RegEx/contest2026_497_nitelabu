@@ -1,0 +1,12 @@
+C6
+WIFI_MODEM_STATUS=PASS init/failures/busy/deinit/retry/reinit
+S31
+S31: /tmp/s31-modem-status-w6qkz2dz/test.c:45: esp_wifi_init_internal: Assertion `sleep_defaults == 7' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_modem_status.py", line 157, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_modem_status.py", line 153, in main
+    subprocess.run([str(temp / target)], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/s31-modem-status-w6qkz2dz/S31']' died with <Signals.SIGABRT: 6>.

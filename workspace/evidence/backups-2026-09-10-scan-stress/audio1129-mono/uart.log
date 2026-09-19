@@ -1,0 +1,34 @@
+
+HOST_COMMAND mount
+mount
+  /data type tmpfs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+HOST_COMMAND ls /dev/audio/pcm0p
+ls /dev/audio/pcm0p
+ /dev/audio/pcm0p
+nsh> [K
+HOST_COMMAND ls /dev/audio/pcm0c
+ls /dev/audio/pcm0c
+ /dev/audio/pcm0c
+nsh> [K
+HOST_COMMAND ls -l /data/mic1129.pcm
+ls -l /data/mic1129.pcm
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+HOST_COMMAND free
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17232328      23376   17208952      30176   16777200     48      4 Umem
+nsh> [K
+HOST_COMMAND cmocka_driver_audio -a 1 -p /data/mic1129.pcm -s 16000 -c 1 -b 16
+cmocka_driver_audio -a 1 -p /data/mic1129.pcm -s 16000 -c 1 -b 16
+nsh: cmocka_driver_audio: too many arguments
+[==========] tests: Running 1 test(s).
+[ RUN      ] drivertest_audio
+Start Capture. 
+[       OK ] drivertest_audio
+[==========] tests: 1 test(s) run.
+[  PASSED  ] 1 test(s).
+nsh> [K

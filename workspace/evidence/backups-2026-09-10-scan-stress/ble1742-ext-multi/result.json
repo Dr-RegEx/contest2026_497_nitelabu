@@ -1,0 +1,24 @@
+{
+  "status": "EXT_MULTI_DIAGNOSTIC",
+  "scope": "NOT_XTS_PASS",
+  "records": [
+    {
+      "name": "ext1",
+      "options": "",
+      "handle": "0x61805e30",
+      "adv_id": 1,
+      "status": 0,
+      "stop_callback": true
+    },
+    {
+      "name": "ext2",
+      "options": "-R random_id -O 01:02:03:04:05:06",
+      "handle": "0x61805e78",
+      "adv_id": 0,
+      "status": 2,
+      "stop_error": "TimeoutError('adv stop -h 0x61805e78\\r\\nbttool> \\r\\n[bttool] Stop adv handle:0x61805e78\\r\\nbttool> ')"
+    }
+  ],
+  "phone_observation": "pending",
+  "uart_log": "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/ble1742-ext-multi/uart.log"
+}

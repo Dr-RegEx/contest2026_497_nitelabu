@@ -1,0 +1,80 @@
+--- CMD: cat /tmp/tcp1624.log ---
+cat /tmp/tcp1624.log
+------------------------------------------------------------
+Client connecting to 192.168.1.29, TCP port 5002
+TCP window size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 192.168.1.60 port 31009 connected with 192.168.1.29 port 5002
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.00-1.00 sec   176 KBytes  1.44 Mbits/sec
+[  1] 1.00-2.00 sec   224 KBytes  1.84 Mbits/sec
+[  1] 2.00-3.00 sec   240 KBytes  1.97 Mbits/sec
+[  1] 3.00-4.00 sec   240 KBytes  1.97 Mbits/sec
+[  1] 4.00-5.00 sec   208 KBytes  1.70 Mbits/sec
+[  1] 5.00-6.00 sec   208 KBytes  1.70 Mbits/sec
+[  1] 6.00-7.00 sec   208 KBytes  1.70 Mbits/sec
+[  1] 7.00-8.00 sec   288 KBytes  2.36 Mbits/sec
+[  1] 8.00-9.00 sec   256 KBytes  2.10 Mbits/sec
+[  1] 9.00-10.00 sec   288 KBytes  2.36 Mbits/sec
+[  1] 10.00-11.00 sec   240 KBytes  1.97 Mbits/sec
+[  1] 11.00-12.00 sec   240 KBytes  1.97 Mbits/sec
+[  1] 12.00-13.00 sec   224 KBytes  1.84 Mbits/sec
+[  1] 13.00-14.00 sec   256 KBytes  2.10 Mbits/sec
+[  1] 14.00-15.00 sec   288 KBytes  2.36 Mbits/sec
+[  1] 15.00-16.00 sec   256 KBytes  2.10 Mbits/sec
+[  1] 16.00-17.00 sec   256 KBytes  2.10 Mbits/sec
+[  1] 17.00-18.00 sec   256 KBytes  2.10 Mbits/sec
+[  1] 18.00-19.00 sec   208 KBytes  1.70 Mbits/sec
+[  1] 19.00-20.00 sec   240 KBytes  1.97 Mbits/sec
+[  1] 0.00-20.14 sec  4.70 MBytes  1.96 Mbits/sec
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    0000057a 00000000 00000000 16315           
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00001148 0000114a 00000000 00000000 4ee7ed           
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0535  051c  0011  0007
+Dropped      0001  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         1144  113b  0002  0007
+  Rexmit     ----  0001  ----  ----
+nsh> [K
+nsh> [K
+--- CMD: cat /proc/iobinfo ---
+cat /proc/iobinfo
+    ntotal     nfree     nwait nthrottle
+        96        96         0        72
+nsh> [K
+nsh> [K
+--- CMD: rm /tmp/tcp1624.log ---
+rm /tmp/tcp1624.log
+nsh> [K
+nsh> [K
+TCP1624_FINISHED_CLEANED

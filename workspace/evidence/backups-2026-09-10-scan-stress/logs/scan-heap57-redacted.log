@@ -1,0 +1,290 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xc898
+load:0x2f00c900,len:0x3050
+entry 0x2f00c45e
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xc898   (51352)
+dram: lma 0x0000e8e0 vma 0x2f00c900 len 0x3050   (12368)
+padd: lma 0x00011968 vma 0x00000000 len 0xe6b0   (59056)
+imap: lma 0x00020020 vma 0x400c0020 len 0x1899c  (100764)
+padd: lma 0x000389c4 vma 0x00000000 len 0x7734   (30516)
+imap: lma 0x00040100 vma 0x40000100 len 0xb1360  (725856)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+SCAN_HEAP_BOOT=PASS seconds=3.304
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     354620      73268     281352      95312     255336    158     11 Kmem
+   16777216     679936   16097280   16097280 Page
+nsh> [K
+nsh> [K
+HEAP boot used=73268 blocks=158
+--- CMD: wapi help ---
+wapi help
+Usage:
+	wapi show         <ifname>
+	wapi scan         <ifname>
+	wapi pscan        <ifname>
+	wapi scan_results <ifname>
+	wapi ip           <ifname> <IP address>
+	wapi mask         <ifname> <mask>
+	wapi freq         <ifname> <frequency>  <index/flag>
+	wapi essid        <ifname> <essid>      <index/flag>
+	wapi psk          <ifname> <passphrase> <index/flag> [wpa]
+	wapi disconnect   <ifname>
+	wapi mode         <ifname>              <index/mode>
+	wapi ap           <ifname>              <MAC address>
+	wapi bitrate      <ifname> <bitrate>    <index/flag>
+	wapi txpower      <ifname> <txpower>    <index/flag>
+	wapi country      <ifname> <country code>
+	wapi sense        <ifname>
+	wapi pta_prio     <ifname>  <index/flag>
+	wapi power_save   <ifname>  <on|off>
+	wapi help
+
+Frequency Flags:
+	[0] WAPI_FREQ_AUTO
+	[1] WAPI_FREQ_FIXED
+
+ESSID Flags:
+	[0] WAPI_ESSID_OFF
+	[1] WAPI_ESSID_ON
+	[2] WAPI_ESSID_DELAY_ON
+
+Passphrase algorithm Flags:
+	[0] WPA_ALG_NONE
+	[1] WPA_ALG_WEP
+	[2] WPA_ALG_TKIP
+	[3] WPA_ALG_CCMP
+
+Passphrase WPA version:
+	[0] WPA_VER_NONE
+	[1] WPA_VER_1
+	[2] WPA_VER_2
+	[3] WPA_VER_3
+
+Operating Modes:
+	[0] WAPI_MODE_AUTO
+	[1] WAPI_MODE_ADHOC
+	[2] WAPI_MODE_MANAGED
+	[3] WAPI_MODE_MASTER
+	[4] WAPI_MODE_REPEAT
+	[5] WAPI_MODE_SECOND
+	[6] WAPI_MODE_MONITOR
+	[7] WAPI_MODE_MESH
+
+Bitrate Flags:
+	[0] WAPI_BITRATE_AUTO
+	[1] WAPI_BITRATE_FIXED
+
+TX power Flags:
+	[0] WAPI_TXPOWER_DBM
+	[1] WAPI_TXPOWER_MWATT
+	[2] WAPI_TXPOWER_RELATIVE
+
+pta prio Flags:
+	[0] WAPI_PTA_PRIORITY_COEX_MAXIMIZED
+	[1] WAPI_PTA_PRIORITY_COEX_HIGH
+	[2] WAPI_PTA_PRIORITY_BALANCED
+	[3] WAPI_PTA_PRIORITY_WLAN_HIGHD
+	[4] WAPI_PTA_PRIORITY_WLAN_MAXIMIZED
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     354620      76820     277800     109712     214376    160     12 Kmem
+   16777216     679936   16097280   16097280 Page
+nsh> [K
+nsh> [K
+HEAP help-1 used=76820 blocks=160
+--- CMD: wapi help ---
+wapi help
+Usage:
+	wapi show         <ifname>
+	wapi scan         <ifname>
+	wapi pscan        <ifname>
+	wapi scan_results <ifname>
+	wapi ip           <ifname> <IP address>
+	wapi mask         <ifname> <mask>
+	wapi freq         <ifname> <frequency>  <index/flag>
+	wapi essid        <ifname> <essid>      <index/flag>
+	wapi psk          <ifname> <passphrase> <index/flag> [wpa]
+	wapi disconnect   <ifname>
+	wapi mode         <ifname>              <index/mode>
+	wapi ap           <ifname>              <MAC address>
+	wapi bitrate      <ifname> <bitrate>    <index/flag>
+	wapi txpower      <ifname> <txpower>    <index/flag>
+	wapi country      <ifname> <country code>
+	wapi sense        <ifname>
+	wapi pta_prio     <ifname>  <index/flag>
+	wapi power_save   <ifname>  <on|off>
+	wapi help
+
+Frequency Flags:
+	[0] WAPI_FREQ_AUTO
+	[1] WAPI_FREQ_FIXED
+
+ESSID Flags:
+	[0] WAPI_ESSID_OFF
+	[1] WAPI_ESSID_ON
+	[2] WAPI_ESSID_DELAY_ON
+
+Passphrase algorithm Flags:
+	[0] WPA_ALG_NONE
+	[1] WPA_ALG_WEP
+	[2] WPA_ALG_TKIP
+	[3] WPA_ALG_CCMP
+
+Passphrase WPA version:
+	[0] WPA_VER_NONE
+	[1] WPA_VER_1
+	[2] WPA_VER_2
+	[3] WPA_VER_3
+
+Operating Modes:
+	[0] WAPI_MODE_AUTO
+	[1] WAPI_MODE_ADHOC
+	[2] WAPI_MODE_MANAGED
+	[3] WAPI_MODE_MASTER
+	[4] WAPI_MODE_REPEAT
+	[5] WAPI_MODE_SECOND
+	[6] WAPI_MODE_MONITOR
+	[7] WAPI_MODE_MESH
+
+Bitrate Flags:
+	[0] WAPI_BITRATE_AUTO
+	[1] WAPI_BITRATE_FIXED
+
+TX power Flags:
+	[0] WAPI_TXPOWER_DBM
+	[1] WAPI_TXPOWER_MWATT
+	[2] WAPI_TXPOWER_RELATIVE
+
+pta prio Flags:
+	[0] WAPI_PTA_PRIORITY_COEX_MAXIMIZED
+	[1] WAPI_PTA_PRIORITY_COEX_HIGH
+	[2] WAPI_PTA_PRIORITY_BALANCED
+	[3] WAPI_PTA_PRIORITY_WLAN_HIGHD
+	[4] WAPI_PTA_PRIORITY_WLAN_MAXIMIZED
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     354620      76820     277800     109712     214376    160     12 Kmem
+   16777216     679936   16097280   16097280 Page
+nsh> [K
+nsh> [K
+HEAP help-2 used=76820 blocks=160
+--- CMD: wapi help ---
+wapi help
+Usage:
+	wapi show         <ifname>
+	wapi scan         <ifname>
+	wapi pscan        <ifname>
+	wapi scan_results <ifname>
+	wapi ip           <ifname> <IP address>
+	wapi mask         <ifname> <mask>
+	wapi freq         <ifname> <frequency>  <index/flag>
+	wapi essid        <ifname> <essid>      <index/flag>
+	wapi psk          <ifname> <passphrase> <index/flag> [wpa]
+	wapi disconnect   <ifname>
+	wapi mode         <ifname>              <index/mode>
+	wapi ap           <ifname>              <MAC address>
+	wapi bitrate      <ifname> <bitrate>    <index/flag>
+	wapi txpower      <ifname> <txpower>    <index/flag>
+	wapi country      <ifname> <country code>
+	wapi sense        <ifname>
+	wapi pta_prio     <ifname>  <index/flag>
+	wapi power_save   <ifname>  <on|off>
+	wapi help
+
+Frequency Flags:
+	[0] WAPI_FREQ_AUTO
+	[1] WAPI_FREQ_FIXED
+
+ESSID Flags:
+	[0] WAPI_ESSID_OFF
+	[1] WAPI_ESSID_ON
+	[2] WAPI_ESSID_DELAY_ON
+
+Passphrase algorithm Flags:
+	[0] WPA_ALG_NONE
+	[1] WPA_ALG_WEP
+	[2] WPA_ALG_TKIP
+	[3] WPA_ALG_CCMP
+
+Passphrase WPA version:
+	[0] WPA_VER_NONE
+	[1] WPA_VER_1
+	[2] WPA_VER_2
+	[3] WPA_VER_3
+
+Operating Modes:
+	[0] WAPI_MODE_AUTO
+	[1] WAPI_MODE_ADHOC
+	[2] WAPI_MODE_MANAGED
+	[3] WAPI_MODE_MASTER
+	[4] WAPI_MODE_REPEAT
+	[5] WAPI_MODE_SECOND
+	[6] WAPI_MODE_MONITOR
+	[7] WAPI_MODE_MESH
+
+Bitrate Flags:
+	[0] WAPI_BITRATE_AUTO
+	[1] WAPI_BITRATE_FIXED
+
+TX power Flags:
+	[0] WAPI_TXPOWER_DBM
+	[1] WAPI_TXPOWER_MWATT
+	[2] WAPI_TXPOWER_RELATIVE
+
+pta prio Flags:
+	[0] WAPI_PTA_PRIORITY_COEX_MAXIMIZED
+	[1] WAPI_PTA_PRIORITY_COEX_HIGH
+	[2] WAPI_PTA_PRIORITY_BALANCED
+	[3] WAPI_PTA_PRIORITY_WLAN_HIGHD
+	[4] WAPI_PTA_PRIORITY_WLAN_MAXIMIZED
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     354620      76876     277744     113264     206184    161     14 Kmem
+   16777216     679936   16097280   16097280 Page
+nsh> [K
+nsh> [K
+HEAP help-3 used=76876 blocks=161
+SCAN_HEAP_PROBE=FAIL: wapi help
+

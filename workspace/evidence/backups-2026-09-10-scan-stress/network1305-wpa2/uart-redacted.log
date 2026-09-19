@@ -1,0 +1,30 @@
+--- CMD: ifup wlan0 ---
+ifup wlan0
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: wapi mode wlan0 2 ---
+wapi mode wlan0 2
+nsh> [K
+nsh> [K
+--- CMD: wapi psk wlan0 <redacted> 3 ---
+wapi psk wlan0 <redacted> 3
+nsh> [K
+nsh> [K
+--- CMD: wapi essid wlan0 <redacted> 1 ---
+wapi essid wlan0 <redacted> 1
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=15 rssi=-70
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=15 rssi=-75
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=15 rssi=-75
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=15 rssi=-64
+[CPU0] esp_wifi_sta_connect: Station connection timed out
+[CPU0] wlan_ioctl: ERROR: Failed to connect
+[CPU0] wapi_set_essid: ioctl(SIOCSIWESSID): Connection timed out
+[CPU0] main: ERROR: Process command (essid) failed.
+nsh> [K
+nsh> [K
+CASE_FAILED: target command failed

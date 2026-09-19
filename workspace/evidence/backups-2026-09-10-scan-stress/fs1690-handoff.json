@@ -1,0 +1,11 @@
+{
+  "status": "BUILD_COMPLETE_NOT_FLASHED",
+  "session": null,
+  "log": "logs/build1690-fs-worker.log",
+  "receipt_expected": "build1690-fs-worker.sha256",
+  "profile": "xts-flat-category-fs-worker",
+  "loaded_board": "1684; original1689 test session41802 remains live and sole UART owner",
+  "next": "Wait active1689 session41802. Require allthreefixturesrestored perresult before flash1692-fs-worker.sh (S31_FLAT_PROFILE=xts-flat-category-fs-worker). Boot1692 logboot1692-fs-worker.log thenmount1692 logmount1692-fs-worker.log. No reset while1689live.",
+  "reason": "work_queue(delay0) usesclock_delay2abstick(0)=clock()+1; small MTD requests fromPSRAMstack canwaitone10ms tick each. Dedicated internalstack+semaphore candidate opt-in; board benefit unproven.",
+  "stack_address": "0x2f009e90 internal SRAM,4096bytes,16bytealigned"
+}

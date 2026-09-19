@@ -1,0 +1,27 @@
+make  all-recursive
+make[1]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+Making all in compat
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/compat”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/compat”
+Making all in doc
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/doc”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/doc”
+Making all in include
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/include”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/include”
+Making all in src
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/src”
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT Server.o -MD -MP -MF .deps/Server.Tpo -c -o Server.o ../../iperf2-2.1.8/src/Server.cpp
+mv -f .deps/Server.Tpo .deps/Server.Po
+x86_64-w64-mingw32-g++ -Wall  -O2 -O2  -O2 -std=gnu11  -pthread  -DHAVE_CONFIG_H  -o iperf.exe Client.o Extractor.o isochronous.o Launch.o active_hosts.o Listener.o Locale.o PerfSocket.o Reporter.o Reports.o ReportOutputs.o Server.o Settings.o SocketAddr.o gnu_getopt.o gnu_getopt_long.o histogram.o main.o service.o socket_io.o stdio.o packet_ring.o tcp_window_size.o pdfs.o dscp.o  ../compat/libcompat.a -lws2_32  -static-libstdc++ -static
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/src”
+Making all in man
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/man”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/man”
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+make[1]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”

@@ -1,0 +1,1 @@
+Original mono command was rejected/truncated by NSH_MAXARGUMENTS=7. cmocka textPASS after argument error is NOT acceptance. No original PCM export or listening verdict. Need >=11-token capacity, planned1131 uses16. Firmware1101 and complete failure retained. Root transport now rejects insufficient capacity before UART.

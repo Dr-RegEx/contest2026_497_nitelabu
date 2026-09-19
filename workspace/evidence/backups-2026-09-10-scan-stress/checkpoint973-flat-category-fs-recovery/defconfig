@@ -1,0 +1,9 @@
+#include "../xts-flat-category-fs-flash/defconfig"
+
+# Original filesystem crash/reboot cases; test04 requires a 32 KiB task stack.
+CONFIG_TESTING_TESTCASES_STACKSIZE=32768
+CONFIG_BOARDCTL_RESET=y
+CONFIG_BOARD_RESET_ON_ASSERT=2
+CONFIG_NSH_CMDOPT_DD_STATS=y
+CONFIG_DEV_NULL=y
+CONFIG_DEV_ZERO=y

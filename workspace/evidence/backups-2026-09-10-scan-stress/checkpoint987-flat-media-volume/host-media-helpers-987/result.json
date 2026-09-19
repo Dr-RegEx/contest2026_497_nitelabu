@@ -1,0 +1,107 @@
+{
+  "scope": "HOST ONLY: substituted hardware, no UART/esptool/format/target transfer",
+  "results": [
+    {
+      "case": "wrong_1MiB_manifest",
+      "status": "PASS",
+      "reason": "wrong or nonblank media Flash backup",
+      "uart_standin_opened": false,
+      "format_commands": 0
+    },
+    {
+      "case": "nonblank_manifest",
+      "status": "PASS",
+      "reason": "wrong or nonblank media Flash backup",
+      "uart_standin_opened": false,
+      "format_commands": 0
+    },
+    {
+      "case": "nonblank_content_despite_manifest",
+      "status": "PASS",
+      "reason": "media backup length, content or digest mismatch",
+      "uart_standin_opened": false,
+      "format_commands": 0
+    },
+    {
+      "case": "consumed_manifest",
+      "status": "PASS",
+      "reason": "backup has already authorized a format attempt; no automatic retry"
+    },
+    {
+      "case": "wrong_profile",
+      "status": "PASS",
+      "reason": "missing ESP32S31_XTS_MEDIA_VOLUME",
+      "uart_standin_opened": false,
+      "format_commands": 0
+    },
+    {
+      "case": "busy_uart",
+      "status": "PASS",
+      "reason": "UART busy or ownership check failed",
+      "uart_standin_opened": false,
+      "format_commands": 0
+    },
+    {
+      "case": "already_mounted_volume",
+      "status": "PASS",
+      "reason": "existing media or production mount; refusing format",
+      "uart_standin_opened": true,
+      "format_commands": 0
+    },
+    {
+      "case": "real_wifi_symbol_guard",
+      "status": "PASS",
+      "reason": "unexpected ESPRESSIF_WIFI"
+    },
+    {
+      "case": "backup_read_only_exact_range_two_reads",
+      "status": "PASS",
+      "subprocesses_substituted": true
+    },
+    {
+      "case": "backup_busy_uart_no_esptool",
+      "status": "PASS"
+    },
+    {
+      "case": "backup_nonblank_rejected_and_preserved",
+      "status": "PASS"
+    },
+    {
+      "case": "intact_original_wav_preflight",
+      "status": "PASS",
+      "hardware_boundary_reached": true,
+      "real_uart_opened": false
+    },
+    {
+      "case": "data_default_compatibility",
+      "status": "PASS",
+      "hardware_boundary_reached": true,
+      "real_uart_opened": false
+    },
+    {
+      "case": "bad_wav_rejected",
+      "status": "PASS",
+      "hardware_boundary_reached": false,
+      "real_uart_opened": false
+    },
+    {
+      "case": "transfer_busy_uart",
+      "status": "PASS",
+      "hardware_boundary_reached": false,
+      "real_uart_opened": false
+    },
+    {
+      "case": "wav_wrong_profile_rejected",
+      "status": "PASS",
+      "hardware_boundary_reached": false,
+      "real_uart_opened": false
+    },
+    {
+      "case": "actual_dynamic_deadline_formula",
+      "status": "PASS",
+      "wav_seconds": 3213.6696180555555,
+      "small_seconds": 600
+    }
+  ],
+  "status": "PASS"
+}

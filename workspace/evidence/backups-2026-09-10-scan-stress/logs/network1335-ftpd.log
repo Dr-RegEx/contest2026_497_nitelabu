@@ -1,0 +1,28 @@
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: mount -t tmpfs /data ---
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+--- CMD: curl -o /data/x http://192.168.1.29:8000/x1327.bin ---
+curl -o /data/x http://192.168.1.29:8000/x1327.bin
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+100 65536  100 65536    0     0   177k      0 --:--:-- --:--:-- --:--:--  177k
+nsh> [K
+nsh> [K
+{"case": "4.1.117", "status": "FAIL", "receipt": "build1332-network-dns.sha256", "error": "command failed: curl -o /data/x http://192.168.1.29:8000/x1327.bin"}

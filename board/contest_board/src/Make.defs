@@ -1,0 +1,87 @@
+#############################################################################
+# boards/risc-v/esp32s31/esp32s31-core-function-board/src/Make.defs
+#
+# SPDX-License-Identifier: Apache-2.0
+#############################################################################
+
+include $(TOPDIR)/Make.defs
+
+CSRCS = esp32s31_boot.c esp32s31_bringup.c
+
+ifeq ($(CONFIG_ESP32S31_AUDIO),y)
+CSRCS += esp32s31_audio.c
+endif
+
+ifneq ($(filter y,$(CONFIG_ESP32S31_CAMERA_OV2640) $(CONFIG_ESP32S31_CAMERA_OV3660)),)
+CSRCS += esp32s31_camera.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_CAMERA_OV3660),y)
+CSRCS += esp32s31_ov3660.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_CAMERA_V4L2),y)
+CSRCS += esp32s31_camera_v4l2.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_XTS_PWM),y)
+CSRCS += esp32s31_pwm.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_XTS_GPIO),y)
+CSRCS += esp32s31_xts_gpio.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_XTS_BMI160),y)
+CSRCS += esp32s31_bmi160.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_XTS_BMI160_UORB),y)
+CSRCS += esp32s31_bmi160_uorb.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_XTS_FLASH),y)
+CSRCS += esp32s31_xts_flash.c
+endif
+
+ifneq ($(filter y,$(CONFIG_BOARDCTL_RESET) $(CONFIG_BOARDCTL_RESET_CAUSE)),)
+CSRCS += esp32s31_reset.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_WIFI_EVENT_TEST),y)
+CSRCS += esp32s31_event_test.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_MQUEUE_TEST),y)
+CSRCS += esp32s31_mqueue_test.c
+endif
+
+ifeq ($(CONFIG_ARCH_BUTTONS),y)
+CSRCS += esp32s31_buttons.c
+endif
+
+ifneq ($(filter y,$(CONFIG_ARCH_BUTTONS) $(CONFIG_ESP32S31_XTS_GPIO) $(CONFIG_ESP32S31_AUDIO)),)
+
+# esp_gpio.h uses the locked S31 HAL's GPIO validation definitions.
+# Board.mk does not inherit the architecture library's private include paths.
+
+S31_BOARD_HAL = $(TOPDIR)$(DELIM)arch$(DELIM)risc-v$(DELIM)src$(DELIM)chip$(DELIM)esp-hal-3rdparty$(DELIM)components
+CFLAGS += ${INCDIR_PREFIX}$(S31_BOARD_HAL)$(DELIM)esp_hal_gpio$(DELIM)include
+CFLAGS += ${INCDIR_PREFIX}$(S31_BOARD_HAL)$(DELIM)esp_hal_gpio$(DELIM)esp32s31$(DELIM)include
+CFLAGS += ${INCDIR_PREFIX}$(S31_BOARD_HAL)$(DELIM)soc$(DELIM)esp32s31$(DELIM)include
+CFLAGS += ${INCDIR_PREFIX}$(S31_BOARD_HAL)$(DELIM)esp_common$(DELIM)include
+endif
+
+ifeq ($(CONFIG_BUILD_KERNEL),y)
+ifneq ($(CONFIG_ESP32S31_FLASH_APPFS),y)
+CSRCS += $(if $(wildcard romfs_boot.c),romfs_boot.c,romfs_stub.c)
+endif
+endif
+
+DEPPATH += --dep-path board
+VPATH += :board
+CFLAGS += ${INCDIR_PREFIX}$(TOPDIR)$(DELIM)arch$(DELIM)$(CONFIG_ARCH)$(DELIM)src$(DELIM)board$(DELIM)board
+
+ifeq ($(CONFIG_ESP32S31_XTS_MEDIA_VOLUME),y)
+CSRCS += esp32s31_xts_media_volume.c
+endif

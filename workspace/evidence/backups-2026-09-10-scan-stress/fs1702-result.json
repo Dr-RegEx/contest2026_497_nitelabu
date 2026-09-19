@@ -1,0 +1,20 @@
+{
+  "status": "SELF_TEST_PASS_MILLISECOND_RANGE_PENDING_COMMUNITY_ACCEPTANCE",
+  "receipt": "build1702-fs-worker.sha256",
+  "case": "5.1.7",
+  "staged": [
+    "/data/audio_file.aac",
+    "/data/persist.db",
+    "/data/frag1164/Fragment_test_largefile"
+  ],
+  "restored": [
+    "/data/audio_file.aac",
+    "/data/persist.db",
+    "/data/frag1164/Fragment_test_largefile"
+  ],
+  "free_blocks_before": 673,
+  "read_seconds": 0.57,
+  "write_seconds": 0.2,
+  "worker_observed": true,
+  "criterion": "write_seconds <= 1.0s (xTS millisecond-level expectation)"
+}

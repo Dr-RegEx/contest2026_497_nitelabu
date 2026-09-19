@@ -1,0 +1,23 @@
+diff --git a/src/fastmath.h b/src/fastmath.h
+index 86cbdfa..f1ba65a 100644
+--- a/src/fastmath.h
++++ b/src/fastmath.h
+@@ -104,7 +104,7 @@ static inline float lc3_exp2f(float x)
+      * Perform polynomial approximation in range -0.5/8 to 0.5/8,
+      * and muplity by precomputed value of 2^(i/8), i in [0:7] */
+ 
+-    union { float f; int32_t s; } y;
++    union { float f; int32_t s; uint32_t u; } y;
+ 
+     y.f = (      p[0]) * x;
+     y.f = (y.f + p[1]) * x;
+@@ -114,7 +114,8 @@ static inline float lc3_exp2f(float x)
+ 
+     /* --- Add the exponent --- */
+ 
+-    y.s += (k >> 3) << LC3_IEEE754_EXP_SHL;
++    /* Exponent bits wrap modulo 2^32; signed shifting/overflow is undefined. */
++    y.u += (uint32_t)(k >> 3) << LC3_IEEE754_EXP_SHL;
+ 
+     return y.f;
+ }

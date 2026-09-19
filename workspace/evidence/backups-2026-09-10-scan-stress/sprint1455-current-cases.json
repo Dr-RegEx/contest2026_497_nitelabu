@@ -1,0 +1,490 @@
+{
+  "label": "Current competition milestone; not complete project scope or official mandatory denominator",
+  "common": {
+    "total": 35,
+    "pass": 32,
+    "physical_reset_evidence": "checkpoint1580-physical-reset-pass",
+    "cold_boot_evidence": "checkpoint1604-coldboot-pass"
+  },
+  "category": [
+    {
+      "line": 1143,
+      "id": "5.1.9",
+      "title": "5.1.9 文件系统多线程读文件vela_fs_multi_thread_read_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS 原始工作量",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1180,
+      "id": "5.1.8",
+      "title": "5.1.8 文件系统多线程写文件测试vela_fs_multi_thread_write_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS 原始工作量",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1217,
+      "id": "5.1.7",
+      "title": "5.1.7 文件系统随机读写测试vela_fs_random_read_and_write_test",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1094执行完成，随机写性能未验收",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1258,
+      "id": "5.1.68",
+      "title": "5.1.68 KVDB稳定性vela_kvdb_stability_test02测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1155，3MiB卷原始10轮；1119失败保留",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1286,
+      "id": "5.1.6",
+      "title": "5.1.6 文件系统反复读写测试vela_fs_stress_read_and_write_loops_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS 原始工作量",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1337,
+      "id": "5.1.5",
+      "title": "5.1.5 文件系统多线程文件读写测试vela_fs_stress_multi_thread_file_operate_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS 原始工作量",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1372,
+      "id": "5.1.42",
+      "title": "5.1.42 WiFi--设备未配网时反复扫描周边无线AP",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1112，原始100轮",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1392,
+      "id": "5.1.41",
+      "title": "5.1.41 WiFi--反复ifup&ifdown",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1035",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1434,
+      "id": "5.1.4",
+      "title": "5.1.4 文件系统反复创建和删除文件vela_fs_stress_maximum_file_name_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1028",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1739,
+      "id": "5.1.3",
+      "title": "5.1.3 文件系统创建和删除压力测试vela_fs_stress_loop_create_delete_file_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1022",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1799,
+      "id": "5.1.26",
+      "title": "5.1.26 WiFi--2.4G网络---设备连接2.4G后wapi反复扫描周边无线AP",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1347 原始100轮全部完成",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1824,
+      "id": "5.1.25",
+      "title": "5.1.25 WiFi--2.4G网络---设备作为Client端时的UDP Tx平均速率",
+      "group": "无需人工",
+      "passed": false,
+      "status": "原始300秒实测完成，速率验收待定",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1852,
+      "id": "5.1.24",
+      "title": "5.1.24 WiFi--2.4G网络---设备作为Server端时的UDP Rx平均速率",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1499原300秒，板11.4Mbit/s丢包30%，末ACK/Server Report正常，性能待验收",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1880,
+      "id": "5.1.22",
+      "title": "5.1.22 WiFi--2.4G网络---设备作为Server端时的TCP Rx平均速率",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1361原始300秒客户端完成，速率记录待验收",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 1924,
+      "id": "5.1.2",
+      "title": "5.1.2 文件系统文件写入速度测试vela_fs_stress_write_speed",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1065 原始1000×1024字节",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1959,
+      "id": "5.1.19",
+      "title": "5.1.19 文件系统crash后文件完整性校验vela_fs_stability_test04 文件",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1126，显式sync挂载",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 1997,
+      "id": "5.1.18",
+      "title": "5.1.18 文件系统crash后crc校验 vela_fs_stability_test03",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1081/1082 reboot及crash均通过",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2033,
+      "id": "5.1.17",
+      "title": "文件系统多线程操作文件测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1163 原始一小时",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2070,
+      "id": "5.1.16",
+      "title": "文件系统碎片读写测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1164/1169 按原文观察标准",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2111,
+      "id": "5.1.15",
+      "title": "5.1.15 文件系统fstest执行1000次",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS：1181原始1000轮，1184收尾",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2173,
+      "id": "5.1.13",
+      "title": "5.1.13 裸设备读写性能测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS994，原始dd实测通过",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2205,
+      "id": "5.1.12",
+      "title": "5.1.12 文件系统读写速率测试dd",
+      "group": "无需人工",
+      "passed": false,
+      "status": "厂商自测记录完成1030，速率待社区验收",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2237,
+      "id": "5.1.11",
+      "title": "5.1.11 文件系统读写速率测试performance_test",
+      "group": "无需人工",
+      "passed": false,
+      "status": "厂商自测记录完成1030，速率待社区验收",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2277,
+      "id": "5.1.10",
+      "title": "5.1.10 文件系统的多线程读写测试vela_fs_multi_thread_read_write_test",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS 原始工作量",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2311,
+      "id": "5.1.1",
+      "title": "文件系统分区写满异常测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1173",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 2779,
+      "id": "4.2.15",
+      "title": "4.2.15 Audio_DSP--Looper_cmoka",
+      "group": "需要人工",
+      "passed": false,
+      "status": "1059麦克风试听通过；外接扬声器播放待验收",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2852,
+      "id": "4.2.13",
+      "title": "4.2.13 Audio_DSP--Capture_cmoka_1channels",
+      "group": "需要人工",
+      "passed": true,
+      "status": "PASS1143原始命令+用户试听",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2878,
+      "id": "4.2.12",
+      "title": "4.2.12 Audio_DSP--Capture_cmoka_2channels",
+      "group": "需要人工",
+      "passed": true,
+      "status": "PASS1087原始程序+用户试听",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2925,
+      "id": "4.2.10",
+      "title": "4.2.10 Audio_DSP--Playback_cmoka_1channels",
+      "group": "需要人工",
+      "passed": false,
+      "status": "待外接扬声器原始播放实测",
+      "reason": "原始声音/录音验收需要发声、听音或外接扬声器；部分格式适用性仍待核定"
+    },
+    {
+      "line": 2953,
+      "id": "4.1.6",
+      "title": "4.1.6 文件系统异常场景--掉电重启时磁盘空间变化",
+      "group": "需要人工",
+      "passed": true,
+      "status": "PASS1603 原始3轮真实掉电/四线程校验/空间统计",
+      "reason": "真实掉电，尚无自动断电夹具"
+    },
+    {
+      "line": 2990,
+      "id": "4.1.57",
+      "title": "4.1.57 WiFi--wapi CountryCode的设置和获取",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1034",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3157,
+      "id": "4.1.5",
+      "title": "4.1.5 文件系统异常场景--创建文件时掉电",
+      "group": "需要人工",
+      "passed": true,
+      "status": "PASS1595 原始3轮创建阶段/真实掉电/恢复读写",
+      "reason": "真实掉电，尚无自动断电夹具"
+    },
+    {
+      "line": 3462,
+      "id": "4.1.4",
+      "title": "4.1.4 文件系统异常场景--写入时掉电",
+      "group": "需要人工",
+      "passed": true,
+      "status": "PASS1589 原始3轮真实掉电及一致性校验",
+      "reason": "真实掉电，尚无自动断电夹具"
+    },
+    {
+      "line": 3689,
+      "id": "4.1.31",
+      "title": "4.1.31 WiFi--2.4G--wapi disconnect后与外网不通",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1342 原始公网断网检查通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3718,
+      "id": "4.1.30",
+      "title": "4.1.30 WiFi--2.4G--wapi reconncet",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1320 1318修复后原重连/DHCP/ping通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3750,
+      "id": "4.1.3",
+      "title": "4.1.3 fatutf8文件系统编码能力测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1006",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 3778,
+      "id": "4.1.29",
+      "title": "4.1.29 WiFi--2.4G--wapi config保存后设备reboot再reconnect",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1325 保存配置后原始reboot重连通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3807,
+      "id": "4.1.28",
+      "title": "4.1.28 WiFi--2.4G--wapi config保存正常",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1312 配置字段逐项核对一致",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3858,
+      "id": "4.1.26",
+      "title": "4.1.26 WiFi--2.4G--Wapi Show获取2.4G AP的无线参数",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1435 original wapi show",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3881,
+      "id": "4.1.25",
+      "title": "4.1.25 WiFi--2.4G--Wapi Sense获取链接2.4G AP的RSSI",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1458 两次RSSI -59/-60 dBm，正常返回且动态变化",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 3984,
+      "id": "4.1.21",
+      "title": "4.1.21 WiFi--2.4G--Wapi连接为WPA2加密方式时加入2.4G网络",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1310 原始关联/DHCP/ping10/10",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4036,
+      "id": "4.1.2",
+      "title": "4.1.2 文件系统--romfs只读文件系统测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1006",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 4548,
+      "id": "4.1.127",
+      "title": "4.1.127 Audio--nxlooper回环功能测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1198 原始命令无报错",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4838,
+      "id": "4.1.117",
+      "title": "4.1.117 NetApp--设备支持ftpd",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1337 复核原始1336双向传输通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4880,
+      "id": "4.1.116",
+      "title": "4.1.116 NetApp--设备支持通过scp方式向其他终端传输本地文件",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1454 original SCP upload",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4924,
+      "id": "4.1.115",
+      "title": "4.1.115 NetApp--设备支持通过scp方式从其他终端获取文件到本地",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1453 original SCP download",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 4968,
+      "id": "未编号/特殊编号",
+      "title": "开关BLE蓝牙",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1085 原始完整开关",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 5050,
+      "id": "4.1.114",
+      "title": "4.1.114 NetApp--curl网页能力测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1334 原始公网网页命令通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 5087,
+      "id": "4.1.113",
+      "title": "4.1.113 NetApp--curl http文件下载测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1331 原始下载及大小核验通过",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 5126,
+      "id": "4.1.11",
+      "title": "4.1.11 KVDB测试",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1013 原始30/30",
+      "reason": "程序及日志可自动执行/核验"
+    },
+    {
+      "line": 5269,
+      "id": "5.1.29",
+      "title": "5.1.29 WiFi--2.4G网络---wapi反复disconnect 2.4G网络",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1457 原始100/100轮，无自动重试；1425失败保留",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    },
+    {
+      "line": 5307,
+      "id": "5.1.27",
+      "title": "5.1.27 WiFi--2.4G网络---设备连接2.4G后wapi扫描指定2.4G AP",
+      "group": "无需人工",
+      "passed": true,
+      "status": "PASS1606，原始100轮同一组3AP，无报错；RSSI及排序变化保留，review明确口径",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成",
+      "evidence": "checkpoint1606-directed-scan-pass"
+    },
+    {
+      "line": 5332,
+      "id": "5.1.23",
+      "title": "5.1.23 WiFi--2.4G网络---设备作为Client端时的TCP Tx平均速率",
+      "group": "无需人工",
+      "passed": false,
+      "status": "1478原300秒双端10.6MiB/296Kbit/s，正常收尾，速率待验收",
+      "reason": "已有电脑/路由器条件下命令与日志可自动执行/核验；未完成实现仍计未完成"
+    }
+  ],
+  "snapshot": "1606; common32/35 category44/53 total76/88"
+}

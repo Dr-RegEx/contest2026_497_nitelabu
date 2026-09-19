@@ -1,0 +1,38 @@
+--- CMD: wapi show wlan0 ---
+wapi show wlan0
+wlan0 Configuration:
+       IP: 192.168.1.60
+  NetMask: 255.255.255.0
+Frequency: 2462
+     Flag: WAPI_FREQ_FIXED
+  Channel: 11
+Frequency: 2462
+    ESSID: <redacted>
+     Flag: WAPI_ESSID_ON
+     Mode: WAPI_MODE_MANAGED
+       AP: ff:ff:ff:ff:ff:[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35815
+[CPU0] wapi_get_pta_prio: ioctl(SIOCGIWPTAPRIO): Not a typewriter
+ff
+  BitRate: 72
+     Flag: WAPI_BITRATE_FIXED
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -69
+  Country: 01
+nsh> [K
+nsh> [K
+--- CMD: wapi sense wlan0 ---
+wapi sense wlan0
+-69
+nsh> [K
+nsh> [K
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+--- CMD: wapi sense wlan0 ---
+wapi sense wlan0
+-69
+nsh> [K
+nsh> [K
+CAPTURE_COMPLETE; verdict requires output review

@@ -1,0 +1,79 @@
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209 -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:production-regression -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/bin_host
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209 --target resetconfig
+[1/1] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production-regression/defconfig /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/.config && /usr/bin/cmake -E env KCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/.config EXTERNALDIR=dummy APPSDIR=/home/regex/work/esp32s31-openvela/openvela-dev/apps DRIVERS_PLATFORM_DIR=dummy APPSBINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/apps BINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209 olddefconfig && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/.config /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/.config.orig && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/CMakeLists.txt
+Loaded configuration '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/.config'
+Configuration saved to '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/.config'
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209 -j8
+[0/1] Re-running CMake...
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/bin_host
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209
+[1/40] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/libs/libc/misc && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/libs/libc/misc/lib_utsname.c
+[2/40] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -DKCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production-regression/defconfig -DNUTTX_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx -DCMAKE_BINARY_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209 -P /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/cmake/nuttx_generate_dts.cmake
+[3/40] Building C object apps/CMakeFiles/apps.dir/dummy.c.o
+[4/40] Building C object apps/external/android/CMakeFiles/android.dir/dummy.c.o
+[5/40] Building C object arch/CMakeFiles/arch_interface.dir/empty.c.o
+[6/40] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/syscall && cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/bin_host --target mksyscall
+Consolidate compiler generated dependencies of target csvparser
+[ 50%] Built target csvparser
+Consolidate compiler generated dependencies of target mksyscall
+[100%] Built target mksyscall
+[7/40] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_fpu.S.o
+[8/40] Linking C static library apps/external/android/libandroid.a
+[9/40] Linking C static library arch/libarch_interface.a
+[10/40] Linking C static library apps/libapps.a
+[11/40] Refreshing ELF relink sentinel:renew
+[12/40] Refreshing ELF relink sentinel:init
+[13/40] Refreshing ELF relink sentinel:sh
+[14/40] Refreshing ELF relink sentinel:ping
+[15/40] Refreshing ELF relink sentinel:wapi
+[16/40] Refreshing ELF relink sentinel:nettest
+[17/40] Refreshing ELF relink sentinel:udpserver
+[18/40] Building C object apps/system/dhcpc/CMakeFiles/ELF_renew.dir/ELF_renew_relink.c.o
+[19/40] Building C object apps/system/nsh/CMakeFiles/ELF_init.dir/ELF_init_relink.c.o
+[20/40] Building C object apps/system/nsh/CMakeFiles/ELF_sh.dir/ELF_sh_relink.c.o
+[21/40] Building C object apps/system/ping/CMakeFiles/ELF_ping.dir/ELF_ping_relink.c.o
+[22/40] Building C object apps/wireless/wapi/CMakeFiles/ELF_wapi.dir/ELF_wapi_relink.c.o
+[23/40] Building C object apps/examples/nettest/CMakeFiles/ELF_nettest.dir/ELF_nettest_relink.c.o
+[24/40] Building C object apps/examples/udp/CMakeFiles/ELF_udpserver.dir/ELF_udpserver_relink.c.o
+[25/40] Linking C static library apps/examples/udp/libELF_udpserver.a
+[26/40] Linking C static library apps/examples/nettest/libELF_nettest.a
+[27/40] Linking C static library apps/system/ping/libELF_ping.a
+[28/40] Linking C static library apps/system/dhcpc/libELF_renew.a
+[29/40] Linking C static library apps/wireless/wapi/libELF_wapi.a
+[30/40] Linking C static library apps/system/nsh/libELF_sh.a
+[31/40] Linking C static library apps/system/nsh/libELF_init.a
+[32/40] Generating external ESP32-S31 application ROMFS
+[33/40] Building C object CMakeFiles/nuttx.dir/empty.c.o
+[34/40] Building C object boards/CMakeFiles/board.dir/__/dummy.c.o
+[35/40] Linking C static library arch/libarch.a
+[36/40] Linking C static library boards/libboard.a
+[37/40] Linking C executable nuttx
+[38/40] Generating nuttx.hex
+[39/40] Generating System.map
+[40/40] Generating ESP32-S31 simple-boot image for offset 0x2000
+esptool v5.4.0
+Creating ESP32-S31 image...
+Image has only RAM segments visible. ROM segments are hidden and SHA256 digest is not appended.
+NOTE: Inserting 60 bytes padding between .iram0.text and .dram0.data
+Merged 2 ELF sections.
+Successfully created ESP32-S31 image.
++ set -o noclobber
++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/nuttx.bin /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-regression209/appfs.img
++ restore_config
++ '[' -f /tmp/s31-flat-source-config.9tQmoJ/.config ']'
++ mv /tmp/s31-flat-source-config.9tQmoJ/.config .config
++ '[' -f /tmp/s31-flat-source-config.9tQmoJ/config.h ']'
++ mv /tmp/s31-flat-source-config.9tQmoJ/config.h include/nuttx/config.h
++ rmdir /tmp/s31-flat-source-config.9tQmoJ

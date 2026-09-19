@@ -1,0 +1,8 @@
+#include "../xts-flat-audio/defconfig"
+
+# Isolated original nxlooper profile; no claim of two physical microphones.
+CONFIG_ESP32S31_I2S_DUPLEX=y
+CONFIG_ES8311_SHARED_DUPLEX=y
+CONFIG_SYSTEM_NXLOOPER=y
+CONFIG_NXLOOPER_MAINTHREAD_STACKSIZE=4096
+CONFIG_NXLOOPER_LOOPTHREAD_STACKSIZE=4096

@@ -1,0 +1,8 @@
+#include "../demo-rmt-xts-rng/defconfig"
+
+# Original fstest/NIST workloads exceed the internal SRAM filesystem heap.
+# Reserve the upper 4 MiB of the existing 16 MiB PSRAM pool for tmpfs;
+# leave the original test sizes, loop counts and algorithms unchanged.
+CONFIG_FS_HEAPSIZE=4194304
+CONFIG_FS_HEAPBUF_SECTION=".s31.fsheap"
+# CONFIG_FS_HEAPLARGE_ONLY is not set

@@ -1,0 +1,380 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7d (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SETUP=PASS seconds=0.691
+XTS_COMMAND=reboot sample=1 utc=2026-09-14T15:12:30.531979+00:00
+reboot
+[CPU0] reboot status=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x400330b0
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SAMPLE=1 PASS seconds=0.538
+XTS_COMMAND=reboot sample=2 utc=2026-09-14T15:12:31.071975+00:00
+reboot
+[CPU0] reboot status=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x400330b0
+Core1 Saved PC:0x2f004c06
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SAMPLE=2 PASS seconds=0.547
+XTS_COMMAND=reboot sample=3 utc=2026-09-14T15:12:31.618702+00:00
+reboot
+[CPU0] reboot status=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x400330b0
+Core1 Saved PC:0x2f004c06
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SAMPLE=3 PASS seconds=0.543
+XTS_COMMAND=reboot sample=4 utc=2026-09-14T15:12:32.161930+00:00
+reboot
+[CPU0] reboot status=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x40028718
+Core1 Saved PC:0x2f004c06
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SAMPLE=4 PASS seconds=0.549
+XTS_COMMAND=reboot sample=5 utc=2026-09-14T15:12:32.711107+00:00
+reboot
+[CPU0] reboot status=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x400330b0
+Core1 Saved PC:0x2f004c06
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU1] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SAMPLE=5 PASS seconds=0.551
+XTS_COMMAND=reboot sample=6 utc=2026-09-14T15:12:33.262010+00:00
+reboot
+[CPU0] reboot status=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x400330b0
+Core1 Saved PC:0x2f004c06
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SAMPLE=6 PASS seconds=0.553
+XTS_COMMAND=reboot sample=7 utc=2026-09-14T15:12:33.815098+00:00
+reboot
+[CPU0] reboot status=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x400330b0
+Core1 Saved PC:0x2f004c06
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SAMPLE=7 PASS seconds=0.552
+XTS_COMMAND=reboot sample=8 utc=2026-09-14T15:12:34.367493+00:00
+reboot
+[CPU0] reboot status=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x400330b0
+Core1 Saved PC:0x2f004c06
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SAMPLE=8 PASS seconds=0.547
+XTS_COMMAND=reboot sample=9 utc=2026-09-14T15:12:34.914481+00:00
+reboot
+[CPU0] reboot status=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x400330b0
+Core1 Saved PC:0x2f004c06
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU1] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SAMPLE=9 PASS seconds=0.550
+XTS_COMMAND=reboot sample=10 utc=2026-09-14T15:12:35.464457+00:00
+reboot
+[CPU0] reboot status=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x400330b0
+Core1 Saved PC:0x2f004c06
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2cb4  (797876)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_REBOOT_SAMPLE=10 PASS seconds=0.550
+XTS_STANDARD=1.2.1,2.1.4 PASS samples=10 average_seconds=0.548
+TIMING=host command-send through UART NSH prompt; includes UART/host overhead. No cold-power-cycle claim.

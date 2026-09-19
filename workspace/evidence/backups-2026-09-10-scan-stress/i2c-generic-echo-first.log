@@ -1,0 +1,96 @@
+S31: ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x5f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x9ff4
+entry 0x2f0088f0
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x9ff4   (40948)
+padd: lma 0x0000c068 vma 0x00000000 len 0x3fb0   (16304)
+imap: lma 0x00010020 vma 0x40040020 len 0x9330   (37680)
+padd: lma 0x00019358 vma 0x00000000 len 0x6da0   (28064)
+imap: lma 0x00020100 vma 0x40000100 len 0x342e4  (213732)
+total segments stored 6
+ABC
+NuttShell (NSH)
+nsh> [K
+C6: ESP-ROM:esp32c6-20220919
+Build:Sep 19 2022
+rst:0x1 (POWERON),boot:0xc (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:2
+load:0x40875730,len:0x1648
+load:0x4086b910,len:0xdbc
+load:0x4086e610,len:0x31e0
+entry 0x4086b91a
+I (23) boot: ESP-IDF v6.1-beta1-497-g14f663f00-dirty 2nd stage bootloader
+I (24) boot: compile time Sep 19 2026 14:06:57
+I (24) boot: chip revision: v0.2
+I (26) boot: efuse block revision: v0.3
+I (29) boot.esp32c6: SPI Speed      : 80MHz
+I (33) boot.esp32c6: SPI Mode       : DIO
+I (37) boot.esp32c6: SPI Flash Size : 2MB
+I (41) boot: Enabling RNG early entropy source...
+I (45) boot: Partition Table:
+I (48) boot: ## Label            Usage          Type ST Offset   Length
+I (54) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (61) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (67) boot:  2 factory          factory app      00 00 00010000 00100000
+I (74) boot: End of partition table
+I (77) esp_image: segment 0: paddr=00010020 vaddr=42018020 size=07f00h ( 32512) map
+I (91) esp_image: segment 1: paddr=00017f28 vaddr=40800000 size=000f0h (   240) load
+I (92) esp_image: segment 2: paddr=00018020 vaddr=42000020 size=13380h ( 78720) map
+I (114) esp_image: segment 3: paddr=0002b3a8 vaddr=408000f0 size=09be4h ( 39908) load
+I (124) esp_image: segment 4: paddr=00034f94 vaddr=40809ce0 size=01adch (  6876) load
+I (128) boot: Loaded app from partition at offset 0x10000
+I (129) boot: Disabling RNG early entropy source...
+I (141) cpu_start: Unicore app
+I (150) cpu_start: GPIO 17 and 16 are used as console UART I/O pins
+I (150) cpu_start: Pro cpu start user code
+I (150) cpu_start: cpu freq: 160000000 Hz
+I (152) app_init: Application information:
+I (156) app_init: Project name:     esp32c6_i2c_slave
+I (161) app_init: App version:      1
+I (164) app_init: Compile time:     Sep 19 2026 14:06:56
+I (169) app_init: ELF file SHA256:  ab365be52...
+I (173) app_init: ESP-IDF:          v6.1-beta1-497-g14f663f00-dirty
+I (179) efuse_init: Min chip rev:     v0.0
+I (183) efuse_init: Max chip rev:     v0.99 
+I (187) efuse_init: Chip rev:         v0.2
+I (191) heap_init: Initializing. RAM available for dynamic allocation:
+I (197) heap_init: At 4080C800 len 0006FE10 (447 KiB): RAM
+I (203) heap_init: At 4087C610 len 00002F54 (11 KiB): RAM
+I (208) heap_init: At 50000000 len 00003FE8 (15 KiB): RTCRAM
+I (214) spi_flash: detected chip: generic
+I (217) spi_flash: flash io: dio
+W (220) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (232) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (238) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (245) main_task: Started on CPU0
+I (245) main_task: Calling app_main()
+I (245) fixture: READY addr=0x68 SCL=4 SDA=5
+
+S31: i2c set -a68 -w16 1234
+WROTE Bus: 0 Addr: 68 Subaddr: 00 Value: 1234
+nsh> [K
+C6: I (2865) fixture: RX len=2 dropped=0
+I (2865) fixture: 34 12
+
+S31: i2c get -a68 -w16
+READ Bus: 0 Addr: 68 Subaddr: 00 Value: 1234
+nsh> [K
+C6: I (4785) fixture: TX len=2 dropped=0
+
+S31: i2c set -a68 -w16 abcd
+WROTE Bus: 0 Addr: 68 Subaddr: 00 Value: abcd
+nsh> [K
+C6: I (6725) fixture: RX len=2 dropped=0
+I (6725) fixture: cd ab
+
+S31: i2c get -a68 -w16
+READ Bus: 0 Addr: 68 Subaddr: 00 Value: abcd
+nsh> [K
+C6: I (8645) fixture: TX len=2 dropped=0
+

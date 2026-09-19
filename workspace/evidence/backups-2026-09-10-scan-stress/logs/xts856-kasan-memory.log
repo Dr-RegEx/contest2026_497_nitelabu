@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-run-standard.py", line 36, in <module>
+    production.boot(port, 'XTS_BOOT')
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_production_smoke.py", line 28, in boot
+    output = transport.collect_until_prompt(port, 30.0)
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_nuttx_smoke.py", line 117, in collect_until_prompt
+    raise TimeoutError(output.decode("utf-8", errors="replace"))
+TimeoutError: ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x18ff8
+entry 0x2f0152b2
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x18ff8  (102392)
+padd: lma 0x0001b068 vma 0x00000000 len 0x4fb0   (20400)
+imap: lma 0x00020020 vma 0x40110020 len 0x1b084  (110724)
+padd: lma 0x0003b0ac vma 0x00000000 len 0x504c   (20556)
+imap: lma 0x00040100 vma 0x40000100 len 0x106750 (1075024)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+S31SM:M-TRAP mcause=0x18000004 mepc=0x4004e376 mtval=0x00000002
+

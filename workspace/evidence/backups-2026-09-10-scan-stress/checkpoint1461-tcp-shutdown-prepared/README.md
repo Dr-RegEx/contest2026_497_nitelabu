@@ -1,0 +1,1 @@
+1461 diagnostic candidate: full build + kernel/AppFS hash checks PASS. Adds S31-only shutdown callback queue/state/sequence logging, no TCP behavior changes. Target NOT RUN. Active target remains1455 running original100 reconfigure1457; UART must not be touched by this candidate while1457 active. Source audit1460 records hypothesis, not proven cause.

@@ -1,0 +1,125 @@
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000009 00000000 00000000 644             
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000002 00000004 00000000 00000000 26d              
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0002  0000  0002  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0002  0000  0002  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+nsh> [K
+--- CMD: iperf2 -s -p 5003 -i 1 -u & ---
+iperf2 -s -p 5003 -i 1 -u &
+iperf2 [10:101]
+nsh> [K
+nsh> [K------------------------------------------------------------
+Server listening on UDP port 5003
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 5003 connected with 192.168.1.29 port 63673
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-1.00 sec  67.5 KBytes   553 Kbits/sec  602737.093 ms 0/47 (0%)
+[  1] 1.00-2.00 sec   102 KBytes   835 Kbits/sec  6175.969 ms 0/71 (0%)
+[  1] 1.00-2.00 sec  2 datagrams received out-of-order
+[  1] 2.00-3.00 sec  67.5 KBytes   553 Kbits/sec  316.341 ms 0/47 (0%)
+[  1] 3.00-4.00 sec  28.7 KBytes   235 Kbits/sec  118.547 ms 0/20 (0%)
+[  1] 4.00-5.00 sec  20.1 KBytes   165 Kbits/sec  95.772 ms 0/14 (0%)
+[  1] 5.00-6.00 sec  27.3 KBytes   223 Kbits/sec  59.497 ms 0/19 (0%)
+[  1] 6.00-7.00 sec  53.1 KBytes   435 Kbits/sec  36.716 ms 0/37 (0%)
+[  1] 7.00-8.00 sec  38.8 KBytes   318 Kbits/sec  35.046 ms 0/27 (0%)
+[  1] 8.00-9.00 sec   109 KBytes   894 Kbits/sec   8.691 ms 0/76 (0%)
+[  1] 8.00-9.00 sec  1 datagrams received out-of-order
+[  1] 9.00-10.00 sec  86.1 KBytes   706 Kbits/sec  21.708 ms 0/60 (0%)
+[  1] 10.00-11.00 sec   126 KBytes  1.03 Mbits/sec   9.924 ms 0/88 (0%)
+[  1] 11.00-12.00 sec   151 KBytes  1.23 Mbits/sec   4.669 ms 0/105 (0%)
+[  1] 12.00-13.00 sec   234 KBytes  1.92 Mbits/sec   7.320 ms 0/163 (0%)
+[  1] 12.00-13.00 sec  1 datagrams received out-of-order
+[  1] 13.00-14.00 sec   200 KBytes  1.63 Mbits/sec   7.604 ms 0/139 (0%)
+[  1] 13.00-14.00 sec  2 datagrams received out-of-order
+[  1] 14.00-15.00 sec   245 KBytes  2.01 Mbits/sec   5.136 ms 0/171 (0%)
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 001(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   10    10 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   11    10 ---(0x00000003) 101 RR       pthread   - Waiting  Signal    0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   12    10 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   13    10 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: kill -15 10 ---
+kill -15 10
+nsh> [K
+nsh> [KWaiting for server threads to complete. Interrupt again to force quit.
+[  1] 15.00-15.56 sec   132 KBytes  1.93 Mbits/sec   5.327 ms 0/92 (0%)
+[  1] 0.00-15.56 sec  1.65 MBytes   889 Kbits/sec   5.327 ms 0/1176 (0%)
+[  1] 0.00-15.56 sec  6 datagrams received out-of-order
+[  3] WARNING: ack of last datagram failed.
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    000004ce 00000000 00000000 1bfe80          
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    0000000e 00000010 00000000 00000000 8e5              
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     04c4  0000  04c4  0000
+Dropped      0000  0000  0028  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         000b  0000  000b  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     277284     119444     157840     140088     110952    256     13 Kmem
+   16777216    1454080   15323136   15323136 Page
+nsh> [K
+nsh> [K
+{"case": "5.1.24", "scope": "DIAGNOSTIC_ONLY", "status": "DIAGNOSTIC_COMPLETE", "receipt": "build1703-udp-rx-buf.sha256", "duration_seconds": 10, "offered_load": "40M", "host_topology": "Native Windows iperf2 on WLAN192.168.1.29, direct LAN; diagnostic10s40M", "server_pid": 10, "client_exit": 0, "wall_seconds": 12.610492245992646, "host_full_duration": true, "board_summary_present": true, "rate_acceptance": "DIAGNOSTIC_ONLY; not original acceptance", "board_capture_sha256": "8160515570a16e5c89a9a67018c0ca88997ac4afe1d2fc3fc95d17e22be91c8f"}

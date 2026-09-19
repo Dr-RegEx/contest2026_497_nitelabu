@@ -1,0 +1,144 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1055-flat-bttool-entropy.sha256
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x5f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x11134
+load:0x2f011180,len:0x28f4
+entry 0x2f010dac
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x11134  (69940)
+dram: lma 0x0001317c vma 0x2f011180 len 0x28f4   (10484)
+padd: lma 0x00015aa8 vma 0x00000000 len 0xa570   (42352)
+imap: lma 0x00020020 vma 0x400f0020 len 0x1f06c  (127084)
+padd: lma 0x0003f094 vma 0x00000000 len 0x1064   (4196)
+imap: lma 0x00040100 vma 0x40000100 len 0xe97b0  (956336)
+total segments stored 7
+ABC
+NuttShell (NSH)
+nsh> [K
+XTS_COMMAND=ls /dev/ttyHCI0
+--- CMD: ls /dev/ttyHCI0 ---
+ls /dev/ttyHCI0
+ /dev/ttyHCI0
+nsh> [K
+nsh> [K
+ls /dev/ttyHCI0
+ /dev/ttyHCI0
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls /data
+--- CMD: ls /data ---
+ls /data
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+ls /data
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data
+--- CMD: mkdir /data ---
+mkdir /data
+nsh> [K
+nsh> [K
+mkdir /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount -t tmpfs /data
+--- CMD: mount -t tmpfs /data ---
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/misc
+--- CMD: mkdir /data/misc ---
+mkdir /data/misc
+nsh> [K
+nsh> [K
+mkdir /data/misc
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/misc/bt
+--- CMD: mkdir /data/misc/bt ---
+mkdir /data/misc/bt
+nsh> [K
+nsh> [K
+mkdir /data/misc/bt
+nsh> [K
+nsh> [K
+XTS_COMMAND=bttool
+bttool
+/data/misc/bt folder create: 0
+[async_queue:91]uv_async_queue_init
+bttool> XTS_COMMAND=enable
+enable
+S31 BLE: controller open
+S31 BLE: controller ready, VHCI registered
+dev:0: Sending HCI_RESET
+S31 BLE host: allocating opcode=0c03
+S31 BLE host: opcode=0c03 buffer=0x2f01a58c
+S31 BLE host: opcode=0c03 queued current=0x2f01b8f0 syswq=0x2f01b8f0
+S31 BLE: TX opcode=0c03 len=3
+S31 BLE: complete opcode=0c03 status=0 len=7
+S31 BLE: TX opcode=0c03 result=3
+S31 BLE host: opcode=0c03 wait=0 status=0 ref=1
+S31 BLE host: opcode=0c03 returned
+S31 BLE host: reset state complete
+S31 BLE host: allocating opcode=1003
+S31 BLE host: opcode=1003 buffer=0x2f01a58c
+S31 BLE host: opcode=1003 queued current=0x2f01b8f0 syswq=0x2f01b8f0
+S31 BLE: TX opcode=1003 len=3
+S31 BLE: complete opcode=1003 status=0 len=15
+S31 BLE: TX opcode=1003 result=3
+S31 BLE host: opcode=1003 wait=0 status=0 ref=1
+S31 BLE host: opcode=1003 returned
+S31 BLE host: allocating opcode=1001
+S31 BLE host: opcode=1001 buffer=0x2f01a58c
+S31 BLE host: opcode=1001 queued current=0x2f01b8f0 syswq=0x2f01b8f0
+S31 BLE: TX opcode=1001 len=3
+S31 BLE: complete opcode=1001 status=0 len=15
+S31 BLE: TX opcode=1001 result=3
+S31 BLE host: opcode=1001 wait=0 status=0 ref=1
+S31 BLE host: opcode=1001 returned
+S31 BLE host: allocating opcode=1002
+S31 BLE host: opcode=1002 buffer=0x2f01a58c
+S31 BLE host: opcode=1002 queued current=0x2f01b8f0 syswq=0x2f01b8f0
+S31 BLE: TX opcode=1002 len=3
+S31 BLE: complete opcode=1002 status=0 len=71
+S31 BLE: TX opcode=1002 result=3
+S31 BLE host: opcode=1002 wait=0 status=0 ref=1
+S31 BLE host: opcode=1002 returned
+S31 BLE host: initializing PSA PRNG
+S31 BLE host: PSA PRNG result=0
+S31 BLE host: opcode=0c33 queued current=0x2f01b8f0 syswq=0x2f01b8f0
+S31 BLE: TX opcode=0c33 len=10
+S31 BLE: complete opcode=0c33 status=17 len=7
+S31 BLE: TX opcode=0c33 result=10
+S31 BLE host: opcode=0c33 wait=0 status=17 ref=1
+S31 BLE host: initialization result=-5
+[bttool] Context:0x2f030fa8, Adapter state changed: 1
+bttool> Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-ble-switch.py", line 110, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-ble-switch.py", line 95, in main
+    interactive('enable', r'Adapter state changed:\s*2\b')
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-ble-switch.py", line 92, in interactive
+    raise TimeoutError('missing original callback/state for ' + cmd + '; no reset/retry')
+TimeoutError: missing original callback/state for enable; no reset/retry

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "case": "5.1.68",
+  "original_command": "vela_kvdb_stability_test02 10",
+  "rounds": 10,
+  "database_io_errors": 0,
+  "vfs_errno_errors": 0,
+  "host_exit_code": 0,
+  "target_exit_code": 0,
+  "database_bytes": 405504,
+  "filesystem_blocks": 768,
+  "final_used_blocks": 177,
+  "final_available_blocks": 591,
+  "image_sha256": "b41c760b9b43daa756e39a1dfd8f5b2ffc0c8564c692551dc4c3ce027c5aa3d8",
+  "configuration": "3MiB existing LittleFS at0xd00000, original workload unchanged, errno diagnostic retained",
+  "previous_failures": "1100/1119 on1MiB retained;1139 interrupted and not counted",
+  "scope": "This3MiB configuration passes; not proof of the precise1MiB failure root cause"
+}

@@ -1,0 +1,13 @@
+{
+  "status": "BACKGROUND_TCP_COMPLETED_QUEUE_OBSERVATION_UNAVAILABLE",
+  "summary": [
+    "[  1] 20.00-20.77 sec  16.0 KBytes   171 Kbits/sec",
+    "[  1] 0.00-20.77 sec   755 KBytes   298 Kbits/sec"
+  ],
+  "image": "1612",
+  "queue_samples_valid": false,
+  "reason": "CONFIG_NET_STATISTICS not set; /proc/net/tcp ENOENT. Do not infer queue values from ps semaphore waits.",
+  "exit": "iperf task absent in ps; log collected and removed; IOB96/96free after test.",
+  "scope": "Custom Windows sink,20seconds diagnostic; no original xTS throughput PASS.",
+  "unresolved": "1612 background SIMD/concurrent cat hang preserved separately."
+}

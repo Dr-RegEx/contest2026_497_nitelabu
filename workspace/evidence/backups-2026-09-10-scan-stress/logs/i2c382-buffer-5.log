@@ -1,0 +1,164 @@
+--- CMD: uname -a ---
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 14 2026 14:37:46 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: i2c reset ---
+i2c reset
+Reset command sent successfully
+nsh> [K
+nsh> [K
+--- CMD: i2c get -a18 -rfd -w8 -f100000 10 ---
+i2c get -a18 -rfd -w8 -f100000 10
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=100000 register=0xfd reads=16
+--- CMD: i2c get -a18 -rfe -w8 -f100000 10 ---
+i2c get -a18 -rfe -w8 -f100000 10
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=100000 register=0xfe reads=16
+--- CMD: i2c reset ---
+i2c reset
+Reset command sent successfully
+nsh> [K
+nsh> [K
+--- CMD: i2c get -a18 -rfd -w8 -f400000 10 ---
+i2c get -a18 -rfd -w8 -f400000 10
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=400000 register=0xfd reads=16
+--- CMD: i2c get -a18 -rfe -w8 -f400000 10 ---
+i2c get -a18 -rfe -w8 -f400000 10
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=400000 register=0xfe reads=16
+--- CMD: i2c reset ---
+i2c reset
+Reset command sent successfully
+nsh> [K
+nsh> [K
+--- CMD: i2c get -a18 -rfd -w8 -f100000 10 ---
+i2c get -a18 -rfd -w8 -f100000 10
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=100000 register=0xfd reads=16
+--- CMD: i2c get -a18 -rfe -w8 -f100000 10 ---
+i2c get -a18 -rfe -w8 -f100000 10
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+nsh> [K
+nsh> [K
+CODEC_ID_STRESS=PASS frequency=100000 register=0xfe reads=16
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=29529 replay=29529 ack=30202 drop=0 pending=0x0 sreplay=13
+MONLAT: cpu=0 input=1 last=1406 max=16286069 samples=6818 over32=256 over100=160 over1000=29 sum=213511789
+MONIRQ: cpu=1 defer=47668 replay=47668 ack=47692 drop=0 pending=0x0 sreplay=3
+MONLAT: cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0
+ADDRENV: created=52 fail=0 destroyed=50 live=2 livemax=3 pages=6990 pgt=200
+WAIT: pid=2 object=0x2f010b14
+LPTRACE: 0x40024860
+WAIT: pid=4 object=0x2f010b6c
+WAIT: pid=12 object=0x2f052a14
+nsh> [K
+nsh> [K
+ES8311_I2C_RECOVERY_STRESS=PASS resets=3 reads=96 audio=untested

@@ -1,0 +1,208 @@
+++ stat -c %s /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/demo-before272/before-a.bin
++ test 5242880 -eq 5242880
+++ stat -c %s /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/demo-before272/before-b.bin
++ test 5242880 -eq 5242880
++ cd /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/demo-before272
++ sha256sum -c SHA256SUMS
+before-a.bin: OK
+before-b.bin: OK
++ cmp /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/demo-before272/before-a.bin /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/demo-before272/before-b.bin
++ cd /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress
++ sha256sum -c SHA256SUMS-progress433
+progress414-433-make.tar.gz: OK
+firmware415-ws2812-write.tar.gz: OK
+firmware432-make-rmt.tar.gz: OK
++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/nuttx.bin /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs.img
++ cmp -s - /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build432-make-rmt.sha256
++ python3 /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/verify-wifi-artifact.py /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx --objdump /home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-objdump
+WIFI_ARTIFACT_CONFIG=PASS booleans=1562 protocol=7
++ rg -q '^# CONFIG_ESPRESSIF_WIFI_STA_11AX is not set$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/.config
++ for task_option in EXAMPLES_S31DEMO EXAMPLES_S31LED ESP_RMT ESPRESSIF_I2C0 SMP BUILD_KERNEL
++ rg -q '^CONFIG_EXAMPLES_S31DEMO=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/.config
++ for task_option in EXAMPLES_S31DEMO EXAMPLES_S31LED ESP_RMT ESPRESSIF_I2C0 SMP BUILD_KERNEL
++ rg -q '^CONFIG_EXAMPLES_S31LED=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/.config
++ for task_option in EXAMPLES_S31DEMO EXAMPLES_S31LED ESP_RMT ESPRESSIF_I2C0 SMP BUILD_KERNEL
++ rg -q '^CONFIG_ESP_RMT=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/.config
++ for task_option in EXAMPLES_S31DEMO EXAMPLES_S31LED ESP_RMT ESPRESSIF_I2C0 SMP BUILD_KERNEL
++ rg -q '^CONFIG_ESPRESSIF_I2C0=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/.config
++ for task_option in EXAMPLES_S31DEMO EXAMPLES_S31LED ESP_RMT ESPRESSIF_I2C0 SMP BUILD_KERNEL
++ rg -q '^CONFIG_SMP=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/.config
++ for task_option in EXAMPLES_S31DEMO EXAMPLES_S31LED ESP_RMT ESPRESSIF_I2C0 SMP BUILD_KERNEL
++ rg -q '^CONFIG_BUILD_KERNEL=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/.config
+++ stat -c %s /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/nuttx.bin
++ test 996132 -le 2088960
+++ stat -c %s /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs.img
++ test 2404352 -le 3145728
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
+++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/init
+++ cut -d ' ' -f 1
+++ head -n 1 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/init.sha256
++ test f12e4378bb3396e31327533b4943e1a54dc14074178e8bb4d7c14348af5ab51f = f12e4378bb3396e31327533b4943e1a54dc14074178e8bb4d7c14348af5ab51f
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
+++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/sh
+++ cut -d ' ' -f 1
+++ head -n 1 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/sh.sha256
++ test 137693cf10e3b2a07794ef35678d3f12e27fc023404a4ebdb3d7f7d2686c6be7 = 137693cf10e3b2a07794ef35678d3f12e27fc023404a4ebdb3d7f7d2686c6be7
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
+++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/s31demo
+++ cut -d ' ' -f 1
+++ head -n 1 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/s31demo.sha256
++ test aa60061ad0f9b753eb141f381e022193d4dd58e588380b0551a6a6692c73d201 = aa60061ad0f9b753eb141f381e022193d4dd58e588380b0551a6a6692c73d201
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
+++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/s31led
+++ cut -d ' ' -f 1
+++ head -n 1 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/s31led.sha256
++ test a8f237ba94b27394810cfcfadd6bd5c31d339d48e13b5186f5f271d3022ee0ed = a8f237ba94b27394810cfcfadd6bd5c31d339d48e13b5186f5f271d3022ee0ed
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
+++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/i2c
+++ cut -d ' ' -f 1
+++ head -n 1 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/i2c.sha256
++ test bf85de17235e6337884164b38b5d3666a4dc93378384411af2edfa14fdd9dfa3 = bf85de17235e6337884164b38b5d3666a4dc93378384411af2edfa14fdd9dfa3
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
+++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/buttons
+++ cut -d ' ' -f 1
+++ head -n 1 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/buttons.sha256
++ test 11c71d7d793d6a8d3e76671a9004395eda4c69da6faad73e663821a2a71a622b = 11c71d7d793d6a8d3e76671a9004395eda4c69da6faad73e663821a2a71a622b
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
+++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/wapi
+++ cut -d ' ' -f 1
+++ head -n 1 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/wapi.sha256
++ test 94d8a22eda14b2361ec501a479ff0dcd230f52ceff19d14c6b92532fe45604b7 = 94d8a22eda14b2361ec501a479ff0dcd230f52ceff19d14c6b92532fe45604b7
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
+++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/ping
+++ cut -d ' ' -f 1
+++ head -n 1 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/ping.sha256
++ test 70a05d52bbe3292f33203b5c8b1a2b9717fc37489d9a3624c981e4ea4bfec406 = 70a05d52bbe3292f33203b5c8b1a2b9717fc37489d9a3624c981e4ea4bfec406
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
+++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/renew
+++ cut -d ' ' -f 1
+++ head -n 1 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs-root/renew.sha256
++ test 9222041b88f9ca2286c8cf538f0e526118f9f97410df00d4996c0d3afb5d82f5 = 9222041b88f9ca2286c8cf538f0e526118f9f97410df00d4996c0d3afb5d82f5
++ /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/esptool --chip esp32s31 --port /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0 --baud 460800 write-flash --flash-size 16MB --flash-mode dio --flash-freq 80m 0x2000 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/nuttx.bin 0x200000 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs.img
+esptool v5.4.0
+Serial port /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0:
+Connecting....
+Connected to ESP32-S31 on /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0:
+Chip type:          ESP32-S31 (revision v0.0)
+Features:           Wi-Fi 6, BT 5.4 (LE), IEEE802.15.4, Dual Core + LP Core, 300MHz
+Crystal frequency:  40MHz
+MAC:                30:ed:a0:f3:f7:b0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/nuttx.bin' at 0x00002000...
+SHA digest in image updated.
+Flash will be erased from 0x00002000 to 0x000f5fff...
+Compressed 996132 bytes to 546777...
+Writing at 0x00007dc3 ╸                                3.0% 16.00kB/533.96kB [0s] 
+Writing at 0x0000def1 ━╸                               6.0% 32.00kB/533.96kB [0s] 
+Writing at 0x00024c96 ━━╸                              9.0% 48.00kB/533.96kB [1s] 
+Writing at 0x0002b4ab ━━━╸                            12.0% 64.00kB/533.96kB [1s] 
+Writing at 0x00036e99 ━━━━                            15.0% 80.00kB/533.96kB [2s] 
+Writing at 0x00044ee5 ━━━━━                           18.0% 96.00kB/533.96kB [2s] 
+Writing at 0x0004b658 ━━━━━━                          21.0% 112.00kB/533.96kB [3s] 
+Writing at 0x00052fe4 ━━━━━━━                         24.0% 128.00kB/533.96kB [3s] 
+Writing at 0x0005a781 ━━━━━━━━                        27.0% 144.00kB/533.96kB [3s] 
+Writing at 0x000610c8 ━━━━━━━━╸                       30.0% 160.00kB/533.96kB [4s] 
+Writing at 0x00067463 ━━━━━━━━━╸                      33.0% 176.00kB/533.96kB [4s] 
+Writing at 0x0006d6af ━━━━━━━━━━╸                     36.0% 192.00kB/533.96kB [4s] 
+Writing at 0x00072eb8 ━━━━━━━━━━━╸                    39.0% 208.00kB/533.96kB [5s] 
+Writing at 0x000789b2 ━━━━━━━━━━━━╸                   42.0% 224.00kB/533.96kB [5s] 
+Writing at 0x0007dfff ━━━━━━━━━━━━━                   44.9% 240.00kB/533.96kB [6s] 
+Writing at 0x00083d77 ━━━━━━━━━━━━━━                  47.9% 256.00kB/533.96kB [6s] 
+Writing at 0x0008aedf ━━━━━━━━━━━━━━━                 50.9% 272.00kB/533.96kB [6s] 
+Writing at 0x00092999 ━━━━━━━━━━━━━━━━                53.9% 288.00kB/533.96kB [7s] 
+Writing at 0x0009a99f ━━━━━━━━━━━━━━━━━               56.9% 304.00kB/533.96kB [7s] 
+Writing at 0x000a30fc ━━━━━━━━━━━━━━━━━╸              59.9% 320.00kB/533.96kB [8s] 
+Writing at 0x000a9c97 ━━━━━━━━━━━━━━━━━━╸             62.9% 336.00kB/533.96kB [8s] 
+Writing at 0x000afbbd ━━━━━━━━━━━━━━━━━━━╸            65.9% 352.00kB/533.96kB [8s] 
+Writing at 0x000b617e ━━━━━━━━━━━━━━━━━━━━╸           68.9% 368.00kB/533.96kB [9s] 
+Writing at 0x000bc8a8 ━━━━━━━━━━━━━━━━━━━━━╸          71.9% 384.00kB/533.96kB [9s] 
+Writing at 0x000c285f ━━━━━━━━━━━━━━━━━━━━━━          74.9% 400.00kB/533.96kB [10s] 
+Writing at 0x000c891f ━━━━━━━━━━━━━━━━━━━━━━━         77.9% 416.00kB/533.96kB [10s] 
+Writing at 0x000ce510 ━━━━━━━━━━━━━━━━━━━━━━━━        80.9% 432.00kB/533.96kB [10s] 
+Writing at 0x000d437f ━━━━━━━━━━━━━━━━━━━━━━━━━       83.9% 448.00kB/533.96kB [11s] 
+Writing at 0x000d9ea9 ━━━━━━━━━━━━━━━━━━━━━━━━━━      86.9% 464.00kB/533.96kB [11s] 
+Writing at 0x000e02dc ━━━━━━━━━━━━━━━━━━━━━━━━━━╸     89.9% 480.00kB/533.96kB [12s] 
+Writing at 0x000e62e1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━╸    92.9% 496.00kB/533.96kB [12s] 
+Writing at 0x000ecdb7 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸   95.9% 512.00kB/533.96kB [12s] 
+Writing at 0x000f2f1f ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸  98.9% 528.00kB/533.96kB [13s] 
+Writing at 0x000f5324 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 533.96kB/533.96kB [13s] 
+Wrote 996132 bytes (546777 compressed) at 0x00002000 in 11.7 seconds (683.7 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Writing '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs.img' at 0x00200000...
+Flash will be erased from 0x00200000 to 0x0044afff...
+Compressed 2404352 bytes to 975459...
+Writing at 0x002073ac ╸                                1.7% 16.00kB/952.60kB [0s] 
+Writing at 0x0020cf08 ━                                3.4% 32.00kB/952.60kB [0s] 
+Writing at 0x00217ab0 ━╸                               5.0% 48.00kB/952.60kB [1s] 
+Writing at 0x0022eed8 ━━                               6.7% 64.00kB/952.60kB [1s] 
+Writing at 0x00236500 ━━╸                              8.4% 80.00kB/952.60kB [2s] 
+Writing at 0x002400b4 ━━━                             10.1% 96.00kB/952.60kB [2s] 
+Writing at 0x00249760 ━━━╸                            11.8% 112.00kB/952.60kB [2s] 
+Writing at 0x00250b08 ━━━━                            13.4% 128.00kB/952.60kB [3s] 
+Writing at 0x0025d937 ━━━━╸                           15.1% 144.00kB/952.60kB [3s] 
+Writing at 0x0026616b ━━━━━                           16.8% 160.00kB/952.60kB [4s] 
+Writing at 0x0026f07b ━━━━━╸                          18.5% 176.00kB/952.60kB [4s] 
+Writing at 0x0027a508 ━━━━━━                          20.2% 192.00kB/952.60kB [4s] 
+Writing at 0x00282602 ━━━━━━╸                         21.8% 208.00kB/952.60kB [5s] 
+Writing at 0x00290487 ━━━━━━━                         23.5% 224.00kB/952.60kB [5s] 
+Writing at 0x002983a1 ━━━━━━━╸                        25.2% 240.00kB/952.60kB [6s] 
+Writing at 0x0029f944 ━━━━━━━━                        26.9% 256.00kB/952.60kB [6s] 
+Writing at 0x002a52b4 ━━━━━━━━╸                       28.6% 272.00kB/952.60kB [6s] 
+Writing at 0x002ab422 ━━━━━━━━━                       30.2% 288.00kB/952.60kB [7s] 
+Writing at 0x002b11fe ━━━━━━━━━╸                      31.9% 304.00kB/952.60kB [7s] 
+Writing at 0x002bb258 ━━━━━━━━━━                      33.6% 320.00kB/952.60kB [7s] 
+Writing at 0x002c5002 ━━━━━━━━━━╸                     35.3% 336.00kB/952.60kB [8s] 
+Writing at 0x002dbf6f ━━━━━━━━━━━                     37.0% 352.00kB/952.60kB [8s] 
+Writing at 0x002e3674 ━━━━━━━━━━━╸                    38.6% 368.00kB/952.60kB [9s] 
+Writing at 0x002ecfde ━━━━━━━━━━━━                    40.3% 384.00kB/952.60kB [9s] 
+Writing at 0x002f76cf ━━━━━━━━━━━━╸                   42.0% 400.00kB/952.60kB [9s] 
+Writing at 0x002ff43f ━━━━━━━━━━━━━                   43.7% 416.00kB/952.60kB [10s] 
+Writing at 0x00305fb3 ━━━━━━━━━━━━━╸                  45.3% 432.00kB/952.60kB [10s] 
+Writing at 0x0030d2e1 ━━━━━━━━━━━━━━                  47.0% 448.00kB/952.60kB [11s] 
+Writing at 0x003193d7 ━━━━━━━━━━━━━━╸                 48.7% 464.00kB/952.60kB [11s] 
+Writing at 0x003285fc ━━━━━━━━━━━━━━━                 50.4% 480.00kB/952.60kB [11s] 
+Writing at 0x0033b686 ━━━━━━━━━━━━━━━╸                52.1% 496.00kB/952.60kB [12s] 
+Writing at 0x00343076 ━━━━━━━━━━━━━━━━                53.7% 512.00kB/952.60kB [12s] 
+Writing at 0x0034c9ef ━━━━━━━━━━━━━━━━╸               55.4% 528.00kB/952.60kB [13s] 
+Writing at 0x00354ed7 ━━━━━━━━━━━━━━━━━               57.1% 544.00kB/952.60kB [13s] 
+Writing at 0x0035d813 ━━━━━━━━━━━━━━━━━╸              58.8% 560.00kB/952.60kB [13s] 
+Writing at 0x0036561b ━━━━━━━━━━━━━━━━━━              60.5% 576.00kB/952.60kB [14s] 
+Writing at 0x00371fb3 ━━━━━━━━━━━━━━━━━━╸             62.1% 592.00kB/952.60kB [14s] 
+Writing at 0x0037aba0 ━━━━━━━━━━━━━━━━━━━             63.8% 608.00kB/952.60kB [15s] 
+Writing at 0x00382a52 ━━━━━━━━━━━━━━━━━━━╸            65.5% 624.00kB/952.60kB [15s] 
+Writing at 0x0038f1e5 ━━━━━━━━━━━━━━━━━━━━            67.2% 640.00kB/952.60kB [15s] 
+Writing at 0x003979b6 ━━━━━━━━━━━━━━━━━━━━╸           68.9% 656.00kB/952.60kB [16s] 
+Writing at 0x0039f163 ━━━━━━━━━━━━━━━━━━━━━           70.5% 672.00kB/952.60kB [16s] 
+Writing at 0x003ac2ae ━━━━━━━━━━━━━━━━━━━━━╸          72.2% 688.00kB/952.60kB [16s] 
+Writing at 0x003b590e ━━━━━━━━━━━━━━━━━━━━━━          73.9% 704.00kB/952.60kB [17s] 
+Writing at 0x003bb160 ━━━━━━━━━━━━━━━━━━━━━━╸         75.6% 720.00kB/952.60kB [17s] 
+Writing at 0x003c5b75 ━━━━━━━━━━━━━━━━━━━━━━━         77.3% 736.00kB/952.60kB [18s] 
+Writing at 0x003d1701 ━━━━━━━━━━━━━━━━━━━━━━━╸        78.9% 752.00kB/952.60kB [18s] 
+Writing at 0x003dadc9 ━━━━━━━━━━━━━━━━━━━━━━━━        80.6% 768.00kB/952.60kB [18s] 
+Writing at 0x003e152e ━━━━━━━━━━━━━━━━━━━━━━━━╸       82.3% 784.00kB/952.60kB [19s] 
+Writing at 0x003e744c ━━━━━━━━━━━━━━━━━━━━━━━━━       84.0% 800.00kB/952.60kB [19s] 
+Writing at 0x003ed5de ━━━━━━━━━━━━━━━━━━━━━━━━━╸      85.7% 816.00kB/952.60kB [20s] 
+Writing at 0x003f2b34 ━━━━━━━━━━━━━━━━━━━━━━━━━━      87.3% 832.00kB/952.60kB [20s] 
+Writing at 0x003fcabc ━━━━━━━━━━━━━━━━━━━━━━━━━━╸     89.0% 848.00kB/952.60kB [20s] 
+Writing at 0x004071b4 ━━━━━━━━━━━━━━━━━━━━━━━━━━━     90.7% 864.00kB/952.60kB [21s] 
+Writing at 0x004174fa ━━━━━━━━━━━━━━━━━━━━━━━━━━━╸    92.4% 880.00kB/952.60kB [21s] 
+Writing at 0x00429329 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━    94.1% 896.00kB/952.60kB [22s] 
+Writing at 0x004305cd ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸   95.7% 912.00kB/952.60kB [22s] 
+Writing at 0x0043a007 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   97.4% 928.00kB/952.60kB [22s] 
+Writing at 0x004452c6 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸  99.1% 944.00kB/952.60kB [23s] 
+Writing at 0x0044b000 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 952.60kB/952.60kB [23s] 
+Wrote 2404352 bytes (975459 compressed) at 0x00200000 in 23.6 seconds (816.2 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Hard resetting via RTS pin...

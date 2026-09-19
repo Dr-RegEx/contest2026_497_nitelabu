@@ -1,0 +1,77 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x5f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x13fa8
+entry 0x2f010388
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x13fa8  (81832)
+padd: lma 0x00016018 vma 0x00000000 len 0xa000   (40960)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1aeb4  (110260)
+padd: lma 0x0003aedc vma 0x00000000 len 0x521c   (21020)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2e88  (798344)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] task exit! tcb=0x2f038de0 name=AppBringUp, tid:3, priority=240 entry:0x40025a2a pid: 0, stack_alloc_ptr: 0x2f044050, adj_stack_size: 8112
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_BOOT=PASS seconds=0.660
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=40 data=0 fcs=7 abort=9 full=0 fifo=0 other=2
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=0 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/cxxtest ---
+ls /system/bin/cxxtest
+ /system/bin/cxxtest
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     290492      89004     201488     104168     176488    198      9 Kmem
+   16777216     712704   16064512   16064512 Page
+nsh> [K
+nsh> [K
+XTS_COMMAND=cxxtest
+cxxtest
+Test std::vector =============================
+v1=1 2 3
+s1=Hello, World!
+Hello World Good Luck 
+Test std::map ===============================
+Test C++17 features [CPU0] task exit! tcb=0x2f052d98 name=cxxtest, tid:7, priority=100 entry:0x61008ac8 pid: 7, stack_alloc_ptr: 0x61804040, adj_stack_size: 16320
+==========================
+File /proc/meminfo exists!
+File /invalid does not exist!
+File /proc/version exists!
+Test RTTI =============================
+extend
+Test Exception ===============================
+nsh> [K
+nsh> [KTraceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-run-standard.py", line 146, in <module>
+    production.require(all(marker in text for marker in
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_production_smoke.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: C++ standard test output incomplete

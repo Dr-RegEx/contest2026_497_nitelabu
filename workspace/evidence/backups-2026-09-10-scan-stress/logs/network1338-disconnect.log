@@ -1,0 +1,13 @@
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: ping www.baidu.com ---
+ping www.baidu.com
+nsh: ping: command not found
+nsh> [K
+nsh> [K
+{"case": "4.1.31", "status": "FAIL", "receipt": "build1332-network-dns.sha256", "error": "public ping prerequisite failed"}

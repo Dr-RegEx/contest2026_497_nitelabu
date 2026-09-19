@@ -1,0 +1,542 @@
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    000a1099 00000000 00000000 3ab2efce        
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 0002f1db
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    0001d20e 0001d215 00000000 00000000 840baeb          
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     fcac  b033  4766  03ad
+Dropped      0166  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         cec2  6965  61ad  03b0
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+nsh> [K
+--- CMD: cat /proc/uptime ---
+cat /proc/uptime
+  10620.50
+nsh> [K
+nsh> [K
+--- CMD: iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M > /tmp/z & ---
+iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M > /tmp/z &
+iperf2 [75:101]
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 000(0x00000003) 100 RR       Kthread   - Running            0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  Mutex:2   0000000000000000 0003520 wifi
+    7     7 001(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   75    75 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008032 iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M
+   76    75 ---(0x00000003) 101 RR       pthread   - Waiting  Signal    0000000000000000 0008144 iperf2 0x6100d684 0x61800dd0
+   77    75 000(0x00000003) 100 RR       pthread   - Running            0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Ready              0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 001(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   75    75 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008032 iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M
+   76    75 ---(0x00000003) 101 RR       pthread   - Waiting  Signal    0000000000000000 0008144 iperf2 0x6100d684 0x61800dd0
+   77    75 000(0x00000003) 100 RR       pthread   - Running            0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Ready              0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Ready              0000000000000000 0003520 wifi
+    7     7 001(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   75    75 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008032 iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M
+   76    75 ---(0x00000003) 101 RR       pthread   - Waiting  Signal    0000000000000000 0008144 iperf2 0x6100d684 0x61800dd0
+   77    75 000(0x00000003) 100 RR       pthread   - Running            0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 000(0x00000003) 100 RR       Kthread   - Running            0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 001(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   75    75 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008032 iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M
+   76    75 ---(0x00000003) 101 RR       pthread   - Waiting  Signal    0000000000000000 0008144 iperf2 0x6100d684 0x61800dd0
+   77    75 ---(0x00000003) 100 RR       pthread   - Ready              0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 000(0x00000003) 100 RR       Kthread   - Running            0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Running            0000000000000000 0003520 wifi
+    7     7 001(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   75    75 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008032 iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M
+   76    75 ---(0x00000003) 101 RR       pthread   - Waiting  Signal    0000000000000000 0008144 iperf2 0x6100d684 0x61800dd0
+   77    75 ---(0x00000003) 100 RR       pthread   - Waiting  Mutex:2   0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 000(0x00000003) 100 RR       Kthread   - Running            0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 001(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   75    75 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008032 iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M
+   76    75 ---(0x00000003) 101 RR       pthread   - Waiting  Signal    0000000000000000 0008144 iperf2 0x6100d684 0x61800dd0
+   77    75 ---(0x00000003) 100 RR       pthread   - Ready              0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   75    75 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008032 iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M
+   76    75 ---(0x00000003) 101 RR       pthread   - Waiting  Signal    0000000000000000 0008144 iperf2 0x6100d684 0x61800dd0
+   77    75 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   75    75 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008032 iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M
+   76    75 ---(0x00000003) 101 RR       pthread   - Waiting  Signal    0000000000000000 0008144 iperf2 0x6100d684 0x61800dd0
+   77    75 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Ready              0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 000(0x00000001) 253 RR       Kthread   - Running            0000000000000000 0003520 wifi
+    7     7 001(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   75    75 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008032 iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M
+   76    75 ---(0x00000003) 101 RR       pthread   - Waiting  Signal    0000000000000000 0008144 iperf2 0x6100d684 0x61800dd0
+   77    75 000(0x00000003) 100 RR       pthread   - Running            0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: cat /proc/uptime ---
+cat /proc/uptime
+  10924.79
+nsh> [K
+nsh> [K
+--- CMD: cat /tmp/z ---
+cat /tmp/z
+------------------------------------------------------------
+Client connecting to 192.168.1.29, UDP port 5004
+Sending 1470 byte datagrams, IPG target: 280.38 us (kalman adjust)
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 18861 connected with 192.168.1.29 port 5004
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.00-1.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 1.00-2.00 sec   498 KBytes  4.08 Mbits/sec
+[  1] 2.00-3.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 3.00-4.00 sec   469 KBytes  3.85 Mbits/sec
+[  1] 4.00-5.00 sec   484 KBytes  3.96 Mbits/sec
+[  1] 5.00-6.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 6.00-7.00 sec   478 KBytes  3.92 Mbits/sec
+[  1] 7.00-8.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 8.00-9.00 sec   502 KBytes  4.12 Mbits/sec
+[  1] 9.00-10.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 10.00-11.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 11.00-12.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 12.00-13.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 13.00-14.00 sec   498 KBytes  4.08 Mbits/sec
+[  1] 14.00-15.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 15.00-16.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 16.00-17.00 sec   500 KBytes  4.09 Mbits/sec
+[  1] 17.00-18.00 sec   477 KBytes  3.90 Mbits/sec
+[  1] 18.00-19.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 19.00-20.00 sec   478 KBytes  3.92 Mbits/sec
+[  1] 20.00-21.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 21.00-22.00 sec   501 KBytes  4.10 Mbits/sec
+[  1] 22.00-23.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 23.00-24.00 sec   484 KBytes  3.96 Mbits/sec
+[  1] 24.00-25.00 sec   478 KBytes  3.92 Mbits/sec
+[  1] 25.00-26.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 26.00-27.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 27.00-28.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 28.00-29.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 29.00-30.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 30.00-31.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 31.00-32.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 32.00-33.00 sec   484 KBytes  3.96 Mbits/sec
+[  1] 33.00-34.00 sec   477 KBytes  3.90 Mbits/sec
+[  1] 34.00-35.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 35.00-36.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 36.00-37.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 37.00-38.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 38.00-39.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 39.00-40.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 40.00-41.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 41.00-42.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 42.00-43.00 sec   474 KBytes  3.88 Mbits/sec
+[  1] 43.00-44.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 44.00-45.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 45.00-46.00 sec   498 KBytes  4.08 Mbits/sec
+[  1] 46.00-47.00 sec   478 KBytes  3.92 Mbits/sec
+[  1] 47.00-48.00 sec   477 KBytes  3.90 Mbits/sec
+[  1] 48.00-49.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 49.00-50.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 50.00-51.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 51.00-52.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 52.00-53.00 sec   502 KBytes  4.12 Mbits/sec
+[  1] 53.00-54.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 54.00-55.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 55.00-56.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 56.00-57.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 57.00-58.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 58.00-59.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 59.00-60.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 60.00-61.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 61.00-62.00 sec   472 KBytes  3.87 Mbits/sec
+[  1] 62.00-63.00 sec   504 KBytes  4.13 Mbits/sec
+[  1] 63.00-64.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 64.00-65.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 65.00-66.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 66.00-67.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 67.00-68.00 sec   484 KBytes  3.96 Mbits/sec
+[  1] 68.00-69.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 69.00-70.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 70.00-71.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 71.00-72.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 72.00-73.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 73.00-74.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 74.00-75.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 75.00-76.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 76.00-77.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 77.00-78.00 sec   505 KBytes  4.14 Mbits/sec
+[  1] 78.00-79.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 79.00-80.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 80.00-81.00 sec   498 KBytes  4.08 Mbits/sec
+[  1] 81.00-82.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 82.00-83.00 sec   494 KBytes  4.05 Mbits/sec
+[  1] 83.00-84.00 sec   478 KBytes  3.92 Mbits/sec
+[  1] 84.00-85.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 85.00-86.00 sec   484 KBytes  3.96 Mbits/sec
+[  1] 86.00-87.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 87.00-88.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 88.00-89.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 89.00-90.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 90.00-91.00 sec   461 KBytes  3.77 Mbits/sec
+[  1] 91.00-92.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 92.00-93.00 sec   501 KBytes  4.10 Mbits/sec
+[  1] 93.00-94.00 sec   494 KBytes  4.05 Mbits/sec
+[  1] 94.00-95.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 95.00-96.00 sec   475 KBytes  3.89 Mbits/sec
+[  1] 96.00-97.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 97.00-98.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 98.00-99.00 sec   475 KBytes  3.89 Mbits/sec
+[  1] 99.00-100.00 sec   471 KBytes  3.86 Mbits/sec
+[  1] 100.00-101.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 101.00-102.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 102.00-103.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 103.00-104.00 sec   484 KBytes  3.96 Mbits/sec
+[  1] 104.00-105.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 105.00-106.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 106.00-107.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 107.00-108.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 108.00-109.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 109.00-110.00 sec   498 KBytes  4.08 Mbits/sec
+[  1] 110.00-111.00 sec   498 KBytes  4.08 Mbits/sec
+[  1] 111.00-112.00 sec   484 KBytes  3.96 Mbits/sec
+[  1] 112.00-113.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 113.00-114.00 sec   475 KBytes  3.89 Mbits/sec
+[  1] 114.00-115.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 115.00-116.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 116.00-117.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 117.00-118.00 sec   474 KBytes  3.88 Mbits/sec
+[  1] 118.00-119.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 119.00-120.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 120.00-121.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 121.00-122.00 sec   469 KBytes  3.85 Mbits/sec
+[  1] 122.00-123.00 sec   498 KBytes  4.08 Mbits/sec
+[  1] 123.00-124.00 sec   498 KBytes  4.08 Mbits/sec
+[  1] 124.00-125.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 125.00-126.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 126.00-127.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 127.00-128.00 sec   484 KBytes  3.96 Mbits/sec
+[  1] 128.00-129.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 129.00-130.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 130.00-131.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 131.00-132.00 sec   502 KBytes  4.12 Mbits/sec
+[  1] 132.00-133.00 sec   484 KBytes  3.96 Mbits/sec
+[  1] 133.00-134.00 sec   418 KBytes  3.42 Mbits/sec
+[  1] 134.00-135.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 135.00-136.00 sec   504 KBytes  4.13 Mbits/sec
+[  1] 136.00-137.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 137.00-138.00 sec   363 KBytes  2.98 Mbits/sec
+[  1] 138.00-139.00 sec   512 KBytes  4.20 Mbits/sec
+[  1] 139.00-140.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 140.00-141.00 sec   501 KBytes  4.10 Mbits/sec
+[  1] 141.00-142.00 sec   504 KBytes  4.13 Mbits/sec
+[  1] 142.00-143.00 sec   468 KBytes  3.83 Mbits/sec
+[  1] 143.00-144.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 144.00-145.00 sec   504 KBytes  4.13 Mbits/sec
+[  1] 145.00-146.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 146.00-147.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 147.00-148.00 sec   478 KBytes  3.92 Mbits/sec
+[  1] 148.00-149.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 149.00-150.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 150.00-151.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 151.00-152.00 sec   455 KBytes  3.73 Mbits/sec
+[  1] 152.00-153.00 sec   494 KBytes  4.05 Mbits/sec
+[  1] 153.00-154.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 154.00-155.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 155.00-156.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 156.00-157.00 sec   501 KBytes  4.10 Mbits/sec
+[  1] 157.00-158.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 158.00-159.00 sec   498 KBytes  4.08 Mbits/sec
+[  1] 159.00-160.00 sec   502 KBytes  4.12 Mbits/sec
+[  1] 160.00-161.00 sec   494 KBytes  4.05 Mbits/sec
+[  1] 161.00-162.00 sec   510 KBytes  4.17 Mbits/sec
+[  1] 162.00-163.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 163.00-164.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 164.00-165.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 165.00-166.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 166.00-167.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 167.00-168.00 sec   494 KBytes  4.05 Mbits/sec
+[  1] 168.00-169.00 sec   501 KBytes  4.10 Mbits/sec
+[  1] 169.00-170.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 170.00-171.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 171.00-172.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 172.00-173.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 173.00-174.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 174.00-175.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 175.00-176.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 176.00-177.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 177.00-178.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 178.00-179.00 sec   502 KBytes  4.12 Mbits/sec
+[  1] 179.00-180.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 180.00-181.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 181.00-182.00 sec   471 KBytes  3.86 Mbits/sec
+[  1] 182.00-183.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 183.00-184.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 184.00-185.00 sec   508 KBytes  4.16 Mbits/sec
+[  1] 185.00-186.00 sec   494 KBytes  4.05 Mbits/sec
+[  1] 186.00-187.00 sec   494 KBytes  4.05 Mbits/sec
+[  1] 187.00-188.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 188.00-189.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 189.00-190.00 sec   500 KBytes  4.09 Mbits/sec
+[  1] 190.00-191.00 sec   446 KBytes  3.66 Mbits/sec
+[  1] 191.00-192.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 192.00-193.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 193.00-194.00 sec   500 KBytes  4.09 Mbits/sec
+[  1] 194.00-195.00 sec   479 KBytes  3.93 Mbits/sec
+[  1] 195.00-196.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 196.00-197.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 197.00-198.00 sec   343 KBytes  2.81 Mbits/sec
+[  1] 198.00-199.00 sec   184 KBytes  1.51 Mbits/sec
+[  1] 199.00-200.00 sec   154 KBytes  1.26 Mbits/sec
+[  1] 200.00-201.00 sec  63.2 KBytes   517 Kbits/sec
+[  1] 201.00-202.00 sec   121 KBytes   988 Kbits/sec
+[  1] 202.00-203.00 sec  50.2 KBytes   412 Kbits/sec
+[  1] 203.00-204.00 sec   223 KBytes  1.82 Mbits/sec
+[  1] 204.00-205.00 sec   435 KBytes  3.56 Mbits/sec
+[  1] 205.00-206.00 sec   451 KBytes  3.69 Mbits/sec
+[  1] 206.00-207.00 sec   169 KBytes  1.39 Mbits/sec
+[  1] 207.00-208.00 sec   108 KBytes   882 Kbits/sec
+[  1] 208.00-209.00 sec   108 KBytes   882 Kbits/sec
+[  1] 209.00-210.00 sec   139 KBytes  1.14 Mbits/sec
+[  1] 210.00-211.00 sec  57.4 KBytes   470 Kbits/sec
+[  1] 211.00-212.00 sec   202 KBytes  1.66 Mbits/sec
+[  1] 212.00-213.00 sec   144 KBytes  1.18 Mbits/sec
+[  1] 213.00-214.00 sec   135 KBytes  1.11 Mbits/sec
+[  1] 214.00-215.00 sec   123 KBytes  1.01 Mbits/sec
+[  1] 215.00-216.00 sec  86.1 KBytes   706 Kbits/sec
+[  1] 216.00-217.00 sec   171 KBytes  1.40 Mbits/sec
+[  1] 217.00-218.00 sec   119 KBytes   976 Kbits/sec
+[  1] 218.00-219.00 sec   164 KBytes  1.34 Mbits/sec
+[  1] 219.00-220.00 sec   156 KBytes  1.28 Mbits/sec
+[  1] 220.00-221.00 sec  58.9 KBytes   482 Kbits/sec
+[  1] 221.00-222.00 sec   106 KBytes   870 Kbits/sec
+[  1] 222.00-223.00 sec   151 KBytes  1.23 Mbits/sec
+[  1] 223.00-224.00 sec   119 KBytes   976 Kbits/sec
+[  1] 224.00-225.00 sec   138 KBytes  1.13 Mbits/sec
+[  1] 225.00-226.00 sec  47.4 KBytes   388 Kbits/sec
+[  1] 226.00-227.00 sec   175 KBytes  1.43 Mbits/sec
+[  1] 227.00-228.00 sec   105 KBytes   858 Kbits/sec
+[  1] 228.00-229.00 sec   123 KBytes  1.01 Mbits/sec
+[  1] 229.00-230.00 sec   168 KBytes  1.38 Mbits/sec
+[  1] 230.00-231.00 sec  83.3 KBytes   682 Kbits/sec
+[  1] 231.00-232.00 sec   171 KBytes  1.40 Mbits/sec
+[  1] 232.00-233.00 sec   167 KBytes  1.36 Mbits/sec
+[  1] 233.00-234.00 sec   152 KBytes  1.25 Mbits/sec
+[  1] 234.00-235.00 sec  94.7 KBytes   776 Kbits/sec
+[  1] 235.00-236.00 sec   111 KBytes   906 Kbits/sec
+[  1] 236.00-237.00 sec  25.8 KBytes   212 Kbits/sec
+[  1] 237.00-238.00 sec  91.9 KBytes   753 Kbits/sec
+[  1] 238.00-239.00 sec  40.2 KBytes   329 Kbits/sec
+[  1] 239.00-240.00 sec  7.18 KBytes  58.8 Kbits/sec
+[  1] 240.00-241.00 sec  27.3 KBytes   223 Kbits/sec
+[  1] 241.00-242.00 sec  5.74 KBytes  47.0 Kbits/sec
+[  1] 242.00-243.00 sec  27.3 KBytes   223 Kbits/sec
+[  1] 243.00-244.00 sec  58.9 KBytes   482 Kbits/sec
+[  1] 244.00-245.00 sec  96.2 KBytes   788 Kbits/sec
+[  1] 245.00-246.00 sec   151 KBytes  1.23 Mbits/sec
+[  1] 246.00-247.00 sec   223 KBytes  1.82 Mbits/sec
+[  1] 247.00-248.00 sec   227 KBytes  1.86 Mbits/sec
+[  1] 248.00-249.00 sec   250 KBytes  2.05 Mbits/sec
+[  1] 249.00-250.00 sec   383 KBytes  3.14 Mbits/sec
+[  1] 250.00-251.00 sec   507 KBytes  4.15 Mbits/sec
+[  1] 251.00-252.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 252.00-253.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 253.00-254.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 254.00-255.00 sec   471 KBytes  3.86 Mbits/sec
+[  1] 255.00-256.00 sec   477 KBytes  3.90 Mbits/sec
+[  1] 256.00-257.00 sec   500 KBytes  4.09 Mbits/sec
+[  1] 257.00-258.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 258.00-259.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 259.00-260.00 sec   501 KBytes  4.10 Mbits/sec
+[  1] 260.00-261.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 261.00-262.00 sec   494 KBytes  4.05 Mbits/sec
+[  1] 262.00-263.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 263.00-264.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 264.00-265.00 sec   505 KBytes  4.14 Mbits/sec
+[  1] 265.00-266.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 266.00-267.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 267.00-268.00 sec   485 KBytes  3.97 Mbits/sec
+[  1] 268.00-269.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 269.00-270.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 270.00-271.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 271.00-272.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 272.00-273.00 sec   469 KBytes  3.85 Mbits/sec
+[  1] 273.00-274.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 274.00-275.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 275.00-276.00 sec   495 KBytes  4.06 Mbits/sec
+[  1] 276.00-277.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 277.00-278.00 sec   491 KBytes  4.02 Mbits/sec
+[  1] 278.00-279.00 sec   502 KBytes  4.12 Mbits/sec
+[  1] 279.00-280.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 280.00-281.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 281.00-282.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 282.00-283.00 sec   500 KBytes  4.09 Mbits/sec
+[  1] 283.00-284.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 284.00-285.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 285.00-286.00 sec   502 KBytes  4.12 Mbits/sec
+[  1] 286.00-287.00 sec   477 KBytes  3.90 Mbits/sec
+[  1] 287.00-288.00 sec   502 KBytes  4.12 Mbits/sec
+[  1] 288.00-289.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 289.00-290.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 290.00-291.00 sec   481 KBytes  3.94 Mbits/sec
+[  1] 291.00-292.00 sec   507 KBytes  4.15 Mbits/sec
+[  1] 292.00-293.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 293.00-294.00 sec   490 KBytes  4.01 Mbits/sec
+[  1] 294.00-295.00 sec   488 KBytes  4.00 Mbits/sec
+[  1] 295.00-296.00 sec   477 KBytes  3.90 Mbits/sec
+[  1] 296.00-297.00 sec   482 KBytes  3.95 Mbits/sec
+[  1] 297.00-298.00 sec   487 KBytes  3.99 Mbits/sec
+[  1] 298.00-299.00 sec   484 KBytes  3.96 Mbits/sec
+[  1] 299.00-300.00 sec   497 KBytes  4.07 Mbits/sec
+[  1] 0.00-300.01 sec   125 MBytes  3.49 Mbits/sec
+[  1] Sent 89058 datagrams
+[  1] Server Report:
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-300.03 sec   125 MBytes  3.49 Mbits/sec   4.113 ms 9/89057 (0.01%)
+[  1] 0.00-300.03 sec  40 datagrams received out-of-order
+nsh> [K
+nsh> [K
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    000a123e 00000000 00000000 3ab45f3e        
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 0002f1db
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00032e21 00032e28 00000000 00000000 10477cef         
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     fd7c  b033  4816  03c3
+Dropped      0170  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         2abb  6965  bd90  03c6
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+nsh> [K
+--- CMD: cat /proc/iobinfo ---
+cat /proc/iobinfo
+    ntotal     nfree     nwait nthrottle
+        96        96         0        72
+nsh> [K
+nsh> [K
+--- CMD: rm /tmp/z ---
+rm /tmp/z
+nsh> [K
+nsh> [K
+EXECUTION_COMPLETE_RATE_PENDING

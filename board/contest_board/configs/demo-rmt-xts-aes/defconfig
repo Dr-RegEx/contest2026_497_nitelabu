@@ -1,0 +1,7 @@
+#include "../demo-rmt-xts-crypto/defconfig"
+
+# Original crypto suites; only AES-CBC uses the new hardware backend.
+# Other algorithms retain the software baseline and are reported separately.
+CONFIG_ESP32S31_CRYPTO_AES_CBC=y
+CONFIG_DEBUG_CRYPTO=y
+CONFIG_DEBUG_CRYPTO_INFO=y

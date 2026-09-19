@@ -1,0 +1,11 @@
+/tmp/s31-wifi-tx-budget-t3ubbxir/test.c:3:2: error: #error Dynamic TX must not request a static TX pool
+    3 | #error Dynamic TX must not request a static TX pool
+      |  ^~~~~
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_tx_budget.py", line 51, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_tx_budget.py", line 44, in main
+    subprocess.run(['cc', '-std=c11', '-Wall', '-Wextra', '-Werror',
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '-I', '/tmp/s31-wifi-tx-budget-t3ubbxir', '-fsyntax-only', '/tmp/s31-wifi-tx-budget-t3ubbxir/test.c']' returned non-zero exit status 1.

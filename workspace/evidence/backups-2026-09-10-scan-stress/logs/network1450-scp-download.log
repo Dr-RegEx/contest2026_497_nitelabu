@@ -1,0 +1,41 @@
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892      84044     226848     110008     148808    222     14 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /data type tmpfs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ping -c 3 192.168.1.29 ---
+ping -c 3 192.168.1.29
+PING 192.168.1.29 56 bytes of data
+No response from 192.168.1.29: icmp_seq=0 time=1000 ms
+No response from 192.168.1.29: icmp_seq=1 time=1000 ms
+No response from 192.168.1.29: icmp_seq=2 time=1000 ms
+3 packets transmitted, 0 received, 100% packet loss, time 3060 ms
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+ -rwxrwxrwx           0 scp1447
+nsh> [K
+nsh> [K
+--- CMD: scp xts@192.168.1.29:/x1348.bin /data/scp1450 ---
+scp xts@192.168.1.29:/x1348.bin /data/scp1450
+The server is unknown. Do you trust the host key (yes/no)?
+SHA256:4nAe7/uKJkVehh55aqbo0G9lS8tJYKz8LKUrTOMFF3g
+
+Couldn't connect to 192.168.1.29
+nsh> [Kyes
+nsh: yes: command not found
+nsh> [K
+{"case": "4.1.115", "status": "FAIL", "receipt": "build1444-ssh-threading.sha256", "host_fingerprint": "SHA256:4nAe7/uKJkVehh55aqbo0G9lS8tJYKz8LKUrTOMFF3g", "error": "SCP error"}

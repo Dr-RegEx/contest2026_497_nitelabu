@@ -1,0 +1,8 @@
+# Software-only JPEG and RGB888/RGB565 board command.
+# Camera capture remains a separate hardware profile pending a sensor.
+#include "../xts-flat/defconfig"
+CONFIG_LIB_JPEG_TURBO=y
+CONFIG_EXAMPLES_JPEGTEST=y
+CONFIG_EXAMPLES_JPEGTEST_PROGNAME="jpegtest"
+CONFIG_EXAMPLES_JPEGTEST_PRIORITY=100
+CONFIG_EXAMPLES_JPEGTEST_STACKSIZE=8192

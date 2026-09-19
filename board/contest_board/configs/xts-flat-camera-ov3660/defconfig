@@ -1,0 +1,27 @@
+# Camera/V4L2 build candidate.  The Function-CoreBoard has no camera sensor
+# fitted in the current test setup, so this profile is build-only evidence.
+#include "../xts-flat-jpeg-rgb/defconfig"
+CONFIG_ALLOW_GPL_COMPONENTS=y
+CONFIG_ESPRESSIF_I2C0=y
+CONFIG_ESPRESSIF_I2C0_SCLPIN=1
+CONFIG_ESPRESSIF_I2C0_SDAPIN=0
+CONFIG_I2C_DRIVER=y
+CONFIG_DRIVERS_VIDEO=y
+CONFIG_VIDEO_STREAM=y
+CONFIG_VIDEO_OV2640=n
+
+CONFIG_ESP32S31_CAMERA_OV2640=n
+CONFIG_ESP32S31_CAMERA_OV3660=y
+CONFIG_ESP32S31_CAMERA_DVP_HRES=640
+CONFIG_ESP32S31_CAMERA_DVP_VRES=480
+CONFIG_ESP32S31_CAMERA_DVP_XCLK_FREQ=16000000
+# This mapping is from the locked ESP-IDF S31 OV2640 test fixture.  It is a
+# build-only candidate until the external Function-CoreBoard fixture is wired.
+CONFIG_ESP32S31_CAMERA_DVP=y
+CONFIG_ESP32S31_CAMERA_V4L2=y
+# Keep the isolated profile's PSRAM choice explicit so the generated
+# sdkconfig.h exposes the S31 HAL speed and sleep-delay constants.
+CONFIG_ESPRESSIF_SPIRAM_SPEED_80M=y
+CONFIG_EXAMPLES_CAMERA=y
+CONFIG_EXAMPLES_CAMERA_PROGNAME="camera"
+CONFIG_EXAMPLES_CAMERA_STACKSIZE=8192

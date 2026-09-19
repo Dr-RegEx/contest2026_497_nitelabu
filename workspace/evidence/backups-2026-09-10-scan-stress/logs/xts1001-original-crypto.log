@@ -1,0 +1,1020 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x14458
+entry 0x2f010512
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x14458  (83032)
+padd: lma 0x000164c8 vma 0x00000000 len 0x9b50   (39760)
+imap: lma 0x00020020 vma 0x400e0020 len 0x22414  (140308)
+padd: lma 0x0004243c vma 0x00000000 len 0xdcbc   (56508)
+imap: lma 0x00050100 vma 0x40000100 len 0xd7498  (881816)
+total segments stored 6
+ABC[CPU0] S31 hardware crypto: SHA1/SHA256/SHA512 PIO
+[CPU0] S31 hardware crypto: HMAC-SHA1/256 via SHA PIO
+[CPU0] S31 hardware crypto: ECDSA P256 verify only
+[CPU0] S31 hardware crypto: AES-CBC 128/256-bit PIO
+[CPU0] S31 hardware crypto: AES-CTR/XTS full-block PIO
+[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+XTS_CRYPTO_BOOT=PASS seconds=0.578
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /dev/crypto ---
+ls /dev/crypto
+ /dev/crypto
+nsh> [K
+nsh> [K
+XTS_COMMAND=cmocka_des3cbc
+cmocka_des3cbc
+[CPU1] [==========] descbc_tests: Running 1 test(s).
+[CPU1] [ RUN      ] test_3descbc
+[CPU1] [       OK ] test_3descbc
+[CPU1] [==========] descbc_tests: 1 test(s) run.
+[CPU1] [  PASSED  ] 1 test(s).
+ok, encrypt with /dev/crypto, decrypt with /dev/crypto
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_des3cbc PASS seconds=0.101 backend=software
+XTS_COMMAND=cmocka_aescbc
+cmocka_aescbc
+[CPU1] [==========] aescbc_tests: Running 1 test(s).
+[CPU1] [ RUN      ] test_aescbc
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=32 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=32 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=48 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=48 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=64 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=64 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CBC_HW bytes=16 status=0
+[CPU1] [       OK ] test_aescbc
+[CPU1] [==========] aescbc_tests: 1 test(s) run.
+[CPU1] [  PASSED  ] 1 test(s).
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_aescbc PASS seconds=0.306 backend=hardware-supported-keys
+XTS_COMMAND=cmocka_aesctr
+cmocka_aesctr
+[CPU1] [==========] aesctr_tests: Running 1 test(s).
+[CPU1] [ RUN      ] test_aesctr
+[CPU1] s31_process: S31_AES_CTR_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CTR_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CTR_HW bytes=32 status=0
+[CPU1] s31_process: S31_AES_CTR_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CTR_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CTR_HW bytes=32 status=0
+[CPU1] s31_process: S31_AES_CTR_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_CTR_HW bytes=16 status=0
+OK test vector 0
+OK test vector 0 stream mode
+OK test vector 1
+OK test vector 1 stream mode
+OK test vector 2
+OK tes[CPU0] s31_process: S31_AES_CTR_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_CTR_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_CTR_HW bytes=32 status=0
+[CPU0] s31_process: S31_AES_CTR_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_CTR_HW bytes=16 status=0
+t vector 2 stream mode
+OK test vector 3
+OK test vector 3 stream mode
+OK test vector 4
+OK test vector 4 stream mode[CPU0] s31_process: S31_AES_CTR_HW bytes=32 status=0
+[CPU0] s31_process: S31_AES_CTR_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_CTR_HW bytes=16 status=0
+[CPU0] [       OK ] test_aesctr
+[CPU0] [==========] aesctr_tests: 1 test(s) run.
+[CPU0] [  PASSED  ] 1 test(s).
+
+OK test vector 5
+OK test vector 5 stream mode
+OK test vector 6
+OK test vector 6 stream mode
+OK test vector 7
+OK test vector 7 stream mode
+OK test vector 8
+OK test vector 8 stream mode
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_aesctr PASS seconds=0.307 backend=hardware-supported-keys
+XTS_COMMAND=cmocka_aesxts
+cmocka_aesxts
+[CPU1] [==========] aesxts_tests: Running 1 test(s).
+[CPU1] [ RUN      ] test_aesxts
+[CPU1] s31_process: S31_AES_XTS_HW bytes=32 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=32 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=32 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=32 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU1] s31_process: S31_AES_XTS_HW bytes=16 status=0
+OK encrypt test vector 0
+OK encrypt test vector 0 in stream mode
+OK decrypt test vector 0
+OK decrypt test vector 0 i[CPU0] s31_process: S31_AES_XTS_HW bytes=32 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=32 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+n stream mode
+OK encrypt test vector 1
+OK encrypt test vector 1 in stream mode
+OK decrypt test vector 1
+OK decrypt [CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+test vector 1 in stream mode
+OK encrypt test vector 2
+OK encrypt test vector 2 in stream mode
+OK decrypt test vector[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+ 2
+OK decrypt test vector 2 in stream mode
+OK encrypt test vector 3
+OK encrypt test vector 3 in stream mode
+OK decr[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+ypt test vector 3
+OK decrypt test vector 3 in stream mode
+OK encrypt test vector 4
+OK encrypt test vector 4 in strea[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+m mode
+OK decrypt test vector 4
+OK decrypt test vector 4 in stream mode
+OK encrypt test vector 5
+OK encrypt test ve[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+ctor 5 in stream mode
+OK decrypt test vector 5
+OK decrypt test vector 5 in stream mode
+OK encrypt test vector 6
+OK [CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+encrypt test vector 6 in stream mode
+OK decrypt test vector 6
+OK decrypt test vector 6 in stream mode
+OK encrypt tes[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+t vector 7
+OK encrypt test vector 7 in stream mode
+OK decrypt test vector 7
+OK decrypt test vector 7 in stream mode[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+
+OK encrypt test vector 8
+OK encrypt test vector 8 in stream mode
+OK decrypt test vector 8
+OK decrypt test vector 8 [CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+in stream mode
+OK encrypt test vector 9
+OK encrypt test vector 9 in stream mode
+OK decrypt test vector 9
+OK decrypt[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+ test vector 9 in stream mode
+OK encrypt test vector 10
+OK encrypt test vector 10 in stream mode
+OK decrypt test vec[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+tor 10
+OK decrypt test vector 10 in stream mode
+OK encrypt test vector 11
+OK encrypt test vector 11 in stream mode
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+OK decrypt test vector 11
+OK decrypt test vector 11 in stream mode
+OK encrypt test vector 12
+OK encrypt test vector [CPU0] s31_process: S31_AES_XTS_HW bytes=512 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] s31_process: S31_AES_XTS_HW bytes=16 status=0
+[CPU0] [       OK ] test_aesxts
+[CPU0] [==========] aesxts_tests: 1 test(s) run.
+[CPU0] [  PASSED  ] 1 test(s).
+12 in stream mode
+OK decrypt test vector 12
+OK decrypt test vector 12 in stream mode
+OK encrypt test vector 13
+OK encrypt test vector 13 in stream mode
+OK decrypt test vector 13
+OK decrypt test vector 13 in stream mode
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_aesxts PASS seconds=4.016 backend=hardware-supported-keys
+XTS_COMMAND=cmocka_hmac
+cmocka_hmac
+[CPU1] [==========] hmac_tests: Running 3 test(s).
+[CPU1] [ RUN      ] test_hmac_md5
+[CPU1] [       OK ] test_hmac_md5
+[CPU1] [ RUN      ] test_hmac_sha1
+[CPU1] s31_sha_process: S31_HMAC_SHA160_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_HMAC_SHA160_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_HMAC_SHA160_HW bytes=0 status=788840180
+[CPU1] [       OK ] test_hmac_sha1
+[CPU1] [ RUN      ] test_hmac_sha256
+[CPU1] s31_sha_process: S31_HMAC_SHA256_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_HMAC_SHA256_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_HMAC_SHA256_HW bytes=0 status=788840180
+[CPU1] [       OK ] test_hmac_sha256
+[CPU1] [==========] hmac_tests: 3 test(s) run.
+[CPU1] [  PASSED  ] 3 test(s).
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_hmac FAIL seconds=0.205 backend=sha-accelerated-hmac-software-md5
+XTS_COMMAND=cmocka_hash
+cmocka_hash
+[CPU1] [==========] hash_tests: Running 4 test(s).
+[CPU1] [ RUN      ] test_hash_md5
+[CPU1] [       OK ] test_hash_md5
+[CPU1] [ RUN      ] test_hash_sha1
+[CPU1] s31_sha_process: S31_SHA160_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_SHA160_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_SHA160_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_SHA160_HW bytes=0 status=788840180
+[CPU1] [       OK ] test_hash_sha1
+[CPU1] [ RUN      ] test_hash_sha256
+[CPU1] s31_sha_process: S31_SHA256_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_SHA256_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_SHA256_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_SHA256_HW bytes=0 status=788840180
+[CPU1] [       OK ] test_hash_sha256
+[CPU1] [ RUN      ] test_hash_sha512
+[CPU1] s31_sha_process: S31_SHA512_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_SHA512_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_SHA512_HW bytes=0 status=788840180
+[CPU1] s31_sha_process: S31_SHA512_HW bytes=0 status=788840180
+[CPU1] [       OK ] test_hash_sha512
+[CPU1] [==========] hash_tests: 4 test(s) run.
+[CPU1] [  PASSED  ] 4 test(s).
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_hash FAIL seconds=0.716 backend=hardware-sha-software-md5
+XTS_COMMAND=cmocka_crc32
+cmocka_crc32
+[CPU1] [==========] crc32_tests: Running 4 test(s).
+[CPU1] [ RUN      ] test_crc32_case1
+[CPU1] [       OK ] test_crc32_case1
+[CPU1] [ RUN      ] test_crc32_case2
+[CPU1] [       OK ] test_crc32_case2
+[CPU1] [ RUN      ] test_crc32_case3
+[CPU1] [       OK ] test_crc32_case3
+[CPU1] [ RUN      ] test_crc32_case4
+[CPU1] [       OK ] test_crc32_case4
+[CPU1] [==========] crc32_tests: 4 test(s) run.
+[CPU1] [  PASSED  ] 4 test(s).
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_crc32 PASS seconds=0.207 backend=software
+XTS_COMMAND=cmocka_ecdsa
+cmocka_ecdsa
+[CPU1] up_ecc_p256_point_mult: S31_ECC_P256_POINT_HW status=0
+p256 generate key sync success
+[CPU1] up_ecc_p256_point_mult: S31_ECC_P256_POINT_HW status=0
+p256 sign sync success
+[CPU1] s31_ecdsa_verify: S31_ECDSA_P256_VERIFY_HW status=0
+p256 verify sync success
+Test SECP256R1 case success
+
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_ecdsa PASS seconds=0.103 backend=ecc-assisted-keygen-sign-hardware-verify
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     304316      77772     226544     107440     180520    234     14 Kmem
+   16777216     679936   16097280   16097280 Page
+nsh> [K
+nsh> [K
+XTS_CRYPTO_FAILED=['cmocka_hmac', 'cmocka_hash']

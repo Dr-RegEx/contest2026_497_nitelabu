@@ -1,0 +1,87 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x14178
+entry 0x2f0104e6
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x14178  (82296)
+padd: lma 0x000161e8 vma 0x00000000 len 0x9e30   (40496)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1af60  (110432)
+padd: lma 0x0003af88 vma 0x00000000 len 0x5170   (20848)
+imap: lma 0x00040100 vma 0x40000100 len 0xc38c0  (800960)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_UART_BOOT=PASS seconds=0.678
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=88 data=0 fcs=6 abort=15 full=0 fifo=0 other=9
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=0 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /dev/ttyS0 ---
+ls /dev/ttyS0
+ /dev/ttyS0
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/cmocka_driver_uart ---
+ls /system/bin/cmocka_driver_uart
+ /system/bin/cmocka_driver_uart
+nsh> [K
+nsh> [K
+XTS_COMMAND=cmocka_driver_uart -d /dev/ttyS0 -n 0
+cmocka_driver_uart -d /dev/ttyS0 -n 0
+[CPU1] [==========] tests: Running 1 test(s).
+[CPU1] [ RUN      ] drivertest_uart
+[CPU1] [       OK ] drivertest_uart
+[CPU1] [==========] tests: 1 test(s) run.
+[CPU1] [  PASSED  ] 1 test(s).
+0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./<>?;':"[]{}\|!@#$%^&*()-+_=nsh> [KXTS_UART_MODE=0 PASS
+XTS_COMMAND=cmocka_driver_uart -d /dev/ttyS0 -n 1
+cmocka_driver_uart -d /dev/ttyS0 -n 1
+[CPU1] [==========] tests: Running 1 test(s).
+[CPU1] [ RUN      ] drivertest_uart
+[CPU0] [       OK ] drivertest_uart
+[CPU0] [==========] tests: 1 test(s) run.
+[CPU0] [  PASSED  ] 1 test(s).
+nsh> [KXTS_UART_MODE=1 PASS
+XTS_COMMAND=cmocka_driver_uart -d /dev/ttyS0 -n 2
+cmocka_driver_uart -d /dev/ttyS0 -n 2
+[CPU1] [==========] tests: Running 1 test(s).
+[CPU1] [ RUN      ] drivertest_uart
+UART_STANDARD_BURST=1 PASS bytes=20
+UART_STANDARD_BURST=2 PASS bytes=79
+UART_STANDARD_BURST=3 PASS bytes=50
+UART_STANDARD_BURST=4 PASS bytes=51
+UART_STANDARD_BURST=5 PASS bytes=19
+UART_STANDARD_BURST=6 PASS bytes=87
+UART_STANDARD_BURST=7 PASS bytes=51
+UART_STANDARD_BURST=8 PASS bytes=68
+UART_STANDARD_BURST=9 PASS bytes=13
+UART_STANDARD_BURST=10 PASS bytes=66
+[CPU0] [       OK ] drivertest_uart
+[CPU0] [==========] tests: 1 test(s) run.
+[CPU0] [  PASSED  ] 1 test(s).
+nsh> [KXTS_UART_MODE=2 PASS
+XTS_STANDARD=1.3.10 PASS write/read/burst, published payload and10samples

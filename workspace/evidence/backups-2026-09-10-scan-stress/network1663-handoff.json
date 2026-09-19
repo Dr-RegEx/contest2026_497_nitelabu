@@ -1,0 +1,19 @@
+{
+  "status": "TERMINAL_INCOMPLETE_HOST_BLOCKED",
+  "exec_session": 3556,
+  "host_launch_session": 19535,
+  "host_pid": 56668,
+  "host_exe": "iperf2-select1641.exe",
+  "host_bind": "192.168.1.29:5004 verified Get-NetUDPEndpoint",
+  "receipt": "build1631-spawn-parent-env.sha256",
+  "script": "network1663-original-udp-tx.py",
+  "log": "logs/network1663-original-udp-tx.log",
+  "host_log": "C:/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/host1663-udp-stdout.log",
+  "previous": "checkpoint1662-original-udp-rx full300s singleWLAN finalACK; ratepending",
+  "next": "See remaining1665-no-repeat.md and sprint1665-current-cases.json. No active network test. Fixture/listening and acceptance gaps remain; Windowsexplicit inboundBlock decision deferred whileuser unavailable.",
+  "sprint": "76/88",
+  "manual": "User sleeping; no physical requests",
+  "host_blocker": "host1664-firewall-observation.log: two enabled inbound BLOCK rules foriperf2-select1641.exe; no traffic observed. Do not bypass by renaming binary/overwriting allowed1476 or disable rules whileuser unavailable.",
+  "serial_owner": null,
+  "host_status": "Owned server stopped"
+}

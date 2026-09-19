@@ -1,0 +1,7 @@
+ECC_RANDOM=FAIL requested=4 expected=32
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/check-ecc-random-host.py", line 72, in <module>
+    subprocess.run([str(exe)],check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-ecc-random/before']' returned non-zero exit status 42.

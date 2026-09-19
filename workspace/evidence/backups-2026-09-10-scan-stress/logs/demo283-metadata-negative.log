@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_elf_metadata.py", line 37, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_elf_metadata.py", line 32, in main
+    assert actual == expected, f"runtime metadata changed: expected={expected}, actual={actual}"
+AssertionError: runtime metadata changed: expected={'nx_heapsize': 65536, 'nx_priority': 100, 'nx_stacksize': 8192}, actual={}

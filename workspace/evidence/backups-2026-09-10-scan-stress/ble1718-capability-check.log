@@ -1,0 +1,50 @@
+# BLE capability check 1718
+UTC 2026-09-18T04:09:00Z
+
+## S31 sdkconfig capability macros
+452:#define CONFIG_SOC_BLE_MESH_SUPPORTED 1
+453:#define CONFIG_SOC_BLE_ISO_SUPPORTED 1
+454:#define CONFIG_SOC_BLE_AUDIO_SUPPORTED 1
+456:#define CONFIG_SOC_BLE_50_SUPPORTED 1
+
+## controller archive version strings
+ble_controller_get_compile_version
+/builds/ble/ble_develop/ble52_controller_sdk/drivers/esp/src/linkedListMode/ble_hw.c
+/builds/ble/ble_develop/ble52_controller_sdk/sdk_refactor/stack/src/base/hci/hci_stack.c
+/builds/ble/ble_develop/ble52_controller_sdk/sdk_refactor/stack/src/base/nrtIsr/nrtIsr_stack.c
+/builds/ble/ble_develop/ble52_controller_sdk/porting/nimble/src/os_mbuf.c
+/builds/ble/ble_develop/ble52_controller_sdk/porting/nimble/src/rf_coexist_hook.c
+/builds/ble/ble_develop/ble52_controller_sdk/sdk_refactor/stack/src/base/sched/sched_txn.c
+INIT ERROR:Invalid version info:%lx, %x, %lx, %x
+/builds/ble/ble_develop/ble52_controller_sdk/controller/src/ble_ll.c
+/builds/ble/ble_develop/ble52_controller_sdk/controller/src/ble_ll_adv.c
+/builds/ble/ble_develop/ble52_controller_sdk/controller/src/ble_ll_conn.c
+/builds/ble/ble_develop/ble52_controller_sdk/controller/src/ble_ll_conn_hci.c
+/builds/ble/ble_develop/ble52_controller_sdk/controller/src/ble_ll_ctrl.c
+/builds/ble/ble_develop/ble52_controller_sdk/sdk_refactor/stack/src/base/base_stack.c
+/builds/ble/ble_develop/ble52_controller_sdk/controller/src/ble_ll_hci.c
+ble_controller_get_compile_version
+/builds/ble/ble_develop/ble52_controller_sdk/controller/src/ble_ll_mem.c
+/builds/ble/ble_develop/ble52_controller_sdk/controller/src/ble_ll_mtrack.c
+/builds/ble/ble_develop/ble52_controller_sdk/controller/src/ble_ll_pawr.c
+/builds/ble/ble_develop/ble52_controller_sdk/controller/src/ble_ll_resolv.c
+
+## host BLE version defaults
+openvela-dev/apps/wireless/bluetooth/nimble/Kconfig:71:	default NIMBLE_BLE_VERSION_50
+openvela-dev/apps/wireless/bluetooth/nimble/Kconfig:73:config NIMBLE_BLE_VERSION_50
+openvela-dev/apps/wireless/bluetooth/nimble/Kconfig:76:config NIMBLE_BLE_VERSION_51
+openvela-dev/apps/wireless/bluetooth/nimble/Kconfig:79:config NIMBLE_BLE_VERSION_52
+openvela-dev/apps/wireless/bluetooth/nimble/Kconfig:82:config NIMBLE_BLE_VERSION_53
+openvela-dev/apps/wireless/bluetooth/nimble/Kconfig:89:	default 50 if NIMBLE_BLE_VERSION_50
+openvela-dev/apps/wireless/bluetooth/nimble/Kconfig:90:	default 51 if NIMBLE_BLE_VERSION_51
+openvela-dev/apps/wireless/bluetooth/nimble/Kconfig:91:	default 52 if NIMBLE_BLE_VERSION_52
+openvela-dev/apps/wireless/bluetooth/nimble/Kconfig:92:	default 53 if NIMBLE_BLE_VERSION_53
+s31-reference/deps/esp-hal-3rdparty/components/bt/host/nimble/port/include/esp_nimble_cfg.h:327:#ifndef MYNEWT_VAL_BLE_VERSION
+s31-reference/deps/esp-hal-3rdparty/components/bt/host/nimble/port/include/esp_nimble_cfg.h:328:#define MYNEWT_VAL_BLE_VERSION (54)
+
+## ISO/audio/mesh source and current profile flags
+s31-reference/deps/esp-hal-3rdparty/components/bt/Kconfig:114:        source "$IDF_PATH/components/bt/esp_ble_iso/Kconfig.in"
+s31-reference/deps/esp-hal-3rdparty/components/bt/Kconfig:119:        source "$IDF_PATH/components/bt/esp_ble_audio/Kconfig.in"
+s31-reference/deps/esp-hal-3rdparty/components/bt/CMakeLists.txt:65:    add_subdirectory(esp_ble_iso)
+s31-reference/deps/esp-hal-3rdparty/components/bt/CMakeLists.txt:70:    add_subdirectory(esp_ble_audio)
+openvela-dev/out/esp32s31-ble-kernel1575/.config:3130:# CONFIG_BLUETOOTH_BLE_AUDIO is not set

@@ -1,0 +1,60 @@
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198 -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:production-cpu0 -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- Found Python3: /home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/bin/python3.10 (found version "3.10.12") found components: Interpreter 
+-- Initializing NuttX
+Loaded configuration '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/.config.compressed'
+Minimal configuration saved to '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/defconfig.tmp'
+  Select HOST_LINUX=y
+--   CMake:  3.22.1
+--   Ninja:  1.10.1
+--   Board:  esp32s31-core-function-board
+--   Config: production-cpu0
+--   Appdir: /home/regex/work/esp32s31-openvela/openvela-dev/apps
+-- The C compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/bin_host
+-- The C compiler identification is GNU 15.2.0
+-- The CXX compiler identification is GNU 15.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: /home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-gcc
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198 --target resetconfig
+[1/1] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production-cpu0/defconfig /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/.config && /usr/bin/cmake -E env KCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/.config EXTERNALDIR=dummy APPSDIR=/home/regex/work/esp32s31-openvela/openvela-dev/apps DRIVERS_PLATFORM_DIR=dummy APPSBINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/apps BINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198 olddefconfig && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/.config /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/.config.orig && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/CMakeLists.txt
+Loaded configuration '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/.config'
+No change to configuration in '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/.config'
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198 -j8
+[0/1] Re-running CMake...
+CMake Error at CMakeLists.txt:221 (message):
+  Application directory ../apps is not found
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/CMakeFiles/CMakeOutput.log".
+See also "/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198/CMakeFiles/CMakeError.log".
+FAILED: build.ninja 
+/usr/bin/cmake --regenerate-during-build -S/home/regex/work/esp32s31-openvela/openvela-dev/nuttx -B/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-wifi-cpu0198
+ninja: error: rebuilding 'build.ninja': subcommand failed
++ restore_config
++ '[' -f /tmp/s31-flat-source-config.DujxgK/.config ']'
++ mv /tmp/s31-flat-source-config.DujxgK/.config .config
++ '[' -f /tmp/s31-flat-source-config.DujxgK/config.h ']'
++ mv /tmp/s31-flat-source-config.DujxgK/config.h include/nuttx/config.h
++ rmdir /tmp/s31-flat-source-config.DujxgK

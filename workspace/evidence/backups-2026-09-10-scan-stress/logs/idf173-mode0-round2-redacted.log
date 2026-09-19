@@ -1,0 +1,47 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2f0740c0,len:0x1158
+load:0x2f06a2b0,len:0x9e8
+load:0x2f06cfb0,len:0x3018
+entry 0x2f06a2b0
+BASELINE_READY version=1 credential_storage=RAM
+W (280) wifi:(phy)rate:0x0(  LP-1Mbps), pwr:20, txing:20
+W (280) wifi:(phy)rate:0x1(  LP-2Mbps), pwr:20, txing:20
+W (290) wifi:(phy)rate:0x2(LP-5.5Mbps), pwr:20, txing:20
+W (290) wifi:(phy)rate:0x3( LP-11Mbps), pwr:20, txing:20
+W (290) wifi:(phy)rate:0x5(  SP-2Mbps), pwr:20, txing:20
+W (300) wifi:(phy)rate:0x6(SP-5.5Mbps), pwr:20, txing:20
+W (300) wifi:(phy)rate:0x7( SP-11Mbps), pwr:20, txing:20
+W (310) wifi:(phy)rate:0x8(    48Mbps), pwr:18, txing:18
+W (310) wifi:(phy)rate:0x9(    24Mbps), pwr:19, txing:19
+W (320) wifi:(phy)rate:0xa(    12Mbps), pwr:20, txing:20
+W (320) wifi:(phy)rate:0xb(     6Mbps), pwr:20, txing:20
+W (330) wifi:(phy)rate:0xc(    54Mbps), pwr:18, txing:18
+W (330) wifi:(phy)rate:0xd(    36Mbps), pwr:19, txing:19
+W (340) wifi:(phy)rate:0xe(    18Mbps), pwr:20, txing:20
+W (340) wifi:(phy)rate:0xf(     9Mbps), pwr:20, txing:20
+W (350) wifi:(phy)rate:0x10, mcs:0x0, pwr(bw20:20, bw40:19), txing:20
+W (360) wifi:(phy)rate:0x11, mcs:0x1, pwr(bw20:20, bw40:19), txing:20
+W (360) wifi:(phy)rate:0x12, mcs:0x2, pwr(bw20:20, bw40:19), txing:20
+W (370) wifi:(phy)rate:0x13, mcs:0x3, pwr(bw20:20, bw40:19), txing:20
+W (370) wifi:(phy)rate:0x14, mcs:0x4, pwr(bw20:19, bw40:18), txing:19
+W (380) wifi:(phy)rate:0x15, mcs:0x5, pwr(bw20:19, bw40:18), txing:19
+W (390) wifi:(phy)rate:0x16, mcs:0x6, pwr(bw20:18, bw40:17), txing:18
+W (390) wifi:(phy)rate:0x17, mcs:0x7, pwr(bw20:18, bw40:17), txing:18
+W (400) wifi:(phy)rate:0x18, mcs:0x8, pwr(bw20:16, bw40:16), txing:16
+W (400) wifi:(phy)rate:0x19, mcs:0x9, pwr(bw20:15, bw40:15), txing:15
+BASELINE_CONNECT protocol=7 ps=none
+W (520) wifi:(trc)band:2G, phymode:3, highestRateIdx:0, lowestRateIdx:11, dataSchedTableSize:14
+BASELINE_IP=192.168.1.60 GW=192.168.1.1
+BASELINE_PHY=4 bssid=60:ce:41:46:0e:ec channel=1 rssi=-71
+W (2720) wifi:<ba-add>idx:0, ifx:0, tid:0, TAHI:0x100ec0e, TALO:0x4641ce60, (ssn:5, win:64, cur_ssn:5), CONF:0xc0000001
+BASELINE_PING sent=8 received=8 result=PASS
+BASELINE_TCP_READY port=5471
+BASELINE_TCP=PASS bytes=4096 peer_closed=1
+BASELINE_DISCONNECT reason=8
+BASELINE_DONE wifi=stopped
+
+TCP_CONNECTED local=192.168.1.29 remote=192.168.1.60:5471
+TCP_NETTEST=PASS bytes=4096 sha256=1301c7362ff8a67293b6cda58d8bbe583d48d90eac8acb0ef0d61fd5e66f6e62

@@ -1,0 +1,21 @@
+#include "../demo-rmt-netapps-iperf/defconfig"
+
+# Combined competition demo and original network tools, without crypto test apps.
+CONFIG_CRYPTO=y
+CONFIG_CRYPTO_SW_AES=y
+CONFIG_CRYPTO_RANDOM_POOL=y
+CONFIG_CRYPTO_CRYPTODEV=y
+CONFIG_CRYPTO_CRYPTODEV_SOFTWARE_CRYPTO=y
+CONFIG_ESP32S31_CRYPTO_AES_CBC=y
+CONFIG_ESP32S31_CRYPTO_AES_MODES=y
+CONFIG_ESP32S31_CRYPTO_SHA=y
+CONFIG_ESP32S31_CRYPTO_HMAC=y
+CONFIG_ESP32S31_CRYPTO_ECDSA_VERIFY=y
+CONFIG_ESP32S31_CRYPTO_ECC_POINT_MULT=y
+
+# Original WAPI save_config/reconnect cases use the existing writable volume.
+CONFIG_NETUTILS_CJSON=y
+CONFIG_WIRELESS_WAPI_INITCONF=y
+CONFIG_WIRELESS_WAPI_CONFIG_PATH="/apps/s31-wapi-xts.conf"
+# Keep association explicit for unassociated scans and reconnect acceptance.
+CONFIG_NETINIT_NETLOCAL=y

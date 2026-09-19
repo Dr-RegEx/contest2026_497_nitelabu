@@ -1,0 +1,116 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build948-flat-category-kv.sha256
+XTS_MOUNT_EVIDENCE=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/checkpoint1012-kv-first-mount/mount-evidence.log
+XTS_MOUNT_EVIDENCE_SHA256=c7edb71418cd841fc49baa8d767f1ed14196f2e8df1d26aea0c1156794b3068c
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls /dev/xtsflash
+--- CMD: ls /dev/xtsflash ---
+ls /dev/xtsflash
+ /dev/xtsflash
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009600 0x2f009648
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009580 0x2f0095c8
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008120 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=kvdbd &
+--- CMD: kvdbd & ---
+kvdbd &
+kvdbd [6:100]
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009600 0x2f009648
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009580 0x2f0095c8
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008120 nsh_main
+    6     6 100 RR       Task      - Waiting  Signal    0000000000000000 0008144 kvdbd
+nsh> [K
+nsh> [K
+XTS_COMMAND=cmocka_kv_test
+--- CMD: cmocka_kv_test ---
+cmocka_kv_test
+[==========] nuttx_kvdb_test_suites: Running 30 test(s).
+[ RUN      ] test_nuttx_kv01
+[       OK ] test_nuttx_kv01
+[ RUN      ] test_nuttx_kv02
+[       OK ] test_nuttx_kv02
+[ RUN      ] test_nuttx_kv03
+[       OK ] test_nuttx_kv03
+[ RUN      ] test_nuttx_kv04
+[       OK ] test_nuttx_kv04
+[ RUN      ] test_nuttx_kv05
+[       OK ] test_nuttx_kv05
+[ RUN      ] test_nuttx_kv06
+[       OK ] test_nuttx_kv06
+[ RUN      ] test_nuttx_kv07
+[       OK ] test_nuttx_kv07
+[ RUN      ] test_nuttx_kv08
+[       OK ] test_nuttx_kv08
+[ RUN      ] test_nuttx_kv09
+[       OK ] test_nuttx_kv09
+[ RUN      ] test_nuttx_kv10
+[       OK ] test_nuttx_kv10
+[ RUN      ] test_nuttx_kv11
+[       OK ] test_nuttx_kv11
+[ RUN      ] test_nuttx_kv12
+[       OK ] test_nuttx_kv12
+[ RUN      ] test_nuttx_kv13
+[       OK ] test_nuttx_kv13
+[ RUN      ] test_nuttx_kv14
+[       OK ] test_nuttx_kv14
+[ RUN      ] test_nuttx_kv15
+[       OK ] test_nuttx_kv15
+[ RUN      ] test_nuttx_kv16
+[       OK ] test_nuttx_kv16
+[ RUN      ] test_nuttx_kv17
+[       OK ] test_nuttx_kv17
+[ RUN      ] test_nuttx_kv18
+[       OK ] test_nuttx_kv18
+[ RUN      ] test_nuttx_kv19
+[       OK ] test_nuttx_kv19
+[ RUN      ] test_nuttx_kv20
+set data:300 takes:700000 microseconds
+[       OK ] test_nuttx_kv20
+[ RUN      ] test_nuttx_kv21
+[       OK ] test_nuttx_kv21
+[ RUN      ] test_nuttx_kv22
+[       OK ] test_nuttx_kv22
+[ RUN      ] test_nuttx_kv23
+[       OK ] test_nuttx_kv23
+[ RUN      ] test_nuttx_kv24
+[       OK ] test_nuttx_kv24
+[ RUN      ] test_nuttx_kv25
+[       OK ] test_nuttx_kv25
+[ RUN      ] test_nuttx_kv26
+[       OK ] test_nuttx_kv26
+[ RUN      ] test_nuttx_kv27
+[       OK ] test_nuttx_kv27
+[ RUN      ] test_nuttx_kv28
+[       OK ] test_nuttx_kv28
+[ RUN      ] test_nuttx_kv29
+[       OK ] test_nuttx_kv29
+[ RUN      ] test_nuttx_kv30
+[       OK ] test_nuttx_kv30
+[==========] nuttx_kvdb_test_suites: 30 test(s) run.
+[  PASSED  ] 30 test(s).
+nsh> [K
+nsh> [K
+XTS_4.1.11_KVDB=PASS original_cases=30 runs=1

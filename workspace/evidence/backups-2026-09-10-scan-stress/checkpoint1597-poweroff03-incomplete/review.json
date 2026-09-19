@@ -1,0 +1,11 @@
+{
+  "case": "4.1.6",
+  "status": "NOT_ACCEPTED",
+  "reason": "write error observed before USB loss; recovery did not find original testDir",
+  "free_before_bytes": 606208,
+  "free_after_bytes": 606208,
+  "root_cause": "Capacity exhaustion is plausible given unbounded original writers; errno not logged, not proven",
+  "rounds_passed": 0,
+  "sprint_pass": 73,
+  "next": "Prepare retry and await user ready before starting; prompt immediate unplug after all4 writers produce data"
+}

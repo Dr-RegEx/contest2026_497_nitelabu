@@ -1,0 +1,111 @@
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-gpio -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:xts-flat-gpio -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- Found Python3: /home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/bin/python3.10 (found version "3.10.12") found components: Interpreter 
+-- Processing includes: /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-gpio/defconfig → /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-gpio/.defconfig.processed
+-- Initializing NuttX
+CMake Warning at cmake/nuttx_kconfig.cmake:182 (message):
+  Kconfig Configuration Error:
+  /home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/bin/olddefconfig:
+  Dependency loop
+
+  ===============
+
+  
+
+  ESP32S31_XTS_GPIO (defined at
+  boards/risc-v/esp32s31/esp32s31-core-function-board/Kconfig:8), with
+  definition...
+
+  
+
+  config ESP32S31_XTS_GPIO
+
+  	bool "Expose J2 GPIO47/48 for the original GPIO xTS"
+
+  	default n
+
+  	select DEV_GPIO
+
+  	select ESPRESSIF_GPIO_IRQ
+
+  	depends on BUILD_FLAT && !GPIO_LOWER_HALF &&
+  ARCH_BOARD_ESP32S31_CORE_FUNCTION_BOARD &&
+  ARCH_BOARD_ESP32S31_CORE_FUNCTION_BOARD
+
+  	help
+
+  	 Register GPIO47 (J2 pin13) as /dev/gpio0 input and GPIO48
+
+  	 (J2 pin14) as /dev/gpio1 output.  Connect these two pins only
+
+  	 when running the original GPIO loopback and interrupt tests.
+
+  
+
+  ...depends on GPIO_LOWER_HALF (defined at drivers/ioexpander/Kconfig:566),
+  with definition...
+
+  
+
+  config GPIO_LOWER_HALF
+
+  	bool "GPIO Lower Half"
+
+  	default n
+
+  	depends on DEV_GPIO && IOEXPANDER
+
+  	help
+
+  	 Enable support for a lower half driver that provides GPIO driver
+
+  	 support for I/O expander pins.
+
+  
+
+  ...depends on DEV_GPIO (defined at drivers/ioexpander/Kconfig:543), with
+  definition...
+
+  
+
+  config DEV_GPIO
+
+  	bool "GPIO driver"
+
+  	default n
+
+  	help
+
+  	 Enables a simple GPIO input/output driver to support application-
+
+  	 space testing of hardware.
+
+  
+
+  (select-related dependencies: (STM32F411MINIMUM_GPIO &&
+  ARCH_BOARD_STM32F411_MINIMUM && ARCH_BOARD_STM32F411_MINIMUM) ||
+  (ESP32S31_XTS_GPIO && BUILD_FLAT && !GPIO_LOWER_HALF &&
+  ARCH_BOARD_ESP32S31_CORE_FUNCTION_BOARD &&
+  ARCH_BOARD_ESP32S31_CORE_FUNCTION_BOARD))
+
+  
+
+  ...depends again on ESP32S31_XTS_GPIO (defined at
+  boards/risc-v/esp32s31/esp32s31-core-function-board/Kconfig:8)
+
+Call Stack (most recent call first):
+  CMakeLists.txt:363 (nuttx_olddefconfig)
+
+
+CMake Error at cmake/nuttx_kconfig.cmake:186 (message):
+  nuttx_olddefconfig: Failed to initialize Kconfig configuration:
+Call Stack (most recent call first):
+  CMakeLists.txt:363 (nuttx_olddefconfig)
+
+
+-- Configuring incomplete, errors occurred!
++ restore_config
++ '[' -f /tmp/s31-flat-source-config.2f11EV/.config ']'
++ mv /tmp/s31-flat-source-config.2f11EV/.config .config
++ '[' -f /tmp/s31-flat-source-config.2f11EV/config.h ']'
++ mv /tmp/s31-flat-source-config.2f11EV/config.h include/nuttx/config.h
++ rmdir /tmp/s31-flat-source-config.2f11EV

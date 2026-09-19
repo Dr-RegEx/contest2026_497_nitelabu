@@ -1,0 +1,7 @@
+#include "../xts-flat-category-fs-flash/defconfig"
+
+# Original loop-create-delete sizes each file from free heap / 10.
+# Use the internal SRAM heap with the existing 1 MiB scratch filesystem.
+# This qualifies this memory configuration, not a PSRAM user-heap workload.
+# CONFIG_ESPRESSIF_SPIRAM_USER_HEAP is not set
+CONFIG_MM_REGIONS=1

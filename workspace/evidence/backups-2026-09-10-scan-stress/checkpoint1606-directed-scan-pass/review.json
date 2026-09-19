@@ -1,0 +1,35 @@
+{
+  "case": "5.1.27",
+  "source_line": 5307,
+  "status": "PASS",
+  "completed": 100,
+  "elapsed_seconds": 366.45373406799627,
+  "ap_count_each_round": 3,
+  "identity_variants": 1,
+  "identities": [
+    [
+      "60:ce:41:46:0e:ec",
+      "2437",
+      "0800",
+      "Kal'tsit"
+    ],
+    [
+      "60:ce:41:ab:02:d0",
+      "2462",
+      "0800",
+      "Kal'tsit"
+    ],
+    [
+      "7c:39:85:2a:50:04",
+      "2462",
+      "0800",
+      "Kal'tsit"
+    ]
+  ],
+  "raw_text_variants": 95,
+  "raw_runner_status": "EXECUTION_COMPLETE_VARIATION_REVIEW_REQUIRED",
+  "review_basis": "AP identity (BSSID/frequency/encryption/SSID) stable for100 original scans; dynamicRSSI and RSSI-dependent ordering are not AP appearance/disappearance. Original text says returned scan list stable, not constant RF strength.",
+  "no_driver_changes": true,
+  "prior1419": "Preserved; distinct identity sets still incomplete. No claim that a software fix caused current improvement.",
+  "receipt": "build1565-simd-int8.sha256"
+}

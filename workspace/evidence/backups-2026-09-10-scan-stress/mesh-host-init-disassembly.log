@@ -1,0 +1,57 @@
+
+openvela-dev/out/esp32s31-xts-flat-ble-mesh-host-init-20260919/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+4009ab3a <mesh_main>:
+4009ab3a:	7179                	addi	sp,sp,-48
+4009ab3c:	401175b7          	lui	a1,0x40117
+4009ab40:	083c                	addi	a5,sp,24
+4009ab42:	d422                	sw	s0,40(sp)
+4009ab44:	7d058593          	addi	a1,a1,2000 # 401177d0 <_flash_rodata_start+0x77b0>
+4009ab48:	4519                	li	a0,6
+4009ab4a:	4405                	li	s0,1
+4009ab4c:	d606                	sw	ra,44(sp)
+4009ab4e:	cc3e                	sw	a5,24(sp)
+4009ab50:	ce3e                	sw	a5,28(sp)
+4009ab52:	c002                	sw	zero,0(sp)
+4009ab54:	c202                	sw	zero,4(sp)
+4009ab56:	c402                	sw	zero,8(sp)
+4009ab58:	c602                	sw	zero,12(sp)
+4009ab5a:	c802                	sw	zero,16(sp)
+4009ab5c:	ca22                	sw	s0,20(sp)
+4009ab5e:	c59970ef          	jal	400327b6 <syslog>
+4009ab62:	45b250ef          	jal	400c07bc <z_sys_init>
+4009ab66:	4009b5b7          	lui	a1,0x4009b
+4009ab6a:	ab858593          	addi	a1,a1,-1352 # 4009aab8 <bt_ready>
+4009ab6e:	4501                	li	a0,0
+4009ab70:	3380a0ef          	jal	400a4ea8 <bt_enable_mc>
+4009ab74:	c10d                	beqz	a0,4009ab96 <mesh_main+0x5c>
+4009ab76:	07250793          	addi	a5,a0,114
+4009ab7a:	862a                	mv	a2,a0
+4009ab7c:	cf89                	beqz	a5,4009ab96 <mesh_main+0x5c>
+4009ab7e:	401175b7          	lui	a1,0x40117
+4009ab82:	4519                	li	a0,6
+4009ab84:	6f858593          	addi	a1,a1,1784 # 401176f8 <_flash_rodata_start+0x76d8>
+4009ab88:	c2f970ef          	jal	400327b6 <syslog>
+4009ab8c:	8522                	mv	a0,s0
+4009ab8e:	50b2                	lw	ra,44(sp)
+4009ab90:	5422                	lw	s0,40(sp)
+4009ab92:	6145                	addi	sp,sp,48
+4009ab94:	8082                	ret
+4009ab96:	401175b7          	lui	a1,0x40117
+4009ab9a:	7e458593          	addi	a1,a1,2020 # 401177e4 <_flash_rodata_start+0x77c4>
+4009ab9e:	4519                	li	a0,6
+4009aba0:	c17970ef          	jal	400327b6 <syslog>
+4009aba4:	401185b7          	lui	a1,0x40118
+4009aba8:	81458593          	addi	a1,a1,-2028 # 40117814 <_flash_rodata_start+0x77f4>
+4009abac:	4519                	li	a0,6
+4009abae:	c09970ef          	jal	400327b6 <syslog>
+4009abb2:	55fd                	li	a1,-1
+4009abb4:	850a                	mv	a0,sp
+4009abb6:	18f260ef          	jal	400c1544 <k_sem_take>
+4009abba:	4501                	li	a0,0
+4009abbc:	bfc9                	j	4009ab8e <mesh_main+0x54>

@@ -1,0 +1,56 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1243-media.sha256
+SCOPE=original file decode/driver execution; audible acceptance pending
+XTS_COMMAND=mediatool
+mediatool
+mediatool> 
+XTS_COMMAND=send all loglevel 24
+send all loglevel 24
+mediatool> 
+XTS_COMMAND=open Music
+open Music
+player ID 0
+mediatool> 
+XTS_COMMAND=prepare 0 url /data/audio_file.aac
+prepare 0 url /data/audio_file.aac
+[media][media_player_open_demuxer:909] protocol_map NOT found in options!
+[media][media_player_map_protocol:697] No protocol_map set or invalid proto.
+media_player_init_stream:784 stream 0, type 1.
+mediatool> [mediatool_event_callback][307] id:0, event:PREPARED(1) ret:0 extra:(null)
+
+XTS_COMMAND=start 0
+start 0
+asubgraph@Convert cannot find / format.
+mediatool> [mediatool_event_callback][307] id:0, event:STARTED(2) ret:0 extra:(null)
+
+[mediatool_event_callback][307] id:0, event:COMPLETED(6) ret:0 e
+PLAYBACK_SECONDS=92.330
+XTS_COMMAND=close 0
+xtra:(null)
+close 0
+[mediatool_event_callback][307] id:0, event:STOPPED(4) ret:0 extra:(null)
+mediatool> 
+XTS_COMMAND=q
+q
+Bye-Bye!
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009400 0x2f009448
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009380 0x2f0093c8
+    4     0 253 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 s31_duplex
+    5     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 hr_timer
+    6     6 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+   13    13 245 RR       Task      - Waiting  Semaphore 0000000000000000 0081872 mediad
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   16840896    1598088   15242808    3054448   14988176    212     14 Umem
+nsh> [K
+nsh> [K
+DECODE_DRIVER_COMPLETE; LISTENING_PENDING; NOT category PASS

@@ -1,0 +1,127 @@
+XTS_HOST_FIXTURES=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts805-ymodem-0x5kilib
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x140a8
+entry 0x2f010474
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x140a8  (82088)
+padd: lma 0x00016118 vma 0x00000000 len 0x9f00   (40704)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae1c  (110108)
+padd: lma 0x0003ae44 vma 0x00000000 len 0x52b4   (21172)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2e64  (798308)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_BOOT=PASS seconds=0.650
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=47 data=0 fcs=7 abort=13 full=0 fifo=0 other=10
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=0 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls /tmp/xts805 ---
+ls /tmp/xts805
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: mkdir /tmp/xts805 ---
+mkdir /tmp/xts805
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/sb ---
+ls /system/bin/sb
+ /system/bin/sb
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/rb ---
+ls /system/bin/rb
+ /system/bin/rb
+nsh> [K
+nsh> [K
+XTS_COMMAND=rb -f /tmp/xts805
+Ignored unexpected text: C
+name:small.bin filesize:129
+     100.0% 129:129 left:00h00m00s
+time used:0.1s speed 1.0kB/s
+name:binary.bin filesize:65573
+     1.6% 1024:65573 left:00h00m07s3.1% 2048:65573 left:00h00m06s4.7% 3072:65573 left:00h00m06s6.2% 4096:65573 left:00h00m06s7.8% 5120:65573 left:00h00m05s9.4% 6144:65573 left:00h00m05s10.9% 7168:65573 left:00h00m05s12.5% 8192:65573 left:00h00m05s14.1% 9216:65573 left:00h00m05s15.6% 10240:65573 left:00h00m05s17.2% 11264:65573 left:00h00m05s18.7% 12288:65573 left:00h00m05s20.3% 13312:65573 left:00h00m05s21.9% 14336:65573 left:00h00m04s23.4% 15360:65573 left:00h00m04s25.0% 16384:65573 left:00h00m04s26.5% 17408:65573 left:00h00m04s28.1% 18432:65573 left:00h00m04s29.7% 19456:65573 left:00h00m04s31.2% 20480:65573 left:00h00m04s32.8% 21504:65573 left:00h00m04s34.4% 22528:65573 left:00h00m04s35.9% 23552:65573 left:00h00m04s37.5% 24576:65573 left:00h00m03s39.0% 25600:65573 left:00h00m03s40.6% 26624:65573 left:00h00m03s42.2% 27648:65573 left:00h00m03s43.7% 28672:65573 left:00h00m03s45.3% 29696:65573 left:00h00m03s46.8% 30720:65573 left:00h00m03s48.4% 31744:65573 left:00h00m03s50.0% 32768:65573 left:00h00m03s51.5% 33792:65573 left:00h00m03s53.1% 34816:65573 left:00h00m02s54.7% 35840:65573 left:00h00m02s56.2% 36864:65573 left:00h00m02s57.8% 37888:65573 left:00h00m02s59.3% 38912:65573 left:00h00m02s60.9% 39936:65573 left:00h00m02s62.5% 40960:65573 left:00h00m02s64.0% 41984:65573 left:00h00m02s65.6% 43008:65573 left:00h00m02s67.1% 44032:65573 left:00h00m02s68.7% 45056:65573 left:00h00m01s70.3% 46080:65573 left:00h00m01s71.8% 47104:65573 left:00h00m01s73.4% 48128:65573 left:00h00m01s75.0% 49152:65573 left:00h00m01s76.5% 50176:65573 left:00h00m01s78.1% 51200:65573 left:00h00m01s79.6% 52224:65573 left:00h00m01s81.2% 53248:65573 left:00h00m01s82.8% 54272:65573 left:00h00m01s84.3% 55296:65573 left:00h00m00s85.9% 56320:65573 left:00h00m00s87.5% 57344:65573 left:00h00m00s89.0% 58368:65573 left:00h00m00s90.6% 59392:65573 left:00h00m00s92.1% 60416:65573 left:00h00m00s93.7% 61440:65573 left:00h00m00s95.3% 62464:65573 left:00h00m00s96.8% 63488:65573 left:00h00m00s98.4% 64512:65573 left:00h00m00s99.9% 65536:65573 left:00h00m00s100.0% 65573:65573 left:00h00m00s
+time used:6.3s speed 10.2kB/s
+
+ all time:6.46s average speed:9.93kB/snsh> [K
+--- CMD: echo $? ---
+echo $?
+0
+nsh> [K
+nsh> [K
+XTS_DIRECTION=host-to-board seconds=6.720
+--- CMD: ls -l /tmp/xts805 ---
+ls -l /tmp/xts805
+/tmp/xts805:
+ -rwxrwxrwx   0       65573 binary.bin
+ -rwxrwxrwx   0         129 small.bin
+nsh> [K
+nsh> [K
+XTS_COMMAND=sb /tmp/xts805/small.bin
+name:small.bin size:129
+100.00% 129:129 left:00h00m00s
+time used:0.2s speed 0.8kB/s
+
+ all time:0.17s average speed:0.73kB/snsh> [K
+--- CMD: echo $? ---
+echo $?
+0
+nsh> [K
+nsh> [K
+XTS_DIRECTION=board-to-host seconds=0.439
+XTS_FILE=small.bin bytes=129 sha256=5099c6a56203f9687f7d33f4bfdf576d31dc91f6b695ecea38b2770c87631135 PASS
+XTS_COMMAND=sb /tmp/xts805/binary.bin
+name:binary.bin size:65573
+1.56% 1024:65573 left:00h00m09s3.12% 2048:65573 left:00h00m07s4.68% 3072:65573 left:00h00m07s6.25% 4096:65573 left:00h00m06s7.81% 5120:65573 left:00h00m06s9.37% 6144:65573 left:00h00m06s10.93% 7168:65573 left:00h00m05s12.49% 8192:65573 left:00h00m05s14.05% 9216:65573 left:00h00m05s15.62% 10240:65573 left:00h00m05s17.18% 11264:65573 left:00h00m05s18.74% 12288:65573 left:00h00m05s20.30% 13312:65573 left:00h00m05s21.86% 14336:65573 left:00h00m05s23.42% 15360:65573 left:00h00m04s24.99% 16384:65573 left:00h00m04s26.55% 17408:65573 left:00h00m04s28.11% 18432:65573 left:00h00m04s29.67% 19456:65573 left:00h00m04s31.23% 20480:65573 left:00h00m04s32.79% 21504:65573 left:00h00m04s34.36% 22528:65573 left:00h00m04s35.92% 23552:65573 left:00h00m04s37.48% 24576:65573 left:00h00m03s39.04% 25600:65573 left:00h00m03s40.60% 26624:65573 left:00h00m03s42.16% 27648:65573 left:00h00m03s43.73% 28672:65573 left:00h00m03s45.29% 29696:65573 left:00h00m03s46.85% 30720:65573 left:00h00m03s48.41% 31744:65573 left:00h00m03s49.97% 32768:65573 left:00h00m03s51.53% 33792:65573 left:00h00m03s53.10% 34816:65573 left:00h00m02s54.66% 35840:65573 left:00h00m02s56.22% 36864:65573 left:00h00m02s57.78% 37888:65573 left:00h00m02s59.34% 38912:65573 left:00h00m02s60.90% 39936:65573 left:00h00m02s62.46% 40960:65573 left:00h00m02s64.03% 41984:65573 left:00h00m02s65.59% 43008:65573 left:00h00m02s67.15% 44032:65573 left:00h00m02s68.71% 45056:65573 left:00h00m01s70.27% 46080:65573 left:00h00m01s71.83% 47104:65573 left:00h00m01s73.40% 48128:65573 left:00h00m01s74.96% 49152:65573 left:00h00m01s76.52% 50176:65573 left:00h00m01s78.08% 51200:65573 left:00h00m01s79.64% 52224:65573 left:00h00m01s81.20% 53248:65573 left:00h00m01s82.77% 54272:65573 left:00h00m01s84.33% 55296:65573 left:00h00m00s85.89% 56320:65573 left:00h00m00s87.45% 57344:65573 left:00h00m00s89.01% 58368:65573 left:00h00m00s90.57% 59392:65573 left:00h00m00s92.14% 60416:65573 left:00h00m00s93.70% 61440:65573 left:00h00m00s95.26% 62464:65573 left:00h00m00s96.82% 63488:65573 left:00h00m00s98.38% 64512:65573 left:00h00m00s99.94% 65536:65573 left:00h00m00s100.00% 65573:65573 left:00h00m00s
+time used:5.1s speed 12.6kB/s
+
+ all time:5.11s average speed:12.53kB/snsh> [K
+--- CMD: echo $? ---
+echo $?
+0
+nsh> [K
+nsh> [K
+XTS_DIRECTION=board-to-host seconds=6.574
+XTS_FILE=binary.bin bytes=65573 sha256=a8147e8e1451821e630e6283b21197d7d4ccbf847c90bd5496ebb824c5c049b2 PASS
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     304828     145692     159136     171896      99656    218     14 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+XTS_STANDARD=UART_FILE_SEND_RECEIVE PASS

@@ -1,0 +1,41 @@
+{
+  "standby": "FAIL",
+  "time_consistency": "FAIL",
+  "receipt": "/tmp/s31-longrun-clock-kotqy97e/fixed_forward_wall_step/receipt.sha256",
+  "samples": [
+    {
+      "index": 0,
+      "board_utc": "2023-11-14T22:13:22",
+      "host_before": 1700000002.4199998,
+      "host_after": 1700000002.4199998,
+      "error_seconds_interval": [
+        -0.4199998378753662,
+        0.5800001621246338
+      ],
+      "elapsed_seconds": 0.4409999999999883,
+      "elapsed_host_seconds": 0.4199998378753662,
+      "monitor_rows": 0
+    },
+    {
+      "index": 1,
+      "board_utc": "2023-11-15T01:14:22",
+      "host_before": 1700021662.72,
+      "host_after": 1700021662.72,
+      "error_seconds_interval": [
+        -10800.72000002861,
+        -10799.72000002861
+      ],
+      "elapsed_seconds": 11403.756000000007,
+      "elapsed_host_seconds": 21660.72000002861,
+      "monitor_rows": 180
+    }
+  ],
+  "monitor": "showinfo -i 60",
+  "radio": "unassociated",
+  "schedule_clock": "HOST_REALTIME",
+  "initial_sample_is_baseline": true,
+  "config_sha256": "e0b1e0a767ba055840ed3d6eef955f7c38de404f5a348864dfd90b3b675a0de6",
+  "started_utc": "2026-09-16T02:52:48.427375+00:00",
+  "updated_utc": "2026-09-16T02:52:48.449817+00:00",
+  "error": "RuntimeError('scheduled duration not reached on host and board')"
+}

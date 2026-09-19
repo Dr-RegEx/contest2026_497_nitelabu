@@ -1,0 +1,115 @@
+before-a.bin: OK
+before-b.bin: OK
+WIFI_ARTIFACT_CONFIG=PASS booleans=1714 protocol=7
++ /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/esptool --chip esp32s31 --port /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0 --baud 460800 write-flash --flash-size 16MB --flash-mode dio --flash-freq 80m 0x2000 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/nuttx.bin 0x200000 /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/appfs.img
+esptool v5.4.0
+Serial port /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0:
+Connecting....
+Connected to ESP32-S31 on /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f65e4ef67f71f011975a049f1045c30f-if00-port0:
+Chip type:          ESP32-S31 (revision v0.0)
+Features:           Wi-Fi 6, BT 5.4 (LE), IEEE802.15.4, Dual Core + LP Core, 300MHz
+Crystal frequency:  40MHz
+MAC:                30:ed:a0:f3:f7:b0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/nuttx.bin' at 0x00002000...
+SHA digest in image updated.
+Flash will be erased from 0x00002000 to 0x000f9fff...
+Compressed 1013448 bytes to 563864...
+Writing at 0x00007d22 ╸                                2.9% 16.00kB/550.65kB [0s] 
+Writing at 0x0000de8f ━╸                               5.8% 32.00kB/550.65kB [0s] 
+Writing at 0x00015c9b ━━╸                              8.7% 48.00kB/550.65kB [1s] 
+Writing at 0x0002a02d ━━━                             11.6% 64.00kB/550.65kB [1s] 
+Writing at 0x00031655 ━━━━                            14.5% 80.00kB/550.65kB [2s] 
+Writing at 0x0004234a ━━━━━                           17.4% 96.00kB/550.65kB [2s] 
+Writing at 0x000483e4 ━━━━━━                          20.3% 112.00kB/550.65kB [3s] 
+Writing at 0x0004e80c ━━━━━━╸                         23.2% 128.00kB/550.65kB [3s] 
+Writing at 0x00055bb4 ━━━━━━━╸                        26.2% 144.00kB/550.65kB [4s] 
+Writing at 0x0005ef9b ━━━━━━━━╸                       29.1% 160.00kB/550.65kB [4s] 
+Writing at 0x00065e84 ━━━━━━━━━╸                      32.0% 176.00kB/550.65kB [4s] 
+Writing at 0x0006d900 ━━━━━━━━━━                      34.9% 192.00kB/550.65kB [5s] 
+Writing at 0x00073f76 ━━━━━━━━━━━                     37.8% 208.00kB/550.65kB [5s] 
+Writing at 0x0007a31c ━━━━━━━━━━━━                    40.7% 224.00kB/550.65kB [6s] 
+Writing at 0x00080323 ━━━━━━━━━━━━━                   43.6% 240.00kB/550.65kB [6s] 
+Writing at 0x000859d1 ━━━━━━━━━━━━━╸                  46.5% 256.00kB/550.65kB [6s] 
+Writing at 0x0008b3a6 ━━━━━━━━━━━━━━╸                 49.4% 272.00kB/550.65kB [7s] 
+Writing at 0x00090d47 ━━━━━━━━━━━━━━━╸                52.3% 288.00kB/550.65kB [7s] 
+Writing at 0x00096a41 ━━━━━━━━━━━━━━━━╸               55.2% 304.00kB/550.65kB [8s] 
+Writing at 0x0009dc3c ━━━━━━━━━━━━━━━━━               58.1% 320.00kB/550.65kB [8s] 
+Writing at 0x000a66a8 ━━━━━━━━━━━━━━━━━━              61.0% 336.00kB/550.65kB [8s] 
+Writing at 0x000ad35d ━━━━━━━━━━━━━━━━━━━             63.9% 352.00kB/550.65kB [9s] 
+Writing at 0x000b305b ━━━━━━━━━━━━━━━━━━━━            66.8% 368.00kB/550.65kB [9s] 
+Writing at 0x000b9bae ━━━━━━━━━━━━━━━━━━━━╸           69.7% 384.00kB/550.65kB [10s] 
+Writing at 0x000c024b ━━━━━━━━━━━━━━━━━━━━━╸          72.6% 400.00kB/550.65kB [10s] 
+Writing at 0x000c61c5 ━━━━━━━━━━━━━━━━━━━━━━╸         75.5% 416.00kB/550.65kB [10s] 
+Writing at 0x000cbdad ━━━━━━━━━━━━━━━━━━━━━━━╸        78.5% 432.00kB/550.65kB [11s] 
+Writing at 0x000d2274 ━━━━━━━━━━━━━━━━━━━━━━━━        81.4% 448.00kB/550.65kB [11s] 
+Writing at 0x000d8a90 ━━━━━━━━━━━━━━━━━━━━━━━━━       84.3% 464.00kB/550.65kB [12s] 
+Writing at 0x000deb7e ━━━━━━━━━━━━━━━━━━━━━━━━━━      87.2% 480.00kB/550.65kB [12s] 
+Writing at 0x000e4c26 ━━━━━━━━━━━━━━━━━━━━━━━━━━━     90.1% 496.00kB/550.65kB [12s] 
+Writing at 0x000eab93 ━━━━━━━━━━━━━━━━━━━━━━━━━━━╸    93.0% 512.00kB/550.65kB [13s] 
+Writing at 0x000f093d ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸   95.9% 528.00kB/550.65kB [13s] 
+Writing at 0x000f6b38 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸  98.8% 544.00kB/550.65kB [14s] 
+Writing at 0x000f96c8 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 550.65kB/550.65kB [14s] 
+Wrote 1013448 bytes (563864 compressed) at 0x00002000 in 11.6 seconds (696.9 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Writing '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/appfs.img' at 0x00200000...
+Flash will be erased from 0x00200000 to 0x0032ffff...
+Compressed 1243136 bytes to 698606...
+Writing at 0x002073ce ╸                                2.3% 16.00kB/682.23kB [0s] 
+Writing at 0x0020cd34 ━                                4.7% 32.00kB/682.23kB [0s] 
+Writing at 0x00214266 ━━                               7.0% 48.00kB/682.23kB [1s] 
+Writing at 0x0021e2d3 ━━╸                              9.4% 64.00kB/682.23kB [1s] 
+Writing at 0x0022ab29 ━━━╸                            11.7% 80.00kB/682.23kB [2s] 
+Writing at 0x00234be2 ━━━━                            14.1% 96.00kB/682.23kB [2s] 
+Writing at 0x0023a9a9 ━━━━╸                           16.4% 112.00kB/682.23kB [2s] 
+Writing at 0x0024092b ━━━━━╸                          18.8% 128.00kB/682.23kB [3s] 
+Writing at 0x00246408 ━━━━━━                          21.1% 144.00kB/682.23kB [3s] 
+Writing at 0x0024dd3c ━━━━━━━                         23.5% 160.00kB/682.23kB [4s] 
+Writing at 0x00256a4e ━━━━━━━╸                        25.8% 176.00kB/682.23kB [4s] 
+Writing at 0x0025c95b ━━━━━━━━                        28.1% 192.00kB/682.23kB [4s] 
+Writing at 0x00263dc3 ━━━━━━━━━                       30.5% 208.00kB/682.23kB [5s] 
+Writing at 0x0026b635 ━━━━━━━━━╸                      32.8% 224.00kB/682.23kB [5s] 
+Writing at 0x002723d0 ━━━━━━━━━━╸                     35.2% 240.00kB/682.23kB [6s] 
+Writing at 0x002788c2 ━━━━━━━━━━━                     37.5% 256.00kB/682.23kB [6s] 
+Writing at 0x0027e8ae ━━━━━━━━━━━╸                    39.9% 272.00kB/682.23kB [6s] 
+Writing at 0x00285839 ━━━━━━━━━━━━╸                   42.2% 288.00kB/682.23kB [7s] 
+Writing at 0x0028ed9d ━━━━━━━━━━━━━                   44.6% 304.00kB/682.23kB [7s] 
+Writing at 0x0029633c ━━━━━━━━━━━━━━                  46.9% 320.00kB/682.23kB [8s] 
+Writing at 0x0029ce1c ━━━━━━━━━━━━━━╸                 49.3% 336.00kB/682.23kB [8s] 
+Writing at 0x002a2f88 ━━━━━━━━━━━━━━━                 51.6% 352.00kB/682.23kB [8s] 
+Writing at 0x002a8450 ━━━━━━━━━━━━━━━━                53.9% 368.00kB/682.23kB [9s] 
+Writing at 0x002b0882 ━━━━━━━━━━━━━━━━╸               56.3% 384.00kB/682.23kB [9s] 
+Writing at 0x002b8214 ━━━━━━━━━━━━━━━━━╸              58.6% 400.00kB/682.23kB [10s] 
+Writing at 0x002be142 ━━━━━━━━━━━━━━━━━━              61.0% 416.00kB/682.23kB [10s] 
+Writing at 0x002c5d6f ━━━━━━━━━━━━━━━━━━╸             63.3% 432.00kB/682.23kB [10s] 
+Writing at 0x002ce1d4 ━━━━━━━━━━━━━━━━━━━╸            65.7% 448.00kB/682.23kB [11s] 
+Writing at 0x002d4dff ━━━━━━━━━━━━━━━━━━━━            68.0% 464.00kB/682.23kB [11s] 
+Writing at 0x002daa0a ━━━━━━━━━━━━━━━━━━━━━           70.4% 480.00kB/682.23kB [12s] 
+Writing at 0x002e0d96 ━━━━━━━━━━━━━━━━━━━━━╸          72.7% 496.00kB/682.23kB [12s] 
+Writing at 0x002e6e13 ━━━━━━━━━━━━━━━━━━━━━━╸         75.0% 512.00kB/682.23kB [13s] 
+Writing at 0x002ec4d7 ━━━━━━━━━━━━━━━━━━━━━━━         77.4% 528.00kB/682.23kB [13s] 
+Writing at 0x002f5c4f ━━━━━━━━━━━━━━━━━━━━━━━╸        79.7% 544.00kB/682.23kB [13s] 
+Writing at 0x002fc694 ━━━━━━━━━━━━━━━━━━━━━━━━╸       82.1% 560.00kB/682.23kB [14s] 
+Writing at 0x00302482 ━━━━━━━━━━━━━━━━━━━━━━━━━       84.4% 576.00kB/682.23kB [14s] 
+Writing at 0x003078a1 ━━━━━━━━━━━━━━━━━━━━━━━━━━      86.8% 592.00kB/682.23kB [15s] 
+Writing at 0x003105ae ━━━━━━━━━━━━━━━━━━━━━━━━━━╸     89.1% 608.00kB/682.23kB [15s] 
+Writing at 0x00317081 ━━━━━━━━━━━━━━━━━━━━━━━━━━━     91.5% 624.00kB/682.23kB [15s] 
+Writing at 0x0031c85d ━━━━━━━━━━━━━━━━━━━━━━━━━━━━    93.8% 640.00kB/682.23kB [16s] 
+Writing at 0x0032271f ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸   96.2% 656.00kB/682.23kB [16s] 
+Writing at 0x0032abb6 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸  98.5% 672.00kB/682.23kB [17s] 
+Writing at 0x0032f800 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 682.23kB/682.23kB [17s] 
+Wrote 1243136 bytes (698606 compressed) at 0x00200000 in 17.6 seconds (566.7 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Hard resetting via RTS pin...

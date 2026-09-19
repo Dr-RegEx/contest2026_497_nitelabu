@@ -1,0 +1,4 @@
+#include "../demo-rmt-xts-aes/defconfig"
+
+# Full-block CTR/XTS use the same AES PIO engine as CBC; AES-192 stays software.
+CONFIG_ESP32S31_CRYPTO_AES_MODES=y

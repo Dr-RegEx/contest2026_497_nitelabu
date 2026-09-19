@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/lib/python3.10/site-packages/serial/serialposix.py", line 385, in _reconfigure_port
+    fcntl.flock(self.fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+BlockingIOError: [Errno 11] Resource temporarily unavailable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-crypto.py", line 23, in <module>
+    with serial.Serial('/dev/ttyUSB0', 115200, timeout=0.1,
+  File "/home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/lib/python3.10/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/lib/python3.10/site-packages/serial/serialposix.py", line 332, in open
+    self._reconfigure_port(force_update=True)
+  File "/home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/lib/python3.10/site-packages/serial/serialposix.py", line 387, in _reconfigure_port
+    raise SerialException(msg.errno, "Could not exclusively lock port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 11] Could not exclusively lock port /dev/ttyUSB0: [Errno 11] Resource temporarily unavailable

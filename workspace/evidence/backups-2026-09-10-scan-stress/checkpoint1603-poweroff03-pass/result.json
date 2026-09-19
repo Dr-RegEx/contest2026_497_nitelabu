@@ -1,0 +1,59 @@
+{
+  "case": "4.1.6",
+  "status": "PASS",
+  "rounds": [
+    {
+      "case": "4.1.6",
+      "round": 1,
+      "status": "ROUND_PASS",
+      "user_confirmation": "空间测试第1轮已断电并插回",
+      "receipt": "build1023-flat-category-fs-name.sha256",
+      "host_reset": false,
+      "formatted": false,
+      "original_recovery_pass": true,
+      "space_KiB": {
+        "total_before": 1024,
+        "free_before": 592,
+        "total_after": 1024,
+        "free_after": 592
+      }
+    },
+    {
+      "case": "4.1.6",
+      "round": 2,
+      "status": "ROUND_PASS",
+      "user_confirmation": "空间测试第2轮已断电并插回",
+      "receipt": "build1023-flat-category-fs-name.sha256",
+      "host_reset": false,
+      "formatted": false,
+      "original_recovery_pass": true,
+      "space_KiB": {
+        "total_before": 1024,
+        "free_before": 592,
+        "total_after": 1024,
+        "free_after": 592
+      }
+    },
+    {
+      "case": "4.1.6",
+      "round": 3,
+      "status": "ROUND_PASS",
+      "user_confirmation": "空间测试第3轮已断电并插",
+      "receipt": "build1023-flat-category-fs-name.sha256",
+      "host_reset": false,
+      "formatted": false,
+      "original_recovery_pass": true,
+      "space_KiB": {
+        "total_before": 1024,
+        "free_before": 592,
+        "total_after": 1024,
+        "free_after": 592
+      }
+    }
+  ],
+  "original_command": "power_off_test03 /data/p1583",
+  "filesystem": "1MiB physical Flash LittleFS at0xc00000",
+  "formatted": false,
+  "prior_failure_preserved": "checkpoint1597-poweroff03-incomplete",
+  "scope": "Original four-thread data checks and total-capacity comparison passed; free-space before/after also equal in captured outputs; not an added source assertion"
+}

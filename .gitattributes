@@ -1,0 +1,7 @@
+# Patch context and archived evidence are preserved byte-for-byte except documented redactions.
+workspace/patches/*.patch -whitespace
+workspace/dependencies/*.patch -whitespace
+workspace/evidence/** -whitespace
+docs/acceptance/** -whitespace
+
+docs/reproduction/*.log -whitespace

@@ -1,0 +1,1 @@
+1563 targetPASS: both workers startCPU0,20 checked affinity changes each, endCPU1, then100 fullbank/vector-add rounds each with zeroerror. Candidate1562 sharedSMP ready-list fix resolves this reproduced local migration scenario. Does not imply arbitrary PIE execution/migration ontoCPU0 is supported; CPU0 has no PIE.1564 sameimage BLE/WiFi regression active.70/88 xTS unchanged.

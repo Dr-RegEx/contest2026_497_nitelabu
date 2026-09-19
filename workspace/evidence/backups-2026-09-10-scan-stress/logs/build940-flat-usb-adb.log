@@ -1,0 +1,319 @@
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-usb-adb -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:xts-flat-usb-adb -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- Found Python3: /home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/bin/python3.10 (found version "3.10.12") found components: Interpreter 
+-- Processing includes: /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-usb-adb/defconfig → /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-usb-adb/.defconfig.processed
+-- Initializing NuttX
+CMake Warning at cmake/nuttx_kconfig.cmake:182 (message):
+  Kconfig Configuration Error:
+  /home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/bin/olddefconfig:
+  Dependency loop
+
+  ===============
+
+  
+
+  SCHED_LPWORK (defined at sched/Kconfig:1987), with definition...
+
+  
+
+  config SCHED_LPWORK
+
+  	bool "Low priority (kernel) worker thread"
+
+  	default n
+
+  	select SCHED_WORKQUEUE
+
+  	help
+
+  	 If SCHED_LPWORK is defined then a lower-priority work queue will
+
+  	 be created.  This lower priority work queue is better suited for
+
+  	 more extended, application oriented processing (such as file system
+
+  	 clean-up operations or asynchronous I/O)
+
+  
+
+  (select-related dependencies: (SIM_NETDEV && <choice>) || (SIM_X11FB &&
+  ARCH_SIM) || (ESP32_SPI_FLASH_SUPPORT_PSRAM_STACK && ESP32_SPIRAM &&
+  ESP32_SPIFLASH && ARCH_CHIP_ESP32 && ARCH_CHIP_ESP32 && ARCH_XTENSA) ||
+  (ESP32S3_SPI_FLASH_SUPPORT_PSRAM_STACK && ESP32S3_SPIRAM &&
+  ESP32S3_SPIFLASH && ARCH_CHIP_ESP32S3 && ARCH_CHIP_ESP32S3 && ARCH_XTENSA)
+  || (CAN_TXREADY_LOPRI && <choice>) || (USBHOST_MAX3421E && EXPERIMENTAL &&
+  USBHOST) || (WL_GS2200M && DRIVERS_WIRELESS) || (RC_DUMMY && DRIVERS_RC) ||
+  (FS_AUTOMOUNTER && !DISABLE_MOUNTPOINT) || (WIRELESS_BLUETOOTH &&
+  ALLOW_BSD_COMPONENTS && WIRELESS))
+
+  
+
+  ...depends on the choice symbol SIM_NETDEV (defined at
+  arch/sim/Kconfig:208), with definition...
+
+  
+
+  config SIM_NETDEV
+
+  	bool "Simulated Network Device"
+
+  	select ARCH_HAVE_NETDEV_STATISTICS
+
+  	select SCHED_LPWORK
+
+  	select NET_ETHERNET
+
+  	depends on <choice>
+
+  	help
+
+  	 Build in support for a simulated network device.
+
+  
+
+  ...depends on <choice> (defined at arch/sim/Kconfig:202), with
+  definition...
+
+  
+
+  choice
+
+  	bool "Simulated Network Interface"
+
+  	default SIM_NETDEV
+
+  	optional
+
+  	depends on NET && ARCH_SIM
+
+  
+
+  ...depends on NET (defined at net/Kconfig:40), with definition...
+
+  
+
+  config NET
+
+  	bool "Networking support"
+
+  	default n
+
+  	select ARCH_HAVE_NET
+
+  	help
+
+  	 Enable or disable all network features
+
+  
+
+  (select-related dependencies: (KINETIS_ENET && (ARCH_FAMILY_K60 ||
+  ARCH_FAMILY_K64 || ARCH_FAMILY_K66) && ARCH_CHIP_KINETIS && ARCH_ARM) ||
+  (LITEX_ETHMAC && ARCH_CHIP_LITEX && ARCH_RISCV) || (ESP32C3_WIRELESS &&
+  ARCH_CHIP_ESP32C3 && ARCH_CHIP_ESP32C3 && ARCH_RISCV) || (ESP_WIRELESS &&
+  (ARCH_CHIP_ESPRESSIF || ARCH_CHIP_ESP32C6 || ARCH_CHIP_ESP32H2 ||
+  ARCH_CHIP_ESP32C3_GENERIC || ARCH_CHIP_ESP32S31) &&
+  ARCH_CHIP_ESP32C3_GENERIC && ARCH_CHIP_ESP32C3_GENERIC && ARCH_RISCV) ||
+  (ESP_WIRELESS && (ARCH_CHIP_ESPRESSIF || ARCH_CHIP_ESP32C6 ||
+  ARCH_CHIP_ESP32H2 || ARCH_CHIP_ESP32C3_GENERIC || ARCH_CHIP_ESP32S31) &&
+  ARCH_CHIP_ESP32C6 && ARCH_CHIP_ESP32C6 && ARCH_RISCV) || (ESP_WIRELESS &&
+  (ARCH_CHIP_ESPRESSIF || ARCH_CHIP_ESP32C6 || ARCH_CHIP_ESP32H2 ||
+  ARCH_CHIP_ESP32C3_GENERIC || ARCH_CHIP_ESP32S31) && ARCH_CHIP_ESP32H2 &&
+  ARCH_CHIP_ESP32H2 && ARCH_RISCV) || (ESP_WIRELESS && (ARCH_CHIP_ESPRESSIF
+  || ARCH_CHIP_ESP32C6 || ARCH_CHIP_ESP32H2 || ARCH_CHIP_ESP32C3_GENERIC ||
+  ARCH_CHIP_ESP32S31) && ARCH_CHIP_ESP32S31 && ARCH_CHIP_ESP32S31 &&
+  ARCH_RISCV) || (ESPRESSIF_WIRELESS && ARCH_CHIP_ESP32S2 && ARCH_CHIP_ESP32
+  && ARCH_CHIP_ESP32 && ARCH_XTENSA) || (ESP32_EMAC && ARCH_CHIP_ESP32 &&
+  ARCH_CHIP_ESP32 && ARCH_XTENSA) || (ESP32_OPENETH && !ESP32_EMAC &&
+  ARCH_CHIP_ESP32 && ARCH_CHIP_ESP32 && ARCH_XTENSA) || (ESP32_WIRELESS &&
+  ARCH_CHIP_ESP32 && ARCH_CHIP_ESP32 && ARCH_XTENSA) || (ESPRESSIF_WIRELESS
+  && ARCH_CHIP_ESP32S2 && ARCH_CHIP_ESP32S2 && ARCH_CHIP_ESP32S2 &&
+  ARCH_XTENSA) || (ESPRESSIF_WIRELESS && ARCH_CHIP_ESP32S2 &&
+  ARCH_CHIP_ESP32S3 && ARCH_CHIP_ESP32S3 && ARCH_XTENSA) || (ESP32S3_WIRELESS
+  && ARCH_CHIP_ESP32S3 && ARCH_CHIP_ESP32S3 && ARCH_XTENSA) ||
+  (ESP32S3_OPENETH && !ESP32S3_WIFI && ARCH_CHIP_ESP32S3 && ARCH_CHIP_ESP32S3
+  && ARCH_XTENSA) || (MODEM_ALT1250 && MODEM) || (NET_CDCECM && USBDEV) ||
+  EXAMPLES_TCP_IPC_CLIENT || EXAMPLES_TCP_IPC_SERVER)
+
+  
+
+  ...depends on USBDEV (defined at drivers/usbdev/Kconfig:6), with
+  definition...
+
+  
+
+  menuconfig USBDEV
+
+  	bool "USB Device Driver Support"
+
+  	default n
+
+  	help
+
+  	 USB device drivers.  See also include/nuttx/usb/usbdev.h
+
+  
+
+  (select-related dependencies: (LPC17_40_USBDEV && ARCH_CHIP_LPC17XX_40XX &&
+  ARCH_ARM) || (NRF52_USBDEV && NRF52_HAVE_USBDEV && NRF52_HFCLK_XTAL &&
+  ARCH_CHIP_NRF52 && ARCH_ARM) || (NRF53_USBDEV && NRF53_HFCLK_XTAL &&
+  ARCH_CHIP_NRF53 && ARCH_ARM) || (SAMV7_USBDEVFS && SAMV7_HAVE_USBFS &&
+  ARCH_CHIP_SAMV7 && ARCH_CHIP_SAMV7 && ARCH_ARM) || (SAMV7_USBDEVHS &&
+  SAMV7_HAVE_USBHS && ARCH_CHIP_SAMV7 && ARCH_CHIP_SAMV7 && ARCH_ARM) ||
+  (STM32_USB && STM32_HAVE_USBDEV && ARCH_CHIP_STM32 && ARCH_ARM) ||
+  (STM32_USBFS && STM32_HAVE_USBFS && ARCH_CHIP_STM32 && ARCH_ARM) ||
+  (STM32_UCPD && STM32_HAVE_UCPD && ARCH_CHIP_STM32 && ARCH_ARM) ||
+  (STM32F0L0G0_USB && STM32F0L0G0_HAVE_USBDEV && (ARCH_CHIP_STM32F0 ||
+  ARCH_CHIP_STM32L0 || ARCH_CHIP_STM32G0) && ARCH_ARM) || (STM32F0L0G0_LCD &&
+  STM32F0L0G0_HAVE_LCD && (ARCH_CHIP_STM32F0 || ARCH_CHIP_STM32L0 ||
+  ARCH_CHIP_STM32G0) && ARCH_ARM) || (STM32L4_USBFS && STM32L4_HAVE_USBFS &&
+  ARCH_CHIP_STM32L4 && ARCH_CHIP_STM32L4 && ARCH_ARM) || (STR71X_USB &&
+  ARCH_CHIP_STR71X && ARCH_ARM) || (AT32_USB && AT32_HAVE_USBDEV &&
+  ARCH_CHIP_AT32 && ARCH_ARM) || (AT32_USBFS && AT32_HAVE_USBFS &&
+  ARCH_CHIP_AT32 && ARCH_ARM) || (AT32_UCPD && AT32_HAVE_UCPD &&
+  ARCH_CHIP_AT32 && ARCH_ARM) || (IMX9_USBDEV && ARCH_CHIP_IMX9 &&
+  ARCH_CHIP_IMX9 && ARCH_ARM64) || (ESP32S31_USBDEV && BUILD_FLAT && !SMP &&
+  !ESPRESSIF_SPIRAM_USER_HEAP && ARCH_CHIP_ESP32S31 && ARCH_CHIP_ESP32S31 &&
+  ARCH_RISCV) || (SIM_USB_DEV && ARCH_SIM) || (ESP32S3_OTG_DEVICE &&
+  <choice>))
+
+  
+
+  ...depends on ESP32S31_USBDEV (defined at
+  arch/risc-v/src/esp32s31/Kconfig:12), with definition...
+
+  
+
+  config ESP32S31_USBDEV
+
+  	bool "S31 UTMI USB device controller (full-speed PIO)"
+
+  	default n
+
+  	select USBDEV
+
+  	depends on BUILD_FLAT && !SMP && !ESPRESSIF_SPIRAM_USER_HEAP &&
+  ARCH_CHIP_ESP32S31 && ARCH_CHIP_ESP32S31 && ARCH_RISCV
+
+  	help
+
+  	 Initial awake device-mode endpoint engine for the dedicated HS PHY.
+
+  	 Uses full-speed packets and PIO.  The board Type-A connector sources
+
+  	 VBUS; a verified isolated device connection is required for testing.
+
+  
+
+  ...depends on the choice symbol BUILD_FLAT (defined at Kconfig:293), with
+  definition...
+
+  
+
+  config BUILD_FLAT
+
+  	bool "Flat address space"
+
+  	depends on <choice>
+
+  	help
+
+  	 Build NuttX as one large, executable "blob".  All of the code
+
+  	 within the blob can interrupt with all of the other code within
+
+  	 the blob.  There are no special privileges, protections, or
+
+  	 restraints.
+
+  
+
+  ...depends on <choice> (defined at Kconfig:289), with definition...
+
+  
+
+  choice
+
+  	bool "Memory organization"
+
+  	default BUILD_FLAT
+
+  
+
+  ...depends on the choice symbol BUILD_KERNEL (defined at Kconfig:316), with
+  definition...
+
+  
+
+  config BUILD_KERNEL
+
+  	bool "NuttX kernel build"
+
+  	select LIB_SYSCALL
+
+  	select MODULES
+
+  	select MM_TASK_HEAP
+
+  	depends on ARCH_USE_MMU && ARCH_ADDRENV && <choice>
+
+  	help
+
+  	 Builds NuttX as a separately compiled kernel.  No applications are
+
+  	 built.  All user applications must reside in a file system where
+
+  	 they can be loaded into memory for execution.
+
+  	
+
+  	 NOTE: This build configuration requires that the platform support
+
+  	 a memory management unit (MMU) and address environments.  Support,
+
+  	 however, may not be implemented on all platforms.
+
+  
+
+  ...depends on ARCH_ADDRENV (defined at arch/Kconfig:818), with
+  definition...
+
+  
+
+  menuconfig ARCH_ADDRENV
+
+  	bool "Address environments"
+
+  	default n
+
+  	depends on ARCH_HAVE_ADDRENV && SCHED_LPWORK
+
+  	help
+
+  	 Support per-task address environments using the MMU...  i.e., support
+
+  	 "processes"
+
+  
+
+  (select-related dependencies: ARCH_CHIP_Z180 && <choice>)
+
+  
+
+  ...depends again on SCHED_LPWORK (defined at sched/Kconfig:1987)
+
+Call Stack (most recent call first):
+  CMakeLists.txt:363 (nuttx_olddefconfig)
+
+
+CMake Error at cmake/nuttx_kconfig.cmake:186 (message):
+  nuttx_olddefconfig: Failed to initialize Kconfig configuration:
+Call Stack (most recent call first):
+  CMakeLists.txt:363 (nuttx_olddefconfig)
+
+
+-- Configuring incomplete, errors occurred!
++ restore_config
++ '[' -f /tmp/s31-flat-source-config.XppCaj/.config ']'
++ mv /tmp/s31-flat-source-config.XppCaj/.config .config
++ '[' -f /tmp/s31-flat-source-config.XppCaj/config.h ']'
++ mv /tmp/s31-flat-source-config.XppCaj/config.h include/nuttx/config.h
++ rmdir /tmp/s31-flat-source-config.XppCaj

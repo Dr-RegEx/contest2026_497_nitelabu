@@ -1,0 +1,1 @@
+Independent1131 mono capture profile includes1101, raises NSH_MAXARGUMENTS from7 to16 so the full original11-token command is accepted. No audio algorithm/hardware changes. Build passed; target acceptance pending. Original1101 frozen and1129 invocation failure retained.

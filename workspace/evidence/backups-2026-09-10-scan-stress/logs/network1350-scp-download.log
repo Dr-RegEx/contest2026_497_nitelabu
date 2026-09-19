@@ -1,0 +1,34 @@
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892      80172     230720     110528     164240    214     16 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: mount -t tmpfs /data ---
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+nsh> [K
+nsh> [K
+--- CMD: scp xts@192.168.1.29:/x1348.bin /data/scp1350 ---
+scp xts@192.168.1.29:/x1348.bin /data/scp1350
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU1] riscv_exception: EXCEPTION: Instruction page fault. MCAUSE: 0000000c, EPC: 00000000, MTVAL: 00000000
+[CPU1] esp32s31_dump_mmu_fault: S31 MMU: satp=8002f053 status=00042020 saved=00042020 kernel=2f015000 kernel_pte=000000ef
+[CPU1] esp32s31_dump_mmu_fault: S31 MMU: root=2f053000 index=0 pte=000000ef
+[CPU1] riscv_exception: Segmentation fault in PID 172: scp
+nsh> [K
+nsh> [K
+{"case": "4.1.115", "status": "FAIL", "receipt": "build1332-network-dns.sha256", "host_fingerprint": "SHA256:4nAe7/uKJkVehh55aqbo0G9lS8tJYKz8LKUrTOMFF3g", "error": "authentication not reached"}

@@ -1,0 +1,162 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x5f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x14178
+entry 0x2f0104e6
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x14178  (82296)
+padd: lma 0x000161e8 vma 0x00000000 len 0x9e30   (40496)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1af58  (110424)
+padd: lma 0x0003af80 vma 0x00000000 len 0x5178   (20856)
+imap: lma 0x00040100 vma 0x40000100 len 0xc38c0  (800960)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_NIST_BOOT=PASS seconds=0.684
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=79 data=0 fcs=3 abort=5 full=0 fifo=0 other=2
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=3 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls /tmp/experiments ---
+ls /tmp/experiments
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: ls /tmp/templates ---
+ls /tmp/templates
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: cd /tmp ---
+cd /tmp
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/ApproximateEntropy ---
+mkdir -p experiments/AlgorithmTesting/ApproximateEntropy
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/CumulativeSums ---
+mkdir -p experiments/AlgorithmTesting/CumulativeSums
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/Frequency ---
+mkdir -p experiments/AlgorithmTesting/Frequency
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/LongestRun ---
+mkdir -p experiments/AlgorithmTesting/LongestRun
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/OverlappingTemplate ---
+mkdir -p experiments/AlgorithmTesting/OverlappingTemplate
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/RandomExcursionsVariant ---
+mkdir -p experiments/AlgorithmTesting/RandomExcursionsVariant
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/Runs ---
+mkdir -p experiments/AlgorithmTesting/Runs
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/Universal ---
+mkdir -p experiments/AlgorithmTesting/Universal
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/BlockFrequency ---
+mkdir -p experiments/AlgorithmTesting/BlockFrequency
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/FFT ---
+mkdir -p experiments/AlgorithmTesting/FFT
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/LinearComplexity ---
+mkdir -p experiments/AlgorithmTesting/LinearComplexity
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/NonOverlappingTemplate ---
+mkdir -p experiments/AlgorithmTesting/NonOverlappingTemplate
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/RandomExcursions ---
+mkdir -p experiments/AlgorithmTesting/RandomExcursions
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/Rank ---
+mkdir -p experiments/AlgorithmTesting/Rank
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p experiments/AlgorithmTesting/Serial ---
+mkdir -p experiments/AlgorithmTesting/Serial
+nsh> [K
+nsh> [K
+--- CMD: mkdir templates ---
+mkdir templates
+nsh> [K
+nsh> [K
+--- CMD: cp /system/bin/nist-template9 /tmp/templates/template9 ---
+cp /system/bin/nist-template9 /tmp/templates/template9
+nsh> [K
+nsh> [K
+--- CMD: ls -l /tmp/templates/template9 ---
+ls -l /tmp/templates/template9
+ -rwxrwxrwx   0        2664 /tmp/templates/template9
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     304828      80996     223832      90832     209256    263      6 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+XTS_COMMAND=nist_sts 400000; inputs=0,/dev/urandom/,1,0,10,1
+XTS_INPUT=nist_sts 400000
+nist_sts 400000
+           G E N E R A T O R    S E L E C T I O N 
+           ______________________________________
+
+    [0] Input File                 [1] Linear Congruential
+    [2] Quadratic Congruential I   [3] Quadratic Congruential II
+    [4] Cubic Congruential         [5] XOR
+    [6] Modular Exponentiation     [7] Blum-Blum-Shub
+    [8] Micali-Schnorr             [9] G Using SHA-1
+
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-nist.py", line 70, in <module>
+    collect(port, b'Enter Choice:')
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-nist.py", line 48, in collect
+    raise TimeoutError('NIST transport timed out')
+TimeoutError: NIST transport timed out

@@ -1,0 +1,9 @@
+c6: /tmp/esp-wifi-irq-mask-27p0e2ru/test.c:10: esp_get_irq: Assertion `cpuint >= 0 && cpuint < 32' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_irq_mask.py", line 97, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_irq_mask.py", line 93, in main
+    subprocess.run([str(path / variant)], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-wifi-irq-mask-27p0e2ru/c6']' died with <Signals.SIGABRT: 6>.

@@ -1,0 +1,15 @@
+make  all-recursive
+make[1]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+Making all in compat
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/compat”
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/compat -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall -O2 -std=gnu11  -MT Thread.o -MD -MP -MF .deps/Thread.Tpo -c -o Thread.o ../../iperf2-2.1.8/compat/Thread.c
+make[2]: x86_64-w64-mingw32-gcc: No such file or directory
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/compat -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall -O2 -std=gnu11  -MT error.o -MD -MP -MF .deps/error.Tpo -c -o error.o ../../iperf2-2.1.8/compat/error.c
+make[2]: x86_64-w64-mingw32-gcc: No such file or directory
+make[2]: *** [Makefile:377：Thread.o] 错误 127
+make[2]: *** 正在等待未完成的任务....
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/compat”
+make[2]: *** [Makefile:377：error.o] 错误 127
+make[1]: *** [Makefile:596：all-recursive] 错误 1
+make[1]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+make: *** [Makefile:536：all] 错误 2

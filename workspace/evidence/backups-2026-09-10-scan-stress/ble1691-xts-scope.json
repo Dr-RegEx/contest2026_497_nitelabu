@@ -1,0 +1,155 @@
+{
+  "version_requirement": "BLE5.4",
+  "test_scope": "all BLE-related original xTS cases; no full-spec certification implied",
+  "ble_cases": 18,
+  "already_in_original88": 1,
+  "added_cases": 17,
+  "current_xts_total": 105,
+  "confirmed_pass": 77,
+  "cases": [
+    {
+      "id": "xTS原文未编号",
+      "title": "开关BLE蓝牙",
+      "source_line": 4968,
+      "status": "已通过",
+      "workload": "1085原始开关/state全步骤通过；已计入原88项",
+      "conditions": "复用旧记录"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "adv start -i <interval>指定广告间隔",
+      "source_line": 4990,
+      "status": "待核验原始证据",
+      "workload": "20/100/1000/10240ms广播间隔；按原文核对误差≤5%",
+      "conditions": "手机nRF观察"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "相同public地址多路广播",
+      "source_line": 5023,
+      "status": "待核验原始证据",
+      "workload": "按原文启动/停止两路广播并核对对端显示",
+      "conditions": "手机nRF观察"
+    },
+    {
+      "id": "4.1.105",
+      "title": "蓝牙--BLE&Wi-Fi共存（Zblue协议栈）-蓝牙扫描和wifi共存",
+      "source_line": 5150,
+      "status": "原始用例待闭合",
+      "workload": "执行原文100次流程；已有1564 GATT并发证据不能替代扫描背景",
+      "conditions": "路由器及BLE扫描环境"
+    },
+    {
+      "id": "4.1.104",
+      "title": "蓝牙--BLE&Wi-Fi共存（Zblue协议栈）-蓝牙广播和wifi共存",
+      "source_line": 5188,
+      "status": "开发验证完成；原始用例待闭合",
+      "workload": "1551/1564已有并发证据；补齐原文广播背景及100次流程",
+      "conditions": "路由器及BLE对端"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "相同random地址多路广播",
+      "source_line": 5388,
+      "status": "待核验原始证据",
+      "workload": "两路random_id广播及对端观察、停止回调",
+      "conditions": "手机nRF观察"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "不同地址多路广播",
+      "source_line": 5417,
+      "status": "待核验原始证据",
+      "workload": "public与random_id两路广播及对端观察",
+      "conditions": "手机nRF观察"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "scan设置扫描phy",
+      "source_line": 5446,
+      "status": "待核验原始证据",
+      "workload": "按原文检查1M/2M/Coded；2M原文注明研发待确认，先核定命令与协议映射",
+      "conditions": "BLE广播对端；保留原文疑点"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "scan设置扫描mode",
+      "source_line": 5474,
+      "status": "待核验原始证据",
+      "workload": "mode 0/1/2逐一开始扫描、观察结果及停止",
+      "conditions": "BLE广播对端"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "组合扫描场景",
+      "source_line": 5502,
+      "status": "待核验原始证据",
+      "workload": "2M+mode2、1M+mode1组合；2M映射疑点同上",
+      "conditions": "BLE广播对端"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "BLE发现时长",
+      "source_line": 5528,
+      "status": "待核验原始证据",
+      "workload": "原始10次计时；原文未给数值门槛，记录实测并保留验收口径",
+      "conditions": "安卓手机；性能测试关闭snoop"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "BLE被发现时长",
+      "source_line": 5548,
+      "status": "待核验原始证据",
+      "workload": "原始10次，手机录屏/日志计时，按原文3σ统计",
+      "conditions": "手机、录屏；关闭snoop"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "BLE发现成功率",
+      "source_line": 5572,
+      "status": "待核验原始证据",
+      "workload": "原始20次；屏蔽室100%，家居环境≥95%",
+      "conditions": "手机nRF广播；关闭snoop"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "BLE被发现成功率",
+      "source_line": 5591,
+      "status": "待核验原始证据",
+      "workload": "原始20次；屏蔽室100%，家居环境≥95%",
+      "conditions": "手机nRF扫描；关闭snoop"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "BLE发现5个设备成功率",
+      "source_line": 5610,
+      "status": "待核验原始证据",
+      "workload": "原始20次；屏蔽室100%，家居环境≥95%",
+      "conditions": "原文要求5台手机广播；关闭snoop"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "BLE配对成功率",
+      "source_line": 5629,
+      "status": "待核验原始证据",
+      "workload": "原始20次；屏蔽室100%，家居环境≥95%",
+      "conditions": "手机nRF及配对操作；关闭snoop"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "BLE扫描效率",
+      "source_line": 5648,
+      "status": "待核验原始证据",
+      "workload": "mode2，≤1m/5m/10m统计包数和扫描成功率；不擅加门槛",
+      "conditions": "广播对端及距离布置"
+    },
+    {
+      "id": "xTS原文未编号",
+      "title": "广播与扫描共存后扫描效率",
+      "source_line": 5671,
+      "status": "待核验原始证据",
+      "workload": "广播间隔≤30ms+mode2扫描；≤1m/5m/10m统计成功率",
+      "conditions": "主动扫描与广播对端及距离布置"
+    }
+  ]
+}

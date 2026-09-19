@@ -1,0 +1,47 @@
+--- CMD: sleep 5 ---
+sleep 5
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     334204      99124     235080     139216     181416    227     14 Kmem
+   16777216    1282048   15495168   15495168 Page
+nsh> [K
+nsh> [K
+--- CMD: sleep 5 ---
+sleep 5
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     334204      99124     235080     139216     181416    227     14 Kmem
+   16777216    1282048   15495168   15495168 Page
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010b00 0x2f010b4c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   12    12 ---(0x00000003) 101 RR       Task      - Waiting  Semaphore 0000000000000000 0008128 s31demo
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=37641 replay=37641 ack=38614 drop=0 pending=0x0 sreplay=29
+MONLAT: cpu=0 input=1 last=1409 max=12991398 samples=6771 over32=367 over100=241 over1000=30 sum=236293234
+MONIRQ: cpu=1 defer=69794 replay=69794 ack=69864 drop=0 pending=0x0 sreplay=5
+MONLAT: cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0
+ADDRENV: created=60 fail=0 destroyed=58 live=2 livemax=3 pages=8102 pgt=232
+WAIT: pid=2 object=0x2f010b14
+LPTRACE: 0x40024860
+WAIT: pid=4 object=0x2f010b6c
+WAIT: pid=12 object=0x2f052a14
+nsh> [K
+nsh> [K

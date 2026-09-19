@@ -1,0 +1,97 @@
+{
+  "full_pass": 70,
+  "total": 88,
+  "manufacturer_done": 72,
+  "items": [
+    {
+      "case": "1.2.2",
+      "blocker": "physical",
+      "next_action": "1580 capture active; requires physical RESET confirmation"
+    },
+    {
+      "case": "2.1.3",
+      "blocker": "physical",
+      "next_action": "10 real cold boots with timestamps, mean <=4s"
+    },
+    {
+      "case": "GPIO",
+      "blocker": "fixture",
+      "next_action": "GPIO loopback"
+    },
+    {
+      "case": "BMI160",
+      "blocker": "fixture",
+      "next_action": "physical BMI160 measurements"
+    },
+    {
+      "case": "RNG",
+      "blocker": "acceptance",
+      "next_action": "original786 has26 unavailable statistics; supplemental808 numeric188 passed"
+    },
+    {
+      "case": "5.1.7",
+      "blocker": "performance",
+      "next_action": "800000B LittleFS overwrite causes suffix rewrite;43.21s/10 writes; no accepted threshold"
+    },
+    {
+      "case": "5.1.11",
+      "blocker": "community",
+      "next_action": "manufacturer measurement complete1030"
+    },
+    {
+      "case": "5.1.12",
+      "blocker": "community",
+      "next_action": "manufacturer measurement complete1030"
+    },
+    {
+      "case": "5.1.22",
+      "blocker": "acceptance",
+      "next_action": "original300s completed1361; rate and timing discrepancy retained"
+    },
+    {
+      "case": "5.1.23",
+      "blocker": "acceptance",
+      "next_action": "original300s completed1478;296Kbit/s"
+    },
+    {
+      "case": "5.1.24",
+      "blocker": "performance",
+      "next_action": "original300s completed1499;11.4Mbit/s,30% loss"
+    },
+    {
+      "case": "5.1.25",
+      "blocker": "acceptance",
+      "next_action": "original300s completed1417;6.16Mbit/s received,0.23% loss"
+    },
+    {
+      "case": "5.1.27",
+      "blocker": "environment_or_driver",
+      "next_action": "1419 100 scans completed; BSSID membership2/3 varies, cause not proven"
+    },
+    {
+      "case": "4.2.15",
+      "blocker": "speaker",
+      "next_action": "external speaker listening"
+    },
+    {
+      "case": "4.2.10",
+      "blocker": "speaker",
+      "next_action": "external speaker original playback"
+    },
+    {
+      "case": "4.1.4",
+      "blocker": "physical",
+      "next_action": "3 poweroffs;1581 prepared"
+    },
+    {
+      "case": "4.1.5",
+      "blocker": "physical",
+      "next_action": "3 poweroffs;1581 prepared"
+    },
+    {
+      "case": "4.1.6",
+      "blocker": "physical",
+      "next_action": "3 poweroffs;1581 prepared"
+    }
+  ]
+}

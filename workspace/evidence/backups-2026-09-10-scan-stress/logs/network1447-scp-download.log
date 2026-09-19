@@ -1,0 +1,34 @@
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892      80092     230800     109576     180608    212     16 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: mount -t tmpfs /data ---
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+nsh> [K
+nsh> [K
+--- CMD: scp xts@192.168.1.29:/x1348.bin /data/scp1447 ---
+scp xts@192.168.1.29:/x1348.bin /data/scp1447
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+Connection failed : Failed to connect: Network is unreachable
+Couldn't connect to 192.168.1.29
+nsh> [K
+nsh> [K
+{"case": "4.1.115", "status": "FAIL", "receipt": "build1444-ssh-threading.sha256", "host_fingerprint": "SHA256:4nAe7/uKJkVehh55aqbo0G9lS8tJYKz8LKUrTOMFF3g", "error": "authentication not reached"}

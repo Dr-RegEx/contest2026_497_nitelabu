@@ -1,0 +1,144 @@
+UART_LINE_CODING_ONLY; NO_DTR_RTS; NO_HOST_RESET
+
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir -p /data
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount -t littlefs /dev/xtsflash /data
+--- CMD: mount -t littlefs /dev/xtsflash /data ---
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/p1583/testdir
+--- CMD: ls -l /data/p1583/testdir ---
+ls -l /data/p1583/testdir
+/data/p1583/testdir:
+ drwx------           0 .
+ drwxrwxrwx           0 ..
+ -rwxrwxrwx           0 0.txt
+ -rwxrwxrwx           0 1.txt
+ -rwxrwxrwx           0 10.txt
+ -rwxrwxrwx           0 11.txt
+ -rwxrwxrwx           0 12.txt
+ -rwxrwxrwx           0 13.txt
+ -rwxrwxrwx           0 14.txt
+ -rwxrwxrwx           0 15.txt
+ -rwxrwxrwx           0 16.txt
+ -rwxrwxrwx           0 17.txt
+ -rwxrwxrwx           0 18.txt
+ -rwxrwxrwx           0 19.txt
+ -rwxrwxrwx           0 2.txt
+ -rwxrwxrwx           0 20.txt
+ -rwxrwxrwx           0 21.txt
+ -rwxrwxrwx           0 22.txt
+ -rwxrwxrwx           0 23.txt
+ -rwxrwxrwx           0 24.txt
+ -rwxrwxrwx           0 25.txt
+ -rwxrwxrwx           0 26.txt
+ -rwxrwxrwx           0 27.txt
+ -rwxrwxrwx           0 28.txt
+ -rwxrwxrwx           0 29.txt
+ -rwxrwxrwx           0 3.txt
+ -rwxrwxrwx           0 30.txt
+ -rwxrwxrwx           0 31.txt
+ -rwxrwxrwx           0 32.txt
+ -rwxrwxrwx           0 33.txt
+ -rwxrwxrwx           0 34.txt
+ -rwxrwxrwx           0 35.txt
+ -rwxrwxrwx           0 36.txt
+ -rwxrwxrwx           0 37.txt
+ -rwxrwxrwx           0 38.txt
+ -rwxrwxrwx           0 39.txt
+ -rwxrwxrwx           0 4.txt
+ -rwxrwxrwx           0 40.txt
+ -rwxrwxrwx           0 41.txt
+ -rwxrwxrwx           0 42.txt
+ -rwxrwxrwx           0 43.txt
+ -rwxrwxrwx           0 44.txt
+ -rwxrwxrwx           0 45.txt
+ -rwxrwxrwx           0 46.txt
+ -rwxrwxrwx           0 47.txt
+ -rwxrwxrwx           0 48.txt
+ -rwxrwxrwx           0 49.txt
+ -rwxrwxrwx           0 5.txt
+ -rwxrwxrwx           0 50.txt
+ -rwxrwxrwx           0 51.txt
+ -rwxrwxrwx           0 52.txt
+ -rwxrwxrwx           0 53.txt
+ -rwxrwxrwx           0 54.txt
+ -rwxrwxrwx           0 55.txt
+ -rwxrwxrwx           0 56.txt
+ -rwxrwxrwx           0 57.txt
+ -rwxrwxrwx           0 58.txt
+ -rwxrwxrwx           0 59.txt
+ -rwxrwxrwx           0 6.txt
+ -rwxrwxrwx           0 60.txt
+ -rwxrwxrwx           0 61.txt
+ -rwxrwxrwx           0 62.txt
+ -rwxrwxrwx           0 63.txt
+ -rwxrwxrwx           0 64.txt
+ -rwxrwxrwx           0 65.txt
+ -rwxrwxrwx           0 66.txt
+ -rwxrwxrwx           0 67.txt
+ -rwxrwxrwx           0 68.txt
+ -rwxrwxrwx           0 69.txt
+ -rwxrwxrwx           0 7.txt
+ -rwxrwxrwx           0 70.txt
+ -rwxrwxrwx           0 71.txt
+ -rwxrwxrwx           0 72.txt
+ -rwxrwxrwx           0 73.txt
+ -rwxrwxrwx           0 74.txt
+ -rwxrwxrwx           0 75.txt
+ -rwxrwxrwx           0 76.txt
+ -rwxrwxrwx           0 77.txt
+ -rwxrwxrwx           0 78.txt
+ -rwxrwxrwx           0 79.txt
+ -rwxrwxrwx           0 8.txt
+ -rwxrwxrwx           0 9.txt
+nsh> [K
+nsh> [K
+XTS_COMMAND=power_off_test02 /data/p1583
+--- CMD: power_off_test02 /data/p1583 ---
+power_off_test02 /data/p1583
+Open  n 80
+Verify the file system  ...
+The file system is functioning normally ...
+Poweroff test open api passed ...
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/p1583
+--- CMD: ls -l /data/p1583 ---
+ls -l /data/p1583
+/data/p1583:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256        108         148 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+{"case": "4.1.5", "round": 3, "status": "ROUND_PASS", "user_confirmation": "创建测试第3轮已断电并插回", "receipt": "build1023-flat-category-fs-name.sha256", "host_reset": false, "formatted": false, "persisted_created_files": 80}

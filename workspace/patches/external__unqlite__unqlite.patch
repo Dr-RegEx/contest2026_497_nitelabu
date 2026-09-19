@@ -1,0 +1,43 @@
+diff --git a/unqlite.c b/unqlite.c
+index f3d9dda..f05c573 100644
+--- a/unqlite.c
++++ b/unqlite.c
+@@ -52656,6 +52656,7 @@ UNQLITE_PRIVATE int unqliteOsAccess(
+ #ifdef __NuttX__
+ # include <nuttx/fs/ioctl.h>
+ # include <sys/ioctl.h>
++# include <stdio.h>
+ #  ifndef CONFIG_BUILD_KERNEL
+ #  include <nuttx/tls_task.h>
+ #  endif
+@@ -53680,6 +53681,14 @@ static int seekAndWrite(unixFile *id, unqlite_int64 offset, const void *pBuf, un
+     }else{
+       ((unixFile*)id)->lastErrno = 0;			
+     }
++#if defined(__NuttX__)
++    {
++      int savedErrno = errno;
++      fprintf(stderr, "KV VFS seek failed fd=%d off=%lld got=%lld errno=%d\n",
++              id->h, (long long)offset, (long long)newOffset, id->lastErrno);
++      errno = savedErrno;
++    }
++#endif
+     return -1;
+   }
+   got = write(id->h, pBuf, cnt);
+@@ -53687,6 +53696,15 @@ static int seekAndWrite(unixFile *id, unqlite_int64 offset, const void *pBuf, un
+   if( got<0 ){
+     ((unixFile*)id)->lastErrno = errno;
+   }
++#if defined(__NuttX__)
++  if( got <= 0 ){
++    int savedErrno = errno;
++    fprintf(stderr, "KV VFS write failed fd=%d off=%lld count=%lld got=%d errno=%d\n",
++            id->h, (long long)offset, (long long)cnt, got,
++            got < 0 ? id->lastErrno : 0);
++    errno = savedErrno;
++  }
++#endif
+   return got;
+ }
+ /*

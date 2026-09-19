@@ -1,0 +1,24 @@
+
+nsh> [K
+nsh> [K
+HOST_COMMAND ls /dev/audio
+ls /dev/audio
+/dev/audio:
+ pcm0c
+ pcm0p
+nsh> [K
+nsh> [K
+HOST_COMMAND nxlooper
+nxlooper
+NxLooper version 1.00
+h for commands, q to exit
+
+nxlooper> 
+HOST_COMMAND device pcm0p
+[Kdevice pcm0p
+nxlooper> [K
+HOST_COMMAND device pcm0c
+device pcm0c
+nxlooper> [K
+HOST_COMMAND loopback 2 16 48000
+loopback 2 16 48000

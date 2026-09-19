@@ -1,0 +1,72 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1575-audio-kernel.sha256
+XTS_COMMAND=ls /dev/audio
+--- CMD: ls /dev/audio ---
+ls /dev/audio
+/dev/audio:
+ pcm0c
+ pcm0p
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     277412      94108     183304     107824     151912    200     11 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+AUDIO_COMMAND=nxrecorder
+nxrecorder
+NxRecorder version 1.00
+h for commands, q to exit
+
+nxrecorder> [KAUDIO_COMMAND=device /dev/audio/pcm0c
+device /dev/audio/pcm0c
+nxrecorder> [KAUDIO_COMMAND=recordraw /tmp/audio1576-0.pcm 2 16 44100
+recordraw /tmp/audio1576-0.pcm 2 16 44100
+nxrecorder> [KAUDIO_COMMAND=stop
+stop
+nxrecorder> [KAUDIO_COMMAND=quit
+quit
+nsh> [KXTS_COMMAND=ls -l /tmp/audio1576-0.pcm
+--- CMD: ls -l /tmp/audio1576-0.pcm ---
+ls -l /tmp/audio1576-0.pcm
+ -rwxrwxrwx      102400 /tmp/audio1576-0.pcm
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018dc0 0x2f018e0c
+    4     0 ---(0x00000003) 240 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 s31_duplex
+    5     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    6     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    7     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    8     8 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     277412     197260      80152     226128      27680    205     13 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+AUDIO_COMMAND=nxrecorder
+nxrecorder
+nsh: nxrecorder: command not found
+nsh> [K
+{"status": "FAIL", "scope": "MMU_AUDIO_LIFECYCLE_DIAGNOSTIC", "receipt": "build1575-audio-kernel.sha256", "captures": [{"file": "/tmp/audio1576-0.pcm", "bytes": 102400, "close": "stop_then_quit"}], "error": "nxrecorder\r\nnsh: nxrecorder: command not found\r\nnsh> \u001b[K"}

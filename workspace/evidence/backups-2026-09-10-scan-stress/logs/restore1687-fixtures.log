@@ -1,0 +1,92 @@
+--- CMD: cd / ---
+cd /
+nsh> [K
+nsh> [K
+cd /
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data/s07_1687 ---
+ls -l /data/s07_1687
+/data/s07_1687:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+nsh> [K
+nsh> [K
+ls -l /data/s07_1687
+/data/s07_1687:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+nsh> [K
+nsh> [K
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        234         534 /data
+     0          0          0           0 /proc
+   512       6556       6553           3 /tmp
+nsh> [K
+nsh> [K
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        234         534 /data
+     0          0          0           0 /proc
+   512       6556       6553           3 /tmp
+nsh> [K
+nsh> [K
+--- CMD: cp /tmp/fs1687-persist.db /data/persist.db ---
+cp /tmp/fs1687-persist.db /data/persist.db
+nsh> [K
+nsh> [K
+cp /tmp/fs1687-persist.db /data/persist.db
+nsh> [K
+nsh> [K
+--- CMD: cmp /tmp/fs1687-persist.db /data/persist.db ---
+cmp /tmp/fs1687-persist.db /data/persist.db
+nsh> [K
+nsh> [K
+cmp /tmp/fs1687-persist.db /data/persist.db
+nsh> [K
+nsh> [K
+--- CMD: cp /tmp/fs1687-audio.aac /data/audio_file.aac ---
+cp /tmp/fs1687-audio.aac /data/audio_file.aac
+nsh> [K
+nsh> [K
+cp /tmp/fs1687-audio.aac /data/audio_file.aac
+nsh> [K
+nsh> [K
+--- CMD: cmp /tmp/fs1687-audio.aac /data/audio_file.aac ---
+cmp /tmp/fs1687-audio.aac /data/audio_file.aac
+nsh> [K
+nsh> [K
+cmp /tmp/fs1687-audio.aac /data/audio_file.aac
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data/audio_file.aac ---
+ls -l /data/audio_file.aac
+ -rw-rw-rw-     1474609 /data/audio_file.aac
+nsh> [K
+nsh> [K
+ls -l /data/audio_file.aac
+ -rw-rw-rw-     1474609 /data/audio_file.aac
+nsh> [K
+nsh> [K
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        695          73 /data
+     0          0          0           0 /proc
+   512       6556       6553           3 /tmp
+nsh> [K
+nsh> [K
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        695          73 /data
+     0          0          0           0 /proc
+   512       6556       6553           3 /tmp
+nsh> [K
+nsh> [K
+AUDIO1687_RESTORED_COMPARE_OK

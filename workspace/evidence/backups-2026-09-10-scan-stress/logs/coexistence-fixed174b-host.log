@@ -1,0 +1,12 @@
+In file included from /tmp/s31-modem-status-od7g16ti/config.c:2:
+/tmp/s31-modem-status-od7g16ti/sdkconfig.h:1102:4: error: #error "SPI timing flash clock is invalid"
+ 1102 | #  error "SPI timing flash clock is invalid"
+      |    ^~~~~
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_modem_status.py", line 163, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_modem_status.py", line 142, in main
+    subprocess.run(['cc', '-std=c11', '-Wall', '-Werror',
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Werror', '-DCONFIG_ESPRESSIF_WIFI=1', '-DEXPECTED_COEX=0', '-I', '/tmp/s31-modem-status-od7g16ti', '/tmp/s31-modem-status-od7g16ti/config.c', '-o', '/tmp/s31-modem-status-od7g16ti/config']' returned non-zero exit status 1.

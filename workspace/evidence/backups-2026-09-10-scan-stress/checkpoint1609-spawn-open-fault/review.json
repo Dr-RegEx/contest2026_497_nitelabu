@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "trigger": "NSH background iperf with output redirection to /tmp/tcp1609.log",
+  "fault": "M-TRAP mcause0x18000005 mepc0x4000f0c2 mtval0x18",
+  "symbol_scope": "1565 ELF getumask vicinity, caller nx_vopen. Saved mepc points just after load instruction; source path independently reviewed.",
+  "hypothesis": "exec_module selects child environment before nxtask_init/group_setuptaskfiles; spawn_file_actions/fdlist_open reads parent TLS umask through child mappings",
+  "state": "Board trapped; no continuing network test. Host sink exited on accept timeout. Candidate1610 pending."
+}

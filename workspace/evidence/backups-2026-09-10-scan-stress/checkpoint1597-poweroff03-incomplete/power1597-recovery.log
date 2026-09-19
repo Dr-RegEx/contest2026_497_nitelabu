@@ -1,0 +1,45 @@
+UART_LINE_CODING_ONLY; NO_DTR_RTS; NO_HOST_RESET
+
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir -p /data
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount -t littlefs /dev/xtsflash /data
+--- CMD: mount -t littlefs /dev/xtsflash /data ---
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256        108         148 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/p1583/testDir/testdir01
+--- CMD: ls -l /data/p1583/testDir/testdir01 ---
+ls -l /data/p1583/testDir/testdir01
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+{"case": "4.1.6", "round": 1, "status": "FAIL", "user_confirmation": "空间测试第1轮已断电并插", "receipt": "build1023-flat-category-fs-name.sha256", "host_reset": false, "formatted": false, "error": "target reset/failure: ls -l /data/p1583/testDir/testdir01"}

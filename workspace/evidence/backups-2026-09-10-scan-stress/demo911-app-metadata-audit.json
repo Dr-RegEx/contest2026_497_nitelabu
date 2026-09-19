@@ -1,0 +1,41 @@
+{
+  "scope": "read-only packaged ELF metadata; not target validation",
+  "apps": [
+    {
+      "app": "s31demo",
+      "nx_stacksize": 8192,
+      "nx_priority": 100,
+      "nx_heapsize": 65536
+    },
+    {
+      "app": "s31led",
+      "nx_stacksize": 4096,
+      "nx_priority": 100,
+      "nx_heapsize": 65536
+    },
+    {
+      "app": "curl",
+      "nx_stacksize": 16384,
+      "nx_priority": 100,
+      "nx_heapsize": 65536
+    },
+    {
+      "app": "scp",
+      "nx_stacksize": 16384,
+      "nx_priority": 200,
+      "nx_heapsize": 65536
+    },
+    {
+      "app": "iperf2",
+      "nx_stacksize": 8192,
+      "nx_priority": 100,
+      "nx_heapsize": 65536
+    },
+    {
+      "app": "ftpd_start",
+      "nx_stacksize": 8192,
+      "nx_priority": "loader default",
+      "nx_heapsize": 65536
+    }
+  ]
+}

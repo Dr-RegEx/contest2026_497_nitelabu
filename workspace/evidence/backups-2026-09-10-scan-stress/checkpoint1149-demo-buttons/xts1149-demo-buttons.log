@@ -1,0 +1,148 @@
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011000 0x2f01104c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 101 RR       Task      - Waiting  Semaphore 0000000000000000 0008128 buttons
+nsh> [K
+nsh> [K
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 1
+Sample = 0
+DEMO_BUTTON_MONITOR=READY pid=11
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 1
+Sample = 1
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 1
+Sample = 0
+XTS_COMMAND=kill 11
+--- CMD: kill 11 ---
+kill 11
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011000 0x2f01104c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+DEMO_BUTTON_REVIEW=PASS press1_release0

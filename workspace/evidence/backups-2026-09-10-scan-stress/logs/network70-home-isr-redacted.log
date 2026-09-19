@@ -1,0 +1,107 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x58 (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xee94
+load:0x2f00ef00,len:0x368c
+entry 0x2f00ea5a
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xee94   (61076)
+dram: lma 0x00010edc vma 0x2f00ef00 len 0x368c   (13964)
+padd: lma 0x00014598 vma 0x00000000 len 0xba80   (47744)
+imap: lma 0x00020020 vma 0x400c0020 len 0x1911c  (102684)
+padd: lma 0x00039144 vma 0x00000000 len 0x6fb4   (28596)
+imap: lma 0x00040100 vma 0x40000100 len 0xb1480  (726144)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_BOOT=PASS seconds=0.561
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=0 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=0 id=128
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=1 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+SCAN_SECONDS=2.530
+SCAN_IOCTL=PASS
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=1 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=0 id=129
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=1 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+PSCAN_SECONDS=5.182
+PSCAN_IOCTL=PASS
+--- CMD: wapi psk wlan0 <redacted> 3 2 ---
+wapi psk wlan0 <redacted> 3 2
+nsh> [K
+nsh> [K
+--- CMD: wapi essid wlan0 <redacted> 1 ---
+wapi essid wlan0 <redacted> 1
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=201 rssi=-128
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=201 rssi=-128
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=201 rssi=-128
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=201 rssi=-128
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=201 rssi=-128
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=201 rssi=-128
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=201 rssi=-128
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=201 rssi=-128
+[CPU0] esp_wifi_sta_connect: Station connection timed out
+[CPU0] wlan_ioctl: ERROR: Failed to connect
+[CPU0] wapi_set_essid: ioctl(SIOCSIWESSID): Connection timed out
+[CPU0] main: ERROR: Process command (essid) failed.
+nsh> [K
+nsh> [K
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xee94
+load:0x2f00ef00,len:0x368c
+entry 0x2f00ea5a
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xee94   (61076)
+dram: lma 0x00010edc vma 0x2f00ef00 len 0x368c   (13964)
+padd: lma 0x00014598 vma 0x00000000 len 0xba80   (47744)
+imap: lma 0x00020020 vma 0x400c0020 len 0x1911c  (102684)
+padd: lma 0x00039144 vma 0x00000000 len 0x6fb4   (28596)
+imap: lma 0x00040100 vma 0x40000100 len 0xb1480  (726144)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_CLEANUP_BOOT=PASS seconds=0.586
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+NETWORK_PROBE=FAIL: WPA2 setup or association command failed

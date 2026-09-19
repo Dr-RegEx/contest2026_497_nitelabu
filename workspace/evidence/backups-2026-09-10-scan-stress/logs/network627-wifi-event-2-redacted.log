@@ -1,0 +1,871 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x13f58
+entry 0x2f010368
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x13f58  (81752)
+padd: lma 0x00015fc8 vma 0x00000000 len 0xa050   (41040)
+imap: lma 0x00020020 vma 0x400c0020 len 0x19fbc  (106428)
+padd: lma 0x00039fe4 vma 0x00000000 len 0x6114   (24852)
+imap: lma 0x00040100 vma 0x40000100 len 0xb6e64  (749156)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_BOOT=PASS seconds=0.662
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=0 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=8 id=128
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=44 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=8
+bssid / frequency / signal level / encode / ssid
+68:dd:b7:77:db:38	2462	-91	0800	JSL
+b8:f8:83:2d:54:eb	2412	-91	0800	GS5.0
+60:ce:41:46:0e:ec	2437	-85	0800	<redacted>
+24:69:68:38:77:70	2412	-82	0800	wlj
+50:78:b3:a3:c4:f4	2412	-80	0800	CU-C4F4
+7c:39:85:2a:50:04	2462	-73	0800	<redacted>
+60:ce:41:ab:02:d2	2462	-65	0800	STB_T4Zp
+60:ce:41:ab:02:d0	2462	-64	0800	<redacted>
+nsh> [K
+nsh> [K
+SCAN_SECONDS=3.016
+SCAN_IOCTL=PASS
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=1 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=9 id=129
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=73 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=9
+bssid / frequency / signal level / encode / ssid
+3c:06:a7:2a:3e:71	2437	-90	0800	KYAFL
+a4:ba:70:3a:61:31	2412	-86	0800	CU-C4F4_plus
+ca:33:e5:05:fe:88	2432	-83	0800	阳光
+24:69:68:38:77:70	2412	-82	0800	wlj
+50:78:b3:a3:c4:f4	2412	-81	0800	CU-C4F4
+bc:54:fc:36:e1:c2	2462	-74	0800	MERCURY_E1C2
+7c:39:85:2a:50:04	2462	-66	0800	<redacted>
+60:ce:41:ab:02:d0	2462	-65	0800	<redacted>
+60:ce:41:ab:02:d2	2462	-65	0800	STB_T4Zp
+nsh> [K
+nsh> [K
+PSCAN_SECONDS=6.095
+PSCAN_IOCTL=PASS
+--- CMD: wapi psk wlan0 <redacted> 3 2 ---
+wapi psk wlan0 <redacted> 3 2
+nsh> [K
+nsh> [K
+--- CMD: wapi essid wlan0 <redacted> 2 ---
+wapi essid wlan0 <redacted> 2
+nsh> [K
+nsh> [K
+--- CMD: wapi ap wlan0 60:ce:41:ab:02:d0 ---
+wapi ap wlan0 60:ce:41:ab:02:d0
+[CPU0] esp_event_post_wrapper: S31 associated: channel=11 auth=3 bssid=60:ce:41:ab:02:d0
+[CPU1] esp_evt_work_cb: S31 driver STA MAC: 30:ed:a0:f3:f7:b0
+[CPU1] esp_evt_work_cb: S31 driver power save: ret=0 mode=0
+[CPU0] esp_evt_work_cb: S31 driver protocol: ret=0 bitmap=7
+[CPU0] esp_evt_work_cb: S31 negotiated PHY: ret=0 mode=4
+[CPU1] esp_evt_work_cb: S31 HE SU beamformee disabled: ret=0 value=0
+[CPU1] s31_wifi_rx_counters: S31 modem clocks connected: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU1] s31_wifi_rx_counters: S31 RX counters connected: ret=0 mpdu=35233 data=68 fcs=2412 abort=3912 full=0 fifo=0 other=2316
+[CPU1] s31_wifi_rx_counters: S31 HE counters: power=1023 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU1] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU1] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=2 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+nsh> [K
+nsh> [K
+PROTOCOL_PROFILE=PASS bitmap=7 phy=4
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010f80 0x2f010fcc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=1764 replay=1764 ack=2377 drop=0 pending=0x0 sreplay=2
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=7500 max=24234 samples=175 over32=2 over100=0 over1000=0 sum=414713 direct=6 directmax=3789 deferred=169 deferredmax=24234
+MONIRQ: cpu=1 defer=10541 replay=10541 ack=10555 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=6 fail=0 destroyed=5 live=1 livemax=2 pages=755 pgt=20
+WAIT: pid=2 object=0x2f010f94
+LPTRACE: 0x4002485c
+WAIT: pid=4 object=0x2f010fec
+nsh> [K
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:0.0.0.0 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: renew wlan0 ---
+renew wlan0
+nsh> [K
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+DHCP=PASS address=192.168.1.60
+--- CMD: arp -i wlan0 -a 192.168.1.1 ---
+arp -i wlan0 -a 192.168.1.1
+nsh: arp: no such ARP entry: 192.168.1.1
+nsh> [K
+nsh> [K
+--- CMD: ping -c 4 192.168.1.1 ---
+ping -c 4 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+56 bytes from 192.168.1.1: icmp_seq=0 time=50.0 ms
+56 bytes from 192.168.1.1: icmp_seq=1 time=50.0 ms
+56 bytes from 192.168.1.1: icmp_seq=2 time=30.0 ms
+56 bytes from 192.168.1.1: icmp_seq=3 time=40.0 ms
+4 packets transmitted, 4 received, 0% packet loss, time 4040 ms
+rtt min/avg/max/mdev = 30.000/42.500/50.000/8.291 ms
+nsh> [K
+nsh> [K
+--- CMD: arp -i wlan0 -a 192.168.1.1 ---
+arp -i wlan0 -a 192.168.1.1
+HWaddr: 60:ce:41:ab:02:ca
+nsh> [K
+nsh> [K
+--- CMD: ping -c 4 192.168.1.1 ---
+ping -c 4 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+56 bytes from 192.168.1.1: icmp_seq=0 time=30.0 ms
+56 bytes from 192.168.1.1: icmp_seq=1 time=20.0 ms
+56 bytes from 192.168.1.1: icmp_seq=2 time=40.0 ms
+56 bytes from 192.168.1.1: icmp_seq=3 time=20.0 ms
+4 packets transmitted, 4 received, 0% packet loss, time 4040 ms
+rtt min/avg/max/mdev = 20.000/27.500/40.000/8.291 ms
+nsh> [K
+nsh> [K
+WARM_ARP_PING=PASS
+COLD_GATEWAY_PING=PASS
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=4136 replay=4136 ack=4960 drop=0 pending=0x0 sreplay=6
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=7500 max=260304 samples=496 over32=14 over100=10 over1000=0 sum=2268546 direct=18 directmax=5021 deferred=478 deferredmax=260304
+MONIRQ: cpu=1 defer=13081 replay=13081 ack=13095 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=9 fail=0 destroyed=8 live=1 livemax=2 pages=1179 pgt=32
+WAIT: pid=2 object=0x2f010f94
+LPTRACE: 0x4002485c
+WAIT: pid=4 object=0x2f010fec
+nsh> [K
+nsh> [K
+GATEWAY_PING=PASS
+WPA2_DHCP_GATEWAY=PASS
+--- CMD: nslookup example.com ---
+nslookup example.com
+Host: example.com Addr: 172.66.147.243
+nsh> [K
+nsh> [K
+DNS_LOOKUP=PASS ipv4_answers=1
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010f80 0x2f010fcc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: nettest & ---
+nettest &
+nettest [15:101]
+nsh> [K
+nsh> [KBinding to IPv4 Address: 00000000
+server: Accepting connections on port 5471
+NET_LEAK_LOAD_TCP_TEST_PID=15
+TCP_CONNECTED local=192.168.1.29 remote=192.168.1.60:5471
+TCP_NETTEST=PASS bytes=4096 sha256=1301c7362ff8a67293b6cda58d8bbe583d48d90eac8acb0ef0d61fd5e66f6e62
+
+
+--- SERIAL DURING TCP TEST ---
+server: Connection accepted -- receiving
+server: Reading...
+server: Received 1460 of 4096 bytes
+server: Reading...
+server: Received 2920 of 4096 bytes
+server: Reading...
+server: Received 4096 of 4096 bytes
+server: Sending 4096 bytes
+server: Sent 4096 bytes
+server: Wait before closing
+server: Terminating
+
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=4872 replay=4872 ack=5726 drop=0 pending=0x0 sreplay=7
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=7500 max=260304 samples=671 over32=19 over100=13 over1000=0 sum=2768003 direct=19 directmax=5321 deferred=652 deferredmax=260304
+MONIRQ: cpu=1 defer=14112 replay=14112 ack=14126 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=10 fail=0 destroyed=9 live=1 livemax=2 pages=1317 pgt=36
+WAIT: pid=2 object=0x2f010f94
+LPTRACE: 0x4002485c
+WAIT: pid=4 object=0x2f010fec
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010f80 0x2f010fcc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010f80 0x2f010fcc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+TCP_SERVER_EXIT=PASS
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010f80 0x2f010fcc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: udpserver & ---
+udpserver &
+udpserver [19:101]
+nsh> server: 0. Receiving up 1024 bytes
+[K
+nsh> [K
+NET_LEAK_LOAD_UDP_TEST_PID=19
+--- SERIAL DURING UDP TEST ---
+server: 0. Received 96 bytes from 192.168.1.29:53735
+server: 1. Receiving up 1024 bytes
+server: 1. Received 96 bytes from 192.168.1.29:53735
+server: 2. Receiving up 1024 bytes
+server: 2. Received 96 bytes from 192.168.1.29:53735
+server: 3. Receiving up 1024 bytes
+server: 3. Received 96 bytes from 192.168.1.29:53735
+server: 4. Receiving up 1024 bytes
+server: 4. Received 96 bytes from 192.168.1.29:53735
+server: 5. Receiving up 1024 bytes
+server: 5. Received 96 bytes from 192.168.1.29:53735
+server: 6. Receiving up 1024 bytes
+server: 6. Received 96 bytes from 192.168.1.29:53735
+server: 7. Receiving up 1024 bytes
+server: 7. Received 96 bytes from 192.168.1.29:53735
+server: 8. Receiving up 1024 bytes
+server: 8. Received 96 bytes from 192.168.1.29:53735
+server: 9. Receiving up 1024 bytes
+server: 9. Received 96 bytes from 192.168.1.29:53735
+server: 10. Receiving up 1024 bytes
+server: 10. Received 96 bytes from 192.168.1.29:53735
+server: 11. Receiving up 1024 bytes
+server: 11. Received 96 bytes from 192.168.1.29:53735
+server: 12. Receiving up 1024 bytes
+server: 12. Received 96 bytes from 192.168.1.29:53735
+server: 13. Receiving up 1024 bytes
+server: 13. Received 96 bytes from 192.168.1.29:53735
+server: 14. Receiving up 1024 bytes
+server: 14. Received 96 bytes from 192.168.1.29:53735
+server: 15. Receiving up 1024 bytes
+server: 15. Received 96 bytes from 192.168.1.29:53735
+server: 16. Receiving up 1024 bytes
+server: 16. Received 96 bytes from 192.168.1.29:53735
+server: 17. Receiving up 1024 bytes
+server: 17. Received 96 bytes from 192.168.1.29:53735
+server: 18. Receiving up 1024 bytes
+server: 18. Received 96 bytes from 192.168.1.29:53735
+server: 19. Receiving up 1024 bytes
+server: 19. Received 96 bytes from 192.168.1.29:53735
+server: 20. Receiving up 1024 bytes
+server: 20. Received 96 bytes from 192.168.1.29:53735
+server: 21. Receiving up 1024 bytes
+server: 21. Received 96 bytes from 192.168.1.29:53735
+server: 22. Receiving up 1024 bytes
+server: 22. Received 96 bytes from 192.168.1.29:53735
+server: 23. Receiving up 1024 bytes
+server: 23. Received 96 bytes from 192.168.1.29:53735
+server: 24. Receiving up 1024 bytes
+server: 24. Received 96 bytes from 192.168.1.29:53735
+server: 25. Receiving up 1024 bytes
+server: 25. Received 96 bytes from 192.168.1.29:53735
+server: 26. Receiving up 1024 bytes
+server: 26. Received 96 bytes from 192.168.1.29:53735
+server: 27. Receiving up 1024 bytes
+server: 27. Received 96 bytes from 192.168.1.29:53735
+server: 28. Receiving up 1024 bytes
+server: 28. Received 96 bytes from 192.168.1.29:53735
+server: 29. Receiving up 1024 bytes
+server: 29. Received 96 bytes from 192.168.1.29:53735
+server: 30. Receiving up 1024 bytes
+server: 30. Received 96 bytes from 192.168.1.29:53735
+server: 31. Receiving up 1024 bytes
+server: 31. Received 96 bytes from 192.168.1.29:53735
+server: 32. Receiving up 1024 bytes
+server: 32. Received 96 bytes from 192.168.1.29:53735
+server: 33. Receiving up 1024 bytes
+server: 33. Received 96 bytes from 192.168.1.29:53735
+server: 34. Receiving up 1024 bytes
+server: 34. Received 96 bytes from 192.168.1.29:53735
+server: 35. Receiving up 1024 bytes
+server: 35. Received 96 bytes from 192.168.1.29:53735
+server: 36. Receiving up 1024 bytes
+server: 36. Received 96 bytes from 192.168.1.29:53735
+server: 37. Receiving up 1024 bytes
+server: 37. Received 96 bytes from 192.168.1.29:53735
+server: 38. Receiving up 1024 bytes
+server: 38. Received 96 bytes from 192.168.1.29:53735
+server: 39. Receiving up 1024 bytes
+server: 39. Received 96 bytes from 192.168.1.29:53735
+server: 40. Receiving up 1024 bytes
+server: 40. Received 96 bytes from 192.168.1.29:53735
+server: 41. Receiving up 1024 bytes
+server: 41. Received 96 bytes from 192.168.1.29:53735
+server: 42. Receiving up 1024 bytes
+server: 42. Received 96 bytes from 192.168.1.29:53735
+server: 43. Receiving up 1024 bytes
+server: 43. Received 96 bytes from 192.168.1.29:53735
+server: 44. Receiving up 1024 bytes
+server: 44. Received 96 bytes from 192.168.1.29:53735
+server: 45. Receiving up 1024 bytes
+server: 45. Received 96 bytes from 192.168.1.29:53735
+server: 46. Receiving up 1024 bytes
+server: 46. Received 96 bytes from 192.168.1.29:53735
+server: 47. Receiving up 1024 bytes
+server: 47. Received 96 bytes from 192.168.1.29:53735
+server: 48. Receiving up 1024 bytes
+server: 48. Received 96 bytes from 192.168.1.29:53735
+server: 49. Receiving up 1024 bytes
+server: 49. Received 96 bytes from 192.168.1.29:53735
+server: 50. Receiving up 1024 bytes
+server: 50. Received 96 bytes from 192.168.1.29:53735
+server: 51. Receiving up 1024 bytes
+server: 51. Received 96 bytes from 192.168.1.29:53735
+server: 52. Receiving up 1024 bytes
+server: 52. Received 96 bytes from 192.168.1.29:53735
+server: 53. Receiving up 1024 bytes
+server: 53. Received 96 bytes from 192.168.1.29:53735
+server: 54. Receiving up 1024 bytes
+server: 54. Received 96 bytes from 192.168.1.29:53735
+server: 55. Receiving up 1024 bytes
+server: 55. Received 96 bytes from 192.168.1.29:53735
+server: 56. Receiving up 1024 bytes
+server: 56. Received 96 bytes from 192.168.1.29:53735
+server: 57. Receiving up 1024 bytes
+server: 57. Received 96 bytes from 192.168.1.29:53735
+server: 58. Receiving up 1024 bytes
+server: 58. Received 96 bytes from 192.168.1.29:53735
+server: 59. Receiving up 1024 bytes
+server: 59. Received 96 bytes from 192.168.1.29:53735
+server: 60. Receiving up 1024 bytes
+server: 60. Received 96 bytes from 192.168.1.29:53735
+server: 61. Receiving up 1024 bytes
+server: 61. Received 96 bytes from 192.168.1.29:53735
+server: 62. Receiving up 1024 bytes
+server: 62. Received 96 bytes from 192.168.1.29:53735
+server: 63. Receiving up 1024 bytes
+server: 63. Received 96 bytes from 192.168.1.29:53735
+server: 64. Receiving up 1024 bytes
+server: 64. Received 96 bytes from 192.168.1.29:53735
+server: 65. Receiving up 1024 bytes
+server: 65. Received 96 bytes from 192.168.1.29:53735
+server: 66. Receiving up 1024 bytes
+server: 66. Received 96 bytes from 192.168.1.29:53735
+server: 67. Receiving up 1024 bytes
+server: 67. Received 96 bytes from 192.168.1.29:53735
+server: 68. Receiving up 1024 bytes
+server: 68. Received 96 bytes from 192.168.1.29:53735
+server: 69. Receiving up 1024 bytes
+server: 69. Received 96 bytes from 192.168.1.29:53735
+server: 70. Receiving up 1024 bytes
+server: 70. Received 96 bytes from 192.168.1.29:53735
+server: 71. Receiving up 1024 bytes
+server: 71. Received 96 bytes from 192.168.1.29:53735
+server: 72. Receiving up 1024 bytes
+server: 72. Received 96 bytes from 192.168.1.29:53735
+server: 73. Receiving up 1024 bytes
+server: 73. Received 96 bytes from 192.168.1.29:53735
+server: 74. Receiving up 1024 bytes
+server: 74. Received 96 bytes from 192.168.1.29:53735
+server: 75. Receiving up 1024 bytes
+server: 75. Received 96 bytes from 192.168.1.29:53735
+server: 76. Receiving up 1024 bytes
+server: 76. Received 96 bytes from 192.168.1.29:53735
+server: 77. Receiving up 1024 bytes
+server: 77. Received 96 bytes from 192.168.1.29:53735
+server: 78. Receiving up 1024 bytes
+server: 78. Received 96 bytes from 192.168.1.29:53735
+server: 79. Receiving up 1024 bytes
+server: 79. Received 96 bytes from 192.168.1.29:53735
+server: 80. Receiving up 1024 bytes
+server: 80. Received 96 bytes from 192.168.1.29:53735
+server: 81. Receiving up 1024 bytes
+server: 81. Received 96 bytes from 192.168.1.29:53735
+server: 82. Receiving up 1024 bytes
+server: 82. Received 96 bytes from 192.168.1.29:53735
+server: 83. Receiving up 1024 bytes
+server: 83. Received 96 bytes from 192.168.1.29:53735
+server: 84. Receiving up 1024 bytes
+server: 84. Received 96 bytes from 192.168.1.29:53735
+server: 85. Receiving up 1024 bytes
+server: 85. Received 96 bytes from 192.168.1.29:53735
+server: 86. Receiving up 1024 bytes
+server: 86. Received 96 bytes from 192.168.1.29:53735
+server: 87. Receiving up 1024 bytes
+server: 87. Received 96 bytes from 192.168.1.29:53735
+server: 88. Receiving up 1024 bytes
+server: 88. Received 96 bytes from 192.168.1.29:53735
+server: 89. Receiving up 1024 bytes
+server: 89. Received 96 bytes from 192.168.1.29:53735
+server: 90. Receiving up 1024 bytes
+server: 90. Received 96 bytes from 192.168.1.29:53735
+server: 91. Receiving up 1024 bytes
+server: 91. Received 96 bytes from 192.168.1.29:53735
+server: 92. Receiving up 1024 bytes
+server: 92. Received 96 bytes from 192.168.1.29:53735
+server: 93. Receiving up 1024 bytes
+server: 93. Received 96 bytes from 192.168.1.29:53735
+server: 94. Receiving up 1024 bytes
+server: 94. Received 96 bytes from 192.168.1.29:53735
+server: 95. Receiving up 1024 bytes
+server: 95. Received 96 bytes from 192.168.1.29:53735
+server: 96. Receiving up 1024 bytes
+server: 96. Received 96 bytes from 192.168.1.29:53735
+server: 97. Receiving up 1024 bytes
+server: 97. Received 96 bytes from 192.168.1.29:53735
+server: 98. Receiving up 1024 bytes
+server: 98. Received 96 bytes from 192.168.1.29:53735
+server: 99. Receiving up 1024 bytes
+server: 99. Received 96 bytes from 192.168.1.29:53735
+server: 100. Receiving up 1024 bytes
+server: 100. Received 96 bytes from 192.168.1.29:53735
+server: 101. Receiving up 1024 bytes
+server: 101. Received 96 bytes from 192.168.1.29:53735
+server: 102. Receiving up 1024 bytes
+server: 102. Received 96 bytes from 192.168.1.29:53735
+server: 103. Receiving up 1024 bytes
+server: 103. Received 96 bytes from 192.168.1.29:53735
+server: 104. Receiving up 1024 bytes
+server: 104. Received 96 bytes from 192.168.1.29:53735
+server: 105. Receiving up 1024 bytes
+server: 105. Received 96 bytes from 192.168.1.29:53735
+server: 106. Receiving up 1024 bytes
+server: 106. Received 96 bytes from 192.168.1.29:53735
+server: 107. Receiving up 1024 bytes
+server: 107. Received 96 bytes from 192.168.1.29:53735
+server: 108. Receiving up 1024 bytes
+server: 108. Received 96 bytes from 192.168.1.29:53735
+server: 109. Receiving up 1024 bytes
+server: 109. Received 96 bytes from 192.168.1.29:53735
+server: 110. Receiving up 1024 bytes
+server: 110. Received 96 bytes from 192.168.1.29:53735
+server: 111. Receiving up 1024 bytes
+server: 111. Received 96 bytes from 192.168.1.29:53735
+server: 112. Receiving up 1024 bytes
+server: 112. Received 96 bytes from 192.168.1.29:53735
+server: 113. Receiving up 1024 bytes
+server: 113. Received 96 bytes from 192.168.1.29:53735
+server: 114. Receiving up 1024 bytes
+server: 114. Received 96 bytes from 192.168.1.29:53735
+server: 115. Receiving up 1024 bytes
+server: 115. Received 96 bytes from 192.168.1.29:53735
+server: 116. Receiving up 1024 bytes
+server: 116. Received 96 bytes from 192.168.1.29:53735
+server: 117. Receiving up 1024 bytes
+server: 117. Received 96 bytes from 192.168.1.29:53735
+server: 118. Receiving up 1024 bytes
+server: 118. Received 96 bytes from 192.168.1.29:53735
+server: 119. Receiving up 1024 bytes
+server: 119. Received 96 bytes from 192.168.1.29:53735
+server: 120. Receiving up 1024 bytes
+server: 120. Received 96 bytes from 192.168.1.29:53735
+server: 121. Receiving up 1024 bytes
+server: 121. Received 96 bytes from 192.168.1.29:53735
+server: 122. Receiving up 1024 bytes
+server: 122. Received 96 bytes from 192.168.1.29:53735
+server: 123. Receiving up 1024 bytes
+server: 123. Received 96 bytes from 192.168.1.29:53735
+server: 124. Receiving up 1024 bytes
+server: 124. Received 96 bytes from 192.168.1.29:53735
+server: 125. Receiving up 1024 bytes
+server: 125. Received 96 bytes from 192.168.1.29:53735
+server: 126. Receiving up 1024 bytes
+server: 126. Received 96 bytes from 192.168.1.29:53735
+server: 127. Receiving up 1024 bytes
+server: 127. Received 96 bytes from 192.168.1.29:53735
+server: 128. Receiving up 1024 bytes
+server: 128. Received 96 bytes from 192.168.1.29:53735
+server: 129. Receiving up 1024 bytes
+server: 129. Received 96 bytes from 192.168.1.29:53735
+server: 130. Receiving up 1024 bytes
+server: 130. Received 96 bytes from 192.168.1.29:53735
+server: 131. Receiving up 1024 bytes
+server: 131. Received 96 bytes from 192.168.1.29:53735
+server: 132. Receiving up 1024 bytes
+server: 132. Received 96 bytes from 192.168.1.29:53735
+server: 133. Receiving up 1024 bytes
+server: 133. Received 96 bytes from 192.168.1.29:53735
+server: 134. Receiving up 1024 bytes
+server: 134. Received 96 bytes from 192.168.1.29:53735
+server: 135. Receiving up 1024 bytes
+server: 135. Received 96 bytes from 192.168.1.29:53735
+server: 136. Receiving up 1024 bytes
+server: 136. Received 96 bytes from 192.168.1.29:53735
+server: 137. Receiving up 1024 bytes
+server: 137. Received 96 bytes from 192.168.1.29:53735
+server: 138. Receiving up 1024 bytes
+server: 138. Received 96 bytes from 192.168.1.29:53735
+server: 139. Receiving up 1024 bytes
+server: 139. Received 96 bytes from 192.168.1.29:53735
+server: 140. Receiving up 1024 bytes
+server: 140. Received 96 bytes from 192.168.1.29:53735
+server: 141. Receiving up 1024 bytes
+server: 141. Received 96 bytes from 192.168.1.29:53735
+server: 142. Receiving up 1024 bytes
+server: 142. Received 96 bytes from 192.168.1.29:53735
+server: 143. Receiving up 1024 bytes
+server: 143. Received 96 bytes from 192.168.1.29:53735
+server: 144. Receiving up 1024 bytes
+server: 144. Received 96 bytes from 192.168.1.29:53735
+server: 145. Receiving up 1024 bytes
+server: 145. Received 96 bytes from 192.168.1.29:53735
+server: 146. Receiving up 1024 bytes
+server: 146. Received 96 bytes from 192.168.1.29:53735
+server: 147. Receiving up 1024 bytes
+server: 147. Received 96 bytes from 192.168.1.29:53735
+server: 148. Receiving up 1024 bytes
+server: 148. Received 96 bytes from 192.168.1.29:53735
+server: 149. Receiving up 1024 bytes
+server: 149. Received 96 bytes from 192.168.1.29:53735
+server: 150. Receiving up 1024 bytes
+server: 150. Received 96 bytes from 192.168.1.29:53735
+server: 151. Receiving up 1024 bytes
+server: 151. Received 96 bytes from 192.168.1.29:53735
+server: 152. Receiving up 1024 bytes
+server: 152. Received 96 bytes from 192.168.1.29:53735
+server: 153. Receiving up 1024 bytes
+server: 153. Received 96 bytes from 192.168.1.29:53735
+server: 154. Receiving up 1024 bytes
+server: 154. Received 96 bytes from 192.168.1.29:53735
+server: 155. Receiving up 1024 bytes
+server: 155. Received 96 bytes from 192.168.1.29:53735
+server: 156. Receiving up 1024 bytes
+server: 156. Received 96 bytes from 192.168.1.29:53735
+server: 157. Receiving up 1024 bytes
+server: 157. Received 96 bytes from 192.168.1.29:53735
+server: 158. Receiving up 1024 bytes
+server: 158. Received 96 bytes from 192.168.1.29:53735
+server: 159. Receiving up 1024 bytes
+server: 159. Received 96 bytes from 192.168.1.29:53735
+server: 160. Receiving up 1024 bytes
+server: 160. Received 96 bytes from 192.168.1.29:53735
+server: 161. Receiving up 1024 bytes
+server: 161. Received 96 bytes from 192.168.1.29:53735
+server: 162. Receiving up 1024 bytes
+server: 162. Received 96 bytes from 192.168.1.29:53735
+server: 163. Receiving up 1024 bytes
+server: 163. Received 96 bytes from 192.168.1.29:53735
+server: 164. Receiving up 1024 bytes
+server: 164. Received 96 bytes from 192.168.1.29:53735
+server: 165. Receiving up 1024 bytes
+server: 165. Received 96 bytes from 192.168.1.29:53735
+server: 166. Receiving up 1024 bytes
+server: 166. Received 96 bytes from 192.168.1.29:53735
+server: 167. Receiving up 1024 bytes
+server: 167. Received 96 bytes from 192.168.1.29:53735
+server: 168. Receiving up 1024 bytes
+server: 168. Received 96 bytes from 192.168.1.29:53735
+server: 169. Receiving up 1024 bytes
+server: 169. Received 96 bytes from 192.168.1.29:53735
+server: 170. Receiving up 1024 bytes
+server: 170. Received 96 bytes from 192.168.1.29:53735
+server: 171. Receiving up 1024 bytes
+server: 171. Received 96 bytes from 192.168.1.29:53735
+server: 172. Receiving up 1024 bytes
+server: 172. Received 96 bytes from 192.168.1.29:53735
+server: 173. Receiving up 1024 bytes
+server: 173. Received 96 bytes from 192.168.1.29:53735
+server: 174. Receiving up 1024 bytes
+server: 174. Received 96 bytes from 192.168.1.29:53735
+server: 175. Receiving up 1024 bytes
+server: 175. Received 96 bytes from 192.168.1.29:53735
+server: 176. Receiving up 1024 bytes
+server: 176. Received 96 bytes from 192.168.1.29:53735
+server: 177. Receiving up 1024 bytes
+server: 177. Received 96 bytes from 192.168.1.29:53735
+server: 178. Receiving up 1024 bytes
+server: 178. Received 96 bytes from 192.168.1.29:53735
+server: 179. Receiving up 1024 bytes
+server: 179. Received 96 bytes from 192.168.1.29:53735
+server: 180. Receiving up 1024 bytes
+server: 180. Received 96 bytes from 192.168.1.29:53735
+server: 181. Receiving up 1024 bytes
+server: 181. Received 96 bytes from 192.168.1.29:53735
+server: 182. Receiving up 1024 bytes
+server: 182. Received 96 bytes from 192.168.1.29:53735
+server: 183. Receiving up 1024 bytes
+server: 183. Received 96 bytes from 192.168.1.29:53735
+server: 184. Receiving up 1024 bytes
+server: 184. Received 96 bytes from 192.168.1.29:53735
+server: 185. Receiving up 1024 bytes
+server: 185. Received 96 bytes from 192.168.1.29:53735
+server: 186. Receiving up 1024 bytes
+server: 186. Received 96 bytes from 192.168.1.29:53735
+server: 187. Receiving up 1024 bytes
+server: 187. Received 96 bytes from 192.168.1.29:53735
+server: 188. Receiving up 1024 bytes
+server: 188. Received 96 bytes from 192.168.1.29:53735
+server: 189. Receiving up 1024 bytes
+server: 189. Received 96 bytes from 192.168.1.29:53735
+server: 190. Receiving up 1024 bytes
+server: 190. Received 96 bytes from 192.168.1.29:53735
+server: 191. Receiving up 1024 bytes
+server: 191. Received 96 bytes from 192.168.1.29:53735
+server: 192. Receiving up 1024 bytes
+server: 192. Received 96 bytes from 192.168.1.29:53735
+server: 193. Receiving up 1024 bytes
+server: 193. Received 96 bytes from 192.168.1.29:53735
+server: 194. Receiving up 1024 bytes
+server: 194. Received 96 bytes from 192.168.1.29:53735
+server: 195. Receiving up 1024 bytes
+server: 195. Received 96 bytes from 192.168.1.29:53735
+server: 196. Receiving up 1024 bytes
+server: 196. Received 96 bytes from 192.168.1.29:53735
+server: 197. Receiving up 1024 bytes
+server: 197. Received 96 bytes from 192.168.1.29:53735
+server: 198. Receiving up 1024 bytes
+server: 198. Received 96 bytes from 192.168.1.29:53735
+server: 199. Receiving up 1024 bytes
+server: 199. Received 96 bytes from 192.168.1.29:53735
+server: 200. Receiving up 1024 bytes
+server: 200. Received 96 bytes from 192.168.1.29:53735
+server: 201. Receiving up 1024 bytes
+server: 201. Received 96 bytes from 192.168.1.29:53735
+server: 202. Receiving up 1024 bytes
+server: 202. Received 96 bytes from 192.168.1.29:53735
+server: 203. Receiving up 1024 bytes
+server: 203. Received 96 bytes from 192.168.1.29:53735
+server: 204. Receiving up 1024 bytes
+server: 204. Received 96 bytes from 192.168.1.29:53735
+server: 205. Receiving up 1024 bytes
+server: 205. Received 96 bytes from 192.168.1.29:53735
+server: 206. Receiving up 1024 bytes
+server: 206. Received 96 bytes from 192.168.1.29:53735
+server: 207. Receiving up 1024 bytes
+server: 207. Received 96 bytes from 192.168.1.29:53735
+server: 208. Receiving up 1024 bytes
+server: 208. Received 96 bytes from 192.168.1.29:53735
+server: 209. Receiving up 1024 bytes
+server: 209. Received 96 bytes from 192.168.1.29:53735
+server: 210. Receiving up 1024 bytes
+server: 210. Received 96 bytes from 192.168.1.29:53735
+server: 211. Receiving up 1024 bytes
+server: 211. Received 96 bytes from 192.168.1.29:53735
+server: 212. Receiving up 1024 bytes
+server: 212. Received 96 bytes from 192.168.1.29:53735
+server: 213. Receiving up 1024 bytes
+server: 213. Received 96 bytes from 192.168.1.29:53735
+server: 214. Receiving up 1024 bytes
+server: 214. Received 96 bytes from 192.168.1.29:53735
+server: 215. Receiving up 1024 bytes
+server: 215. Received 96 bytes from 192.168.1.29:53735
+server: 216. Receiving up 1024 bytes
+server: 216. Received 96 bytes from 192.168.1.29:53735
+server: 217. Receiving up 1024 bytes
+server: 217. Received 96 bytes from 192.168.1.29:53735
+server: 218. Receiving up 1024 bytes
+server: 218. Received 96 bytes from 192.168.1.29:53735
+server: 219. Receiving up 1024 bytes
+server: 219. Received 96 bytes from 192.168.1.29:53735
+server: 220. Receiving up 1024 bytes
+server: 220. Received 96 bytes from 192.168.1.29:53735
+server: 221. Receiving up 1024 bytes
+server: 221. Received 96 bytes from 192.168.1.29:53735
+server: 222. Receiving up 1024 bytes
+server: 222. Received 96 bytes from 192.168.1.29:53735
+server: 223. Receiving up 1024 bytes
+server: 223. Received 96 bytes from 192.168.1.29:53735
+server: 224. Receiving up 1024 bytes
+server: 224. Received 96 bytes from 192.168.1.29:53735
+server: 225. Receiving up 1024 bytes
+server: 225. Received 96 bytes from 192.168.1.29:53735
+server: 226. Receiving up 1024 bytes
+server: 226. Received 96 bytes from 192.168.1.29:53735
+server: 227. Receiving up 1024 bytes
+server: 227. Received 96 bytes from 192.168.1.29:53735
+server: 228. Receiving up 1024 bytes
+server: 228. Received 96 bytes from 192.168.1.29:53735
+server: 229. Receiving up 1024 bytes
+server: 229. Received 96 bytes from 192.168.1.29:53735
+server: 230. Receiving up 1024 bytes
+server: 230. Received 96 bytes from 192.168.1.29:53735
+server: 231. Receiving up 1024 bytes
+server: 231. Received 96 bytes from 192.168.1.29:53735
+server: 232. Receiving up 1024 bytes
+server: 232. Received 96 bytes from 192.168.1.29:53735
+server: 233. Receiving up 1024 bytes
+server: 233. Received 96 bytes from 192.168.1.29:53735
+server: 234. Receiving up 1024 bytes
+server: 234. Received 96 bytes from 192.168.1.29:53735
+server: 235. Receiving up 1024 bytes
+server: 235. Received 96 bytes from 192.168.1.29:53735
+server: 236. Receiving up 1024 bytes
+server: 236. Received 96 bytes from 192.168.1.29:53735
+server: 237. Receiving up 1024 bytes
+server: 237. Received 96 bytes from 192.168.1.29:53735
+server: 238. Receiving up 1024 bytes
+server: 238. Received 96 bytes from 192.168.1.29:53735
+server: 239. Receiving up 1024 bytes
+server: 239. Received 96 bytes from 192.168.1.29:53735
+server: 240. Receiving up 1024 bytes
+server: 240. Received 96 bytes from 192.168.1.29:53735
+server: 241. Receiving up 1024 bytes
+server: 241. Received 96 bytes from 192.168.1.29:53735
+server: 242. Receiving up 1024 bytes
+server: 242. Received 96 bytes from 192.168.1.29:53735
+server: 243. Receiving up 1024 bytes
+server: 243. Received 96 bytes from 192.168.1.29:53735
+server: 244. Receiving up 1024 bytes
+server: 244. Received 96 bytes from 192.168.1.29:53735
+server: 245. Receiving up 1024 bytes
+server: 245. Received 96 bytes from 192.168.1.29:53735
+server: 246. Receiving up 1024 bytes
+server: 246. Received 96 bytes from 192.168.1.29:53735
+server: 247. Receiving up 1024 bytes
+server: 247. Received 96 bytes from 192.168.1.29:53735
+server: 248. Receiving up 1024 bytes
+server: 248. Received 96 bytes from 192.168.1.29:53735
+server: 249. Receiving up 1024 bytes
+server: 249. Received 96 bytes from 192.168.1.29:53735
+server: 250. Receiving up 1024 bytes
+server: 250. Received 96 bytes from 192.168.1.29:53735
+server: 251. Receiving up 1024 bytes
+server: 251. Received 96 bytes from 192.168.1.29:53735
+server: 252. Receiving up 1024 bytes
+server: 252. Received 96 bytes from 192.168.1.29:53735
+server: 253. Receiving up 1024 bytes
+server: 253. Received 96 bytes from 192.168.1.29:53735
+server: 254. Receiving up 1024 bytes
+server: 254. Received 96 bytes from 192.168.1.29:53735
+server: 255. Receiving up 1024 bytes
+server: 255. Received 96 bytes from 192.168.1.29:53735
+UDP_SENT=256 bytes_per_packet=96
+
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010f80 0x2f010fcc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+UDP_RECEIVE=PASS packets=256 bytes=24576
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=25469 data=450 fcs=6381 abort=20903 full=0 fifo=0 other=14644
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=1023 sigb=0 format=0 unsupported=0 siga=3 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=2 bitmap=2 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=76 ht=283 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=63 complete=63 succ=28 ack=13 ba=15 retry=26 nomem=0 timeout=0
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=8 rssi=-62
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+[CPU1] esp_evt_work_cb: Failed to connect AP error=12290
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+PRE_RESET_IFDOWN=PASS
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x13f58
+entry 0x2f010368
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x13f58  (81752)
+padd: lma 0x00015fc8 vma 0x00000000 len 0xa050   (41040)
+imap: lma 0x00020020 vma 0x400c0020 len 0x19fbc  (106428)
+padd: lma 0x00039fe4 vma 0x00000000 len 0x6114   (24852)
+imap: lma 0x00040100 vma 0x40000100 len 0xb6e64  (749156)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_CLEANUP_BOOT=PASS seconds=0.664
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=73 data=0 fcs=4 abort=11 full=0 fifo=0 other=6
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=2 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K

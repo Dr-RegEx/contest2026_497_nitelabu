@@ -1,0 +1,94 @@
+# 1720 board JPEG/RGB command audit
+timestamp=2026-09-18T14:44:49+0800
+
+$ echo MEDIA1720_BOARD_AUDIT_START
+echo MEDIA1720_BOARD_AUDIT_START
+MEDIA1720_BOARD_AUDIT_START
+nsh> [K
+nsh> [K
+$ help media
+help media
+nsh: media: command not found
+nsh> [K
+nsh> [K
+$ help jpeg
+help jpeg
+nsh: jpeg: command not found
+nsh> [K
+nsh> [K
+$ help camera
+help camera
+nsh: camera: command not found
+nsh> [K
+nsh> [K
+$ ls /system/bin
+ls /system/bin
+/system/bin:
+ bttool
+ bttool.sha256
+ buttons
+ buttons.sha256
+ curl
+ curl.sha256
+ ftpd_start
+ ftpd_start.sha256
+ i2c
+ i2c.sha256
+ init
+ init.sha256
+ iperf2
+ iperf2.sha256
+ nettest
+ nettest.sha256
+ ping
+ ping.sha256
+ renew
+ renew.sha256
+ s31demo
+ s31demo.sha256
+ s31led
+ s31led.sha256
+ s31simd
+ s31simd.sha256
+ scp
+ scp.sha256
+ sh
+ sh.sha256
+ udpserver
+ udpserver.sha256
+ wapi
+ wapi.sha256
+nsh> [K
+nsh> [K
+$ ls /bin
+ls /bin
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+$ ls /dev
+ls /dev
+/dev:
+ appfs
+ apps
+ buttons
+ console
+ crypto
+ i2c0
+ leds0
+ null
+ ptmx
+ random
+ rtc0
+ s31stat
+ tlbshoot
+ ttyHCI0
+ ttyS0
+ urandom
+ zero
+nsh> [K
+nsh> [K
+$ echo MEDIA1720_BOARD_AUDIT_END
+echo MEDIA1720_BOARD_AUDIT_END
+MEDIA1720_BOARD_AUDIT_END
+nsh> [K
+nsh> [K
