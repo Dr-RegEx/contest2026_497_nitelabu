@@ -1,0 +1,66 @@
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: wapi show wlan0 ---
+wapi show wlan0
+wlan0 Configuration:
+       IP: 192.168.1.60
+  NetMask: 255.255.255.0
+Frequency: 2462
+     Flag: WAPI_FREQ_FIXED
+  Channel: 11
+Frequency: 2462
+    ESSID: Kal'tsit
+     Flag: WAPI_ESSID_ON
+     Mode: WAPI_MODE_MANAGED
+       AP: 7c:39:85:2a:50:04
+  BitRate: 72
+     Flag: WAPI_BITRATE_FIXED
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -65
+  Country: 01
+ PTA prio: not supported
+nsh> [K
+nsh> [K
+--- CMD: ping -c 3 192.168.1.1 ---
+ping -c 3 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+56 bytes from 192.168.1.1: icmp_seq=0 time=20.0 ms
+56 bytes from 192.168.1.1: icmp_seq=1 time=20.0 ms
+56 bytes from 192.168.1.1: icmp_seq=2 time=20.0 ms
+3 packets transmitted, 3 received, 0% packet loss, time 3030 ms
+rtt min/avg/max/mdev = 20.000/20.000/20.000/0.000 ms
+nsh> [K
+nsh> [K
+--- CMD: ping -c 3 192.168.1.29 ---
+ping -c 3 192.168.1.29
+PING 192.168.1.29 56 bytes of data
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 0: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 1: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 2: 101
+3 packets transmitted, 0 received, 100% packet loss, time 3030 ms
+nsh> [K
+nsh> [K
+--- CMD: arp -a ---
+arp -a
+nsh: arp: missing required argument(s)
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892      84044     226848     110008     148808    222     14 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K

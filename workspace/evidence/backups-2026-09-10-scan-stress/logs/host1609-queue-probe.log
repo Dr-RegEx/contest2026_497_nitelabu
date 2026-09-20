@@ -1,0 +1,8 @@
+READY ACK_MODE=0 PORT=5002
+accept timeout
+ËùÔÚÎ»ÖÃ C:\Users\tttgu\Documents\Codex\s31-host-tools-2026-09-16\host1609-queue-probe.ps1:9 ×Ö·û: 32
++   if(-not $accept.Wait(45000)){throw 'accept timeout'}
++                                ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (accept timeout:String) [], RuntimeException
+    + FullyQualifiedErrorId : accept timeout
+ 

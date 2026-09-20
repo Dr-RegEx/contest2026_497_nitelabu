@@ -1,0 +1,1 @@
+audio_open allocates priv fromkmm. Fixed error-pathkumm_free to kmm_free; mutex-lock failure now freespriv before return. No successful-path or callback/API change. Actualaudio.c standalone compilation passes with existingFLATaudio config and kernel1565 config plusaudio options. Doesnot enable kernel audio, proveasyncAPB lifetime, oraddtargetPASS.

@@ -1,0 +1,228 @@
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /usr/bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking whether make supports the include directive... yes (GNU style)
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc understands -c and -o together... yes
+checking dependency style of gcc... gcc3
+checking whether TPACKET_V2 is declared... yes
+checking whether IFF_TUN is declared... yes
+checking whether IFF_TAP is declared... yes
+checking for g++... g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether g++ accepts -g... yes
+checking dependency style of g++... gcc3
+checking for gcc... (cached) gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether gcc accepts -g... (cached) yes
+checking for gcc option to accept ISO C89... (cached) none needed
+checking whether gcc understands -c and -o together... (cached) yes
+checking dependency style of gcc... (cached) gcc3
+checking for library containing strerror... none required
+checking whether make sets $(MAKE)... (cached) yes
+checking for ranlib... ranlib
+checking build system type... x86_64-unknown-linux-gnu
+checking host system type... x86_64-unknown-linux-gnu
+checking for clock_gettime in -lrt... yes
+checking for a sed that does not truncate output... /usr/bin/sed
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking whether gcc is Clang... no
+checking whether pthreads work with -pthread... yes
+checking for joinable pthread attribute... PTHREAD_CREATE_JOINABLE
+checking whether more special flags are required for pthreads... no
+checking for PTHREAD_PRIO_INHERIT... yes
+checking for library containing gethostbyname... none required
+checking for library containing socket... none required
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking arpa/inet.h usability... yes
+checking arpa/inet.h presence... yes
+checking for arpa/inet.h... yes
+checking libintl.h usability... yes
+checking libintl.h presence... yes
+checking for libintl.h... yes
+checking net/ethernet.h usability... yes
+checking net/ethernet.h presence... yes
+checking for net/ethernet.h... yes
+checking net/if.h usability... yes
+checking net/if.h presence... yes
+checking for net/if.h... yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking sys/sockio.h usability... no
+checking sys/sockio.h presence... no
+checking for sys/sockio.h... no
+checking linux/sockios.h usability... yes
+checking linux/sockios.h presence... yes
+checking for linux/sockios.h... yes
+checking linux/ip.h usability... yes
+checking linux/ip.h presence... yes
+checking for linux/ip.h... yes
+checking linux/udp.h usability... yes
+checking linux/udp.h presence... yes
+checking for linux/udp.h... yes
+checking linux/if_packet.h usability... yes
+checking linux/if_packet.h presence... yes
+checking for linux/if_packet.h... yes
+checking linux/filter.h usability... yes
+checking linux/filter.h presence... yes
+checking for linux/filter.h... yes
+checking linux/if_tun.h usability... yes
+checking linux/if_tun.h presence... yes
+checking for linux/if_tun.h... yes
+checking netdb.h usability... yes
+checking netdb.h presence... yes
+checking for netdb.h... yes
+checking netinet/in.h usability... yes
+checking netinet/in.h presence... yes
+checking for netinet/in.h... yes
+checking netinet/tcp.h usability... yes
+checking netinet/tcp.h presence... yes
+checking for netinet/tcp.h... yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking for strings.h... (cached) yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking syslog.h usability... yes
+checking syslog.h presence... yes
+checking for syslog.h... yes
+checking for unistd.h... (cached) yes
+checking signal.h usability... yes
+checking signal.h presence... yes
+checking for signal.h... yes
+checking ifaddrs.h usability... yes
+checking ifaddrs.h presence... yes
+checking for ifaddrs.h... yes
+checking for an ANSI C-conforming const... yes
+checking for size_t... yes
+checking for ssize_t... yes
+checking whether time.h and sys/time.h may both be included... yes
+checking whether struct tm is in sys/time.h or time.h... time.h
+checking for int64_t... yes
+checking 3rd argument of accept... socklen_t
+checking for working memcmp... yes
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking for sys/socket.h... (cached) yes
+checking types of arguments for select... int,fd_set *,struct timeval *
+checking return type of signal handlers... void
+checking for strftime... yes
+checking for vprintf... yes
+checking for _doprnt... no
+checking for atexit... yes
+checking for memset... yes
+checking for pthread_cleanup_push... no
+checking for select... yes
+checking for strchr... yes
+checking for strerror... yes
+checking for strtol... yes
+checking for strtoll... yes
+checking for strtod... yes
+checking for usleep... yes
+checking for clock_gettime... yes
+checking for sched_setscheduler... yes
+checking for sched_yield... yes
+checking for mlockall... yes
+checking for setitimer... yes
+checking for nanosleep... yes
+checking for clock_nanosleep... yes
+checking for freopen... yes
+checking for snprintf... yes
+checking for inet_pton... yes
+checking for inet_ntop... yes
+checking for gettimeofday... yes
+checking whether ENOBUFS is declared... yes
+checking whether EWOULDBLOCK is declared... yes
+checking whether SIOCGIFMTU is declared... yes
+checking whether pthread_cancel is declared... yes
+checking whether CPU_SET is declared... yes
+checking whether SIGALRM is declared... yes
+checking whether AF_INET6 is declared... yes
+checking whether SO_TIMESTAMP is declared... yes
+checking whether SO_SNDTIMEO is declared... yes
+checking whether SO_REUSEPORT is declared... yes
+checking whether SO_BINDTODEVICE is declared... yes
+checking whether MSG_DONTWAIT is declared... yes
+checking whether SO_MAX_PACING_RATE is declared... yes
+checking whether SO_DONTROUTE is declared... yes
+checking whether SO_REUSEADDR is declared... yes
+checking whether IPV6_TCLASS is declared... yes
+checking whether IP_MULTICAST_ALL is declared... yes
+checking whether IP_TOS is declared... yes
+checking whether MCAST_JOIN_GROUP is declared... yes
+checking whether MCAST_JOIN_SOURCE_GROUP is declared... yes
+checking whether IPV6_JOIN_GROUP is declared... yes
+checking whether IPV6_V6ONLY is declared... yes
+checking whether IPV6_ADD_MEMBERSHIP is declared... yes
+checking whether IPV6_MULTICAST_HOPS is declared... yes
+checking whether MSG_PEEK is declared... yes
+checking whether MSG_WAITALL is declared... yes
+checking whether TCP_NODELAY is declared... yes
+checking whether TCP_INFO is declared... yes
+checking whether TCP_CONNECTION_INFO is declared... no
+checking whether TCP_WINDOW_CLAMP is declared... yes
+checking whether TCP_QUICKACK is declared... yes
+checking whether TCP_NOTSENT_LOWAT is declared... yes
+checking whether TCP_MAXSEG is declared... yes
+checking whether IP_ADD_MEMBERSHIP is declared... yes
+checking whether IP_ADD_SOURCE_MEMBERSHIP is declared... yes
+checking for struct sockaddr_storage... yes
+checking for struct sockaddr_in6... yes
+checking for struct group_source_req... yes
+checking for struct ip_mreq... yes
+checking for struct ipv6_mreq... yes
+checking for struct ip_mreq_source... yes
+checking for struct sockaddr_in6.sin6_len... no
+checking for struct ip_mreq_source.imr_multiaddr.s_addr... yes
+checking for struct tcp_info.tcpi_total_retrans... yes
+checking for struct tcp_info.tcpi_total_retrans... (cached) yes
+checking for stdbool.h that conforms to C99... yes
+checking for _Bool... yes
+checking whether byte ordering is bigendian... no
+checking for gettid syscall... yes
+checking for multicast support... yes
+checking for multicast ssm support... yes
+checking for tcpstats support... checking for TCP_INFO_TCPI_TOTAL_RETRANS support... yes
+checking for IPv6 headers and structures... yes
+checking for IPv6 multicast support... yes
+checking whether make is GNU make... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating compat/Makefile
+config.status: creating doc/Makefile
+config.status: creating include/Makefile
+config.status: creating src/Makefile
+config.status: creating man/Makefile
+config.status: creating config.h
+config.status: config.h is unchanged
+config.status: executing depfiles commands

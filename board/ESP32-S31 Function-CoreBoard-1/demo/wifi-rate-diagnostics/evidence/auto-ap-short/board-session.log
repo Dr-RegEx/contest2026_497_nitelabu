@@ -1,0 +1,410 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x5f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x1c150
+entry 0x2f017f84
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x1c150  (115024)
+padd: lma 0x0001e1c8 vma 0x00000000 len 0x1e50   (7760)
+imap: lma 0x00020020 vma 0x40140020 len 0x25eac  (155308)
+padd: lma 0x00045ed4 vma 0x00000000 len 0xa224   (41508)
+imap: lma 0x00050100 vma 0x40000100 len 0x13a44c (1287244)
+total segments stored 6
+ABC[CPU0] S31 hardware crypto: SHA1/SHA256/SHA512 PIO
+[CPU0] S31 hardware crypto: HMAC-SHA1/256 via SHA PIO
+[CPU0] S31 hardware crypto: ECDSA P256 verify only
+[CPU0] S31 hardware crypto: AES-CBC 128/256-bit PIO
+[CPU0] S31 hardware crypto: AES-CTR/XTS full-block PIO
+[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [Kuname -a
+NuttX  0.0.0 428252a08db-dirty Sep 20 2026 03:37:06 risc-v esp32s31-core-function-board
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at DOWN mtu 1500
+	inet addr:0.0.0.0 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000000 00000000 00000000 0               
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000000 00000000 00000000 00000000 0                
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0000  0000  0000  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0000  0000  0000  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [Kiperf2 -v
+iperf version 2.1.8 (12 August 2022) pthreads
+nsh> [Kifup wlan0
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+ifup wlan0...OK
+nsh> [Kwapi mode wlan0 2
+nsh> [Kwapi psk wlan0 <REDACTED> 3
+nsh> [Kwapi essid wlan0 "[REDACTED]" 1
+[CPU0] esp_event_post_wrapper: S31 associated: channel=1 auth=3 bssid=7c:39:85:2a:50:04
+[CPU1] esp_evt_work_cb: S31 driver STA MAC: 30:ed:a0:f3:f7:b0
+[CPU1] esp_evt_work_cb: S31 driver power save: ret=0 mode=0
+[CPU0] esp_evt_work_cb: S31 driver protocol: ret=0 bitmap=7
+[CPU0] esp_evt_work_cb: S31 negotiated PHY: ret=0 mode=4
+[CPU0] esp_evt_work_cb: S31 HE SU beamformee disabled: ret=0 value=0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks connected: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters connected: ret=0 mpdu=28403 data=33 fcs=883 abort=1319 full=0 fifo=0 other=768
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=230 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=2 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+nsh> [Krenew wlan0
+nsh> [Kwapi show wlan0
+wlan0 Configuration:
+       IP: 192.168.1.60
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_FIXED
+  Channel: 1
+Frequency: 2412
+    ESSID: [REDACTED]
+     Flag: WAPI_ESSID_ON
+     Mode: WAPI_MODE_MANAGED
+       AP: 7c:39:85:2a:50:04
+  BitRate: 72
+     Flag: WAPI_BITRATE_FIXED
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -64
+  Country: 01
+ PTA prio: not supported
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000013 00000000 00000000 8e4             
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000002 00000004 00000000 00000000 26d              
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0003  0000  0003  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0002  0000  0002  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [Kping -c 3 192.168.1.29
+PING 192.168.1.29 56 bytes of data
+[CPU1] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 0: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 1: 101
+No response from 192.168.1.29: icmp_seq=2 time=1000 ms
+3 packets transmitted, 0 received, 100% packet loss, time 3006 ms
+nsh> [Kiperf2 -s -p 5001 -i 1 &
+iperf2 [15:101]
+nsh> [K------------------------------------------------------------
+Server listening on TCP port 5001
+TCP window size: 16.0 KByte
+------------------------------------------------------------
+[CPU1] tcp_setsockopt: ERROR: TCP_NODELAY not supported
+tcpnodelay failed: Invalid system call number
+[  1] local 192.168.1.60 port 5001 connected with 192.168.1.29 port 9770
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.00-1.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 1.00-2.00 sec   522 KBytes  4.27 Mbits/sec
+[  1] 2.00-3.00 sec   543 KBytes  4.45 Mbits/sec
+[  1] 3.00-4.00 sec   549 KBytes  4.50 Mbits/sec
+[  1] 4.00-5.00 sec   250 KBytes  2.04 Mbits/sec
+[  1] 5.00-6.00 sec   509 KBytes  4.17 Mbits/sec
+[  1] 6.00-7.00 sec   471 KBytes  3.85 Mbits/sec
+[  1] 7.00-8.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 8.00-9.00 sec   550 KBytes  4.51 Mbits/sec
+[  1] 9.00-10.00 sec   476 KBytes  3.90 Mbits/sec
+[  1] 10.00-11.00 sec   535 KBytes  4.38 Mbits/sec
+[  1] 11.00-12.00 sec   523 KBytes  4.29 Mbits/sec
+[  1] 12.00-13.00 sec   510 KBytes  4.18 Mbits/sec
+[  1] 13.00-14.00 sec   538 KBytes  4.40 Mbits/sec
+[  1] 14.00-15.00 sec   567 KBytes  4.65 Mbits/sec
+[  1] 15.00-16.00 sec   533 KBytes  4.37 Mbits/sec
+[  1] 16.00-17.00 sec   509 KBytes  4.17 Mbits/sec
+[  1] 17.00-18.00 sec   346 KBytes  2.84 Mbits/sec
+[  1] 18.00-19.00 sec   302 KBytes  2.48 Mbits/sec
+[  1] 19.00-20.00 sec   576 KBytes  4.72 Mbits/sec
+[  1] 20.00-21.00 sec   572 KBytes  4.68 Mbits/sec
+[  1] 21.00-22.00 sec   480 KBytes  3.94 Mbits/sec
+[  1] 22.00-23.00 sec   565 KBytes  4.63 Mbits/sec
+[  1] 23.00-24.00 sec   490 KBytes  4.02 Mbits/sec
+[  1] 24.00-25.00 sec   522 KBytes  4.27 Mbits/sec
+[  1] 25.00-26.00 sec   565 KBytes  4.63 Mbits/sec
+[  1] 26.00-27.00 sec   480 KBytes  3.94 Mbits/sec
+[  1] 27.00-28.00 sec   540 KBytes  4.43 Mbits/sec
+[  1] 28.00-29.00 sec   607 KBytes  4.98 Mbits/sec
+[  1] 29.00-30.00 sec   489 KBytes  4.01 Mbits/sec
+[  1] 30.00-31.00 sec   157 KBytes  1.29 Mbits/sec
+[  1] 31.00-31.50 sec   147 KBytes  2.42 Mbits/sec
+[  1] 0.00-31.50 sec  15.0 MBytes  3.99 Mbits/sec
+kill -15 15
+nsh> [K[CPU0] inet_accept: ERROR: psock_tcp_accept failed: -4
+[CPU0] psock_accept: ERROR: si_accept failed: -4
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00002a6c 00000000 00000000 f9090e          
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    000018b6 000018b8 00000000 00000000 538e5            
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     2a2a  2a1f  0007  0004
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         18b2  18ab  0002  0005
+  Rexmit     ----  0001  ----  ----
+nsh> [Kiperf2 -s -p 5003 -i 1 -u &
+iperf2 [26:101]
+nsh> [K------------------------------------------------------------
+Server listening on UDP port 5003
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 5003 connected with 192.168.1.29 port 51460
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-1.00 sec   636 KBytes  5.21 Mbits/sec   2.029 ms 0/443 (0%)
+[  1] 0.00-1.00 sec  1 datagrams received out-of-order
+[  1] 1.00-2.00 sec   609 KBytes  4.99 Mbits/sec   2.347 ms 21/445 (4.7%)
+[  1] 1.00-2.00 sec  1 datagrams received out-of-order
+[  1] 2.00-3.00 sec   643 KBytes  5.27 Mbits/sec   1.379 ms 0/448 (0%)
+[  1] 2.00-3.00 sec  1 datagrams received out-of-order
+[  1] 3.00-4.00 sec   632 KBytes  5.17 Mbits/sec   1.355 ms 5/445 (1.1%)
+[  1] 3.00-4.00 sec  2 datagrams received out-of-order
+[  1] 4.00-5.00 sec   630 KBytes  5.16 Mbits/sec   1.246 ms 5/444 (1.1%)
+[  1] 4.00-5.00 sec  2 datagrams received out-of-order
+[  1] 5.00-6.00 sec   630 KBytes  5.16 Mbits/sec   1.502 ms 9/448 (2%)
+[  1] 6.00-7.00 sec   256 KBytes  2.09 Mbits/sec   6.236 ms 12/190 (6.3%)
+[  1] 6.00-7.00 sec  1 datagrams received out-of-order
+[  1] 7.00-8.00 sec   583 KBytes  4.77 Mbits/sec   1.160 ms 19/425 (4.5%)
+[  1] 7.00-8.00 sec  2 datagrams received out-of-order
+[  1] 8.00-9.00 sec   662 KBytes  5.42 Mbits/sec   1.821 ms 13/474 (2.7%)
+[  1] 9.00-10.00 sec   609 KBytes  4.99 Mbits/sec   1.376 ms 22/446 (4.9%)
+[  1] 9.00-10.00 sec  1 datagrams received out-of-order
+[  1] 10.00-11.00 sec   597 KBytes  4.89 Mbits/sec   1.454 ms 31/447 (6.9%)
+[  1] 11.00-12.00 sec   627 KBytes  5.14 Mbits/sec   0.983 ms 8/445 (1.8%)
+[  1] 12.00-13.00 sec   642 KBytes  5.26 Mbits/sec   1.215 ms 0/447 (0%)
+[  1] 13.00-14.00 sec   627 KBytes  5.14 Mbits/sec   0.939 ms 2/439 (0.46%)
+[  1] 14.00-15.00 sec   647 KBytes  5.30 Mbits/sec   1.084 ms 1/452 (0.22%)
+[  1] 15.00-16.00 sec   636 KBytes  5.21 Mbits/sec   2.614 ms 0/443 (0%)
+[  1] 15.00-16.00 sec  1 datagrams received out-of-order
+[  1] 16.00-17.00 sec   606 KBytes  4.96 Mbits/sec   0.858 ms 23/445 (5.2%)
+[  1] 16.00-17.00 sec  1 datagrams received out-of-order
+[  1] 17.00-18.00 sec   643 KBytes  5.27 Mbits/sec   1.834 ms 0/448 (0%)
+[  1] 17.00-18.00 sec  1 datagrams received out-of-order
+[  1] 18.00-19.00 sec   626 KBytes  5.13 Mbits/sec   0.918 ms 11/447 (2.5%)
+[  1] 19.00-20.00 sec   637 KBytes  5.22 Mbits/sec   0.910 ms 6/450 (1.3%)
+[  1] 19.00-20.00 sec  1 datagrams received out-of-order
+[  1] 20.00-21.00 sec   632 KBytes  5.17 Mbits/sec   1.275 ms 2/442 (0.45%)
+[  1] 20.00-21.00 sec  1 datagrams received out-of-order
+[  1] 21.00-22.00 sec   624 KBytes  5.12 Mbits/sec   1.071 ms 0/435 (0%)
+[  1] 22.00-23.00 sec   647 KBytes  5.30 Mbits/sec   2.316 ms 10/461 (2.2%)
+[  1] 22.00-23.00 sec  2 datagrams received out-of-order
+[  1] 23.00-24.00 sec   635 KBytes  5.20 Mbits/sec   1.680 ms 1/443 (0.23%)
+[  1] 24.00-25.00 sec   604 KBytes  4.95 Mbits/sec   1.044 ms 24/445 (5.4%)
+[  1] 25.00-26.00 sec   636 KBytes  5.21 Mbits/sec   1.202 ms 1/444 (0.23%)
+[  1] 26.00-27.00 sec   626 KBytes  5.13 Mbits/sec   1.870 ms 10/446 (2.2%)
+[  1] 26.00-27.00 sec  5 datagrams received out-of-order
+[  1] 27.00-28.00 sec   639 KBytes  5.23 Mbits/sec   1.592 ms 0/445 (0%)
+[  1] 27.00-28.00 sec  1 datagrams received out-of-order
+[  1] 28.00-29.00 sec   639 KBytes  5.23 Mbits/sec   2.316 ms 1/446 (0.22%)
+[  1] 28.00-29.00 sec  4 datagrams received out-of-order
+[  1] 29.00-30.00 sec   438 KBytes  3.59 Mbits/sec   4.780 ms 2/307 (0.65%)
+[  1] 30.00-30.37 sec  68.9 KBytes  1.53 Mbits/sec   5.295 ms 3/51 (5.9%)
+[  1] 0.00-30.37 sec  17.9 MBytes  4.95 Mbits/sec   5.295 ms 242/13036 (1.9%)
+[  1] 0.00-30.37 sec  28 datagrams received out-of-order
+[  3] WARNING: ack of last datagram failed.
+kill -15 26
+nsh> [Krecvfrom failed: Interrupted system call
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00005d7f 00000000 00000000 225dbd8         
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 0000000b
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    000018c7 000018c9 00000000 00000000 5410f            
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     5d22  2a1f  32fa  0008
+Dropped      0001  0000  01ce  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         18bf  18ab  000b  0009
+  Rexmit     ----  0001  ----  ----
+nsh> [Kiperf2 -c 192.168.1.29 -i 1 -p 5002 -t 30
+------------------------------------------------------------
+Client connecting to 192.168.1.29, TCP port 5002
+TCP window size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 192.168.1.60 port 23650 connected with 192.168.1.29 port 5002
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.00-1.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 1.00-2.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 2.00-3.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 3.00-4.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 4.00-5.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 5.00-6.00 sec   336 KBytes  2.75 Mbits/sec
+[  1] 6.00-7.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 7.00-8.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 8.00-9.00 sec   400 KBytes  3.28 Mbits/sec
+[  1] 9.00-10.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 10.00-11.00 sec  53.7 KBytes   440 Kbits/sec
+[  1] 11.00-12.00 sec   267 KBytes  2.19 Mbits/sec
+[  1] 12.00-13.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 13.00-14.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 14.00-15.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 15.00-16.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 16.00-17.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 17.00-18.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 18.00-19.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 19.00-20.00 sec   416 KBytes  3.41 Mbits/sec
+[  1] 20.00-21.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 21.00-22.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 22.00-23.00 sec   432 KBytes  3.54 Mbits/sec
+[  1] 23.00-24.00 sec   464 KBytes  3.80 Mbits/sec
+[  1] 24.00-25.00 sec   368 KBytes  3.01 Mbits/sec
+[  1] 25.00-26.00 sec   215 KBytes  1.76 Mbits/sec
+[  1] 26.00-27.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 27.00-28.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 28.00-29.00 sec   384 KBytes  3.15 Mbits/sec
+[  1] 29.00-30.00 sec   448 KBytes  3.67 Mbits/sec
+[CPU0] S31_TCP_SHUTDOWN state=4 how=2 write_empty=1 unacked_empty=1 tx_unacked=0 seq=1407615086
+[  1] 0.00-30.07 sec  11.8 MBytes  3.30 Mbits/sec
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00006963 00000000 00000000 228b88e         
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 0000000b
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    000041e6 000041e8 00000000 00000000 cb7061           
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     68de  35c8  3309  000c
+Dropped      0001  0000  01ce  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         41dc  41c4  000b  000d
+  Rexmit     ----  0002  ----  ----
+nsh> [Kiperf2 -c 192.168.1.29 -i 1 -p 5004 -t 30 -u -b 5M
+------------------------------------------------------------
+Client connecting to 192.168.1.29, UDP port 5004
+Sending 1470 byte datagrams, IPG target: 2243.04 us (kalman adjust)
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 24142 connected with 192.168.1.29 port 5004
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.00-1.00 sec   441 KBytes  3.61 Mbits/sec
+[  1] 1.00-2.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 2.00-3.00 sec   449 KBytes  3.68 Mbits/sec
+[  1] 3.00-4.00 sec   459 KBytes  3.76 Mbits/sec
+[  1] 4.00-5.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 5.00-6.00 sec   454 KBytes  3.72 Mbits/sec
+[  1] 6.00-7.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 7.00-8.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 8.00-9.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 9.00-10.00 sec   441 KBytes  3.61 Mbits/sec
+[  1] 10.00-11.00 sec   441 KBytes  3.61 Mbits/sec
+[  1] 11.00-12.00 sec   458 KBytes  3.75 Mbits/sec
+[  1] 12.00-13.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 13.00-14.00 sec   459 KBytes  3.76 Mbits/sec
+[  1] 14.00-15.00 sec   451 KBytes  3.69 Mbits/sec
+[  1] 15.00-16.00 sec   436 KBytes  3.58 Mbits/sec
+[  1] 16.00-17.00 sec   436 KBytes  3.58 Mbits/sec
+[  1] 17.00-18.00 sec   439 KBytes  3.60 Mbits/sec
+[  1] 18.00-19.00 sec   455 KBytes  3.73 Mbits/sec
+[  1] 19.00-20.00 sec   452 KBytes  3.70 Mbits/sec
+[  1] 20.00-21.00 sec   445 KBytes  3.65 Mbits/sec
+[  1] 21.00-22.00 sec   449 KBytes  3.68 Mbits/sec
+[  1] 22.00-23.00 sec   446 KBytes  3.66 Mbits/sec
+[  1] 23.00-24.00 sec   451 KBytes  3.69 Mbits/sec
+[  1] 24.00-25.00 sec   455 KBytes  3.73 Mbits/sec
+[  1] 25.00-26.00 sec   455 KBytes  3.73 Mbits/sec
+[  1] 26.00-27.00 sec   445 KBytes  3.65 Mbits/sec
+[  1] 27.00-28.00 sec   452 KBytes  3.70 Mbits/sec
+[  1] 28.00-29.00 sec   444 KBytes  3.63 Mbits/sec
+[  1] 29.00-30.00 sec   438 KBytes  3.59 Mbits/sec
+[  1] 0.00-30.01 sec  13.1 MBytes  3.66 Mbits/sec
+[  1] Sent 9345 datagrams
+[  1] Server Report:
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-30.02 sec  13.1 MBytes  3.66 Mbits/sec   4.412 ms 8/9344 (0.086%)
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    000069ab 00000000 00000000 228f3a2         
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 0000000b
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00006670 00006672 00000000 00000000 1a30d3f          
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     68f2  35c8  3319  0010
+Dropped      0001  0000  01ce  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         6661  41c4  248c  0011
+  Rexmit     ----  0002  ----  ----
+nsh> [K

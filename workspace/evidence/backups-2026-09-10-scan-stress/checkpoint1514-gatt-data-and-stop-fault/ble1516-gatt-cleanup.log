@@ -1,0 +1,8 @@
+Cleanup of 1514 on receipted 1515 image; no reset
+XTS_COMMAND=gatts stop 3
+gatts stop 3
+dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 17 2026 22:04:59 risc-v
+dump_assert_info: Assertion failed : at file: /mm/mm_heap/mm_malloc_size.c:78 task:Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/ble1516-gatt-cleanup.py", line 24, in <module>
+    assert not any(x in output for x in ('PANIC', 'Assertion failed', 'ESP-ROM:', 'cmd execute error')), 'target error'
+AssertionError: target error

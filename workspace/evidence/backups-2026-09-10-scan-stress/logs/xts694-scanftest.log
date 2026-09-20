@@ -1,0 +1,205 @@
+--- CMD: uname -a ---
+uname -a
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+NuttX  0.0.0 428252a08db-dirty Sep 14 2026 22:31:29 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/scanftest ---
+ls /system/bin/scanftest
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+ /system/bin/scanftest
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+      total       used       free    maxused    maxfree  nused  nfree name
+     304828      79908     224920      99056     181304    194     12 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+XTS_COMMAND=scanftest
+scanftest
+
+Testing sscanf()'s return-value,
+conversions, and assignments...
+Test #1 PASSED.
+Test #2 PASSED.
+Test #3 PASSED.
+Test #4 PASSED.
+Test #5 PASSED.
+Test #6 PASSED.
+Test #7 PASSED.
+Test #8 PASSED.
+Test #9 PASSED.
+Test #10 PASSED.
+Test #11 PASSED.
+Test #12 PASSED.
+Test #13 PASSED.
+Test #14 PASSED.
+Test #15 PASSED.
+Test #16 PASSED.
+Test #17 PASSED.
+Test #18 PASSED.
+Test #19 PASSED.
+Test #20 PASSED.
+Test #21 PASSED.
+Test #22 PASSED.
+Test #23 PASSED.
+Test #24 PASSED.
+Test #25 PASSED.
+Test #26 PASSED.
+Test #27 PASSED.
+Test #28 PASSED.
+Test #29 PASSED.
+Test #30 PASSED.
+Test #31 PASSED.
+Test #32 PASSED.
+Test #33 PASSED.
+Test #34 PASSED.
+Test #35 PASSED.
+Test #36 PASSED.
+Test #37 PASSED.
+Test #38 PASSED.
+Test #39 PASSED.
+Test #40 PASSED.
+Test #41 PASSED.
+Test #42 PASSED.
+Test #43 PASSED.
+Test #44 PASSED.
+Test #45 PASSED.
+Test #46 PASSED.
+Test #47 PASSED.
+Test #48 PASSED.
+Test #49 PASSED.
+Test #50 PASSED.
+Test #51 PASSED.
+Test #52 PASSED.
+Test #53 PASSED.
+Test #54 PASSED.
+Test #55 PASSED.
+Test #56 PASSED.
+Test #57 PASSED.
+Test #58 PASSED.
+Test #59 PASSED.
+Test #60 PASSED.
+Test #61 PASSED.
+Test #62 PASSED.
+Test #63 PASSED.
+Test #64 PASSED.
+Test #65 PASSED.
+Test #66 PASSED.
+Test #67 PASSED.
+Test #68 PASSED.
+Test #69 PASSED.
+
+Back to Back Test...
+Test PASSED.
+
+Testing fscanf()'s return-value,
+conversions, and assignments...
+Test #1 PASSED.
+Test #2 PASSED.
+Test #3 PASSED.
+Test #4 PASSED.
+Test #5 PASSED.
+Test #6 PASSED.
+Test #7 PASSED.
+Test #8 PASSED.
+Test #9 PASSED.
+Test #10 PASSED.
+Test #11 PASSED.
+Test #12 PASSED.
+Test #13 PASSED.
+Test #14 PASSED.
+Test #15 PASSED.
+Test #16 PASSED.
+Test #17 PASSED.
+Test #18 PASSED.
+Test #19 PASSED.
+Test #20 PASSED.
+Test #21 PASSED.
+Test #22 PASSED.
+Test #23 PASSED.
+Test #24 PASSED.
+Test #25 PASSED.
+Test #26 PASSED.
+Test #27 PASSED.
+Test #28 PASSED.
+Test #29 PASSED.
+Test #30 PASSED.
+Test #31 PASSED.
+Test #32 PASSED.
+Test #33 PASSED.
+Test #34 PASSED.
+Test #35 PASSED.
+Test #36 PASSED.
+Test #37 PASSED.
+Test #38 PASSED.
+Test #39 PASSED.
+Test #40 PASSED.
+Test #41 PASSED.
+Test #42 PASSED.
+Test #43 PASSED.
+Test #44 PASSED.
+Test #45 PASSED.
+Test #46 PASSED.
+Test #47 PASSED.
+Test #48 PASSED.
+Test #49 PASSED.
+Test #50 PASSED.
+Test #51 PASSED.
+Test #52 PASSED.
+Test #53 PASSED.
+Test #54 PASSED.
+Test #55 PASSED.
+Test #56 PASSED.
+Test #57 PASSED.
+Test #58 PASSED.
+Test #59 PASSED.
+Test #60 PASSED.
+Test #61 PASSED.
+Test #62 PASSED.
+Test #63 PASSED.
+Test #64 PASSED.
+Test #65 PASSED.
+Test #66 PASSED.
+Test #67 PASSED.
+Test #68 PASSED.
+Test #69 PASSED.
+
+Testing scanf()'s type-modifiers...
+Test #1 PASSED.
+Test #2 PASSED.
+Test #3 PASSED.
+Test #4 PASSED.
+Test #5 PASSED.
+Test #6 PASSED.
+Test #7 PASSED.
+Test #8 PASSED.
+Test #9 PASSED.
+Test #10 PASSED.
+Test #11 PASSED.
+Test #12 PASSED.
+Test #13 PASSED.
+Test #14 PASSED.
+Test #15 PASSED.
+Test #16 PASSED.
+Test #17 PASSED.
+Test #18 PASSED.
+Test #19 PASSED.
+Test #20 PASSED.
+Test #21 PASSED.
+Test #22 PASSED.
+Test #23 PASSED.
+Test #24 PASSED.
+Test #25 PASSED.
+Scanf tests done... OK: 164, FAILED: 0
+nsh> [K
+nsh> [KXTS_STANDARD=scanftest PASS seconds=0.406

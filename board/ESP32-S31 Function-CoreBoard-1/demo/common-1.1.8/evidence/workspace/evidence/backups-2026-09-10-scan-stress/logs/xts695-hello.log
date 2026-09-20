@@ -1,0 +1,31 @@
+--- CMD: uname -a ---
+uname -a
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+NuttX  0.0.0 428252a08db-dirty Sep 14 2026 22:31:29 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/hello ---
+ls /system/bin/hello
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+ /system/bin/hello
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+      total       used       free    maxused    maxfree  nused  nfree name
+     304828      77276     227552     106080     164496    196     12 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+XTS_COMMAND=hello
+hello
+Hello, World!!
+nsh> [K
+nsh> [KXTS_STANDARD=hello PASS seconds=0.106

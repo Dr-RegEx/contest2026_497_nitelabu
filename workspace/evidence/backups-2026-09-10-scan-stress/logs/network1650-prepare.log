@@ -1,0 +1,18 @@
+--- CMD: ifup wlan0 ---
+ifup wlan0
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/network1650-prepare.py", line 7, in <module>
+    o=k.transport.run_command(p,t,timeout=75,reset_input=False)
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_nuttx_smoke.py", line 216, in run_command
+    output = collect_until_prompt(port, timeout, visible_command)
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_nuttx_smoke.py", line 117, in collect_until_prompt
+    raise TimeoutError(output.decode("utf-8", errors="replace"))
+TimeoutError: wapi reconnect wlan0
+

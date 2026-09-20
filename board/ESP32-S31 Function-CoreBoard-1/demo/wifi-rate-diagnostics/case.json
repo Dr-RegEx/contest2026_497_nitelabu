@@ -1,0 +1,1817 @@
+{
+  "name": "wifi-rate-diagnostics",
+  "title": "Wi-Fi 四方向 300 秒速率实测与失败记录",
+  "keys": [
+    "category:5.1.22",
+    "category:5.1.23",
+    "category:5.1.24",
+    "category:5.1.25"
+  ],
+  "profile": "demo-wifi-rate-window64",
+  "kind": "measured-not-accepted",
+  "flat": false,
+  "sources": [
+    "external/iperf2/iperf2/src",
+    "external/iperf2/iperf2/include",
+    "external/iperf2/CMakeLists.txt",
+    "external/iperf2/Kconfig",
+    "nuttx/arch/risc-v/src/common/espressif/esp_wlan.c"
+  ],
+  "summary": "仅为诊断例程，不计新增 xTS 通过。64KiB 候选 TCP RX 完成双端 225MiB、6.29Mbit/s、300 秒；UDP RX 9.86Mbit/s、76% 丢包且最终 ACK 缺失，随后 TCP/UDP TX 未完成，IOB 128 个仅剩 1 个可用。历史完整 TCP TX 3.38、UDP TX 对端 3.77Mbit/s 属于较早候选和环境，不能拼成同一镜像四向通过。",
+  "steps": "对端使用已核验的 Windows select1656 修正版 iperf2（SHA256 `73096a7826379d0b092c748e367489704953e240d34f2658b9b63acef3a3a4cd`），或明确记录所用主机工具版本与差异。旧 Windows 2.1.8 有超时兼容/计数问题。配置个人 AP 凭据，不使用历史日志中的测试密码；在板端 `wapi show wlan0` 及主机 WLAN 状态中保存实际 BSSID、信道和 RSSI。同 SSID 不等于同一个 AP。\n\n以下 IP 为示例，改成实际板端/电脑地址。每项单独运行，保存双方完整日志，结束服务器后再做下一项。\n\n|方向|开发板 NSH|电脑终端|\n|---|---|---|\n|TCP RX|`iperf2 -s -p 5001 -i 1 &`|`iperf2 -c 192.168.1.60 -p 5001 -t 300 -i 1 -l 16384`|\n|TCP TX|`iperf2 -c 192.168.1.29 -p 5001 -t 300 -i 1 -l 16384`|先启动 `iperf2 -s -p 5001 -i 1`|\n|UDP RX|`iperf2 -s -u -p 5001 -i 1 &`|`iperf2 -c 192.168.1.60 -u -p 5001 -b 40M -t 300 -i 1`|\n|UDP TX|`iperf2 -c 192.168.1.29 -u -p 5001 -b 40M -t 300 -i 1`|先启动 `iperf2 -s -u -p 5001 -i 1`|\n\n必须核对双方 300 秒持续时间、字节数和正常结束，UDP 用接收端吞吐、丢包和最终报告判读。主机发送速率不能冒充板端接收速率。若资源耗尽、超时或最终 ACK 缺失，保留失败并停止当轮，不把重启后的结果拼作连续通过。30 秒短测只作诊断。",
+  "local_sources": [
+    {
+      "origin": "external/iperf2/iperf2/src",
+      "path": "src/external/iperf2/iperf2/src"
+    },
+    {
+      "origin": "external/iperf2/iperf2/include",
+      "path": "src/external/iperf2/iperf2/include"
+    },
+    {
+      "origin": "external/iperf2/CMakeLists.txt",
+      "path": "src/external/iperf2/CMakeLists.txt"
+    },
+    {
+      "origin": "external/iperf2/Kconfig",
+      "path": "src/external/iperf2/Kconfig"
+    },
+    {
+      "origin": "nuttx/arch/risc-v/src/common/espressif/esp_wlan.c",
+      "path": "src/nuttx/arch/risc-v/src/common/espressif/esp_wlan.c"
+    }
+  ],
+  "local_config": "config/demo-wifi-rate-window64/defconfig",
+  "local_evidence": [
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/flash-arp200-runner.log",
+      "path": "evidence/flash-arp200-runner.log",
+      "sha256": "ca7341ee9820b5bd41df86a6f207f36dc1f8a1b28241fde2e837a0b41c6f7e63",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-runner.log",
+      "path": "evidence/same-ap-runner.log",
+      "sha256": "a427a04fc82bb254247755fd4659f7f3148476425ba3d7d9fca10d9e4341f631",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.22-rx-result.json",
+      "path": "evidence/5.1.22-rx-result.json",
+      "sha256": "11bd2e7c43134650d70e377f7d2f2b69eb3a90856e9eac0a2adbc796267c0cef",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/board-session.log",
+      "path": "evidence/board-session.log",
+      "sha256": "1d4c40762b15aa8cbaa6ca56d6c2cb7cb51f1fbc30f5420fe7d1b13a319c3bc3",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/verify-pair.log",
+      "path": "evidence/verify-pair.log",
+      "sha256": "0bbc1fdd9e0b6f04b9f5950737871df0edc13ca98db2abdb9eef424b47e04956",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/runner.log",
+      "path": "evidence/runner.log",
+      "sha256": "6cfe02d9d8aa8c9a1ac57b9e95a6c188ced826e07fc4b14ea283e8a5ea92e777",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host-runner.log",
+      "path": "evidence/select-host-runner.log",
+      "sha256": "d3776b045cebe9a44f951f6da7c9bd4c5e2d08ebb7a9234a28160b8dbe338cf5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap-selection-strict.log",
+      "path": "evidence/ap-selection-strict.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short-runner.log",
+      "path": "evidence/auto-ap-short-runner.log",
+      "sha256": "e305d215ba2fe4910126b67916503022b506ccde9b0f9eae21f8da6e2167f25d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/flash-ap-selection-runner.log",
+      "path": "evidence/flash-ap-selection-runner.log",
+      "sha256": "bdfc8c6151734d0ee8d21fd2c72874e652b1e2f2f1dc3462878b87b18c6a6e14",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.24-rx-board.log",
+      "path": "evidence/5.1.24-rx-board.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-diagnose-runner.log",
+      "path": "evidence/rx-diagnose-runner.log",
+      "sha256": "e11a64ce189c52fb1c94eec722d0d01a082ea32ebf48874898fb77f45b2f6327",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/flash-receipt.json",
+      "path": "evidence/flash-receipt.json",
+      "sha256": "b979ad4eceb8988383567f9dd4dd762e473b537b70c6640f93244c8e206dd776",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/preflight.log",
+      "path": "evidence/preflight.log",
+      "sha256": "29a8d2186b685e640d408793f0f5a5c5bdddcb253b95d2ccc0d6922c52990131",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/reviewed-results.json",
+      "path": "evidence/reviewed-results.json",
+      "sha256": "c1c36cc779ec6cba3bff2ba60e3d93373682cd6c2c41c40537a3d723baa74cef",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.23-tx-board.log",
+      "path": "evidence/5.1.23-tx-board.log",
+      "sha256": "3b080228765e0032421d6ef69312fcbe61e345f501ec200d8d3df1f390c14d7b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-diagnostic-host-test.log",
+      "path": "evidence/rx-diagnostic-host-test.log",
+      "sha256": "cb3b25babbbc5de4d88b11f8889ecd3cc567db820c86635a4cb7ccfc8903c450",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/host-wlan-during-udp-rx.txt",
+      "path": "evidence/host-wlan-during-udp-rx.txt",
+      "sha256": "dd4b57cb666ff03b1d0bdf3ebe02a5f66fc24abb9e32f82fc72c749fc8ace776",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe-runner.log",
+      "path": "evidence/arp200-probe-runner.log",
+      "sha256": "5bce7b7ca4e33af0a15fb037fe3e77eea6e9971d3b8e2a613d54ea80849fc426",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.25-tx-host.log",
+      "path": "evidence/5.1.25-tx-host.log",
+      "sha256": "8c266162167ac3f59c8ca4c0669937995a30f159dba9bac91dfdd397875a999a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/flash.log",
+      "path": "evidence/flash.log",
+      "sha256": "c60af8fe56ae4c20cef1c5822a50a3ece4ce27be68dbcbeeeb70b6990a2f3872",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap6-check-runner.log",
+      "path": "evidence/ap6-check-runner.log",
+      "sha256": "db98c5d195b29de36fdb32e2b6e8edadc67ecd4db692d5aac2a4589cc2cb8a0b",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates-runner.log",
+      "path": "evidence/same-ap-rates-runner.log",
+      "sha256": "a84e312f15b331396590a419c3e76ff914896703eb42a7f6ef4d9c57d0022288",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.24-rx-host.log",
+      "path": "evidence/5.1.24-rx-host.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-runner.log",
+      "path": "evidence/remaining-runner.log",
+      "sha256": "f24b4a4b5bf37181c07aef958dedd392cfe011aa12eb17d700ac46712c7da058",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/active.json",
+      "path": "evidence/active.json",
+      "sha256": "c9220e194c320a430b48abcdeeb49a7e1e39175b072b5bfb149a40428e7a14c3",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.24-rx-result.json",
+      "path": "evidence/5.1.24-rx-result.json",
+      "sha256": "5387e8497e20c1941ab51a76d9b7638d89e3b34bc78d71dfec77fbb937db753c",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/flash-rx-observe-runner.log",
+      "path": "evidence/flash-rx-observe-runner.log",
+      "sha256": "c23203b91953b4e2a88b36134e9ad0a8d3c70fbb1e17be32c1793515aad00cb8",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/preparation-attempt1-board-session.log",
+      "path": "evidence/preparation-attempt1-board-session.log",
+      "sha256": "07051e74d0dc28b8f87b7da3e3d106e952574e53aec35d611076c3457f8092e4",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/verify-backup.log",
+      "path": "evidence/verify-backup.log",
+      "sha256": "56b54c6c2c69eb4fdcaf817c06bdd3fc0eca27081e4d1d4b44b02efe3afac63e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare-runner.log",
+      "path": "evidence/tcp-window-compare-runner.log",
+      "sha256": "5f093cb69dc8143729a7c349eae106cab6900515b33de4d738e78910d84c37e3",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.25-tx-result.json",
+      "path": "evidence/5.1.25-tx-result.json",
+      "sha256": "13e2588cd3a7193540b83de5d7ca64dead3c0fbfbf0f8d8f8d497110ca4d44ef",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.22-rx-host.log",
+      "path": "evidence/5.1.22-rx-host.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates-runner.log",
+      "path": "evidence/window64-rates-runner.log",
+      "sha256": "edce2fc5906c2685770cd1e30fd20ebf5b76c1efd0e7d0e5453fc4fa1dd979d7",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.25-tx-board.log",
+      "path": "evidence/5.1.25-tx-board.log",
+      "sha256": "867d29ad8fc8a9e59c84544a3998c22806133c66fa4014c256d2539912c51f89",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.22-rx-board.log",
+      "path": "evidence/5.1.22-rx-board.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-diagnostic-source.sha256",
+      "path": "evidence/rx-diagnostic-source.sha256",
+      "sha256": "573c7babc6c93d30d9aa1c7ee9f402969ca61d8a14cd87df1e83ca1b0eb0959d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/retry-runner.log",
+      "path": "evidence/retry-runner.log",
+      "sha256": "8996375f797fcde3bb2459498560a62016cb46a0eb6ded6c9f195cec2ca5fcab",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-diagnostic-target-strict-final.log",
+      "path": "evidence/rx-diagnostic-target-strict-final.log",
+      "sha256": "b169ed055fcf16aa0016f3ef3b91ae3e935394e0f5bf66d3f5d0b80f07ecf230",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/backup.log",
+      "path": "evidence/backup.log",
+      "sha256": "42fc2aa3c856117ff2a3780a3f006c9fc143b689734916153e2d603c3e30d8a2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.23-tx-result.json",
+      "path": "evidence/5.1.23-tx-result.json",
+      "sha256": "de983f212395aac0f02495ca98675ef2a8f32531a1776c23bbf00a5d2f5820e4",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/5.1.23-tx-host.log",
+      "path": "evidence/5.1.23-tx-host.log",
+      "sha256": "b188f6ac5846a2ab8f8111f32149542de783965cb0e47b6cf400bdb7058127b3",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/preparation-attempt1-runner.log",
+      "path": "evidence/preparation-attempt1-runner.log",
+      "sha256": "d3a1f3f32f29390ae6d472f5d90d20de36ffef44a4e7ecfa29168478e48f0bd2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ttyUSB0-identify.log",
+      "path": "evidence/ttyUSB0-identify.log",
+      "sha256": "9df361259be517fe77d657febd52007a358728ebe970eb03838252827bdb7de4",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/environment.json",
+      "path": "evidence/environment.json",
+      "sha256": "2b13139508fa104ea1145abcb66058eb99baf1bf6c3cdc76f2dc86383d72940c",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-diagnostic-preparation.md",
+      "path": "evidence/rx-diagnostic-preparation.md",
+      "sha256": "be2afa32be2e744926f476abb481efad295a3c9045e05a8b08702bd8bb5c5093",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ttyACM1-identify.log",
+      "path": "evidence/ttyACM1-identify.log",
+      "sha256": "9578e599472a6ea0d7cdeba09d0caf20b781c3c8922efff5fc2e8b8e06e20777",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-peer-runner.log",
+      "path": "evidence/linux-peer-runner.log",
+      "sha256": "1b3ec99ed20b72bdfa72fd1d91884f3303fa3feaabfaf7a1969c48ca5680b309",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/review.md",
+      "path": "evidence/review.md",
+      "sha256": "2583bd2b89c3926ff0c93c9f302137bf24b5166fb9cec1dcdaafb2298b1ae077",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window-runner.log",
+      "path": "evidence/auto-ap-arp-window-runner.log",
+      "sha256": "66cbdbd4e0c2ad22ffa98caada5382212ab1fec4d002c41563aa880e8f97de09",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/results.json",
+      "path": "evidence/results.json",
+      "sha256": "a336aa9653c17c2140aaab4da899b57d6602393ba14ca21d70e0cae9e6ad2012",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package-peer-runner.log",
+      "path": "evidence/linux-package-peer-runner.log",
+      "sha256": "a8c1c490b09f8688e9a81478b752d7591d95bdf10f79af2fff883ade872e46a3",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/host-wlan-environment.txt",
+      "path": "evidence/host-wlan-environment.txt",
+      "sha256": "dd4b57cb666ff03b1d0bdf3ebe02a5f66fc24abb9e32f82fc72c749fc8ace776",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-diagnostic-target-strict.log",
+      "path": "evidence/rx-diagnostic-target-strict.log",
+      "sha256": "10fdf4c3528bd267fd4607e115610164ded186767da79d1b2fe09f9878522313",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-rationale.md",
+      "path": "evidence/tcp-window-rationale.md",
+      "sha256": "72db77b351b73639995f73831e18f2ec3e7e9d8557457c808b0ed24ba9c64ff7",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/flash-window64-runner.log",
+      "path": "evidence/flash-window64-runner.log",
+      "sha256": "7623ec8f8a81eba97d2093fd059b2fe441b101b149c2ef7c8c69e9ac5e5a6ebc",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/board-session.log",
+      "path": "evidence/auto-ap-arp-window/board-session.log",
+      "sha256": "b28e0c823749bd019d26eaece17ecb74479972c93e2bf64fb7169152c001b9d8",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/1-tcp-tx-16k-board.log",
+      "path": "evidence/auto-ap-arp-window/1-tcp-tx-16k-board.log",
+      "sha256": "2eb099346212af3ef753189efb910b92bca717e9a707e551153b1785c13320ca",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/host-ping.log",
+      "path": "evidence/auto-ap-arp-window/host-ping.log",
+      "sha256": "c1693f3fdc629ec79c3d503e2c7b4308b3ed795931326736534ca7e7b7c2e48b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/inbound-prime-board.log",
+      "path": "evidence/auto-ap-arp-window/inbound-prime-board.log",
+      "sha256": "03e9a89445c2f66d79553e8d72739136be84d7f410d4491234b462b3cbeda304",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/2-tcp-tx-64k-after.log",
+      "path": "evidence/auto-ap-arp-window/2-tcp-tx-64k-after.log",
+      "sha256": "9abb634f3cd13e4e981a8d64964ac7be9d4032ca951f8e0fe993a75c1f26fc0f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/host-ping-after.log",
+      "path": "evidence/auto-ap-arp-window/host-ping-after.log",
+      "sha256": "49714357121819a7749cd7280917ade4f14da423eeb85496c41c051df92eb071",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/1-tcp-tx-16k-host.log",
+      "path": "evidence/auto-ap-arp-window/1-tcp-tx-16k-host.log",
+      "sha256": "cd9e42a35d8d438f62a8c7823f9a01ba6ee22a03c66753bc984311b2c21e95b4",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/flash-receipt.json",
+      "path": "evidence/auto-ap-arp-window/flash-receipt.json",
+      "sha256": "d9063c11ef6c9f5ba07ba6a355016d349d0ba81d067cf4a08fadfcf4e5db8929",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/inbound-prime-host.log",
+      "path": "evidence/auto-ap-arp-window/inbound-prime-host.log",
+      "sha256": "54942e125fc2d2e1eb13b6690994d4183289d91c9c750ad4750d32951c64952f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/2-tcp-tx-64k-board.log",
+      "path": "evidence/auto-ap-arp-window/2-tcp-tx-64k-board.log",
+      "sha256": "85d6a4d8f3a554ade78b702143ce5ab110e6ab3f51749b8cb36af7db447cda5a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/logs.sha256",
+      "path": "evidence/auto-ap-arp-window/logs.sha256",
+      "sha256": "8d41392c6c7ee0896efa2afc95904c63c64d763406bd90eb4931efcf9a3fc06d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/1-tcp-tx-16k-after.log",
+      "path": "evidence/auto-ap-arp-window/1-tcp-tx-16k-after.log",
+      "sha256": "c316fedf1e5961e2a05e6f2223304a7ca2f73ceee98f292daeaac2bb1cac6fa8",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/inbound-after.log",
+      "path": "evidence/auto-ap-arp-window/inbound-after.log",
+      "sha256": "9a27dc7ff1f9b857be75680688bf80af9f2284f551264b2a7a59ae08a26d976b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/1-tcp-tx-16k-before.log",
+      "path": "evidence/auto-ap-arp-window/1-tcp-tx-16k-before.log",
+      "sha256": "430e3c5be562475e2df33810e47f87196e7418abc3f3bf75874e2850f13f5b34",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/2-tcp-tx-64k-before.log",
+      "path": "evidence/auto-ap-arp-window/2-tcp-tx-64k-before.log",
+      "sha256": "c316fedf1e5961e2a05e6f2223304a7ca2f73ceee98f292daeaac2bb1cac6fa8",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/cold-after.log",
+      "path": "evidence/auto-ap-arp-window/cold-after.log",
+      "sha256": "a4e1088d475e0714935ffe2e589c482abf1e55124b1c4b98529d156d3c71885f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/3-tcp-tx-16k-board.log",
+      "path": "evidence/auto-ap-arp-window/3-tcp-tx-16k-board.log",
+      "sha256": "865ef80dfed0a2f82b7e28514b33da6e78a28b2571973640f3bf718a2a39d2db",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/3-tcp-tx-16k-before.log",
+      "path": "evidence/auto-ap-arp-window/3-tcp-tx-16k-before.log",
+      "sha256": "9abb634f3cd13e4e981a8d64964ac7be9d4032ca951f8e0fe993a75c1f26fc0f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/cold-before.log",
+      "path": "evidence/auto-ap-arp-window/cold-before.log",
+      "sha256": "812a0f2ec51594e048b7f70d207259e53ddfbc4753dd869ef2c79fb8ae01441e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/3-tcp-tx-16k-after.log",
+      "path": "evidence/auto-ap-arp-window/3-tcp-tx-16k-after.log",
+      "sha256": "38e4f245f47a8c16b954fddf20701a08ead642a1a397817dd71debffe2eaaa08",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/review.md",
+      "path": "evidence/auto-ap-arp-window/review.md",
+      "sha256": "3812d98d9ac3c350185cef95798c2bfbe4f3c93c3b4cc5c6ea14971f31a49591",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/results.json",
+      "path": "evidence/auto-ap-arp-window/results.json",
+      "sha256": "063bf5f157695b48a50a21fbc7b47a8ffaf4c7ee348c42cd41b4e390175111db",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/warm-after.log",
+      "path": "evidence/auto-ap-arp-window/warm-after.log",
+      "sha256": "405ee4e4221c1f6cad5680ca12e25ad8a3403bab043f87c0adc76b356bbd6494",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/2-tcp-tx-64k-host.log",
+      "path": "evidence/auto-ap-arp-window/2-tcp-tx-64k-host.log",
+      "sha256": "2136132e05e7a098dbf63c8e9d061d05bc896c8ec89f00c052ed166f96f74c12",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-arp-window/3-tcp-tx-16k-host.log",
+      "path": "evidence/auto-ap-arp-window/3-tcp-tx-16k-host.log",
+      "sha256": "a7a94bec9f352d2bb0f191ffd40ffcee58dfabc23193abaad351209abf6b87c5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/board-session.log",
+      "path": "evidence/arp200-probe/board-session.log",
+      "sha256": "86bec76314619b038c662fab06cb9b23efe25f3736f3a0e1255276ffdea31801",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/1-tcp-tx-16k-board.log",
+      "path": "evidence/arp200-probe/1-tcp-tx-16k-board.log",
+      "sha256": "f708a72c4db8b3ff2df8c4418f079105c2340b94f509131e6a003cccb7b4ea44",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/host-ping.log",
+      "path": "evidence/arp200-probe/host-ping.log",
+      "sha256": "b6cb984b64fa7105ca219ef7b0bbbcd76e0a816f0010f33428dc4ac9b141917f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/inbound-prime-board.log",
+      "path": "evidence/arp200-probe/inbound-prime-board.log",
+      "sha256": "0a1fec32819896d49a033fc8a60d7483f678a768cda4c21b957503b9ae225a1b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/host-ping-after.log",
+      "path": "evidence/arp200-probe/host-ping-after.log",
+      "sha256": "3b5068075cbe9a3cd2645a7bfa31a38a3c6170552b083441db4bc8c61a1c2855",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/1-tcp-tx-16k-host.log",
+      "path": "evidence/arp200-probe/1-tcp-tx-16k-host.log",
+      "sha256": "af6c4fa2e2a932e75ac1c029022d8a375568d84576ac22df3e16d91c317f4369",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/flash-receipt.json",
+      "path": "evidence/arp200-probe/flash-receipt.json",
+      "sha256": "c91b3b29394007f0c7dd481ca73226d09bc64fc89aa0eb5053cdf32179de94d6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/inbound-prime-host.log",
+      "path": "evidence/arp200-probe/inbound-prime-host.log",
+      "sha256": "e0978ec12df962297691e365465ff9697fede931e25081f575a6bd3c174c370e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/logs.sha256",
+      "path": "evidence/arp200-probe/logs.sha256",
+      "sha256": "0ee9907393ef137aa85274c78b91f0118674ab1db8ad17a4ecfb23a7fea2ec93",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/1-tcp-tx-16k-after.log",
+      "path": "evidence/arp200-probe/1-tcp-tx-16k-after.log",
+      "sha256": "fad97fda7e0486050bb2b53633bcc929926eccb5afe0e2ce0f5fe95a1d0a9596",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/inbound-after.log",
+      "path": "evidence/arp200-probe/inbound-after.log",
+      "sha256": "0035456316e9a69b910c5ede8175322d00710ae1878d08f1299fe7e4e2260447",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/1-tcp-tx-16k-before.log",
+      "path": "evidence/arp200-probe/1-tcp-tx-16k-before.log",
+      "sha256": "2d7eb71b4876f766ba296e734fe8cc17b3188ff9edb14531c6c85f11f976888c",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/cold-after.log",
+      "path": "evidence/arp200-probe/cold-after.log",
+      "sha256": "9fb6bf3e559bbd4e5914cfba4312c1066e4d43c846a9a2dc568468aabcebc9c1",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/cold-before.log",
+      "path": "evidence/arp200-probe/cold-before.log",
+      "sha256": "731446ab4ba96859d5710c40ca2d3188645dfa631698ddd4c69fadd235755869",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/review.md",
+      "path": "evidence/arp200-probe/review.md",
+      "sha256": "e406f10e7a17a7e4e22ba559431d5b20a7d8f0de0b9e7e6d1c28bc6b5cb29d2d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/results.json",
+      "path": "evidence/arp200-probe/results.json",
+      "sha256": "b3e2b99300985f13cafa5a020d1363ddc935a39f91bd681b688c034c9cb35576",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200-probe/warm-after.log",
+      "path": "evidence/arp200-probe/warm-after.log",
+      "sha256": "07b41ca3c76568142686962d5bd3e9523acdc5abfa2158a0e16e4f58b77d3f24",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64/verify-pair.log",
+      "path": "evidence/window64/verify-pair.log",
+      "sha256": "6fb94ae03f9752e63d521875b4386bb4e9d582a2b353e6663db26f159dabea2c",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64/flash-receipt.json",
+      "path": "evidence/window64/flash-receipt.json",
+      "sha256": "95613928b5b67bf3791c9de4a40aa73976a68eb573130ff0e2a4d0ff48be14cc",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64/verify-previous-pair.log",
+      "path": "evidence/window64/verify-previous-pair.log",
+      "sha256": "2b7318343860419b4dc8854d0a877ed6fe4db8f467b242c0606c727100ac571f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64/flash.log",
+      "path": "evidence/window64/flash.log",
+      "sha256": "4a9c97c067b8450d267d30a9e5679bf193a5f42fbe251e0325e0f15dea5efe5f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/board-session.log",
+      "path": "evidence/remaining-tx-udp/board-session.log",
+      "sha256": "970d167952e1be360716098f9cb6d63ab3b556878ea43ffedcf185120e8f1478",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/5.1.24-rx-board.log",
+      "path": "evidence/remaining-tx-udp/5.1.24-rx-board.log",
+      "sha256": "916f384d8912ed3e706899ec58d4ae18903de3d09099d175191924f6d71e97bc",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/flash-receipt.json",
+      "path": "evidence/remaining-tx-udp/flash-receipt.json",
+      "sha256": "b979ad4eceb8988383567f9dd4dd762e473b537b70c6640f93244c8e206dd776",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/5.1.23-tx-board.log",
+      "path": "evidence/remaining-tx-udp/5.1.23-tx-board.log",
+      "sha256": "305ef823ecb7588a74065e94389228ef5a0869e229fe9a051714e91a983d0fed",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/5.1.24-rx-host.log",
+      "path": "evidence/remaining-tx-udp/5.1.24-rx-host.log",
+      "sha256": "babae9d3d482b3ff658e645b786d3eaeefacff3627557a2947618557c3a65ba2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/active.json",
+      "path": "evidence/remaining-tx-udp/active.json",
+      "sha256": "fcc01be93b5a9f4d50ad54bcdb920ffc7f7873be68fa447168fc91368ff371d0",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/5.1.24-rx-result.json",
+      "path": "evidence/remaining-tx-udp/5.1.24-rx-result.json",
+      "sha256": "b303e749533fc739cd682b46bf4c6f4d5806fc369428368ff505bd3d7b458e87",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/5.1.23-tx-result.json",
+      "path": "evidence/remaining-tx-udp/5.1.23-tx-result.json",
+      "sha256": "141a1d7736553067c5bb412b8271589f38ebeaa9158937dd3eaf03387c5a6e35",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/5.1.23-tx-host.log",
+      "path": "evidence/remaining-tx-udp/5.1.23-tx-host.log",
+      "sha256": "f8c16180f578f2f0d63b08e74b1120df9af77db8724f161813c634557c340a5a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/environment.json",
+      "path": "evidence/remaining-tx-udp/environment.json",
+      "sha256": "0616a7b610badc6587e69192b3ab01def6d4c46bd8acd57323640c5c9c6d7963",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/remaining-tx-udp/results.json",
+      "path": "evidence/remaining-tx-udp/results.json",
+      "sha256": "35f95cbf7ac3c2c570cb4fec411f1d6359235b681e7b05d6898376569f1160c4",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/window64-delay-dependencies.txt",
+      "path": "evidence/iperf-delay-path-audit/window64-delay-dependencies.txt",
+      "sha256": "58d9bd6fe1729a711b495cc799ecf7ad039e8e2a6d4b6f5044afcbf532ba8fd0",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/rx-observe-delay-compile-command.txt",
+      "path": "evidence/iperf-delay-path-audit/rx-observe-delay-compile-command.txt",
+      "sha256": "aa78bb457a54e82da9b4fea1850cc47feb4831ee980074e392bfeb54c1eb6712",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/window64-delay-compile-command.txt",
+      "path": "evidence/iperf-delay-path-audit/window64-delay-compile-command.txt",
+      "sha256": "06eb2e9814c106d7d5266158d2db893f911409c2a3ba61cdba8b12602590c1e1",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/rx-observe-delay-disassembly.txt",
+      "path": "evidence/iperf-delay-path-audit/rx-observe-delay-disassembly.txt",
+      "sha256": "44e08648f7fa320d71299566e11fbb033c7251a25837239f8f6f9d5880b8587b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/ap-selection-delay-disassembly.txt",
+      "path": "evidence/iperf-delay-path-audit/ap-selection-delay-disassembly.txt",
+      "sha256": "940728d9f40b4db60e2d942201b8f8380756e2de3dcd67df40ea241ccb401736",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/artifact-hashes.json",
+      "path": "evidence/iperf-delay-path-audit/artifact-hashes.json",
+      "sha256": "5a23a095804de264454ae41c66173daa9d14de1f984c4717460fcb93993b6781",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/window64-delay-disassembly.txt",
+      "path": "evidence/iperf-delay-path-audit/window64-delay-disassembly.txt",
+      "sha256": "5bef44d678a6a1093d707b269c3f73a038d80c46534b98416e2273b875266541",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/ap-selection-delay-compile-command.txt",
+      "path": "evidence/iperf-delay-path-audit/ap-selection-delay-compile-command.txt",
+      "sha256": "011adbb51b0e8633111b11b54165a63f7d5d44c9894b1197bf6709230ee70fa6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/ap-selection-delay-dependencies.txt",
+      "path": "evidence/iperf-delay-path-audit/ap-selection-delay-dependencies.txt",
+      "sha256": "489d5167b2f3a8140e33965167ab438c247331e704f47f9ce6d0388d0f3ef458",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/review.md",
+      "path": "evidence/iperf-delay-path-audit/review.md",
+      "sha256": "588f3160c5a245fc9528413e43f521325d1a5031d3c9a53a044ac3eb29de7355",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/iperf-delay-path-audit/rx-observe-delay-dependencies.txt",
+      "path": "evidence/iperf-delay-path-audit/rx-observe-delay-dependencies.txt",
+      "sha256": "cbdc54d6f9b7c5d0b810b5c8c299b801e49f695a7c65d37c4b700097209efbd2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.22-rx-result.json",
+      "path": "evidence/window64-rates/5.1.22-rx-result.json",
+      "sha256": "c3d23c684f098c4f74d56ea20633f50f5b37ff45a8682f196d836a514044a068",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/board-session.log",
+      "path": "evidence/window64-rates/board-session.log",
+      "sha256": "a784d40a81ca3ff14efaa700ad523bf490d679d2de5320f568ce907e5b238652",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.24-rx-before.log",
+      "path": "evidence/window64-rates/5.1.24-rx-before.log",
+      "sha256": "b3258ff0fd9b78c852ec20951ac86247649abc26948fe1dcaa85b9c357081959",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.22-rx-before.log",
+      "path": "evidence/window64-rates/5.1.22-rx-before.log",
+      "sha256": "af33ca42c5fc4d6afb11cadf47270d78c25f734935c30974995ace3b2513bcb5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.24-rx-board.log",
+      "path": "evidence/window64-rates/5.1.24-rx-board.log",
+      "sha256": "ba939cd1b8931b940a8f5703646062bb6490ef1019d5b24afc819509ea704181",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/flash-receipt.json",
+      "path": "evidence/window64-rates/flash-receipt.json",
+      "sha256": "95613928b5b67bf3791c9de4a40aa73976a68eb573130ff0e2a4d0ff48be14cc",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.23-tx-board.log",
+      "path": "evidence/window64-rates/5.1.23-tx-board.log",
+      "sha256": "edbbd79212598f47bb4dadfe8fd6e330bb7077e508d7e03501974084734e375b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.23-tx-before.log",
+      "path": "evidence/window64-rates/5.1.23-tx-before.log",
+      "sha256": "8e2c4de3cb677d46e066edd26c429121d4f4bc86c37fca2388d0ea21b97566a0",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/board-ap.log",
+      "path": "evidence/window64-rates/board-ap.log",
+      "sha256": "5d9570f3978ad02dbb30d445bc36229d959a233f752e9a7ba3c293c1d23548d5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.25-tx-host.log",
+      "path": "evidence/window64-rates/5.1.25-tx-host.log",
+      "sha256": "84b5dd64dfd707e7b5ce417d650710cbde57e352d904fac48de937a5f6a7bedc",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.24-rx-host.log",
+      "path": "evidence/window64-rates/5.1.24-rx-host.log",
+      "sha256": "bbe22f6817d26ab9bb5873e1faa2cb175c4fe02f8c7e086e8de854debfe2c12f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/active.json",
+      "path": "evidence/window64-rates/active.json",
+      "sha256": "c9220e194c320a430b48abcdeeb49a7e1e39175b072b5bfb149a40428e7a14c3",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.24-rx-result.json",
+      "path": "evidence/window64-rates/5.1.24-rx-result.json",
+      "sha256": "14130b116bf0e0f022ed3bc20a79220c93c5c228e43c0145f3291b5a0af7c66b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.25-tx-result.json",
+      "path": "evidence/window64-rates/5.1.25-tx-result.json",
+      "sha256": "75ca50c40b4374aa4bfdb33857d2cb33063a9ac1c0cbdae3aea8019698c8cb54",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.22-rx-host.log",
+      "path": "evidence/window64-rates/5.1.22-rx-host.log",
+      "sha256": "752d49e617aee05266aa63ccda77ef8c64805f21faa5f7ec333c9596e48e276e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.25-tx-board.log",
+      "path": "evidence/window64-rates/5.1.25-tx-board.log",
+      "sha256": "5461462920d0e513741a5afeaa2a346b4cc8119afd73c05df72e16f2c7104366",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.22-rx-board.log",
+      "path": "evidence/window64-rates/5.1.22-rx-board.log",
+      "sha256": "4d1a55d12f543d2bcccfdd4113624457551a476af12aa465d241fff8ce0b3210",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.23-tx-result.json",
+      "path": "evidence/window64-rates/5.1.23-tx-result.json",
+      "sha256": "cc459a311604cad65c0dcd7d12799168aa470e4a701674dca964e256e0bb3e24",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.23-tx-host.log",
+      "path": "evidence/window64-rates/5.1.23-tx-host.log",
+      "sha256": "26c4f781ef341e182a73f38fada7e8381df367d78ea619995c35605cf35d390e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/environment.json",
+      "path": "evidence/window64-rates/environment.json",
+      "sha256": "a83c2c9acf3a5d38adcee7d9b34aee833224b57f73b8923aa6ee46efc23148e2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/review.md",
+      "path": "evidence/window64-rates/review.md",
+      "sha256": "2da8ab5891cd5388a4547f595436a10c91295ac7c06378d5c17b54940bc39b34",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/results.json",
+      "path": "evidence/window64-rates/results.json",
+      "sha256": "f9cad04ef30587a7ed1807725791957586a1a712859f2d6e16a19b7dd6480bff",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-rates/5.1.25-tx-before.log",
+      "path": "evidence/window64-rates/5.1.25-tx-before.log",
+      "sha256": "34ba9ffe10d0655b55b3ae526084070952ba1bfe2a2695687ecf64a7e8ebe7f8",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package-peer/board-session.log",
+      "path": "evidence/linux-package-peer/board-session.log",
+      "sha256": "6d2e3b5c11314b10e26ae63390f7bf189db5e82b9d8f6d7562dd1a70a6449f14",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package-peer/diagnostic-results.json",
+      "path": "evidence/linux-package-peer/diagnostic-results.json",
+      "sha256": "eb5c0f119017a31a8b76cf44e9ddd1a30b4d306fb140431eb4d29dd51c25bbe9",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package-peer/after-5M-snapshot.log",
+      "path": "evidence/linux-package-peer/after-5M-snapshot.log",
+      "sha256": "c199e8ea66dbc2020b225d572a2171753490f73ac0e0c9fbc970c6fd08f8f4e8",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package-peer/flash-receipt.json",
+      "path": "evidence/linux-package-peer/flash-receipt.json",
+      "sha256": "c1d29565a5fd699da8bdefd734d6337e4f2156b97c422d47099db32f396a3243",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package-peer/udp-rx-5M-board.log",
+      "path": "evidence/linux-package-peer/udp-rx-5M-board.log",
+      "sha256": "4bf34a59a9817633cc16c42d358ac21fed9afead09fa372b464602cde0b06d5e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package-peer/disconnected-snapshot.log",
+      "path": "evidence/linux-package-peer/disconnected-snapshot.log",
+      "sha256": "bd64e43df5d9600b1b73322edeaa8b5d668f465ec151284bba65d5d19d8c7ac7",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package-peer/udp-rx-5M-host.log",
+      "path": "evidence/linux-package-peer/udp-rx-5M-host.log",
+      "sha256": "9c0ba1f05546386dc4395be7bee385fc59132bf6b5afd92e65da10c1cd160ef6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package-peer/before-snapshot.log",
+      "path": "evidence/linux-package-peer/before-snapshot.log",
+      "sha256": "792b8ee1a3b5ee01437d2a50fd4a9967430ab30b8a80d9552f2410a4f3d46a89",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-peer/flash-receipt.json",
+      "path": "evidence/linux-peer/flash-receipt.json",
+      "sha256": "c1d29565a5fd699da8bdefd734d6337e4f2156b97c422d47099db32f396a3243",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap/board-session.log",
+      "path": "evidence/same-ap/board-session.log",
+      "sha256": "f129ff7ffa7c5c1b90c2166eeb68f23c3345d16791eb6be20219784b26ada6de",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap/diagnostic-results.json",
+      "path": "evidence/same-ap/diagnostic-results.json",
+      "sha256": "08ca0f3acd71285fbfc0a9fee1e8a24521c111ecb4c95a35f832e08f6c9cf351",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap/after-5M-snapshot.log",
+      "path": "evidence/same-ap/after-5M-snapshot.log",
+      "sha256": "09b71758c200d05098fa3eaaf82bf028d6e58e0d4807b1099ce3cf1628e0ba8f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap/flash-receipt.json",
+      "path": "evidence/same-ap/flash-receipt.json",
+      "sha256": "c1d29565a5fd699da8bdefd734d6337e4f2156b97c422d47099db32f396a3243",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap/udp-rx-5M-board.log",
+      "path": "evidence/same-ap/udp-rx-5M-board.log",
+      "sha256": "9464313f0ef89ece8d05ae440764c7912c8115f2122151bc37660505160a5793",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap/disconnected-snapshot.log",
+      "path": "evidence/same-ap/disconnected-snapshot.log",
+      "sha256": "136e500ea7b035c528b33b303e0a067914d49c6d04f6994b1c585b4a4384777e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap/udp-rx-5M-host.log",
+      "path": "evidence/same-ap/udp-rx-5M-host.log",
+      "sha256": "09558e90ca3e8bd2f3f12d9439531ab74c51b65127b6182b398c03ae2ca8995a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap/before-snapshot.log",
+      "path": "evidence/same-ap/before-snapshot.log",
+      "sha256": "019b3df33dd47b0644a98783c1f130e432ce13c65d0ceba1b59ba56685a93da9",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/board-session.log",
+      "path": "evidence/tcp-window-compare/board-session.log",
+      "sha256": "a840e7f53953ac41e409f394f738965089272a3ace42f3d5f34498c158d52abb",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/1-tcp-tx-16k-board.log",
+      "path": "evidence/tcp-window-compare/1-tcp-tx-16k-board.log",
+      "sha256": "a44bfb21ca9c218ce379e4a162677409e190f7fe09d94655a644f15495514508",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/2-tcp-tx-64k-after.log",
+      "path": "evidence/tcp-window-compare/2-tcp-tx-64k-after.log",
+      "sha256": "ee81b494e9b691c681e49c5f72fe3cfca2ed57abee79a10a44f913bd150b0131",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/1-tcp-tx-16k-host.log",
+      "path": "evidence/tcp-window-compare/1-tcp-tx-16k-host.log",
+      "sha256": "3529626543b86f3f553d82f18cacc463f7a640742035fcd3448fa1fc99adb7c2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/flash-receipt.json",
+      "path": "evidence/tcp-window-compare/flash-receipt.json",
+      "sha256": "c1d29565a5fd699da8bdefd734d6337e4f2156b97c422d47099db32f396a3243",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/2-tcp-tx-64k-board.log",
+      "path": "evidence/tcp-window-compare/2-tcp-tx-64k-board.log",
+      "sha256": "77768c2f4bb4073891849128ebe417ae6822fec4c2b63f818da13ec950e238ae",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/logs.sha256",
+      "path": "evidence/tcp-window-compare/logs.sha256",
+      "sha256": "53fd57829a3eeca16592b759d6c9827c2a80392ac4dd4d3810ef703ed44d4349",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/1-tcp-tx-16k-after.log",
+      "path": "evidence/tcp-window-compare/1-tcp-tx-16k-after.log",
+      "sha256": "9f9c622877eba90f56932dea172eebcbcef66c513f5e08929179c54ae6134c5a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/1-tcp-tx-16k-before.log",
+      "path": "evidence/tcp-window-compare/1-tcp-tx-16k-before.log",
+      "sha256": "d1d71fcfc010ef101ddbf42fcea51f3941457a15f7ea9165a93da7c992fd5e3d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/2-tcp-tx-64k-before.log",
+      "path": "evidence/tcp-window-compare/2-tcp-tx-64k-before.log",
+      "sha256": "9f9c622877eba90f56932dea172eebcbcef66c513f5e08929179c54ae6134c5a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/3-tcp-tx-16k-board.log",
+      "path": "evidence/tcp-window-compare/3-tcp-tx-16k-board.log",
+      "sha256": "a42480a8328094b2dafb842dda20a36e5a03ef667cab7908544f9dc72b713423",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/3-tcp-tx-16k-before.log",
+      "path": "evidence/tcp-window-compare/3-tcp-tx-16k-before.log",
+      "sha256": "ee81b494e9b691c681e49c5f72fe3cfca2ed57abee79a10a44f913bd150b0131",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/3-tcp-tx-16k-after.log",
+      "path": "evidence/tcp-window-compare/3-tcp-tx-16k-after.log",
+      "sha256": "4176677976910730461b88a8152dbad403d7ca568982d02496b40a1a6149c2d3",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/review.md",
+      "path": "evidence/tcp-window-compare/review.md",
+      "sha256": "4fcadd216ebd3a50abb46fbac9e8dd1938c6e1282760f911efb903428093415e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/results.json",
+      "path": "evidence/tcp-window-compare/results.json",
+      "sha256": "e4f13ca29ae20d0146bfa6297dfbcba86095f7bfc1afbd8af1da7f4f0e5eddd6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/2-tcp-tx-64k-host.log",
+      "path": "evidence/tcp-window-compare/2-tcp-tx-64k-host.log",
+      "sha256": "c294c97fbb7972bbbb0fd323341c371c4e61811bab0653ff3e8ef7aa01209dea",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/tcp-window-compare/3-tcp-tx-16k-host.log",
+      "path": "evidence/tcp-window-compare/3-tcp-tx-16k-host.log",
+      "sha256": "7e2b75b10e8cb33d289a35f7801e9394c169b3230bd2316c34c8d9db815c14f6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap6-check/board-session.log",
+      "path": "evidence/ap6-check/board-session.log",
+      "sha256": "0449f97092d9ae9c279e6b1afaa3325c79c93ebcd67bf7f273d85569269b2052",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap6-check/diagnostic-results.json",
+      "path": "evidence/ap6-check/diagnostic-results.json",
+      "sha256": "4d2eafe54c8764e7894cd1862b4d2a5d8d7d2478dea17db2d62a9e61085278f1",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap6-check/after-5M-snapshot.log",
+      "path": "evidence/ap6-check/after-5M-snapshot.log",
+      "sha256": "c054a25b99b4ffbc947169b7a87d2489b11a73e3c7deed57695fc8f4d004d7f2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap6-check/flash-receipt.json",
+      "path": "evidence/ap6-check/flash-receipt.json",
+      "sha256": "c1d29565a5fd699da8bdefd734d6337e4f2156b97c422d47099db32f396a3243",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap6-check/udp-rx-5M-board.log",
+      "path": "evidence/ap6-check/udp-rx-5M-board.log",
+      "sha256": "8b06a2eae95dc0860d95242f96d83ffc3aba8559f5a586b7806f1a93242899aa",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap6-check/disconnected-snapshot.log",
+      "path": "evidence/ap6-check/disconnected-snapshot.log",
+      "sha256": "434b4742c021531f0e9632c734ff7b05f8b866277b5d13da3f02933ca4a95d01",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap6-check/udp-rx-5M-host.log",
+      "path": "evidence/ap6-check/udp-rx-5M-host.log",
+      "sha256": "57ac4347e3a84fed7f1244c9c2e8f24c256f5a25b84db7ddda9e74d063666469",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap6-check/scan.log",
+      "path": "evidence/ap6-check/scan.log",
+      "sha256": "35e3570e8158e0b8cdab9902384ee28de800e19154a15d17c5e8adaff97806cf",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap6-check/before-snapshot.log",
+      "path": "evidence/ap6-check/before-snapshot.log",
+      "sha256": "b12b25f71673a0a647c2ae0e81425c4283dd7fa986df3fc91bef9777a3c2a382",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap-selection/verify-pair.log",
+      "path": "evidence/ap-selection/verify-pair.log",
+      "sha256": "e532914d963d987bbc4fdee5daad56516ab7b4ffaf8e4176d444cbbb550c6547",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap-selection/flash-receipt.json",
+      "path": "evidence/ap-selection/flash-receipt.json",
+      "sha256": "d9063c11ef6c9f5ba07ba6a355016d349d0ba81d067cf4a08fadfcf4e5db8929",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap-selection/verify-previous-pair.log",
+      "path": "evidence/ap-selection/verify-previous-pair.log",
+      "sha256": "0b8cd8e98be77774fce193233d36da2790ba31de6aadb79ed32f8fe2abb1926d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap-selection/flash.log",
+      "path": "evidence/ap-selection/flash.log",
+      "sha256": "ad1224b864464ff62dfce45cb1ec8d85c14ee5b0855371af322907e6a60e435b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/after-20M-snapshot.log",
+      "path": "evidence/rx-observe/after-20M-snapshot.log",
+      "sha256": "4b62d896febef76f0b305219a8664423ad500e4052caf94e9a2cbe911660f0a5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/board-session.log",
+      "path": "evidence/rx-observe/board-session.log",
+      "sha256": "c2d66f0bc9754c7de2a75221e300074ac509ea3192aef8d227573d5ac1a54110",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/verify-pair.log",
+      "path": "evidence/rx-observe/verify-pair.log",
+      "sha256": "0b8cd8e98be77774fce193233d36da2790ba31de6aadb79ed32f8fe2abb1926d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/after-40M-snapshot.log",
+      "path": "evidence/rx-observe/after-40M-snapshot.log",
+      "sha256": "e571ed578778230b0d29bcba395c3596e17be3703c2577d84cbff0e2f30d6258",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/diagnostic-results.json",
+      "path": "evidence/rx-observe/diagnostic-results.json",
+      "sha256": "e990ab2ccdcbdbd19b2850e10ea6d5dc27ef44c939632af83f0ef025137903e5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/after-5M-snapshot.log",
+      "path": "evidence/rx-observe/after-5M-snapshot.log",
+      "sha256": "511d7fc2841a07617b5a338b558a0cdd3d9d8b731191e5018353619f9159c1e8",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/flash-receipt.json",
+      "path": "evidence/rx-observe/flash-receipt.json",
+      "sha256": "c1d29565a5fd699da8bdefd734d6337e4f2156b97c422d47099db32f396a3243",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/udp-rx-5M-board.log",
+      "path": "evidence/rx-observe/udp-rx-5M-board.log",
+      "sha256": "582cb7d71db44158abd1bf637afcd0d5d0e39653e3f8aa499f3fd98ff395eb7e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/udp-rx-20M-board.log",
+      "path": "evidence/rx-observe/udp-rx-20M-board.log",
+      "sha256": "911849a4e802c0d709648037f4683d0a8373a6614c6716ea245fd0dc3dce0ac3",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/verify-previous-pair.log",
+      "path": "evidence/rx-observe/verify-previous-pair.log",
+      "sha256": "0bbc1fdd9e0b6f04b9f5950737871df0edc13ca98db2abdb9eef424b47e04956",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/udp-rx-20M-host.log",
+      "path": "evidence/rx-observe/udp-rx-20M-host.log",
+      "sha256": "c98030547ad35c51c5aee434f5e7c8d4b53d3823ff5edb2869c57faaaf29f081",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/disconnected-snapshot.log",
+      "path": "evidence/rx-observe/disconnected-snapshot.log",
+      "sha256": "c7c608643abb0cd4ca1ffc4a23bff5cf1dd3fb500d6f5ff1ed961edfc87d2696",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/flash.log",
+      "path": "evidence/rx-observe/flash.log",
+      "sha256": "fa8cdc851cb64ac71c1098fcd37bec89ba609a2430ecf6e302da175e973ffdbb",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/udp-rx-40M-board.log",
+      "path": "evidence/rx-observe/udp-rx-40M-board.log",
+      "sha256": "df1b843ee84c652695da268221fad2f09f5827734608d0f5afd3306bc002d8cf",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/udp-rx-5M-host.log",
+      "path": "evidence/rx-observe/udp-rx-5M-host.log",
+      "sha256": "6516baa7c6ddb4a800185ec478aed0e394fe0b5cc48a948f1b05206f5b58bddc",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/udp-rx-40M-host.log",
+      "path": "evidence/rx-observe/udp-rx-40M-host.log",
+      "sha256": "2ff7948dd2053b4c3ce824dcecbf2a18169a06b3f42e1aba7580a067cb2cb9b7",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/rx-observe/before-snapshot.log",
+      "path": "evidence/rx-observe/before-snapshot.log",
+      "sha256": "914e16ad7a068693fad018758a5f729a3d846ee46c69831c25e2be2b115882c4",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.22-rx-result.json",
+      "path": "evidence/same-ap-rates/5.1.22-rx-result.json",
+      "sha256": "a8f9e11aa107590e08c4fd1cce8690865be86fa92dd6f29575b92ff1f6e3e5b2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/board-session.log",
+      "path": "evidence/same-ap-rates/board-session.log",
+      "sha256": "876c93a8793abc60a466e3e3eac4f43fa528dadc155a745f0aa4f01307a4e2cc",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.24-rx-board.log",
+      "path": "evidence/same-ap-rates/5.1.24-rx-board.log",
+      "sha256": "f8ff4d7f5bd36ca18176e017338287d0233061230ae5d9a6bfb9eb84dbbf5ea7",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/flash-receipt.json",
+      "path": "evidence/same-ap-rates/flash-receipt.json",
+      "sha256": "c1d29565a5fd699da8bdefd734d6337e4f2156b97c422d47099db32f396a3243",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.23-tx-board.log",
+      "path": "evidence/same-ap-rates/5.1.23-tx-board.log",
+      "sha256": "68968e89f1f3ca716b5aabb59e1661b4ce8c9717bcb0bbc165761e6c26ab3b7f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/board-ap.log",
+      "path": "evidence/same-ap-rates/board-ap.log",
+      "sha256": "93b547b00c0ee33bdc2082a98a6cbe4c9da89321cb8bb00943b9557e92e53e49",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/host-nic-during-udp.json",
+      "path": "evidence/same-ap-rates/host-nic-during-udp.json",
+      "sha256": "b3e1ad5b330e5d26b0fec6c6c42ff936294e68c9c2d66c32f695175843358e5d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.25-tx-host.log",
+      "path": "evidence/same-ap-rates/5.1.25-tx-host.log",
+      "sha256": "a711816ac20b5c595e4507f8396c6c0dc38b4a7c293e476355188da48bb68f62",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.24-rx-host.log",
+      "path": "evidence/same-ap-rates/5.1.24-rx-host.log",
+      "sha256": "a3669a8f5740c369a5a98d9b88c979092345efae31ccbe975208979ffaf02292",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/active.json",
+      "path": "evidence/same-ap-rates/active.json",
+      "sha256": "c9220e194c320a430b48abcdeeb49a7e1e39175b072b5bfb149a40428e7a14c3",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.24-rx-result.json",
+      "path": "evidence/same-ap-rates/5.1.24-rx-result.json",
+      "sha256": "b4e19392238f08e921feb4d26059c977f7d16a905927a88f216331e6bac66d2d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.25-tx-result.json",
+      "path": "evidence/same-ap-rates/5.1.25-tx-result.json",
+      "sha256": "dc8d61959044d660634733df25e3519ff90e5a86960f6301c21dfb4003a32303",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.22-rx-host.log",
+      "path": "evidence/same-ap-rates/5.1.22-rx-host.log",
+      "sha256": "516ad883efc52fd6eb6b56c50cd65bff843cd1bdf200b6393b7230701f0037ee",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.25-tx-board.log",
+      "path": "evidence/same-ap-rates/5.1.25-tx-board.log",
+      "sha256": "6154ae8d340b852f6c301d06dd47297f6614beb2c137238a1f718b6ce1fecdbd",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.22-rx-board.log",
+      "path": "evidence/same-ap-rates/5.1.22-rx-board.log",
+      "sha256": "bf3b37e1742865f467e8dbc7a33bef300ee009024250c8c8a010786e9fdb8c34",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.23-tx-result.json",
+      "path": "evidence/same-ap-rates/5.1.23-tx-result.json",
+      "sha256": "a59f95bb61230c4b51aa348e908a78adf360717ae84ab88ce05ef9aaefc711e9",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/5.1.23-tx-host.log",
+      "path": "evidence/same-ap-rates/5.1.23-tx-host.log",
+      "sha256": "f45d596640c64293a583ae084bcd685d23918f95586c2c9d962236f9bc2df879",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/environment.json",
+      "path": "evidence/same-ap-rates/environment.json",
+      "sha256": "cffab2a3a883ed068aa9873ae46310371498a00cda60d7a547d8735a0a98e333",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/same-ap-rates/results.json",
+      "path": "evidence/same-ap-rates/results.json",
+      "sha256": "7fb7752b75bdd8bbdb05f5d0c411cc3f411540474019936f4781ac0ec725b58d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap-selection-preparation/host-test.log",
+      "path": "evidence/ap-selection-preparation/host-test.log",
+      "sha256": "349dca1b0679e966a50feba4d1ded76e296b2d1e1b6f09c7c83e972cf2223bf2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/ap-selection-preparation/review.md",
+      "path": "evidence/ap-selection-preparation/review.md",
+      "sha256": "647bcb1b075257765cbb4cdaec091a7f3044b6c3fd1b550bd4c4f4931573fc86",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-candidate/build-wifi-window64.sha256",
+      "path": "evidence/window64-candidate/build-wifi-window64.sha256",
+      "sha256": "2043d8d76b8ae9d5b18c0dae4dd593904b72ad7a32b628bad1af43730382028d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-candidate/review.md",
+      "path": "evidence/window64-candidate/review.md",
+      "sha256": "4e6c2112acf87457726fc37194e99d7429eec91d055a0c747bec26116ea4966a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/window64-candidate/build-result.json",
+      "path": "evidence/window64-candidate/build-result.json",
+      "sha256": "70da5f90f4e0a163fa06d3126b606fb3a120e9fbe6c9ce5a9d93a48b1bb8d9d2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.22-rx-result.json",
+      "path": "evidence/auto-ap-short/5.1.22-rx-result.json",
+      "sha256": "c0389577b802f2f6d3fa85e417d810cfcb999e46735f5797ad498b15b2b6b14a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/board-session.log",
+      "path": "evidence/auto-ap-short/board-session.log",
+      "sha256": "0c32630a7210b68219a37fcb9423bc45169b03bdd1e42b950e432d4373726294",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.24-rx-board.log",
+      "path": "evidence/auto-ap-short/5.1.24-rx-board.log",
+      "sha256": "3e85a7178f12392dc7b03e91e826c3e994a74329a41df37599c0b8bede93d7ae",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/flash-receipt.json",
+      "path": "evidence/auto-ap-short/flash-receipt.json",
+      "sha256": "d9063c11ef6c9f5ba07ba6a355016d349d0ba81d067cf4a08fadfcf4e5db8929",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.23-tx-board.log",
+      "path": "evidence/auto-ap-short/5.1.23-tx-board.log",
+      "sha256": "dd291365d4afd3721da816103e20bc9853422e4ebd1fc1441773106b20621505",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/board-ap.log",
+      "path": "evidence/auto-ap-short/board-ap.log",
+      "sha256": "5d9570f3978ad02dbb30d445bc36229d959a233f752e9a7ba3c293c1d23548d5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.25-tx-host.log",
+      "path": "evidence/auto-ap-short/5.1.25-tx-host.log",
+      "sha256": "2e8ffa6fbaccad830052e9c3efab7a9f1f4d944ab69566a4778b1075e174d23f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.24-rx-host.log",
+      "path": "evidence/auto-ap-short/5.1.24-rx-host.log",
+      "sha256": "7844c4ce4208fd02f945c3fd9d1401eb851a8eb3a972fcfffcbbc361f91fcdaa",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/active.json",
+      "path": "evidence/auto-ap-short/active.json",
+      "sha256": "c9220e194c320a430b48abcdeeb49a7e1e39175b072b5bfb149a40428e7a14c3",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.24-rx-result.json",
+      "path": "evidence/auto-ap-short/5.1.24-rx-result.json",
+      "sha256": "c2b1af0a4ec295f853db12d113478ff93e21a06aa3cfdfe83a276f4f3eba34cc",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.25-tx-result.json",
+      "path": "evidence/auto-ap-short/5.1.25-tx-result.json",
+      "sha256": "1aa6793347261d3886000116989bea3ca033d0c9a8876c81362769f4b05acac1",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.22-rx-host.log",
+      "path": "evidence/auto-ap-short/5.1.22-rx-host.log",
+      "sha256": "37bbe9285c7f9cd34070a48b9b3b36959bbf7512741c3132e43ab8db86082d7b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.25-tx-board.log",
+      "path": "evidence/auto-ap-short/5.1.25-tx-board.log",
+      "sha256": "8f30741e0689c90f2cf3a7330a22c269d145e3b257326b892c58624398bcd1b4",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.22-rx-board.log",
+      "path": "evidence/auto-ap-short/5.1.22-rx-board.log",
+      "sha256": "c6bee6de821620770df26e2ec518f9a696b023e89a662a7cac010c2359a8581d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.23-tx-result.json",
+      "path": "evidence/auto-ap-short/5.1.23-tx-result.json",
+      "sha256": "459c6c0d1b910fc1bd71c60ea29265be59e3d884521e679d28ac395a51b53553",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/5.1.23-tx-host.log",
+      "path": "evidence/auto-ap-short/5.1.23-tx-host.log",
+      "sha256": "22e77c566987d5954f0610119ba53644f0bf9c5d8babfc3be83e26bdf4316e55",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/environment.json",
+      "path": "evidence/auto-ap-short/environment.json",
+      "sha256": "fa6bd06fd3c92f4a77d73c75280a917184d8be1cb4c054300d8bd56e086d2904",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/review.md",
+      "path": "evidence/auto-ap-short/review.md",
+      "sha256": "5f635f5c0fe6fbfdada5021a69fb26ebcfe41fa9c8736d7cc85b56b5db8d2750",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/auto-ap-short/results.json",
+      "path": "evidence/auto-ap-short/results.json",
+      "sha256": "783f2003bdb09ccd8832c4075998ac01a4b6437973cf8ef2b753326c1c05c1d7",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/retry-remaining/5.1.22-rx-result.json",
+      "path": "evidence/retry-remaining/5.1.22-rx-result.json",
+      "sha256": "0ac241034479f0ab9f3e637ac66617b00602a4dce5b950f90bbd5fb56d510ceb",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/retry-remaining/board-session.log",
+      "path": "evidence/retry-remaining/board-session.log",
+      "sha256": "563098d3a5f0b3f5525f578c131bc0bb06c763287df61204bb09dcbbc881224c",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/retry-remaining/flash-receipt.json",
+      "path": "evidence/retry-remaining/flash-receipt.json",
+      "sha256": "b979ad4eceb8988383567f9dd4dd762e473b537b70c6640f93244c8e206dd776",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/retry-remaining/active.json",
+      "path": "evidence/retry-remaining/active.json",
+      "sha256": "af8990ed262c79774857cd3841610a74c51fd628260d1cc5c6f5a739615d969f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/retry-remaining/5.1.22-rx-host.log",
+      "path": "evidence/retry-remaining/5.1.22-rx-host.log",
+      "sha256": "8adf42ad9be8a00cf8d253f1cb9d04c25a0ca7a8e9f23ee7879abc8997034a8b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/retry-remaining/5.1.22-rx-board.log",
+      "path": "evidence/retry-remaining/5.1.22-rx-board.log",
+      "sha256": "3309036f55a660cbe13a37840266bdd666b1851b8229922bad31339cd2da4ea6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/retry-remaining/environment.json",
+      "path": "evidence/retry-remaining/environment.json",
+      "sha256": "7260ec27108ad8dd02c40c35f6125296e36f90b12393d1e110ff382ad2663bb2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/retry-remaining/results.json",
+      "path": "evidence/retry-remaining/results.json",
+      "sha256": "9311eb13c8bc8541924c7ce20a92ad75d1ead9a75f6afa9403bc6697c8c829fe",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp-budget-candidate/config-diff.json",
+      "path": "evidence/arp-budget-candidate/config-diff.json",
+      "sha256": "3109272d3901ee5a3401683167a3c6cce5b6693d9e6e0e81301d15e4b0650284",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp-budget-candidate/receipt.json",
+      "path": "evidence/arp-budget-candidate/receipt.json",
+      "sha256": "bc6116e7b39c88b1f09f4dcd2f561926f085c2cbbc86588d6772ada7baa7b381",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp-budget-candidate/review.md",
+      "path": "evidence/arp-budget-candidate/review.md",
+      "sha256": "26042be09a071bd05ad0c89d5b0a193d70eeac25859e12a094ad3a22e5af8de9",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp-budget-candidate/build-result.json",
+      "path": "evidence/arp-budget-candidate/build-result.json",
+      "sha256": "8aaf63199ed17114183f7e80dcea840e04280bfeb16b686def61ca0b95916135",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp-budget-candidate/build-wifi-arp200.sha256",
+      "path": "evidence/arp-budget-candidate/build-wifi-arp200.sha256",
+      "sha256": "64a243142d6d9ca0b706ed3ffab9004000951be344fa558589b069809de2ee9b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-tool/loopback-server-uncompressed.sha256",
+      "path": "evidence/linux-tool/loopback-server-uncompressed.sha256",
+      "sha256": "16a5d7c8ea361bd8e954a5526ef108caad8abf93df593eba23f5cc0235f7a6e6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-tool/loopback-client.log",
+      "path": "evidence/linux-tool/loopback-client.log",
+      "sha256": "726c780364cf34536befa4b91588bd39fda091d38797a96a3b40952109d5655a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-tool/build-linux.log",
+      "path": "evidence/linux-tool/build-linux.log",
+      "sha256": "0c9ffad2b72da7c918cd8b4dcbb6b029d7999530d61bad67d8c92e7711738e94",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-tool/configure.log",
+      "path": "evidence/linux-tool/configure.log",
+      "sha256": "06c64221b0b3fd32847ec67be09af712da891e576796dbcef81f3d18ae123ddf",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-tool/REJECTED.md",
+      "path": "evidence/linux-tool/REJECTED.md",
+      "sha256": "cd9b1f4a164eea65314b08e5c45cda29960950c07d7b71fbe5efa8090251967d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200/verify-pair.log",
+      "path": "evidence/arp200/verify-pair.log",
+      "sha256": "72867f25d81372462228892a8503bd498f99829664d37e4ce5c2dd8d3f558e62",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200/flash-receipt.json",
+      "path": "evidence/arp200/flash-receipt.json",
+      "sha256": "c91b3b29394007f0c7dd481ca73226d09bc64fc89aa0eb5053cdf32179de94d6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200/verify-previous-pair.log",
+      "path": "evidence/arp200/verify-previous-pair.log",
+      "sha256": "e532914d963d987bbc4fdee5daad56516ab7b4ffaf8e4176d444cbbb550c6547",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/arp200/flash.log",
+      "path": "evidence/arp200/flash.log",
+      "sha256": "07d89d6d2718dfb10f06cd2251238c03952ff23f9bf56e547dedf439fe174327",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/5.1.22-rx-result.json",
+      "path": "evidence/select-host/5.1.22-rx-result.json",
+      "sha256": "dc14b1df7422efac749769bf812321df43300435de3fad0a78eb1d64f4f54485",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/board-session.log",
+      "path": "evidence/select-host/board-session.log",
+      "sha256": "1b204eb2f8e6ce02eb99516c2351f020fee1506855c852d91dbd72422d84f683",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/5.1.24-rx-board.log",
+      "path": "evidence/select-host/5.1.24-rx-board.log",
+      "sha256": "97fe8c8158f2d9e7b732e8bd0316b12e98dfb0c3d8262c8ca30a4df80174bca8",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/flash-receipt.json",
+      "path": "evidence/select-host/flash-receipt.json",
+      "sha256": "b979ad4eceb8988383567f9dd4dd762e473b537b70c6640f93244c8e206dd776",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/5.1.23-tx-board.log",
+      "path": "evidence/select-host/5.1.23-tx-board.log",
+      "sha256": "4f01ae8c424162e8b90bb4c2ce1016369893fcfebf3f9b21f427a39eb31e1c70",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/5.1.24-rx-host.log",
+      "path": "evidence/select-host/5.1.24-rx-host.log",
+      "sha256": "321cb3d37e85cd6afd8b14d709326c1d0cfbf2e9be8888ecdbd75cb82bf80c9a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/active.json",
+      "path": "evidence/select-host/active.json",
+      "sha256": "a3e3834641ce3e7c02e496da9204b3152f3803a503cfb7ec0b1f43c61ae7eeba",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/5.1.24-rx-result.json",
+      "path": "evidence/select-host/5.1.24-rx-result.json",
+      "sha256": "43e2fcc6e21f82e6c162dea08b869e7ff97d9c30f319873a879d6d4c477f921d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/5.1.22-rx-host.log",
+      "path": "evidence/select-host/5.1.22-rx-host.log",
+      "sha256": "40441da5a87179719e437d3a643b4b190bebd9446cfac6b818f55f3a3355991c",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/5.1.22-rx-board.log",
+      "path": "evidence/select-host/5.1.22-rx-board.log",
+      "sha256": "535b3dd091d2740378e6d761afd32ea6d5458b1f326e2f0fc75fd7322c92ad7a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/5.1.23-tx-result.json",
+      "path": "evidence/select-host/5.1.23-tx-result.json",
+      "sha256": "7b7fff4557093e559cff26418e6aba13d9f7208a4adbe78c020a90d2b6cba145",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/5.1.23-tx-host.log",
+      "path": "evidence/select-host/5.1.23-tx-host.log",
+      "sha256": "8d2411058a1fbe9230613e371fc98102a20a4d85a7d58b34e19e4897236ef86a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/environment.json",
+      "path": "evidence/select-host/environment.json",
+      "sha256": "d6fefa19bbd501a2adc1ebd2d99bddc98446ef7571b50378fad626b24de5821a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/select-host/results.json",
+      "path": "evidence/select-host/results.json",
+      "sha256": "2e732be4af9f3f052aae9aa40bbc9981c22e829bfea58de78450a7e386a172dc",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package/loopback-client.log",
+      "path": "evidence/linux-package/loopback-client.log",
+      "sha256": "76c79e7cf1a19e636801a0ef261c65b4fa248d14e1a6ee302aab86a3535ddfd5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package/apt-metadata.txt",
+      "path": "evidence/linux-package/apt-metadata.txt",
+      "sha256": "fe6796f5e8474aa0b6f7c556d67ea5aa55d6e5b35230cd3670109569d2211f1d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package/download.log",
+      "path": "evidence/linux-package/download.log",
+      "sha256": "c5f1a635d2fbb23f10f0c5855e132ca8087ef13aab91ff9f583817a504c30892",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package/receipt.json",
+      "path": "evidence/linux-package/receipt.json",
+      "sha256": "e0afa18f0fa184082c3c631adb9c1a5d1dcd567ec0a9b6de857d6f285f805938",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/network-rate-20260920/linux-package/loopback-server.log",
+      "path": "evidence/linux-package/loopback-server.log",
+      "sha256": "782e20636cbdd86f097f2cb6925489b9bf10daf9df630664b9bbfaec74339781",
+      "redacted": false
+    }
+  ]
+}

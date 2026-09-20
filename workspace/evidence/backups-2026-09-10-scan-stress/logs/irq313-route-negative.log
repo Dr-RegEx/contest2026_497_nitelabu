@@ -1,0 +1,10 @@
+ESP_IRQ_ROUTE=PASS CPU0/CPU1; 32 inputs; level/edge; priorities 1..7
+test: /tmp/s31-irq-route-t7maykli/test.c:40: esp_rom_route_intr_matrix: Assertion `target == cpu' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_irq_route.py", line 109, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_irq_route.py", line 105, in main
+    subprocess.run([str(path / "test")], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/s31-irq-route-t7maykli/test']' died with <Signals.SIGABRT: 6>.

@@ -1,0 +1,33 @@
+[
+  {
+    "diagnostic_only": true,
+    "offered_rate": "5M",
+    "duration": 30,
+    "host_command": [
+      "/mnt/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/iperf2-select1656.exe",
+      "-B",
+      "192.168.1.29",
+      "-c",
+      "192.168.1.60",
+      "-p",
+      "5010",
+      "-i",
+      "1",
+      "-t",
+      "30",
+      "-u",
+      "-b",
+      "5M"
+    ],
+    "host_exit": 0,
+    "board_summaries": [
+      "[  1] 0.00-30.00 sec  18.5 MBytes  5.18 Mbits/sec   2.512 ms 164/13372 (1.2%)",
+      "[  1] 0.00-30.00 sec  37 datagrams received out-of-order"
+    ],
+    "host_summaries": [
+      "[  1] 0.00-30.00 sec  18.7 MBytes  5.24 Mbits/sec",
+      "[  1] 0.00-30.00 sec  18.5 MBytes  5.18 Mbits/sec   2.511 ms 164/13372 (1.2%)",
+      "[  1] 0.00-30.00 sec  37 datagrams received out-of-order"
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+iperf2 -s -u -p 5199 -i 1 &
+iperf2 [15:101]
+nsh> [K------------------------------------------------------------
+Server listening on UDP port 5199
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 5199 connected with 192.168.1.29 port 60074
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-1.00 sec   128 KBytes  1.05 Mbits/sec  71733.440 ms 0/89 (0%)
+[  1] 1.00-2.00 sec   129 KBytes  1.06 Mbits/sec  218.323 ms 0/90 (0%)
+[  1] 0.00-2.01 sec   260 KBytes  1.06 Mbits/sec  192.063 ms 0/181 (0%)
+kill -15 15
+nsh> [K

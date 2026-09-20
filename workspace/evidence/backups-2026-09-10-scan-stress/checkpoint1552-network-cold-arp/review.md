@@ -1,0 +1,1 @@
+1552: short TCP on1550 failed before transfer: five ARP wait timeouts for192.168.1.29, network unreachable. No valid throughput orxTS PASS. No board reset or automatic retry. Existing1551 WiFi gateway/BLE coexistence result remains scoped to gateway, not peer TCP.

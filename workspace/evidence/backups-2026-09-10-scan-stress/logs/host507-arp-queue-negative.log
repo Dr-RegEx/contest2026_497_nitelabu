@@ -1,0 +1,9 @@
+test: /tmp/arp-queue-ownership-7nn3np_9/test.c:53: main: Assertion `queue_result == 0 ? queued == &item && freed == 0 : queued == NULL && freed == 1' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_arp_queue_ownership.py", line 85, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_arp_queue_ownership.py", line 81, in main
+    subprocess.run([str(path / 'test')], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/arp-queue-ownership-7nn3np_9/test']' died with <Signals.SIGABRT: 6>.

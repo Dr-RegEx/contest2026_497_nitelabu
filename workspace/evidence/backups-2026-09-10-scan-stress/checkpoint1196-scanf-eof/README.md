@@ -1,0 +1,1 @@
+1196 original nxlooper passed parameter parsing after scanf EOF guard, then RX callback returned -EIO. Full DEBUG_AUDIO_INFO was enabled. 1198 disables INFO, keeps ERROR, and completes commands. This archive preserves the failed diagnostic image; no PASS is claimed here.

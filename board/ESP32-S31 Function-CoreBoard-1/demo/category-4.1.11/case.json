@@ -1,0 +1,68 @@
+{
+  "name": "category-4.1.11",
+  "keys": [
+    "category:4.1.11"
+  ],
+  "profile": "xts-flat-category-kv",
+  "sources": [
+    "apps/testing/testsuites/kernel/kv"
+  ],
+  "evidence_ids": [
+    1013
+  ],
+  "note": "使用专用可写 LittleFS 卷，逐项核对 30 个子用例。",
+  "original": "4.1.11",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/first-mount/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/xts-category-status.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1013-original-kvdb.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/logs/xts1011-flash948-kv.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "KVDB测试",
+  "original_line": 5126,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/kv",
+      "origin": "apps/testing/testsuites/kernel/kv"
+    }
+  ],
+  "local_config": "config/xts-flat-category-kv/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/first-mount/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/first-mount/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/logs/xts1011-flash948-kv.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/logs/xts1011-flash948-kv.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/xts-category-status.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1013-kvdb-target/xts-category-status.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1013-original-kvdb.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1013-original-kvdb.log"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+--- CMD: uname -a ---
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 14 2026 14:28:04 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: i2c reset ---
+i2c reset
+Reset command sent successfully
+nsh> [K
+nsh> [K
+--- CMD: i2c get -a18 -rfd -w8 -f100000 10 ---
+i2c get -a18 -rfd -w8 -f100000 10
+[CPU0] esp_i2c_transfer: Message 0 timed out.
+[CPU0] esp_i2c_transfer: I2C state=3 raw=00008252 ena=000005a8 error=00000000
+[CPU0] esp_i2c_transfer: I2C ctr=00000010 sr=6600c001 cmd0=00001000 cmd1=00002000
+i2ctool: get: Transfer failed: 110
+nsh> [K
+nsh> [K
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/i2c338-codec-stress.py", line 26, in <module>
+    production.require(len(values) == 16 and
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_production_smoke.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: ID count/value mismatch

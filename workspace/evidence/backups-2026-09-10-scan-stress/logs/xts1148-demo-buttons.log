@@ -1,0 +1,42 @@
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011000 0x2f01104c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+XTS_COMMAND=prlimit -s 8192 buttons &
+--- CMD: prlimit -s 8192 buttons & ---
+prlimit -s 8192 buttons &
+buttons [11:101]
+button_daemon: Running
+nsh> button_daemon: Opening /dev/buttons
+[K
+nsh> [Kbutton_daemon: Supported BUTTONs 0x01
+
+button_daemon: poll returned: 1
+Sample = 0
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011000 0x2f01104c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 101 RR       Task      - Waiting  Semaphore 0000000000000000 0008128 buttons
+nsh> [K
+nsh> [K
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/run1148-demo-buttons.py", line 28, in <module>
+    k.require(len(pids) == 1, 'cannot uniquely identify button task; no guessed kill')
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: cannot uniquely identify button task; no guessed kill

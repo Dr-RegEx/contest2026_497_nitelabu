@@ -1,0 +1,9 @@
+test: /tmp/tcp-accept-context-yc6mibf1/test.c:29: accept_tcpsender: Assertion `visible && locked && a == &listener && b == &accepted' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_tcp_accept_address_context.py", line 135, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_tcp_accept_address_context.py", line 131, in main
+    subprocess.run([str(path / "test")], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/tcp-accept-context-yc6mibf1/test']' died with <Signals.SIGABRT: 6>.

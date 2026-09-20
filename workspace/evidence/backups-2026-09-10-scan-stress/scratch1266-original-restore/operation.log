@@ -1,0 +1,29 @@
+esptool v5.4.0
+Serial port /dev/ttyUSB0:
+Connecting....
+Connected to ESP32-S31 on /dev/ttyUSB0:
+Chip type:          ESP32-S31 (revision v0.0)
+Features:           Wi-Fi 6, BT 5.4 (LE), IEEE802.15.4, Dual Core + LP Core, 300MHz
+Crystal frequency:  40MHz
+MAC:                30:ed:a0:f3:f7:b0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+Flash will be erased from 0x00d00000 to 0x00ffffff...
+Compressed 3145728 bytes to 90852...
+Writing at 0x00dd6292 ━━━━━                           18.0% 16.00kB/88.72kB [0s] 
+Writing at 0x00e23104 ━━━━━━━━━━╸                     36.1% 32.00kB/88.72kB [4s] 
+Writing at 0x00ec0418 ━━━━━━━━━━━━━━━━                54.1% 48.00kB/88.72kB [6s] 
+Writing at 0x00f3522b ━━━━━━━━━━━━━━━━━━━━━╸          72.1% 64.00kB/88.72kB [8s] 
+Writing at 0x00fa0592 ━━━━━━━━━━━━━━━━━━━━━━━━━━━     90.2% 80.00kB/88.72kB [9s] 
+Writing at 0x01000000 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 88.72kB/88.72kB [10s] 
+Wrote 3145728 bytes (90852 compressed) at 0x00d00000 in 11.6 seconds (2162.2 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Hard resetting via RTS pin...

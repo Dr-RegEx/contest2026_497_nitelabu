@@ -1,0 +1,13 @@
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_iram.py", line 91, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_iram.py", line 86, in main
+    totals = check_map(args.map.read_text())
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_iram.py", line 45, in check_map
+    raise ValueError(f"{section} outside IRAM: {address:#x} "
+ValueError: .wifislprxiram.115 outside IRAM: 0x400b17d8 size=0xe owner=/home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_wifi/lib/esp32s31/libnet80211.a(wl_cnx.o)

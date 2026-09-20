@@ -1,0 +1,9 @@
+test: /tmp/esp-wifi-scan-4wasqn1_/test.c:183: main: Assertion `esp_wifi_get_scan_results(&request) == -EAGAIN' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_scan_results.py", line 140, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_scan_results.py", line 136, in main
+    subprocess.run([str(path / "test")], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-wifi-scan-4wasqn1_/test']' died with <Signals.SIGABRT: 6>.

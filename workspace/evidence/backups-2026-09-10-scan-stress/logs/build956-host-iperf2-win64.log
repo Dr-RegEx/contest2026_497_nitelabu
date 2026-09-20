@@ -1,0 +1,790 @@
+make  all-recursive
+make[1]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+Making all in compat
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/compat”
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/compat -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall -O2  -MT Thread.o -MD -MP -MF .deps/Thread.Tpo -c -o Thread.o ../../iperf2-2.1.8/compat/Thread.c
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/compat -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall -O2  -MT inet_ntop.o -MD -MP -MF .deps/inet_ntop.Tpo -c -o inet_ntop.o ../../iperf2-2.1.8/compat/inet_ntop.c
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/compat -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall -O2  -MT inet_pton.o -MD -MP -MF .deps/inet_pton.Tpo -c -o inet_pton.o ../../iperf2-2.1.8/compat/inet_pton.c
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/compat -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall -O2  -MT signal.o -MD -MP -MF .deps/signal.Tpo -c -o signal.o ../../iperf2-2.1.8/compat/signal.c
+mv -f .deps/Thread.Tpo .deps/Thread.Po
+mv -f .deps/inet_pton.Tpo .deps/inet_pton.Po
+mv -f .deps/inet_ntop.Tpo .deps/inet_ntop.Po
+mv -f .deps/signal.Tpo .deps/signal.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/compat -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall -O2  -MT snprintf.o -MD -MP -MF .deps/snprintf.Tpo -c -o snprintf.o ../../iperf2-2.1.8/compat/snprintf.c
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/compat -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall -O2  -MT string.o -MD -MP -MF .deps/string.Tpo -c -o string.o ../../iperf2-2.1.8/compat/string.c
+mv -f .deps/snprintf.Tpo .deps/snprintf.Po
+mv -f .deps/string.Tpo .deps/string.Po
+rm -f libcompat.a
+ar cru libcompat.a Thread.o error.o delay.o gettimeofday.o gettcpinfo.o inet_ntop.o inet_pton.o signal.o snprintf.o string.o 
+C:\msys64\ucrt64\bin\ar.exe: `u' modifier ignored since `D' is the default (see `U')
+ranlib libcompat.a
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/compat”
+Making all in doc
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/doc”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/doc”
+Making all in include
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/include”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/include”
+Making all in src
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/src”
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT Client.o -MD -MP -MF .deps/Client.Tpo -c -o Client.o ../../iperf2-2.1.8/src/Client.cpp
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT Extractor.o -MD -MP -MF .deps/Extractor.Tpo -c -o Extractor.o ../../iperf2-2.1.8/src/Extractor.c
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT isochronous.o -MD -MP -MF .deps/isochronous.Tpo -c -o isochronous.o ../../iperf2-2.1.8/src/isochronous.cpp
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT Launch.o -MD -MP -MF .deps/Launch.Tpo -c -o Launch.o ../../iperf2-2.1.8/src/Launch.cpp
+In file included from ../../iperf2-2.1.8/src/isochronous.cpp:48:
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+In file included from ../../iperf2-2.1.8/src/Launch.cpp:56:
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+In file included from ../../iperf2-2.1.8/src/Client.cpp:55:
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+mv -f .deps/Extractor.Tpo .deps/Extractor.Po
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT active_hosts.o -MD -MP -MF .deps/active_hosts.Tpo -c -o active_hosts.o ../../iperf2-2.1.8/src/active_hosts.cpp
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/util.h:73:1: note: in expansion of macro 'bool'
+   73 | bool setsock_blocking(int fd, bool blocking);
+      | ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:269:5: note: in expansion of macro 'bool'
+  269 |     bool before(timeval right) {
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/gettcpinfo.h:58:5: note: in expansion of macro 'bool'
+   58 |     bool isValid;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:274:5: note: in expansion of macro 'bool'
+  274 |     bool before(Timestamp right) { return before(right.mTime); }
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:279:5: note: in expansion of macro 'bool'
+  279 |     bool after(timeval right) {
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:188:5: note: in expansion of macro 'bool'
+  188 |     bool KeyCheck;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:284:5: note: in expansion of macro 'bool'
+  284 |     bool after(Timestamp right) { return after(right.mTime); }
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:336:5: note: in expansion of macro 'bool'
+  336 |     bool isMaskOutput;
+      |     ^~~~
+In file included from ../../iperf2-2.1.8/src/isochronous.cpp:49:
+../../iperf2-2.1.8/include/Timestamp.hpp: In member function 'double Timestamp::fraction(Timestamp, Timestamp)':
+../../iperf2-2.1.8/include/Timestamp.hpp:291:26: error: 'class Timestamp' has no member named 'after'
+  291 |         if ((currentTime.after(*this)) && (endTime.after(currentTime))) {
+      |                          ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:291:52: error: 'class Timestamp' has no member named 'after'
+  291 |         if ((currentTime.after(*this)) && (endTime.after(currentTime))) {
+      |                                                    ^~~~~
+../../iperf2-2.1.8/include/util.h: At global scope:
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/util.h:73:1: note: in expansion of macro 'bool'
+   73 | bool setsock_blocking(int fd, bool blocking);
+      | ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:362:5: note: in expansion of macro 'bool'
+  362 |     bool final;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/gettcpinfo.h:58:5: note: in expansion of macro 'bool'
+   58 |     bool isValid;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:363:5: note: in expansion of macro 'bool'
+  363 |     bool burstid_transition;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:364:5: note: in expansion of macro 'bool'
+  364 |     bool isEnableTcpInfo;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:188:5: note: in expansion of macro 'bool'
+  188 |     bool KeyCheck;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:424:1: note: in expansion of macro 'bool'
+  424 | bool ReportPacket (struct ReporterData* data, struct ReportStruct *packet);
+      | ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:336:5: note: in expansion of macro 'bool'
+  336 |     bool isMaskOutput;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Settings.hpp:225:5: note: in expansion of macro 'bool'
+  225 |     bool clientListener;              // set to True if client mode listener per -r or -d
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:362:5: note: in expansion of macro 'bool'
+  362 |     bool final;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Settings.hpp:283:5: note: in expansion of macro 'bool'
+  283 |     bool mKeyCheck;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:363:5: note: in expansion of macro 'bool'
+  363 |     bool burstid_transition;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:364:5: note: in expansion of macro 'bool'
+  364 |     bool isEnableTcpInfo;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:269:5: note: in expansion of macro 'bool'
+  269 |     bool before(timeval right) {
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:424:1: note: in expansion of macro 'bool'
+  424 | bool ReportPacket (struct ReporterData* data, struct ReportStruct *packet);
+      | ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:274:5: note: in expansion of macro 'bool'
+  274 |     bool before(Timestamp right) { return before(right.mTime); }
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Settings.hpp:225:5: note: in expansion of macro 'bool'
+  225 |     bool clientListener;              // set to True if client mode listener per -r or -d
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:279:5: note: in expansion of macro 'bool'
+  279 |     bool after(timeval right) {
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:284:5: note: in expansion of macro 'bool'
+  284 |     bool after(Timestamp right) { return after(right.mTime); }
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Settings.hpp:283:5: note: in expansion of macro 'bool'
+  283 |     bool mKeyCheck;
+      |     ^~~~
+In file included from ../../iperf2-2.1.8/include/Client.hpp:58,
+                 from ../../iperf2-2.1.8/src/Launch.cpp:59:
+../../iperf2-2.1.8/include/Timestamp.hpp: In member function 'double Timestamp::fraction(Timestamp, Timestamp)':
+../../iperf2-2.1.8/include/Timestamp.hpp:291:26: error: 'class Timestamp' has no member named 'after'
+  291 |         if ((currentTime.after(*this)) && (endTime.after(currentTime))) {
+      |                          ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:291:52: error: 'class Timestamp' has no member named 'after'
+  291 |         if ((currentTime.after(*this)) && (endTime.after(currentTime))) {
+      |                                                    ^~~~~
+../../iperf2-2.1.8/src/isochronous.cpp: In member function 'unsigned int Isochronous::FrameCounter::wait_tick()':
+../../iperf2-2.1.8/src/isochronous.cpp:130:21: error: 'class Timestamp' has no member named 'before'
+  130 |         while (!now.before(nextslotTime)) {
+      |                     ^~~~~~
+../../iperf2-2.1.8/include/Client.hpp: At global scope:
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:81:5: note: in expansion of macro 'bool'
+   81 |     bool my_connect(bool close_on_fail);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:82:5: note: in expansion of macro 'bool'
+   82 |     bool isConnected(void) const;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:98:5: note: in expansion of macro 'bool'
+   98 |     bool InProgress(void);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:102:5: note: in expansion of macro 'bool'
+  102 |     bool connected;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:107:5: note: in expansion of macro 'bool'
+  107 |     bool one_report;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:108:5: note: in expansion of macro 'bool'
+  108 |     bool apply_first_udppkt_delay;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:140:5: note: in expansion of macro 'bool'
+  140 |     bool isburst;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:141:5: note: in expansion of macro 'bool'
+  141 |     bool peerclose;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Listener.hpp:81:5: note: in expansion of macro 'bool'
+   81 |     bool apply_client_settings_udp(thread_Settings *server);
+      |     ^~~~
+make[2]: *** [Makefile:538：isochronous.o] 错误 1
+make[2]: *** 正在等待未完成的任务....
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Listener.hpp:82:5: note: in expansion of macro 'bool'
+   82 |     bool apply_client_settings_tcp(thread_Settings *server);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Listener.hpp:83:5: note: in expansion of macro 'bool'
+   83 |     bool apply_client_settings(thread_Settings *server);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Listener.hpp:92:5: note: in expansion of macro 'bool'
+   92 |     bool L2_setup(thread_Settings *server, int sockfd);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/util.h:73:1: note: in expansion of macro 'bool'
+   73 | bool setsock_blocking(int fd, bool blocking);
+      | ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Listener.hpp:93:5: note: in expansion of macro 'bool'
+   93 |     bool tap_setup(thread_Settings *server, int sockfd);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/gettcpinfo.h:58:5: note: in expansion of macro 'bool'
+   58 |     bool isValid;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Listener.hpp:95:5: note: in expansion of macro 'bool'
+   95 |     bool test_permit_key(uint32_t flags, thread_Settings *server, int keyoffset);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:188:5: note: in expansion of macro 'bool'
+  188 |     bool KeyCheck;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Server.hpp:85:5: note: in expansion of macro 'bool'
+   85 |     bool InitTrafficLoop(void);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Server.hpp:88:5: note: in expansion of macro 'bool'
+   88 |     bool ReadBBWithRXTimestamp ();
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:336:5: note: in expansion of macro 'bool'
+  336 |     bool isMaskOutput;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Server.hpp:90:5: note: in expansion of macro 'bool'
+   90 |     bool ReadPacketID(int);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:362:5: note: in expansion of macro 'bool'
+  362 |     bool final;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Server.hpp:94:5: note: in expansion of macro 'bool'
+   94 |     bool InProgress(void);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:363:5: note: in expansion of macro 'bool'
+  363 |     bool burstid_transition;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Server.hpp:99:5: note: in expansion of macro 'bool'
+   99 |     bool peerclose;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:364:5: note: in expansion of macro 'bool'
+  364 |     bool isEnableTcpInfo;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Server.hpp:100:5: note: in expansion of macro 'bool'
+  100 |     bool isburst;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:424:1: note: in expansion of macro 'bool'
+  424 | bool ReportPacket (struct ReporterData* data, struct ReportStruct *packet);
+      | ^~~~
+../../iperf2-2.1.8/src/Launch.cpp: In function 'void clientside_client_basic(thread_Settings*, Client*)':
+../../iperf2-2.1.8/src/Launch.cpp:215:16: error: 'class Client' has no member named 'my_connect'
+  215 |     theClient->my_connect(true);
+      |                ^~~~~~~~~~
+../../iperf2-2.1.8/src/Launch.cpp:226:20: error: 'class Client' has no member named 'isConnected'
+  226 |     if (theClient->isConnected()) {
+      |                    ^~~~~~~~~~~
+../../iperf2-2.1.8/src/Launch.cpp: In function 'void clientside_client_reverse(thread_Settings*, Client*)':
+../../iperf2-2.1.8/src/Launch.cpp:237:16: error: 'class Client' has no member named 'my_connect'
+  237 |     theClient->my_connect(true);
+      |                ^~~~~~~~~~
+../../iperf2-2.1.8/src/Launch.cpp:244:20: error: 'class Client' has no member named 'isConnected'
+  244 |     if (theClient->isConnected()) {
+      |                    ^~~~~~~~~~~
+../../iperf2-2.1.8/src/Launch.cpp: In function 'void clientside_client_fullduplex(thread_Settings*, Client*)':
+../../iperf2-2.1.8/src/Launch.cpp:277:16: error: 'class Client' has no member named 'my_connect'
+  277 |     theClient->my_connect(true);
+      |                ^~~~~~~~~~
+../../iperf2-2.1.8/src/Launch.cpp:284:20: error: 'class Client' has no member named 'isConnected'
+  284 |     if (theClient->isConnected()) {
+      |                    ^~~~~~~~~~~
+../../iperf2-2.1.8/src/Launch.cpp: In function 'void serverside_client_bidir(thread_Settings*, Client*)':
+../../iperf2-2.1.8/src/Launch.cpp:320:16: error: 'class Client' has no member named 'my_connect'
+  320 |     theClient->my_connect(false);
+      |                ^~~~~~~~~~
+../../iperf2-2.1.8/src/Launch.cpp:321:20: error: 'class Client' has no member named 'isConnected'
+  321 |     if (theClient->isConnected()) {
+      |                    ^~~~~~~~~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Settings.hpp:225:5: note: in expansion of macro 'bool'
+  225 |     bool clientListener;              // set to True if client mode listener per -r or -d
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Settings.hpp:283:5: note: in expansion of macro 'bool'
+  283 |     bool mKeyCheck;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:269:5: note: in expansion of macro 'bool'
+  269 |     bool before(timeval right) {
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:274:5: note: in expansion of macro 'bool'
+  274 |     bool before(Timestamp right) { return before(right.mTime); }
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:279:5: note: in expansion of macro 'bool'
+  279 |     bool after(timeval right) {
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:284:5: note: in expansion of macro 'bool'
+  284 |     bool after(Timestamp right) { return after(right.mTime); }
+      |     ^~~~
+In file included from ../../iperf2-2.1.8/include/Client.hpp:58,
+                 from ../../iperf2-2.1.8/src/Client.cpp:56:
+../../iperf2-2.1.8/include/Timestamp.hpp: In member function 'double Timestamp::fraction(Timestamp, Timestamp)':
+../../iperf2-2.1.8/include/Timestamp.hpp:291:26: error: 'class Timestamp' has no member named 'after'
+  291 |         if ((currentTime.after(*this)) && (endTime.after(currentTime))) {
+      |                          ^~~~~
+../../iperf2-2.1.8/include/Timestamp.hpp:291:52: error: 'class Timestamp' has no member named 'after'
+  291 |         if ((currentTime.after(*this)) && (endTime.after(currentTime))) {
+      |                                                    ^~~~~
+../../iperf2-2.1.8/include/Client.hpp: At global scope:
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:81:5: note: in expansion of macro 'bool'
+   81 |     bool my_connect(bool close_on_fail);
+      |     ^~~~
+make[2]: *** [Makefile:538：Launch.o] 错误 1
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:82:5: note: in expansion of macro 'bool'
+   82 |     bool isConnected(void) const;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:98:5: note: in expansion of macro 'bool'
+   98 |     bool InProgress(void);
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:102:5: note: in expansion of macro 'bool'
+  102 |     bool connected;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:107:5: note: in expansion of macro 'bool'
+  107 |     bool one_report;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:108:5: note: in expansion of macro 'bool'
+  108 |     bool apply_first_udppkt_delay;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:140:5: note: in expansion of macro 'bool'
+  140 |     bool isburst;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Client.hpp:141:5: note: in expansion of macro 'bool'
+  141 |     bool peerclose;
+      |     ^~~~
+../../iperf2-2.1.8/src/Client.cpp: In constructor 'Client::Client(thread_Settings*)':
+../../iperf2-2.1.8/src/Client.cpp:86:5: error: 'one_report' was not declared in this scope
+   86 |     one_report = false;
+      |     ^~~~~~~~~~
+In file included from ../../iperf2-2.1.8/include/active_hosts.h:57,
+                 from ../../iperf2-2.1.8/src/active_hosts.cpp:55:
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/src/Client.cpp:88:5: error: 'apply_first_udppkt_delay' was not declared in this scope
+   88 |     apply_first_udppkt_delay = false;
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp:94:5: error: 'connected' was not declared in this scope; did you mean 'connect'?
+   94 |     connected = isServerReverse(mSettings);
+      |     ^~~~~~~~~
+      |     connect
+../../iperf2-2.1.8/src/Client.cpp:114:5: error: 'peerclose' was not declared in this scope; did you mean 'pclose'?
+  114 |     peerclose = false;
+      |     ^~~~~~~~~
+      |     pclose
+../../iperf2-2.1.8/src/Client.cpp:115:5: error: 'isburst' was not declared in this scope
+  115 |     isburst = (isIsochronous(mSettings) || isPeriodicBurst(mSettings) || (isTripTime(mSettings) && !isUDP(mSettings)));
+      |     ^~~~~~~
+../../iperf2-2.1.8/src/Client.cpp: At global scope:
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/src/Client.cpp:136:1: note: in expansion of macro 'bool'
+  136 | bool Client::my_connect (bool close_on_fail) {
+      | ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/src/Client.cpp:255:1: note: in expansion of macro 'bool'
+  255 | bool Client::isConnected () const {
+      | ^~~~
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::myReportPacket()':
+../../iperf2-2.1.8/src/Client.cpp:269:5: error: 'ReportPacket' was not declared in this scope; did you mean 'myReportPacket'?
+  269 |     ReportPacket(myReport, reportstruct);
+      |     ^~~~~~~~~~~~
+      |     myReportPacket
+../../iperf2-2.1.8/src/Client.cpp: In member function 'int Client::StartSynch()':
+../../iperf2-2.1.8/src/Client.cpp:285:20: error: 'struct TransferInfo' has no member named 'isEnableTcpInfo'
+  285 |     myReport->info.isEnableTcpInfo = false; // default here, set in init traffic actions
+      |                    ^~~~~~~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::ConnectPeriodic()':
+../../iperf2-2.1.8/src/Client.cpp:442:13: error: 'my_connect' was not declared in this scope; did you mean 'connect'?
+  442 |         if (my_connect(false)){
+      |             ^~~~~~~~~~
+      |             connect
+../../iperf2-2.1.8/src/Client.cpp:451:27: error: 'class Timestamp' has no member named 'before'
+  451 |             } while (next.before(now));
+      |                           ^~~~~~
+../../iperf2-2.1.8/src/Client.cpp:452:22: error: 'class Timestamp' has no member named 'before'
+  452 |             if (next.before(end)) {
+      |                      ^~~~~~
+../../iperf2-2.1.8/src/Client.cpp:462:52: error: 'class Timestamp' has no member named 'before'
+  462 |     } while (num_connects && !sInterupted && (next.before(end) || (isModeTime(mSettings) && !(mSettings->mInterval > 0))));
+      |                                                    ^~~~~~
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::InitTrafficLoop()':
+../../iperf2-2.1.8/src/Client.cpp:512:5: error: 'one_report' was not declared in this scope
+  512 |     one_report = (!isUDP(mSettings) && !isEnhanced(mSettings) && (mSettings->mIntervalMode != kInterval_Time) \
+      |     ^~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::RunTCP()':
+../../iperf2-2.1.8/src/Client.cpp:577:12: error: 'InProgress' was not declared in this scope
+  577 |     while (InProgress()) {
+      |            ^~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp:582:13: error: 'isburst' was not declared in this scope
+  582 |         if (isburst && !(burst_remaining > 0)) {
+      |             ^~~~~~~
+../../iperf2-2.1.8/src/Client.cpp:663:17: error: 'peerclose' was not declared in this scope; did you mean 'pclose'?
+  663 |                 peerclose = true;
+      |                 ^~~~~~~~~
+      |                 pclose
+../../iperf2-2.1.8/src/Client.cpp:679:17: error: 'isburst' was not declared in this scope
+  679 |             if (isburst) {
+      |                 ^~~~~~~
+../../iperf2-2.1.8/src/Client.cpp:697:14: error: 'one_report' was not declared in this scope
+  697 |         if (!one_report) {
+      |              ^~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::RunNearCongestionTCP()':
+../../iperf2-2.1.8/src/Client.cpp:713:12: error: 'InProgress' was not declared in this scope
+  713 |     while (InProgress()) {
+      |            ^~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::RunRateLimitedTCP()':
+../../iperf2-2.1.8/src/Client.cpp:811:12: error: 'InProgress' was not declared in this scope
+  811 |     while (InProgress() && !fatalwrite_err) {
+      |            ^~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp:888:18: error: 'one_report' was not declared in this scope
+  888 |             if (!one_report) {
+      |                  ^~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::RunBounceBackTCP()':
+../../iperf2-2.1.8/src/Client.cpp:1006:12: error: 'InProgress' was not declared in this scope
+ 1006 |     while (InProgress()) {
+      |            ^~~~~~~~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' was not declared in this scope
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/src/Client.cpp:1009:9: note: in expansion of macro 'bool'
+ 1009 |         bool isFirst;
+      |         ^~~~
+../../iperf2-2.1.8/src/Client.cpp:1015:13: error: 'isFirst' was not declared in this scope
+ 1015 |             isFirst = true;
+      |             ^~~~~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/util.h:73:1: note: in expansion of macro 'bool'
+   73 | bool setsock_blocking(int fd, bool blocking);
+      | ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/gettcpinfo.h:58:5: note: in expansion of macro 'bool'
+   58 |     bool isValid;
+      |     ^~~~
+../../iperf2-2.1.8/src/Client.cpp:1018:13: error: 'isFirst' was not declared in this scope
+ 1018 |             isFirst = false;
+      |             ^~~~~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:188:5: note: in expansion of macro 'bool'
+  188 |     bool KeyCheck;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:336:5: note: in expansion of macro 'bool'
+  336 |     bool isMaskOutput;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:362:5: note: in expansion of macro 'bool'
+  362 |     bool final;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:363:5: note: in expansion of macro 'bool'
+  363 |     bool burstid_transition;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:364:5: note: in expansion of macro 'bool'
+  364 |     bool isEnableTcpInfo;
+      |     ^~~~
+../../iperf2-2.1.8/src/Client.cpp:1023:17: error: 'isFirst' was not declared in this scope
+ 1023 |             if (isFirst) {
+      |                 ^~~~~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Reporter.h:424:1: note: in expansion of macro 'bool'
+  424 | bool ReportPacket (struct ReporterData* data, struct ReportStruct *packet);
+      | ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Settings.hpp:225:5: note: in expansion of macro 'bool'
+  225 |     bool clientListener;              // set to True if client mode listener per -r or -d
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/include/Settings.hpp:283:5: note: in expansion of macro 'bool'
+  283 |     bool mKeyCheck;
+      |     ^~~~
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/src/active_hosts.cpp:64:8: note: in expansion of macro 'bool'
+   64 | static bool Iperf_host_port_present (iperf_sockaddr *find);
+      |        ^~~~
+../../iperf2-2.1.8/src/Client.cpp:1033:17: error: 'peerclose' was not declared in this scope; did you mean 'pclose'?
+ 1033 |                 peerclose = true;
+      |                 ^~~~~~~~~
+      |                 pclose
+../../iperf2-2.1.8/src/Client.cpp:1064:21: error: 'peerclose' was not declared in this scope; did you mean 'pclose'?
+ 1064 |                     peerclose = true;
+      |                     ^~~~~~~~~
+      |                     pclose
+../../iperf2-2.1.8/src/active_hosts.cpp: In function 'int Iperf_push_host_port_conditional(thread_Settings*)':
+../../iperf2-2.1.8/src/active_hosts.cpp:152:10: error: 'Iperf_host_port_present' was not declared in this scope; did you mean 'Iperf_host_present'?
+  152 |     if (!Iperf_host_port_present(host)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~~
+      |          Iperf_host_present
+../../iperf2-2.1.8/src/active_hosts.cpp: At global scope:
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/src/active_hosts.cpp:216:1: note: in expansion of macro 'bool'
+  216 | bool Iperf_host_port_present (iperf_sockaddr *find) {
+      | ^~~~
+make[2]: *** [Makefile:538：active_hosts.o] 错误 1
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::RunUDP()':
+../../iperf2-2.1.8/src/Client.cpp:1115:9: error: 'apply_first_udppkt_delay' was not declared in this scope
+ 1115 |     if (apply_first_udppkt_delay && (delay_target > 100000)) {
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp:1120:12: error: 'InProgress' was not declared in this scope
+ 1120 |     while (InProgress()) {
+      |            ^~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::RunUDPIsochronous()':
+../../iperf2-2.1.8/src/Client.cpp:1247:12: error: 'InProgress' was not declared in this scope
+ 1247 |     while (InProgress() && !fatalwrite_err) {
+      |            ^~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp: At global scope:
+../../iperf2-2.1.8/include/headers.h:99:15: error: '_Bool' does not name a type
+   99 | # define bool _Bool
+      |               ^~~~~
+../../iperf2-2.1.8/src/Client.cpp:1460:8: note: in expansion of macro 'bool'
+ 1460 | inline bool Client::InProgress (void) {
+      |        ^~~~
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::tcp_shutdown()':
+../../iperf2-2.1.8/src/Client.cpp:1474:41: error: 'isConnected' was not declared in this scope; did you mean 'isConnectOnly'?
+ 1474 |     if ((mySocket != INVALID_SOCKET) && isConnected()) {
+      |                                         ^~~~~~~~~~~
+      |                                         isConnectOnly
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::FinishTrafficActions()':
+../../iperf2-2.1.8/src/Client.cpp:1505:13: error: 'one_report' was not declared in this scope
+ 1505 |         if (one_report) {
+      |             ^~~~~~~~~~
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::AwaitServerFinPacket()':
+../../iperf2-2.1.8/src/Client.cpp:1593:50: error: 'MIN' was not declared in this scope; did you mean 'IN'?
+ 1593 |             rc = read(mySocket, mSettings->mBuf, MIN(MAXUDPBUF, mSettings->mBufLen));
+      |                                                  ^~~
+../../iperf2-2.1.8/include/headers.h:203:50: note: in definition of macro 'read'
+  203 |     #define read( s, b, l )  recv( s, (char*) b, l, 0 )
+      |                                                  ^
+../../iperf2-2.1.8/src/Client.cpp: In member function 'void Client::AwaitServerCloseEvent()':
+../../iperf2-2.1.8/src/Client.cpp:1654:9: error: 'connected' was not declared in this scope; did you mean 'connect'?
+ 1654 |         connected = false;
+      |         ^~~~~~~~~
+      |         connect
+../../iperf2-2.1.8/src/Client.cpp: In member function 'int Client::SendFirstPayload()':
+../../iperf2-2.1.8/src/Client.cpp:1689:17: error: 'apply_first_udppkt_delay' was not declared in this scope
+ 1689 |                 apply_first_udppkt_delay = true;
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/src”
+make[2]: *** [Makefile:538：Client.o] 错误 1
+make[1]: *** [Makefile:596：all-recursive] 错误 1
+make[1]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+make: *** [Makefile:536：all] 错误 2

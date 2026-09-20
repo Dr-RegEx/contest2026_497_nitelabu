@@ -1,0 +1,125 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1023-flat-category-fs-name.sha256
+XTS_COMMAND=cd /
+--- CMD: cd / ---
+cd /
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256         30         226 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/s11
+--- CMD: mkdir /data/s11 ---
+mkdir /data/s11
+nsh> [K
+nsh> [K
+XTS_COMMAND=performance_test -d/data/s11 -b4096 -c64 -m1
+--- CMD: performance_test -d/data/s11 -b4096 -c64 -m1 ---
+performance_test -d/data/s11 -b4096 -c64 -m1
+write speed is 234.862385
+nsh> [K
+nsh> [K
+XTS_PERF_MODE=1 rate_KiB_s=234.862385
+XTS_COMMAND=performance_test -d/data/s11 -b4096 -c64 -m2
+--- CMD: performance_test -d/data/s11 -b4096 -c64 -m2 ---
+performance_test -d/data/s11 -b4096 -c64 -m2
+read speed is 2133.333333
+nsh> [K
+nsh> [K
+XTS_PERF_MODE=2 rate_KiB_s=2133.333333
+XTS_COMMAND=performance_test -d/data/s11 -b4096 -c64 -m3
+--- CMD: performance_test -d/data/s11 -b4096 -c64 -m3 ---
+performance_test -d/data/s11 -b4096 -c64 -m3
+random write speed is 4.555160
+nsh> [K
+nsh> [K
+XTS_PERF_MODE=3 rate_KiB_s=4.55516
+XTS_COMMAND=performance_test -d/data/s11 -b4096 -c64 -m4
+--- CMD: performance_test -d/data/s11 -b4096 -c64 -m4 ---
+performance_test -d/data/s11 -b4096 -c64 -m4
+random read speed is 1706.666667
+nsh> [K
+nsh> [K
+XTS_PERF_MODE=4 rate_KiB_s=1706.666667
+XTS_COMMAND=ls -l /data/s11
+--- CMD: ls -l /data/s11 ---
+ls -l /data/s11
+/data/s11:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+ -rwx------      262144 performance_test
+nsh> [K
+nsh> [K
+XTS_CASE=5.1.11 MEASURED modes=1,2,3,4 bytes=262144 no_private_speed_threshold
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256         97         159 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/s12
+--- CMD: mkdir /data/s12 ---
+mkdir /data/s12
+nsh> [K
+nsh> [K
+XTS_COMMAND=dd if=/dev/zero of=/data/s12/payload bs=4096 count=64
+--- CMD: dd if=/dev/zero of=/data/s12/payload bs=4096 count=64 ---
+dd if=/dev/zero of=/data/s12/payload bs=4096 count=64
+262144bytes copied, 1160000 usec, 220 KB/s
+nsh> [K
+nsh> [K
+XTS_COMMAND=dd if=/data/s12/payload of=/dev/null bs=4096 count=64
+--- CMD: dd if=/data/s12/payload of=/dev/null bs=4096 count=64 ---
+dd if=/data/s12/payload of=/dev/null bs=4096 count=64
+262144bytes copied, 130000 usec, 1969 KB/s
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/s12
+--- CMD: ls -l /data/s12 ---
+ls -l /data/s12
+/data/s12:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+ -rw-r--r--      262144 payload
+nsh> [K
+nsh> [K
+XTS_CASE=5.1.12 MEASURED bytes=262144 no_private_speed_threshold
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256        164          92 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K

@@ -1,0 +1,5 @@
+# Wi-Fi + BLE coexistence candidate with two connection slots.
+# Inherit the validated 1547 coexistence profile and only raise the
+# connection pool needed by the two-advertiser BLE candidate.
+#include "../demo-rmt-bttool-coex/defconfig"
+CONFIG_BT_MAX_CONN=2

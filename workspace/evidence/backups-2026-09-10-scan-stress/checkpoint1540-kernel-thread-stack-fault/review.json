@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "stage": "bttool startup before enable",
+  "fault": "riscv_usestack.c:163 preallocated pthread stack does not meet TLS stack alignment",
+  "kernel_boot": "SMP/MMU and HCI device initialization reached NSH",
+  "next": "1541 uses pthread_attr_setstacksize in kernel userspace so NuttX allocates a correctly aligned stack",
+  "sprint_pass": "70/88 unchanged"
+}

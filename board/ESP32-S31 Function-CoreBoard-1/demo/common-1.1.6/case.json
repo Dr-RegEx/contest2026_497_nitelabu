@@ -1,0 +1,43 @@
+{
+  "name": "common-1.1.6",
+  "keys": [
+    "common:1.1.6"
+  ],
+  "profile": "xts-flat-rtc",
+  "sources": [
+    "apps/testing/mm/heaptest"
+  ],
+  "evidence_ids": [
+    839
+  ],
+  "note": "该记录使用 FLAT 镜像验证含 16MiB PSRAM 的堆，不换成 Kernel 配置复用数值。",
+  "original": "1.1.6",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts839-flat-heap-clean.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "Kernel-mm内存测试",
+  "original_line": 197,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/heaptest",
+      "origin": "apps/testing/mm/heaptest"
+    }
+  ],
+  "local_config": "config/xts-flat-rtc/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts839-flat-heap-clean.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts839-flat-heap-clean.log"
+    }
+  ]
+}

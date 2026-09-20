@@ -1,0 +1,49 @@
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892      84052     226840     110528     164240    222     16 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /data type tmpfs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+ -rwxrwxrwx           0 scp1350
+nsh> [K
+nsh> [K
+--- CMD: scp -vvv xts@192.168.1.29:/x1348.bin /data/scp1351 ---
+scp -vvv xts@192.168.1.29:/x1348.bin /data/scp1351
+[1970/01/01 00:09:53.350000, 3] ssh_connect:  libssh 0.10.90 (c) 2003-2023 Aris Adamantiadis, Andreas Schneider and libssh contributors. Distributed under the LGPL, please refer to COPYING file for information about your rights, using threading threads_pthread
+[1970/01/01 00:09:53.350000, 3] getai:  host 192.168.1.29 matches an IP address
+[1970/01/01 00:09:53.350000, 3] ssh_socket_connect:  Nonblocking connection socket: 4
+[1970/01/01 00:09:53.360000, 3] ssh_connect:  Socket connecting, now waiting for the callbacks to work
+[1970/01/01 00:09:53.370000, 3] ssh_connect:  Actual timeout : 10000
+[1970/01/01 00:09:53.370000, 3] ssh_socket_pollcallback:  Received POLLOUT in connecting state
+[1970/01/01 00:09:53.380000, 3] ssh_socket_unbuffered_write:  Enabling POLLOUT for socket
+[1970/01/01 00:09:53.390000, 3] callback_receive_banner:  Received banner: SSH-2.0-AsyncSSH_2.24.0
+[1970/01/01 00:09:53.400000, 3] ssh_client_connection_callback:  SSH server banner: SSH-2.0-AsyncSSH_2.24.0
+[1970/01/01 00:09:53.410000, 3] ssh_analyze_banner:  Analyzing banner: SSH-2.0-AsyncSSH_2.24.0
+[1970/01/01 00:09:53.410000, 3] ssh_client_select_hostkeys:  Order of wanted host keys: "ssh-ed25519,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256"
+[1970/01/01 00:09:53.440000, 3] ssh_client_select_hostkeys:  No key found in known_hosts; changing host key method to "ssh-ed25519,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256"
+[1970/01/01 00:09:53.460000, 3] packet_send2:  packet: wrote [type=20, len=916, padding_size=9, comp=906, payload=906]
+[1970/01/01 00:09:53.470000, 3] ssh_send_kex:  SSH_MSG_KEXINIT sent
+[1970/01/01 00:09:53.470000, 3] ssh_socket_unbuffered_write:  Enabling POLLOUT for socket
+[1970/01/01 00:09:53.480000, 3] ssh_packet_socket_callback:  packet: read type 20 [len=1604,padding=7,comp=1596,payload=1596]
+[1970/01/01 00:09:53.490000, 3] ssh_packet_process:  Dispatching handler for packet type 20
+[1970/01/01 00:09:53.500000, 3][CPU0] riscv_exception: EXCEPTION: Instruction page fault. MCAUSE: 0000000c, EPC: 00000000, MTVAL: 00000000
+[CPU0] esp32s31_dump_mmu_fault: S31 MMU: satp=8002f053 status=00042000 saved=00042000 kernel=2f015000 kernel_pte=000000ef
+[CPU0] esp32s31_dump_mmu_fault: S31 MMU: root=2f053000 index=0 pte=000000ef
+[CPU0] riscv_exception: Segmentation fault in PID 173: scp
+ ssh_kex_select_methods:  Negotiated curve25519-sha256,rsa-sha2-512,chacha20-poly1305@openssh.com,chacha20-poly1305@openssh.com,aead-poly1305,aead-poly1305,none,none,,
+nsh> [K
+nsh> [K
+{"case": "DIAGNOSTIC_ONLY", "status": "FAIL", "receipt": "build1332-network-dns.sha256", "host_fingerprint": "SHA256:4nAe7/uKJkVehh55aqbo0G9lS8tJYKz8LKUrTOMFF3g", "error": "authentication not reached"}

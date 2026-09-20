@@ -1,0 +1,1 @@
+1558 PASS: both workers explicitly reported CPU1, 100 arithmetic and Q0-Q7 sleep-switch rounds each, zero errors.1556 CPU0 fault retained. Runtime affinity migration remains unproven; create-time affinity works. Auxiliary bank not yet accepted. No xTS count added.

@@ -1,0 +1,301 @@
+diff --git a/components/upper_hal_cam/dvp/src/esp_cam_ctlr_dvp_cam.c b/components/upper_hal_cam/dvp/src/esp_cam_ctlr_dvp_cam.c
+index 23adf3d3f4b..9e08fe4d5da 100644
+--- a/components/upper_hal_cam/dvp/src/esp_cam_ctlr_dvp_cam.c
++++ b/components/upper_hal_cam/dvp/src/esp_cam_ctlr_dvp_cam.c
+@@ -182,9 +182,14 @@ static IRAM_ATTR esp_err_t esp_cam_ctlr_dvp_start_trans(esp_cam_ctlr_dvp_cam_t *
+                         TAG, "failed to sync(M2C) trans buffer");
+ 
+     ESP_RETURN_ON_ERROR_ISR(esp_cam_ctlr_dvp_dma_reset(&ctlr->dma), TAG, "failed to reset DMA");
+-    ESP_RETURN_ON_ERROR_ISR(esp_cam_ctlr_dvp_dma_start(&ctlr->dma, trans.buffer, ctlr->fb_size_in_bytes), TAG, "failed to start DMA");
+-
++    /* Publish ownership before enabling DMA: the first EOF can preempt
++     * the initial task-side start and immediately arm the next buffer. */
+     ctlr->cur_buf = trans.buffer;
++    esp_err_t ret = esp_cam_ctlr_dvp_dma_start(&ctlr->dma, trans.buffer, ctlr->fb_size_in_bytes);
++    if (ret != ESP_OK) {
++        ctlr->cur_buf = NULL;
++        return ret;
++    }
+ 
+     return ESP_OK;
+ }
+@@ -460,7 +465,7 @@ esp_err_t esp_cam_ctlr_dvp_deinit(int ctlr_id)
+         cam_ll_enable_clk(ctlr_id, false);
+     };
+ 
+-    PERIPH_RCC_ACQUIRE_ATOMIC(cam_periph_signals.buses[ctlr_id].module, ref_count) {
++    PERIPH_RCC_RELEASE_ATOMIC(cam_periph_signals.buses[ctlr_id].module, ref_count) {
+         if (ref_count == 0) {
+             cam_ll_reset_register(ctlr_id);
+             cam_ll_enable_bus_clock(ctlr_id, false);
+@@ -571,7 +576,16 @@ static esp_err_t esp_cam_ctlr_dvp_cam_start(esp_cam_ctlr_handle_t handle)
+     portEXIT_CRITICAL(&ctlr->spinlock);
+ 
+     if (start) {
++        /* stop() disables the receiver while leaving the controller enabled.
++         * Restore receiver/FIFO before starting its DMA handshake. */
++        cam_hal_start_streaming(&ctlr->hal);
+         ret = esp_cam_ctlr_dvp_start_trans(ctlr);
++        if (ret != ESP_OK) {
++            cam_hal_stop_streaming(&ctlr->hal);
++            portENTER_CRITICAL(&ctlr->spinlock);
++            ctlr->dvp_fsm = ESP_CAM_CTLR_DVP_CAM_FSM_ENABLED;
++            portEXIT_CRITICAL(&ctlr->spinlock);
++        }
+     }
+ 
+     return ret;
+diff --git a/components/upper_hal_dma/src/gdma.c b/components/upper_hal_dma/src/gdma.c
+index 798069abffa..614bd22f203 100644
+--- a/components/upper_hal_dma/src/gdma.c
++++ b/components/upper_hal_dma/src/gdma.c
+@@ -39,6 +39,13 @@ typedef struct gdma_platform_t {
+     gdma_group_t *groups[GDMA_LL_GET(INST_NUM)]; // array of GDMA group instances
+ } gdma_platform_t;
+ 
++#if defined(__NuttX__) && defined(CONFIG_ARCH_CHIP_ESP32S31)
++#include "gdma_nuttx_irq.h"
++#define esp_intr_alloc_info s31_gdma_intr_alloc
++#define esp_intr_enable s31_gdma_intr_enable
++#define esp_intr_free s31_gdma_intr_free
++#endif
++
+ static gdma_group_t *gdma_try_alloc_group_handle(int group_id, void (*hal_init)(gdma_hal_context_t *hal, const gdma_hal_config_t *config));
+ static gdma_pair_t *gdma_try_alloc_pair_handle(gdma_group_t *group, int pair_id);
+ static void gdma_try_free_group_handle(gdma_group_t *group);
+diff --git a/components/upper_hal_dma/src/gdma_nuttx_irq.h b/components/upper_hal_dma/src/gdma_nuttx_irq.h
+new file mode 100644
+index 00000000000..9646ed97c3f
+--- /dev/null
++++ b/components/upper_hal_dma/src/gdma_nuttx_irq.h
+@@ -0,0 +1,147 @@
++/* SPDX-License-Identifier: Apache-2.0
++ * ESP32-S31 GDMA adapter for the NuttX interrupt allocator.
++ * Vendor intr_alloc owns a separate CPU-vector table; routing its vectors
++ * directly bypasses NuttX's CPU-input map. Keep allocation and dispatch in
++ * NuttX, including RX/TX handlers sharing one peripheral interrupt source.
++ * Private to gdma.c: these handles must not escape to vendor intr_alloc.
++ */
++#include <nuttx/irq.h>
++#include <nuttx/kmalloc.h>
++#include "esp_irq.h"
++
++struct s31_gdma_irq {
++    struct s31_gdma_irq *next;
++    intr_handler_t handler;
++    void *arg;
++    uint32_t statusreg;
++    uint32_t statusmask;
++    int source;
++    int cpuint;
++    int priority;
++    bool iram;
++    bool enabled;
++};
++
++static struct s31_gdma_irq *s31_gdma_irqs;
++
++static int IRAM_ATTR s31_gdma_dispatch(int irq, void *context, void *arg)
++{
++    int source = (int)(intptr_t)arg;
++    (void)irq;
++    (void)context;
++    struct s31_gdma_irq *entry;
++    for (entry = s31_gdma_irqs; entry; entry = entry->next) {
++        if (entry->source == source && entry->enabled &&
++            (!entry->statusreg ||
++             (*(volatile uint32_t *)(uintptr_t)entry->statusreg & entry->statusmask))) {
++            entry->handler(entry->arg);
++        }
++    }
++    return 0;
++}
++
++static esp_err_t s31_gdma_intr_alloc(const esp_intr_alloc_info_t *info,
++                                      intr_handle_t *handle)
++{
++    struct s31_gdma_irq *entry;
++    struct s31_gdma_irq *shared;
++    irqstate_t flags;
++    int priority = 1;
++    int irq;
++    int ret;
++    if (!info || !handle || !info->handler || info->source < 0 ||
++        info->source >= ESP_NSOURCES || (info->flags & ESP_INTR_FLAG_EDGE)) {
++        return ESP_ERR_INVALID_ARG;
++    }
++    while (priority < 7 && !(info->flags & (1 << priority))) priority++;
++    if (priority == 7 && !(info->flags & (1 << priority))) priority = 1;
++    entry = kmm_zalloc(sizeof(*entry));
++    if (!entry) return ESP_ERR_NO_MEM;
++    entry->handler = info->handler;
++    entry->arg = info->arg;
++    entry->statusreg = info->intrstatusreg;
++    entry->statusmask = info->intrstatusmask;
++    entry->source = info->source;
++    entry->priority = priority;
++    entry->iram = (info->flags & ESP_INTR_FLAG_IRAM) != 0;
++    entry->enabled = !(info->flags & ESP_INTR_FLAG_INTRDISABLED);
++    irq = ESP_SOURCE2IRQ(entry->source);
++    flags = enter_critical_section();
++    for (shared = s31_gdma_irqs; shared; shared = shared->next) {
++        if (shared->source == entry->source) break;
++    }
++    if (shared) {
++        if (shared->priority != priority || shared->iram != entry->iram) {
++            leave_critical_section(flags);
++            kmm_free(entry);
++            return ESP_ERR_INVALID_STATE;
++        }
++        entry->cpuint = shared->cpuint;
++    } else {
++        entry->cpuint = esp_setup_irq(entry->source, priority,
++                                     entry->iram ? ESP_IRQ_IRAM : ESP_IRQ_NON_IRAM);
++        if (entry->cpuint < 0) {
++            leave_critical_section(flags);
++            kmm_free(entry);
++            return ESP_ERR_NO_MEM;
++        }
++        up_disable_irq(irq);
++        ret = irq_attach(irq, s31_gdma_dispatch, (void *)(intptr_t)entry->source);
++        if (ret < 0) {
++            esp_teardown_irq(entry->source, entry->cpuint);
++            leave_critical_section(flags);
++            kmm_free(entry);
++            return ESP_FAIL;
++        }
++    }
++    entry->next = s31_gdma_irqs;
++    s31_gdma_irqs = entry;
++    if (entry->enabled) up_enable_irq(irq);
++    *handle = (intr_handle_t)entry;
++    leave_critical_section(flags);
++    return ESP_OK;
++}
++
++static esp_err_t s31_gdma_intr_enable(intr_handle_t handle)
++{
++    struct s31_gdma_irq *entry = (struct s31_gdma_irq *)handle;
++    irqstate_t flags;
++    if (!entry) return ESP_ERR_INVALID_ARG;
++    flags = enter_critical_section();
++    entry->enabled = true;
++    up_enable_irq(ESP_SOURCE2IRQ(entry->source));
++    leave_critical_section(flags);
++    return ESP_OK;
++}
++
++static esp_err_t s31_gdma_intr_free(intr_handle_t handle)
++{
++    struct s31_gdma_irq *entry = (struct s31_gdma_irq *)handle;
++    struct s31_gdma_irq **link;
++    struct s31_gdma_irq *other;
++    bool shared = false;
++    bool enabled = false;
++    irqstate_t flags;
++    if (!entry) return ESP_ERR_INVALID_ARG;
++    flags = enter_critical_section();
++    for (link = &s31_gdma_irqs; *link && *link != entry; link = &(*link)->next);
++    if (!*link) {
++        leave_critical_section(flags);
++        return ESP_ERR_INVALID_ARG;
++    }
++    *link = entry->next;
++    for (other = s31_gdma_irqs; other; other = other->next) {
++        if (other->source == entry->source) {
++            shared = true;
++            enabled |= other->enabled;
++        }
++    }
++    if (!enabled) up_disable_irq(ESP_SOURCE2IRQ(entry->source));
++    if (!shared) {
++        irq_detach(ESP_SOURCE2IRQ(entry->source));
++        esp_teardown_irq(entry->source, entry->cpuint);
++    }
++    leave_critical_section(flags);
++    kmm_free(entry);
++    return ESP_OK;
++}
+diff --git a/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h b/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
+index 63e763ca97b..200714764b3 100644
+--- a/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
++++ b/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
+@@ -110,6 +110,7 @@ struct sd_host_sdmmc_slot_t {
+ 
+     struct {
+         int                        width;
++        int                        active_width;
+         sd_host_sdmmc_slot_state_t width_state;
+     } width;
+     struct {
+diff --git a/components/upper_hal_sdmmc/src/sd_host_sdmmc.c b/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
+index 8429f300be9..c22dfe3473d 100644
+--- a/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
++++ b/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
+@@ -256,12 +256,19 @@ static esp_err_t sd_host_slot_sdmmc_configure(sd_host_slot_handle_t slot, const
+ #endif
+ 
+     sd_host_sdmmc_slot_t *slot_ctx = __containerof(slot, sd_host_sdmmc_slot_t, drv);
++    ESP_RETURN_ON_FALSE(config->width == 0 ||
++                       ((config->width == SD_BUS_WIDTH_1_BIT ||
++                         config->width == SD_BUS_WIDTH_4_BIT ||
++                         config->width == SD_BUS_WIDTH_8_BIT) &&
++                        config->width <= slot_ctx->width.width),
++                       ESP_ERR_INVALID_ARG, TAG, "unsupported bus width");
+     portENTER_CRITICAL(&slot_ctx->ctlr->spinlock);
+     if (config->freq_hz != 0) {
+         slot_ctx->freq.freq_hz = config->freq_hz;
+         slot_ctx->freq.freq_state = SD_HOST_SLOT_STATE_READY;
+     }
+     if (config->width != 0) {
++        slot_ctx->width.active_width = config->width;
+         slot_ctx->width.width_state = SD_HOST_SLOT_STATE_READY;
+     }
+     if (config->sampling_mode != 0) {
+@@ -668,7 +675,7 @@ esp_err_t sd_host_slot_set_bus_width(sd_host_sdmmc_slot_t *slot)
+ {
+     ESP_RETURN_ON_FALSE(slot, ESP_ERR_INVALID_ARG, TAG, "invalid argument: null pointer");
+ 
+-    int width = slot->width.width_state == SD_HOST_SLOT_STATE_READY ? slot->width.width : 1;
++    int width = slot->width.width_state == SD_HOST_SLOT_STATE_READY ? slot->width.active_width : 1;
+     ESP_LOGD(TAG, "width: %d, state: %d", width, slot->width.width_state);
+     sd_host_sdmmc_slot_io_cfg_t *slot_gpio = &slot->io_config;
+ 
+@@ -694,7 +701,7 @@ esp_err_t sd_host_slot_set_bus_sampling_mode(sd_host_sdmmc_slot_t *slot)
+ {
+     ESP_RETURN_ON_FALSE(slot, ESP_ERR_INVALID_ARG, TAG, "invalid argument: null pointer");
+     if (slot->sampling_mode.sampling_mode_state == SD_HOST_SLOT_STATE_READY) {
+-        ESP_RETURN_ON_FALSE((slot->width.width != 8), ESP_ERR_NOT_SUPPORTED, TAG, "DDR mode with 8-bit bus width is not supported yet");
++        ESP_RETURN_ON_FALSE((slot->width.active_width != 8), ESP_ERR_NOT_SUPPORTED, TAG, "DDR mode with 8-bit bus width is not supported yet");
+     }
+ 
+     bool ddr = false;
+@@ -1301,6 +1308,7 @@ static esp_err_t sdmmc_slot_io_config(sd_host_sdmmc_slot_t *slot, const sd_host_
+     slot->io_config.d6_io = GPIO_NUM_NC;
+     slot->io_config.d7_io = GPIO_NUM_NC;
+     slot->width.width = slot_width;
++    slot->width.active_width = SD_BUS_WIDTH_1_BIT;
+     slot->width.width_state = SD_HOST_SLOT_STATE_INIT;
+     slot_gpio->cd_io = io_config->cd_io;
+     slot_gpio->wp_io = io_config->wp_io;
+diff --git a/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c b/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
+index b26e7e43c80..be61f8a3873 100644
+--- a/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
++++ b/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
+@@ -578,9 +578,13 @@ esp_err_t sd_host_slot_sdmmc_do_transaction(sd_host_slot_handle_t slot, sdmmc_co
+     if (cmdinfo->data) {
+         bool needs_sync = esp_cache_get_line_size_by_addr(cmdinfo->data) > 0;
+         if (needs_sync) {
+-            ret = esp_cache_msync((void *)cmdinfo->data, cache_sync_len, ESP_CACHE_MSYNC_FLAG_DIR_M2C);
+-            if (ret != ESP_OK) {
+-                goto out;
++            esp_err_t sync_ret = esp_cache_msync((void *)cmdinfo->data, cache_sync_len, ESP_CACHE_MSYNC_FLAG_DIR_M2C);
++            /* Cache maintenance must not turn a failed transfer or busy
++             * timeout into success.  Report its error only if no earlier
++             * transaction error is being returned.
++             */
++            if (ret == ESP_OK) {
++                ret = sync_ret;
+             }
+         }
+     }

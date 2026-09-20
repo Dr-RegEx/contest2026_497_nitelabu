@@ -1,0 +1,21 @@
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892      83756     227136     110528     164240    217     19 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data ---
+ls -l /data
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+{"case": "4.1.115", "status": "FAIL", "receipt": "build1332-network-dns.sha256", "host_fingerprint": "SHA256:4nAe7/uKJkVehh55aqbo0G9lS8tJYKz8LKUrTOMFF3g", "error": "command failure: ls -l /data"}

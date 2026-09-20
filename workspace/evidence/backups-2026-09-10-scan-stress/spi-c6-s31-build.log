@@ -1,0 +1,29 @@
+-- Processing includes: /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-spi-c6/defconfig → /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-spi-c6/.defconfig.processed
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-spi-c6/bin_host
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-spi-c6
+[1/15] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-spi-c6/libs/libc/misc && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/libs/libc/misc/lib_utsname.c
+[2/15] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -DKCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-spi-c6/.defconfig.processed -DNUTTX_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx -DCMAKE_BINARY_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-spi-c6 -P /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/cmake/nuttx_generate_dts.cmake
+[3/15] Building C object CMakeFiles/nuttx.dir/empty.c.o
+[4/15] Building C object apps/CMakeFiles/apps.dir/dummy.c.o
+[5/15] Building C object apps/external/android/CMakeFiles/android.dir/dummy.c.o
+[6/15] Building C object boards/CMakeFiles/board.dir/__/dummy.c.o
+[7/15] Linking C static library apps/external/android/libandroid.a
+[8/15] Linking C static library boards/libboard.a
+[9/15] Linking C static library apps/libapps.a
+[10/15] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp32s31_spi.c.o
+[11/15] Linking C static library arch/libarch.a
+[12/15] Linking C executable nuttx
+[13/15] Generating nuttx.hex
+[14/15] Generating System.map
+[15/15] Generating ESP32-S31 simple-boot image for offset 0x2000
+esptool v5.4.0
+Creating ESP32-S31 image...
+Image has only RAM segments visible. ROM segments are hidden and SHA256 digest is not appended.
+NOTE: Inserting 32 bytes padding between .iram0.text and .dram0.data
+Merged 2 ELF sections.
+Successfully created ESP32-S31 image.

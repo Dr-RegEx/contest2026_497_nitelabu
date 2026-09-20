@@ -1,0 +1,6 @@
+#include "../demo-rmt-xts-common/defconfig"
+
+# Published RAM/filesystem cases 1.3.2 and 1.3.3.
+# Test invocation selects volatile /tmp; no persistent format operation.
+CONFIG_TESTING_FSTEST=y
+CONFIG_TESTING_RAMTEST=y

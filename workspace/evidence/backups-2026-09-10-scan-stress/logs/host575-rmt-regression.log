@@ -1,0 +1,15 @@
+ESP_RMT_TX_LIFECYCLE=PASS cancellation/error/loop/refill/early/stale events
+VARIANT spiram=False pingpong=False
+ESP_RMT_INSTALL=PASS OOM/IRQ/lock cleanup, retry, existing channel
+VARIANT spiram=False pingpong=True
+ESP_RMT_INSTALL=PASS OOM/IRQ/lock cleanup, retry, existing channel
+VARIANT spiram=True pingpong=False
+ESP_RMT_INSTALL=PASS OOM/IRQ/lock cleanup, retry, existing channel
+VARIANT spiram=True pingpong=True
+ESP_RMT_INSTALL=PASS OOM/IRQ/lock cleanup, retry, existing channel
+ESP_RMT_WRITE=PASS bytes/errno/zero/null/length-alignment/overflow/mode
+ESP_RMT_INITIALIZE=PASS allocation/config/install failures and success
+VARIANT pingpong=True
+ESP_RMT_RX_START=PASS single lock/channel decode/reset/threshold
+VARIANT pingpong=False
+ESP_RMT_RX_START=PASS single lock/channel decode/reset/threshold

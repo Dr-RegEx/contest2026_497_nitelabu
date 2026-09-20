@@ -1,0 +1,53 @@
+--- CMD: uname -a ---
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 15 2026 11:21:37 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=50 data=0 fcs=3 abort=7 full=0 fifo=0 other=2
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=1 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls /tmp/xts774-rng-sample.bin ---
+ls /tmp/xts774-rng-sample.bin
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: dd if=/dev/urandom of=/tmp/xts774-rng-sample.bin bs=128 count=1 ---
+dd if=/dev/urandom of=/tmp/xts774-rng-sample.bin bs=128 count=1
+nsh> [K
+nsh> [K
+--- CMD: ls -l /tmp/xts774-rng-sample.bin ---
+ls -l /tmp/xts774-rng-sample.bin
+ -rwxrwxrwx   0         128 /tmp/xts774-rng-sample.bin
+nsh> [K
+nsh> [K
+--- CMD: hexdump /tmp/xts774-rng-sample.bin ---
+hexdump /tmp/xts774-rng-sample.bin
+/tmp/xts774-rng-sample.bin at 0:
+0000: 9d 9e 9e 5f a0 a0 a1 61 a2 a3 a3 64 a5 a5 a6 66 ..._...a...d...f
+0010: a7 a8 a8 69 aa aa ab 6b ac ad ad 6e af af b0 70 ...i...k...n...p
+0020: b1 b2 b2 73 b4 b4 b4 75 b6 b6 b7 77 b8 b9 b9 7a ...s...u...w...z
+0030: bb bb bc 7c bd be be 7f c0 c0 c1 01 c2 c3 c3 04 ...|............
+0040: c5 c5 c6 06 c7 c8 c8 09 ca ca cb 0b cc cd cd 0e ................
+0050: cf cf d0 10 d1 d2 d2 13 d4 d4 d4 15 d6 d6 d7 17 ................
+0060: d8 d9 d9 1a db db dc 1c dd de de 1f e0 e0 e1 21 ...............!
+0070: e2 e3 e3 24 e5 e5 e6 26 e7 e8 e8 29 ea ea eb 2b ...$...&...)...+
+nsh> [K
+nsh> [K

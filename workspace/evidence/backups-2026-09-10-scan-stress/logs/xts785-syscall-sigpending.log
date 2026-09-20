@@ -1,0 +1,262 @@
+--- CMD: uname -a ---
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 15 2026 11:36:39 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/cmocka_syscall_test ---
+ls /system/bin/cmocka_syscall_test
+ /system/bin/cmocka_syscall_test
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+    4194300       6252    4188048       6648    4187880    101      9 heapfs
+     304828      69604     235224      84640     209256    118      8 Kmem
+   12582912     696320   11886592   11886592 Page
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls /tmp/CM_syscall_testdir ---
+ls /tmp/CM_syscall_testdir
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: ls /fcntl05_fifo ---
+ls /fcntl05_fifo
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: ls /Lstat01_tst_syml ---
+ls /Lstat01_tst_syml
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: ls /Symlink02_file ---
+ls /Symlink02_file
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: ls /var/Test_Fifo_SyscallFsync02 ---
+ls /var/Test_Fifo_SyscallFsync02
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+XTS_COMMAND=cmocka_syscall_test
+cmocka_syscall_test
+[CPU1] [==========] nuttx_syscall_test_suites: Running 83 test(s).
+[CPU1] [ RUN      ] test_nuttx_syscall_chdir01
+[CPU1] [       OK ] test_nuttx_syscall_chdir01
+[CPU1] [ RUN      ] test_nuttx_syscall_chdir02
+[CPU1] [       OK ] test_nuttx_syscall_chdir02
+[CPU1] [ RUN      ] test_nuttx_syscall_getitimer01
+[CPU1] [       OK ] test_nuttx_syscall_getitimer01
+[CPU1] [ RUN      ] test_nuttx_syscall_clockgettime01
+[CPU1] [       OK ] test_nuttx_syscall_clockgettime01
+[CPU1] [ RUN      ] test_nuttx_syscall_clocknanosleep01
+[CPU0] [       OK ] test_nuttx_syscall_clocknanosleep01
+[CPU0] [ RUN      ] test_nuttx_syscall_clocksettime01
+[CPU0] [       OK ] test_nuttx_syscall_clocksettime01
+[CPU0] [ RUN      ] test_nuttx_syscall_close01
+[CPU0] [       OK ] test_nuttx_syscall_close01
+[CPU0] [ RUN      ] test_nuttx_syscall_close02
+[CPU0] [       OK ] test_nuttx_syscall_close02
+[CPU0] [ RUN      ] test_nuttx_syscall_close03
+[CPU0] [       OK ] test_nuttx_syscall_close03
+[CPU0] [ RUN      ] test_nuttx_syscall_creat01
+[CPU0] [       OK ] test_nuttx_syscall_creat01
+[CPU0] [ RUN      ] test_nuttx_syscall_creat02
+[CPU0] [       OK ] test_nuttx_syscall_creat02
+[CPU0] [ RUN      ] test_nuttx_syscall_fcntl02
+[CPU0] [       OK ] test_nuttx_syscall_fcntl02
+[CPU0] [ RUN      ] test_nuttx_syscall_fcntl03
+[CPU0] [       OK ] test_nuttx_syscall_fcntl03
+[CPU0] [ RUN      ] test_nuttx_syscall_fcntl04
+[CPU0] [       OK ] test_nuttx_syscall_fcntl04
+[CPU0] [ RUN      ] test_nuttx_syscall_fcntl06
+[CPU0] [       OK ] test_nuttx_syscall_fcntl06
+[CPU0] [ RUN      ] test_nuttx_syscall_fstatfs01
+[CPU0] [       OK ] test_nuttx_syscall_fstatfs01
+[CPU0] [ RUN      ] test_nuttx_syscall_fsync01
+[CPU0] [       OK ] test_nuttx_syscall_fsync01
+[CPU0] [ RUN      ] test_nuttx_syscall_fsync02
+[CPU0] [       OK ] test_nuttx_syscall_fsync02
+[CPU0] [ RUN      ] test_nuttx_syscall_fsync03
+[CPU0] [       OK ] test_nuttx_syscall_fsync03
+[CPU0] [ RUN      ] test_nuttx_syscall_getpeername01
+[CPU0] [       OK ] test_nuttx_syscall_getpeername01
+[CPU0] [ RUN      ] test_nuttx_syscall_getsockopt01
+[CPU0] ipv4_getsockopt: ERROR: Unrecognized IPv4 option: -1
+[CPU0] tcp_getsockopt: ERROR: Unrecognized TCP option: -1
+[CPU0] [       OK ] test_nuttx_syscall_getsockopt01
+[CPU0] [ RUN      ] test_nuttx_syscall_setsockopt01
+[CPU0] ipv4_setsockopt: ERROR: Unrecognized IPv4 option: -1
+[CPU0] tcp_setsockopt: ERROR: Unrecognized TCP option: -1
+[CPU0] [       OK ] test_nuttx_syscall_setsockopt01
+[CPU0] [ RUN      ] test_nuttx_syscall_listen01
+[CPU0] listen(-400, 0) failed
+[CPU0] bad file descriptor successful
+[CPU0] listen(3, 0) failed
+[CPU0] not a socket successful
+[CPU0] inet_listen: ERROR:  Unsupported socket type: 2
+[CPU0] psock_listen: ERROR: si_listen failed: -95
+[CPU0] listen(4, 0) failed
+[CPU0] UDP listen successful
+[CPU0] [       OK ] test_nuttx_syscall_listen01
+[CPU0] [ RUN      ] test_nuttx_syscall_socketpair02
+[CPU0] [       OK ] test_nuttx_syscall_socketpair02
+[CPU0] [ RUN      ] test_nuttx_syscall_ftruncate01
+[CPU0] [       OK ] test_nuttx_syscall_ftruncate01
+[CPU0] [ RUN      ] test_nuttx_syscall_getcwd01
+[CPU0] [       OK ] test_nuttx_syscall_getcwd01
+[CPU0] [ RUN      ] test_nuttx_syscall_getcwd02
+[CPU0] [       OK ] test_nuttx_syscall_getcwd02
+[CPU0] [ RUN      ] test_nuttx_syscall_getpid01
+[CPU0] [       OK ] test_nuttx_syscall_getpid01
+[CPU0] [ RUN      ] test_nuttx_syscall_getppid01
+[CPU0] [       OK ] test_nuttx_syscall_getppid01
+[CPU0] [ RUN      ] test_nuttx_syscall_gethostname01
+[CPU0] [       OK ] test_nuttx_syscall_gethostname01
+[CPU0] [ RUN      ] test_nuttx_syscall_gettimeofday01
+[CPU0] [       OK ] test_nuttx_syscall_gettimeofday01
+[CPU0] [ RUN      ] test_nuttx_syscall_lseek01
+[CPU0] [       OK ] test_nuttx_syscall_lseek01
+[CPU0] [ RUN      ] test_nuttx_syscall_lseek07
+[CPU0] [       OK ] test_nuttx_syscall_lseek07
+[CPU0] [ RUN      ] test_nuttx_syscall_lstat01
+[CPU0] [       OK ] test_nuttx_syscall_lstat01
+[CPU0] [ RUN      ] test_nuttx_syscall_dup01
+[CPU0] [       OK ] test_nuttx_syscall_dup01
+[CPU0] [ RUN      ] test_nuttx_syscall_dup02
+[CPU0] [       OK ] test_nuttx_syscall_dup02
+[CPU0] [ RUN      ] test_nuttx_syscall_dup03
+[CPU0] [       OK ] test_nuttx_syscall_dup03
+[CPU0] [ RUN      ] test_nuttx_syscall_dup04
+[CPU0] [       OK ] test_nuttx_syscall_dup04
+[CPU0] [ RUN      ] test_nuttx_syscall_dup05
+[CPU0] [       OK ] test_nuttx_syscall_dup05
+[CPU0] [ RUN      ] test_nuttx_syscall_dup201
+[CPU0] [       OK ] test_nuttx_syscall_dup201
+[CPU0] [ RUN      ] test_nuttx_syscall_dup202
+[CPU0] [       OK ] test_nuttx_syscall_dup202
+[CPU0] [ RUN      ] test_nuttx_syscall_fpathconf01
+[CPU0] [       OK ] test_nuttx_syscall_fpathconf01
+[CPU0] [ RUN      ] test_nuttx_syscall_getegid01
+[CPU0] [       OK ] test_nuttx_syscall_getegid01
+[CPU0] [ RUN      ] test_nuttx_syscall_getegid02
+[CPU0] [       OK ] test_nuttx_syscall_getegid02
+[CPU0] [ RUN      ] test_nuttx_syscall_geteuid01
+[CPU0] [       OK ] test_nuttx_syscall_geteuid01
+[CPU0] [ RUN      ] test_nuttx_syscall_getgid01
+[CPU0] [       OK ] test_nuttx_syscall_getgid01
+[CPU0] [ RUN      ] test_nuttx_syscall_getgid02
+[CPU0] [       OK ] test_nuttx_syscall_getgid02
+[CPU0] [ RUN      ] test_nuttx_syscall_getuid01
+[CPU0] [       OK ] test_nuttx_syscall_getuid01
+[CPU0] [ RUN      ] test_nuttx_syscall_pathconf01
+[CPU0] [       OK ] test_nuttx_syscall_pathconf01
+[CPU0] [ RUN      ] test_nuttx_syscall_pipe01
+[CPU0] [       OK ] test_nuttx_syscall_pipe01
+[CPU0] [ RUN      ] test_nuttx_syscall_pipe02
+[CPU0] [       OK ] test_nuttx_syscall_pipe02
+[CPU0] [ RUN      ] test_nuttx_syscall_pread01
+[CPU0] [       OK ] test_nuttx_syscall_pread01
+[CPU0] [ RUN      ] test_nuttx_syscall_pwrite01
+[CPU0] [       OK ] test_nuttx_syscall_pwrite01
+[CPU0] [ RUN      ] test_nuttx_syscall_pwrite02
+[CPU0] [       OK ] test_nuttx_syscall_pwrite02
+[CPU0] [ RUN      ] test_nuttx_syscall_rmdir01
+[CPU0] [       OK ] test_nuttx_syscall_rmdir01
+[CPU0] [ RUN      ] test_nuttx_syscall_rmdir02
+[CPU0] [       OK ] test_nuttx_syscall_rmdir02
+[CPU0] [ RUN      ] test_nuttx_syscall_truncate01
+[CPU0] [       OK ] test_nuttx_syscall_truncate01
+[CPU0] [ RUN      ] test_nuttx_syscall_unlink01
+[CPU0] [       OK ] test_nuttx_syscall_unlink01
+[CPU0] [ RUN      ] test_nuttx_syscall_nansleep01
+[CPU0] [       OK ] test_nuttx_syscall_nansleep01
+[CPU0] [ RUN      ] test_nuttx_syscall_nansleep02
+[CPU0] [       OK ] test_nuttx_syscall_nansleep02
+[CPU0] [ RUN      ] test_nuttx_syscall_time01
+[CPU0] [       OK ] test_nuttx_syscall_time01
+[CPU0] [ RUN      ] test_nuttx_syscall_time02
+[CPU0] [       OK ] test_nuttx_syscall_time02
+[CPU0] [ RUN      ] test_nuttx_syscall_timercreate01
+[CPU0] [       OK ] test_nuttx_syscall_timercreate01
+[CPU0] [ RUN      ] test_nuttx_syscall_timerdelete01
+[CPU0] [       OK ] test_nuttx_syscall_timerdelete01
+[CPU0] [ RUN      ] test_nuttx_syscall_timergettime01
+[CPU0] [       OK ] test_nuttx_syscall_timergettime01
+[CPU0] [ RUN      ] test_nuttx_syscall_mkdir01
+[CPU0] [       OK ] test_nuttx_syscall_mkdir01
+[CPU0] [ RUN      ] test_nuttx_syscall_mkdir02
+[CPU0] [       OK ] test_nuttx_syscall_mkdir02
+[CPU0] [ RUN      ] test_nuttx_syscall_mkdir03
+[CPU0] [       OK ] test_nuttx_syscall_mkdir03
+[CPU0] [ RUN      ] test_nuttx_syscall_sched01
+[CPU0] [       OK ] test_nuttx_syscall_sched01
+[CPU0] [ RUN      ] test_nuttx_syscall_sched02
+[CPU0] [       OK ] test_nuttx_syscall_sched02
+[CPU0] [ RUN      ] test_nuttx_syscall_sched03
+[CPU0] [       OK ] test_nuttx_syscall_sched03
+[CPU0] [ RUN      ] test_nuttx_syscall_sched04
+[CPU0] [       OK ] test_nuttx_syscall_sched04
+[CPU0] [ RUN      ] test_nuttx_syscall_write01
+[CPU0] [       OK ] test_nuttx_syscall_write01
+[CPU0] [ RUN      ] test_nuttx_syscall_write02
+[CPU0] [       OK ] test_nuttx_syscall_write02
+[CPU0] [ RUN      ] test_nuttx_syscall_write03
+[CPU0] [       OK ] test_nuttx_syscall_write03
+[CPU0] [ RUN      ] test_nuttx_syscall_read01
+[CPU0] [       OK ] test_nuttx_syscall_read01
+[CPU0] [ RUN      ] test_nuttx_syscall_read02
+[CPU0] [       OK ] test_nuttx_syscall_read02
+[CPU0] [ RUN      ] test_nuttx_syscall_read03
+[CPU0] [       OK ] test_nuttx_syscall_read03
+[CPU0] [ RUN      ] test_nuttx_syscall_read04
+[CPU0] [       OK ] test_nuttx_syscall_read04
+[CPU0] [ RUN      ] test_nuttx_syscall_symlink01
+[CPU0] [       OK ] test_nuttx_syscall_symlink01
+[CPU0] [ RUN      ] test_nuttx_syscall_symlink02
+[CPU0] [       OK ] test_nuttx_syscall_symlink02
+[CPU0] [ RUN      ] test_nuttx_syscall_sockettest01
+[CPU0] net_sockif: ERROR: Address family unsupported: 0
+[CPU0] psock_socket: ERROR: socket address family unsupported: 0
+[CPU0] socket: ERROR: psock_socket() failed: -97
+[CPU0] socket: ERROR: psock_socket() failed: -22
+[CPU0] NO.1 do socket() test, ret=-1  erron=22 experrno=97
+[CPU0] inet_setup: ERROR: Unsupported type: 3
+[CPU0] psock_socket: ERROR: socket si_setup() failed: -93
+[CPU0] socket: ERROR: psock_socket() failed: -93
+[CPU0] NO.2 do socket() test, ret=-1  erron=93 experrno=97
+[CPU0] inet_setup: ERROR: Unsupported stream protocol: 17
+[CPU0] psock_socket: ERROR: socket si_setup() failed: -93
+[CPU0] socket: ERROR: psock_socket() failed: -93
+[CPU0] NO.3 do socket() test, ret=-1  erron=93 experrno=97
+[CPU0] inet_setup: ERROR: Unsupported datagram protocol: 6
+[CPU0] psock_socket: ERROR: socket si_setup() failed: -93
+[CPU0] socket: ERROR: psock_socket() failed: -93
+[CPU0] NO.4 do socket() test, ret=-1  erron=93 experrno=97
+[CPU0] inet_setup: ERROR: Unsupported stream protocol: 1
+[CPU0] psock_socket: ERROR: socket si_setup() failed: -93
+[CPU0] socket: ERROR: psock_socket() failed: -93
+[CPU0] NO.6 do socket() test, ret=-1  erron=93 experrno=97
+[CPU0] [       OK ] test_nuttx_syscall_sockettest01
+[CPU0] [ RUN      ] test_nuttx_syscall_sockettest02
+[CPU0] [       OK ] test_nuttx_syscall_sockettest02
+[CPU0] [==========] nuttx_syscall_test_suites: 83 test(s) run.
+[CPU0] [  PASSED  ] 83 test(s).
+nsh> [K
+nsh> [KXTS_STANDARD=cmocka_syscall_test PASS subcases=83 seconds=14.876

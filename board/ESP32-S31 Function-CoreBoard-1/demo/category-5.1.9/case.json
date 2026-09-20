@@ -1,0 +1,48 @@
+{
+  "name": "category-5.1.9",
+  "keys": [
+    "category:5.1.9"
+  ],
+  "profile": "xts-flat-category-fs-name",
+  "sources": [
+    "tests/testcases/vela_fs_test"
+  ],
+  "evidence_ids": [
+    1538
+  ],
+  "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+  "original": "5.1.9",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1538-fs-5.1.9.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1538-fs-5.1.9.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "文件系统多线程读文件vela_fs_multi_thread_read_test",
+  "original_line": 1143,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/vela_fs_test",
+      "origin": "tests/testcases/vela_fs_test"
+    }
+  ],
+  "local_config": "config/xts-flat-category-fs-name/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1538-fs-5.1.9.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1019-fs-batch/xts1538-fs-5.1.9.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1538-fs-5.1.9.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1538-fs-5.1.9.log"
+    }
+  ]
+}

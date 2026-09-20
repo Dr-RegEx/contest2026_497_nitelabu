@@ -1,0 +1,122 @@
++ python3 /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/verify-wifi-artifact.py . --objdump /home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-objdump
+WIFI_ARTIFACT_CONFIG=PASS booleans=1562 protocol=7
+++ stat -c %s nuttx.bin
++ test 996132 -le 2088960
+++ stat -c %s appfs.img
++ test 2404352 -le 3145728
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
++ test -f appfs-root/init
+++ stat -c %s appfs-root/init
++ test 472012 -le 524288
+++ sha256sum appfs-root/init
+++ cut -d ' ' -f 1
+++ head -n 1 appfs-root/init.sha256
++ test f12e4378bb3396e31327533b4943e1a54dc14074178e8bb4d7c14348af5ab51f = f12e4378bb3396e31327533b4943e1a54dc14074178e8bb4d7c14348af5ab51f
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
++ test -f appfs-root/sh
+++ stat -c %s appfs-root/sh
++ test 400264 -le 524288
+++ sha256sum appfs-root/sh
+++ cut -d ' ' -f 1
+++ head -n 1 appfs-root/sh.sha256
++ test 137693cf10e3b2a07794ef35678d3f12e27fc023404a4ebdb3d7f7d2686c6be7 = 137693cf10e3b2a07794ef35678d3f12e27fc023404a4ebdb3d7f7d2686c6be7
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
++ test -f appfs-root/s31demo
+++ stat -c %s appfs-root/s31demo
++ test 291888 -le 524288
+++ sha256sum appfs-root/s31demo
+++ cut -d ' ' -f 1
+++ head -n 1 appfs-root/s31demo.sha256
++ test aa60061ad0f9b753eb141f381e022193d4dd58e588380b0551a6a6692c73d201 = aa60061ad0f9b753eb141f381e022193d4dd58e588380b0551a6a6692c73d201
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
++ test -f appfs-root/s31led
+++ stat -c %s appfs-root/s31led
++ test 113524 -le 524288
+++ sha256sum appfs-root/s31led
+++ cut -d ' ' -f 1
+++ head -n 1 appfs-root/s31led.sha256
++ test a8f237ba94b27394810cfcfadd6bd5c31d339d48e13b5186f5f271d3022ee0ed = a8f237ba94b27394810cfcfadd6bd5c31d339d48e13b5186f5f271d3022ee0ed
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
++ test -f appfs-root/i2c
+++ stat -c %s appfs-root/i2c
++ test 124140 -le 524288
+++ sha256sum appfs-root/i2c
+++ cut -d ' ' -f 1
+++ head -n 1 appfs-root/i2c.sha256
++ test bf85de17235e6337884164b38b5d3666a4dc93378384411af2edfa14fdd9dfa3 = bf85de17235e6337884164b38b5d3666a4dc93378384411af2edfa14fdd9dfa3
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
++ test -f appfs-root/buttons
+++ stat -c %s appfs-root/buttons
++ test 107952 -le 524288
+++ sha256sum appfs-root/buttons
+++ cut -d ' ' -f 1
+++ head -n 1 appfs-root/buttons.sha256
++ test 11c71d7d793d6a8d3e76671a9004395eda4c69da6faad73e663821a2a71a622b = 11c71d7d793d6a8d3e76671a9004395eda4c69da6faad73e663821a2a71a622b
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
++ test -f appfs-root/wapi
+++ stat -c %s appfs-root/wapi
++ test 388924 -le 524288
+++ sha256sum appfs-root/wapi
+++ cut -d ' ' -f 1
+++ head -n 1 appfs-root/wapi.sha256
++ test 94d8a22eda14b2361ec501a479ff0dcd230f52ceff19d14c6b92532fe45604b7 = 94d8a22eda14b2361ec501a479ff0dcd230f52ceff19d14c6b92532fe45604b7
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
++ test -f appfs-root/ping
+++ stat -c %s appfs-root/ping
++ test 146244 -le 524288
+++ sha256sum appfs-root/ping
+++ cut -d ' ' -f 1
+++ head -n 1 appfs-root/ping.sha256
++ test 70a05d52bbe3292f33203b5c8b1a2b9717fc37489d9a3624c981e4ea4bfec406 = 70a05d52bbe3292f33203b5c8b1a2b9717fc37489d9a3624c981e4ea4bfec406
++ for task_app in init sh s31demo s31led i2c buttons wapi ping renew
++ test -f appfs-root/renew
+++ stat -c %s appfs-root/renew
++ test 129160 -le 524288
+++ sha256sum appfs-root/renew
+++ cut -d ' ' -f 1
+++ head -n 1 appfs-root/renew.sha256
++ test 9222041b88f9ca2286c8cf538f0e526118f9f97410df00d4996c0d3afb5d82f5 = 9222041b88f9ca2286c8cf538f0e526118f9f97410df00d4996c0d3afb5d82f5
++ for task_app in s31led s31demo
++ python3 tools/test_esp32s31_elf_metadata.py --nm /home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-nm --elf appfs-root/s31led --reference ../apps/bin/s31led --check-make
+S31_ELF_MAKE_POLICY=PASS s31-preserved/other-chips-unchanged
+S31_ELF_METADATA=PASS {'nx_heapsize': 65536, 'nx_priority': 100, 'nx_stacksize': 4096}
++ for task_app in s31led s31demo
++ python3 tools/test_esp32s31_elf_metadata.py --nm /home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-nm --elf appfs-root/s31demo --reference ../apps/bin/s31demo --check-make
+S31_ELF_MAKE_POLICY=PASS s31-preserved/other-chips-unchanged
+S31_ELF_METADATA=PASS {'nx_heapsize': 65536, 'nx_priority': 100, 'nx_stacksize': 8192}
++ /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/esptool --chip esp32s31 image-info nuttx.bin
+esptool v5.4.0
+Image size: 996132 bytes
+
+ESP32-S31 Image Header
+======================
+Image version: 1
+Entry point: 0x2f00dd18
+Segments: 2
+Flash size: 16MB
+Flash freq: 80m
+Flash mode: DIO
+
+ESP32-S31 Extended Image Header
+===============================
+WP pin: 0xee (disabled)
+Flash pins drive settings: clk_drv: 0x0, q_drv: 0x0, d_drv: 0x0, cs0_drv: 0x0, hd_drv: 0x0, wp_drv: 0x0
+Chip ID: 32 (ESP32-S31)
+Minimal chip revision: v0.0, (legacy min_rev = 0)
+Maximal chip revision: v655.35
+
+Segments Information
+====================
+Segment   Length   Load addr   File offs  Memory types
+-------  -------  ----------  ----------  ------------
+      0  0x00018  0x2e000000  0x00000018  RTC_IRAM, RTC_DRAM
+      1  0x11238  0x2f000000  0x00000038  DRAM, BYTE_ACCESSIBLE, IRAM
+
+ESP32-S31 Image Footer
+======================
+Checksum: 0x3a (valid)
+Validation hash: d67a52494f2799d7494e70e07846175522dacc702f48401e515d9d6c1970156d (valid)
++ test '!' -e /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build432-make-rmt.sha256
++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/nuttx.bin /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/appfs.img
++ echo MAKE_RMT_ARTIFACTS=PASS
+MAKE_RMT_ARTIFACTS=PASS

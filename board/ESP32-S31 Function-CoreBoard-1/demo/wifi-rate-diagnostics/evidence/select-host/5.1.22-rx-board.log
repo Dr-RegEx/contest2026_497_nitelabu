@@ -1,0 +1,31 @@
+iperf2 -s -p 5001 -i 1 &
+iperf2 [28:101]
+nsh> [K------------------------------------------------------------
+Server listening on TCP port 5001
+TCP window size: 16.0 KByte
+------------------------------------------------------------
+kill -15 28
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    0000ced7 00000000 00000000 26f6828         
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    0001af19 0001af1a 00000000 00000000 7fa0d77          
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     cca7  66c1  65b3  002e
+Dropped      0005  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         a66f  a635  000b  002f
+  Rexmit     ----  0003  ----  ----
+nsh> [K

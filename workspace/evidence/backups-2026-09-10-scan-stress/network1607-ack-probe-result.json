@@ -1,0 +1,15 @@
+{
+  "status": "COMMANDS_RETURNED_REVIEW_REQUIRED",
+  "scope": "DIAGNOSTIC_ONLY",
+  "receipt": "build1565-simd-int8.sha256",
+  "rounds": [
+    {
+      "mode": 0,
+      "output": "iperf2 -c 192.168.1.29 -i 1 -p 5002 -t 10\r\n------------------------------------------------------------\r\nClient connecting to 192.168.1.29, TCP port 5002\r\nTCP window size: 16.0 KByte\r\n------------------------------------------------------------\r\n[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29\r\n[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29\r\n[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29\r\n[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29\r\n[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29\r\ntcp connect failed: Network is unreachable\r\n[  1] local 0.0.0.0 port 0 connected with 192.168.1.29 port 5002\r\nnsh> \u001b[K\r\nnsh> \u001b[K"
+    },
+    {
+      "mode": 1,
+      "output": "iperf2 -c 192.168.1.29 -i 1 -p 5002 -t 10\r\n------------------------------------------------------------\r\nClient connecting to 192.168.1.29, TCP port 5002\r\nTCP window size: 16.0 KByte\r\n------------------------------------------------------------\r\ntcp connect failed: Network is unreachable\r\n[  1] local 0.0.0.0 port 0 connected with 192.168.1.29 port 5002\r\nnsh> \u001b[K\r\nnsh> \u001b[K"
+    }
+  ]
+}

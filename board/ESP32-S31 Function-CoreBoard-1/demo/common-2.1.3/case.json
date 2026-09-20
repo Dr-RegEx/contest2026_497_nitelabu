@@ -1,0 +1,68 @@
+{
+  "name": "common-2.1.3",
+  "keys": [
+    "common:2.1.3"
+  ],
+  "profile": "demo-rmt-netapps-competition",
+  "sources": [
+    "apps/system/nsh/nsh_main.c"
+  ],
+  "evidence_ids": [
+    1604
+  ],
+  "note": "必须真实 USB 断电/上电 10 次；计时口径为 ROM 日志到 NSH，RESET 保持时间不计入。",
+  "original": "2.1.3",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round06/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round05/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round10/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round08/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round09/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round07/result.json",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "Cold Boot启动时间测试",
+  "original_line": 1020,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/nsh_main.c",
+      "origin": "apps/system/nsh/nsh_main.c"
+    }
+  ],
+  "local_config": "config/demo-rmt-netapps-competition/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round05/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round05/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round06/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round06/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round07/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round07/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round08/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round08/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round09/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round09/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round10/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/cold1604-round10/result.json"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/network-rate-20260920/linux-peer.py", line 15, in <module>
+    cred=json.loads(Path('/tmp/s31-rate-network.json').read_text())
+  File "/usr/lib/python3.10/pathlib.py", line 1134, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+  File "/usr/lib/python3.10/pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/s31-rate-network.json'

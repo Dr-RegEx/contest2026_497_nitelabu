@@ -1,0 +1,110 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build974-flat-category-fs-internal.sha256
+IMAGE_SHA256=a066314a8765110cadf3df97f8b1bc323f0d4a842955e23165403e0878d2c1be
+CONFIG_SHA256=4e88b454b7f05ee8b1ecb29bb1b7579e27dcf976f9c5885fdd3190628a265601
+XTS_RESET=single_initial_reset
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x9090
+load:0x2f009100,len:0x17c8
+entry 0x2f008d06
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x9090   (37008)
+dram: lma 0x0000b0d8 vma 0x2f009100 len 0x17c8   (6088)
+padd: lma 0x0000c8d8 vma 0x00000000 len 0x3740   (14144)
+imap: lma 0x00010020 vma 0x40050020 len 0xd650   (54864)
+padd: lma 0x0001d678 vma 0x00000000 len 0x2a80   (10880)
+imap: lma 0x00020100 vma 0x40000100 len 0x480bc  (295100)
+total segments stored 7
+ABCxTS Flash scratch: /dev/xtsflash offset=0xc00000 size=0x100000
+
+NuttShell (NSH)
+nsh> [K
+
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=ls /dev/xtsflash
+--- CMD: ls /dev/xtsflash ---
+ls /dev/xtsflash
+ /dev/xtsflash
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mkdir -p /data
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mount -t littlefs /dev/xtsflash /data
+--- CMD: mount -t littlefs /dev/xtsflash /data ---
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=ls -l /data
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+ drwxrwxrwx           0 .
+ dr--r--r--           0 ..
+ -rw-r--r--       12288 persist.db
+ drwxrwxrwx           0 s04/
+ drwxrwxrwx           0 s05/
+ drwxrwxrwx           0 s06/
+ drwxrwxrwx           0 s08/
+ drwxrwxrwx           0 s09/
+ drwxrwxrwx           0 s10/
+ -rw-rw-rw-          27 test.prop
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256         24         232 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     449240      19112     430128      25160     424440     41      3 Umem
+nsh> [K
+nsh> [K
+XTS_EXISTING_SCRATCH_MOUNT=PASS candidate=974

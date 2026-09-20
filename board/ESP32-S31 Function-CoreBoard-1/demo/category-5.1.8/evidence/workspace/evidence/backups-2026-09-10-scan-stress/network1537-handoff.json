@@ -1,0 +1,18 @@
+{
+  "state": "DIAGNOSTICS_TERMINAL",
+  "board_receipt": "build1534-arp-resolution-window.sha256",
+  "board": "NSH, authorized WiFi connected, no UART owner",
+  "changes_adopted_this_turn": [],
+  "rejected": [
+    "1528 bounded TX burst throughput inconclusive",
+    "1534 ARP interval200ms cold peer still fails"
+  ],
+  "last_positive": "1519 BLE GATT full read/write/cleanup on separate1520 FLAT",
+  "count": "70/88",
+  "next": "Broader BLE integration before SIMD; preserve incomplete network rate/ARP acceptance",
+  "evidence": [
+    "checkpoint1527-tcp-rate-baseline",
+    "checkpoint1533-tx-burst-inconclusive",
+    "checkpoint1537-arp-window-negative"
+  ]
+}

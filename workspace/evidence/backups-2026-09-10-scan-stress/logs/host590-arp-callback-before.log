@@ -1,0 +1,62 @@
+=================================================================
+==1011768==ERROR: AddressSanitizer: heap-use-after-free on address 0x50300000004c at pc 0x5f0e62fcb0fe bp 0x7ffcf1898c30 sp 0x7ffcf1898c20
+READ of size 4 at 0x50300000004c thread T0
+    #0 0x5f0e62fcb0fd in arp_notify (/tmp/arp-callback-failure-9lw5_a4n/test+0x40fd)
+    #1 0x5f0e62fcb700 in main (/tmp/arp-callback-failure-9lw5_a4n/test+0x4700)
+    #2 0x7c2129029d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+    #3 0x7c2129029e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f)
+    #4 0x5f0e62fca344 in _start (/tmp/arp-callback-failure-9lw5_a4n/test+0x3344)
+
+0x50300000004c is located 12 bytes inside of 24-byte region [0x503000000040,0x503000000058)
+freed by thread T0 here:
+    #0 0x7c2129cb4537 in __interceptor_free ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:127
+    #1 0x5f0e62fcb6f6 in main (/tmp/arp-callback-failure-9lw5_a4n/test+0x46f6)
+    #2 0x7c2129029d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+
+previously allocated by thread T0 here:
+    #0 0x7c2129cb4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x5f0e62fcb695 in main (/tmp/arp-callback-failure-9lw5_a4n/test+0x4695)
+    #2 0x7c2129029d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+
+SUMMARY: AddressSanitizer: heap-use-after-free (/tmp/arp-callback-failure-9lw5_a4n/test+0x40fd) in arp_notify
+Shadow bytes around the buggy address:
+  0x0a067fff7fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0a067fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0a067fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0a067fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0a067fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0a067fff8000: fa fa 00 00 00 fa fa fa fd[fd]fd fa fa fa fa fa
+  0x0a067fff8010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0a067fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0a067fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0a067fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0a067fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==1011768==ABORTING
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_arp_send_callback_failure.py", line 114, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_arp_send_callback_failure.py", line 110, in main
+    subprocess.run([str(path / 'test')], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/arp-callback-failure-9lw5_a4n/test']' returned non-zero exit status 1.

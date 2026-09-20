@@ -1,0 +1,7 @@
+test: /tmp/s31-sd-error-7vr66z1v/test.c:184: main: Assertion `sd_host_slot_sdmmc_do_transaction(&slot.drv,&cmd)==ESP_ERR_TIMEOUT' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/tools/tests/sdmmc-transaction-error/run.py", line 116, in <module>
+    subprocess.run([str(exe)], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/s31-sd-error-7vr66z1v/test']' died with <Signals.SIGABRT: 6>.

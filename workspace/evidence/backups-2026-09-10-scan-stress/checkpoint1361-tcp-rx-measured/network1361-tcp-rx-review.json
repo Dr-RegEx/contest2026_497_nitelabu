@@ -1,0 +1,17 @@
+{
+  "case": "5.1.22",
+  "status": "EXECUTION_COMPLETE_WARNINGS_RATE_PENDING",
+  "host_exit": 0,
+  "host_seconds": 304.11,
+  "host_mbit_per_second": 1.86,
+  "board_seconds": 289.82,
+  "board_mbit_per_second": 1.95,
+  "both_endpoints_mib_rounded": 67.3,
+  "limits": [
+    "Original client-t300 completed; no extra requirement that receiver clocks also read300.",
+    "Board/server timestamp discrepancy not yet explained; preserve both rates.",
+    "TCP_NODELAY disabling unsupported and receive-window option warning.",
+    "Original case gives no numeric rate criterion; no fullPASS added."
+  ],
+  "original_harness_result": "FAIL retained; required receiver300 seconds beyond originalclientduration criterion"
+}

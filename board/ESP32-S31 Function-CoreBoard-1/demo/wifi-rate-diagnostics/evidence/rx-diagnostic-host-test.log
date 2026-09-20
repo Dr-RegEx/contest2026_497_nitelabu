@@ -1,0 +1,7 @@
+Production source: openvela-dev/nuttx/arch/risc-v/src/esp32c6/esp_wifi_adapter.c
+Source SHA256: a5c89b6979f62063880eb7bcf17db3dc83c3f7cdfb4545aca28d185893fda283
+Extracted helper SHA256: aee07ff9cd6faf39f50b72909a702583b3281fb59f442af54277a5ac2c1945bb
+Compile: cc -std=c11 -Wall -Wextra -Werror -pthread -fsanitize=address,undefined -o /tmp/s31-wifiq-host-fa0j3bq3/test /tmp/s31-wifiq-host-fa0j3bq3/test.c
+PASS: preserved adapter layout, wrapper allocation/handle/free roundtrip,
+      concurrent increments (400000), saturation, all 16 slots,
+      deleted/active records, overflow visibility, buffer sizes 0..4095

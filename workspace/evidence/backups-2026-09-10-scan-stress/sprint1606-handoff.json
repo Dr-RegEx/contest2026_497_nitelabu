@@ -1,0 +1,95 @@
+{
+  "snapshot": "After1606 review:76/88 full PASS",
+  "common_remaining": [
+    "GPIO external loopback",
+    "BMI160 external module",
+    "RNG original 10-stream missing26 statistical rows; supplemental100-stream PASS does not replace original"
+  ],
+  "category_remaining": [
+    {
+      "id": "5.1.7",
+      "source_line": 1217,
+      "title": "5.1.7 文件系统随机读写测试vela_fs_random_read_and_write_test",
+      "status": "1094执行完成，随机写性能未验收",
+      "group": "无需人工"
+    },
+    {
+      "id": "5.1.25",
+      "source_line": 1824,
+      "title": "5.1.25 WiFi--2.4G网络---设备作为Client端时的UDP Tx平均速率",
+      "status": "原始300秒实测完成，速率验收待定",
+      "group": "无需人工"
+    },
+    {
+      "id": "5.1.24",
+      "source_line": 1852,
+      "title": "5.1.24 WiFi--2.4G网络---设备作为Server端时的UDP Rx平均速率",
+      "status": "1499原300秒，板11.4Mbit/s丢包30%，末ACK/Server Report正常，性能待验收",
+      "group": "无需人工"
+    },
+    {
+      "id": "5.1.22",
+      "source_line": 1880,
+      "title": "5.1.22 WiFi--2.4G网络---设备作为Server端时的TCP Rx平均速率",
+      "status": "1361原始300秒客户端完成，速率记录待验收",
+      "group": "无需人工"
+    },
+    {
+      "id": "5.1.12",
+      "source_line": 2205,
+      "title": "5.1.12 文件系统读写速率测试dd",
+      "status": "厂商自测记录完成1030，速率待社区验收",
+      "group": "无需人工"
+    },
+    {
+      "id": "5.1.11",
+      "source_line": 2237,
+      "title": "5.1.11 文件系统读写速率测试performance_test",
+      "status": "厂商自测记录完成1030，速率待社区验收",
+      "group": "无需人工"
+    },
+    {
+      "id": "4.2.15",
+      "source_line": 2779,
+      "title": "4.2.15 Audio_DSP--Looper_cmoka",
+      "status": "1059麦克风试听通过；外接扬声器播放待验收",
+      "group": "需要人工"
+    },
+    {
+      "id": "4.2.10",
+      "source_line": 2925,
+      "title": "4.2.10 Audio_DSP--Playback_cmoka_1channels",
+      "status": "待外接扬声器原始播放实测",
+      "group": "需要人工"
+    },
+    {
+      "id": "5.1.23",
+      "source_line": 5332,
+      "title": "5.1.23 WiFi--2.4G网络---设备作为Client端时的TCP Tx平均速率",
+      "status": "1478原300秒双端10.6MiB/296Kbit/s，正常收尾，速率待验收",
+      "group": "无需人工"
+    }
+  ],
+  "live_test": {
+    "state": "TERMINAL",
+    "raw_exit_code": 1,
+    "review_status": "PASS",
+    "evidence": "checkpoint1606-directed-scan-pass",
+    "serial_owner": "released"
+  },
+  "manual_question": "Requested available GPIO loopback/BMI160/J9 speaker and wiring; answer pending",
+  "priority": "Finish remaining sprint cases; BLE1544/1551/1564 and SIMD1566 evidence preserved, no unrelated extension",
+  "user_hardware_update": "User confirms single cable connected to UART; board also has DBG. Presence of loopback wire, BMI160 and J9 speaker remains unconfirmed.",
+  "board_port_reference": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp32-s31-function-coreboard-1/user_guide.html",
+  "latest_work": {
+    "id": 1608,
+    "status": "DIAGNOSTIC_COMPLETE",
+    "evidence": "checkpoint1608-tcp-ack-diagnosis",
+    "finding": "Per-socket quick ACK correlated with about4x TCP sender throughput; one pair, not root cause proof",
+    "next": "Inspect sender pipeline/ACK cadence; prior1528 eight-pass poll did not help, do not repeat blindly",
+    "host_sessions": "25031 and23636 exited",
+    "uart_sessions": "66396 and12956 exited",
+    "firmware": "1565 unchanged",
+    "cold_arp": "1607 reproduced failure before peer warmed neighbor"
+  }
+}

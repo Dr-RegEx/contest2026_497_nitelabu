@@ -1,0 +1,18 @@
++ '[' '' = configure ']'
++ make -j8
+CC:  nettest_cmdline.c
+LD:  tcpclient
+LN: platform/board to /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/platform/dummy
+Generating unified Rust library from registered crates...
+No valid Rust crates found to build
+In file included from board/esp32s31_buttons.c:21:
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/arch/risc-v/src/common/espressif/esp_gpio.h:34:12: fatal error: hal/gpio_types.h: No such file or directory
+   34 | #  include "hal/gpio_types.h"
+      |            ^~~~~~~~~~~~~~~~~~
+compilation terminated.
+ERROR: riscv32-esp-elf-gcc failed: 1
+       command: riscv32-esp-elf-gcc -MT ./esp32s31_buttons.o  -M '-fno-common' '-Wall' '-Wstrict-prototypes' '-Wshadow' '-Wundef' '-Wno-attributes' '-Wno-unknown-pragmas' '-Wno-psabi' '-fno-common' '-Wall' '-Wstrict-prototypes' '-Wshadow' '-Wundef' '-Wno-attributes' '-Wno-unknown-pragmas' '-Wno-psabi' '-Os' '-fno-strict-aliasing' '-fomit-frame-pointer' '-ffunction-sections' '-fdata-sections' '-nostdlib' '-Os' '-fno-strict-aliasing' '-fomit-frame-pointer' '-ffunction-sections' '-fdata-sections' '-nostdlib' '-march=rv32imafc_zicsr_zifencei' '-mabi=ilp32f' '-march=rv32imafc_zicsr_zifencei' '-mabi=ilp32f' '-isystem' '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/include' '-isystem' '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/include' '-D__NuttX__' '-D__NuttX__' '-D__KERNEL__' '-Werror=return-type' '-I' '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/arch/risc-v/src/board/board' '-I' '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/sched' '-I' '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/arch/risc-v/src/chip' '-I' '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/arch/risc-v/src/common' '-I' '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/arch/risc-v/src/rv32' board/esp32s31_buttons.c
+make[2]: *** [/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/boards/Board.mk:103: .depend] Error 1
+make[1]: *** [Makefile:235: .depend] Error 2
+make: *** [tools/Unix.mk:660: pass2dep] Error 2
+make: *** Waiting for unfinished jobs....

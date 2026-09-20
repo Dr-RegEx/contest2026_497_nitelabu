@@ -1,0 +1,265 @@
+UART_LINE_CODING_ONLY; NO_DTR_RTS; NO_HOST_RESET
+
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir -p /data
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount -t littlefs /dev/xtsflash /data
+--- CMD: mount -t littlefs /dev/xtsflash /data ---
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/p1583/powerOffTestFile
+--- CMD: ls -l /data/p1583/powerOffTestFile ---
+ls -l /data/p1583/powerOffTestFile
+ -rwxrwxrwx       10100 /data/p1583/powerOffTestFile
+nsh> [K
+nsh> [K
+XTS_COMMAND=power_off_test01 /data/p1583
+--- CMD: power_off_test01 /data/p1583 ---
+power_off_test01 /data/p1583
+START TEST ...
+[checkFileExist] The test file exists and can be opened !
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+Read the file that was being written before power Off 
+Check data consistency 
+TEST PASSED
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/p1583
+--- CMD: ls -l /data/p1583 ---
+ls -l /data/p1583
+/data/p1583:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256        108         148 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+{"case": "4.1.4", "round": 1, "status": "ROUND_PASS", "user_confirmation": "第1轮已断电并插回", "receipt": "build1023-flat-category-fs-name.sha256", "host_reset": false, "formatted": false, "persisted_bytes": 10100}

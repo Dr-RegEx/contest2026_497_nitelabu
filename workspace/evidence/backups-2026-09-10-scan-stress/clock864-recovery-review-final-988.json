@@ -1,0 +1,101 @@
+{
+  "tag": "xts864",
+  "audit_utc": "2026-09-16T08:48:07.704939+00:00",
+  "raw_script_labels": {
+    "standby": "PASS",
+    "time_consistency": "RUNNING"
+  },
+  "raw_script_error": null,
+  "resource_rows": 831,
+  "uart_log_age_seconds": 36884.53475642204,
+  "fault_markers_after_monitor_start": [],
+  "sample_count": 3,
+  "note": "Audit only. No raw PASS label is adopted automatically. Clock-source discrepancy and uninterrupted monitoring must be reviewed before formal acceptance. Original-log metrics below exclude the recovery log.",
+  "recovered_time_observation": {
+    "collector_status": "COMPLETE_REVIEW_REQUIRED",
+    "capture_gap": "Original UART log ended 2026-09-16 06:33:23+08; resumed after WSL restart around08:12; no continuous-log claim",
+    "automatic_acceptance": false,
+    "scheduled_check_count": 4,
+    "diagnostic_sample_count": 1,
+    "scheduled_checks": [
+      {
+        "check_number": 1,
+        "host_utc": "2026-09-15T14:34:23.854678+00:00",
+        "board_utc": "2026-09-15T14:34:22",
+        "elapsed_host_seconds": 21071.261191129684,
+        "interval_since_previous_check_seconds": 21071.261191129684,
+        "error_seconds_interval": [
+          -1.8733148574829102,
+          -0.8546781539916992
+        ]
+      },
+      {
+        "check_number": 2,
+        "host_utc": "2026-09-15T20:13:14.066880+00:00",
+        "board_utc": "2026-09-15T20:13:14",
+        "elapsed_host_seconds": 41401.47339272499,
+        "interval_since_previous_check_seconds": 20330.193564891815,
+        "error_seconds_interval": [
+          -0.08581089973449707,
+          0.9331202507019043
+        ]
+      },
+      {
+        "check_number": 3,
+        "host_utc": "2026-09-16T02:43:12.709825+00:00",
+        "board_utc": "2026-09-16T02:43:12+00:00",
+        "elapsed_host_seconds": 64800.1163380146,
+        "interval_since_previous_check_seconds": 23398.624014139175,
+        "error_seconds_interval": [
+          -0.7298223972320557,
+          0.2901749610900879
+        ]
+      },
+      {
+        "check_number": 4,
+        "host_utc": "2026-09-16T08:43:17.662882+00:00",
+        "board_utc": "2026-09-16T08:43:16+00:00",
+        "elapsed_host_seconds": 86405.06939482689,
+        "interval_since_previous_check_seconds": 21604.933059453964,
+        "error_seconds_interval": [
+          -1.6835227012634277,
+          -0.6628818511962891
+        ]
+      }
+    ],
+    "review": "REQUIRED; completion is not a PASS",
+    "last_elapsed_host_seconds_lower_bound": 86405.06939482689,
+    "last_error_interval_entirely_within_2s": true
+  },
+  "resource_extrema": {
+    "minimum_free": 522728,
+    "maximum_used": 5652,
+    "maximum_reported_peak": 38784,
+    "maximum_cpu_percent": 7.9
+  },
+  "ongoing_standby_observation": {
+    "host_realtime_to_last_log_write_seconds": 49811.15062594414,
+    "complete_monitor_periods_seconds": 49800,
+    "12h_evidence_ready_for_review": false
+  },
+  "duration_at_last_date_sample": {
+    "host_realtime_interval_seconds": [
+      41401.47339272499,
+      41401.509889125824
+    ],
+    "board_date_interval_seconds": [
+      41401.0,
+      41403.0
+    ],
+    "host_monotonic_seconds": 43199.725511524,
+    "monotonic_minus_realtime_midpoint_seconds": 1798.2338705985894
+  },
+  "last_time_error_interval_seconds": [
+    -0.08581089973449707,
+    0.9331202507019043
+  ],
+  "sampled_duration_at_least_12h_on_both_axes": false,
+  "sampled_duration_at_least_24h_on_both_axes": false,
+  "last_time_error_within_2s": true,
+  "timing_review": "REQUIRED"
+}

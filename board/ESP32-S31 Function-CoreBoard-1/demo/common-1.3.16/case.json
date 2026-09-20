@@ -1,0 +1,60 @@
+{
+  "name": "common-1.3.16",
+  "keys": [
+    "common:1.3.16"
+  ],
+  "profile": "demo-rmt-xts-rng",
+  "sources": [
+    "apps/testing/drivers/nist-sts"
+  ],
+  "evidence_ids": [
+    786,
+    808,
+    1682
+  ],
+  "note": "**用户确认通过**：保留原始 26 项未定义统计输出，不将其改写成统计套件全通过或社区认证。",
+  "original": "1.3.16",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts786-nist-rng-clock.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts808-nist100.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/rng1682-user-acceptance.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/sprint1682-current-cases.json",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "RNG功能测试",
+  "original_line": 918,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/nist-sts",
+      "origin": "apps/testing/drivers/nist-sts"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-rng/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts786-nist-rng-clock.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts786-nist-rng-clock.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts808-nist100.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts808-nist100.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/rng1682-user-acceptance.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/rng1682-user-acceptance.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/sprint1682-current-cases.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/sprint1682-current-cases.json"
+    }
+  ]
+}

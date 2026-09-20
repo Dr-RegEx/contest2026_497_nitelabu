@@ -1,0 +1,68 @@
+{
+  "name": "category-5.1.42",
+  "keys": [
+    "category:5.1.42"
+  ],
+  "profile": "demo-rmt-netapps-competition",
+  "sources": [
+    "apps/wireless/wapi"
+  ],
+  "evidence_ids": [
+    1112
+  ],
+  "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+  "original": "5.1.42",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/checkpoint1078-wifi-mmu.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1112-wifi-scan.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1112-wifi-scan.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1111-wifi-mmu-flash.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "WiFi--设备未配网时反复扫描周边无线AP",
+  "original_line": 1372,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/wapi",
+      "origin": "apps/wireless/wapi"
+    }
+  ],
+  "local_config": "config/demo-rmt-netapps-competition/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/checkpoint1078-wifi-mmu.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/checkpoint1078-wifi-mmu.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1111-wifi-mmu-flash.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1111-wifi-mmu-flash.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1112-wifi-scan.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1112-wifi-scan/xts1112-wifi-scan.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1112-wifi-scan.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1112-wifi-scan.log"
+    }
+  ]
+}

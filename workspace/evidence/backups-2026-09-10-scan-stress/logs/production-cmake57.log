@@ -1,0 +1,102 @@
++ '[' '' = resetconfig ']'
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6 -j8
+[1/87] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/libs/libc/misc && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/libs/libc/misc/lib_utsname.c
+[2/87] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -DKCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production/defconfig -DNUTTX_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx -DCMAKE_BINARY_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6 -P /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/cmake/nuttx_generate_dts.cmake
+[3/87] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/syscall && cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/bin_host --target mksyscall
+[ 50%] Built target csvparser
+[100%] Built target mksyscall
+[4/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfscritmon.c.o
+[5/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfscpuload.c.o
+[6/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsfdt.c.o
+[7/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfscpuinfo.c.o
+[8/87] Building C object fs/CMakeFiles/fs.dir/mount/fs_procfs_mount.c.o
+[9/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsiobinfo.c.o
+[10/87] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_cpuinfo.c.o
+[11/87] Building C object drivers/CMakeFiles/drivers.dir/mtd/mtd_partition.c.o
+[12/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfstcbinfo.c.o
+[13/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsmeminfo.c.o
+[14/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsuptime.c.o
+[15/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfs.c.o
+[16/87] Linking C static library drivers/libdrivers.a
+[17/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsutil.c.o
+[18/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsversion.c.o
+[19/87] Building C object mm/CMakeFiles/mm.dir/mempool/mempool_procfs.c.o
+[20/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_malloc_size.c.o
+[21/87] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsproc.c.o
+[22/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_initialize.c.o
+[23/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_shrinkchunk.c.o
+[24/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_brkaddr.c.o
+[25/87] Building C object mm/CMakeFiles/mm.dir/mempool/mempool.c.o
+[26/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_extend.c.o
+[27/87] Linking C static library fs/libfs.a
+[28/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_mallinfo.c.o
+[29/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_free.c.o
+[30/87] Building C object mm/CMakeFiles/mm.dir/mempool/mempool_multiple.c.o
+[31/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_malloc.c.o
+[32/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_foreach.c.o
+[33/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_heapmember.c.o
+[34/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_memalign.c.o
+[35/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_memdump.c.o
+[36/87] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_realloc.c.o
+[37/87] Building C object mm/CMakeFiles/kmm.dir/mempool/mempool_procfs.c.o
+[38/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_malloc_size.c.o
+[39/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_initialize.c.o
+[40/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_shrinkchunk.c.o
+[41/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_brkaddr.c.o
+[42/87] Linking C static library mm/libmm.a
+[43/87] Building C object mm/CMakeFiles/kmm.dir/mempool/mempool.c.o
+[44/87] Linking C static library arch/libarch.a
+[45/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_extend.c.o
+[46/87] Building C object mm/CMakeFiles/kmm.dir/mempool/mempool_multiple.c.o
+[47/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_mallinfo.c.o
+[48/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_free.c.o
+[49/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_foreach.c.o
+[50/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_malloc.c.o
+[51/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_memalign.c.o
+[52/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_heapmember.c.o
+[53/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_realloc.c.o
+[54/87] Building C object mm/CMakeFiles/kmm.dir/mm_heap/mm_memdump.c.o
+[55/87] Building C object net/CMakeFiles/net.dir/devif/devif_callback.c.o
+[56/87] Building C object net/CMakeFiles/net.dir/procfs/netdev_statistics.c.o
+[57/87] Building C object net/CMakeFiles/net.dir/procfs/net_procfs.c.o
+[58/87] Building C object net/CMakeFiles/net.dir/arp/arp_send.c.o
+[59/87] Refreshing ELF relink sentinel:renew
+[60/87] Building C object net/CMakeFiles/net.dir/tcp/tcp_wrbuffer.c.o
+[61/87] Refreshing ELF relink sentinel:init
+[62/87] Building C object apps/system/dhcpc/CMakeFiles/ELF_renew.dir/ELF_renew_relink.c.o
+[63/87] Building C object net/CMakeFiles/net.dir/icmp/icmp_conn.c.o
+[64/87] Linking C static library mm/libkmm.a
+[65/87] Building C object apps/system/nsh/CMakeFiles/ELF_init.dir/ELF_init_relink.c.o
+[66/87] Refreshing ELF relink sentinel:sh
+[67/87] Refreshing ELF relink sentinel:ping
+[68/87] Building C object apps/system/nsh/CMakeFiles/ELF_sh.dir/ELF_sh_relink.c.o
+[69/87] Building C object apps/system/ping/CMakeFiles/ELF_ping.dir/ELF_ping_relink.c.o
+[70/87] Building C object net/CMakeFiles/net.dir/udp/udp_wrbuffer.c.o
+[71/87] Refreshing ELF relink sentinel:wapi
+[72/87] Building C object apps/wireless/wapi/CMakeFiles/ELF_wapi.dir/ELF_wapi_relink.c.o
+[73/87] Building C object sched/CMakeFiles/sched.dir/sched/sched_smp.c.o
+[74/87] Building C object net/CMakeFiles/net.dir/udp/udp_conn.c.o
+[75/87] Building C object net/CMakeFiles/net.dir/tcp/tcp_conn.c.o
+[76/87] Linking C static library apps/system/dhcpc/libELF_renew.a
+[77/87] Linking C static library apps/system/ping/libELF_ping.a
+[78/87] Linking C static library apps/system/nsh/libELF_sh.a
+[79/87] Linking C static library apps/system/nsh/libELF_init.a
+[80/87] Linking C static library apps/wireless/wapi/libELF_wapi.a
+[81/87] Generating external ESP32-S31 application ROMFS
+[82/87] Linking C static library net/libnet.a
+[83/87] Linking C static library sched/libsched.a
+[84/87] Linking C executable nuttx
+[85/87] Generating System.map
+[86/87] Generating nuttx.hex
+[87/87] Generating ESP32-S31 simple-boot image for offset 0x2000
+esptool v5.4.0
+Creating ESP32-S31 image...
+Image has only RAM segments visible. ROM segments are hidden and SHA256 digest is not appended.
+Merged 1 ELF section.
+Successfully created ESP32-S31 image.
++ restore_cfg
++ '[' -f /tmp/esp32s31-source-config.Yk9CTh/.config ']'
++ mv /tmp/esp32s31-source-config.Yk9CTh/.config .config
++ '[' -f /tmp/esp32s31-source-config.Yk9CTh/config.h ']'
++ mv /tmp/esp32s31-source-config.Yk9CTh/config.h include/nuttx/config.h
++ rmdir /tmp/esp32s31-source-config.Yk9CTh

@@ -1,0 +1,38 @@
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: ping www.baidu.com ---
+ping www.baidu.com
+PING 110.242.70.57 56 bytes of data
+56 bytes from 110.242.70.57: icmp_seq=0 time=30.0 ms
+56 bytes from 110.242.70.57: icmp_seq=1 time=30.0 ms
+56 bytes from 110.242.70.57: icmp_seq=2 time=50.0 ms
+56 bytes from 110.242.70.57: icmp_seq=3 time=40.0 ms
+56 bytes from 110.242.70.57: icmp_seq=4 time=30.0 ms
+56 bytes from 110.242.70.57: icmp_seq=5 time=30.0 ms
+56 bytes from 110.242.70.57: icmp_seq=6 time=40.0 ms
+56 bytes from 110.242.70.57: icmp_seq=7 time=30.0 ms
+56 bytes from 110.242.70.57: icmp_seq=8 time=40.0 ms
+56 bytes from 110.242.70.57: icmp_seq=9 time=40.0 ms
+10 packets transmitted, 10 received, 0% packet loss, time 10100 ms
+rtt min/avg/max/mdev = 30.000/36.000/50.000/6.633 ms
+nsh> [K
+nsh> [K
+--- CMD: wapi disconnect wlan0 ---
+wapi disconnect wlan0
+nsh> [K
+nsh> [K
+--- CMD: ping www.baidu.com ---
+ping www.baidu.com
+[CPU1] arp_send: ERROR: Unreachable: 0101a8c0
+[CPU1] psock_udp_sendto: ERROR: Not reachable
+[CPU1] dns_send_query: ERROR: sendto failed: -101
+[CPU1] dns_query_error: ERROR: IPv4 dns_send_query failed: -101, server address: 192.168.1.1
+ERROR: ping_gethostip(www.baidu.com) failed
+nsh> [K
+nsh> [K
+{"case": "4.1.31", "status": "FAIL", "receipt": "build1332-network-dns.sha256", "error": "ping did not demonstrate loss of connectivity"}

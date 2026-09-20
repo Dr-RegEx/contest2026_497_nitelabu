@@ -1,0 +1,56 @@
+{
+  "case": "3.1.1",
+  "name": "12h unassociated standby stability",
+  "status": "PASS",
+  "recorded_utc": "2026-09-15T20:45:24.536712+00:00",
+  "firmware": 860,
+  "run": 864,
+  "audit": {
+    "tag": "xts864",
+    "audit_utc": "2026-09-15T20:45:24.536491+00:00",
+    "raw_script_labels": {
+      "standby": "PASS",
+      "time_consistency": "RUNNING"
+    },
+    "raw_script_error": null,
+    "resource_rows": 723,
+    "uart_log_age_seconds": 2.804046154022217,
+    "fault_markers_after_monitor_start": [],
+    "sample_count": 3,
+    "note": "Audit only. No raw PASS label is adopted automatically. Clock-source discrepancy and uninterrupted monitoring must be reviewed before formal acceptance.",
+    "resource_extrema": {
+      "minimum_free": 522728,
+      "maximum_used": 5652,
+      "maximum_reported_peak": 38784,
+      "maximum_cpu_percent": 7.9
+    },
+    "ongoing_standby_observation": {
+      "host_realtime_to_last_log_write_seconds": 43329.712886571884,
+      "complete_monitor_periods_seconds": 43320,
+      "12h_evidence_ready_for_review": true
+    },
+    "duration_at_last_date_sample": {
+      "host_realtime_interval_seconds": [
+        41401.47339272499,
+        41401.509889125824
+      ],
+      "board_date_interval_seconds": [
+        41401.0,
+        41403.0
+      ],
+      "host_monotonic_seconds": 43199.725511524,
+      "monotonic_minus_realtime_midpoint_seconds": 1798.2338705985894
+    },
+    "last_time_error_interval_seconds": [
+      -0.08581089973449707,
+      0.9331202507019043
+    ],
+    "sampled_duration_at_least_12h_on_both_axes": false,
+    "sampled_duration_at_least_24h_on_both_axes": false,
+    "last_time_error_within_2s": true,
+    "timing_review": "REQUIRED"
+  },
+  "scope": "Kernel KASAN and original showinfo; no user-process sanitizer or large-PSRAM-FS-heap coverage claimed.",
+  "time_consistency_case": "1.3.14 still RUNNING; this is not a 24h time PASS.",
+  "continuity": "Original PID144782 remains running; no UART access, reset, clock setting or flash during evidence capture."
+}

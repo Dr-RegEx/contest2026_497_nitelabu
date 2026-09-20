@@ -1,0 +1,43 @@
+{
+  "name": "common-1.1.3",
+  "keys": [
+    "common:1.1.3"
+  ],
+  "profile": "demo-rmt-xts-common",
+  "sources": [
+    "apps/testing/testsuites/kernel/syscall"
+  ],
+  "evidence_ids": [
+    709
+  ],
+  "note": "",
+  "original": "1.1.3",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts709-syscall.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "系统调用测试",
+  "original_line": 96,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/syscall",
+      "origin": "apps/testing/testsuites/kernel/syscall"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-common/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts709-syscall.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts709-syscall.log"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "test_case": "5.1.23",
+  "environment": "ESP32-S31 board + Windows WLAN192.168.1.29 + existing2.4GHz WPA2 AP; Linux iperf2 peer in local WSL via Windows TCP relay",
+  "pc_port": 5002,
+  "wsl_address": "172.31.208.211",
+  "wsl_port": 2224,
+  "linux_peer_session": 85271,
+  "relay_session": 4319,
+  "iperf_version": "2.1.8 local existing build",
+  "router": "SSID/BSSID/channel in previous association logs; router model not supplied",
+  "measurement_limit": "TCP relay adds another local TCP connection; retain topology in throughput report. No numerical pass threshold supplied by original case."
+}

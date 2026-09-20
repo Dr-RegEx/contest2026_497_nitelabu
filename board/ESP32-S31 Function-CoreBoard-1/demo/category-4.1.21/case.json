@@ -1,0 +1,68 @@
+{
+  "name": "category-4.1.21",
+  "keys": [
+    "category:4.1.21"
+  ],
+  "profile": "demo-rmt-netapps-competition",
+  "sources": [
+    "apps/wireless/wapi"
+  ],
+  "evidence_ids": [
+    1310
+  ],
+  "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+  "original": "4.1.21",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/network1310-wpa2-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1310-wpa2-finish.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/uart-redacted.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-finish.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-result.json",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "WiFi--2.4G--Wapi连接为WPA2加密方式时加入2.4G网络",
+  "original_line": 3984,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/wapi",
+      "origin": "apps/wireless/wapi"
+    }
+  ],
+  "local_config": "config/demo-rmt-netapps-competition/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-finish.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-finish.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/network1310-wpa2-result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/uart-redacted.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1310-wpa2/uart-redacted.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1310-wpa2-finish.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1310-wpa2-finish.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1310-wpa2-result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1310-wpa2-result.json"
+    }
+  ]
+}

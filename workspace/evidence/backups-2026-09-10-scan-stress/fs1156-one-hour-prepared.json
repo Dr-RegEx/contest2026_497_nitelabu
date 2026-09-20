@@ -1,0 +1,20 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "case": "5.1.17",
+  "image_receipt": "build1102-flat-category-fs-sync.sha256",
+  "command": "vela_fs_stability_test01 -d /data/s17 -t 60",
+  "duration_seconds": 3600,
+  "source_disclosure": "Previously archived test01 worker join fix; worker workloads unchanged",
+  "volume": "existing 3MiB LittleFS, explicit sync mount, no formatting",
+  "prerequisites": [
+    "Finish and archive active KV test1155",
+    "Preserve post-KV volume before changing storage workload",
+    "Flash frozen1102 only after UART release",
+    "Fresh1102 boot and sync mount evidence; do not reuse1125 evidence"
+  ],
+  "validation": [
+    "Python syntax compilation passed",
+    "--help completed without UART access"
+  ],
+  "runner_sha256": "03c0923c46cf261ca80bdc0c8e35ef3b90ed251764c08e7fef0c04d68b0ba37a"
+}

@@ -1,0 +1,35 @@
+
+HOST_COMMAND mount
+mount
+  /data type tmpfs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+HOST_COMMAND ls /dev/audio/pcm0p
+ls /dev/audio/pcm0p
+ /dev/audio/pcm0p
+nsh> [K
+HOST_COMMAND ls /dev/audio/pcm0c
+ls /dev/audio/pcm0c
+ /dev/audio/pcm0c
+nsh> [K
+HOST_COMMAND ls -l /data/graph.conf
+ls -l /data/graph.conf
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+HOST_COMMAND rb -f /data
+rb -f /data
+Ignored unexpected text: CC
+name:graph.conf filesize:212
+     100.0% 212:212 left:00h00m00s
+time used:0.1s speed 1.8kB/s
+
+ all time:10.32s average speed:0.02kB/snsh> [K
+HOST_COMMAND echo $?
+echo $?
+0
+nsh> [K
+HOST_COMMAND ls -l /data/graph.conf
+ls -l /data/graph.conf
+ -rwxrwxrwx         212 /data/graph.conf
+nsh> [K

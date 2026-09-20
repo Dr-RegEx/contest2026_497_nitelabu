@@ -1,0 +1,26 @@
+[
+  {
+    "diagnostic_only": true,
+    "offered_rate": "5M",
+    "duration": 30,
+    "host_command": [
+      "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/network-rate-20260920/linux-package/iperf",
+      "-c",
+      "192.168.1.60",
+      "-p",
+      "5010",
+      "-i",
+      "1",
+      "-t",
+      "30",
+      "-u",
+      "-b",
+      "5M"
+    ],
+    "host_exit": 0,
+    "board_summaries": [],
+    "host_summaries": [
+      "[  1] 0.0000-30.0031 sec  18.8 MBytes  5.24 Mbits/sec"
+    ]
+  }
+]

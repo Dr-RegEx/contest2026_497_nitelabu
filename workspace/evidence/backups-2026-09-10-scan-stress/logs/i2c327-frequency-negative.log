@@ -1,0 +1,9 @@
+test: /tmp/esp-i2c-clock-cpl4t4b1/test.c:51: main: Assertion `programmed == frequencies[i] && priv.clk_freq == frequencies[i]' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_i2c_frequency.py", line 83, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_i2c_frequency.py", line 79, in main
+    subprocess.run([str(path / "test")], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-i2c-clock-cpl4t4b1/test']' died with <Signals.SIGABRT: 6>.

@@ -1,0 +1,32 @@
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    000047b2 00000000 00000000 119bbf          
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    0000e60a 0000e60c 00000000 00000000 4113589          
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     4591  44c6  008c  003b
+Dropped      0004  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         e5dc  e59f  0002  003b
+  Rexmit     ----  0005  ----  ----
+nsh> [K
+nsh> [K
+--- CMD: cat /proc/uptime ---
+cat /proc/uptime
+    588.78
+nsh> [K
+nsh> [K
+INCOMPLETE

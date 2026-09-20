@@ -1,0 +1,64 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x79 (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2f000000,len:0x8d9c
+load:0x2f008e00,len:0x2ad8
+entry 0x2f0089de
+*** Booting NuttX ***
+dram: lma 0x00002020 vma 0x2f000000 len 0x8d9c   (36252)
+dram: lma 0x0000adc4 vma 0x2f008e00 len 0x2ad8   (10968)
+padd: lma 0x0000d8c8 vma 0x00000000 len 0x2750   (10064)
+imap: lma 0x00010020 vma 0x40030020 len 0x85c4   (34244)
+padd: lma 0x000185ec vma 0x00000000 len 0x7b0c   (31500)
+imap: lma 0x00020100 vma 0x40000100 len 0x2aad4  (174804)
+total segments stored 6
+ABCS31 LCD: NuttX framebuffer 800x480 RGB565 pclk=18000000, two DMA scan buffers, raw link-switch polling
+OPENVELA_FB_READY /dev/fb0 RGB565 800x480
+S31 DVP controller prepared: 640x480 RGB565, 614400 bytes
+S31 camera SCCB sensor ID: 0x3660
+
+NuttShell (NSH)
+nsh> [Kls /dev
+/dev:
+ console
+ fb0
+ i2c0
+ null
+ random
+ ttyS0
+ video0
+ zero
+nsh> [Ks31preview --frames 20
+s31preview: video=/dev/video0 640x480 RGB565 stride=1280 bytes=614400 buffers=2 fb=/dev/fb0 800x480 stride=1600 x=80 frames=20 timeout_ms=3000
+S31 LCD: UPDATE_STAGE=copy
+S31 LCD: UPDATE_STAGE=cache-writeback
+S31 LCD: UPDATE_STAGE=link-request channel=0
+S31 LCD: UPDATE_STAGE=link-wait
+S31 LCD: UPDATE_STAGE=complete raw=00000403
+s31preview: frame=1 buffer=0 capture_time=18.160000 elapsed_ms=140 bytesused=614400 fnv1a32=b600f1f1 update=OK
+s31preview: frame=2 buffer=1 capture_time=18.640000 elapsed_ms=620 bytesused=614400 fnv1a32=3629b78a update=OK
+s31preview: frame=3 buffer=0 capture_time=18.870000 elapsed_ms=850 bytesused=614400 fnv1a32=5897bc18 update=OK
+s31preview: frame=4 buffer=1 capture_time=19.090000 elapsed_ms=1070 bytesused=614400 fnv1a32=815fb178 update=OK
+s31preview: frame=5 buffer=0 capture_time=19.320000 elapsed_ms=1300 bytesused=614400 fnv1a32=46014a3c update=OK
+s31preview: frame=6 buffer=1 capture_time=19.540000 elapsed_ms=1520 bytesused=614400 fnv1a32=b412a57c update=OK
+s31preview: frame=7 buffer=0 capture_time=19.770000 elapsed_ms=1750 bytesused=614400 fnv1a32=4253667d update=OK
+s31preview: frame=8 buffer=1 capture_time=19.990000 elapsed_ms=1990 bytesused=614400 fnv1a32=ac77745c update=OK
+s31preview: frame=9 buffer=0 capture_time=20.220000 elapsed_ms=2200 bytesused=614400 fnv1a32=ea214c20 update=OK
+s31preview: frame=10 buffer=1 capture_time=20.440000 elapsed_ms=2440 bytesused=614400 fnv1a32=4087ee2e update=OK
+s31preview: frame=11 buffer=0 capture_time=20.670000 elapsed_ms=2650 bytesused=614400 fnv1a32=750a3129 update=OK
+s31preview: frame=12 buffer=1 capture_time=20.890000 elapsed_ms=2890 bytesused=614400 fnv1a32=e459eb09 update=OK
+s31preview: frame=13 buffer=0 capture_time=21.120000 elapsed_ms=3110 bytesused=614400 fnv1a32=1c27df33 update=OK
+s31preview: frame=14 buffer=1 capture_time=21.340000 elapsed_ms=3340 bytesused=614400 fnv1a32=f761c97d update=OK
+s31preview: frame=15 buffer=0 capture_time=21.570000 elapsed_ms=3560 bytesused=614400 fnv1a32=ffbe99bb update=OK
+s31preview: frame=16 buffer=1 capture_time=21.780000 elapsed_ms=3790 bytesused=614400 fnv1a32=6ef57e3e update=OK
+s31preview: frame=17 buffer=0 capture_time=22.020000 elapsed_ms=4010 bytesused=614400 fnv1a32=799c502f update=OK
+s31preview: frame=18 buffer=1 capture_time=22.230000 elapsed_ms=4240 bytesused=614400 fnv1a32=34b06678 update=OK
+s31preview: frame=19 buffer=0 capture_time=22.470000 elapsed_ms=4470 bytesused=614400 fnv1a32=22af142d update=OK
+s31preview: frame=20 buffer=1 capture_time=22.680000 elapsed_ms=4670 bytesused=614400 fnv1a32=442c224b update=OK
+s31preview: completed=20/20 result=PASS
+nsh> [Ks31preview --frames 600
+s31preview: video=/dev/video0 640x480 RGB565 stride=1280 bytes=614400 buffers=2 fb=/dev/fb0 800x480 stride=1600 x=80 frames=600 timeout_ms=3000
+s31preview: capture failed frame=1 errno=110
+s31preview: completed=0/600 result=FAIL
+nsh> [K

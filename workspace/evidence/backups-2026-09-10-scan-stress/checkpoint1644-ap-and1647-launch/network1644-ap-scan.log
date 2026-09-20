@@ -1,0 +1,50 @@
+--- CMD: wapi show wlan0 ---
+wapi show wlan0
+wlan0 Configuration:
+       IP: 192.168.1.60
+  NetMask: 255.255.255.0
+Frequency: 2437
+     Flag: WAPI_FREQ_FIXED
+  Channel: 6
+Frequency: 2437
+    ESSID: Kal'tsit
+     Flag: WAPI_ESSID_ON
+     Mode: WAPI_MODE_MANAGED
+       AP: 60:ce:41:46:0e:ec
+  BitRate: 72
+     Flag: WAPI_BITRATE_FIXED
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -72
+  Country: 01
+ PTA prio: not supported
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=0 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=19 id=128
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=447640 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=19
+bssid / frequency / signal level / encode / ssid
+82:79:69:d5:29:c2	2462	-92	0800	WDS123
+fa:28:c9:3c:41:14	2437	-92	0800	CMCC-Uu7k
+c0:a4:76:31:55:84	2437	-90	0800	爱我的女孩
+8c:de:f9:a0:3f:6c	2442	-90	0800	Xiaomi_DDB3
+08:f4:58:ab:bf:e8	2437	-87	0800	HDMRC
+a4:ba:70:3a:61:31	2412	-86	0800	CU-C4F4_plus
+c2:a4:76:28:e1:eb	2437	-86	0800	@Ruijie-s9599_iot
+94:bf:80:7e:6f:c9	2452	-85	0800	CU_rfNY
+90:7e:43:c9:d4:3c	2427	-85	0800	XXN3M
+c4:16:c8:5a:e5:6c	2462	-84	0800	HUAWEI-J
+c0:a4:76:e8:e1:eb	2437	-84	0800	@Ruijie-s9599
+64:75:20:b4:ac:e2	2417	-82	0800	CU_xRzP
+a4:ba:70:be:df:fb	2412	-82	0800	20371506
+b8:f8:83:2d:54:eb	2412	-81	0800	GS5.0
+60:ce:41:ab:02:d2	2462	-75	0800	STB_T4Zp
+60:ce:41:46:0e:ec	2437	-74	0800	Kal'tsit
+bc:54:fc:36:e1:c2	2462	-68	0800	MERCURY_E1C2
+60:ce:41:ab:02:d0	2462	-66	0800	Kal'tsit
+7c:39:85:2a:50:04	2462	-64	0800	Kal'tsit
+nsh> [K
+nsh> [K

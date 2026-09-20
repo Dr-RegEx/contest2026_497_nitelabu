@@ -1,0 +1,23 @@
+PRE_RESET_IFDOWN=FAIL: 
+NETWORK_PROBE=FAIL: ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xc5ac
+load:0x2f00c600,len:0x3398
+entry 0x2f00c254
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xc5ac   (50604)
+dram: lma 0x0000e5f4 vma 0x2f00c600 len 0x3398   (13208)
+padd: lma 0x000119b8 vma 0x00000000 len 0xe660   (58976)
+imap: lma 0x00020020 vma 0x400b0020 len 0x1c2ec  (115436)
+padd: lma 0x0003c314 vma 0x00000000 len 0x3de4   (15844)
+imap: lma 0x00040100 vma 0x40000100 len 0xa025c  (655964)
+total segments stored 7
+ABCset_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+

@@ -1,0 +1,4 @@
+#include "../demo-rmt-tcpdiag/defconfig"
+# Temporary cold-ARP comparison; preserve active ARP send, no IP harvesting.
+CONFIG_NET_ARP_SEND=y
+CONFIG_NET_ARP_SEND_QUEUE=y

@@ -1,0 +1,51 @@
+=== BOOT_OR_CURRENT_CONSOLE ===
+
+nsh> [K
+nsh> [K
+
+=== NSH ls /dev/ttyHCI0 ===
+ls /dev/ttyHCI0
+ /dev/ttyHCI0
+nsh> [K
+nsh> [K
+
+=== NSH mount ===
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+
+=== NSH mkdir /data ===
+mkdir /data
+nsh> [K
+nsh> [K
+
+=== NSH mount -t tmpfs /data ===
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+
+=== NSH mkdir /data/misc ===
+mkdir /data/misc
+nsh> [K
+nsh> [K
+
+=== NSH mkdir /data/misc/bt ===
+mkdir /data/misc/bt
+nsh> [K
+nsh> [K
+
+=== BTTOOL bttool ===
+bttool
+[CPU0] /data/misc/bt folder create: 0
+[CPU1] [async_queue:91]uv_async_queue_init
+bttool> 
+bttool> 
+=== BTTOOL enable ===
+enable
+bttool> 
+bttool> [CPU0] S31 BLE: controller open
+[CPU0

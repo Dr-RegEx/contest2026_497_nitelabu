@@ -1,0 +1,7 @@
+# BLE bttool candidate 937 — BUILD ONLY
+
+Original bttool, openvela local BLE service, Zblue host and ESP32-S31 controller are linked in one isolated FLAT image. Candidate 936 first completed this link; 937 adds the real H4 close entry and defers the OFF event until bt_disable succeeds. H4 close removes the receive poll on the service loop before closing the underlying controller device and resets partial-frame state. Send and close serialize through the driver mutex. Initial host configuration supports adapter/advertising/scanning and connection/security; framework GATT client/server, GATT database caching, Wi-Fi coexistence and controller sleep are disabled.
+
+All 54 pinned OSAL wrapper functions have strong archive definitions. Candidate 936 ELF verified the retained bttool_main, bt_enable_mc, h4_drv_api, bt_service_init, bt_sal_le_enable and the identified internal-RAM callback closure. GNU size includes a large Flash mapping dummy BSS section; do not interpret its aggregate BSS figure as internal SRAM consumption. Actual 936 .dram0.bss was 40180 bytes.
+
+No target boot or BLE xTS PASS. Original longrun 864 still owns the UART. HCI initialization, actual enable/disable, advertising observations and pairing still require hardware logs. See ble-target-sequence.md. F0 dependencies and tracked diff whitespace checks passed during integration; original HAL/IDF references were not modified.

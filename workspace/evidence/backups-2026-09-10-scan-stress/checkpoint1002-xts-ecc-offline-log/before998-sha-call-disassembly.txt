@@ -1,0 +1,323 @@
+
+openvela-dev/out/esp32s31-xts-ecc-offline/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+400d61f8 <s31_sha_process>:
+400d61f8:	7159                	addi	sp,sp,-112
+400d61fa:	d686                	sw	ra,108(sp)
+400d61fc:	d4a2                	sw	s0,104(sp)
+400d61fe:	d2a6                	sw	s1,100(sp)
+400d6200:	d0ca                	sw	s2,96(sp)
+400d6202:	cece                	sw	s3,92(sp)
+400d6204:	ccd2                	sw	s4,88(sp)
+400d6206:	cad6                	sw	s5,84(sp)
+400d6208:	c8da                	sw	s6,80(sp)
+400d620a:	c6de                	sw	s7,76(sp)
+400d620c:	c4e2                	sw	s8,72(sp)
+400d620e:	c2e6                	sw	s9,68(sp)
+400d6210:	c0ea                	sw	s10,64(sp)
+400d6212:	20050863          	beqz	a0,400d6422 <s31_sha_process+0x22a>
+400d6216:	02c52a03          	lw	s4,44(a0)
+400d621a:	200a0463          	beqz	s4,400d6422 <s31_sha_process+0x22a>
+400d621e:	03ca2783          	lw	a5,60(s4)
+400d6222:	20079063          	bnez	a5,400d6422 <s31_sha_process+0x22a>
+400d6226:	000a2683          	lw	a3,0(s4)
+400d622a:	1e06cc63          	bltz	a3,400d6422 <s31_sha_process+0x22a>
+400d622e:	004a2783          	lw	a5,4(s4)
+400d6232:	1e07c863          	bltz	a5,400d6422 <s31_sha_process+0x22a>
+400d6236:	4518                	lw	a4,8(a0)
+400d6238:	1ed74563          	blt	a4,a3,400d6422 <s31_sha_process+0x22a>
+400d623c:	8f15                	sub	a4,a4,a3
+400d623e:	1ef74263          	blt	a4,a5,400d6422 <s31_sha_process+0x22a>
+400d6242:	020a2983          	lw	s3,32(s4)
+400d6246:	fbf9fb13          	andi	s6,s3,-65
+400d624a:	1c0b1c63          	bnez	s6,400d6422 <s31_sha_process+0x22a>
+400d624e:	0409f993          	andi	s3,s3,64
+400d6252:	04098963          	beqz	s3,400d62a4 <s31_sha_process+0xac>
+400d6256:	c781                	beqz	a5,400d625e <s31_sha_process+0x66>
+400d6258:	515c                	lw	a5,36(a0)
+400d625a:	1c078463          	beqz	a5,400d6422 <s31_sha_process+0x22a>
+400d625e:	2f018cb7          	lui	s9,0x2f018
+400d6262:	892a                	mv	s2,a0
+400d6264:	4d09                	li	s10,2
+400d6266:	080c8c93          	addi	s9,s9,128 # 2f018080 <g_interrupt_context>
+400d626a:	100d3473          	csrrc	s0,sstatus,s10
+400d626e:	eef3a097          	auipc	ra,0xeef3a
+400d6272:	a2a080e7          	jalr	-1494(ra) # 2f00fc98 <up_cpu_index>
+400d6276:	9566                	add	a0,a0,s9
+400d6278:	00054483          	lbu	s1,0(a0)
+400d627c:	0ff4f493          	zext.b	s1,s1
+400d6280:	10041073          	csrw	sstatus,s0
+400d6284:	8809                	andi	s0,s0,2
+400d6286:	c409                	beqz	s0,400d6290 <s31_sha_process+0x98>
+400d6288:	eef2c097          	auipc	ra,0xeef2c
+400d628c:	b72080e7          	jalr	-1166(ra) # 2f001dfa <esp32s31_smode_irq_reenable>
+400d6290:	cc91                	beqz	s1,400d62ac <s31_sha_process+0xb4>
+400d6292:	4601                	li	a2,0
+400d6294:	20600593          	li	a1,518
+400d6298:	400e0537          	lui	a0,0x400e0
+400d629c:	21050513          	addi	a0,a0,528 # 400e0210 <_flash_rodata_start+0x1f0>
+400d62a0:	fbd330ef          	jal	4000a25c <__assert>
+400d62a4:	16079f63          	bnez	a5,400d6422 <s31_sha_process+0x22a>
+400d62a8:	595c                	lw	a5,52(a0)
+400d62aa:	bf45                	j	400d625a <s31_sha_process+0x62>
+400d62ac:	2f0187b7          	lui	a5,0x2f018
+400d62b0:	19c7a703          	lw	a4,412(a5) # 2f01819c <g_nx_initstate>
+400d62b4:	4795                	li	a5,5
+400d62b6:	00e7f963          	bgeu	a5,a4,400d62c8 <s31_sha_process+0xd0>
+400d62ba:	996520ef          	jal	40028450 <sched_idletask>
+400d62be:	c509                	beqz	a0,400d62c8 <s31_sha_process+0xd0>
+400d62c0:	4601                	li	a2,0
+400d62c2:	20700593          	li	a1,519
+400d62c6:	bfc9                	j	400d6298 <s31_sha_process+0xa0>
+400d62c8:	2f013bb7          	lui	s7,0x2f013
+400d62cc:	c9cb8c13          	addi	s8,s7,-868 # 2f012c9c <g_sha_lock>
+400d62d0:	004c2783          	lw	a5,4(s8)
+400d62d4:	8b91                	andi	a5,a5,4
+400d62d6:	e789                	bnez	a5,400d62e0 <s31_sha_process+0xe8>
+400d62d8:	4601                	li	a2,0
+400d62da:	20b00593          	li	a1,523
+400d62de:	bf6d                	j	400d6298 <s31_sha_process+0xa0>
+400d62e0:	4409                	li	s0,2
+400d62e2:	10043473          	csrrc	s0,sstatus,s0
+400d62e6:	eef3a097          	auipc	ra,0xeef3a
+400d62ea:	9b2080e7          	jalr	-1614(ra) # 2f00fc98 <up_cpu_index>
+400d62ee:	2f0187b7          	lui	a5,0x2f018
+400d62f2:	050a                	slli	a0,a0,0x2
+400d62f4:	1d478793          	addi	a5,a5,468 # 2f0181d4 <g_assignedtasks>
+400d62f8:	97aa                	add	a5,a5,a0
+400d62fa:	4384                	lw	s1,0(a5)
+400d62fc:	10041073          	csrw	sstatus,s0
+400d6300:	8809                	andi	s0,s0,2
+400d6302:	c409                	beqz	s0,400d630c <s31_sha_process+0x114>
+400d6304:	eef2c097          	auipc	ra,0xeef2c
+400d6308:	af6080e7          	jalr	-1290(ra) # 2f001dfa <esp32s31_smode_irq_reenable>
+400d630c:	44b4                	lw	a3,72(s1)
+400d630e:	4791                	li	a5,4
+400d6310:	5775                	li	a4,-3
+400d6312:	00f69363          	bne	a3,a5,400d6318 <s31_sha_process+0x120>
+400d6316:	58d8                	lw	a4,52(s1)
+400d6318:	800007b7          	lui	a5,0x80000
+400d631c:	17fd                	addi	a5,a5,-1 # 7fffffff <_s31_fsheap_end+0x2effffff>
+400d631e:	c9cb8593          	addi	a1,s7,-868
+400d6322:	1405a6af          	lr.w.aq	a3,(a1)
+400d6326:	00f69563          	bne	a3,a5,400d6330 <s31_sha_process+0x138>
+400d632a:	18e5a62f          	sc.w	a2,a4,(a1)
+400d632e:	fa75                	bnez	a2,400d6322 <s31_sha_process+0x12a>
+400d6330:	28f68763          	beq	a3,a5,400d65be <s31_sha_process+0x3c6>
+400d6334:	c9cb8513          	addi	a0,s7,-868
+400d6338:	eff520ef          	jal	40029236 <nxsem_wait_slow>
+400d633c:	84aa                	mv	s1,a0
+400d633e:	28055063          	bgez	a0,400d65be <s31_sha_process+0x3c6>
+400d6342:	00450793          	addi	a5,a0,4
+400d6346:	d395                	beqz	a5,400d626a <s31_sha_process+0x72>
+400d6348:	07d50793          	addi	a5,a0,125
+400d634c:	df99                	beqz	a5,400d626a <s31_sha_process+0x72>
+400d634e:	50b6                	lw	ra,108(sp)
+400d6350:	5426                	lw	s0,104(sp)
+400d6352:	5906                	lw	s2,96(sp)
+400d6354:	49f6                	lw	s3,92(sp)
+400d6356:	4a66                	lw	s4,88(sp)
+400d6358:	4ad6                	lw	s5,84(sp)
+400d635a:	4b46                	lw	s6,80(sp)
+400d635c:	4bb6                	lw	s7,76(sp)
+400d635e:	4c26                	lw	s8,72(sp)
+400d6360:	4c96                	lw	s9,68(sp)
+400d6362:	4d06                	lw	s10,64(sp)
+400d6364:	8526                	mv	a0,s1
+400d6366:	5496                	lw	s1,100(sp)
+400d6368:	6165                	addi	sp,sp,112
+400d636a:	8082                	ret
+400d636c:	11442783          	lw	a5,276(s0)
+400d6370:	00f70c63          	beq	a4,a5,400d6388 <s31_sha_process+0x190>
+400d6374:	4000                	lw	s0,0(s0)
+400d6376:	f87d                	bnez	s0,400d636c <s31_sha_process+0x174>
+400d6378:	004c2783          	lw	a5,4(s8)
+400d637c:	8b91                	andi	a5,a5,4
+400d637e:	efad                	bnez	a5,400d63f8 <s31_sha_process+0x200>
+400d6380:	4601                	li	a2,0
+400d6382:	23700593          	li	a1,567
+400d6386:	bf09                	j	400d6298 <s31_sha_process+0xa0>
+400d6388:	11d44703          	lbu	a4,285(s0)
+400d638c:	00ca2783          	lw	a5,12(s4)
+400d6390:	fef714e3          	bne	a4,a5,400d6378 <s31_sha_process+0x180>
+400d6394:	12544783          	lbu	a5,293(s0)
+400d6398:	f3e5                	bnez	a5,400d6378 <s31_sha_process+0x180>
+400d639a:	00099863          	bnez	s3,400d63aa <s31_sha_process+0x1b2>
+400d639e:	11c44783          	lbu	a5,284(s0)
+400d63a2:	00c92703          	lw	a4,12(s2)
+400d63a6:	fcf749e3          	blt	a4,a5,400d6378 <s31_sha_process+0x180>
+400d63aa:	a28ff0ef          	jal	400d55d2 <esp_crypto_sha_aes_lock_acquire>
+400d63ae:	eef32097          	auipc	ra,0xeef32
+400d63b2:	3cc080e7          	jalr	972(ra) # 2f00877a <periph_rcc_enter>
+400d63b6:	205877b7          	lui	a5,0x20587
+400d63ba:	00078793          	mv	a5,a5
+400d63be:	4fb8                	lw	a4,88(a5)
+400d63c0:	04076713          	ori	a4,a4,64
+400d63c4:	cfb8                	sw	a4,88(a5)
+400d63c6:	9d3ff0ef          	jal	400d5d98 <sha_ll_reset_register>
+400d63ca:	eef32097          	auipc	ra,0xeef32
+400d63ce:	3bc080e7          	jalr	956(ra) # 2f008786 <periph_rcc_exit>
+400d63d2:	12042703          	lw	a4,288(s0)
+400d63d6:	205097b7          	lui	a5,0x20509
+400d63da:	c398                	sw	a4,0(a5)
+400d63dc:	12444783          	lbu	a5,292(s0)
+400d63e0:	c3b9                	beqz	a5,400d6426 <s31_sha_process+0x22e>
+400d63e2:	11044783          	lbu	a5,272(s0)
+400d63e6:	e3bd                	bnez	a5,400d644c <s31_sha_process+0x254>
+400d63e8:	06099d63          	bnez	s3,400d6462 <s31_sha_process+0x26a>
+400d63ec:	03492583          	lw	a1,52(s2)
+400d63f0:	8522                	mv	a0,s0
+400d63f2:	d11ff0ef          	jal	400d6102 <s31_sha_final>
+400d63f6:	a051                	j	400d647a <s31_sha_process+0x282>
+400d63f8:	c9cb8793          	addi	a5,s7,-868
+400d63fc:	439c                	lw	a5,0(a5)
+400d63fe:	80000737          	lui	a4,0x80000
+400d6402:	177d                	addi	a4,a4,-1 # 7fffffff <_s31_fsheap_end+0x2effffff>
+400d6404:	8ff9                	and	a5,a5,a4
+400d6406:	c9cb8593          	addi	a1,s7,-868
+400d640a:	1005a6af          	lr.w	a3,(a1)
+400d640e:	00f69563          	bne	a3,a5,400d6418 <s31_sha_process+0x220>
+400d6412:	1ae5a62f          	sc.w.rl	a2,a4,(a1)
+400d6416:	fa75                	bnez	a2,400d640a <s31_sha_process+0x212>
+400d6418:	00f68563          	beq	a3,a5,400d6422 <s31_sha_process+0x22a>
+400d641c:	8562                	mv	a0,s8
+400d641e:	dbe530ef          	jal	400299dc <nxsem_post_slow>
+400d6422:	54a9                	li	s1,-22
+400d6424:	b72d                	j	400d634e <s31_sha_process+0x156>
+400d6426:	11c44783          	lbu	a5,284(s0)
+400d642a:	205096b7          	lui	a3,0x20509
+400d642e:	01040713          	addi	a4,s0,16
+400d6432:	8389                	srli	a5,a5,0x2
+400d6434:	04068693          	addi	a3,a3,64 # 20509040 <CPU_APM+0x4440>
+400d6438:	fafb75e3          	bgeu	s6,a5,400d63e2 <s31_sha_process+0x1ea>
+400d643c:	430c                	lw	a1,0(a4)
+400d643e:	002b1613          	slli	a2,s6,0x2
+400d6442:	9636                	add	a2,a2,a3
+400d6444:	c20c                	sw	a1,0(a2)
+400d6446:	0b05                	addi	s6,s6,1
+400d6448:	0711                	addi	a4,a4,4
+400d644a:	b7fd                	j	400d6438 <s31_sha_process+0x240>
+400d644c:	12444783          	lbu	a5,292(s0)
+400d6450:	16078463          	beqz	a5,400d65b8 <s31_sha_process+0x3c0>
+400d6454:	8522                	mv	a0,s0
+400d6456:	b43ff0ef          	jal	400d5f98 <s31_sha_block>
+400d645a:	84aa                	mv	s1,a0
+400d645c:	e15d                	bnez	a0,400d6502 <s31_sha_process+0x30a>
+400d645e:	02098063          	beqz	s3,400d647e <s31_sha_process+0x286>
+400d6462:	004a2483          	lw	s1,4(s4)
+400d6466:	ccd1                	beqz	s1,400d6502 <s31_sha_process+0x30a>
+400d6468:	02492583          	lw	a1,36(s2)
+400d646c:	000a2783          	lw	a5,0(s4)
+400d6470:	8626                	mv	a2,s1
+400d6472:	8522                	mv	a0,s0
+400d6474:	95be                	add	a1,a1,a5
+400d6476:	bf3ff0ef          	jal	400d6068 <s31_sha_update>
+400d647a:	84aa                	mv	s1,a0
+400d647c:	a059                	j	400d6502 <s31_sha_process+0x30a>
+400d647e:	11044783          	lbu	a5,272(s0)
+400d6482:	d7ad                	beqz	a5,400d63ec <s31_sha_process+0x1f4>
+400d6484:	441c                	lw	a5,8(s0)
+400d6486:	11a45a03          	lhu	s4,282(s0)
+400d648a:	00c42b03          	lw	s6,12(s0)
+400d648e:	858a                	mv	a1,sp
+400d6490:	41478a33          	sub	s4,a5,s4
+400d6494:	0147b7b3          	sltu	a5,a5,s4
+400d6498:	8522                	mv	a0,s0
+400d649a:	40fb0b33          	sub	s6,s6,a5
+400d649e:	c65ff0ef          	jal	400d6102 <s31_sha_final>
+400d64a2:	84aa                	mv	s1,a0
+400d64a4:	e531                	bnez	a0,400d64f0 <s31_sha_process+0x2f8>
+400d64a6:	11a45603          	lhu	a2,282(s0)
+400d64aa:	4785                	li	a5,1
+400d64ac:	12f40223          	sb	a5,292(s0)
+400d64b0:	10c41c23          	sh	a2,280(s0)
+400d64b4:	c410                	sw	a2,8(s0)
+400d64b6:	0d040593          	addi	a1,s0,208
+400d64ba:	00042623          	sw	zero,12(s0)
+400d64be:	05040513          	addi	a0,s0,80
+400d64c2:	eef2a097          	auipc	ra,0xeef2a
+400d64c6:	6ce080e7          	jalr	1742(ra) # 2f000b90 <memcpy>
+400d64ca:	8522                	mv	a0,s0
+400d64cc:	acdff0ef          	jal	400d5f98 <s31_sha_block>
+400d64d0:	84aa                	mv	s1,a0
+400d64d2:	ed19                	bnez	a0,400d64f0 <s31_sha_process+0x2f8>
+400d64d4:	11c44603          	lbu	a2,284(s0)
+400d64d8:	858a                	mv	a1,sp
+400d64da:	8522                	mv	a0,s0
+400d64dc:	b8dff0ef          	jal	400d6068 <s31_sha_update>
+400d64e0:	84aa                	mv	s1,a0
+400d64e2:	e519                	bnez	a0,400d64f0 <s31_sha_process+0x2f8>
+400d64e4:	03492583          	lw	a1,52(s2)
+400d64e8:	8522                	mv	a0,s0
+400d64ea:	c19ff0ef          	jal	400d6102 <s31_sha_final>
+400d64ee:	84aa                	mv	s1,a0
+400d64f0:	01442423          	sw	s4,8(s0)
+400d64f4:	01642623          	sw	s6,12(s0)
+400d64f8:	04000593          	li	a1,64
+400d64fc:	850a                	mv	a0,sp
+400d64fe:	dcda60ef          	jal	4007d2ca <explicit_bzero>
+400d6502:	eef32097          	auipc	ra,0xeef32
+400d6506:	278080e7          	jalr	632(ra) # 2f00877a <periph_rcc_enter>
+400d650a:	88fff0ef          	jal	400d5d98 <sha_ll_reset_register>
+400d650e:	eef32097          	auipc	ra,0xeef32
+400d6512:	278080e7          	jalr	632(ra) # 2f008786 <periph_rcc_exit>
+400d6516:	8c8ff0ef          	jal	400d55de <esp_crypto_sha_aes_lock_release>
+400d651a:	e099                	bnez	s1,400d6520 <s31_sha_process+0x328>
+400d651c:	04099b63          	bnez	s3,400d6572 <s31_sha_process+0x37a>
+400d6520:	11c44683          	lbu	a3,284(s0)
+400d6524:	11044583          	lbu	a1,272(s0)
+400d6528:	4785                	li	a5,1
+400d652a:	12f402a3          	sb	a5,293(s0)
+400d652e:	400f7637          	lui	a2,0x400f7
+400d6532:	4418                	lw	a4,8(s0)
+400d6534:	445c                	lw	a5,12(s0)
+400d6536:	068e                	slli	a3,a3,0x3
+400d6538:	8826                	mv	a6,s1
+400d653a:	55460613          	addi	a2,a2,1364 # 400f7554 <__FUNCTION__.0>
+400d653e:	c5ad                	beqz	a1,400d65a8 <s31_sha_process+0x3b0>
+400d6540:	400e95b7          	lui	a1,0x400e9
+400d6544:	9e858593          	addi	a1,a1,-1560 # 400e89e8 <_flash_rodata_start+0x89c8>
+400d6548:	4519                	li	a0,6
+400d654a:	c6a300ef          	jal	400069b4 <nx_syslog>
+400d654e:	04000593          	li	a1,64
+400d6552:	0d040513          	addi	a0,s0,208
+400d6556:	d75a60ef          	jal	4007d2ca <explicit_bzero>
+400d655a:	08000593          	li	a1,128
+400d655e:	05040513          	addi	a0,s0,80
+400d6562:	d69a60ef          	jal	4007d2ca <explicit_bzero>
+400d6566:	04000593          	li	a1,64
+400d656a:	01040513          	addi	a0,s0,16
+400d656e:	d5da60ef          	jal	4007d2ca <explicit_bzero>
+400d6572:	004c2783          	lw	a5,4(s8)
+400d6576:	8b91                	andi	a5,a5,4
+400d6578:	e00784e3          	beqz	a5,400d6380 <s31_sha_process+0x188>
+400d657c:	c9cb8793          	addi	a5,s7,-868
+400d6580:	439c                	lw	a5,0(a5)
+400d6582:	80000737          	lui	a4,0x80000
+400d6586:	177d                	addi	a4,a4,-1 # 7fffffff <_s31_fsheap_end+0x2effffff>
+400d6588:	8ff9                	and	a5,a5,a4
+400d658a:	c9cb8593          	addi	a1,s7,-868
+400d658e:	1005a6af          	lr.w	a3,(a1)
+400d6592:	00f69563          	bne	a3,a5,400d659c <s31_sha_process+0x3a4>
+400d6596:	1ae5a62f          	sc.w.rl	a2,a4,(a1)
+400d659a:	fa75                	bnez	a2,400d658e <s31_sha_process+0x396>
+400d659c:	daf689e3          	beq	a3,a5,400d634e <s31_sha_process+0x156>
+400d65a0:	8562                	mv	a0,s8
+400d65a2:	c3a530ef          	jal	400299dc <nxsem_post_slow>
+400d65a6:	b365                	j	400d634e <s31_sha_process+0x156>
+400d65a8:	400e95b7          	lui	a1,0x400e9
+400d65ac:	a1458593          	addi	a1,a1,-1516 # 400e8a14 <_flash_rodata_start+0x89f4>
+400d65b0:	4519                	li	a0,6
+400d65b2:	c02300ef          	jal	400069b4 <nx_syslog>
+400d65b6:	b755                	j	400d655a <s31_sha_process+0x362>
+400d65b8:	ec0986e3          	beqz	s3,400d6484 <s31_sha_process+0x28c>
+400d65bc:	b55d                	j	400d6462 <s31_sha_process+0x26a>
+400d65be:	2f0187b7          	lui	a5,0x2f018
+400d65c2:	00092703          	lw	a4,0(s2)
+400d65c6:	3f87a403          	lw	s0,1016(a5) # 2f0183f8 <g_sha_sessions>
+400d65ca:	b375                	j	400d6376 <s31_sha_process+0x17e>

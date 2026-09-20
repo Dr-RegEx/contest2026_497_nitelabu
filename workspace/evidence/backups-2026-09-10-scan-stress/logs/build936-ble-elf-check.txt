@@ -1,0 +1,53 @@
+All 54 pinned OSAL wrappers have strong archive definitions.
+Original bttool_main, bt_enable_mc, h4_drv_api, bt_service_init and bt_sal_le_enable retained.
+nxsem_trywait_slow: 2f008d02
+nxsem_post_slow: 2f008bf6
+clock_systime_ticks: 2f008d5e
+wd_start: 2f008dd8
+wd_cancel: 2f008e64
+nxsched_switch: 2f008f8e
+wr_btdm_osal_rand: 2f003196
+There are 35 section headers, starting at offset 0x1afb24:
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .rtc.text         PROGBITS        2e000000 11ee1c 000000 00   W  0   0  1
+  [ 2] .rtc.force_fast   PROGBITS        2e000000 11ee1c 000000 00   W  0   0  1
+  [ 3] .rtc.data         PROGBITS        2e000000 001000 000018 00  WA  0   0  8
+  [ 4] .rtc_noinit       PROGBITS        2e000018 11ee1c 000000 00   W  0   0  1
+  [ 5] .rtc.force_slow   PROGBITS        2e000018 11ee1c 000000 00   W  0   0  1
+  [ 6] .rtc_reserved     NOBITS          2e007fe8 001fe8 000018 00  WA  0   0  8
+  [ 7] .iram0.text       PROGBITS        2f000000 002000 011132 00  AX  0   0 256
+  [ 8] .iram0.text_end   NOBITS          2f011132 013132 00004e 00  WA  0   0  1
+  [ 9] .iram0.data       PROGBITS        2f011180 11ee1c 000000 00   W  0   0  1
+  [10] .iram0.bss        PROGBITS        2f011180 11ee1c 000000 00   W  0   0  1
+  [11] .dram0.dummy      PROGBITS        2f011180 11ee1c 000000 00   W  0   0  1
+  [12] .dram0.data       PROGBITS        2f011180 013180 0028ec 00  WA  0   0 64
+  [13] .noinit           NOBITS          2f013a6c 000000 000000 00  WA  0   0  1
+  [14] .dram0.bss        NOBITS          2f013a70 015a6c 009cf4 00  WA  0   0 16
+  [15] .flash.text       PROGBITS        40000100 016100 0e9332 00  AX  0   0 256
+  [16] .flash_rodata_dummy NOBITS          40000020 016020 0f0000 00  WA  0   0  1
+  [17] .flash.appdesc    PROGBITS        400f0020 11ee20 000000 00   W  0   0 16
+  [18] .flash.rodata     PROGBITS        400f0020 100020 01edc0 00   A  0   0 16
+  [19] .flash.init_array INIT_ARRAY      4010ede0 11ede0 00003c 04  WA  0   0  4
+  [20] .flash.tdata      PROGBITS        4010ee1c 11ee20 000000 00   W  0   0  1
+  [21] .debug_aranges    PROGBITS        00000000 11ee20 000180 00      0   0  1
+  [22] .debug_info       PROGBITS        00000000 11efa0 005548 00      0   0  1
+  [23] .debug_abbrev     PROGBITS        00000000 1244e8 0012d2 00      0   0  1
+  [24] .debug_line       PROGBITS        00000000 1257ba 00e481 00      0   0  1
+  [25] .debug_frame      PROGBITS        00000000 133c3c 000308 00      0   0  4
+  [26] .debug_str        PROGBITS        00000000 133f44 0008d2 01  MS  0   0  1
+  [27] .debug_line_str   PROGBITS        00000000 134816 0004d3 01  MS  0   0  1
+  [28] .debug_loclists   PROGBITS        00000000 134ce9 00d591 00      0   0  1
+  [29] .debug_rnglists   PROGBITS        00000000 14227a 000bb3 00      0   0  1
+  [30] .comment          PROGBITS        00000000 142e2d 000060 01  MS  0   0  1
+  [31] .riscv.attributes RISCV_ATTRIBUTES 00000000 142e8d 000073 00      0   0  1
+  [32] .symtab           SYMTAB          00000000 142f00 039640 10     33 7861  4
+  [33] .strtab           STRTAB          00000000 17c540 033425 00      0   0  1
+  [34] .shstrtab         STRTAB          00000000 1af965 0001bc 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  D (mbind), p (processor specific)

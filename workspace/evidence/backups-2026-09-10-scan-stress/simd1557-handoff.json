@@ -1,0 +1,9 @@
+{
+  "build_session": 63065,
+  "build_log": "backups/2026-09-10-scan-stress/logs/build1557-pie-affinity.log",
+  "board_receipt": "build1555-pie-test.sha256",
+  "last_test": "1556 failed at first esp.vld on CPU0; task fault, NSH returned",
+  "change": "create workers with CPU1 pthread attributes; retain self affinity and check sched_getcpu before first PIE opcode",
+  "next": "check1557 build terminal; flash1557 and run simd1558-target.py; do not overwrite1556 log",
+  "pass_count": "70/88 unchanged"
+}

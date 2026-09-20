@@ -1,0 +1,16 @@
+--- CMD: s31simd ---
+s31simd
+SIMD worker=1 initial_cpu=0
+SIMD worker=2 initial_cpu=0
+SIMD worker=1 affinity_switches=20 PASS
+SIMD worker=1 cpu=1
+SIMD worker=2 affinity_switches=20 PASS
+SIMD worker=2 cpu=1
+SIMD INT8 dot16 worker=1 checked=100 PASS
+SIMD INT8 dot16 worker=2 checked=100 PASS
+SIMD CPU1 worker=1 completed=100 error=0
+SIMD CPU1 worker=2 completed=100 error=0
+SIMD arithmetic and full-bank sleep-switch: PASS
+nsh> [K
+nsh> [K
+SIMD1633_REGRESSION_RETURNED

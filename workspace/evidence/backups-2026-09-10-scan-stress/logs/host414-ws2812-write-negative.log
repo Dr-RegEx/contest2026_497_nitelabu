@@ -1,0 +1,9 @@
+test: /tmp/esp-ws2812-write-2yys26kt/test.c:49: map_leds_to_words: Assertion `dst == words + expected_offset && count == expected_count' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_ws2812_write.py", line 151, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_ws2812_write.py", line 147, in main
+    subprocess.run([str(path / "test")], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-ws2812-write-2yys26kt/test']' died with <Signals.SIGABRT: 6>.

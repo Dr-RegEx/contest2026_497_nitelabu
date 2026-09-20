@@ -1,0 +1,18 @@
+{
+  "status": "LOCAL_CALLBACKS_VERIFIED",
+  "scope": "DEVELOPMENT_DIAGNOSTIC_NOT_XTS_PASS",
+  "candidate": 1725,
+  "steps": [
+    "ttyHCI0",
+    "enable/state=2",
+    "adv start/stop",
+    "scan start/stop",
+    "scan results observed",
+    "disable/state=0",
+    "quit returned nsh prompt"
+  ],
+  "peer_observation": false,
+  "repetition_requirements": false,
+  "log": "backups/2026-09-10-scan-stress/ble1725-board-basic/uart.log",
+  "note": "bttool quit normally returns directly to nsh; no error or reset was observed. This is board-local callback evidence, not a formal xTS peer/repetition pass."
+}

@@ -1,0 +1,58 @@
+{
+  "name": "common-1.2.2",
+  "keys": [
+    "common:1.2.2"
+  ],
+  "profile": "demo-rmt-netapps-competition",
+  "sources": [
+    "apps/nshlib/nsh_syscmds.c"
+  ],
+  "evidence_ids": [
+    1580
+  ],
+  "note": "通过依据为用户按实体 RESET 后启动正常；不替代 2.1.3 的 10 次真实 USB 上下电计时。",
+  "original": "1.2.2",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/physical1580-reset.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/physical1580-reset.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "Cold boot启动异常测试",
+  "original_line": 453,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/nsh_syscmds.c",
+      "origin": "apps/nshlib/nsh_syscmds.c"
+    }
+  ],
+  "local_config": "config/demo-rmt-netapps-competition/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/physical1580-reset.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/physical1580-reset.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1580-physical-reset-pass/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/physical1580-reset.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/physical1580-reset.log"
+    }
+  ]
+}

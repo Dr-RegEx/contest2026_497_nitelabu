@@ -1,0 +1,112 @@
+ M arch/risc-v/src/common/espressif/esp_allocateheap.c
+ M arch/risc-v/src/common/espressif/esp_irq.c
+ M arch/risc-v/src/common/espressif/esp_rtc.c
+ M arch/risc-v/src/common/espressif/esp_spiflash_mtd.c
+ M arch/risc-v/src/common/espressif/esp_start.c
+ M arch/risc-v/src/common/espressif/esp_wifi_utils.c
+ M arch/risc-v/src/common/espressif/esp_wlan.c
+ M arch/risc-v/src/common/riscv_swint.c
+ M arch/risc-v/src/esp32c6/esp_wifi_adapter.c
+ M arch/risc-v/src/esp32s31/CMakeLists.txt
+ M arch/risc-v/src/esp32s31/Kconfig
+ M arch/risc-v/src/esp32s31/Make.defs
+ M arch/risc-v/src/esp32s31/esp32s31_monstat.c
+ M arch/risc-v/src/esp32s31/esp32s31_supervisor.S
+ M arch/risc-v/src/esp32s31/hal_esp32s31.cmake
+ M arch/risc-v/src/esp32s31/include/irq.h
+ M arch/risc-v/src/esp32s31/include/sdkconfig.h
+ M boards/risc-v/esp32s31/common/scripts/esp32s31_sections.ld
+ M boards/risc-v/esp32s31/esp32s31-core-function-board/Kconfig
+ M boards/risc-v/esp32s31/esp32s31-core-function-board/README.md
+ M boards/risc-v/esp32s31/esp32s31-core-function-board/src/CMakeLists.txt
+ M boards/risc-v/esp32s31/esp32s31-core-function-board/src/Make.defs
+ M boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31-core-function-board.h
+ M boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_bringup.c
+ M boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_reset.c
+ M crypto/Kconfig
+ M crypto/crypto.c
+ M crypto/ecc.c
+ M drivers/audio/es8311.c
+ M drivers/sensors/bmi160.c
+ M drivers/sensors/bmi160_base.c
+ M drivers/sensors/bmi160_base.h
+ M drivers/sensors/bmi160_uorb.c
+ M include/nuttx/crypto/crypto.h
+ M mm/kasan/CMakeLists.txt
+ M mm/umm_heap/umm_initialize.c
+?? arch/risc-v/src/esp32s31/esp32s31_adc.c
+?? arch/risc-v/src/esp32s31/esp32s31_ble.c
+?? arch/risc-v/src/esp32s31/esp32s31_ble_controller.c
+?? arch/risc-v/src/esp32s31/esp32s31_ble_osal.c
+?? arch/risc-v/src/esp32s31/esp32s31_bluetooth.cmake
+?? arch/risc-v/src/esp32s31/esp32s31_btbb.c
+?? arch/risc-v/src/esp32s31/esp32s31_crypto.c
+?? arch/risc-v/src/esp32s31/esp32s31_ecc.c
+?? arch/risc-v/src/esp32s31/esp32s31_ecdsa.c
+?? arch/risc-v/src/esp32s31/esp32s31_ecdsa.h
+?? arch/risc-v/src/esp32s31/esp32s31_heap.c
+?? arch/risc-v/src/esp32s31/esp32s31_heap.h
+?? arch/risc-v/src/esp32s31/esp32s31_i2s.c
+?? arch/risc-v/src/esp32s31/esp32s31_i2s.h
+?? arch/risc-v/src/esp32s31/esp32s31_pwm.c
+?? arch/risc-v/src/esp32s31/esp32s31_pwm.h
+?? arch/risc-v/src/esp32s31/esp32s31_rtc_periodic.c
+?? arch/risc-v/src/esp32s31/esp32s31_rtc_periodic.h
+?? arch/risc-v/src/esp32s31/esp32s31_sha.c
+?? arch/risc-v/src/esp32s31/esp32s31_sha.h
+?? arch/risc-v/src/esp32s31/esp32s31_usbdev.c
+?? arch/risc-v/src/esp32s31/esp32s31_wdt.c
+?? arch/risc-v/src/esp32s31/esp32s31_wdt.h
+?? arch/risc-v/src/esp32s31/hardware/esp32s31_otg.h
+?? arch/risc-v/src/esp32s31/include/esp32s31_bt_config.h
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-arp-learn-he/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-arp-learn/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-arp-queue/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-he/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-mqueue/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-netapps-competition/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-netapps-iperf/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-netapps-ssh/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-netapps/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-tcpdiag/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-aes-modes/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-aes/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-crypto/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-ecc/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-ecdsa/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-hmac/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-sha/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-standby/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production-cpu0/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production-regression/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/wifi-flat/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-adc/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-audio/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-ble/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-bmi160-uorb/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-bmi160/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-bttool/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-category-fs-flash/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-category-fs-perf/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-category-fs/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-category-kv/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-flash-raw/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-flash/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-gpio/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-pwm/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-rtc/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-usb-adb/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-wdt/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat/defconfig
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_audio.c
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_bmi160.c
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_bmi160_uorb.c
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_mqueue_test.c
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_pwm.c
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_xts_flash.c
+?? boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_xts_gpio.c
+?? tools/espressif/esp32s31_mqueue_smoke.py
+?? tools/test_esp32s31_arp_diag.py
+?? tools/test_esp32s31_mqueue_smoke.py
+?? tools/test_esp32s31_tcp_synack_diag.py
+?? tools/test_esp32s31_wifi_latency.py

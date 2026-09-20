@@ -1,0 +1,17 @@
+# Generic S31 master <-> ESP32-C6 slave protocol fixture.
+# This profile is intentionally separate from the BMI160 xTS image.
+# S31 I2C0: GPIO45=SCL, GPIO46=SDA; C6 fixture address: 0x68.
+# The NuttX i2c command is enabled for direct protocol verification.
+#include "../xts-flat-rtc/defconfig"
+
+CONFIG_ESPRESSIF_I2C0=y
+CONFIG_ESPRESSIF_I2C0_SCLPIN=45
+CONFIG_ESPRESSIF_I2C0_SDAPIN=46
+CONFIG_I2C=y
+CONFIG_I2C_DRIVER=y
+CONFIG_I2C_RESET=y
+CONFIG_SYSTEM_I2CTOOL=y
+CONFIG_I2CTOOL_MAXBUS=0
+CONFIG_I2CTOOL_DEFFREQ=100000
+CONFIG_DEBUG_I2C=y
+CONFIG_DEBUG_I2C_ERROR=y

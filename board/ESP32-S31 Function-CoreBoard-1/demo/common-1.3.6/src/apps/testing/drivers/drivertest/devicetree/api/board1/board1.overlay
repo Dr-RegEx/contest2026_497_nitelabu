@@ -1,0 +1,124 @@
+/****************************************************************************
+ * apps/testing/drivers/drivertest/devicetree/api/board1/board1.overlay
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.  The
+ * ASF licenses this file to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the
+ * License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ *
+ ****************************************************************************/
+
+/ {
+	test {
+		test_foreach: test-foreach-1 {
+			compatible = "vnd,foreach-test";
+			status = "okay";
+			label_device_1: device_1 {
+				compatible = "vnd,foreach-test";
+				status = "okay";
+				device_id = <0>;
+				m_device_enable = <1>;
+				m_device_bits = <16>;
+				gpios = <&test_gpio_1 21 32>;
+				label_child_1_1: child_1_1 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <0>;
+					m_child_enable = <1>;
+					m_child_bits = <1>;
+					m_child_idx = <1>;
+				};
+				label_child_1_2: child_1_2 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <1>;
+					m_child_enable = <0>;
+					m_child_bits = <2>;
+					m_child_idx = <2>;
+				};
+			};
+			label_device_2: device_2 {
+				compatible = "vnd,foreach-test";
+				status = "okay";
+				device_id = <1>;
+				m_device_enable = <2>;
+				m_device_bits = <32>;
+				gpios = <&test_gpio_1 11 56>;
+				label_child_2_1: child_2_1 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <0>;
+					m_child_enable = <1>;
+					m_child_bits = <4>;
+					m_child_idx = <3>;
+				};
+				label_child_2_2: child_2_2 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <1>;
+					m_child_enable = <1>;
+					m_child_bits = <8>;
+					m_child_idx = <4>;
+				};
+			};
+			label_device_3: device_3 {
+				compatible = "vnd,foreach-test";
+				status = "okay";
+				device_id = <2>;
+				m_device_enable = <4>;
+				m_device_bits = <64>;
+				gpios = <&test_gpio_2 23 35>;
+				label_child_3_1: child_3_1 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <0>;
+					m_child_enable = <0>;
+					m_child_bits = <16>;
+					m_child_idx = <5>;
+				};
+				label_child_3_2: child_3_2 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <1>;
+					m_child_enable = <0>;
+					m_child_bits = <32>;
+					m_child_idx = <6>;
+				};
+			};
+			label_device_4: device_4 {
+				compatible = "vnd,foreach-test";
+				status = "okay";
+				device_id = <3>;
+				m_device_enable = <4>;
+				m_device_bits = <64>;
+				gpios = <&test_gpio_2 24 37>;
+				label_child_4_1: child_4_1 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <0>;
+					m_child_enable = <0>;
+					m_child_bits = <64>;
+					m_child_idx = <7>;
+				};
+				label_child_4_2: child_4_2 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <1>;
+					m_child_enable = <1>;
+					m_child_bits = <128>;
+					m_child_idx = <8>;
+				};
+			};
+		};
+	};
+};

@@ -1,0 +1,11 @@
+{
+  "case": "4.1.31",
+  "status": "PASS",
+  "run": 1341,
+  "review": 1342,
+  "receipt": "build1332-network-dns.sha256",
+  "before": "public ping10/10",
+  "after": "DNS send failed ENETUNREACH(-101), public ping cannot resolve; expected after disconnect",
+  "system": "subsequent ifconfig/free responsive; no panic/reset",
+  "review_reason": "Harness failed to recognize actual DNS unreachable wording; original failed result preserved; no rerun."
+}

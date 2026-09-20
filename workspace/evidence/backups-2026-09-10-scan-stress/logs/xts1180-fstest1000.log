@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/run1157-fstest1000.py", line 126, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/run1157-fstest1000.py", line 67, in main
+    kv.check_mount_evidence(args.mount_evidence.read_text(), receipt, digest)
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 95, in check_mount_evidence
+    require(mounted, 'no explicit scratch LittleFS mount in evidence')
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: no explicit scratch LittleFS mount in evidence

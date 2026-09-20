@@ -1,0 +1,491 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1102-flat-category-fs-sync.sha256
+XTS_SCOPE=5.1.16 observation; n=100 s=1; stop after first full outer iteration
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        179         589 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/frag1164
+--- CMD: mkdir /data/frag1164 ---
+mkdir /data/frag1164
+nsh> [K
+nsh> [K
+XTS_COMMAND=vela_fs_file_fragmentation_test -d /data/frag1164 -n 100 -s 1 &
+--- CMD: vela_fs_file_fragmentation_test -d /data/frag1164 -n 100 -s 1 & ---
+vela_fs_file_fragmentation_test -d /data/frag1164 -n 100 -s 1 &
+cleanning up, test begin in 5s!
+vela_fs_file_fragmentation_test [10:100]
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+   10    10 255 RR       Task      - Waiting  Signal    0000000000000000 0032632 vela_fs_file_fragmentation_test -d /data/frag1164 -n 100 -s 1
+nsh> [K
+nsh> [K
+XTS_TARGET_PID=10
+[TEST NO.0] Create some small files !
+[Create] : /data/frag1164/Fragment_test_0_5_0
+[Create] : /data/frag1164/Fragment_test_1_55EkArfO_1
+[Create] : /data/frag1164/Fragment_test_0_1lpmV_2
+[Create] : /data/frag1164/Fragment_test_1_YBjLU_3
+[Create] : /data/frag1164/Fragment_test_0_YB_4
+[Create] : /data/frag1164/Fragment_test_1_UR_5
+[Create] : /data/frag1164/Fragment_test_0_mz29AdThx_6
+[Create] : /data/frag1164/Fragment_test_1_mz29AdThx_7
+[Create] : /data/frag1164/Fragment_test_0_jPW3yW_8
+[Create] : /data/frag1164/Fragment_test_1_f5ROMp_9
+[Create] : /data/frag1164/Fragment_test_0_sPa_10
+[Create] : /data/frag1164/Fragment_test_1_oKP_11
+[Create] : /data/frag1164/Fragment_test_0_k0K2pXFieG_12
+[Create] : /data/frag1164/Fragment_test_1_ggEMv2gH8H_13
+[Create] : /data/frag1164/Fragment_test_0_l2Fe9VS_14
+[Create] : /data/frag1164/Fragment_test_1_iiz86ha_15
+[Create] : /data/frag1164/Fragment_test_0_QvUJ_16
+[Create] : /data/frag1164/Fragment_test_1_M_17
+[Create] : /data/frag1164/Fragment_test_0_J_18
+[Create] : /data/frag1164/Fragment_test_1_J2z9mnQh_19
+[Create] : /data/frag1164/Fragment_test_0_A3hSxDZ0_20
+[Create] : /data/frag1164/Fragment_test_1_wkx1Y_21
+[Create] : /data/frag1164/Fragment_test_0_tAsM2_22
+[Create] : /data/frag1164/Fragment_test_1_pD_23
+[Create] : /data/frag1164/Fragment_test_0_lT_24
+[Create] : /data/frag1164/Fragment_test_1_6uqKbbWhw_25
+[Create] : /data/frag1164/Fragment_test_0_YE05tYtlC_26
+[Create] : /data/frag1164/Fragment_test_1_YE05tY_27
+[Create] : /data/frag1164/Fragment_test_0_Hi3Wca_28
+[Create] : /data/frag1164/Fragment_test_1_Ezj_29
+[Create] : /data/frag1164/Fragment_test_0_hsh_30
+[Create] : /data/frag1164/Fragment_test_1_3hXXlDbNx8_31
+[Create] : /data/frag1164/Fragment_test_0_VELg1bv42s_32
+[Create] : /data/frag1164/Fragment_test_1_VELg1bv_33
+[Create] : /data/frag1164/Fragment_test_0_NPlB_34
+[Create] : /data/frag1164/Fragment_test_1_NPlB_35
+[Create] : /data/frag1164/Fragment_test_0_w_36
+[Create] : /data/frag1164/Fragment_test_1_B_37
+[Create] : /data/frag1164/Fragment_test_0_xvOJx3n8_38
+[Create] : /data/frag1164/Fragment_test_1_pGofb6tM_39
+[Create] : /data/frag1164/Fragment_test_0_ic3Fw_40
+[Create] : /data/frag1164/Fragment_test_1_etYqB_41
+[Create] : /data/frag1164/Fragment_test_0_5u_42
+[Create] : /data/frag1164/Fragment_test_1_TT_43
+[Create] : /data/frag1164/Fragment_test_0_CUG8OkhUN_44
+[Create] : /data/frag1164/Fragment_test_1_Ty5tSmH2W_45
+[Create] : /data/frag1164/Fragment_test_0_BHbAM1_46
+[Create] : /data/frag1164/Fragment_test_1_yXVgnr_47
+[Create] : /data/frag1164/Fragment_test_0_pYE_48
+[Create] : /data/frag1164/Fragment_test_1_lez_49
+[Create] : /data/frag1164/Fragment_test_0_qqfmpQ9mZN_50
+[Create] : /data/frag1164/Fragment_test_1_jW59tai_51
+[Create] : /data/frag1164/Fragment_test_0_a7EuLXP_52
+[Create] : /data/frag1164/Fragment_test_1_4GLJ_53
+[Create] : /data/frag1164/Fragment_test_0_MYyg_54
+[Create] : /data/frag1164/Fragment_test_1_J_55
+[Create] : /data/frag1164/Fragment_test_0_B_56
+[Create] : /data/frag1164/Fragment_test_1_ww5MfcjH_57
+[Create] : /data/frag1164/Fragment_test_0_p3fa96Ji_58
+[Create] : /data/frag1164/Fragment_test_1_lj1cZ_59
+[Create] : /data/frag1164/Fragment_test_0_0I0HJ_60
+[Create] : /data/frag1164/Fragment_test_1_U7_61
+[Create] : /data/frag1164/Fragment_test_0_ND_62
+[Create] : /data/frag1164/Fragment_test_1_A1BR1kHBi_63
+[Create] : /data/frag1164/Fragment_test_0_r3Paqbftl_64
+[Create] : /data/frag1164/Fragment_test_1_ojzI8Z_65
+[Create] : /data/frag1164/Fragment_test_0_dM0OfH_66
+[Create] : /data/frag1164/Fragment_test_1_Wrx_67
+[Create] : /data/frag1164/Fragment_test_0_L9fLrA3I4a_68
+[Create] : /data/frag1164/Fragment_test_1_GU35MdomJ3_69
+[Create] : /data/frag1164/Fragment_test_0_vI8nCY9_70
+[Create] : /data/frag1164/Fragment_test_1_nSzZajJ_71
+[Create] : /data/frag1164/Fragment_test_0_2DOO_72
+[Create] : /data/frag1164/Fragment_test_1_2DOO_73
+[Create] : /data/frag1164/Fragment_test_0_b_74
+[Create] : /data/frag1164/Fragment_test_1_D_75
+[Create] : /data/frag1164/Fragment_test_0_v9gecebd_76
+[Create] : /data/frag1164/Fragment_test_1_nbY6hBnI_77
+[Create] : /data/frag1164/Fragment_test_0_cXyib_78
+[Create] : /data/frag1164/Fragment_test_1_7SJl3_79
+[Create] : /data/frag1164/Fragment_test_0_Qn_80
+[Create] : /data/frag1164/Fragment_test_1_ND_81
+[Create] : /data/frag1164/Fragment_test_0_A4icAA0je_82
+[Create] : /data/frag1164/Fragment_test_1_xk4dVIw5z_83
+[Create] : /data/frag1164/Fragment_test_0_IsIYsu_84
+[Create] : /data/frag1164/Fragment_test_1_kkL_85
+[Create] : /data/frag1164/Fragment_test_0_8Be_86
+[Create] : /data/frag1164/Fragment_test_1_4R9giO5hZB_87
+[Create] : /data/frag1164/Fragment_test_0_W34QyikRVE_88
+[Create] : /data/frag1164/Fragment_test_1_FHg3sfIM_89
+[Create] : /data/frag1164/Fragment_test_0_7SI8Q978_90
+[Create] : /data/frag1164/Fragment_test_1_0AFEk_91
+[Create] : /data/frag1164/Fragment_test_0_UeMId_92
+[Create] : /data/frag1164/Fragment_test_1_HC_93
+[Create] : /data/frag1164/Fragment_test_0_vU_94
+[Create] : /data/frag1164/Fragment_test_1_n5tZKiT3i_95
+[Create] : /data/frag1164/Fragment_test_0_8Y5qbRqPp_96
+[Create] : /data/frag1164/Fragment_test_1_8Y5qbR_97
+[Create] : /data/frag1164/Fragment_test_0_MyjPPf_98
+[Create] : /data/frag1164/Fragment_test_1_llW_99
+Create a total of 100 files
+Delete odd prefixed files !
+[Delete] : /data/frag1164/Fragment_test_1_0AFEk_91
+[Delete] : /data/frag1164/Fragment_test_1_2DOO_73
+[Delete] : /data/frag1164/Fragment_test_1_3hXXlDbNx8_31
+[Delete] : /data/frag1164/Fragment_test_1_4GLJ_53
+[Delete] : /data/frag1164/Fragment_test_1_4R9giO5hZB_87
+[Delete] : /data/frag1164/Fragment_test_1_55EkArfO_1
+[Delete] : /data/frag1164/Fragment_test_1_6uqKbbWhw_25
+[Delete] : /data/frag1164/Fragment_test_1_7SJl3_79
+[Delete] : /data/frag1164/Fragment_test_1_8Y5qbR_97
+[Delete] : /data/frag1164/Fragment_test_1_A1BR1kHBi_63
+[Delete] : /data/frag1164/Fragment_test_1_B_37
+[Delete] : /data/frag1164/Fragment_test_1_D_75
+[Delete] : /data/frag1164/Fragment_test_1_Ezj_29
+[Delete] : /data/frag1164/Fragment_test_1_FHg3sfIM_89
+[Delete] : /data/frag1164/Fragment_test_1_GU35MdomJ3_69
+[Delete] : /data/frag1164/Fragment_test_1_HC_93
+[Delete] : /data/frag1164/Fragment_test_1_J2z9mnQh_19
+[Delete] : /data/frag1164/Fragment_test_1_J_55
+[Delete] : /data/frag1164/Fragment_test_1_M_17
+[Delete] : /data/frag1164/Fragment_test_1_ND_81
+[Delete] : /data/frag1164/Fragment_test_1_NPlB_35
+[Delete] : /data/frag1164/Fragment_test_1_TT_43
+[Delete] : /data/frag1164/Fragment_test_1_Ty5tSmH2W_45
+[Delete] : /data/frag1164/Fragment_test_1_U7_61
+[Delete] : /data/frag1164/Fragment_test_1_UR_5
+[Delete] : /data/frag1164/Fragment_test_1_VELg1bv_33
+[Delete] : /data/frag1164/Fragment_test_1_Wrx_67
+[Delete] : /data/frag1164/Fragment_test_1_YBjLU_3
+[Delete] : /data/frag1164/Fragment_test_1_YE05tY_27
+[Delete] : /data/frag1164/Fragment_test_1_etYqB_41
+[Delete] : /data/frag1164/Fragment_test_1_f5ROMp_9
+[Delete] : /data/frag1164/Fragment_test_1_ggEMv2gH8H_13
+[Delete] : /data/frag1164/Fragment_test_1_iiz86ha_15
+[Delete] : /data/frag1164/Fragment_test_1_jW59tai_51
+[Delete] : /data/frag1164/Fragment_test_1_kkL_85
+[Delete] : /data/frag1164/Fragment_test_1_lez_49
+[Delete] : /data/frag1164/Fragment_test_1_lj1cZ_59
+[Delete] : /data/frag1164/Fragment_test_1_llW_99
+[Delete] : /data/frag1164/Fragment_test_1_mz29AdThx_7
+[Delete] : /data/frag1164/Fragment_test_1_n5tZKiT3i_95
+[Delete] : /data/frag1164/Fragment_test_1_nSzZajJ_71
+[Delete] : /data/frag1164/Fragment_test_1_nbY6hBnI_77
+[Delete] : /data/frag1164/Fragment_test_1_oKP_11
+[Delete] : /data/frag1164/Fragment_test_1_ojzI8Z_65
+[Delete] : /data/frag1164/Fragment_test_1_pD_23
+[Delete] : /data/frag1164/Fragment_test_1_pGofb6tM_39
+[Delete] : /data/frag1164/Fragment_test_1_wkx1Y_21
+[Delete] : /data/frag1164/Fragment_test_1_ww5MfcjH_57
+[Delete] : /data/frag1164/Fragment_test_1_xk4dVIw5z_83
+[Delete] : /data/frag1164/Fragment_test_1_yXVgnr_47
+Delete total 50
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.0  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.1  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.2  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.3  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.4  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.5  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.6  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.7  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.8  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.9  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.10  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.11  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.12  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.13  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.14  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.15  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.16  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.17  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.18  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.19  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.20  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.21  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.22  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.23  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.24  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.25  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.26  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.27  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.28  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.29  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.30  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.31  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.32  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.33  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.34  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.35  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.36  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.37  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.38  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.39  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.40  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.41  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.42  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.43  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.44  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.45  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.46  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.47  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.48  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.49  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.50  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.51  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.52  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.53  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.54  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.55  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.56  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.57  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.58  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.59  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.60  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.61  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.62  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.63  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.64  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.65  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.66  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.67  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.68  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.69  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.70  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.71  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.72  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.73  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.74  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.75  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.76  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.77  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.78  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.79  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.80  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.81  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.82  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.83  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.84  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.85  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.86  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.87  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.88  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.89  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.90  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.91  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.92  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.93  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.94  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.95  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.96  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.97  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.98  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+TEST NO.99  The test large file was deleted successfully !
+[Delete] : /data/frag1164/Fragment_test_0_0I0HJ_60
+[Delete] : /data/frag1164/Fragment_test_0_1lpmV_2
+[Delete] : /data/frag1164/Fragment_test_0_2DOO_72
+[Delete] : /data/frag1164/Fragment_test_0_5_0
+[Delete] : /data/frag1164/Fragment_test_0_5u_42
+[Delete] : /data/frag1164/Fragment_test_0_7SI8Q978_90
+[Delete] : /data/frag1164/Fragment_test_0_8Be_86
+[Delete] : /data/frag1164/Fragment_test_0_8Y5qbRqPp_96
+[Delete] : /data/frag1164/Fragment_test_0_A3hSxDZ0_20
+[Delete] : /data/frag1164/Fragment_test_0_A4icAA0je_82
+[Delete] : /data/frag1164/Fragment_test_0_BHbAM1_46
+[Delete] : /data/frag1164/Fragment_test_0_B_56
+[Delete] : /data/frag1164/Fragment_test_0_CUG8OkhUN_44
+[Delete] : /data/frag1164/Fragment_test_0_Hi3Wca_28
+[Delete] : /data/frag1164/Fragment_test_0_IsIYsu_84
+[Delete] : /data/frag1164/Fragment_test_0_J_18
+[Delete] : /data/frag1164/Fragment_test_0_L9fLrA3I4a_68
+[Delete] : /data/frag1164/Fragment_test_0_MYyg_54
+[Delete] : /data/frag1164/Fragment_test_0_MyjPPf_98
+[Delete] : /data/frag1164/Fragment_test_0_ND_62
+[Delete] : /data/frag1164/Fragment_test_0_NPlB_34
+[Delete] : /data/frag1164/Fragment_test_0_Qn_80
+[Delete] : /data/frag1164/Fragment_test_0_QvUJ_16
+[Delete] : /data/frag1164/Fragment_test_0_UeMId_92
+[Delete] : /data/frag1164/Fragment_test_0_VELg1bv42s_32
+[Delete] : /data/frag1164/Fragment_test_0_W34QyikRVE_88
+[Delete] : /data/frag1164/Fragment_test_0_YB_4
+[Delete] : /data/frag1164/Fragment_test_0_YE05tYtlC_26
+[Delete] : /data/frag1164/Fragment_test_0_a7EuLXP_52
+[Delete] : /data/frag1164/Fragment_test_0_b_74
+[Delete] : /data/frag1164/Fragment_test_0_cXyib_78
+[Delete] : /data/frag1164/Fragment_test_0_dM0OfH_66
+[Delete] : /data/frag1164/Fragment_test_0_hsh_30
+[Delete] : /data/frag1164/Fragment_test_0_ic3Fw_40
+[Delete] : /data/frag1164/Fragment_test_0_jPW3yW_8
+[Delete] : /data/frag1164/Fragment_test_0_k0K2pXFieG_12
+[Delete] : /data/frag1164/Fragment_test_0_l2Fe9VS_14
+[Delete] : /data/frag1164/Fragment_test_0_lT_24
+[Delete] : /data/frag1164/Fragment_test_0_mz29AdThx_6
+[Delete] : /data/frag1164/Fragment_test_0_p3fa96Ji_58
+[Delete] : /data/frag1164/Fragment_test_0_pYE_48
+[Delete] : /data/frag1164/Fragment_test_0_qqfmpQ9mZN_50
+[Delete] : /data/frag1164/Fragment_test_0_r3Paqbftl_64
+[Delete] : /data/frag1164/Fragment_test_0_sPa_10
+[Delete] : /data/frag1164/Fragment_test_0_tAsM2_22
+[Delete] : /data/frag1164/Fragment_test_0_v9gecebd_76
+[Delete] : /data/frag1164/Fragment_test_0_vI8nCY9_70
+[Delete] : /data/frag1164/Fragment_test_0_vU_94
+[Delete] : /data/frag1164/Fragment_test_0_w_36
+[Delete] : /data/frag1164/Fragment_test_0_xvOJx3n8_38
+[TEST NO.0] TEST ... OK !
+[TEST NO.1] Create some small files !
+Create XTS_OBSERVATION_SECONDS=4579.232
+XTS_STOP=explicit kill after first complete outer loop; not full default workload
+XTS_COMMAND=kill 10
+--- CMD: kill 10 ---
+a total of 0 files
+kill 10
+Delete odd prefixed files !
+Delete total 0
+[Create] : /data/frag1164/Fragment_test_largefile
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+   10    10 255 RR       Task      - Waiting  Signal    0000000000000000 0032632 vela_fs_file_fragmentation_test -d /data/frag1164 -n 100 -s 1
+nsh> [K
+nsh> [K
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/run1164-fragment-observe.py", line 62, in <module>
+    k.require('vela_fs_file_fragmentation_test' not in k.command(p, 'ps'), 'task still active')
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: task still active

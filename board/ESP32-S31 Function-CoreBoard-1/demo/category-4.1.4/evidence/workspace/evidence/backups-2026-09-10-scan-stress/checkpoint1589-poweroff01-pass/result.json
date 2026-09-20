@@ -1,0 +1,40 @@
+{
+  "case": "4.1.4",
+  "status": "PASS",
+  "rounds": [
+    {
+      "case": "4.1.4",
+      "round": 1,
+      "status": "ROUND_PASS",
+      "user_confirmation": "第1轮已断电并插回",
+      "receipt": "build1023-flat-category-fs-name.sha256",
+      "host_reset": false,
+      "formatted": false,
+      "persisted_bytes": 10100
+    },
+    {
+      "case": "4.1.4",
+      "round": 2,
+      "status": "ROUND_PASS",
+      "user_confirmation": "第2轮已断电并插回",
+      "receipt": "build1023-flat-category-fs-name.sha256",
+      "host_reset": false,
+      "formatted": false,
+      "persisted_bytes": 28300
+    },
+    {
+      "case": "4.1.4",
+      "round": 3,
+      "status": "ROUND_PASS",
+      "user_confirmation": "第3轮已断电并插回",
+      "receipt": "build1023-flat-category-fs-name.sha256",
+      "host_reset": false,
+      "formatted": false,
+      "persisted_bytes": 4400
+    }
+  ],
+  "original_command": "power_off_test01 /data/p1583",
+  "filesystem": "1MiB physical Flash LittleFS at0xc00000",
+  "formatted": false,
+  "host_reset_between_write_and_check": false
+}

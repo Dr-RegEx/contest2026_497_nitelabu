@@ -1,0 +1,17 @@
+cmocka_driver_gpio -i /dev/gpio0 -o /dev/gpio1 -p 0 -l -r 1
+[CPU1] [==========] tests: Running 4 test(s).
+[CPU1] [ RUN      ] drivertest_gpio_bool
+[CPU1] [       OK ] drivertest_gpio_bool
+[CPU1] [ RUN      ] drivertest_gpio_loop
+[CPU1] [       OK ] drivertest_gpio_loop
+[CPU1] [ RUN      ] drivertest_gpio_rw
+[CPU1] [       OK ] drivertest_gpio_rw
+[CPU1] [ RUN      ] drivertest_gpio_interrupt
+[write and read output]  writevalue is 0, outvalue is 0
+[Loop test]  outvalue is 0, invalue is 0
+[input and output test]  outvalue is 48, invalue is 48
+[CPU0] S31_GPIO_IRQ pin=47 type=1 count=1
+[CPU0] [       OK ] drivertest_gpio_interrupt
+[CPU0] [==========] tests: 4 test(s) run.
+[CPU0] [  PASSED  ] 4 test(s).
+nsh> [K

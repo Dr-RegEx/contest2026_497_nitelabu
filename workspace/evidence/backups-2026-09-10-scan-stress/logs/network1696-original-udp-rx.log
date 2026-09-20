@@ -1,0 +1,998 @@
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    000000d9 00000000 00000000 8e38            
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000038 0000003c 00000000 00000000 12b9             
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0075  0000  004b  0022
+Dropped      0008  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0024  0000  0002  0022
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+nsh> [K
+--- CMD: iperf2 -s -p 5003 -i 1 -u > /tmp/r1696 & ---
+iperf2 -s -p 5003 -i 1 -u > /tmp/r1696 &
+iperf2 [11:101]
+nsh> [K
+nsh> [K
+--- CMD: cat /tmp/r1696 ---
+cat /tmp/r1696
+------------------------------------------------------------
+Server listening on UDP port 5003
+UDP buffer size: -1.00 Byte (WARNING: requested 16.0 KByte)
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 5003 connected with 192.168.1.29 port 60633
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-1.00 sec   769 KBytes  6.30 Mbits/sec   2.285 ms 101/637 (16%)
+[  1] 1.00-2.00 sec  1.32 MBytes  11.1 Mbits/sec   1.386 ms 161/1105 (15%)
+[  1] 1.00-2.00 sec  2 datagrams received out-of-order
+[  1] 2.00-3.00 sec  1.12 MBytes  9.37 Mbits/sec   3.002 ms 183/980 (19%)
+[  1] 2.00-3.00 sec  3 datagrams received out-of-order
+[  1] 3.00-4.00 sec  1.01 MBytes  8.47 Mbits/sec   1.321 ms 96/816 (12%)
+[  1] 3.00-4.00 sec  4 datagrams received out-of-order
+[  1] 4.00-5.00 sec  1.15 MBytes  9.68 Mbits/sec   0.850 ms 182/1005 (18%)
+[  1] 4.00-5.00 sec  2 datagrams received out-of-order
+[  1] 5.00-6.00 sec  1.13 MBytes  9.48 Mbits/sec   0.715 ms 145/951 (15%)
+[  1] 5.00-6.00 sec  3 datagrams received out-of-order
+[  1] 6.00-7.00 sec  1.27 MBytes  10.6 Mbits/sec   2.029 ms 318/1222 (26%)
+[  1] 6.00-7.00 sec  2 datagrams received out-of-order
+[  1] 7.00-8.00 sec  1.26 MBytes  10.6 Mbits/sec   1.958 ms 256/1154 (22%)
+[  1] 8.00-9.00 sec  1.18 MBytes  9.91 Mbits/sec   1.651 ms 223/1066 (21%)
+[  1] 8.00-9.00 sec  2 datagrams received out-of-order
+[  1] 9.00-10.00 sec  1.38 MBytes  11.6 Mbits/sec   1.911 ms 351/1337 (26%)
+[  1] 9.00-10.00 sec  1 datagrams received out-of-order
+[  1] 10.00-11.00 sec  1.12 MBytes  9.40 Mbits/sec   5.303 ms 115/914 (13%)
+[  1] 10.00-11.00 sec  25 datagrams received out-of-order
+[  1] 11.00-12.00 sec  1.32 MBytes  11.1 Mbits/sec   0.830 ms 230/1173 (20%)
+[  1] 11.00-12.00 sec  1 datagrams received out-of-order
+[  1] 12.00-13.00 sec  1.44 MBytes  12.1 Mbits/sec   1.329 ms 327/1353 (24%)
+[  1] 13.00-14.00 sec  1.42 MBytes  11.9 Mbits/sec   0.683 ms 462/1475 (31%)
+[  1] 13.00-14.00 sec  21 datagrams received out-of-order
+[  1] 14.00-15.00 sec  1.12 MBytes  9.37 Mbits/sec   2.160 ms 182/979 (19%)
+[  1] 14.00-15.00 sec  3 datagrams received out-of-order
+[  1] 15.00-16.00 sec  1.14 MBytes  9.56 Mbits/sec   2.708 ms 199/1012 (20%)
+[  1] 15.00-16.00 sec  11 datagrams received out-of-order
+[  1] 16.00-17.00 sec  1008 KBytes  8.26 Mbits/sec   0.802 ms 40/742 (5.4%)
+[  1] 16.00-17.00 sec  8 datagrams received out-of-order
+[  1] 17.00-18.00 sec  1.18 MBytes  9.93 Mbits/sec   2.002 ms 191/1035 (18%)
+[  1] 17.00-18.00 sec  4 datagrams received out-of-order
+[  1] 18.00-19.00 sec  1.49 MBytes  12.5 Mbits/sec   2.783 ms 240/1300 (18%)
+[  1] 18.00-19.00 sec  1 datagrams received out-of-order
+[  1] 19.00-20.00 sec  1.31 MBytes  11.0 Mbits/sec   2.135 ms 267/1203 (22%)
+[  1] 19.00-20.00 sec  1 datagrams received out-of-order
+[  1] 20.00-21.00 sec  1.30 MBytes  10.9 Mbits/sec   1.831 ms 345/1273 (27%)
+[  1] 20.00-21.00 sec  4 datagrams received out-of-order
+[  1] 21.00-22.00 sec  1.53 MBytes  12.9 Mbits/sec   4.867 ms 448/1542 (29%)
+[  1] 21.00-22.00 sec  34 datagrams received out-of-order
+[  1] 22.00-23.00 sec  1.40 MBytes  11.7 Mbits/sec   6.323 ms 343/1341 (26%)
+[  1] 22.00-23.00 sec  7 datagrams received out-of-order
+[  1] 23.00-24.00 sec  1.24 MBytes  10.4 Mbits/sec   1.420 ms 129/1014 (13%)
+[  1] 23.00-24.00 sec  15 datagrams received out-of-order
+[  1] 24.00-25.00 sec  1.47 MBytes  12.3 Mbits/sec   1.103 ms 351/1398 (25%)
+[  1] 24.00-25.00 sec  1 datagrams received out-of-order
+[  1] 25.00-26.00 sec  1.22 MBytes  10.3 Mbits/sec   1.127 ms 286/1159 (25%)
+[  1] 25.00-26.00 sec  4 datagrams received out-of-order
+[  1] 26.00-27.00 sec  1.33 MBytes  11.2 Mbits/sec   0.784 ms 198/1148 (17%)
+[  1] 26.00-27.00 sec  44 datagrams received out-of-order
+[  1] 27.00-28.00 sec  1.33 MBytes  11.1 Mbits/sec   2.069 ms 359/1307 (27%)
+[  1] 27.00-28.00 sec  1 datagrams received out-of-order
+[  1] 28.00-29.00 sec  1.39 MBytes  11.6 Mbits/sec   1.411 ms 311/1300 (24%)
+[  1] 28.00-29.00 sec  30 datagrams received out-of-order
+[  1] 29.00-30.00 sec  1.33 MBytes  11.2 Mbits/sec   1.694 ms 401/1352 (30%)
+[  1] 29.00-30.00 sec  31 datagrams received out-of-order
+[  1] 30.00-31.00 sec  1.17 MBytes  9.82 Mbits/sec   1.380 ms 206/1041 (20%)
+[  1] 30.00-31.00 sec  64 datagrams received out-of-order
+[  1] 31.00-32.00 sec  1.23 MBytes  10.3 Mbits/sec   3.729 ms 413/1289 (32%)
+[  1] 31.00-32.00 sec  3 datagrams received out-of-order
+[  1] 32.00-33.00 sec  1.50 MBytes  12.6 Mbits/sec   0.741 ms 361/1430 (25%)
+[  1] 32.00-33.00 sec  2 datagrams received out-of-order
+[  1] 33.00-34.00 sec  1.44 MBytes  12.1 Mbits/sec   0.874 ms 366/1391 (26%)
+[  1] 33.00-34.00 sec  3 datagrams received out-of-order
+[  1] 34.00-35.00 sec  1.28 MBytes  10.8 Mbits/sec   1.314 ms 343/1259 (27%)
+[  1] 34.00-35.00 sec  14 datagrams received out-of-order
+[  1] 35.00-36.00 sec  1.51 MBytes  12.7 Mbits/sec   0.948 ms 227/1307 (17%)
+[  1] 35.00-36.00 sec  6 datagrams received out-of-order
+[  1] 36.00-37.00 sec  1.37 MBytes  11.5 Mbits/sec   9.429 ms 278/1258 (22%)
+[  1] 36.00-37.00 sec  41 datagrams received out-of-order
+[  1] 37.00-38.00 sec  1.15 MBytes  9.68 Mbits/sec   1.054 ms 131/954 (14%)
+[  1] 37.00-38.00 sec  7 datagrams received out-of-order
+[  1] 38.00-39.00 sec  1.32 MBytes  11.1 Mbits/sec   1.635 ms 428/1372 (31%)
+[  1] 38.00-39.00 sec  2 datagrams received out-of-order
+[  1] 39.00-40.00 sec  1.43 MBytes  12.0 Mbits/sec   1.864 ms 292/1311 (22%)
+[  1] 39.00-40.00 sec  3 datagrams received out-of-order
+[  1] 40.00-41.00 sec  1.19 MBytes  10.0 Mbits/sec   2.341 ms 215/1065 (20%)
+[  1] 40.00-41.00 sec  8 datagrams received out-of-order
+[  1] 41.00-42.00 sec  1.46 MBytes  12.3 Mbits/sec   0.706 ms 496/1538 (32%)
+[  1] 41.00-42.00 sec  11 datagrams received out-of-order
+[  1] 42.00-43.00 sec  1.38 MBytes  11.5 Mbits/sec   0.603 ms 559/1540 (36%)
+[  1] 42.00-43.00 sec  3 datagrams received out-of-order
+[  1] 43.00-44.00 sec  1.36 MBytes  11.4 Mbits/sec   2.027 ms 333/1306 (25%)
+[  1] 43.00-44.00 sec  1 datagrams received out-of-order
+[  1] 44.00-45.00 sec  1.37 MBytes  11.5 Mbits/sec   2.208 ms 183/1159 (16%)
+[  1] 44.00-45.00 sec  4 datagrams received out-of-order
+[  1] 45.00-46.00 sec  1.39 MBytes  11.6 Mbits/sec   0.989 ms 215/1205 (18%)
+[  1] 45.00-46.00 sec  2 datagrams received out-of-order
+[  1] 46.00-47.00 sec  1.40 MBytes  11.8 Mbits/sec   4.217 ms 448/1449 (31%)
+[  1] 46.00-47.00 sec  15 datagrams received out-of-order
+[  1] 47.00-48.00 sec  1.53 MBytes  12.8 Mbits/sec   1.002 ms 397/1488 (27%)
+[  1] 47.00-48.00 sec  53 datagrams received out-of-order
+[  1] 48.00-49.00 sec  1.42 MBytes  11.9 Mbits/sec   0.870 ms 406/1421 (29%)
+[  1] 48.00-49.00 sec  25 datagrams received out-of-order
+[  1] 49.00-50.00 sec  1.32 MBytes  11.1 Mbits/sec   2.215 ms 440/1381 (32%)
+[  1] 49.00-50.00 sec  6 datagrams received out-of-order
+[  1] 50.00-51.00 sec  1.25 MBytes  10.5 Mbits/sec   1.646 ms 325/1220 (27%)
+[  1] 50.00-51.00 sec  4 datagrams received out-of-order
+[  1] 51.00-52.00 sec  1.49 MBytes  12.5 Mbits/sec   2.041 ms 251/1312 (19%)
+[  1] 51.00-52.00 sec  3 datagrams received out-of-order
+[  1] 52.00-53.00 sec  1.52 MBytes  12.8 Mbits/sec   1.567 ms 409/1495 (27%)
+[  1] 52.00-53.00 sec  3 datagrams received out-of-order
+[  1] 53.00-54.00 sec  1.47 MBytes  12.3 Mbits/sec   1.311 ms 605/1651 (37%)
+[  1] 53.00-54.00 sec  4 datagrams received out-of-order
+[  1] 54.00-55.00 sec  1.28 MBytes  10.7 Mbits/sec   1.323 ms 622/1532 (41%)
+[  1] 54.00-55.00 sec  2 datagrams received out-of-order
+[  1] 55.00-56.00 sec  1.57 MBytes  13.2 Mbits/sec   1.739 ms 457/1579 (29%)
+[  1] 55.00-56.00 sec  6 datagrams received out-of-order
+[  1] 56.00-57.00 sec  1.56 MBytes  13.1 Mbits/sec   2.028 ms 979/2091 (47%)
+[  1] 56.00-57.00 sec  16 datagrams received out-of-order
+[  1] 57.00-58.00 sec  1.46 MBytes  12.2 Mbits/sec   2.602 ms 517/1555 (33%)
+[  1] 57.00-58.00 sec  4 datagrams received out-of-order
+[  1] 58.00-59.00 sec  1.46 MBytes  12.3 Mbits/sec   0.799 ms 399/1444 (28%)
+[  1] 58.00-59.00 sec  2 datagrams received out-of-order
+[  1] 59.00-60.00 sec  1.50 MBytes  12.6 Mbits/sec   1.298 ms 444/1512 (29%)
+[  1] 59.00-60.00 sec  5 datagrams received out-of-order
+[  1] 60.00-61.00 sec  1.19 MBytes  9.95 Mbits/sec   0.998 ms 177/1023 (17%)
+[  1] 60.00-61.00 sec  5 datagrams received out-of-order
+[  1] 61.00-62.00 sec  1.30 MBytes  10.9 Mbits/sec   2.492 ms 349/1276 (27%)
+[  1] 61.00-62.00 sec  18 datagrams received out-of-order
+[  1] 62.00-63.00 sec  1.29 MBytes  10.8 Mbits/sec   2.937 ms 459/1376 (33%)
+[  1] 62.00-63.00 sec  9 datagrams received out-of-order
+[  1] 63.00-64.00 sec  1.25 MBytes  10.5 Mbits/sec   2.365 ms 334/1225 (27%)
+[  1] 63.00-64.00 sec  29 datagrams received out-of-order
+[  1] 64.00-65.00 sec  1.44 MBytes  12.1 Mbits/sec   1.633 ms 639/1664 (38%)
+[  1] 64.00-65.00 sec  3 datagrams received out-of-order
+[  1] 65.00-66.00 sec  1.30 MBytes  10.9 Mbits/sec   2.091 ms 476/1405 (34%)
+[  1] 65.00-66.00 sec  6 datagrams received out-of-order
+[  1] 66.00-67.00 sec  1.04 MBytes  8.71 Mbits/sec   1.288 ms 286/1027 (28%)
+[  1] 66.00-67.00 sec  3 datagrams received out-of-order
+[  1] 67.00-68.00 sec  1.41 MBytes  11.8 Mbits/sec   2.048 ms 467/1470 (32%)
+[  1] 67.00-68.00 sec  3 datagrams received out-of-order
+[  1] 68.00-69.00 sec  1.35 MBytes  11.3 Mbits/sec   1.423 ms 261/1224 (21%)
+[  1] 68.00-69.00 sec  1 datagrams received out-of-order
+[  1] 69.00-70.00 sec  1.20 MBytes  10.1 Mbits/sec   0.907 ms 286/1141 (25%)
+[  1] 69.00-70.00 sec  35 datagrams received out-of-order
+[  1] 70.00-71.00 sec  1.52 MBytes  12.8 Mbits/sec   2.311 ms 446/1533 (29%)
+[  1] 70.00-71.00 sec  7 datagrams received out-of-order
+[  1] 71.00-72.00 sec  1.50 MBytes  12.6 Mbits/sec   0.925 ms 343/1413 (24%)
+[  1] 71.00-72.00 sec  9 datagrams received out-of-order
+[  1] 72.00-73.00 sec  1.29 MBytes  10.8 Mbits/sec   0.847 ms 236/1155 (20%)
+[  1] 72.00-73.00 sec  3 datagrams received out-of-order
+[  1] 73.00-74.00 sec  1.38 MBytes  11.6 Mbits/sec   3.081 ms 390/1375 (28%)
+[  1] 73.00-74.00 sec  3 datagrams received out-of-order
+[  1] 74.00-75.00 sec  1.36 MBytes  11.4 Mbits/sec   1.406 ms 302/1270 (24%)
+[  1] 74.00-75.00 sec  2 datagrams received out-of-order
+[  1] 75.00-76.00 sec  1.24 MBytes  10.4 Mbits/sec   1.031 ms 270/1156 (23%)
+[  1] 75.00-76.00 sec  1 datagrams received out-of-order
+[  1] 76.00-77.00 sec  1.52 MBytes  12.8 Mbits/sec   2.126 ms 316/1403 (23%)
+[  1] 76.00-77.00 sec  6 datagrams received out-of-order
+[  1] 77.00-78.00 sec  1.29 MBytes  10.8 Mbits/sec   0.645 ms 449/1369 (33%)
+[  1] 77.00-78.00 sec  1 datagrams received out-of-order
+[  1] 78.00-79.00 sec  1.47 MBytes  12.4 Mbits/sec   1.912 ms 420/1472 (29%)
+[  1] 78.00-79.00 sec  5 datagrams received out-of-order
+[  1] 79.00-80.00 sec  1.57 MBytes  13.1 Mbits/sec   1.868 ms 299/1416 (21%)
+[  1] 79.00-80.00 sec  4 datagrams received out-of-order
+[  1] 80.00-81.00 sec  1.52 MBytes  12.8 Mbits/sec   1.343 ms 303/1389 (22%)
+[  1] 80.00-81.00 sec  3 datagrams received out-of-order
+[  1] 81.00-82.00 sec  1.57 MBytes  13.1 Mbits/sec   0.636 ms 327/1445 (23%)
+[  1] 81.00-82.00 sec  2 datagrams received out-of-order
+[  1] 82.00-83.00 sec  1.41 MBytes  11.8 Mbits/sec   0.985 ms 390/1395 (28%)
+[  1] 82.00-83.00 sec  4 datagrams received out-of-order
+[  1] 83.00-84.00 sec  1.26 MBytes  10.6 Mbits/sec   3.261 ms 270/1169 (23%)
+[  1] 83.00-84.00 sec  5 datagrams received out-of-order
+[  1] 84.00-85.00 sec  1.50 MBytes  12.6 Mbits/sec   1.406 ms 234/1305 (18%)
+[  1] 84.00-85.00 sec  18 datagrams received out-of-order
+[  1] 85.00-86.00 sec  1.32 MBytes  11.1 Mbits/sec   1.542 ms 364/1305 (28%)
+[  1] 85.00-86.00 sec  3 datagrams received out-of-order
+[  1] 86.00-87.00 sec  1.11 MBytes  9.33 Mbits/sec   1.993 ms 328/1121 (29%)
+[  1] 86.00-87.00 sec  5 datagrams received out-of-order
+[  1] 87.00-88.00 sec  1.28 MBytes  10.7 Mbits/sec   1.286 ms 160/1074 (15%)
+[  1] 87.00-88.00 sec  2 datagrams received out-of-order
+[  1] 88.00-89.00 sec  1.38 MBytes  11.6 Mbits/sec   3.633 ms 233/1219 (19%)
+[  1] 88.00-89.00 sec  14 datagrams received out-of-order
+[  1] 89.00-90.00 sec  1.20 MBytes  10.1 Mbits/sec   2.767 ms 255/1111 (23%)
+[  1] 90.00-91.00 sec  1.26 MBytes  10.5 Mbits/sec   0.601 ms 303/1200 (25%)
+[  1] 90.00-91.00 sec  11 datagrams received out-of-order
+[  1] 91.00-92.00 sec  1.26 MBytes  10.6 Mbits/sec   2.141 ms 214/1113 (19%)
+[  1] 91.00-92.00 sec  4 datagrams received out-of-order
+[  1] 92.00-93.00 sec  1.12 MBytes  9.37 Mbits/sec   2.608 ms 403/1200 (34%)
+[  1] 92.00-93.00 sec  7 datagrams received out-of-order
+[  1] 93.00-94.00 sec  1.54 MBytes  12.9 Mbits/sec   1.606 ms 945/2040 (46%)
+[  1] 93.00-94.00 sec  5 datagrams received out-of-order
+[  1] 94.00-95.00 sec  1.54 MBytes  12.9 Mbits/sec   3.750 ms 1855/2952 (63%)
+[  1] 94.00-95.00 sec  21 datagrams received out-of-order
+[  1] 95.00-96.00 sec  1.38 MBytes  11.6 Mbits/sec   3.373 ms 786/1771 (44%)
+[  1] 95.00-96.00 sec  5 datagrams received out-of-order
+[  1] 96.00-97.00 sec  1.38 MBytes  11.6 Mbits/sec   1.325 ms 1324/2311 (57%)
+[  1] 96.00-97.00 sec  3 datagrams received out-of-order
+[  1] 97.00-98.00 sec  1.34 MBytes  11.2 Mbits/sec   2.066 ms 707/1663 (43%)
+[  1] 97.00-98.00 sec  2 datagrams received out-of-order
+[  1] 98.00-99.00 sec  1.43 MBytes  12.0 Mbits/sec   2.239 ms 505/1528 (33%)
+[  1] 98.00-99.00 sec  39 datagrams received out-of-order
+[  1] 99.00-100.00 sec  1.52 MBytes  12.7 Mbits/sec   1.179 ms 220/1303 (17%)
+[  1] 99.00-100.00 sec  2 datagrams received out-of-order
+[  1] 100.00-101.00 sec  1.34 MBytes  11.2 Mbits/sec   3.896 ms 304/1258 (24%)
+[  1] 100.00-101.00 sec  3 datagrams received out-of-order
+[  1] 101.00-102.00 sec  1.31 MBytes  11.0 Mbits/sec   1.625 ms 163/1099 (15%)
+[  1] 101.00-102.00 sec  1 datagrams received out-of-order
+[  1] 102.00-103.00 sec  1.35 MBytes  11.3 Mbits/sec   1.305 ms 211/1176 (18%)
+[  1] 102.00-103.00 sec  4 datagrams received out-of-order
+[  1] 103.00-104.00 sec  1.24 MBytes  10.4 Mbits/sec   1.420 ms 218/1106 (20%)
+[  1] 103.00-104.00 sec  3 datagrams received out-of-order
+[  1] 104.00-105.00 sec  1.55 MBytes  13.0 Mbits/sec   1.341 ms 972/2078 (47%)
+[  1] 104.00-105.00 sec  2 datagrams received out-of-order
+[  1] 105.00-106.00 sec  1.51 MBytes  12.6 Mbits/sec   1.150 ms 629/1704 (37%)
+[  1] 105.00-106.00 sec  2 datagrams received out-of-order
+[  1] 106.00-107.00 sec  1.39 MBytes  11.7 Mbits/sec   3.016 ms 217/1209 (18%)
+[  1] 106.00-107.00 sec  1 datagrams received out-of-order
+[  1] 107.00-108.00 sec  1.34 MBytes  11.2 Mbits/sec   2.332 ms 654/1607 (41%)
+[  1] 107.00-108.00 sec  4 datagrams received out-of-order
+[  1] 108.00-109.00 sec  1.33 MBytes  11.2 Mbits/sec   1.347 ms 1054/2005 (53%)
+[  1] 108.00-109.00 sec  7 datagrams received out-of-order
+[  1] 109.00-110.00 sec  1.39 MBytes  11.7 Mbits/sec   1.176 ms 1112/2104 (53%)
+[  1] 110.00-111.00 sec  1.45 MBytes  12.1 Mbits/sec   1.602 ms 465/1497 (31%)
+[  1] 110.00-111.00 sec  16 datagrams received out-of-order
+[  1] 111.00-112.00 sec  1.40 MBytes  11.8 Mbits/sec   0.714 ms 652/1654 (39%)
+[  1] 111.00-112.00 sec  9 datagrams received out-of-order
+[  1] 112.00-113.00 sec  1.41 MBytes  11.8 Mbits/sec   1.577 ms 495/1502 (33%)
+[  1] 112.00-113.00 sec  7 datagrams received out-of-order
+[  1] 113.00-114.00 sec  1.49 MBytes  12.5 Mbits/sec   1.251 ms 445/1509 (29%)
+[  1] 113.00-114.00 sec  28 datagrams received out-of-order
+[  1] 114.00-115.00 sec  1.25 MBytes  10.5 Mbits/sec   2.281 ms 191/1083 (18%)
+[  1] 114.00-115.00 sec  6 datagrams received out-of-order
+[  1] 115.00-116.00 sec  1.14 MBytes  9.58 Mbits/sec   1.941 ms 249/1064 (23%)
+[  1] 115.00-116.00 sec  59 datagrams received out-of-order
+[  1] 116.00-117.00 sec  1.29 MBytes  10.8 Mbits/sec   1.474 ms 153/1072 (14%)
+[  1] 116.00-117.00 sec  2 datagrams received out-of-order
+[  1] 117.00-118.00 sec  1.51 MBytes  12.7 Mbits/sec   1.195 ms 664/1741 (38%)
+[  1] 117.00-118.00 sec  2 datagrams received out-of-order
+[  1] 118.00-119.00 sec  1.41 MBytes  11.9 Mbits/sec   2.085 ms 586/1595 (37%)
+[  1] 118.00-119.00 sec  2 datagrams received out-of-order
+[  1] 119.00-120.00 sec  1.52 MBytes  12.8 Mbits/sec   1.094 ms 628/1713 (37%)
+[  1] 119.00-120.00 sec  4 datagrams received out-of-order
+[  1] 120.00-121.00 sec  1.64 MBytes  13.8 Mbits/sec   6.075 ms 895/2068 (43%)
+[  1] 120.00-121.00 sec  1 datagrams received out-of-order
+[  1] 121.00-122.00 sec  1.47 MBytes  12.3 Mbits/sec   2.701 ms 835/1884 (44%)
+[  1] 121.00-122.00 sec  6 datagrams received out-of-order
+[  1] 122.00-123.00 sec  1.31 MBytes  10.9 Mbits/sec   2.424 ms 632/1563 (40%)
+[  1] 122.00-123.00 sec  4 datagrams received out-of-order
+[  1] 123.00-124.00 sec  1.49 MBytes  12.5 Mbits/sec   0.783 ms 521/1587 (33%)
+[  1] 123.00-124.00 sec  23 datagrams received out-of-order
+[  1] 124.00-125.00 sec  1.34 MBytes  11.2 Mbits/sec   7.707 ms 378/1334 (28%)
+[  1] 124.00-125.00 sec  7 datagrams received out-of-order
+[  1] 125.00-126.00 sec  1.32 MBytes  11.0 Mbits/sec   1.127 ms 316/1255 (25%)
+[  1] 125.00-126.00 sec  5 datagrams received out-of-order
+[  1] 126.00-127.00 sec  1.44 MBytes  12.1 Mbits/sec   0.454 ms 252/1279 (20%)
+[  1] 126.00-127.00 sec  4 datagrams received out-of-order
+[  1] 127.00-128.00 sec  1.39 MBytes  11.7 Mbits/sec   0.931 ms 262/1254 (21%)
+[  1] 127.00-128.00 sec  2 datagrams received out-of-order
+[  1] 128.00-129.00 sec  1.21 MBytes  10.1 Mbits/sec   1.175 ms 300/1160 (26%)
+[  1] 128.00-129.00 sec  3 datagrams received out-of-order
+[  1] 129.00-130.00 sec  1.27 MBytes  10.6 Mbits/sec   1.690 ms 191/1094 (17%)
+[  1] 130.00-131.00 sec  1.28 MBytes  10.7 Mbits/sec   2.927 ms 388/1299 (30%)
+[  1] 130.00-131.00 sec  2 datagrams received out-of-order
+[  1] 131.00-132.00 sec  1.40 MBytes  11.8 Mbits/sec   0.805 ms 488/1490 (33%)
+[  1] 131.00-132.00 sec  3 datagrams received out-of-order
+[  1] 132.00-133.00 sec  1.19 MBytes  9.96 Mbits/sec  11.197 ms 352/1199 (29%)
+[  1] 132.00-133.00 sec  5 datagrams received out-of-order
+[  1] 133.00-134.00 sec  1.38 MBytes  11.5 Mbits/sec   1.153 ms 363/1344 (27%)
+[  1] 133.00-134.00 sec  2 datagrams received out-of-order
+[  1] 134.00-135.00 sec  1.38 MBytes  11.6 Mbits/sec   1.791 ms 681/1666 (41%)
+[  1] 134.00-135.00 sec  9 datagrams received out-of-order
+[  1] 135.00-136.00 sec  1.33 MBytes  11.2 Mbits/sec   1.161 ms 1569/2519 (62%)
+[  1] 135.00-136.00 sec  1 datagrams received out-of-order
+[  1] 136.00-137.00 sec  1.47 MBytes  12.4 Mbits/sec   2.864 ms 860/1912 (45%)
+[  1] 136.00-137.00 sec  2 datagrams received out-of-order
+[  1] 137.00-138.00 sec  1.45 MBytes  12.2 Mbits/sec   3.945 ms 708/1745 (41%)
+[  1] 137.00-138.00 sec  2 datagrams received out-of-order
+[  1] 138.00-139.00 sec  1.41 MBytes  11.9 Mbits/sec   5.388 ms 297/1305 (23%)
+[  1] 138.00-139.00 sec  10 datagrams received out-of-order
+[  1] 139.00-140.00 sec  1.39 MBytes  11.7 Mbits/sec   1.428 ms 294/1287 (23%)
+[  1] 139.00-140.00 sec  8 datagrams received out-of-order
+[  1] 140.00-141.00 sec  1.40 MBytes  11.8 Mbits/sec   0.754 ms 354/1356 (26%)
+[  1] 140.00-141.00 sec  1 datagrams received out-of-order
+[  1] 141.00-142.00 sec  1.27 MBytes  10.7 Mbits/sec   2.172 ms 260/1169 (22%)
+[  1] 141.00-142.00 sec  2 datagrams received out-of-order
+[  1] 142.00-143.00 sec  1.42 MBytes  11.9 Mbits/sec   0.939 ms 311/1323 (24%)
+[  1] 142.00-143.00 sec  1 datagrams received out-of-order
+[  1] 143.00-144.00 sec  1.51 MBytes  12.7 Mbits/sec   2.129 ms 332/1411 (24%)
+[  1] 143.00-144.00 sec  8 datagrams received out-of-order
+[  1] 144.00-145.00 sec  1.44 MBytes  12.1 Mbits/sec   1.239 ms 580/1605 (36%)
+[  1] 144.00-145.00 sec  4 datagrams received out-of-order
+[  1] 145.00-146.00 sec  1.40 MBytes  11.7 Mbits/sec   2.889 ms 507/1506 (34%)
+[  1] 145.00-146.00 sec  11 datagrams received out-of-order
+[  1] 146.00-147.00 sec  1.35 MBytes  11.3 Mbits/sec   1.504 ms 245/1210 (20%)
+[  1] 146.00-147.00 sec  9 datagrams received out-of-order
+[  1] 147.00-148.00 sec  1.35 MBytes  11.3 Mbits/sec   1.764 ms 299/1260 (24%)
+[  1] 147.00-148.00 sec  3 datagrams received out-of-order
+[  1] 148.00-149.00 sec  1.55 MBytes  13.0 Mbits/sec   1.172 ms 384/1487 (26%)
+[  1] 148.00-149.00 sec  10 datagrams received out-of-order
+[  1] 149.00-150.00 sec  1.19 MBytes  10.0 Mbits/sec   3.406 ms 213/1064 (20%)
+[  1] 149.00-150.00 sec  2 datagrams received out-of-order
+[  1] 150.00-151.00 sec  1.31 MBytes  11.0 Mbits/sec   2.486 ms 310/1243 (25%)
+[  1] 150.00-151.00 sec  15 datagrams received out-of-order
+[  1] 151.00-152.00 sec  1.31 MBytes  11.0 Mbits/sec   1.589 ms 424/1362 (31%)
+[  1] 151.00-152.00 sec  1 datagrams received out-of-order
+[  1] 152.00-153.00 sec  1.23 MBytes  10.3 Mbits/sec   4.074 ms 578/1458 (40%)
+[  1] 153.00-154.00 sec  1.39 MBytes  11.7 Mbits/sec   1.423 ms 1035/2026 (51%)
+[  1] 153.00-154.00 sec  23 datagrams received out-of-order
+[  1] 154.00-155.00 sec  1.34 MBytes  11.3 Mbits/sec   1.632 ms 688/1645 (42%)
+[  1] 154.00-155.00 sec  6 datagrams received out-of-order
+[  1] 155.00-156.00 sec  1.33 MBytes  11.1 Mbits/sec   2.744 ms 468/1415 (33%)
+[  1] 155.00-156.00 sec  4 datagrams received out-of-order
+[  1] 156.00-157.00 sec  1.48 MBytes  12.4 Mbits/sec   2.686 ms 495/1548 (32%)
+[  1] 156.00-157.00 sec  8 datagrams received out-of-order
+[  1] 157.00-158.00 sec  1.31 MBytes  11.0 Mbits/sec   1.068 ms 837/1770 (47%)
+[  1] 157.00-158.00 sec  3 datagrams received out-of-order
+[  1] 158.00-159.00 sec  1.15 MBytes  9.64 Mbits/sec   1.917 ms 833/1653 (50%)
+[  1] 158.00-159.00 sec  20 datagrams received out-of-order
+[  1] 159.00-160.00 sec  1.39 MBytes  11.7 Mbits/sec   2.395 ms 319/1312 (24%)
+[  1] 159.00-160.00 sec  3 datagrams received out-of-order
+[  1] 160.00-161.00 sec  1.53 MBytes  12.8 Mbits/sec   1.045 ms 442/1531 (29%)
+[  1] 160.00-161.00 sec  2 datagrams received out-of-order
+[  1] 161.00-162.00 sec  1.38 MBytes  11.6 Mbits/sec   3.597 ms 396/1379 (29%)
+[  1] 161.00-162.00 sec  10 datagrams received out-of-order
+[  1] 162.00-163.00 sec  1.40 MBytes  11.8 Mbits/sec   1.152 ms 452/1453 (31%)
+[  1] 162.00-163.00 sec  6 datagrams received out-of-order
+[  1] 163.00-164.00 sec  1.44 MBytes  12.1 Mbits/sec   3.690 ms 399/1425 (28%)
+[  1] 163.00-164.00 sec  9 datagrams received out-of-order
+[  1] 164.00-165.00 sec  1.30 MBytes  10.9 Mbits/sec   5.270 ms 253/1181 (21%)
+[  1] 164.00-165.00 sec  22 datagrams received out-of-order
+[  1] 165.00-166.00 sec  1.29 MBytes  10.8 Mbits/sec   1.043 ms 611/1532 (40%)
+[  1] 165.00-166.00 sec  27 datagrams received out-of-order
+[  1] 166.00-167.00 sec  1.17 MBytes  9.84 Mbits/sec   2.477 ms 607/1444 (42%)
+[  1] 166.00-167.00 sec  3 datagrams received out-of-order
+[  1] 167.00-168.00 sec  1.41 MBytes  11.8 Mbits/sec   1.555 ms 290/1293 (22%)
+[  1] 167.00-168.00 sec  16 datagrams received out-of-order
+[  1] 168.00-169.00 sec  1.57 MBytes  13.2 Mbits/sec   1.167 ms 392/1511 (26%)
+[  1] 168.00-169.00 sec  2 datagrams received out-of-order
+[  1] 169.00-170.00 sec  1.40 MBytes  11.7 Mbits/sec   0.770 ms 287/1283 (22%)
+[  1] 169.00-170.00 sec  3 datagrams received out-of-order
+[  1] 170.00-171.00 sec  1.11 MBytes  9.33 Mbits/sec   0.935 ms 197/990 (20%)
+[  1] 170.00-171.00 sec  3 datagrams received out-of-order
+[  1] 171.00-172.00 sec  1.42 MBytes  11.9 Mbits/sec   2.372 ms 478/1490 (32%)
+[  1] 171.00-172.00 sec  10 datagrams received out-of-order
+[  1] 172.00-173.00 sec  1.16 MBytes  9.70 Mbits/sec   2.372 ms 609/1434 (42%)
+[  1] 172.00-173.00 sec  3 datagrams received out-of-order
+[  1] 173.00-174.00 sec  1.40 MBytes  11.8 Mbits/sec   1.753 ms 883/1883 (47%)
+[  1] 173.00-174.00 sec  18 datagrams received out-of-order
+[  1] 174.00-175.00 sec  1.44 MBytes  12.1 Mbits/sec   2.623 ms 762/1792 (43%)
+[  1] 174.00-175.00 sec  2 datagrams received out-of-order
+[  1] 175.00-176.00 sec  1.44 MBytes  12.1 Mbits/sec   0.830 ms 497/1524 (33%)
+[  1] 175.00-176.00 sec  39 datagrams received out-of-order
+[  1] 176.00-177.00 sec  1.39 MBytes  11.7 Mbits/sec   5.932 ms 1887/2879 (66%)
+[  1] 176.00-177.00 sec  5 datagrams received out-of-order
+[  1] 177.00-178.00 sec  1.45 MBytes  12.1 Mbits/sec   0.855 ms 1070/2103 (51%)
+[  1] 177.00-178.00 sec  5 datagrams received out-of-order
+[  1] 178.00-179.00 sec  1.50 MBytes  12.5 Mbits/sec   1.311 ms 926/1993 (46%)
+[  1] 178.00-179.00 sec  1 datagrams received out-of-order
+[  1] 179.00-180.00 sec  1.51 MBytes  12.6 Mbits/sec   0.960 ms 1242/2316 (54%)
+[  1] 179.00-180.00 sec  1 datagrams received out-of-order
+[  1] 180.00-181.00 sec  1.43 MBytes  12.0 Mbits/sec   1.005 ms 1078/2095 (51%)
+[  1] 180.00-181.00 sec  15 datagrams received out-of-order
+[  1] 181.00-182.00 sec  1.35 MBytes  11.3 Mbits/sec   1.986 ms 532/1493 (36%)
+[  1] 181.00-182.00 sec  11 datagrams received out-of-order
+[  1] 182.00-183.00 sec  1.40 MBytes  11.7 Mbits/sec   1.111 ms 448/1445 (31%)
+[  1] 182.00-183.00 sec  1 datagrams received out-of-order
+[  1] 183.00-184.00 sec  1.54 MBytes  12.9 Mbits/sec   0.981 ms 363/1462 (25%)
+[  1] 183.00-184.00 sec  19 datagrams received out-of-order
+[  1] 184.00-185.00 sec  1.30 MBytes  10.9 Mbits/sec   1.031 ms 330/1260 (26%)
+[  1] 184.00-185.00 sec  13 datagrams received out-of-order
+[  1] 185.00-186.00 sec  1.63 MBytes  13.7 Mbits/sec   4.265 ms 306/1469 (21%)
+[  1] 185.00-186.00 sec  1 datagrams received out-of-order
+[  1] 186.00-187.00 sec  1.61 MBytes  13.5 Mbits/sec   0.782 ms 429/1576 (27%)
+[  1] 186.00-187.00 sec  14 datagrams received out-of-order
+[  1] 187.00-188.00 sec  1.36 MBytes  11.4 Mbits/sec   1.567 ms 419/1391 (30%)
+[  1] 187.00-188.00 sec  4 datagrams received out-of-order
+[  1] 188.00-189.00 sec  1.39 MBytes  11.6 Mbits/sec   1.091 ms 408/1398 (29%)
+[  1] 188.00-189.00 sec  1 datagrams received out-of-order
+[  1] 189.00-190.00 sec  1.34 MBytes  11.2 Mbits/sec   0.981 ms 369/1325 (28%)
+[  1] 189.00-190.00 sec  5 datagrams received out-of-order
+[  1] 190.00-191.00 sec  1.41 MBytes  11.8 Mbits/sec   2.613 ms 334/1340 (25%)
+[  1] 190.00-191.00 sec  19 datagrams received out-of-order
+[  1] 191.00-192.00 sec  1.33 MBytes  11.2 Mbits/sec   2.183 ms 316/1266 (25%)
+[  1] 191.00-192.00 sec  17 datagrams received out-of-order
+[  1] 192.00-193.00 sec  1.14 MBytes  9.58 Mbits/sec   3.281 ms 237/1052 (23%)
+[  1] 192.00-193.00 sec  4 datagrams received out-of-order
+[  1] 193.00-194.00 sec  1.27 MBytes  10.7 Mbits/sec   0.911 ms 364/1272 (29%)
+[  1] 193.00-194.00 sec  2 datagrams received out-of-order
+[  1] 194.00-195.00 sec  1.46 MBytes  12.2 Mbits/sec   2.094 ms 406/1444 (28%)
+[  1] 194.00-195.00 sec  2 datagrams received out-of-order
+[  1] 195.00-196.00 sec  1.07 MBytes  8.96 Mbits/sec   1.231 ms 284/1046 (27%)
+[  1] 195.00-196.00 sec  1 datagrams received out-of-order
+[  1] 196.00-197.00 sec  1.32 MBytes  11.1 Mbits/sec   0.780 ms 295/1239 (24%)
+[  1] 196.00-197.00 sec  9 datagrams received out-of-order
+[  1] 197.00-198.00 sec  1.51 MBytes  12.7 Mbits/sec   2.034 ms 389/1468 (26%)
+[  1] 197.00-198.00 sec  33 datagrams received out-of-order
+[  1] 198.00-199.00 sec  1.33 MBytes  11.2 Mbits/sec   1.608 ms 477/1427 (33%)
+[  1] 198.00-199.00 sec  4 datagrams received out-of-order
+[  1] 199.00-200.00 sec  1.55 MBytes  13.0 Mbits/sec   1.085 ms 436/1544 (28%)
+[  1] 199.00-200.00 sec  4 datagrams received out-of-order
+[  1] 200.00-201.00 sec  1.43 MBytes  12.0 Mbits/sec   2.427 ms 241/1264 (19%)
+[  1] 200.00-201.00 sec  3 datagrams received out-of-order
+[  1] 201.00-202.00 sec  1.09 MBytes  9.16 Mbits/sec   2.231 ms 308/1087 (28%)
+[  1] 201.00-202.00 sec  29 datagrams received out-of-order
+[  1] 202.00-203.00 sec  1.36 MBytes  11.4 Mbits/sec   1.821 ms 354/1323 (27%)
+[  1] 202.00-203.00 sec  2 datagrams received out-of-order
+[  1] 203.00-204.00 sec  1.45 MBytes  12.2 Mbits/sec   0.791 ms 291/1326 (22%)
+[  1] 203.00-204.00 sec  3 datagrams received out-of-order
+[  1] 204.00-205.00 sec  1.34 MBytes  11.3 Mbits/sec   1.959 ms 361/1320 (27%)
+[  1] 204.00-205.00 sec  4 datagrams received out-of-order
+[  1] 205.00-206.00 sec  1.56 MBytes  13.1 Mbits/sec   0.971 ms 445/1559 (29%)
+[  1] 205.00-206.00 sec  1 datagrams received out-of-order
+[  1] 206.00-207.00 sec  1.48 MBytes  12.4 Mbits/sec   2.734 ms 416/1470 (28%)
+[  1] 206.00-207.00 sec  7 datagrams received out-of-order
+[  1] 207.00-208.00 sec  1.46 MBytes  12.2 Mbits/sec   3.502 ms 441/1480 (30%)
+[  1] 207.00-208.00 sec  6 datagrams received out-of-order
+[  1] 208.00-209.00 sec  1.53 MBytes  12.9 Mbits/sec   2.847 ms 626/1720 (36%)
+[  1] 208.00-209.00 sec  17 datagrams received out-of-order
+[  1] 209.00-210.00 sec  1.52 MBytes  12.8 Mbits/sec   1.061 ms 513/1598 (32%)
+[  1] 209.00-210.00 sec  21 datagrams received out-of-order
+[  1] 210.00-211.00 sec  1.33 MBytes  11.1 Mbits/sec   1.337 ms 276/1222 (23%)
+[  1] 210.00-211.00 sec  1 datagrams received out-of-order
+[  1] 211.00-212.00 sec  1.43 MBytes  12.0 Mbits/sec   2.231 ms 376/1399 (27%)
+[  1] 211.00-212.00 sec  4 datagrams received out-of-order
+[  1] 212.00-213.00 sec  1.50 MBytes  12.6 Mbits/sec   1.048 ms 267/1335 (20%)
+[  1] 212.00-213.00 sec  1 datagrams received out-of-order
+[  1] 213.00-214.00 sec  1.28 MBytes  10.8 Mbits/sec   1.772 ms 158/1073 (15%)
+[  1] 213.00-214.00 sec  5 datagrams received out-of-order
+[  1] 214.00-215.00 sec  1.56 MBytes  13.1 Mbits/sec   4.407 ms 435/1548 (28%)
+[  1] 214.00-215.00 sec  4 datagrams received out-of-order
+[  1] 215.00-216.00 sec  1.49 MBytes  12.5 Mbits/sec   2.111 ms 388/1451 (27%)
+[  1] 215.00-216.00 sec  2 datagrams received out-of-order
+[  1] 216.00-217.00 sec  1.39 MBytes  11.7 Mbits/sec   1.565 ms 389/1380 (28%)
+[  1] 216.00-217.00 sec  3 datagrams received out-of-order
+[  1] 217.00-218.00 sec  1.36 MBytes  11.4 Mbits/sec   0.850 ms 326/1295 (25%)
+[  1] 217.00-218.00 sec  2 datagrams received out-of-order
+[  1] 218.00-219.00 sec  1.27 MBytes  10.7 Mbits/sec   3.392 ms 183/1089 (17%)
+[  1] 218.00-219.00 sec  2 datagrams received out-of-order
+[  1] 219.00-220.00 sec  1.49 MBytes  12.5 Mbits/sec   1.293 ms 387/1451 (27%)
+[  1] 219.00-220.00 sec  4 datagrams received out-of-order
+[  1] 220.00-221.00 sec  1.42 MBytes  11.9 Mbits/sec   1.183 ms 383/1393 (27%)
+[  1] 220.00-221.00 sec  6 datagrams received out-of-order
+[  1] 221.00-222.00 sec  1.48 MBytes  12.4 Mbits/sec   3.309 ms 385/1441 (27%)
+[  1] 221.00-222.00 sec  2 datagrams received out-of-order
+[  1] 222.00-223.00 sec  1.45 MBytes  12.2 Mbits/sec   1.106 ms 363/1398 (26%)
+[  1] 222.00-223.00 sec  1 datagrams received out-of-order
+[  1] 223.00-224.00 sec  1.53 MBytes  12.8 Mbits/sec   1.297 ms 446/1537 (29%)
+[  1] 223.00-224.00 sec  12 datagrams received out-of-order
+[  1] 224.00-225.00 sec  1.43 MBytes  12.0 Mbits/sec   4.061 ms 548/1569 (35%)
+[  1] 224.00-225.00 sec  9 datagrams received out-of-order
+[  1] 225.00-226.00 sec  1.49 MBytes  12.5 Mbits/sec   2.470 ms 528/1591 (33%)
+[  1] 225.00-226.00 sec  21 datagrams received out-of-order
+[  1] 226.00-227.00 sec  1.44 MBytes  12.1 Mbits/sec   1.795 ms 382/1411 (27%)
+[  1] 226.00-227.00 sec  4 datagrams received out-of-order
+[  1] 227.00-228.00 sec  1.33 MBytes  11.1 Mbits/sec   1.576 ms 584/1531 (38%)
+[  1] 227.00-228.00 sec  4 datagrams received out-of-order
+[  1] 228.00-229.00 sec  1.44 MBytes  12.1 Mbits/sec   3.307 ms 349/1377 (25%)
+[  1] 228.00-229.00 sec  3 datagrams received out-of-order
+[  1] 229.00-230.00 sec  1.46 MBytes  12.3 Mbits/sec   1.965 ms 666/1709 (39%)
+[  1] 229.00-230.00 sec  8 datagrams received out-of-order
+[  1] 230.00-231.00 sec  1.33 MBytes  11.2 Mbits/sec   0.800 ms 440/1392 (32%)
+[  1] 230.00-231.00 sec  2 datagrams received out-of-order
+[  1] 231.00-232.00 sec  1.43 MBytes  12.0 Mbits/sec   1.705 ms 1099/2119 (52%)
+[  1] 231.00-232.00 sec  5 datagrams received out-of-order
+[  1] 232.00-233.00 sec  1.43 MBytes  12.0 Mbits/sec   1.630 ms 681/1703 (40%)
+[  1] 232.00-233.00 sec  1 datagrams received out-of-order
+[  1] 233.00-234.00 sec  1.42 MBytes  11.9 Mbits/sec   1.288 ms 460/1472 (31%)
+[  1] 233.00-234.00 sec  2 datagrams received out-of-order
+[  1] 234.00-235.00 sec  1.49 MBytes  12.5 Mbits/sec   1.860 ms 328/1389 (24%)
+[  1] 234.00-235.00 sec  5 datagrams received out-of-order
+[  1] 235.00-236.00 sec  1.27 MBytes  10.7 Mbits/sec   1.294 ms 266/1173 (23%)
+[  1] 236.00-237.00 sec  1.31 MBytes  10.9 Mbits/sec   1.773 ms 290/1221 (24%)
+[  1] 236.00-237.00 sec  2 datagrams received out-of-order
+[  1] 237.00-238.00 sec  1.47 MBytes  12.3 Mbits/sec   1.412 ms 406/1453 (28%)
+[  1] 237.00-238.00 sec  11 datagrams received out-of-order
+[  1] 238.00-239.00 sec  1.41 MBytes  11.8 Mbits/sec   4.118 ms 444/1449 (31%)
+[  1] 238.00-239.00 sec  7 datagrams received out-of-order
+[  1] 239.00-240.00 sec  1.39 MBytes  11.7 Mbits/sec   1.509 ms 369/1362 (27%)
+[  1] 239.00-240.00 sec  2 datagrams received out-of-order
+[  1] 240.00-241.00 sec  1.37 MBytes  11.5 Mbits/sec   1.197 ms 244/1218 (20%)
+[  1] 240.00-241.00 sec  3 datagrams received out-of-order
+[  1] 241.00-242.00 sec  1.24 MBytes  10.4 Mbits/sec   2.538 ms 886/1772 (50%)
+[  1] 241.00-242.00 sec  3 datagrams received out-of-order
+[  1] 242.00-243.00 sec  1.47 MBytes  12.3 Mbits/sec   0.898 ms 811/1860 (44%)
+[  1] 242.00-243.00 sec  10 datagrams received out-of-order
+[  1] 243.00-244.00 sec  1.46 MBytes  12.3 Mbits/sec   1.210 ms 576/1621 (36%)
+[  1] 243.00-244.00 sec  3 datagrams received out-of-order
+[  1] 244.00-245.00 sec  1.44 MBytes  12.1 Mbits/sec   1.142 ms 411/1439 (29%)
+[  1] 244.00-245.00 sec  2 datagrams received out-of-order
+[  1] 245.00-246.00 sec  1.61 MBytes  13.5 Mbits/sec   1.863 ms 613/1760 (35%)
+[  1] 245.00-246.00 sec  1 datagrams received out-of-order
+[  1] 246.00-247.00 sec  1.51 MBytes  12.7 Mbits/sec   1.005 ms 707/1785 (40%)
+[  1] 246.00-247.00 sec  1 datagrams received out-of-order
+[  1] 247.00-248.00 sec  1.24 MBytes  10.4 Mbits/sec   1.290 ms 335/1222 (27%)
+[  1] 247.00-248.00 sec  6 datagrams received out-of-order
+[  1] 248.00-249.00 sec  1.43 MBytes  12.0 Mbits/sec   1.752 ms 573/1590 (36%)
+[  1] 248.00-249.00 sec  3 datagrams received out-of-order
+[  1] 249.00-250.00 sec  1.37 MBytes  11.5 Mbits/sec   2.276 ms 369/1344 (27%)
+[  1] 249.00-250.00 sec  2 datagrams received out-of-order
+[  1] 250.00-251.00 sec  1.30 MBytes  10.9 Mbits/sec   1.134 ms 306/1235 (25%)
+[  1] 250.00-251.00 sec  3 datagrams received out-of-order
+[  1] 251.00-252.00 sec  1.51 MBytes  12.7 Mbits/sec   0.992 ms 309/1388 (22%)
+[  1] 251.00-252.00 sec  6 datagrams received out-of-order
+[  1] 252.00-253.00 sec  1.28 MBytes  10.8 Mbits/sec   1.264 ms 242/1157 (21%)
+[  1] 252.00-253.00 sec  2 datagrams received out-of-order
+[  1] 253.00-254.00 sec  1.22 MBytes  10.2 Mbits/sec   1.104 ms 522/1393 (37%)
+[  1] 253.00-254.00 sec  1 datagrams received out-of-order
+[  1] 254.00-255.00 sec  1.41 MBytes  11.8 Mbits/sec   0.730 ms 961/1964 (49%)
+[  1] 254.00-255.00 sec  1 datagrams received out-of-order
+[  1] 255.00-256.00 sec  1.28 MBytes  10.7 Mbits/sec   1.570 ms 804/1717 (47%)
+[  1] 255.00-256.00 sec  4 datagrams received out-of-order
+[  1] 256.00-257.00 sec  1.18 MBytes  9.94 Mbits/sec   3.548 ms 652/1497 (44%)
+[  1] 256.00-257.00 sec  4 datagrams received out-of-order
+[  1] 257.00-258.00 sec  1.31 MBytes  11.0 Mbits/sec   4.456 ms 632/1568 (40%)
+[  1] 257.00-258.00 sec  22 datagrams received out-of-order
+[  1] 258.00-259.00 sec  1.47 MBytes  12.3 Mbits/sec   0.943 ms 442/1489 (30%)
+[  1] 258.00-259.00 sec  5 datagrams received out-of-order
+[  1] 259.00-260.00 sec  1.43 MBytes  12.0 Mbits/sec   0.908 ms 777/1796 (43%)
+[  1] 259.00-260.00 sec  4 datagrams received out-of-order
+[  1] 260.00-261.00 sec  1.47 MBytes  12.3 Mbits/sec   0.923 ms 573/1621 (35%)
+[  1] 260.00-261.00 sec  2 datagrams received out-of-order
+[  1] 261.00-262.00 sec  1.35 MBytes  11.3 Mbits/sec   4.463 ms 910/1875 (49%)
+[  1] 261.00-262.00 sec  11 datagrams received out-of-order
+[  1] 262.00-263.00 sec  1.36 MBytes  11.4 Mbits/sec   2.030 ms 654/1626 (40%)
+[  1] 262.00-263.00 sec  6 datagrams received out-of-order
+[  1] 263.00-264.00 sec  1.46 MBytes  12.2 Mbits/sec   1.972 ms 796/1835 (43%)
+[  1] 263.00-264.00 sec  1 datagrams received out-of-order
+[  1] 264.00-265.00 sec  1.24 MBytes  10.4 Mbits/sec   1.583 ms 365/1251 (29%)
+[  1] 264.00-265.00 sec  6 datagrams received out-of-order
+[  1] 265.00-266.00 sec  1.51 MBytes  12.7 Mbits/sec   2.821 ms 435/1515 (29%)
+[  1] 265.00-266.00 sec  14 datagrams received out-of-order
+[  1] 266.00-267.00 sec  1.41 MBytes  11.8 Mbits/sec   1.001 ms 297/1301 (23%)
+[  1] 267.00-268.00 sec  1.25 MBytes  10.5 Mbits/sec   1.088 ms 254/1149 (22%)
+[  1] 267.00-268.00 sec  3 datagrams received out-of-order
+[  1] 268.00-269.00 sec  1.45 MBytes  12.1 Mbits/sec   1.361 ms 1043/2076 (50%)
+[  1] 268.00-269.00 sec  16 datagrams received out-of-order
+[  1] 269.00-270.00 sec  1.48 MBytes  12.4 Mbits/sec   1.214 ms 367/1422 (26%)
+[  1] 269.00-270.00 sec  6 datagrams received out-of-order
+[  1] 270.00-271.00 sec  1.51 MBytes  12.7 Mbits/sec   1.576 ms 891/1969 (45%)
+[  1] 270.00-271.00 sec  13 datagrams received out-of-order
+[  1] 271.00-272.00 sec  1.48 MBytes  12.4 Mbits/sec   1.584 ms 635/1688 (38%)
+[  1] 271.00-272.00 sec  2 datagrams received out-of-order
+[  1] 272.00-273.00 sec  1.40 MBytes  11.7 Mbits/sec   1.269 ms 1015/2012 (50%)
+[  1] 272.00-273.00 sec  3 datagrams received out-of-order
+[  1] 273.00-274.00 sec  1.11 MBytes  9.29 Mbits/sec   2.441 ms 341/1131 (30%)
+[  1] 273.00-274.00 sec  2 datagrams received out-of-order
+[  1] 274.00-275.00 sec  1.36 MBytes  11.4 Mbits/sec   5.128 ms 273/1245 (22%)
+[  1] 274.00-275.00 sec  2 datagrams received out-of-order
+[  1] 275.00-276.00 sec  1.39 MBytes  11.7 Mbits/sec   1.590 ms 502/1497 (34%)
+[  1] 275.00-276.00 sec  1 datagrams received out-of-order
+[  1] 276.00-277.00 sec  1.41 MBytes  11.8 Mbits/sec   0.913 ms 272/1279 (21%)
+[  1] 276.00-277.00 sec  3 datagrams received out-of-order
+[  1] 277.00-278.00 sec  1.42 MBytes  11.9 Mbits/sec   1.572 ms 305/1320 (23%)
+[  1] 277.00-278.00 sec  2 datagrams received out-of-order
+[  1] 278.00-279.00 sec  1.39 MBytes  11.6 Mbits/sec   1.507 ms 331/1320 (25%)
+[  1] 278.00-279.00 sec  1 datagrams received out-of-order
+[  1] 279.00-280.00 sec  1.47 MBytes  12.3 Mbits/sec   1.886 ms 979/2026 (48%)
+[  1] 279.00-280.00 sec  1 datagrams received out-of-order
+[  1] 280.00-281.00 sec  1.51 MBytes  12.6 Mbits/sec   1.286 ms 789/1863 (42%)
+[  1] 280.00-281.00 sec  25 datagrams received out-of-order
+[  1] 281.00-282.00 sec  1.23 MBytes  10.3 Mbits/sec   0.665 ms 309/1185 (26%)
+[  1] 281.00-282.00 sec  4 datagrams received out-of-order
+[  1] 282.00-283.00 sec  1001 KBytes  8.20 Mbits/sec   1.827 ms 12/709 (1.7%)
+[  1] 282.00-283.00 sec  41 datagrams received out-of-order
+[  1] 283.00-284.00 sec  1.27 MBytes  10.6 Mbits/sec   1.840 ms 89/994 (9%)
+[  1] 283.00-284.00 sec  37 datagrams received out-of-order
+[  1] 284.00-285.00 sec  1.28 MBytes  10.7 Mbits/sec   1.069 ms 331/1245 (27%)
+[  1] 284.00-285.00 sec  14 datagrams received out-of-order
+[  1] 285.00-286.00 sec  1.39 MBytes  11.7 Mbits/sec   1.254 ms 239/1230 (19%)
+[  1] 285.00-286.00 sec  8 datagrams received out-of-order
+[  1] 286.00-287.00 sec  1.49 MBytes  12.5 Mbits/sec   2.673 ms 441/1507 (29%)
+[  1] 286.00-287.00 sec  3 datagrams received out-of-order
+[  1] 287.00-288.00 sec  1.41 MBytes  11.9 Mbits/sec   0.812 ms 177/1185 (15%)
+[  1] 287.00-288.00 sec  3 datagrams received out-of-order
+[  1] 288.00-289.00 sec  1.43 MBytes  12.0 Mbits/sec   1.584 ms 1065/2083 (51%)
+[  1] 288.00-289.00 sec  9 datagrams received out-of-order
+[  1] 289.00-290.00 sec  1.51 MBytes  12.7 Mbits/sec   1.382 ms 1850/2928 (63%)
+[  1] 289.00-290.00 sec  38 datagrams received out-of-order
+[  1] 290.00-291.00 sec  1.31 MBytes  11.0 Mbits/sec   1.125 ms 933/1871 (50%)
+[  1] 290.00-291.00 sec  13 datagrams received out-of-order
+[  1] 291.00-292.00 sec  1.41 MBytes  11.8 Mbits/sec   2.368 ms 986/1992 (49%)
+[  1] 291.00-292.00 sec  4 datagrams received out-of-order
+[  1] 292.00-293.00 sec  1.37 MBytes  11.5 Mbits/sec   1.721 ms 702/1681 (42%)
+[  1] 292.00-293.00 sec  5 datagrams received out-of-order
+[  1] 293.00-294.00 sec  1.45 MBytes  12.1 Mbits/sec   0.849 ms 1416/2448 (58%)
+[  1] 293.00-294.00 sec  24 datagrams received out-of-order
+[  1] 294.00-295.00 sec  1.39 MBytes  11.6 Mbits/sec   2.992 ms 966/1954 (49%)
+[  1] 294.00-295.00 sec  2 datagrams received out-of-order
+[  1] 295.00-296.00 sec  1.53 MBytes  12.8 Mbits/sec   1.794 ms 504/1596 (32%)
+[  1] 295.00-296.00 sec  1 datagrams received out-of-order
+[  1] 296.00-297.00 sec  1.47 MBytes  12.3 Mbits/sec   3.184 ms 780/1827 (43%)
+[  1] 296.00-297.00 sec  19 datagrams received out-of-order
+[  1] 297.00-298.00 sec  1.54 MBytes  12.9 Mbits/sec   2.407 ms 434/1534 (28%)
+[  1] 297.00-298.00 sec  5 datagrams received out-of-order
+[  1] 298.00-299.00 sec  1.44 MBytes  12.1 Mbits/sec   2.069 ms 535/1565 (34%)
+[  1] 298.00-299.00 sec  16 datagrams received out-of-order
+[  1] 299.00-300.00 sec  1.54 MBytes  12.9 Mbits/sec   1.988 ms 781/1877 (42%)
+[  1] 299.00-300.00 sec  1 datagrams received out-of-order
+[  1] 300.00-301.00 sec  1.60 MBytes  13.4 Mbits/sec   1.575 ms 1240/2383 (52%)
+[  1] 300.00-301.00 sec  2 datagrams received out-of-order
+[  1] 301.00-302.00 sec  1.57 MBytes  13.1 Mbits/sec   1.099 ms 841/1958 (43%)
+[  1] 301.00-302.00 sec  5 datagrams received out-of-order
+[  1] 302.00-303.00 sec  1.35 MBytes  11.3 Mbits/sec   1.866 ms 992/1957 (51%)
+[  1] 302.00-303.00 sec  2 datagrams received out-of-order
+[  1] 303.00-304.00 sec  1.45 MBytes  12.2 Mbits/sec   2.687 ms 1183/2217 (53%)
+[  1] 303.00-304.00 sec  22 datagrams received out-of-order
+[  1] 304.00-304.31 sec   577 KBytes  15.1 Mbits/sec   1.112 ms 106/508 (21%)
+[  1] 304.00-304.31 sec  2 datagrams received out-of-order
+[  1] 0.00-304.31 sec   418 MBytes  11.5 Mbits/sec   1.112 ms 144241/442496 (33%)
+[  1] 0.00-304.31 sec  2370 datagrams received out-of-order
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: kill -15 11 ---
+kill -15 11
+nsh> Waiting for server threads to complete. Interrupt again to force quit.
+[K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   11    11 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   12    11 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   13    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   14    11 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K
+INCOMPLETE

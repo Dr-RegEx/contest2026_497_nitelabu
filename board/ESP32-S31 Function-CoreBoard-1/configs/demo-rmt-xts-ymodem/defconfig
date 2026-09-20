@@ -1,0 +1,6 @@
+#include "../demo-rmt-xts-io/defconfig"
+
+# Published case 1.3.11: real file send/receive through the existing YMODEM
+# implementation.  The host runner uses fresh volatile /tmp paths only.
+CONFIG_SYSTEM_YMODEM=y
+CONFIG_SYSTEM_YMODEM_STACKSIZE=8192

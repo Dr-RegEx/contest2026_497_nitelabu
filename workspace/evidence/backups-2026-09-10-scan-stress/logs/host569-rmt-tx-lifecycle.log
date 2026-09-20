@@ -1,0 +1,16 @@
+/tmp/esp-rmt-tx-life-5vqdas_e/test.c: In function ‘rmt_fill_memory’:
+/tmp/esp-rmt-tx-life-5vqdas_e/test.c:101:3: error: this ‘for’ clause does not guard... [-Werror=misleading-indentation]
+  101 |   for (int i = 0; i < n; i++) memory[offset + i] = p[i]; writes++; }
+      |   ^~~
+/tmp/esp-rmt-tx-life-5vqdas_e/test.c:101:58: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+  101 |   for (int i = 0; i < n; i++) memory[offset + i] = p[i]; writes++; }
+      |                                                          ^~~~~~
+cc1: all warnings being treated as errors
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_rmt_tx_lifecycle.py", line 184, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_rmt_tx_lifecycle.py", line 177, in main
+    subprocess.run(['cc', '-std=c11', '-Wall', '-Wextra', '-Werror',
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '-fsanitize=address,undefined', '-fno-sanitize-recover=all', '/tmp/esp-rmt-tx-life-5vqdas_e/test.c', '-o', '/tmp/esp-rmt-tx-life-5vqdas_e/test']' returned non-zero exit status 1.

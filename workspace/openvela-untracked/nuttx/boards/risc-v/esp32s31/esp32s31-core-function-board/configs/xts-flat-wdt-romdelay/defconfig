@@ -1,0 +1,4 @@
+#include "../xts-flat-wdt/defconfig"
+
+# Keep calibrated busy delays isolated from previously qualified profiles.
+CONFIG_ESP32S31_WDT_ROM_DELAY=y

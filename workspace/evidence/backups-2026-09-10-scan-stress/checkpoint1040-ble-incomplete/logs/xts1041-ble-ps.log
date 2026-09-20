@@ -1,0 +1,8 @@
+EXISTING_UART_COMMAND=quit
+ESP-ROM:esp32s31-20251218
+BTraceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/ble-existing-ps.py", line 36, in <module>
+    command('quit', 'nsh> ', 20)
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/ble-existing-ps.py", line 31, in command
+    raise RuntimeError('unexpected target reboot; stop without retry')
+RuntimeError: unexpected target reboot; stop without retry

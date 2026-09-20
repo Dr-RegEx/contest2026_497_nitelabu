@@ -1,0 +1,9 @@
+#include "../demo-rmt-xts-drivers/defconfig"
+
+# Required full RTC test profile. Currently configuration-blocked because
+# this openvela revision disallows SIG_EVTHREAD in BUILD_KERNEL.
+# Do not mark RTC passed with alarm/periodic cases silently omitted.
+CONFIG_SIG_EVTHREAD=y
+CONFIG_RTC_ALARM=y
+CONFIG_RTC_PERIODIC=y
+CONFIG_RTC_IOCTL=y

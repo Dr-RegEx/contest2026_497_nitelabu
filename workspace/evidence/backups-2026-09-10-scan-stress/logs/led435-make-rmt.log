@@ -1,0 +1,47 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x11238
+entry 0x2f00dd18
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x11238  (70200)
+padd: lma 0x000132a8 vma 0x00000000 len 0xcd70   (52592)
+imap: lma 0x00020020 vma 0x400c0020 len 0x1904c  (102476)
+padd: lma 0x00039074 vma 0x00000000 len 0x7084   (28804)
+imap: lma 0x00040100 vma 0x40000100 len 0xb5224  (741924)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+RMT_BOOT=PASS seconds=3.480
+--- CMD: ls /dev/leds0 ---
+ls /dev/leds0
+ /dev/leds0
+nsh> [K
+nsh> [K
+--- CMD: s31led 10 ---
+s31led 10
+S31_LED=PASS frames=40 brightness=8 final=off optical=unverified
+nsh> [K
+nsh> [K
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=1344 replay=1344 ack=1829 drop=0 pending=0x0 sreplay=1
+MONIRQ: cpu=1 defer=93513 replay=93513 ack=93836 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=2 fail=0 destroyed=1 live=1 livemax=2 pages=137 pgt=4
+nsh> [K
+nsh> [K
+S31_LED_SMOKE=PASS optical=unverified

@@ -1,0 +1,7 @@
+# Isolated performance candidate. Keep the published scratch layout and
+# LittleFS copy-on-write semantics, but cache one complete 4 KiB erase block.
+# The board geometry is 64-byte I/O blocks and 4096-byte erase blocks.
+# This reduces repeated partial-cache reads/programs during random 4 KiB writes.
+# It increases RAM use by a bounded amount and does not alter on-disk format.
+#include "../xts-flat-category-fs-perf/defconfig"
+CONFIG_FS_LITTLEFS_CACHE_SIZE_FACTOR=64

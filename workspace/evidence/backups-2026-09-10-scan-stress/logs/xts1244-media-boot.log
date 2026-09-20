@@ -1,0 +1,72 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1243-media.sha256
+ments stored 6
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xba18
+entry 0x2f008b34
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xba18   (47640)
+padd: lma 0x0000da88 vma 0x00000000 len 0x2590   (9616)
+imap: lma 0x00010020 vma 0x400f0020 len 0x9a0a4  (630948)
+padd: lma 0x000aa0cc vma 0x00000000 len 0x602c   (24620)
+imap: lma 0x000b0100 vma 0x40000100 len 0xe1c74  (924788)
+total segments stored 6
+ABCES8311: pcm0p/pcm0c duplex, 48000/16/2 slots
+
+NuttShell (NSH)
+nsh> [K
+XTS_COMMAND=ls /dev/audio
+--- CMD: ls /dev/audio ---
+ls /dev/audio
+/dev/audio:
+ pcm0c
+ pcm0p
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   16840896      23288   16817608      30240   16777200     45      3 Umem
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data
+--- CMD: mkdir /data ---
+mkdir /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount -t tmpfs /data
+--- CMD: mount -t tmpfs /data ---
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/media
+--- CMD: mkdir /data/media ---
+mkdir /data/media
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /tmp/media-kv
+--- CMD: mkdir /tmp/media-kv ---
+mkdir /tmp/media-kv
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type tmpfs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+VOLATILE_MEDIA_STORAGE_READY; no media playback PASS

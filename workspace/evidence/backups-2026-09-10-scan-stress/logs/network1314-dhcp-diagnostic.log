@@ -1,0 +1,46 @@
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at UP mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=41924 replay=41924 ack=42576 drop=0 pending=0x0 sreplay=9
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=17055 max=27363473 samples=6441 over32=194 over100=60 over1000=3 sum=54079586 direct=34 directmax=18896 deferred=6407 deferredmax=27363473
+MONIRQ: cpu=1 defer=22734 replay=22734 ack=22736 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=13 fail=0 destroyed=12 live=1 livemax=2 pages=1808 pgt=48
+WAIT: pid=2 object=0x2f011014
+LPTRACE: 0x400258ac
+WAIT: pid=4 object=0x2f01106c
+nsh> [K
+nsh> [K
+--- CMD: ping 192.168.1.1 ---
+ping 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+[CPU1] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 0: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 1: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 2: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 3: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 4: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 5: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 6: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 7: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 8: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 9: 101
+10 packets transmitted, 0 received, 100% packet loss, time 10100 ms
+nsh> [K
+nsh> [K
+DIAGNOSTIC_ONLY

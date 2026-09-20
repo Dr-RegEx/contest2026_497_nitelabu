@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config EXAMPLES_S31RGB565
+	tristate "ESP32-S31 Korvo RGB565 framebuffer demo"
+	default n
+	depends on VIDEO_FB && FB_UPDATE
+	---help---
+		Draw an openvela RGB565 dashboard, solid colors, and a pixel grid
+		on an 800x480 framebuffer. The driver must synchronize scanout in
+		FBIO_UPDATE before the application redraws the mapped buffer.
+		The pattern cycle lasts 30 seconds. Use --frames N or --cycles N
+		for a finite run; otherwise the program runs continuously.
+
+if EXAMPLES_S31RGB565
+
+config EXAMPLES_S31RGB565_PROGNAME
+	string "Program name"
+	default "s31rgb565"
+
+config EXAMPLES_S31RGB565_PRIORITY
+	int "Task priority"
+	default 100
+
+config EXAMPLES_S31RGB565_STACKSIZE
+	int "Stack size"
+	default 4096
+
+endif

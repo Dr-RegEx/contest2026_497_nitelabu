@@ -1,0 +1,67 @@
+iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 30 -u -b 5M
+------------------------------------------------------------
+Client connecting to 192.168.1.29, UDP port 5004
+Sending 1470 byte datagrams, IPG target: 2243.04 us (kalman adjust)
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 24142 connected with 192.168.1.29 port 5004
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.00-1.00 sec   441 KBytes  3.61 Mbits/sec
+[  1] 1.00-2.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 2.00-3.00 sec   449 KBytes  3.68 Mbits/sec
+[  1] 3.00-4.00 sec   459 KBytes  3.76 Mbits/sec
+[  1] 4.00-5.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 5.00-6.00 sec   454 KBytes  3.72 Mbits/sec
+[  1] 6.00-7.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 7.00-8.00 sec   448 KBytes  3.67 Mbits/sec
+[  1] 8.00-9.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 9.00-10.00 sec   441 KBytes  3.61 Mbits/sec
+[  1] 10.00-11.00 sec   441 KBytes  3.61 Mbits/sec
+[  1] 11.00-12.00 sec   458 KBytes  3.75 Mbits/sec
+[  1] 12.00-13.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 13.00-14.00 sec   459 KBytes  3.76 Mbits/sec
+[  1] 14.00-15.00 sec   451 KBytes  3.69 Mbits/sec
+[  1] 15.00-16.00 sec   436 KBytes  3.58 Mbits/sec
+[  1] 16.00-17.00 sec   436 KBytes  3.58 Mbits/sec
+[  1] 17.00-18.00 sec   439 KBytes  3.60 Mbits/sec
+[  1] 18.00-19.00 sec   455 KBytes  3.73 Mbits/sec
+[  1] 19.00-20.00 sec   452 KBytes  3.70 Mbits/sec
+[  1] 20.00-21.00 sec   445 KBytes  3.65 Mbits/sec
+[  1] 21.00-22.00 sec   449 KBytes  3.68 Mbits/sec
+[  1] 22.00-23.00 sec   446 KBytes  3.66 Mbits/sec
+[  1] 23.00-24.00 sec   451 KBytes  3.69 Mbits/sec
+[  1] 24.00-25.00 sec   455 KBytes  3.73 Mbits/sec
+[  1] 25.00-26.00 sec   455 KBytes  3.73 Mbits/sec
+[  1] 26.00-27.00 sec   445 KBytes  3.65 Mbits/sec
+[  1] 27.00-28.00 sec   452 KBytes  3.70 Mbits/sec
+[  1] 28.00-29.00 sec   444 KBytes  3.63 Mbits/sec
+[  1] 29.00-30.00 sec   438 KBytes  3.59 Mbits/sec
+[  1] 0.00-30.01 sec  13.1 MBytes  3.66 Mbits/sec
+[  1] Sent 9345 datagrams
+[  1] Server Report:
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-30.02 sec  13.1 MBytes  3.66 Mbits/sec   4.412 ms 8/9344 (0.086%)
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    000069ab 00000000 00000000 228f3a2         
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 0000000b
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00006670 00006672 00000000 00000000 1a30d3f          
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     68f2  35c8  3319  0010
+Dropped      0001  0000  01ce  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         6661  41c4  248c  0011
+  Rexmit     ----  0002  ----  ----
+nsh> [K

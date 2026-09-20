@@ -1,0 +1,12 @@
+{
+  "status": "TCP_FIXED_BYTE_DIAGNOSTIC_RUNNING",
+  "exec_session": 25136,
+  "receipt": "build1631-spawn-parent-env.sha256",
+  "script": "network1658-fixed-byte-rx.py tcp",
+  "log": "logs/network1658-fixed-byte-rx.log",
+  "host_log": "logs/host1658-original-rx.log",
+  "previous_result": "checkpoint1651-udp-rx-final-ack",
+  "host_fix_evidence": "checkpoint1657-host-tcp-accounting",
+  "manual": "User sleeping; no physical requests",
+  "next": "Poll session25136 before touching UART. If bytes match, run new original300s TCP with1656client; preserve rate-pending scope. UDP Tx1649 prepared with1641hostreceiver still not run."
+}

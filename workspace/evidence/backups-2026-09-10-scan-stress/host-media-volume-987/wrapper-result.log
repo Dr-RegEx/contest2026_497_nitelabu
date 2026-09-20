@@ -1,0 +1,5 @@
+PASS actual boot: fixed 3MiB partition geometry and registration only, no lower read/write/erase; repeated initialization is inert
+PASS actual byte/block read/write: split offsets and buffer advance, final unit, zero count, negative/overflow/out-of-range preflight, short/error/invalid oversized child result
+PASS actual erase result contract: RAM requires 0; Flash requires exact count; zero/short/oversize Flash and unexpected RAM positive fail
+PASS actual erase boundaries and error; combined geometry; bulk erase never forwarded
+HOST ONLY: leaf MTD/hardware mocked; full actual wrapper source retained apart from includes

@@ -1,0 +1,9 @@
+test: /tmp/arp-queue-expiry-mxwowvfj/test.c:34: iob_tryadd_queue: Assertion `locked && queue == &entry.at_queue' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_arp_queue_expiry.py", line 122, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_arp_queue_expiry.py", line 118, in main
+    subprocess.run([str(path / 'test')], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/arp-queue-expiry-mxwowvfj/test']' died with <Signals.SIGABRT: 6>.

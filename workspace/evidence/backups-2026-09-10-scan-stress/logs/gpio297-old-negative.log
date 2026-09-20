@@ -1,0 +1,9 @@
+test: /tmp/esp-gpio-banks-v5vidvdk/test.c:17: clear_pin: Assertion `!(cleared & (UINT64_C(1) << pin))' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_gpio_irq_banks.py", line 87, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_gpio_irq_banks.py", line 83, in main
+    subprocess.run([str(path / "test")], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-gpio-banks-v5vidvdk/test']' died with <Signals.SIGABRT: 6>.

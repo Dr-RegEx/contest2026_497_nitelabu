@@ -1,0 +1,37 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x79 (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2f000000,len:0xb3e8
+entry 0x2f00863c
+*** Booting NuttX ***
+dram: lma 0x00002020 vma 0x2f000000 len 0xb3e8   (46056)
+padd: lma 0x0000d438 vma 0x00000000 len 0x2be0   (11232)
+imap: lma 0x00010020 vma 0x40030020 len 0x638c   (25484)
+padd: lma 0x000163b4 vma 0x00000000 len 0x9d44   (40260)
+imap: lma 0x00020100 vma 0x40000100 len 0x210a0  (135328)
+total segments stored 5
+ABCS31 LCD: NuttX framebuffer 800x480 RGB565 pclk=18000000, two DMA scan buffers, raw link-switch polling
+OPENVELA_FB_READY /dev/fb0 RGB565 800x480
+OPENVELA_RGB565_START sysname=NuttX release=0.0.0 version=6c3a1973-dirty Sep 19 2026 23:41:24 machine=risc-v
+s31rgb565: background pid=3; entering NSH
+
+NuttShell (NSH)
+nsh> [Ks31rgb565: OPENVELA/NUTTX RGB565 framebuffer demo
+s31rgb565: RGB565_SELFTEST=PASS words=65536 byte_order=little-endian
+s31rgb565: FB=/dev/fb0 format=11 800x480 bpp=16 stride=1600 bytes=768000
+s31rgb565: PATTERN=DASHBOARD frame=0
+S31 LCD: UPDATE_STAGE=copy
+S31 LCD: UPDATE_STAGE=cache-writeback
+S31 LCD: UPDATE_STAGE=link-request channel=0
+S31 LCD: UPDATE_STAGE=link-wait
+S31 LCD: UPDATE_STAGE=complete raw=00000403
+s31rgb565: FIRST_FRAME_UPDATE=PASS
+s31rgb565: PATTERN=RED F800 frame=78
+s31rgb565: PATTERN=GREEN 07E0 frame=88
+s31rgb565: PATTERN=BLUE 001F frame=98
+s31rgb565: LCD_FRAMES=100 FRAMEBUFFER_UPDATE=PASS optical=unverified
+s31rgb565: PATTERN=WHITE FFFF frame=109
+s31rgb565: PATTERN=BLACK 0000 frame=119
+s31rgb565: PATTERN=CHECKERBOARD frame=129
+s31rgb565: PATTERN=DASHBOARD frame=149

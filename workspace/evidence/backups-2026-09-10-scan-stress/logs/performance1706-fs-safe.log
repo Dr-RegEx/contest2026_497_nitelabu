@@ -1,0 +1,127 @@
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+mkdir -p /data
+nsh> [K
+nsh> [K
+--- CMD: mount -t littlefs /dev/xtsflash /data ---
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        752          16 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        752          16 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+--- CMD: rm -r /data/s11_1706 ---
+rm -r /data/s11_1706
+nsh: rm: unlink failed: No such file or directory
+nsh> [K
+nsh> [K
+rm -r /data/s11_1706
+nsh: rm: unlink failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: mkdir /data/s11_1706 ---
+mkdir /data/s11_1706
+nsh> [K
+nsh> [K
+mkdir /data/s11_1706
+nsh> [K
+nsh> [K
+--- CMD: performance_test -d/data/s11_1706 -b4096 -c64 -m1 ---
+performance_test -d/data/s11_1706 -b4096 -c64 -m1
+write failed , errno 28, i 13, block 4096
+write speed is 136.842105
+nsh> [K
+nsh> [K
+performance_test -d/data/s11_1706 -b4096 -c64 -m1
+write failed , errno 28, i 13, block 4096
+write speed is 136.842105
+nsh> [K
+nsh> [K
+SAFE_RATE 1 write 136.842105
+--- CMD: performance_test -d/data/s11_1706 -b4096 -c64 -m2 ---
+performance_test -d/data/s11_1706 -b4096 -c64 -m2
+read failed , errno 0, i 0, block 4096
+read speed is nan
+nsh> [K
+nsh> [K
+performance_test -d/data/s11_1706 -b4096 -c64 -m2
+read failed , errno 0, i 0, block 4096
+read speed is nan
+nsh> [K
+nsh> [K
+SAFE_RATE 2 read nan
+--- CMD: performance_test -d/data/s11_1706 -b4096 -c64 -m3 ---
+performance_test -d/data/s11_1706 -b4096 -c64 -m3
+write failed , errno 28, i 2, block 4096
+random write speed is 14.285714
+nsh> [K
+nsh> [K
+performance_test -d/data/s11_1706 -b4096 -c64 -m3
+write failed , errno 28, i 2, block 4096
+random write speed is 14.285714
+nsh> [K
+nsh> [K
+SAFE_RATE 3 random write 14.285714
+--- CMD: performance_test -d/data/s11_1706 -b4096 -c64 -m4 ---
+performance_test -d/data/s11_1706 -b4096 -c64 -m4
+read failed , errno 0, i 0, block 4096
+random read speed is nan
+nsh> [K
+nsh> [K
+performance_test -d/data/s11_1706 -b4096 -c64 -m4
+read failed , errno 0, i 0, block 4096
+random read speed is nan
+nsh> [K
+nsh> [K
+SAFE_RATE 4 random read nan
+--- CMD: ls -l /data/s11_1706 ---
+ls -l /data/s11_1706
+/data/s11_1706:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+ -rwx------           0 performance_test
+nsh> [K
+nsh> [K
+ls -l /data/s11_1706
+/data/s11_1706:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+ -rwx------           0 performance_test
+nsh> [K
+nsh> [K
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        754          14 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        754          14 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K

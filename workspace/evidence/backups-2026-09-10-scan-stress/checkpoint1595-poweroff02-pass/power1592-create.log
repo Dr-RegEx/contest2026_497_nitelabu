@@ -1,0 +1,23 @@
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/p1583
+--- CMD: ls -l /data/p1583 ---
+ls -l /data/p1583
+/data/p1583:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+nsh> [K
+nsh> [K
+XTS_COMMAND=power_off_test02 /data/p1583
+power_off_test02 /data/p1583
+Open  n 80
+Open  test  start ...
+Open test end ...
+nsh> [KPHYSICAL_POWER_OFF_READY case=4.1.5 round=2
+{"case": "4.1.5", "round": 2, "status": "USB_LOSS_OBSERVED_RECOVERY_PENDING", "receipt": "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1023-flat-category-fs-name.sha256", "physical_confirmation": false}

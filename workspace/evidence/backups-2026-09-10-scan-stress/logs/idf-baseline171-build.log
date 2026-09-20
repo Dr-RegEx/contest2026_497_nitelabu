@@ -1,0 +1,171 @@
+Checking "python3" ...
+Python 3.10.12
+"python3" has been detected
+Activating ESP-IDF 6.1
+Setting IDF_PATH to '/home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean'.
+* Checking python version ... 3.10.12
+* Checking python dependencies ... OK
+* Deactivating the current ESP-IDF environment (if any) ... OK
+* Establishing a new ESP-IDF environment ... OK
+* Identifying shell ... bash
+* Detecting outdated tools in system ... OK - no outdated tools found
+* Shell completion ... Autocompletion code generated
+
+Done! You can now compile ESP-IDF projects.
+Go to the project directory and run:
+
+  idf.py build
++ cmake -S /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline -B /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build -G Ninja -DIDF_TARGET=esp32s31 -DSDKCONFIG=/home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/sdkconfig -DSDKCONFIG_DEFAULTS=/home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/sdkconfig.defaults -DGIT_EXECUTABLE=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/offline-bin/git
+skip submodule check on internal CI
+-- Minimal build - ON
+-- git rev-parse returned 'fatal: not a git repository (or any of the parent directories): .git'
+-- Could not use 'git describe' to determine PROJECT_VER.
+-- Building ESP-IDF components for target esp32s31
+-- Checking Python dependencies...
+Python requirements are satisfied.
+Constraint file: /home/regex/.espressif/espidf.constraints.v6.1.txt
+Requirement files:
+ - /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/requirements/requirements.core.txt
+Python being checked: /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python
+-- ESP-TEE is currently supported only on the esp32c6;esp32h2;esp32c5;esp32c61 SoCs
+-- KCONFIG_REPORT_VERBOSITY not set, using default
+-- Project sdkconfig file /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/sdkconfig
+Loading defaults file /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/sdkconfig.defaults...
+NOTE: Kconfig parser version: 1
+NOTE: Kconfig defaults policy: use sdkconfig
+NOTE: Status: Finished successfully
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/riscv/ld/rom.api.ld
+-- App "s31_wifi_baseline" version: 1
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_systimer/esp32s31/rom.systimer.ld
+-- Setting up mbedtls configuration
+-- Linkage type is PUBLIC
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_wdt/esp32s31/rom.wdt.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_system/ld/esp32s31/memory.ld.in
+--   -> Preprocessing .in script: /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_system/ld/esp32s31/memory.ld.in
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_system/ld/esp32s31/sections.ld.in
+--   -> Preprocessing .in script: /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_system/ld/esp32s31/sections.ld.in
+--   -> Applying ldgen processing: /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/esp-idf/esp_system/ld/sections.ld.in
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_rom/esp32s31/ld/esp32s31.rom.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_rom/esp32s31/ld/esp32s31.rom.api.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_rom/esp32s31/ld/esp32s31.rom.rvfp.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_rom/esp32s31/ld/esp32s31.rom.version.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_rom/esp32s31/ld/esp32s31.rom.phy.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_rom/esp32s31/ld/esp32s31.rom.coexist.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_rom/esp32s31/ld/esp32s31.rom.net80211.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_rom/esp32s31/ld/esp32s31.rom.pp.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_rom/esp32s31/ld/esp32s31.rom.libc.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/heap/port/esp32s31/ld/esp32s31.rom.heap.ld
+-- Adding linker script /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/soc/esp32s31/ld/esp32s31.peripherals.ld
+CMake Warning at /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/cmake/component_validation.cmake:106 (message):
+  Private include directory
+  '/home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_wifi/wifi_apps/roaming_app/include'
+  belongs to component esp_wifi but is being used by component
+  wpa_supplicant.  It is recommended to define the component dependency for
+  wpa_supplicant on the component esp_wifi, i.e.  'idf_component_register(...
+  PRIV_REQUIRES esp_wifi)' in the CMakeLists.txt of wpa_supplicant, and
+  specify the included directory as idf_component_register(...
+  PRIV_INCLUDE_DIRS <dir relative to component>) in the CMakeLists.txt of
+  component esp_wifi.
+Call Stack (most recent call first):
+  /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/cmake/component_validation.cmake:130 (__component_validation_check_include_dirs)
+  /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/CMakeLists.txt:356 (__component_validation_run_checks)
+
+
+CMake Warning at /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/cmake/component_validation.cmake:106 (message):
+  Private include directory
+  '/home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_wifi/wifi_apps/roaming_app/src'
+  belongs to component esp_wifi but is being used by component
+  wpa_supplicant.  It is recommended to define the component dependency for
+  wpa_supplicant on the component esp_wifi, i.e.  'idf_component_register(...
+  PRIV_REQUIRES esp_wifi)' in the CMakeLists.txt of wpa_supplicant, and
+  specify the included directory as idf_component_register(...
+  PRIV_INCLUDE_DIRS <dir relative to component>) in the CMakeLists.txt of
+  component esp_wifi.
+Call Stack (most recent call first):
+  /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/cmake/component_validation.cmake:130 (__component_validation_check_include_dirs)
+  /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/CMakeLists.txt:356 (__component_validation_run_checks)
+
+
+CMake Warning at /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/cmake/component_validation.cmake:106 (message):
+  Private include directory
+  '/home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_wifi/wifi_apps/include/apps_private'
+  belongs to component esp_wifi but is being used by component
+  wpa_supplicant.  It is recommended to define the component dependency for
+  wpa_supplicant on the component esp_wifi, i.e.  'idf_component_register(...
+  PRIV_REQUIRES esp_wifi)' in the CMakeLists.txt of wpa_supplicant, and
+  specify the included directory as idf_component_register(...
+  PRIV_INCLUDE_DIRS <dir relative to component>) in the CMakeLists.txt of
+  component esp_wifi.
+Call Stack (most recent call first):
+  /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/cmake/component_validation.cmake:130 (__component_validation_check_include_dirs)
+  /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/CMakeLists.txt:356 (__component_validation_run_checks)
+
+
+CMake Warning at /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/cmake/component_validation.cmake:106 (message):
+  Private include directory
+  '/home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/wpa_supplicant/src'
+  belongs to component wpa_supplicant but is being used by component
+  esp_wifi.  It is recommended to define the component dependency for
+  esp_wifi on the component wpa_supplicant, i.e.  'idf_component_register(...
+  PRIV_REQUIRES wpa_supplicant)' in the CMakeLists.txt of esp_wifi, and
+  specify the included directory as idf_component_register(...
+  PRIV_INCLUDE_DIRS <dir relative to component>) in the CMakeLists.txt of
+  component wpa_supplicant.
+Call Stack (most recent call first):
+  /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/cmake/component_validation.cmake:130 (__component_validation_check_include_dirs)
+  /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/CMakeLists.txt:356 (__component_validation_run_checks)
+
+
+CMake Warning at /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/cmake/component_validation.cmake:106 (message):
+  Private include directory
+  '/home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/wpa_supplicant/esp_supplicant/src'
+  belongs to component wpa_supplicant but is being used by component
+  esp_wifi.  It is recommended to define the component dependency for
+  esp_wifi on the component wpa_supplicant, i.e.  'idf_component_register(...
+  PRIV_REQUIRES wpa_supplicant)' in the CMakeLists.txt of esp_wifi, and
+  specify the included directory as idf_component_register(...
+  PRIV_INCLUDE_DIRS <dir relative to component>) in the CMakeLists.txt of
+  component wpa_supplicant.
+Call Stack (most recent call first):
+  /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/tools/cmake/component_validation.cmake:130 (__component_validation_check_include_dirs)
+  /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/CMakeLists.txt:356 (__component_validation_run_checks)
+
+
+-- Components: app_update bootloader bootloader_support cxx efuse esp_app_format esp_blockdev esp_bootloader_format esp_coex esp_common esp_driver_dma esp_driver_gpio esp_driver_uart esp_driver_usb_serial_jtag esp_event esp_hal_ana_conv esp_hal_clock esp_hal_dma esp_hal_gpio esp_hal_gpspi esp_hal_mspi esp_hal_pmu esp_hal_regi2c esp_hal_rtc_timer esp_hal_security esp_hal_systimer esp_hal_timg esp_hal_touch_sens esp_hal_uart esp_hal_usb esp_hal_wdt esp_hw_support esp_libc esp_mm esp_netif esp_netif_stack esp_partition esp_phy esp_pm esp_psram esp_ringbuf esp_rom esp_security esp_stdio esp_system esp_timer esp_usb_cdc_rom_console esp_wifi esptool_py freertos hal heap log lwip main mbedtls nvs_flash nvs_sec_provider partition_table pthread riscv soc spi_flash vfs wpa_supplicant
+-- Component paths: /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/app_update /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/bootloader /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/bootloader_support /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/cxx /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/efuse /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_app_format /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_blockdev /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_bootloader_format /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_coex /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_common /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_driver_dma /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_driver_gpio /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_driver_uart /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_driver_usb_serial_jtag /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_event /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_ana_conv /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_clock /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_dma /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_gpio /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_gpspi /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_mspi /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_pmu /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_regi2c /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_rtc_timer /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_security /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_systimer /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_timg /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_touch_sens /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_uart /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_usb /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hal_wdt /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_hw_support /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_libc /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_mm /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_netif /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_netif_stack /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_partition /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_phy /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_pm /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_psram /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_ringbuf /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_rom /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_security /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_stdio /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_system /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_timer /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_usb_cdc_rom_console /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esp_wifi /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esptool_py /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/freertos /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/hal /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/heap /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/log /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/lwip /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/main /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/mbedtls /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/nvs_flash /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/nvs_sec_provider /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/pthread /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/riscv /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/soc /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/spi_flash /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/vfs /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/wpa_supplicant
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build
++ cmake --build /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build -j8
+[1/9] Performing build step for 'bootloader'
+[1/1] cd /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/bootloader && python /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x2000 /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/bootloader/bootloader.bin
+Bootloader binary size 0x4bb0 bytes. 0x1450 bytes (21%) free.
+[2/7] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/baseline.c.obj
+[3/7] Linking C static library esp-idf/main/libmain.a
+[4/7] Generating esp-idf/esp_system/ld/sections.ld
+Skipping linker script generation, section names unchanged
+[5/7] Linking CXX executable s31_wifi_baseline.elf
+[6/7] Generating binary image from built executable
+esptool v5.4.0
+Creating ESP32-S31 image...
+Merged 3 ELF sections.
+Successfully created ESP32-S31 image.
+Generated /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/s31_wifi_baseline.bin
+[7/7] cd /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build && python /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/partition_table/partition-table.bin /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/s31_wifi_baseline.bin
+s31_wifi_baseline.bin binary size 0xd76e0 bytes. Smallest app partition is 0x1f0000 bytes. 0x118920 bytes (57%) free.
++ sha256sum /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/bootloader/bootloader.bin /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/partition_table/partition-table.bin /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/s31_wifi_baseline.bin
+6cec23aa2f5835abf61a388e9f39edf048a2aecc82c92b14a34577a3a842428b  /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/bootloader/bootloader.bin
+4e31205fa4c5ba45b6bde8fd483490fe1a706b318f93d53b7e4698cd8407dda3  /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/partition_table/partition-table.bin
+e11a55fd4ffd3abf666e8a6b381717d8a53e49f1ac1a4e092cca99d8ec801e16  /home/regex/work/esp32s31-openvela/diagnostics/idf-baseline/build/s31_wifi_baseline.bin

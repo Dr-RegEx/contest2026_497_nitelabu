@@ -1,0 +1,11 @@
+# S31 ARP response-budget candidate
+
+Diagnostic only. No target acceptance or performance claim. No flashing is performed by this build.
+
+The AP-selection baseline uses CONFIG_ARP_SEND_DELAYMSEC=20 and CONFIG_ARP_SEND_MAXTRIES=5. arp_send.c passes the delay to both its send-callback wait and arp_wait(); utils/utils.h forwards it to net_sem_timedwait2(), and utils/net_lock.c converts it with MSEC2TICK. These are milliseconds, with CONFIG_USEC_PER_TICK=1000. A successfully submitted request therefore gets only 20 ms for its response, five times. A failed cache entry can subsequently return ENETUNREACH for ten seconds (arp_table.c, CONFIG_NET_ARP_MAXAGE_UNREACHABLE=1).
+
+The separate profile demo-rmt-bttool-coex-pie-netdiag-sack-window128-ampdu12-arp200 copies the existing ampdu12 profile and adds only CONFIG_ARP_SEND_DELAYMSEC=200. Five response waits allow roughly one second; send-callback waits can add another roughly one second in the worst case, apart from scheduling delays. Successful replies wake the wait immediately. This tenfold diagnostic budget tests a latency hypothesis; it is not a measured optimal setting and cannot repair dropped or malformed ARP requests. The in-progress cache period follows the retry product and becomes one second; the ten-second negative-cache age remains unchanged.
+
+config-diff.json verifies exactly one enabled configuration-value difference from the AP-selection output. The original profile and its output configuration are unchanged. build-wifi-arp200.sh uses a separate output directory and export log, preserves/restores temporary source configuration files, and writes a new kernel/AppFS SHA-256 receipt only after a successful build.
+
+Before treating this as a fix, compare cold board-initiated ARP with host-first neighbor learning under the same BSSID. Preserve /dev/s31stat deltas (ARPREQ, ARPDIAG, TXDONE, TXSHAPE), board/host packet evidence where available, actual AP association, and current address/neighbor state. Host-first success is a discriminating observation, not cold-ARP acceptance. Current tcp-window-compare evidence did not collect these TX counters, so it cannot locate the loss boundary. ap6-check successful UDP reception used incoming ARP requests and outgoing replies; it did not prove outbound ARP request handling.

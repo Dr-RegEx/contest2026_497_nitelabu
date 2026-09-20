@@ -1,0 +1,312 @@
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+    4194300     364196    3830104     364560    3829440    789     11 heapfs
+     304828      73156     231672     107376     189768    120      9 Kmem
+   12582912     696320   11886592   11886592 Page
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011140 0x2f01118c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ls -l /tmp/experiments/AlgorithmTesting/RandomExcursionsVariant ---
+ls -l /tmp/experiments/AlgorithmTesting/RandomExcursionsVariant
+/tmp/experiments/AlgorithmTesting/RandomExcursionsVariant:
+ -rwxrwxrwx   0          90 data18.txt
+ -rwxrwxrwx   0          90 data17.txt
+ -rwxrwxrwx   0          90 data16.txt
+ -rwxrwxrwx   0          90 data15.txt
+ -rwxrwxrwx   0          90 data14.txt
+ -rwxrwxrwx   0          90 data13.txt
+ -rwxrwxrwx   0          90 data12.txt
+ -rwxrwxrwx   0          90 data11.txt
+ -rwxrwxrwx   0          90 data10.txt
+ -rwxrwxrwx   0          90 data9.txt
+ -rwxrwxrwx   0          90 data8.txt
+ -rwxrwxrwx   0          90 data7.txt
+ -rwxrwxrwx   0          90 data6.txt
+ -rwxrwxrwx   0          90 data5.txt
+ -rwxrwxrwx   0          90 data4.txt
+ -rwxrwxrwx   0          90 data3.txt
+ -rwxrwxrwx   0          90 data2.txt
+ -rwxrwxrwx   0          90 data1.txt
+ -rwxrwxrwx   0        1620 results.txt
+ -rwxrwxrwx   0        5881 stats.txt
+nsh> [K
+nsh> [K
+--- CMD: cat /tmp/experiments/AlgorithmTesting/BlockFrequency/stats.txt ---
+cat /tmp/experiments/AlgorithmTesting/BlockFrequency/stats.txt
+			BLOCK FREQUENCY TEST
+		---------------------------------------------
+		COMPUTATIONAL INFORMATION:
+		---------------------------------------------
+		(a) Chi^2           = 13212.312500
+		(b) # of substrings = 3125
+		(c) block length    = 128
+		(d) Note: 0 bits were discarded.
+		---------------------------------------------
+FAILURE		p_value = 0.000000
+
+			BLOCK FREQUENCY TEST
+		---------------------------------------------
+		COMPUTATIONAL INFORMATION:
+		---------------------------------------------
+		(a) Chi^2           = 13252.156250
+		(b) # of substrings = 3125
+		(c) block length    = 128
+		(d) Note: 0 bits were discarded.
+		---------------------------------------------
+FAILURE		p_value = 0.000000
+
+			BLOCK FREQUENCY TEST
+		---------------------------------------------
+		COMPUTATIONAL INFORMATION:
+		---------------------------------------------
+		(a) Chi^2           = 13332.656250
+		(b) # of substrings = 3125
+		(c) block length    = 128
+		(d) Note: 0 bits were discarded.
+		---------------------------------------------
+FAILURE		p_value = 0.000000
+
+			BLOCK FREQUENCY TEST
+		---------------------------------------------
+		COMPUTATIONAL INFORMATION:
+		---------------------------------------------
+		(a) Chi^2           = 13489.000000
+		(b) # of substrings = 3125
+		(c) block length    = 128
+		(d) Note: 0 bits were discarded.
+		---------------------------------------------
+FAILURE		p_value = 0.000000
+
+			BLOCK FREQUENCY TEST
+		---------------------------------------------
+		COMPUTATIONAL INFORMATION:
+		---------------------------------------------
+		(a) Chi^2           = 13190.843750
+		(b) # of substrings = 3125
+		(c) block length    = 128
+		(d) Note: 0 bits were discarded.
+		---------------------------------------------
+FAILURE		p_value = 0.000000
+
+			BLOCK FREQUENCY TEST
+		---------------------------------------------
+		COMPUTATIONAL INFORMATION:
+		---------------------------------------------
+		(a) Chi^2           = 13854.375000
+		(b) # of substrings = 3125
+		(c) block length    = 128
+		(d) Note: 0 bits were discarded.
+		---------------------------------------------
+FAILURE		p_value = 0.000000
+
+			BLOCK FREQUENCY TEST
+		---------------------------------------------
+		COMPUTATIONAL INFORMATION:
+		---------------------------------------------
+		(a) Chi^2           = 13149.375000
+		(b) # of substrings = 3125
+		(c) block length    = 128
+		(d) Note: 0 bits were discarded.
+		---------------------------------------------
+FAILURE		p_value = 0.000000
+
+			BLOCK FREQUENCY TEST
+		---------------------------------------------
+		COMPUTATIONAL INFORMATION:
+		---------------------------------------------
+		(a) Chi^2           = 13017.281250
+		(b) # of substrings = 3125
+		(c) block length    = 128
+		(d) Note: 0 bits were discarded.
+		---------------------------------------------
+FAILURE		p_value = 0.000000
+
+			BLOCK FREQUENCY TEST
+		---------------------------------------------
+		COMPUTATIONAL INFORMATION:
+		---------------------------------------------
+		(a) Chi^2           = 13490.437500
+		(b) # of substrings = 3125
+		(c) block length    = 128
+		(d) Note: 0 bits were discarded.
+		---------------------------------------------
+FAILURE		p_value = 0.000000
+
+			BLOCK FREQUENCY TEST
+		---------------------------------------------
+		COMPUTATIONAL INFORMATION:
+		---------------------------------------------
+		(a) Chi^2           = 14430.031250
+		(b) # of substrings = 3125
+		(c) block length    = 128
+		(d) Note: 0 bits were discarded.
+		---------------------------------------------
+FAILURE		p_value = 0.000000
+
+nsh> [K
+nsh> [K
+--- CMD: cat /tmp/experiments/AlgorithmTesting/Serial/stats.txt ---
+cat /tmp/experiments/AlgorithmTesting/Serial/stats.txt
+			       SERIAL TEST
+		---------------------------------------------
+		 COMPUTATIONAL INFORMATION:		  
+		---------------------------------------------
+		(a) Block length    (m) = 16
+		(b) Sequence length (n) = 400000
+		(c) Psi_m               = 5403197.399040
+		(d) Psi_m-1             = 3553005.199360
+		(e) Psi_m-2             = 2474879.836160
+		(f) Del_1               = 1850192.199680
+		(g) Del_2               = 772066.836480
+		---------------------------------------------
+FAILURE		p_value1 = 0.000000
+FAILURE		p_value2 = 0.000000
+
+			       SERIAL TEST
+		---------------------------------------------
+		 COMPUTATIONAL INFORMATION:		  
+		---------------------------------------------
+		(a) Block length    (m) = 16
+		(b) Sequence length (n) = 400000
+		(c) Psi_m               = 5396607.098880
+		(d) Psi_m-1             = 3548367.052800
+		(e) Psi_m-2             = 2472833.802240
+		(f) Del_1               = 1848240.046080
+		(g) Del_2               = 772706.795520
+		---------------------------------------------
+FAILURE		p_value1 = 0.000000
+FAILURE		p_value2 = 0.000000
+
+			       SERIAL TEST
+		---------------------------------------------
+		 COMPUTATIONAL INFORMATION:		  
+		---------------------------------------------
+		(a) Block length    (m) = 16
+		(b) Sequence length (n) = 400000
+		(c) Psi_m               = 5411101.368320
+		(d) Psi_m-1             = 3553244.241920
+		(e) Psi_m-2             = 2474588.774400
+		(f) Del_1               = 1857857.126400
+		(g) Del_2               = 779201.658880
+		---------------------------------------------
+FAILURE		p_value1 = 0.000000
+FAILURE		p_value2 = 0.000000
+
+			       SERIAL TEST
+		---------------------------------------------
+		 COMPUTATIONAL INFORMATION:		  
+		---------------------------------------------
+		(a) Block length    (m) = 16
+		(b) Sequence length (n) = 400000
+		(c) Psi_m               = 5417932.513280
+		(d) Psi_m-1             = 3559559.127040
+		(e) Psi_m-2             = 2478787.911680
+		(f) Del_1               = 1858373.386240
+		(g) Del_2               = 777602.170880
+		---------------------------------------------
+FAILURE		p_value1 = 0.000000
+FAILURE		p_value2 = 0.000000
+
+			       SERIAL TEST
+		---------------------------------------------
+		 COMPUTATIONAL INFORMATION:		  
+		---------------------------------------------
+		(a) Block length    (m) = 16
+		(b) Sequence length (n) = 400000
+		(c) Psi_m               = 5411676.446720
+		(d) Psi_m-1             = 3553096.949760
+		(e) Psi_m-2             = 2472848.465920
+		(f) Del_1               = 1858579.496960
+		(g) Del_2               = 778331.013120
+		---------------------------------------------
+FAILURE		p_value1 = 0.000000
+FAILURE		p_value2 = 0.000000
+
+			       SERIAL TEST
+		---------------------------------------------
+		 COMPUTATIONAL INFORMATION:		  
+		---------------------------------------------
+		(a) Block length    (m) = 16
+		(b) Sequence length (n) = 400000
+		(c) Psi_m               = 5444975.616000
+		(d) Psi_m-1             = 3573176.197120
+		(e) Psi_m-2             = 2486393.364480
+		(f) Del_1               = 1871799.418880
+		(g) Del_2               = 785016.586240
+		---------------------------------------------
+FAILURE		p_value1 = 0.000000
+FAILURE		p_value2 = 0.000000
+
+			       SERIAL TEST
+		---------------------------------------------
+		 COMPUTATIONAL INFORMATION:		  
+		---------------------------------------------
+		(a) Block length    (m) = 16
+		(b) Sequence length (n) = 400000
+		(c) Psi_m               = 5384573.378560
+		(d) Psi_m-1             = 3536553.041920
+		(e) Psi_m-2             = 2463386.869760
+		(f) Del_1               = 1848020.336640
+		(g) Del_2               = 774854.164480
+		---------------------------------------------
+FAILURE		p_value1 = 0.000000
+FAILURE		p_value2 = 0.000000
+
+			       SERIAL TEST
+		---------------------------------------------
+		 COMPUTATIONAL INFORMATION:		  
+		---------------------------------------------
+		(a) Block length    (m) = 16
+		(b) Sequence length (n) = 400000
+		(c) Psi_m               = 5381589.196800
+		(d) Psi_m-1             = 3539208.069120
+		(e) Psi_m-2             = 2466862.735360
+		(f) Del_1               = 1842381.127680
+		(g) Del_2               = 770035.793920
+		---------------------------------------------
+FAILURE		p_value1 = 0.000000
+FAILURE		p_value2 = 0.000000
+
+			       SERIAL TEST
+		---------------------------------------------
+		 COMPUTATIONAL INFORMATION:		  
+		---------------------------------------------
+		(a) Block length    (m) = 16
+		(b) Sequence length (n) = 400000
+		(c) Psi_m               = 5416833.146880
+		(d) Psi_m-1             = 3557919.907840
+		(e) Psi_m-2             = 2477804.544000
+		(f) Del_1               = 1858913.239040
+		(g) Del_2               = 778797.875200
+		---------------------------------------------
+FAILURE		p_value1 = 0.000000
+FAILURE		p_value2 = 0.000000
+
+			       SERIAL TEST
+		---------------------------------------------
+		 COMPUTATIONAL INFORMATION:		  
+		---------------------------------------------
+		(a) Block length    (m) = 16
+		(b) Sequence length (n) = 400000
+		(c) Psi_m               = 5501748.142080
+		(d) Psi_m-1             = 3607622.901760
+		(e) Psi_m-2             = 2507885.322240
+		(f) Del_1               = 1894125.240320
+		(g) Del_2               = 794387.660800
+		---------------------------------------------
+FAILURE		p_value1 = 0.000000
+FAILURE		p_value2 = 0.000000
+
+nsh> [K
+nsh> [K

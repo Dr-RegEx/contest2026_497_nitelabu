@@ -1,0 +1,41 @@
+Package: iperf
+Architecture: amd64
+Version: 2.1.5+dfsg1-1
+Priority: optional
+Section: universe/net
+Origin: Ubuntu
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Original-Maintainer: Roberto Lumbreras <rover@debian.org>
+Bugs: https://bugs.launchpad.net/ubuntu/+filebug
+Installed-Size: 308
+Depends: libc6 (>= 2.34), libstdc++6 (>= 5)
+Filename: pool/universe/i/iperf/iperf_2.1.5+dfsg1-1_amd64.deb
+Size: 121246
+MD5sum: 6e5a89dfb18251cb9d80dadf0bc23425
+SHA1: 992d4c32b51109248eec92e121ae6d3a2b273b05
+SHA256: c4be7401751dce631dd57c2cea07a49c8016bddaee2142b129c222149fbd6bb6
+SHA512: bc3b3594d5ccd687f69b70ac8b869441467ac1a3e2592319a2b2ca5743a6ec479b6f3f08a241f4602538395a003afcd239b5bcaafb90aea64954bcdbf67e944d
+Homepage: https://sourceforge.net/projects/iperf2/
+Description-en: Internet Protocol bandwidth measuring tool
+ Iperf is a modern alternative for measuring TCP and UDP bandwidth performance,
+ allowing the tuning of various parameters and characteristics.
+ .
+ Features:
+    * Measure bandwidth, packet loss, delay jitter
+    * Report MSS/MTU size and observed read sizes.
+    * Support for TCP window size via socket buffers.
+    * Multi-threaded. Client and server can have multiple simultaneous
+      connections.
+    * Client can create UDP streams of specified bandwidth.
+    * Multicast and IPv6 capable.
+    * Options can be specified with K (kilo-) and M (mega-) suffices.
+    * Can run for specified time, rather than a set amount of data to transfer.
+    * Picks the best units for the size of data being reported.
+    * Server handles multiple connections.
+    * Print periodic, intermediate bandwidth, jitter, and loss reports at
+      specified intervals.
+    * Server can be run as a daemon.
+    * Use representative streams to test out how link layer compression affects
+      your achievable bandwidth.
+Description-md5: 1b25d29ae979d65c1a67cf08177ba875
+

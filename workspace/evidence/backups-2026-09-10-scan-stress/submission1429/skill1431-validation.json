@@ -1,0 +1,36 @@
+{
+  "structure": "quick_validate PASS",
+  "behavior": [
+    {
+      "scenario": "match",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS"
+    },
+    {
+      "scenario": "mismatch",
+      "exit": 1,
+      "expected": 1,
+      "status": "PASS"
+    },
+    {
+      "scenario": "missing",
+      "exit": 1,
+      "expected": 1,
+      "status": "PASS"
+    },
+    {
+      "scenario": "malformed",
+      "exit": 1,
+      "expected": 1,
+      "status": "PASS"
+    },
+    {
+      "scenario": "empty",
+      "exit": 1,
+      "expected": 1,
+      "status": "PASS"
+    }
+  ],
+  "live_firmware_receipt": "1430 pair MATCH; targetNOTRUN"
+}

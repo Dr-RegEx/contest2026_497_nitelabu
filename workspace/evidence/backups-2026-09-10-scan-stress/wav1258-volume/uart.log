@@ -1,0 +1,66 @@
+MEDIA_IMAGE_SHA256=8d4ea4b8b50e1ae196092d8dbf6432adf9faf4be5a7f43d27206bec8c9202fe7
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type tmpfs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls /dev/wavvol
+--- CMD: ls /dev/wavvol ---
+ls /dev/wavvol
+ /dev/wavvol
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   16839616   14704152    2135464   14710568    2097080     59      3 Umem
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009880 0x2f0098c8
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009800 0x2f009848
+    4     0 253 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 s31_duplex
+    5     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 hr_timer
+    6     6 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount -t littlefs -o forceformat /dev/wavvol /wav
+--- CMD: mount -t littlefs -o forceformat /dev/wavvol /wav ---
+mount -t littlefs -o forceformat /dev/wavvol /wav
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type tmpfs
+  /proc type procfs
+  /tmp type tmpfs
+  /wav type littlefs
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+   512          1          0           1 /data
+     0          0          0           0 /proc
+   512          1          0           1 /tmp
+  4096       4352          2        4350 /wav
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   16839616   14705216    2134400   14710568    2097080     63      4 Umem
+nsh> [K
+nsh> [K

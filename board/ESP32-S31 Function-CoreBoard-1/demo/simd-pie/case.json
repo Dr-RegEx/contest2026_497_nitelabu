@@ -1,0 +1,124 @@
+{
+  "name": "simd-pie",
+  "keys": [
+    "extra:2"
+  ],
+  "profile": "demo-rmt-bttool-coex-pie",
+  "sources": [
+    "apps/examples/s31simd"
+  ],
+  "evidence_ids": [
+    1566,
+    1633,
+    1654
+  ],
+  "note": "NSH 执行 s31simd；两线程各 100 轮向量加法/INT8 点积和 PIE 全寄存器保护，各 20 次绑核迁移。200 组点积须与标量对照一致；不宣称 AI 模型或加速倍数。",
+  "original": null,
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/review.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/simd1566-handoff.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/simd1566-target.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/simd1566-target.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1633-tick-catchup/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/clock1633-result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-warm.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-load.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-clock-load.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-simd-regression.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/review.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/network1654-offline-isolation.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1654-offline-isolation.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1653-reobserve.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.json",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "SIMD指令集与PIE上下文保护",
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/s31simd",
+      "origin": "apps/examples/s31simd"
+    }
+  ],
+  "local_config": "config/demo-rmt-bttool-coex-pie/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/review.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/review.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/simd1566-target.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1566-simd-int8/simd1566-target.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1633-tick-catchup/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1633-tick-catchup/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1653-reobserve.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1653-reobserve.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/review.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/review.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/clock1633-result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/clock1633-result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-load.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-load.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-simd-regression.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/clock1633-simd-regression.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-clock-load.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-clock-load.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-warm.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/host1633-warm.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1654-offline-isolation.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1654-offline-isolation.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/simd1566-target.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/simd1566-target.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1654-offline-isolation.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1654-offline-isolation.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/simd1566-handoff.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/simd1566-handoff.json"
+    }
+  ]
+}

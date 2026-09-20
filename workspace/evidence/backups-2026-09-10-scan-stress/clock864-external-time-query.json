@@ -1,0 +1,16 @@
+{
+  "command": [
+    "w32tm.exe",
+    "/stripchart",
+    "/computer:time.windows.com",
+    "/samples:1",
+    "/dataonly"
+  ],
+  "windows_displayed_local": "2026-09-16T03:50:54+08:00",
+  "peer": "time.windows.com",
+  "peer_address": "52.231.114.183:123",
+  "reported_offset_seconds": -1.4359775,
+  "exit_code": 0,
+  "clock_adjusted": false,
+  "note": "Single read-only external NTP comparison, not proof of clock stability over the longrun. Published xTS compares board against PC; this does not replace that comparison or excuse an out-of-range result."
+}

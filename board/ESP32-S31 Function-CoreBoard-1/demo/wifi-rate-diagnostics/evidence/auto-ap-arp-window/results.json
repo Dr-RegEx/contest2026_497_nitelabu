@@ -1,0 +1,38 @@
+[
+  {
+    "diagnostic_only": true,
+    "window": "16k",
+    "duration": 30,
+    "command": "iperf2 -c 192.168.1.29 -p 5101 -i 1 -t 30 -l 16384 -w 16k",
+    "board": [
+      "[  1] 0.00-30.25 sec  12.1 MBytes  3.36 Mbits/sec"
+    ],
+    "host": [
+      "[  1] 0.00-30.10 sec  12.1 MBytes  3.37 Mbits/sec"
+    ]
+  },
+  {
+    "diagnostic_only": true,
+    "window": "64k",
+    "duration": 30,
+    "command": "iperf2 -c 192.168.1.29 -p 5102 -i 1 -t 30 -l 16384 -w 64k",
+    "board": [
+      "[  1] 0.00-30.07 sec  22.2 MBytes  6.18 Mbits/sec"
+    ],
+    "host": [
+      "[  1] 0.00-30.04 sec  22.2 MBytes  6.19 Mbits/sec"
+    ]
+  },
+  {
+    "diagnostic_only": true,
+    "window": "16k",
+    "duration": 30,
+    "command": "iperf2 -c 192.168.1.29 -p 5103 -i 1 -t 30 -l 16384 -w 16k",
+    "board": [
+      "[  1] 0.00-30.52 sec  11.9 MBytes  3.28 Mbits/sec"
+    ],
+    "host": [
+      "[  1] 0.00-30.31 sec  11.9 MBytes  3.30 Mbits/sec"
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2f000000,len:0x87b0
+load:0x2f008800,len:0x12b0
+entry 0x2f008428
+*** Booting NuttX ***
+dram: lma 0x00002020 vma 0x2f000000 len 0x87b0   (34736)
+dram: lma 0x0000a7d8 vma 0x2f008800 len 0x12b0   (4784)
+padd: lma 0x0000bab8 vma 0x00000000 len 0x4560   (17760)
+imap: lma 0x00010020 vma 0x40030020 len 0x7ea0   (32416)
+padd: lma 0x00017ec8 vma 0x00000000 len 0x8230   (33328)
+imap: lma 0x00020100 vma 0x40000100 len 0x2fa38  (195128)
+total segments stored 6
+ABC

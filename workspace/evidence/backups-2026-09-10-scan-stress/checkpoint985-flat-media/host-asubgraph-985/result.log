@@ -1,0 +1,4 @@
+PASS actual array-count rule: old aliases graph_desc; new count=1 and count reset preserves graph_desc
+PASS actual drain function: EAGAIN normalizes, EOF/EIO propagate; old assignment masks all; submit EIO propagates
+PASS actual caller: drain EIO stops before EOS/processing; EOS EIO stops before processing; EAGAIN/EOF drain and successful/EOF EOS continue flushing
+HOST ONLY: stub frame/DMA operations, no firmware or board claim

@@ -1,0 +1,76 @@
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 20 2026 02:48:13 risc-v esp32s31-core-function-board
+nsh> [K
+ifup wlan0
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+ifup wlan0...OK
+nsh> [K
+wapi mode wlan0 2
+nsh> [K
+wapi ap wlan0 7c:39:85:2a:50:04
+[CPU0] esp_wifi_sta_connect: Failed to connect ret=12298
+[CPU0] esp_wifi_to_errno: ERROR: UNKNOWN ERROR (code=0x300a errno=-1)
+[CPU0] wlan_ioctl: ERROR: Failed to connect
+[CPU0] wapi_set_ap: ioctl(SIOCSIWAP): Operation not permitted
+[CPU0] main: ERROR: Process command (ap) failed.
+nsh> [K
+wapi psk wlan0 <REDACTED> 3
+nsh> [K
+wapi essid wlan0 "[REDACTED]" 1
+[CPU0] esp_event_post_wrapper: S31 associated: channel=1 auth=3 bssid=7c:39:85:2a:50:04
+[CPU1] esp_evt_work_cb: S31 driver STA MAC: 30:ed:a0:f3:f7:b0
+[CPU1] esp_evt_work_cb: S31 driver power save: ret=0 mode=0
+[CPU0] esp_evt_work_cb: S31 driver protocol: ret=0 bitmap=7
+[CPU0] esp_evt_work_cb: S31 negotiated PHY: ret=0 mode=4
+[CPU0] esp_evt_work_cb: S31 HE SU beamformee disabled: ret=0 value=0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks connected: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters connected: ret=0 mpdu=1159 data=10 fcs=126 abort=238 full=0 fifo=0 other=136
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=11 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=2 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+nsh> [K
+renew wlan0
+nsh> [K
+wapi show wlan0
+wlan0 Configuration:
+       IP: 192.168.1.60
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_FIXED
+  Channel: 1
+Frequency: 2412
+    ESSID: [REDACTED]
+     Flag: WAPI_ESSID_ON
+     Mode: WAPI_MODE_MANAGED
+       AP: 7c:39:85:2a:50:04
+  BitRate: 72
+     Flag: WAPI_BITRATE_FIXED
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -64
+  Country: 01
+ PTA prio: not supported
+nsh> [K
+SNAPSHOT before
+START udp-rx-5M
+SNAPSHOT after-5M
+{"diagnostic_only": true, "offered_rate": "5M", "duration": 30, "host_command": ["/mnt/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/iperf2-select1656.exe", "-B", "192.168.1.29", "-c", "192.168.1.60", "-p", "5010", "-i", "1", "-t", "30", "-u", "-b", "5M"], "host_exit": 0, "board_summaries": ["[  1] 0.00-30.00 sec  18.5 MBytes  5.18 Mbits/sec   2.512 ms 164/13372 (1.2%)", "[  1] 0.00-30.00 sec  37 datagrams received out-of-order"], "host_summaries": ["[  1] 0.00-30.00 sec  18.7 MBytes  5.24 Mbits/sec", "[  1] 0.00-30.00 sec  18.5 MBytes  5.18 Mbits/sec   2.511 ms 164/13372 (1.2%)", "[  1] 0.00-30.00 sec  37 datagrams received out-of-order"]}
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=51337 data=3563 fcs=11782 abort=14104 full=0 fifo=0 other=8957
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=1023 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=352 bitmap=352 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=96 ht=13732 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=8 complete=8 succ=6 ack=1 ba=5 retry=2 nomem=0 timeout=0
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=8 rssi=-61
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+[CPU0] esp_evt_work_cb: Failed to connect AP error=12290
+ifdown wlan0...OK
+nsh> [K
+SNAPSHOT disconnected

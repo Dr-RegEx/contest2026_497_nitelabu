@@ -1,0 +1,198 @@
+
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-ble-iso-controller-fix/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+4008fcd6 <r_ble_hci_trans_hs_iso_tx>:
+4008fcd6:	1101                	addi	sp,sp,-32
+4008fcd8:	cc22                	sw	s0,24(sp)
+4008fcda:	2f01c437          	lui	s0,0x2f01c
+4008fcde:	12840413          	addi	s0,s0,296 # 2f01c128 <ble_hci_trans_env_p>
+4008fce2:	401c                	lw	a5,0(s0)
+4008fce4:	ca26                	sw	s1,20(sp)
+4008fce6:	c84a                	sw	s2,16(sp)
+4008fce8:	0407a303          	lw	t1,64(a5)
+4008fcec:	c64e                	sw	s3,12(sp)
+4008fcee:	ce06                	sw	ra,28(sp)
+4008fcf0:	84aa                	mv	s1,a0
+4008fcf2:	892e                	mv	s2,a1
+4008fcf4:	89b2                	mv	s3,a2
+4008fcf6:	00030c63          	beqz	t1,4008fd0e <r_ble_hci_trans_hs_iso_tx+0x38>
+4008fcfa:	4462                	lw	s0,24(sp)
+4008fcfc:	40f2                	lw	ra,28(sp)
+4008fcfe:	864e                	mv	a2,s3
+4008fd00:	85ca                	mv	a1,s2
+4008fd02:	49b2                	lw	s3,12(sp)
+4008fd04:	4942                	lw	s2,16(sp)
+4008fd06:	8526                	mv	a0,s1
+4008fd08:	44d2                	lw	s1,20(sp)
+4008fd0a:	6105                	addi	sp,sp,32
+4008fd0c:	8302                	jr	t1
+4008fd0e:	40106537          	lui	a0,0x40106
+4008fd12:	470d                	li	a4,3
+4008fd14:	4681                	li	a3,0
+4008fd16:	4601                	li	a2,0
+4008fd18:	11400593          	li	a1,276
+4008fd1c:	1b050513          	addi	a0,a0,432 # 401061b0 <_flash_rodata_start+0x6190>
+4008fd20:	eef73097          	auipc	ra,0xeef73
+4008fd24:	d28080e7          	jalr	-728(ra) # 2f002a48 <wr_btdm_assert>
+4008fd28:	401c                	lw	a5,0(s0)
+4008fd2a:	0407a303          	lw	t1,64(a5)
+4008fd2e:	b7f1                	j	4008fcfa <r_ble_hci_trans_hs_iso_tx+0x24>
+
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-ble-iso-controller-fix/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+4008fc6e <r_ble_iso_trans_cfg_ll>:
+4008fc6e:	2f01c7b7          	lui	a5,0x2f01c
+4008fc72:	1287a783          	lw	a5,296(a5) # 2f01c128 <ble_hci_trans_env_p>
+4008fc76:	c3a8                	sw	a0,64(a5)
+4008fc78:	c3ec                	sw	a1,68(a5)
+4008fc7a:	8082                	ret
+
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-ble-iso-controller-fix/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+40062cde <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft>:
+40062cde:	7179                	addi	sp,sp,-48
+40062ce0:	d226                	sw	s1,36(sp)
+40062ce2:	d04a                	sw	s2,32(sp)
+40062ce4:	d606                	sw	ra,44(sp)
+40062ce6:	d422                	sw	s0,40(sp)
+40062ce8:	ce4e                	sw	s3,28(sp)
+40062cea:	84aa                	mv	s1,a0
+40062cec:	892e                	mv	s2,a1
+40062cee:	cd49                	beqz	a0,40062d88 <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft+0xaa>
+40062cf0:	478d                	li	a5,3
+40062cf2:	08b7fb63          	bgeu	a5,a1,40062d88 <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft+0xaa>
+40062cf6:	860a                	mv	a2,sp
+40062cf8:	85ca                	mv	a1,s2
+40062cfa:	8526                	mv	a0,s1
+40062cfc:	eefa3097          	auipc	ra,0xeefa3
+40062d00:	a46080e7          	jalr	-1466(ra) # 2f005742 <r_sym_ble_VV9GW9qr8lnyblrfG3QB>
+40062d04:	850a                	mv	a0,sp
+40062d06:	e9dff0ef          	jal	40062ba2 <r_sym_ble_jICUHZGnUSnKgBydiS1P>
+40062d0a:	89aa                	mv	s3,a0
+40062d0c:	e54d                	bnez	a0,40062db6 <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft+0xd8>
+40062d0e:	4551                	li	a0,20
+40062d10:	eefa3097          	auipc	ra,0xeefa3
+40062d14:	8f8080e7          	jalr	-1800(ra) # 2f005608 <r_sym_ble_oH7aBdtSiGJl6Mnejv8I>
+40062d18:	842a                	mv	s0,a0
+40062d1a:	c95d                	beqz	a0,40062dd0 <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft+0xf2>
+40062d1c:	4651                	li	a2,20
+40062d1e:	4581                	li	a1,0
+40062d20:	8522                	mv	a0,s0
+40062d22:	eefa2097          	auipc	ra,0xeefa2
+40062d26:	7aa080e7          	jalr	1962(ra) # 2f0054cc <r_sym_ble_VMCpFnrmfaHDrCdt13ps>
+40062d2a:	2f01c7b7          	lui	a5,0x2f01c
+40062d2e:	0807a783          	lw	a5,128(a5) # 2f01c080 <r_sym_ble_B7FJOPpJyLhnCNKHI7aT>
+40062d32:	01241223          	sh	s2,4(s0)
+40062d36:	c004                	sw	s1,0(s0)
+40062d38:	0097c783          	lbu	a5,9(a5)
+40062d3c:	ebad                	bnez	a5,40062dae <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft+0xd0>
+40062d3e:	eefa0097          	auipc	ra,0xeefa0
+40062d42:	3d2080e7          	jalr	978(ra) # 2f003110 <wr_btdm_osal_hw_enter_critical>
+40062d46:	2f01c7b7          	lui	a5,0x2f01c
+40062d4a:	0947a783          	lw	a5,148(a5) # 2f01c094 <r_sym_ble_f7tRAylUKJK3KWgbjTIo>
+40062d4e:	00042823          	sw	zero,16(s0)
+40062d52:	01040713          	addi	a4,s0,16
+40062d56:	43d4                	lw	a3,4(a5)
+40062d58:	c280                	sw	s0,0(a3)
+40062d5a:	c3d8                	sw	a4,4(a5)
+40062d5c:	eefa0097          	auipc	ra,0xeefa0
+40062d60:	3fc080e7          	jalr	1020(ra) # 2f003158 <wr_btdm_osal_hw_exit_critical>
+40062d64:	eefa2097          	auipc	ra,0xeefa2
+40062d68:	226080e7          	jalr	550(ra) # 2f004f8a <r_sym_ble_UWoJftXDyRAPW2SIJq0e>
+40062d6c:	ed0d                	bnez	a0,40062da6 <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft+0xc8>
+40062d6e:	50b2                	lw	ra,44(sp)
+40062d70:	5422                	lw	s0,40(sp)
+40062d72:	201017b7          	lui	a5,0x20101
+40062d76:	4705                	li	a4,1
+40062d78:	42e7a223          	sw	a4,1060(a5) # 20101424 <_image_irom_size+0x20010856>
+40062d7c:	854e                	mv	a0,s3
+40062d7e:	5492                	lw	s1,36(sp)
+40062d80:	5902                	lw	s2,32(sp)
+40062d82:	49f2                	lw	s3,28(sp)
+40062d84:	6145                	addi	sp,sp,48
+40062d86:	8082                	ret
+40062d88:	2f01c7b7          	lui	a5,0x2f01c
+40062d8c:	1487a783          	lw	a5,328(a5) # 2f01c148 <r_sym_ble_pBNUoU5EPgUlFpeQVn6W>
+40062d90:	401175b7          	lui	a1,0x40117
+40062d94:	86ca                	mv	a3,s2
+40062d96:	47dc                	lw	a5,12(a5)
+40062d98:	8626                	mv	a2,s1
+40062d9a:	f7458593          	addi	a1,a1,-140 # 40116f74 <r_sym_ble_yCqUuiZV1PD4T9k1Vmv4+0xc60>
+40062d9e:	7d500513          	li	a0,2005
+40062da2:	9782                	jalr	a5
+40062da4:	bf89                	j	40062cf6 <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft+0x18>
+40062da6:	4505                	li	a0,1
+40062da8:	ac9ee0ef          	jal	40051870 <r_sym_ble_SII6kduYpvA5EOBSo5Sv>
+40062dac:	b7c9                	j	40062d6e <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft+0x90>
+40062dae:	854a                	mv	a0,s2
+40062db0:	b51ff0ef          	jal	40062900 <r_sym_ble_lIZ4ZWUtyI9vQrqOg6r5.part.1>
+40062db4:	b769                	j	40062d3e <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft+0x60>
+40062db6:	8526                	mv	a0,s1
+40062db8:	eefa2097          	auipc	ra,0xeefa2
+40062dbc:	6fe080e7          	jalr	1790(ra) # 2f0054b6 <r_sym_ble_M1vTuH91lR6M04XZ7p4T>
+40062dc0:	50b2                	lw	ra,44(sp)
+40062dc2:	5422                	lw	s0,40(sp)
+40062dc4:	854e                	mv	a0,s3
+40062dc6:	5492                	lw	s1,36(sp)
+40062dc8:	5902                	lw	s2,32(sp)
+40062dca:	49f2                	lw	s3,28(sp)
+40062dcc:	6145                	addi	sp,sp,48
+40062dce:	8082                	ret
+40062dd0:	2f01c7b7          	lui	a5,0x2f01c
+40062dd4:	1487a783          	lw	a5,328(a5) # 2f01c148 <r_sym_ble_pBNUoU5EPgUlFpeQVn6W>
+40062dd8:	401175b7          	lui	a1,0x40117
+40062ddc:	86ca                	mv	a3,s2
+40062dde:	47dc                	lw	a5,12(a5)
+40062de0:	4651                	li	a2,20
+40062de2:	f7458593          	addi	a1,a1,-140 # 40116f74 <r_sym_ble_yCqUuiZV1PD4T9k1Vmv4+0xc60>
+40062de6:	7e000513          	li	a0,2016
+40062dea:	9782                	jalr	a5
+40062dec:	bf05                	j	40062d1c <r_sym_ble_Iz1Chq2XDIpX4iL8g2ft+0x3e>
+
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-ble-iso-controller-fix/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+2f0054b6 <r_sym_ble_M1vTuH91lR6M04XZ7p4T>:
+2f0054b6:	2f01c7b7          	lui	a5,0x2f01c
+2f0054ba:	1487a783          	lw	a5,328(a5) # 2f01c148 <r_sym_ble_pBNUoU5EPgUlFpeQVn6W>
+2f0054be:	0087a303          	lw	t1,8(a5)
+2f0054c2:	8302                	jr	t1
+
+Disassembly of section .flash.text:
+
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-ble-iso-controller-fix/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+40025d66 <wr_btdm_osal_malloc>:
+40025d66:	986e806f          	j	4000deec <malloc>
+
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-ble-iso-controller-fix/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+40025d6a <wr_btdm_osal_free>:
+40025d6a:	952e806f          	j	4000debc <free>

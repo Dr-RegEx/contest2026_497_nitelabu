@@ -1,0 +1,48 @@
+{
+  "name": "common-1.2.1",
+  "keys": [
+    "common:1.2.1"
+  ],
+  "profile": "demo-rmt-xts-reboot",
+  "sources": [
+    "apps/nshlib/nsh_syscmds.c"
+  ],
+  "evidence_ids": [
+    726
+  ],
+  "note": "执行 10 次软件 reboot，每次保存从 ROM 到 NSH 的日志；不要把 reboot 当作物理掉电。",
+  "original": "1.2.1",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "Reboot启动异常测试",
+  "original_line": 435,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/nsh_syscmds.c",
+      "origin": "apps/nshlib/nsh_syscmds.c"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-reboot/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log"
+    }
+  ]
+}

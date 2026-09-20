@@ -1,0 +1,39 @@
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    0000cd49 00000000 00000000 3084603         
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00001499
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00021df2 00021df4 00000000 00000000 a8fccb6          
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     c6fa  5a53  6c08  008f
+Dropped      0010  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0170  f2b0  0e31  008f
+  Rexmit     ----  0005  ----  ----
+nsh> [K
+nsh> [K
+INCOMPLETE

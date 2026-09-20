@@ -1,0 +1,150 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x5b (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x1c150
+entry 0x2f017f84
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x1c150  (115024)
+padd: lma 0x0001e1c8 vma 0x00000000 len 0x1e50   (7760)
+imap: lma 0x00020020 vma 0x40140020 len 0x25eac  (155308)
+padd: lma 0x00045ed4 vma 0x00000000 len 0xa224   (41508)
+imap: lma 0x00050100 vma 0x40000100 len 0x13a44c (1287244)
+total segments stored 6
+ABC[CPU0] S31 hardware crypto: SHA1/SHA256/SHA512 PIO
+[CPU0] S31 hardware crypto: HMAC-SHA1/256 via SHA PIO
+[CPU0] S31 hardware crypto: ECDSA P256 verify only
+[CPU0] S31 hardware crypto: AES-CBC 128/256-bit PIO
+[CPU0] S31 hardware crypto: AES-CTR/XTS full-block PIO
+[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [Kifup wlan0
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+ifup wlan0...OK
+nsh> [Kwapi mode wlan0 2
+nsh> [Kwapi ap wlan0 7c:39:85:2a:50:04
+[CPU0] esp_wifi_sta_connect: Failed to connect ret=12298
+[CPU0] esp_wifi_to_errno: ERROR: UNKNOWN ERROR (code=0x300a errno=-1)
+[CPU0] wlan_ioctl: ERROR: Failed to connect
+[CPU0] wapi_set_ap: ioctl(SIOCSIWAP): Operation not permitted
+[CPU0] main: ERROR: Process command (ap) failed.
+nsh> [Kwapi psk wlan0 <REDACTED> 3
+nsh> [Kwapi essid wlan0 "[REDACTED]" 1
+[CPU0] esp_event_post_wrapper: S31 associated: channel=1 auth=3 bssid=7c:39:85:2a:50:04
+[CPU1] esp_evt_work_cb: S31 driver STA MAC: 30:ed:a0:f3:f7:b0
+[CPU1] esp_evt_work_cb: S31 driver power save: ret=0 mode=0
+[CPU0] esp_evt_work_cb: S31 driver protocol: ret=0 bitmap=7
+[CPU0] esp_evt_work_cb: S31 negotiated PHY: ret=0 mode=4
+[CPU0] esp_evt_work_cb: S31 HE SU beamformee disabled: ret=0 value=0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks connected: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters connected: ret=0 mpdu=1446 data=9 fcs=157 abort=223 full=0 fifo=0 other=96
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=8 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=2 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+nsh> [Krenew wlan0
+nsh> [Kwapi show wlan0
+wlan0 Configuration:
+       IP: 192.168.1.60
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_FIXED
+  Channel: 1
+Frequency: 2412
+    ESSID: [REDACTED]
+     Flag: WAPI_ESSID_ON
+     Mode: WAPI_MODE_MANAGED
+       AP: 7c:39:85:2a:50:04
+  BitRate: 72
+     Flag: WAPI_BITRATE_FIXED
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -66
+  Country: 01
+ PTA prio: not supported
+nsh> [Kcat /proc/iobinfo
+    ntotal     nfree     nwait nthrottle
+       128       128         0       104
+nsh> [Kfree
+      total       used       free    maxused    maxfree  nused  nfree name
+     261660     102252     159408     127448     115088    228     17 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [Kiperf2 -c 192.168.1.29 -p 5101 -i 1 -t 30 -l 16384 -w 16k
+------------------------------------------------------------
+Client connecting to 192.168.1.29, TCP port 5101
+TCP window size: 15.6 KByte
+------------------------------------------------------------
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+tcp connect failed: Network is unreachable
+[  1] local 0.0.0.0 port 0 connected with 192.168.1.29 port 5101
+nsh> [Kcat /proc/iobinfo
+    ntotal     nfree     nwait nthrottle
+       128       128         0       104
+nsh> [Kfree
+      total       used       free    maxused    maxfree  nused  nfree name
+     261660     105564     156096     128168      99656    229     20 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [Kcat /proc/iobinfo
+    ntotal     nfree     nwait nthrottle
+       128       128         0       104
+nsh> [Kfree
+      total       used       free    maxused    maxfree  nused  nfree name
+     261660     105564     156096     128168      99656    229     20 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [Kiperf2 -c 192.168.1.29 -p 5102 -i 1 -t 30 -l 16384 -w 64k
+------------------------------------------------------------
+Client connecting to 192.168.1.29, TCP port 5102
+TCP window size: 62.5 KByte
+------------------------------------------------------------
+tcp connect failed: Network is unreachable
+[  1] local 0.0.0.0 port 0 connected with 192.168.1.29 port 5102
+nsh> [Kcat /proc/iobinfo
+    ntotal     nfree     nwait nthrottle
+       128       128         0       104
+nsh> [Kfree
+      total       used       free    maxused    maxfree  nused  nfree name
+     261660     105572     156088     131496      83272    229     19 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [Kcat /proc/iobinfo
+    ntotal     nfree     nwait nthrottle
+       128       128         0       104
+nsh> [Kfree
+      total       used       free    maxused    maxfree  nused  nfree name
+     261660     105572     156088     131496      83272    229     19 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [Kiperf2 -c 192.168.1.29 -p 5103 -i 1 -t 30 -l 16384 -w 16k
+------------------------------------------------------------
+Client connecting to 192.168.1.29, TCP port 5103
+TCP window size: 15.6 KByte
+------------------------------------------------------------
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+tcp connect failed: Network is unreachable
+[  1] local 0.0.0.0 port 0 connected with 192.168.1.29 port 5103
+nsh> [Kcat /proc/iobinfo
+    ntotal     nfree     nwait nthrottle
+       128       128         0       104
+nsh> [Kfree
+      total       used       free    maxused    maxfree  nused  nfree name
+     261660     105564     156096     131496      82528    229     20 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K

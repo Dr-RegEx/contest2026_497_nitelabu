@@ -1,0 +1,109 @@
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-run-standard.py", line 36, in <module>
+    production.boot(port, 'XTS_BOOT')
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_production_smoke.py", line 28, in boot
+    output = transport.collect_until_prompt(port, 30.0)
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_nuttx_smoke.py", line 117, in collect_until_prompt
+    raise TimeoutError(output.decode("utf-8", errors="replace"))
+TimeoutError: ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x18ff8
+entry 0x2f0152b2
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x18ff8  (102392)
+padd: lma 0x0001b068 vma 0x00000000 len 0x4fb0   (20400)
+imap: lma 0x00020020 vma 0x40110020 len 0x1b084  (110724)
+padd: lma 0x0003b0ac vma 0x00000000 len 0x504c   (20556)
+imap: lma 0x00040100 vma 0x40000100 len 0x106750 (1075024)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU1] riscv_exception: EXCEPTION: Load page fault. MCAUSE: 0000000d, EPC: 2f006936, MTVAL: 6187cf80
+[CPU1] riscv_exception: PANIC!!! Exception = 0000000d
+Reset board on recursive assert:
+0x2f020a3c: 4003ae92 4003ae92 2f01ca68 00000000 2f020068 2f01cbf0 00000000 10000000
+0x2f020a5c: 2f020068 0000010c 2f020a3c 00000004 00000000 4003ae72 00000000 0000cafe
+0x2f020a7c: 68000000 00000000 2f020930 40119000 401101d8 401103c4 2f01c000 00000008
+0x2f020a9c: 2f020068 00000000 00000000 00000083 00000000 2f009f0a 00000000 2f000ac0
+0x2f020abc: 00044101 0000000d 00000000 00000000 00000000 00000000 00000000 00000000
+0x2f020adc: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+0x2f020afc: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+0x2f020b1c: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+0x2f020b3c: 00000000 00000000 00000000[CPU0] dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 15 2026 16:35:49 risc-v
+[CPU0] dump_assert_info: Assertion failed : at file: /home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/noos/log_lock.c:14 task(CPU0): wifi process: Kernel 0x2f800fc0
+[CPU0] up_dump_register: PC: 4003ae92
+[CPU0] up_dump_register: A0: 2f020930 A1: 00000004 A2: 00000002 A3: 2f01e7cc
+[CPU0] up_dump_register: A4: 6187cf80 A5: 61800170 A6: 0000001a A7: 2f01c1e4
+[CPU0] up_dump_register: T0: 2f01d3f0 T1: 00000004 T2: 10000000 T3: 00000000
+[CPU0] up_dump_register: T4: 4003ae72 T5: 00000000 T6: 00000000
+[CPU0] up_dump_register: S0: 2f03b1c0 S1: 0000010c S2: 2f020930 S3: 2f03b1c0
+[CPU0] up_dump_register: S4: 00000000 S5: 40115ab4 S6: 2f01c000 S7: 00000006
+[CPU0] up_dump_register: S8: 0000000e S9: 00000083 S10: 00000005 S11: 0000000e
+[CPU0] up_dump_register: SP: 2f01d280 FP: 2f03b1c0 TP: 00000000 RA: 4003ae92
+[CPU0] dump_stackinfo: IRQ Stack:
+[CPU0] dump_stackinfo:   base: 0x2f01cbf0
+[CPU0] dump_stackinfo:   size: 00002048
+[CPU0] dump_stackinfo:     sp: 0x2f01d280
+[CPU0] stack_dump:  2f01d260: 2f01c000 40115ab4 40116fe4 80046020 2f020930 2f020930 2f03b1c0 4003b1a8
+[CPU0] stack_dump:  2f01d280: 40112aec 2f800fc0 00000000 00000000 00000000 00000000 2f03b294 00000000
+[CPU0] stack_dump:  2f01d2a0: 00000000 00000002 2f03b1c0 2f020930 00000000 40115ab4 0000000e 7474754e
+[CPU0] stack_dump:  2f01d2c0: 00000058 40059c5c 00000000 00000000 00000000 4003ef42 2f01c208 00000002
+[CPU0] stack_dump:  2f01d2e0: 00000002 00000001 00000000 2f024800 302e3000 0000302e 0000001f 2f01c27c
+[CPU0] stack_dump:  2f01d300: 00000001 32340001 32353238 64383061 69642d62 20797472 20706553 32203531
+[CPU0] stack_dump:  2f01d320: 20363230 333a3631 39343a35 2f01c000 4003f180 00000000 7369721f 00762d63
+[CPU0] stack_dump:  2f01d340: 4003f180 2f01c27c 80046120 2f01c000 2f020f88 40047a3e 00000052 0000096c
+[CPU0] stack_dump:  2f01d360: 00000005 00000083 0000000e 2f033684 00000000 00000002 2f048abc 2f03b1c0
+[CPU0] stack_dump:  2f01d380: 00000003 40115ab4 2f03b1c0 40003abc 2f048c74 2f00a0a2 00000000 0000000e
+[CPU0] stack_dump:  2f01d3a0: 00000000 00000000 2f01c080 00000000 2f01c080 2f048a94 2f01c1e4 40059288
+[CPU0] stack_dump:  2f01d3c0: 00000032 2f0020dc 00000000 2f033684 2f080000 2f080000 40056320 4012422c
+[CPU0] stack_dump:  2f01d3e0: 40115ab4 00000100 2f048ba0 2f001124 00000000 00000000 00000000 00000000
+[CPU0] dump_stackinfo: User Stack:
+[CPU0] dump_stackinfo:   base: 0x2f048040
+[CPU0] dump_stackinfo:   size: 00003520
+[CPU0] dump_stackinfo:     sp: 0x2f048ba0
+[CPU0] stack_dump:  2f048b80: deadbeef 00000000 2f832288 00000001 00000000 00000002 00000001 4001041e
+[CPU0] stack_dump:  2f048ba0: 00000001 00000002 0000000e 00000000 2f080000 2f048c5c 40117608 2f01111e
+[CPU0] stack_dump:  2f048bc0: 2f01c000 ffffffff 00000000 2f01112e 2f03b088 00000008 ffffffff 40076d6c
+[CPU0] stack_dump:  2f048be0: 2f048d3c 00000000 40059c1e 00000000 00000000 80044100 00000001 40076d48
+[CPU0] stack_dump:  2f048c00: 00000000 00000000 40117610 2f0110c8 00000000 00000000 40117608 00000001
+[CPU0] stack_dump:  2f048c20: 00000000 40117000 00000001 40056340 41800000 4a8ee190 453b9400 2f048c5c
+[CPU0] stack_dump:  2f048c40: 00000000 00000000 00000000 400d6d08 00000000 00000000 00000000 00000045
+[CPU0] stack_dump:  2f048c60: 000001a1 40117608 40116fe4 2f043f50 00000000 00000000 00000000 00000045
+[CPU0] stack_dump:  2f048c80: 00000005 00000083 4957454e 00005644 2f080000 2f080000 00000001 00000000
+[CPU0] stack_dump:  2f048ca0: 00000000 0000002b ffffffff 400e346e 0000002b ffffffff 0000000c 2f043f50
+[CPU0] stack_dump:  2f048cc0: 2f03b240 00000000 2f048d0c 400d5bce 00000000 00000000 2f042e01 00000000
+[CPU0] stack_dump:  2f048ce0: 2f035d5c 000009b4 00000001 2f080000 0000000e 2f033780 2f033b08 400d5e3a
+[CPU0] stack_dump:  2f048d00: 2f035d5c 00000000 00010001 2f010001 2f017a60 80046022 00000000 00000000
+[CPU0] stack_dump:  2f048d20: 00000000 00000000 00000000 00000000 00000000 2f07fec0 2f07febc 2f036000
+[CPU0] stack_dump:  2f048d40: 2f035d5c 00000000 2f080000 400dfd08 00000001 2f016000 80046022 2f035d5c
+[CPU0] stack_dump:  2f048d60: 00000001 00000001 00000000 400e091e 2f035d5c ffffffff 2f036830 2f84df5c
+[CPU0] stack_dump:  2f048d80: 2f035d5c ffffffff 2f04ecc8 400dddbe 2f07ff24 2f07ff0c 2f080000 2f83206e
+[CPU0] stack_dump:  2f048da0: 00000000 00000000 00000006 2f04ecc8 00000000 00000000 00000000 2f800fc0
+[CPU0] stack_dump:  2f048dc0: 2f048030 00000002 00000001 40046688 00000000 00000000 00000000 2f048034
+[CPU0] stack_dump:  2f048de0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU0] stack_dump:  2f048e00: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU0] sched_dumpstack: backtrace| 5: 0x40010472
+[CPU0] dump_fatal_info: Dump CPU1: RUNNING
+[CPU0] dump_tasks:    PID GROUP   CPU PRI POLICY   TYPE    NPX STATE   EVENT      SIGMASK          STACKBASE  STACKSIZE      USED   FILLED       CPU   COMMAND
+[CPU0] dump_tasks:   ----   ---     0 --- -------- ------- --- ------- ---------- ---------------- 0x2f01cbf0      2048      1952    95.3%!     ----   irq
+[CPU0] dump_tasks:   ----   ---     1 --- -------- ------- --- ------- ---------- ---------------- 0x2f01c3f0      2048      1952    95.3%!     ----   irq
+[CPU0] dump_task:       0     0     0   0 FIFO     Kthread -   Assigned           0000000000000000 0x2f0372dc      3024       724    23.9%     16.1%   CPU0 IDLE
+[CPU0] dump_task:       1     0     1   0 FIFO     Kthread -   Running            0000000000000000 0x2f037edc      3024       460    15.2%     80.6%   CPU1 IDLE
+[CPU0] dump_task:       2     0     0 100 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f03c060      1952       524    26.8%      0.0%   lpwork 0x2f015fc0 0x2f01600c
+[CPU0] dump_task:       4     0     0 223 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f044050      1968       540    27.4%      0.0%   hr_timer
+[CPU0] dump_task:       5     0     0 253 RR       Kthread -   Running            0000000000000000 0x2f048040      3520       876    24.8%      3.2%   wifi
+[CPU0] dump_task:       6     6     0 101 RR       Task    -   Ready              0000000000000000 0x61804050      4016       228     5.6%      0.0%   /system/bin/init
+[CPU0] sched_dumpstack: backtrace| 0: 0x2f002028
+[CPU0] sched_dumpstack: backtrace| 1: 0x2f006936
+[CPU0] sched_dumpstack: backtrace| 2: 0x4003eace
+[CPU0] sched_dumpstack: backtrace| 4: 0x4003eace
+[CPU0] sched_dumpstack: backtrace| 5: 0x40010472
+

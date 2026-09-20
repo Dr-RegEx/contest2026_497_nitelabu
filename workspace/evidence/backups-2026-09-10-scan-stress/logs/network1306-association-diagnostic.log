@@ -1,0 +1,45 @@
+XTS_COMMAND=ifconfig
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at UP mtu 1500
+	inet addr:0.0.0.0 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+XTS_COMMAND=cat /dev/s31stat
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=24459 replay=24459 ack=24979 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=12894 max=52827 samples=435 over32=217 over100=5 over1000=0 sum=4262369 direct=12 directmax=19557 deferred=423 deferredmax=52827
+MONIRQ: cpu=1 defer=8983 replay=8983 ack=8985 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=4 fail=0 destroyed=3 live=1 livemax=2 pages=462 pgt=12
+WAIT: pid=2 object=0x2f011014
+LPTRACE: 0x400258ac
+WAIT: pid=4 object=0x2f01106c
+nsh> [K
+nsh> [K
+XTS_COMMAND=wapi scan wlan0
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=0 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=13 id=128
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=487 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=13
+bssid / frequency / signal level / encode / ssid
+d8:31:39:80:18:b0	2457	-90	0800	CU_9wN9
+24:5a:5f:78:74:42	2462	-90	0800	falcom219
+f4:2a:7d:d3:d2:95	2437	-89	0800	TP-LINK_1903
+a4:ba:70:3a:61:31	2412	-88	0800	CU-C4F4_plus
+98:0d:51:96:33:54	2437	-87	0800	HDMRC
+c2:a4:76:28:e1:eb	2437	-86	0800	@Ruijie-s9599_iot
+c0:a4:76:e8:e1:eb	2437	-82	0800	@Ruijie-s9599
+50:78:b3:a3:c4:f4	2412	-78	0800	CU-C4F4
+bc:54:fc:36:e1:c2	2462	-76	0800	MERCURY_E1C2
+60:ce:41:46:0e:ec	2412	-75	0800	Kal'tsit
+60:ce:41:ab:02:d0	2462	-73	0800	Kal'tsit
+60:ce:41:ab:02:d2	2462	-69	0800	STB_T4Zp
+7c:39:85:2a:50:04	2462	-63	0800	Kal'tsit
+nsh> [K
+nsh> [K
+DIAGNOSTIC_ONLY; no category PASS

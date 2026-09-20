@@ -1,0 +1,32 @@
+{
+  "nuttx": {
+    "apply_check": true,
+    "apply": true,
+    "result_matches_tested_source": true,
+    "reverse_check": true,
+    "files": [
+      "arch/risc-v/src/esp32s31/CMakeLists.txt",
+      "arch/risc-v/src/esp32s31/Make.defs",
+      "arch/risc-v/src/esp32s31/esp32s31_lcd.c",
+      "boards/risc-v/esp32s31/esp32s31-core-function-board/Kconfig",
+      "boards/risc-v/esp32s31/esp32s31-core-function-board/configs/korvo-rgb565/defconfig",
+      "boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_bringup.c"
+    ]
+  },
+  "apps": {
+    "apply_check": true,
+    "apply": true,
+    "result_matches_tested_source": true,
+    "reverse_check": true,
+    "files": [
+      "examples/s31rgb565/CMakeLists.txt",
+      "examples/s31rgb565/Kconfig",
+      "examples/s31rgb565/Make.defs",
+      "examples/s31rgb565/Makefile",
+      "examples/s31rgb565/patterns.c",
+      "examples/s31rgb565/patterns.h",
+      "examples/s31rgb565/s31rgb565_main.c",
+      "examples/s31rgb565/startup.c"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1199-media.sha256
+XTS_COMMAND=mv /data/graph.conf /data/media/graph.conf
+--- CMD: mv /data/graph.conf /data/media/graph.conf ---
+mv /data/graph.conf /data/media/graph.conf
+nsh> [K
+nsh> [K
+XTS_COMMAND=mv /data/criteria.txt /data/media/criteria.txt
+--- CMD: mv /data/criteria.txt /data/media/criteria.txt ---
+mv /data/criteria.txt /data/media/criteria.txt
+nsh> [K
+nsh> [K
+XTS_COMMAND=mv /data/settings.pfw /data/media/settings.pfw
+--- CMD: mv /data/settings.pfw /data/media/settings.pfw ---
+mv /data/settings.pfw /data/media/settings.pfw
+nsh> [K
+nsh> [K
+XTS_COMMAND=mediad &
+--- CMD: mediad & ---
+mediad &
+[media][audio_graph_load:232] audio_graph_load, loadgraph from file: /data/media/graph.conf
+[media][audio_graph_load:249] audio_graph_load, graph_desc:
+abufsrc@Music0=outputs=1:map=1,asubgraph@Convert=inputs=1:outputs=1:map=1,alsasink@pcm0p=inputs=1:devname=pcm0p:format=s16:sample_rate=48000:ch_layout=stereo
+<subgraph>Convert:aresample=48000:osf=s16:ochl=stereo
+
+pthread_mutexattr_settype failed with error: Invalid system call number
+mediad [13:100]
+nsh> [K
+nsh> [K
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/start1202-media.py", line 15, in <module>
+    k.command(port, 'mediad &')
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 115, in command
+    require(not re.search(r'ERROR|failed|timed out', result, re.I),
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: precondition command failed: mediad &

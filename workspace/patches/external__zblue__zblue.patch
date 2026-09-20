@@ -1,0 +1,2098 @@
+diff --git a/include/zephyr/bluetooth/gatt.h b/include/zephyr/bluetooth/gatt.h
+index cfa26ea9058..816af835492 100644
+--- a/include/zephyr/bluetooth/gatt.h
++++ b/include/zephyr/bluetooth/gatt.h
+@@ -2313,8 +2313,14 @@ int bt_gatt_subscribe(struct bt_conn *conn,
+  *
+  *  @return 0 in case of success or negative value in case of error.
+  */
+-int bt_gatt_resubscribe(uint8_t id, const bt_addr_le_t *peer,
+-			struct bt_gatt_subscribe_params *params);
++int bt_gatt_resubscribe_mc(uint8_t dev_id, uint8_t id, const bt_addr_le_t *peer,
++                          struct bt_gatt_subscribe_params *params);
++
++static inline int bt_gatt_resubscribe(uint8_t id, const bt_addr_le_t *peer,
++                                    struct bt_gatt_subscribe_params *params)
++{
++	return bt_gatt_resubscribe_mc(0, id, peer, params);
++}
+ 
+ /** @brief Unsubscribe Attribute Value Notification
+  *
+diff --git a/include/zephyr/sys/atomic.h b/include/zephyr/sys/atomic.h
+index e4e8dcfef5f..b5a308adcef 100644
+--- a/include/zephyr/sys/atomic.h
++++ b/include/zephyr/sys/atomic.h
+@@ -18,6 +18,8 @@ extern "C" {
+ 
+ #include <nuttx/atomic.h>
+ 
++#ifndef ZEPHYR_NUTTX_ATOMIC_TYPES_DEFINED
++#define ZEPHYR_NUTTX_ATOMIC_TYPES_DEFINED
+ typedef int32_t atomic_val_t;
+ #if INTPTR_MAX >= INT64_MAX
+ typedef volatile int64_t atomic_ptr_t;
+@@ -26,6 +28,7 @@ typedef int64_t atomic_ptr_val_t;
+ typedef volatile int32_t atomic_ptr_t;
+ typedef int32_t atomic_ptr_val_t;
+ #endif
++#endif
+ 
+ #include <zephyr/sys/atomic_port.h>
+ 
+diff --git a/include/zephyr/sys/atomic_types.h b/include/zephyr/sys/atomic_types.h
+index 33935971f50..890bdf6e27d 100644
+--- a/include/zephyr/sys/atomic_types.h
++++ b/include/zephyr/sys/atomic_types.h
+@@ -8,14 +8,29 @@
+ #ifndef ZEPHYR_INCLUDE_SYS_ATOMIC_TYPES_H_
+ #define ZEPHYR_INCLUDE_SYS_ATOMIC_TYPES_H_
+ 
++#include <stdint.h>
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+ 
++#ifdef __NuttX__
++/* NuttX owns atomic_t. Keep the Zephyr aliases compatible when audio
++ * headers include atomic_types.h before the portability atomic.h wrapper.
++ */
++#include <nuttx/atomic.h>
++#ifndef ZEPHYR_NUTTX_ATOMIC_TYPES_DEFINED
++#define ZEPHYR_NUTTX_ATOMIC_TYPES_DEFINED
++typedef int32_t atomic_val_t;
++typedef volatile int32_t atomic_ptr_t;
++typedef int32_t atomic_ptr_val_t;
++#endif
++#else
+ typedef long atomic_t;
+ typedef atomic_t atomic_val_t;
+ typedef void *atomic_ptr_t;
+ typedef atomic_ptr_t atomic_ptr_val_t;
++#endif
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/include/zephyr/sys/time_units.h b/include/zephyr/sys/time_units.h
+index c02fd012887..1135998401e 100644
+--- a/include/zephyr/sys/time_units.h
++++ b/include/zephyr/sys/time_units.h
+@@ -73,6 +73,9 @@ static inline int z_impl_sys_clock_hw_cycles_per_sec_runtime_get(void)
+ #if defined(CONFIG_TIMER_READS_ITS_FREQUENCY_AT_RUNTIME)
+ #define sys_clock_hw_cycles_per_sec() sys_clock_hw_cycles_per_sec_runtime_get()
+ #else
++#ifndef CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC
++#define CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC CONFIG_ZBLUE_SYS_CLOCK_HW_CYCLES_PER_SEC
++#endif
+ #define sys_clock_hw_cycles_per_sec() CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC
+ #endif
+ 
+diff --git a/port/include/zephyr/arch/posix/arch.h b/port/include/zephyr/arch/posix/arch.h
+index 4b5e3c76711..8fabb684044 100644
+--- a/port/include/zephyr/arch/posix/arch.h
++++ b/port/include/zephyr/arch/posix/arch.h
+@@ -57,6 +57,15 @@ static ALWAYS_INLINE bool arch_irq_unlocked(unsigned int key)
+ 	return false;
+ }
+ 
++#if defined(CONFIG_BUILD_KERNEL) && !defined(__KERNEL__)
++/* The host runs in user threads; serialize its virtual IRQ regions without
++ * accessing supervisor interrupt state or CPU registers.
++ */
++unsigned int z_nuttx_user_irq_lock(void);
++void z_nuttx_user_irq_unlock(unsigned int key);
++#define arch_irq_lock z_nuttx_user_irq_lock
++#define arch_irq_unlock z_nuttx_user_irq_unlock
++#else
+ static ALWAYS_INLINE unsigned int arch_irq_lock(void)
+ {
+ 	if (!up_interrupt_context()) {
+@@ -75,6 +84,8 @@ static ALWAYS_INLINE void arch_irq_unlock(unsigned int key)
+ 	leave_critical_section(key);
+ }
+ 
++#endif
++
+ static inline unsigned int arch_num_cpus(void)
+ {
+ 	return 1;
+diff --git a/port/include/zephyr/kernel.h b/port/include/zephyr/kernel.h
+index a56c9892037..7f8c3605f1d 100644
+--- a/port/include/zephyr/kernel.h
++++ b/port/include/zephyr/kernel.h
+@@ -3922,7 +3922,11 @@ enum {
+ 
+ /** @brief A structure used to submit work. */
+ struct k_work {
++#if defined(CONFIG_BUILD_KERNEL) && !defined(__KERNEL__)
++	struct z_nuttx_timeout *user_timeout;
++#else
+ 	struct wdog_s wdog;
++#endif
+ 	/* All fields are protected by the work module spinlock.  No fields
+ 	 * are to be accessed except through kernel API.
+ 	 */
+diff --git a/port/include/zephyr/shell/shell.h b/port/include/zephyr/shell/shell.h
+index e83fd153019..d6cd149789c 100644
+--- a/port/include/zephyr/shell/shell.h
++++ b/port/include/zephyr/shell/shell.h
+@@ -373,7 +373,7 @@ struct shell_static_entry {
+ #define SHELL_SUBCMD_COND_ADD(_flag, _parent, _syntax, _subcmd, _help, _handler, \
+ 			   _mand, _opt) \
+ 	COND_CODE_1(_flag, \
+-		(static const TYPE_SECTION_ITERABLE(struct shell_static_entry, \
++		(const TYPE_SECTION_ITERABLE(struct shell_static_entry, \
+ 					Z_SHELL_SUBCMD_NAME(__DEBRACKET _parent, _syntax), \
+ 					shell_subcmds, \
+ 					Z_SHELL_SUBCMD_ADD_SECTION_TAG(_parent, _syntax)) = \
+diff --git a/port/kernel/sched.c b/port/kernel/sched.c
+index ad21e07993d..a545ac6a097 100644
+--- a/port/kernel/sched.c
++++ b/port/kernel/sched.c
+@@ -17,6 +17,34 @@
+  *****************************************************************************/
+ 
+ #include <zephyr/kernel.h>
++#include <unistd.h>
++
++#if defined(CONFIG_BUILD_KERNEL) && !defined(__KERNEL__)
++static pthread_once_t user_irq_once = PTHREAD_ONCE_INIT;
++static pthread_mutex_t user_irq_mutex;
++
++static void user_irq_init(void)
++{
++	pthread_mutexattr_t attr;
++	pthread_mutexattr_init(&attr);
++	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
++	pthread_mutex_init(&user_irq_mutex, &attr);
++	pthread_mutexattr_destroy(&attr);
++}
++
++unsigned int z_nuttx_user_irq_lock(void)
++{
++	pthread_once(&user_irq_once, user_irq_init);
++	pthread_mutex_lock(&user_irq_mutex);
++	return 0;
++}
++
++void z_nuttx_user_irq_unlock(unsigned int key)
++{
++	(void)key;
++	pthread_mutex_unlock(&user_irq_mutex);
++}
++#endif
+ 
+ int32_t k_sleep(k_timeout_t timeout)
+ {
+@@ -30,7 +58,12 @@ int32_t k_sleep(k_timeout_t timeout)
+ 	}
+ #endif
+ 
++#if defined(CONFIG_BUILD_KERNEL) && !defined(__KERNEL__)
++	int ret = usleep(k_ticks_to_us_ceil32(timeout.ticks));
++	return ret < 0 ? -errno : ret;
++#else
+ 	return nxsig_usleep(k_ticks_to_us_ceil32(timeout.ticks));
++#endif
+ }
+ 
+ void k_yield(void)
+@@ -65,14 +98,22 @@ extern k_tid_t k_thread_current(void);
+ 
+ void k_sched_lock(void)
+ {
++#if defined(CONFIG_BUILD_KERNEL) && !defined(__KERNEL__)
++	{
++#else
+ 	if (!up_interrupt_context()) {
++#endif
+ 		sched_lock();
+ 	}
+ }
+ 
+ void k_sched_unlock(void)
+ {
++#if defined(CONFIG_BUILD_KERNEL) && !defined(__KERNEL__)
++	{
++#else
+ 	if (!up_interrupt_context()) {
++#endif
+ 		sched_unlock();
+ 	}
+ }
+diff --git a/port/kernel/thread.c b/port/kernel/thread.c
+index f565122c9a0..1d10a17ea9c 100644
+--- a/port/kernel/thread.c
++++ b/port/kernel/thread.c
+@@ -102,12 +102,22 @@ k_tid_t k_thread_create(struct k_thread *new_thread,
+ 	_main->argv[3] = p3;
+ 
+ 	pthread_attr_init(&pattr);
+-	pthread_attr_setstack(&pattr, stack, stack_size);
++#if defined(CONFIG_BUILD_KERNEL) && !defined(__KERNEL__)
++	/* Let NuttX allocate the user stack with its TLS/MMU alignment. */
++	ret = pthread_attr_setstacksize(&pattr, MAX(stack_size, PTHREAD_STACK_MIN));
++#else
++	ret = pthread_attr_setstack(&pattr, stack, stack_size);
++#endif
++	if (ret != 0) {
++		pthread_attr_destroy(&pattr);
++		free(_main);
++		return (k_tid_t)-1;
++	}
+ 	pthread_attr_setschedparam(&pattr, &param);
+ 
+ 	ret = pthread_create(&pid, &pattr, k_thread_main, _main);
+ 	pthread_attr_destroy(&pattr);
+-	if (ret < 0) {
++	if (ret != 0) {
+ 		free(_main);
+ 		return (k_tid_t)-1;
+ 	}
+diff --git a/port/kernel/timeout.c b/port/kernel/timeout.c
+index 67b73aff955..08f08a75298 100644
+--- a/port/kernel/timeout.c
++++ b/port/kernel/timeout.c
+@@ -16,10 +16,18 @@
+  *
+  *****************************************************************************/
+ #include <zephyr/kernel.h>
++#include <time.h>
++#include <nuttx/wqueue.h>
++#include <stdlib.h>
+ 
+ int64_t sys_clock_tick_get(void)
+ {
+-#if defined(CONFIG_SYSTEM_TIME64)
++#if defined(CONFIG_BUILD_KERNEL) && !defined(__KERNEL__)
++	struct timespec now;
++	int ret = clock_gettime(CLOCK_MONOTONIC, &now);
++	__ASSERT_NO_MSG(ret == 0);
++	return (int64_t)now.tv_sec * TICK_PER_SEC + now.tv_nsec / NSEC_PER_TICK;
++#elif defined(CONFIG_SYSTEM_TIME64)
+ 	return clock_systime_ticks();
+ #else
+ 	static int64_t g_tick;
+@@ -78,6 +86,99 @@ k_timepoint_t sys_timepoint_calc(k_timeout_t timeout)
+ 	return timepoint;
+ }
+ 
++#if defined(CONFIG_BUILD_KERNEL) && !defined(__KERNEL__)
++/* Keep the queued object alive independently of the Bluetooth work item.
++ * Cancellation may race a user worker which has dequeued its callback but
++ * has not yet acquired the host lock. Such a callback sees a NULL owner.
++ */
++struct z_nuttx_timeout {
++	struct work_s work;
++	struct _timeout *owner;
++	_timeout_func_t function;
++	int64_t deadline;
++};
++
++static pthread_once_t timer_once = PTHREAD_ONCE_INIT;
++
++static void timer_init(void)
++{
++	int ret = work_usrstart();
++	__ASSERT_NO_MSG(ret >= 0);
++}
++
++static void timer_expire(void *arg)
++{
++	struct z_nuttx_timeout *timer = arg;
++	unsigned int key = arch_irq_lock();
++	if (timer->owner != NULL) {
++		struct k_work_delayable *dwork = CONTAINER_OF(timer->owner,
++				struct k_work_delayable, timeout);
++		dwork->work.user_timeout = NULL;
++		timer->function(timer->owner);
++	}
++	arch_irq_unlock(key);
++	free(timer);
++}
++
++k_ticks_t z_timeout_remaining(const struct _timeout *timeout)
++{
++	const struct k_work_delayable *dwork = CONTAINER_OF(timeout,
++			struct k_work_delayable, timeout);
++	unsigned int key = arch_irq_lock();
++	struct z_nuttx_timeout *timer = dwork->work.user_timeout;
++	int64_t remaining = timer ? MAX(0, timer->deadline - sys_clock_tick_get()) : 0;
++	arch_irq_unlock(key);
++	return remaining;
++}
++
++int z_abort_timeout(struct _timeout *to)
++{
++	struct k_work_delayable *dwork = CONTAINER_OF(to,
++			struct k_work_delayable, timeout);
++	unsigned int key = arch_irq_lock();
++	struct z_nuttx_timeout *timer = dwork->work.user_timeout;
++	if (timer == NULL) {
++		arch_irq_unlock(key);
++		return -ENOENT;
++	}
++
++	dwork->work.user_timeout = NULL;
++	timer->owner = NULL;
++	if (work_cancel(USRWORK, &timer->work) == 0) {
++		free(timer);
++	}
++	arch_irq_unlock(key);
++	return 0;
++}
++
++void z_add_timeout(struct _timeout *to, _timeout_func_t fn, k_timeout_t timeout)
++{
++	struct k_work_delayable *dwork = CONTAINER_OF(to,
++			struct k_work_delayable, timeout);
++	struct z_nuttx_timeout *timer;
++	unsigned int key;
++	int ret;
++
++	pthread_once(&timer_once, timer_init);
++	key = arch_irq_lock();
++	z_abort_timeout(to);
++	if (K_TIMEOUT_EQ(timeout, K_FOREVER)) {
++		arch_irq_unlock(key);
++		return;
++	}
++
++	timer = calloc(1, sizeof(*timer));
++	__ASSERT_NO_MSG(timer != NULL);
++	timer->owner = to;
++	timer->function = fn;
++	timer->deadline = sys_clock_tick_get() + MAX(1, timeout.ticks);
++	dwork->work.user_timeout = timer;
++	ret = work_queue(USRWORK, &timer->work, timer_expire, timer,
++			MAX(1, timeout.ticks));
++	__ASSERT_NO_MSG(ret == 0);
++	arch_irq_unlock(key);
++}
++#else
+ k_ticks_t z_timeout_remaining(const struct _timeout *timeout)
+ {
+ 	clock_t qtime, curr, elapsed;
+@@ -109,4 +210,5 @@ int z_abort_timeout(struct _timeout *to)
+ 	dwork = CONTAINER_OF(to, struct k_work_delayable, timeout);
+ 
+ 	return wd_cancel(&dwork->work.wdog);
+-}
+\ No newline at end of file
++}
++#endif
+diff --git a/port/sections/defines.c b/port/sections/defines.c
+index 8ef0025b011..5409609d208 100644
+--- a/port/sections/defines.c
++++ b/port/sections/defines.c
+@@ -107,7 +107,15 @@ const struct bt_gatt_service_static *_bt_gatt_service_static_list[] = {
+ 
+ /* bt_conn_cb START */
+ extern const struct bt_conn_cb bt_conn_cb_mible_api;
++extern const struct bt_conn_cb bt_conn_cb_ascs_conn_cb;
++extern const struct bt_conn_cb bt_conn_cb_bap_scan_delegator_conn_cb;
+ const struct bt_conn_cb *_bt_conn_cb_list[] = {
++#if defined(CONFIG_BT_ASCS)
++	&bt_conn_cb_ascs_conn_cb,
++#endif
++#if defined(CONFIG_BT_BAP_SCAN_DELEGATOR)
++	&bt_conn_cb_bap_scan_delegator_conn_cb,
++#endif
+ #if defined(CONFIG_MIBLE_SDK)
+ 	&bt_conn_cb_mible_api,
+ #endif /* CONFIG_MIBLE_SDK */
+@@ -123,6 +131,7 @@ struct bt_sco_conn_cb *_bt_sco_conn_cb_list[] = {
+ 
+ /* net_buf_pool START */
+ extern struct net_buf_pool sine_tx_pool;
++extern struct net_buf_pool bap_tx_pool;
+ extern struct net_buf_pool tx_pool;
+ extern struct net_buf_pool vs_err_tx_pool;
+ extern struct net_buf_pool sync_evt_pool;
+@@ -256,11 +265,11 @@ struct net_buf_pool *_net_buf_pool_list[] = {
+ 	&bis_tx_pool,
+ 	&tx_pool,
+ #endif /* CONFIG_BT_ISO */
+-#if defined(CONFIG_BT_BAP_STREAM)
++#if defined(CONFIG_BT_BAP_STREAM) && defined(CONFIG_LIBLC3) && defined(CONFIG_BT_AUDIO_TX)
+ 	&sine_tx_pool,
+ #endif /* CONFIG_BT_BAP_STREAM */
+-#if defined(CONFIG_BT_AUDIO_TX)
+-	&tx_pool,
++#if defined(CONFIG_BT_BAP_STREAM) && defined(CONFIG_BT_AUDIO_TX)
++	&bap_tx_pool,
+ #endif /* CONFIG_BT_AUDIO_TX */
+ #if defined(CONFIG_USB_DEVICE_AUDIO)
+ 	&usb_out_buf_pool,
+@@ -548,9 +557,9 @@ extern const struct init_entry __init___device_dts_ord_DT_N_INST_1_zephyr_bt_hci
+ const struct init_entry *_init_entry_list[] = {
+ 	&__init_init_mem_slab_obj_core_list,
+ 	&__init_k_sys_work_q_init,
+-#if defined(CONFIG_BT_BAP_BROADCAST_ASSISTANT)
++#if defined(CONFIG_BT_BAP_BROADCAST_SINK)
+ 	&__init_broadcast_sink_init,
+-#endif /* CONFIG_BT_BAP_BROADCAST_ASSISTANT */
++#endif /* CONFIG_BT_BAP_BROADCAST_SINK */
+ #if defined(CONFIG_BT_CONN)
+ #if defined(CONFIG_BT_CONN_TX_NOTIFY_WQ)
+ 	&__init_bt_conn_tx_workq_init,
+diff --git a/port/subsys/fs/fs.c b/port/subsys/fs/fs.c
+index 8611b42a708..f6bfcde87c7 100644
+--- a/port/subsys/fs/fs.c
++++ b/port/subsys/fs/fs.c
+@@ -25,6 +25,7 @@
+ 
+ #include <errno.h>
+ #include <fcntl.h>
++#include <unistd.h>
+ #include <sys/stat.h>
+ #include <sys/types.h>
+ #include <errno.h>
+@@ -32,65 +33,78 @@
+ /* File operations */
+ int fs_open(struct fs_file_t *zfp, const char *file_name, fs_mode_t flags)
+ {
+-	zfp->filep = fopen(file_name, "a+");
++	int access = flags & FS_O_RDWR;
++	int oflags;
++	int fd;
++	const char *mode;
++
++	if (access == FS_O_READ) { oflags = O_RDONLY; mode = "r"; }
++	else if (access == FS_O_WRITE) { oflags = O_WRONLY; mode = "w"; }
++	else if (access == FS_O_RDWR) { oflags = O_RDWR; mode = "r+"; }
++	else { return -EINVAL; }
++	if (flags & FS_O_CREATE) { oflags |= O_CREAT; }
++	if (flags & FS_O_APPEND) { oflags |= O_APPEND; }
++	if (flags & FS_O_TRUNC) { oflags |= O_TRUNC; }
++	fd = open(file_name, oflags, 0600);
++	if (fd < 0) { return -errno; }
++	zfp->filep = fdopen(fd, mode);
+ 	if (!zfp->filep) {
+-		return -EINVAL;
++		int err = errno;
++		close(fd);
++		return -err;
+ 	}
+-
++	/* Settings durability must not depend on an unflushed stdio buffer. */
++	setvbuf(zfp->filep, NULL, _IONBF, 0);
+ 	return 0;
+ }
+ 
+ int fs_close(struct fs_file_t *zfp)
+ {
+-	return fclose(zfp->filep);
++	int ret = fclose(zfp->filep);
++	zfp->filep = NULL;
++	return ret < 0 ? -errno : 0;
+ }
+ 
+ ssize_t fs_read(struct fs_file_t *zfp, void *ptr, size_t size)
+ {
+-	return fread(ptr, 1, size, zfp->filep);
++	size_t count = fread(ptr, 1, size, zfp->filep);
++	return count == 0 && ferror(zfp->filep) ? -(errno ? errno : EIO) : (ssize_t)count;
+ }
+ 
+ ssize_t fs_write(struct fs_file_t *zfp, const void *ptr, size_t size)
+ {
+-	return fwrite(ptr, 1, size, zfp->filep);
++	size_t count = fwrite(ptr, 1, size, zfp->filep);
++	return count == 0 && size && ferror(zfp->filep) ? -(errno ? errno : EIO) : (ssize_t)count;
+ }
+ 
+ int fs_seek(struct fs_file_t *zfp, off_t offset, int whence)
+ {
+-	int _whence;
+-	int ret;
+-
++	int native;
+ 	switch (whence) {
+-		case FS_SEEK_SET:
+-			_whence = SEEK_SET;
+-			break;
+-		case FS_SEEK_CUR:
+-			_whence = SEEK_CUR;
+-			break;
+-		case FS_SEEK_END:
+-			_whence = SEEK_END;
+-			break;
+-		default:
+-			return -EINVAL;
++	case FS_SEEK_SET: native = SEEK_SET; break;
++	case FS_SEEK_CUR: native = SEEK_CUR; break;
++	case FS_SEEK_END: native = SEEK_END; break;
++	default: return -EINVAL;
+ 	}
+-
+-	ret = fseek(zfp->filep, offset, _whence);
+-	return ret >= 0 ? 0 : ret;
++	return fseek(zfp->filep, offset, native) ? -errno : 0;
+ }
+ 
+ off_t fs_tell(struct fs_file_t *zfp)
+ {
+-	return ftell(zfp->filep);
++	off_t ret = ftell(zfp->filep);
++	return ret < 0 ? -errno : ret;
+ }
+ 
+ int fs_truncate(struct fs_file_t *zfp, off_t length)
+ {
+-	return ftruncate(fileno(zfp->filep), length);
++	if (fflush(zfp->filep)) { return -errno; }
++	return ftruncate(fileno(zfp->filep), length) < 0 ? -errno : 0;
+ }
+ 
+ int fs_sync(struct fs_file_t *zfp)
+ {
+-	return fsync(fileno(zfp->filep));
++	if (fflush(zfp->filep)) { return -errno; }
++	return fsync(fileno(zfp->filep)) < 0 ? -errno : 0;
+ }
+ 
+ /* Filesystem operations */
+@@ -105,12 +119,12 @@ int fs_mkdir(const char *abs_path)
+ 
+ int fs_unlink(const char *abs_path)
+ {
+-	return unlink(abs_path);
++	return unlink(abs_path) < 0 ? -errno : 0;
+ }
+ 
+ int fs_rename(const char *from, const char *to)
+ {
+-	return rename(from, to);
++	return rename(from, to) < 0 ? -errno : 0;
+ }
+ 
+ int fs_stat(const char *abs_path, struct fs_dirent *entry)
+@@ -120,7 +134,7 @@ int fs_stat(const char *abs_path, struct fs_dirent *entry)
+ 
+ 	ret = lstat(abs_path, &buf);
+ 	if (ret != 0) {
+-		return ret;
++		return -errno;
+ 	}
+ 
+     size_t len_to_copy = strnlen(abs_path, sizeof(entry->name) - 1);
+diff --git a/port/subsys/shell/shell.c b/port/subsys/shell/shell.c
+index 1bb32f61aa4..1c295255365 100644
+--- a/port/subsys/shell/shell.c
++++ b/port/subsys/shell/shell.c
+@@ -242,60 +242,54 @@ static void cmds_show(const struct shell *sh)
+ 
+ static int execute_cmd(const struct shell *sh, size_t argc, char **argv)
+ {
+-	const struct shell_static_entry *cmd;
++	const struct shell_static_entry *cmd = root_cmd_find(argv[0]);
++	size_t depth = 0;
+ 
+-	cmd = root_cmd_find(argv[0]);
+ 	if (!cmd) {
+ 		return -ENOEXEC;
+ 	}
+ 
+-	if (argc == 1) {
+-		memcpy(&sh->ctx->active_cmd, cmd,
+-		       sizeof(struct shell_static_entry));
++	/* Mesh commands include nested groups, e.g. mesh prov pb-adv on. */
++	while (depth + 1 < argc && cmd->subcmd) {
++		const struct shell_static_entry *child = cmd->subcmd->entry;
+ 
+-		if (!cmd->handler) {
+-			return 0;
+-		}
+-
+-		return cmd->handler(sh, argc, &argv[0]);
+-	}
+-
+-	cmd = cmd->subcmd->entry;
+-	for (; cmd && cmd->syntax; cmd++) {
+-		if (strcmp(argv[1], cmd->syntax)) {
+-			continue;
++		for (; child && child->syntax; child++) {
++			if (!strcmp(argv[depth + 1], child->syntax)) {
++				break;
++			}
+ 		}
+-
+-		if (cmd->args.mandatory > argc - 1) {
+-			shell_fprintf_info(sh, "cmd:%s Mands:%d opts:%d help:%s\n",
+-			   	   cmd->syntax,
+-			   	   cmd->args.mandatory, cmd->args.optional,
+-			   	   cmd->help);
+-			return 0;
++		if (!child || !child->syntax) {
++			return -ENOEXEC;
+ 		}
+-
+-		memcpy(&sh->ctx->active_cmd, cmd,
+-		       sizeof(struct shell_static_entry));
+-		return cmd->handler(sh, argc - 1, &argv[1]);
++		cmd = child;
++		depth++;
+ 	}
+ 
+-	return -ENOEXEC;
++	memcpy(&sh->ctx->active_cmd, cmd, sizeof(*cmd));
++	if (!cmd->handler) {
++		shell_help(sh);
++		return 0;
++	}
++	if (cmd->args.mandatory > argc - depth) {
++		shell_help(sh);
++		return -EINVAL;
++	}
++	return cmd->handler(sh, argc - depth, argv + depth);
+ }
+ 
+-extern z_sys_init(void);
++extern void z_sys_init(void);
+ 
+-int main(int argc, char *argv[])
++int zblue_shell_run(void)
+ {
+-	struct shell_ctx ctx = { 0 };
+-	struct shell sh = { .ctx = &ctx };
++	static struct shell_ctx ctx;
++	static struct shell sh = { .ctx = &ctx };
+ 	int _argc = 0;
+ 	char* _argv[32];
+ 	char* buffer = NULL;
+ 	char* saveptr;
+ 	int ret = 0;
+-	size_t len, size = 0;
+-
+-	z_sys_init();
++	size_t size = 0;
++	ssize_t len;
+ 
+ 	while (1) {
+ 		printf("zblue> ");
+@@ -307,7 +301,7 @@ int main(int argc, char *argv[])
+ 			goto end;
+ 
+ 		buffer[len] = '\0';
+-		if (buffer[len - 1] == '\n')
++		if (len > 0 && buffer[len - 1] == '\n')
+ 			buffer[len - 1] = '\0';
+ 
+ 		if (buffer[0] == '!') {
+@@ -321,11 +315,20 @@ int main(int argc, char *argv[])
+ 		char* tmpstr = buffer;
+ 
+ 		while ((tmpstr = strtok_r(tmpstr, " ", &saveptr)) != NULL) {
++			if (_argc == ARRAY_SIZE(_argv)) {
++				break;
++			}
+ 			_argv[_argc] = tmpstr;
+ 			_argc++;
+ 			tmpstr = NULL;
+ 		}
+ 
++		if (tmpstr != NULL) {
++			shell_error(&sh, "Too many arguments");
++			_argc = 0;
++			continue;
++		}
++
+ 		if (_argc > 0) {
+ 			if (strcmp(_argv[0], "q") == 0) {
+ 				shell_fprintf_info(&sh, "Bye!\n");
+@@ -350,3 +353,9 @@ end:
+ 
+ 	return 0;
+ }
++
++int main(int argc, char *argv[])
++{
++	z_sys_init();
++	return zblue_shell_run();
++}
+diff --git a/subsys/bluetooth/audio/ascs.c b/subsys/bluetooth/audio/ascs.c
+index 51ba19b2350..0e270e1fa12 100644
+--- a/subsys/bluetooth/audio/ascs.c
++++ b/subsys/bluetooth/audio/ascs.c
+@@ -1314,7 +1314,7 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
+ 	}
+ }
+ 
+-BT_CONN_CB_DEFINE(conn_cb) = {
++BT_CONN_CB_DEFINE(ascs_conn_cb) = {
+ 	.disconnected = disconnected,
+ };
+ 
+diff --git a/subsys/bluetooth/audio/bap_scan_delegator.c b/subsys/bluetooth/audio/bap_scan_delegator.c
+index 8fdf83557d7..1749a8e1c9e 100644
+--- a/subsys/bluetooth/audio/bap_scan_delegator.c
++++ b/subsys/bluetooth/audio/bap_scan_delegator.c
+@@ -264,7 +264,7 @@ static void scan_delegator_security_changed(struct bt_conn *conn,
+ 					    enum bt_security_err err)
+ {
+ 
+-	if (err != 0 || level < BT_SECURITY_L2 || !bt_addr_le_is_bonded(conn->id, &conn->le.dst)) {
++	if (err != 0 || level < BT_SECURITY_L2 || !bt_addr_le_is_bonded(conn->hdev, conn->id, &conn->le.dst)) {
+ 		return;
+ 	}
+ 
+@@ -291,7 +291,7 @@ static void scan_delegator_security_changed(struct bt_conn *conn,
+ 	}
+ }
+ 
+-BT_CONN_CB_DEFINE(conn_callbacks) = {
++BT_CONN_CB_DEFINE(bap_scan_delegator_conn_cb) = {
+ 	.security_changed = scan_delegator_security_changed,
+ };
+ 
+diff --git a/subsys/bluetooth/audio/pacs.c b/subsys/bluetooth/audio/pacs.c
+index 30e5d64d9a4..c9f5a0095db 100644
+--- a/subsys/bluetooth/audio/pacs.c
++++ b/subsys/bluetooth/audio/pacs.c
+@@ -981,7 +981,7 @@ static void pacs_security_changed(struct bt_conn *conn, bt_security_t level,
+ 		return;
+ 	}
+ 
+-	if (!bt_addr_le_is_bonded(conn->id, &conn->le.dst)) {
++	if (!bt_addr_le_is_bonded(conn->hdev, conn->id, &conn->le.dst)) {
+ 		return;
+ 	}
+ 
+diff --git a/subsys/bluetooth/audio/shell/bap.c b/subsys/bluetooth/audio/shell/bap.c
+index d6ada33ca82..6e00484c05a 100644
+--- a/subsys/bluetooth/audio/shell/bap.c
++++ b/subsys/bluetooth/audio/shell/bap.c
+@@ -3809,8 +3809,16 @@ static int cmd_init(const struct shell *sh, size_t argc, char *argv[])
+ 		src_cnt = CONFIG_BT_ASCS_MAX_ASE_SRC_COUNT;
+ 	}
+ 
+-	bt_bap_unicast_server_register(&unicast_server_param);
+-	bt_bap_unicast_server_register_cb(&unicast_server_cb);
++	err = bt_bap_unicast_server_register(&unicast_server_param);
++	if (err != 0) {
++		shell_error(sh, "Unicast server registration failed: %d", err);
++		return err;
++	}
++	err = bt_bap_unicast_server_register_cb(&unicast_server_cb);
++	if (err != 0) {
++		shell_error(sh, "Unicast server callback registration failed: %d", err);
++		return err;
++	}
+ #endif /* CONFIG_BT_BAP_UNICAST_SERVER */
+ 
+ #if defined(CONFIG_BT_PAC_SNK)
+@@ -3924,7 +3932,7 @@ static int cmd_init(const struct shell *sh, size_t argc, char *argv[])
+ #if defined(CONFIG_BT_AUDIO_TX)
+ 
+ #define DATA_MTU CONFIG_BT_ISO_TX_MTU
+-NET_BUF_POOL_FIXED_DEFINE(tx_pool, 1, DATA_MTU, CONFIG_BT_CONN_TX_USER_DATA_SIZE, NULL);
++NET_BUF_POOL_FIXED_DEFINE(bap_tx_pool, 1, DATA_MTU, CONFIG_BT_CONN_TX_USER_DATA_SIZE, NULL);
+ 
+ static int cmd_send(const struct shell *sh, size_t argc, char *argv[])
+ {
+@@ -3957,7 +3965,7 @@ static int cmd_send(const struct shell *sh, size_t argc, char *argv[])
+ 		memset(data, 0xff, len);
+ 	}
+ 
+-	buf = net_buf_alloc(&tx_pool, K_FOREVER);
++	buf = net_buf_alloc(&bap_tx_pool, K_FOREVER);
+ 	net_buf_reserve(buf, BT_ISO_CHAN_SEND_RESERVE);
+ 
+ 	net_buf_add_mem(buf, data, len);
+diff --git a/subsys/bluetooth/host/att.c b/subsys/bluetooth/host/att.c
+index 6a32982a32d..eb21e8ffe68 100644
+--- a/subsys/bluetooth/host/att.c
++++ b/subsys/bluetooth/host/att.c
+@@ -148,9 +148,11 @@ static uint16_t bt_att_mtu(struct bt_att_chan *chan)
+ 	 *         The server and client shall set ATT_MTU to the minimum of the
+ 	 *         Client Rx MTU and the Server Rx MTU.
+ 	 */
+-	if (IS_ENABLED(CONFIG_BT_ATT_OVER_BR) && bt_att_is_over_br(chan)) {
++#if defined(CONFIG_BT_ATT_OVER_BR)
++	if (bt_att_is_over_br(chan)) {
+ 		return MIN(chan->br_chan.rx.mtu, chan->br_chan.tx.mtu);
+ 	}
++#endif
+ 
+ 	return MIN(chan->chan.rx.mtu, chan->chan.tx.mtu);
+ }
+@@ -329,9 +331,12 @@ static void att_sent(void *user_data)
+ 
+ 	__ASSERT_NO_MSG(!bt_att_is_enhanced(att_chan));
+ 
+-	if (IS_ENABLED(CONFIG_BT_ATT_OVER_BR) && bt_att_is_over_br(att_chan)) {
++#if defined(CONFIG_BT_ATT_OVER_BR)
++	if (bt_att_is_over_br(att_chan)) {
+ 		chan = &att_chan->br_chan.chan;
+-	} else {
++	} else
++#endif
++	{
+ 		chan = &att_chan->chan.chan;
+ 	}
+ 
+@@ -439,10 +444,13 @@ static int chan_send(struct bt_att_chan *chan, struct net_buf *buf)
+ 	net_buf_simple_save(&buf->b, &state);
+ 
+ 	data->att_chan = chan;
+-	if (IS_ENABLED(CONFIG_BT_ATT_OVER_BR) && bt_att_is_over_br(chan)) {
++#if defined(CONFIG_BT_ATT_OVER_BR)
++	if (bt_att_is_over_br(chan)) {
+ 		l2cap_chan = &chan->br_chan.chan;
+ 		err = bt_l2cap_chan_send(l2cap_chan, buf);
+-	} else {
++	} else
++#endif
++	{
+ 		l2cap_chan = &chan->chan.chan;
+ 		err = bt_l2cap_send_pdu(&chan->chan, buf, NULL, NULL);
+ 	}
+@@ -668,9 +676,12 @@ static void chan_req_notif_sent(struct bt_att_tx_meta_data *user_data)
+ 	void *ud = data->user_data;
+ 	uint16_t cid;
+ 
+-	if (IS_ENABLED(CONFIG_BT_ATT_OVER_BR) && bt_att_is_over_br(chan)) {
++#if defined(CONFIG_BT_ATT_OVER_BR)
++	if (bt_att_is_over_br(chan)) {
+ 		cid = chan->br_chan.tx.cid;
+-	} else {
++	} else
++#endif
++	{
+ 		cid = chan->chan.tx.cid;
+ 	}
+ 
+@@ -1032,10 +1043,13 @@ static uint8_t att_mtu_rsp(struct bt_att_chan *chan, struct net_buf *buf)
+ 		return att_handle_rsp(chan, NULL, 0, BT_ATT_ERR_INVALID_PDU);
+ 	}
+ 
+-	if (IS_ENABLED(CONFIG_BT_ATT_OVER_BR) && bt_att_is_over_br(chan)) {
++#if defined(CONFIG_BT_ATT_OVER_BR)
++	if (bt_att_is_over_br(chan)) {
+ 			chan->br_chan.rx.mtu = L2CAP_BR_DEFAULT_MTU;
+ 			chan->br_chan.tx.mtu = mtu;
+-	} else {
++	} else
++#endif
++	{
+ 		/* The following must equal the value we sent in the req. We assume this
+ 		* is a rsp to `gatt_exchange_mtu_encode`.
+ 		*/
+@@ -1201,9 +1215,12 @@ static struct bt_conn *get_conn(struct bt_att_chan *att_chan)
+ {
+ 	struct bt_conn *conn;
+ 
+-	if (IS_ENABLED(CONFIG_BT_ATT_OVER_BR) && bt_att_is_over_br(att_chan)) {
++#if defined(CONFIG_BT_ATT_OVER_BR)
++	if (bt_att_is_over_br(att_chan)) {
+ 		conn = att_chan->br_chan.chan.conn;
+-	} else {
++	} else
++#endif
++	{
+ 		conn = att_chan->chan.chan.conn;
+ 	}
+ 
+@@ -3110,6 +3127,7 @@ static struct bt_att *att_get(struct bt_conn *conn)
+ 		return NULL;
+ 	}
+ 
++#if defined(CONFIG_BT_ATT_OVER_BR)
+ 	if (IS_ENABLED(CONFIG_BT_CLASSIC) &&
+ 	    conn->type == BT_CONN_TYPE_BR) {
+ 		chan = bt_l2cap_br_lookup_psm(conn, BT_L2CAP_PSM_ATT);
+@@ -3126,6 +3144,7 @@ static struct bt_att *att_get(struct bt_conn *conn)
+ 
+ 		return att_chan->att;
+ 	}
++#endif
+ 
+ 	chan = bt_l2cap_le_lookup_rx_cid(conn, BT_L2CAP_CID_ATT);
+ 	if (!chan) {
+@@ -3277,13 +3296,21 @@ static void att_timeout(struct k_work *work)
+ 
+ 	if (conn->type == BT_CONN_TYPE_LE) {
+ 		bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
+-	} else if (conn->type == BT_CONN_TYPE_BR) {
++	}
++#if defined(CONFIG_BT_CLASSIC)
++	else if (conn->type == BT_CONN_TYPE_BR) {
+ 		bt_addr_to_str(bt_conn_get_dst_br(conn), addr, sizeof(addr));
+ 	}
++#endif
++	else {
++		LOG_ERR("Unsupported ATT connection type");
++		return;
++	}
+ 
+ 	LOG_ERR("ATT Timeout for device %s. Disconnecting...", addr);
+ 
+-	if (IS_ENABLED(CONFIG_BT_ATT_OVER_BR) && bt_att_is_over_br(chan)) {
++#if defined(CONFIG_BT_ATT_OVER_BR)
++	if (bt_att_is_over_br(chan)) {
+ 		/* timeout execute att_br disconnect
+ 		 *
+ 		 * bt_att_disconnected will be called after L2CAP disconnected, so
+@@ -3295,6 +3322,7 @@ static void att_timeout(struct k_work *work)
+ 		}
+ 		return;
+ 	}
++#endif
+ 
+ 	/* BLUETOOTH SPECIFICATION Version 4.2 [Vol 3, Part F] page 480:
+ 	 *
+@@ -3354,7 +3382,8 @@ static void bt_att_connected(struct bt_l2cap_chan *chan)
+ 
+ 	k_work_init_delayable(&att_chan->timeout_work, att_timeout);
+ 
+-	if (IS_ENABLED(CONFIG_BT_ATT_OVER_BR) && bt_att_is_over_br(att_chan)) {
++#if defined(CONFIG_BT_ATT_OVER_BR)
++	if (bt_att_is_over_br(att_chan)) {
+ 		struct bt_l2cap_br_chan *br_chan = BT_L2CAP_BR_CHAN(chan);
+ 		struct bt_att_conn_cb *callback;
+ 
+@@ -3371,7 +3400,9 @@ static void bt_att_connected(struct bt_l2cap_chan *chan)
+ 				callback->connected(chan->conn);
+ 			}
+ 		}
+-	} else {
++	} else
++#endif
++	{
+ 		le_chan = BT_L2CAP_LE_CHAN(chan);
+ 		conn = le_chan->chan.conn;
+ 		LOG_DBG("chan %p cid 0x%04x", le_chan, le_chan->tx.cid);
+@@ -3401,7 +3432,8 @@ static void bt_att_disconnected(struct bt_l2cap_chan *chan)
+ 
+ 	att_reset(att);
+ 
+-	if (IS_ENABLED(CONFIG_BT_ATT_OVER_BR) && bt_att_is_over_br(att_chan)) {
++#if defined(CONFIG_BT_ATT_OVER_BR)
++	if (bt_att_is_over_br(att_chan)) {
+ 		struct bt_l2cap_br_chan *br_chan = BT_L2CAP_BR_CHAN(chan);
+ 		struct bt_att_conn_cb *callback;
+ 
+@@ -3414,6 +3446,7 @@ static void bt_att_disconnected(struct bt_l2cap_chan *chan)
+ 		}
+ 		return;
+ 	}
++#endif
+ 
+ 	le_chan = BT_L2CAP_LE_CHAN(chan);
+ 
+@@ -4280,7 +4313,8 @@ static void att_chan_mtu_updated(struct bt_att_chan *updated_chan)
+ 	struct bt_att_chan *chan, *tmp;
+ 	uint16_t max_tx = 0, max_rx = 0;
+ 
+-	if (IS_ENABLED(CONFIG_BT_ATT_OVER_BR) && bt_att_is_over_br(updated_chan)) {
++#if defined(CONFIG_BT_ATT_OVER_BR)
++	if (bt_att_is_over_br(updated_chan)) {
+ 		SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&att->chans, chan, tmp, node) {
+ 			if (chan == updated_chan) {
+ 				continue;
+@@ -4298,6 +4332,7 @@ static void att_chan_mtu_updated(struct bt_att_chan *updated_chan)
+ 
+ 		return;
+ 	}
++#endif
+ 
+ 	/* Get maximum MTU's of other channels */
+ 	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&att->chans, chan, tmp, node) {
+diff --git a/subsys/bluetooth/host/conn.c b/subsys/bluetooth/host/conn.c
+index 8bcf58bbd82..a21f99b41cc 100644
+--- a/subsys/bluetooth/host/conn.c
++++ b/subsys/bluetooth/host/conn.c
+@@ -2178,8 +2178,8 @@ static struct bt_conn *conn_lookup_iso(struct bt_conn *conn)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < ARRAY_SIZE(hdev->iso_conns); i++) {
+-		struct bt_conn *iso = bt_conn_ref(&hdev->iso_conns[i]);
++	for (i = 0; i < ARRAY_SIZE(conn->hdev->iso_conns); i++) {
++		struct bt_conn *iso = bt_conn_ref(&conn->hdev->iso_conns[i]);
+ 
+ 		if (iso == NULL) {
+ 			continue;
+diff --git a/subsys/bluetooth/host/gatt.c b/subsys/bluetooth/host/gatt.c
+index 27707175e57..b1acf8c5298 100644
+--- a/subsys/bluetooth/host/gatt.c
++++ b/subsys/bluetooth/host/gatt.c
+@@ -693,9 +693,9 @@ static void set_change_aware(struct gatt_cf_cfg *cfg, bool aware)
+ #endif
+ }
+ 
+-static int bt_gatt_store_cf(uint8_t id, const bt_addr_le_t *peer);
++static int bt_gatt_store_cf(struct bt_dev *hdev, uint8_t id, const bt_addr_le_t *peer);
+ 
+-static void set_all_change_unaware(void)
++static void set_all_change_unaware(struct bt_dev *hdev)
+ {
+ #if defined(CONFIG_BT_SETTINGS)
+ 	/* Mark all bonded peers as change-unaware.
+@@ -711,13 +711,13 @@ static void set_all_change_unaware(void)
+ 
+ 		if (!bt_addr_le_eq(&cfg->peer, BT_ADDR_LE_ANY)) {
+ 			set_change_aware_no_store(cfg, false);
+-			bt_gatt_store_cf(cfg->id, &cfg->peer);
++			bt_gatt_store_cf(hdev, cfg->id, &cfg->peer);
+ 		}
+ 	}
+ #endif	/* CONFIG_BT_SETTINGS */
+ }
+ 
+-static struct gatt_cf_cfg *find_cf_cfg(struct bt_conn *conn)
++static struct gatt_cf_cfg *find_cf_cfg(struct bt_dev *hdev, struct bt_conn *conn)
+ {
+ 	int i;
+ 
+@@ -742,7 +742,7 @@ static ssize_t cf_read(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+ 	struct gatt_cf_cfg *cfg;
+ 	uint8_t data[1] = {};
+ 
+-	cfg = find_cf_cfg(conn);
++	cfg = find_cf_cfg(conn->hdev, conn);
+ 	if (cfg) {
+ 		memcpy(data, cfg->data, sizeof(data));
+ 	}
+@@ -792,9 +792,9 @@ static ssize_t cf_write(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+ 		return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
+ 	}
+ 
+-	cfg = find_cf_cfg(conn);
++	cfg = find_cf_cfg(conn->hdev, conn);
+ 	if (!cfg) {
+-		cfg = find_cf_cfg(NULL);
++		cfg = find_cf_cfg(conn->hdev, NULL);
+ 	}
+ 
+ 	if (!cfg) {
+@@ -857,7 +857,7 @@ static int db_hash_update(struct gen_hash_state *state, uint8_t *data, size_t le
+ 	return 0;
+ }
+ 
+-static int db_hash_finish(struct gen_hash_state *state)
++static int db_hash_finish(struct bt_dev *hdev, struct gen_hash_state *state)
+ {
+ 	size_t mac_length;
+ 	psa_status_t ret = psa_mac_sign_finish(&(state->operation), hdev->gatt_ctx->db_hash.hash, 16,
+@@ -981,12 +981,12 @@ static uint8_t gen_hash_m(const struct bt_gatt_attr *attr, uint16_t handle,
+ 	return BT_GATT_ITER_CONTINUE;
+ }
+ 
+-static void db_hash_store(void)
++static void db_hash_store(struct bt_dev *hdev)
+ {
+ #if defined(CONFIG_BT_SETTINGS)
+ 	int err;
+ 
+-	err = bt_settings_store_hash(&hdev->gatt_ctx->db_hash.hash, sizeof(hdev->gatt_ctx->db_hash.hash));
++	err = bt_settings_store_hash(hdev->dev_id, &hdev->gatt_ctx->db_hash.hash, sizeof(hdev->gatt_ctx->db_hash.hash));
+ 	if (err) {
+ 		LOG_ERR("Failed to save Database Hash (err %d)", err);
+ 	}
+@@ -995,7 +995,7 @@ static void db_hash_store(void)
+ #endif	/* CONFIG_BT_SETTINGS */
+ }
+ 
+-static void db_hash_gen(void)
++static void db_hash_gen(struct bt_dev *hdev)
+ {
+ 	uint8_t key[16] = {};
+ 	struct gen_hash_state state;
+@@ -1004,9 +1004,9 @@ static void db_hash_gen(void)
+ 		return;
+ 	}
+ 
+-	bt_gatt_foreach_attr(0x0001, 0xffff, gen_hash_m, &state);
++	bt_gatt_foreach_attr_mc(hdev->dev_id, 0x0001, 0xffff, gen_hash_m, &state);
+ 
+-	if (db_hash_finish(&state) != 0) {
++	if (db_hash_finish(hdev, &state) != 0) {
+ 		return;
+ 	}
+ 
+@@ -1031,7 +1031,7 @@ static void do_db_hash(struct bt_dev* hdev)
+ 	bool new_hash = !atomic_test_bit(hdev->gatt_ctx->gatt_sc.flags, DB_HASH_VALID);
+ 
+ 	if (new_hash) {
+-		db_hash_gen();
++		db_hash_gen(hdev);
+ 	}
+ 
+ #if defined(CONFIG_BT_SETTINGS)
+@@ -1053,8 +1053,8 @@ static void do_db_hash(struct bt_dev* hdev)
+ 		 * the calculated hash to settings (if it has changed).
+ 		 */
+ 		if (new_hash) {
+-			set_all_change_unaware();
+-			db_hash_store();
++			set_all_change_unaware(hdev);
++			db_hash_store(hdev);
+ 		}
+ 	} else {
+ 		/* this is only supposed to run once, on bootup, after the hash
+@@ -1080,21 +1080,21 @@ static void do_db_hash(struct bt_dev* hdev)
+ 		 * database range to invalidate client-side cache and force
+ 		 * discovery on reconnect.
+ 		 */
+-		sc_indicate(0x0001, 0xffff);
++		sc_indicate(hdev, 0x0001, 0xffff);
+ 
+ 		/* Hash did not match, overwrite with current hash.
+ 		 * Also immediately set all peers (in settings) as
+ 		 * change-unaware.
+ 		 */
+-		set_all_change_unaware();
+-		db_hash_store();
++		set_all_change_unaware(hdev);
++		db_hash_store(hdev);
+ 	}
+ #endif /* defined(CONFIG_BT_SETTINGS) */
+ }
+ 
+ static void db_hash_process(struct k_work *work)
+ {
+-	struct db_hash *hash = CONTAINER_OF(work, struct db_hash, work);
++	struct db_hash *hash = CONTAINER_OF(k_work_delayable_from_work(work), struct db_hash, work);
+ 	struct bt_dev_gatt_ctx *gatt_ctx = CONTAINER_OF(hash, struct bt_dev_gatt_ctx, db_hash);
+ 
+ 	do_db_hash(gatt_ctx->hdev);
+@@ -1112,10 +1112,10 @@ static ssize_t db_hash_read(struct bt_conn *conn,
+ 	 */
+ 	(void)k_work_cancel_delayable_sync(&hdev->gatt_ctx->db_hash.work, &hdev->gatt_ctx->db_hash.sync);
+ 	if (!atomic_test_bit(hdev->gatt_ctx->gatt_sc.flags, DB_HASH_VALID)) {
+-		db_hash_gen();
++		db_hash_gen(hdev);
+ 		if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
+-			set_all_change_unaware();
+-			db_hash_store();
++			set_all_change_unaware(hdev);
++			db_hash_store(hdev);
+ 		}
+ 	}
+ 
+@@ -1125,7 +1125,7 @@ static ssize_t db_hash_read(struct bt_conn *conn,
+ 	 * The client reads the Database Hash characteristic and then the server
+ 	 * receives another ATT request from the client.
+ 	 */
+-	cfg = find_cf_cfg(conn);
++	cfg = find_cf_cfg(conn->hdev, conn);
+ 	if (cfg &&
+ 	    CF_ROBUST_CACHING(cfg) &&
+ 	    !atomic_test_bit(cfg->flags, CF_CHANGE_AWARE)) {
+@@ -1140,7 +1140,7 @@ static void remove_cf_cfg(struct bt_conn *conn)
+ {
+ 	struct gatt_cf_cfg *cfg;
+ 
+-	cfg = find_cf_cfg(conn);
++	cfg = find_cf_cfg(conn->hdev, conn);
+ 	if (!cfg) {
+ 		return;
+ 	}
+@@ -1209,7 +1209,7 @@ static int bt_gatt_store_cf(struct bt_dev *hdev, uint8_t id, const bt_addr_le_t
+ 		str = dst;
+ 	}
+ 
+-	err = bt_settings_store_cf(id, peer, str, len);
++	err = bt_settings_store_cf(hdev->dev_id, id, peer, str, len);
+ 	if (err) {
+ 		LOG_ERR("Failed to store Client Features (err %d)", err);
+ 		return err;
+@@ -1448,7 +1448,7 @@ static void sc_indicate_rsp(struct bt_conn *conn,
+ 	 * for the Service Changed characteristic
+ 	 */
+ 	if (bt_att_fixed_chan_only(conn)) {
+-		cfg = find_cf_cfg(conn);
++		cfg = find_cf_cfg(conn->hdev, conn);
+ 		if (cfg && CF_ROBUST_CACHING(cfg)) {
+ 			set_change_aware(cfg, true);
+ 		}
+@@ -1690,7 +1690,7 @@ void bt_gatt_init(struct bt_dev *hdev)
+ 	if (IS_ENABLED(CONFIG_BT_LONG_WQ)) {
+ 		bt_long_wq_schedule(&gatt_ctx->db_hash.work, DB_HASH_TIMEOUT);
+ 	} else {
+-		k_work_schedule(&gatt_ctx->gatt_ctx->db_hash.work, DB_HASH_TIMEOUT);
++		k_work_schedule(&gatt_ctx->db_hash.work, DB_HASH_TIMEOUT);
+ 	}
+ #endif /* CONFIG_BT_GATT_CACHING */
+ 
+@@ -2560,7 +2560,7 @@ static bool gatt_cf_notify_multi(struct bt_conn *conn)
+ {
+ 	struct gatt_cf_cfg *cfg;
+ 
+-	cfg = find_cf_cfg(conn);
++	cfg = find_cf_cfg(conn->hdev, conn);
+ 	if (!cfg) {
+ 		return false;
+ 	}
+@@ -3479,7 +3479,7 @@ static void sc_restore_rsp(struct bt_conn *conn,
+ 	 */
+ 
+ 	if (bt_att_fixed_chan_only(conn)) {
+-		cfg = find_cf_cfg(conn);
++		cfg = find_cf_cfg(conn->hdev, conn);
+ 		if (cfg && CF_ROBUST_CACHING(cfg)) {
+ 			set_change_aware(cfg, true);
+ 		}
+@@ -6379,7 +6379,7 @@ bool bt_gatt_change_aware(struct bt_conn *conn, bool req)
+ #if defined(CONFIG_BT_GATT_CACHING)
+ 	struct gatt_cf_cfg *cfg;
+ 
+-	cfg = find_cf_cfg(conn);
++	cfg = find_cf_cfg(conn->hdev, conn);
+ 	if (!cfg || !CF_ROBUST_CACHING(cfg)) {
+ 		return true;
+ 	}
+@@ -6674,7 +6674,7 @@ static int cf_set(const char *name, size_t len_rd, settings_read_cb read_cb,
+ 
+ 	cfg = find_cf_cfg_by_addr(hdev, id, &addr);
+ 	if (!cfg) {
+-		cfg = find_cf_cfg(NULL);
++		cfg = find_cf_cfg(hdev, NULL);
+ 		if (!cfg) {
+ 			LOG_ERR("Unable to restore CF: no cfg left");
+ 			return -ENOMEM;
+diff --git a/subsys/bluetooth/host/hci_core.c b/subsys/bluetooth/host/hci_core.c
+index 34afd9c3b83..af85f4bdc04 100644
+--- a/subsys/bluetooth/host/hci_core.c
++++ b/subsys/bluetooth/host/hci_core.c
+@@ -447,7 +447,17 @@ int bt_hci_cmd_send_sync(struct bt_dev *hdev, uint16_t opcode, struct net_buf *b
+ 	int err;
+ 
+ 	if (!buf) {
++#ifdef CONFIG_ESP32S31_BLE
++		if (true) {
++			syslog(LOG_INFO, "S31 BLE host: allocating opcode=%04x\n", opcode);
++		}
++#endif
+ 		buf = bt_hci_cmd_create(opcode, 0);
++#ifdef CONFIG_ESP32S31_BLE
++		if (true) {
++			syslog(LOG_INFO, "S31 BLE host: opcode=%04x buffer=%p\n", opcode, buf);
++		}
++#endif
+ 		if (!buf) {
+ 			return -ENOBUFS;
+ 		}
+@@ -470,6 +480,12 @@ int bt_hci_cmd_send_sync(struct bt_dev *hdev, uint16_t opcode, struct net_buf *b
+ 
+ 	k_fifo_put(&hdev->cmd_tx_queue, net_buf_ref(buf));
+ 	bt_tx_irq_raise(hdev);
++#ifdef CONFIG_ESP32S31_BLE
++	if (true) {
++		syslog(LOG_INFO, "S31 BLE host: opcode=%04x queued current=%p syswq=%p\n",
++		       opcode, k_current_get(), &k_sys_work_q.thread);
++	}
++#endif
+ 
+ 	/* TODO: disallow sending sync commands from syswq altogether */
+ 
+@@ -502,6 +518,12 @@ int bt_hci_cmd_send_sync(struct bt_dev *hdev, uint16_t opcode, struct net_buf *b
+ 
+ 	/* Now that we have sent the command, suspend until the LL replies */
+ 	err = k_sem_take(&sync_sem, HCI_CMD_TIMEOUT);
++#ifdef CONFIG_ESP32S31_BLE
++	if (true) {
++		syslog(LOG_INFO, "S31 BLE host: opcode=%04x wait=%d status=%u ref=%u\n",
++		       opcode, err, cmd(buf)->status, buf->ref);
++	}
++#endif
+ 	BT_ASSERT_MSG(err == 0,
+ 		      "Controller unresponsive, command opcode 0x%04x %s timeout with err %d",
+ 		      opcode, bt_hci_opcode_to_str(opcode), err);
+@@ -534,6 +556,9 @@ int bt_hci_cmd_send_sync(struct bt_dev *hdev, uint16_t opcode, struct net_buf *b
+ 		net_buf_unref(buf);
+ 	}
+ 
++#ifdef CONFIG_ESP32S31_BLE
++	syslog(LOG_INFO, "S31 BLE host: opcode=%04x returned\n", opcode);
++#endif
+ 	return 0;
+ }
+ 
+@@ -2113,6 +2138,16 @@ static int set_flow_control(struct bt_dev *hdev)
+ 	(void)memset(hbs, 0, sizeof(*hbs));
+ 	hbs->acl_mtu = sys_cpu_to_le16(CONFIG_BT_BUF_ACL_RX_SIZE);
+ 	hbs->acl_pkts = sys_cpu_to_le16(BT_BUF_ACL_RX_COUNT);
++#ifdef CONFIG_ESP32S31_BLE
++	/* The pinned S31 common controller validates a synchronous packet
++	 * length of 255 even in LE-only mode. Keep the synchronous packet
++	 * count zero: this host neither advertises credits nor enables SCO.
++	 */
++	BUILD_ASSERT(CONFIG_BT_BUF_ACL_RX_SIZE >= 1021);
++	hbs->sco_mtu = 255;
++	syslog(LOG_INFO, "S31 BLE host: buffers ACL=%u/%u SCO=%u/0\n",
++	       CONFIG_BT_BUF_ACL_RX_SIZE, BT_BUF_ACL_RX_COUNT, hbs->sco_mtu);
++#endif
+ 
+ 	err = bt_hci_cmd_send_sync(hdev, BT_HCI_OP_HOST_BUFFER_SIZE, buf, NULL);
+ 	if (err) {
+@@ -3391,6 +3426,9 @@ static int common_init(struct bt_dev *hdev)
+ 			return err;
+ 		}
+ 		hci_reset_complete(hdev);
++#ifdef CONFIG_ESP32S31_BLE
++		syslog(LOG_INFO, "S31 BLE host: reset state complete\n");
++#endif
+ 	}
+ 
+ 	/* Read Local Supported Features */
+@@ -3423,7 +3461,13 @@ static int common_init(struct bt_dev *hdev)
+ 		/* Initialize the PRNG so that it is safe to use it later
+ 		 * on in the initialization process.
+ 		 */
++#ifdef CONFIG_ESP32S31_BLE
++		syslog(LOG_INFO, "S31 BLE host: initializing PSA PRNG\n");
++#endif
+ 		err = prng_init(hdev);
++#ifdef CONFIG_ESP32S31_BLE
++		syslog(LOG_INFO, "S31 BLE host: PSA PRNG result=%d\n", err);
++#endif
+ 		if (err) {
+ 			return err;
+ 		}
+@@ -3962,6 +4006,15 @@ static void bt_dev_show_info(struct bt_dev *hdev)
+ 		hdev->manufacturer);
+ 	LOG_INF("LMP: version %s (0x%02x) subver 0x%04x", bt_hci_get_ver_str(hdev->lmp_version),
+ 		hdev->lmp_version, hdev->lmp_subversion);
++	/* Keep the controller capability evidence visible on the NuttX UART even
++	 * when the Zephyr log backend is filtered by the board profile. */
++	syslog(LOG_INFO,
++		"S31 BLE controller HCI=%s(0x%02x) rev=0x%04x mfr=0x%04x LEfeat=%02x%02x%02x%02x%02x%02x%02x%02x\n",
++		bt_hci_get_ver_str(hdev->hci_version), hdev->hci_version,
++		hdev->hci_revision, hdev->manufacturer,
++		hdev->le.features[0], hdev->le.features[1], hdev->le.features[2],
++		hdev->le.features[3], hdev->le.features[4], hdev->le.features[5],
++		hdev->le.features[6], hdev->le.features[7]);
+ }
+ 
+ #if defined(CONFIG_BT_HCI_VS)
+@@ -4384,6 +4437,9 @@ static void init_work(struct k_work *work)
+ 	struct bt_dev *hdev = CONTAINER_OF(work, struct bt_dev, init);
+ 
+ 	err = bt_init(hdev);
++#ifdef CONFIG_ESP32S31_BLE
++	syslog(LOG_INFO, "S31 BLE host: initialization result=%d\n", err);
++#endif
+ 	if (hdev->ready_cb) {
+ 		hdev->ready_cb(hdev->dev_id, err);
+ 	}
+diff --git a/subsys/bluetooth/host/iso.c b/subsys/bluetooth/host/iso.c
+index 796b10ce7b2..8323258e01a 100644
+--- a/subsys/bluetooth/host/iso.c
++++ b/subsys/bluetooth/host/iso.c
+@@ -788,7 +788,7 @@ static uint16_t iso_chan_max_data_len(const struct bt_iso_chan *chan)
+ {
+ 	size_t max_controller_data_len;
+ 	uint16_t max_data_len;
+-	struct bt_dev *hdev = chan->conn->hdev;
++	struct bt_dev *hdev = chan->iso->hdev;
+ 
+ 	if (chan->qos->tx == NULL) {
+ 		return 0;
+@@ -1127,7 +1127,7 @@ static void store_cis_info(const struct bt_hci_evt_le_cis_established *evt,
+ 	peripheral->flush_timeout = info->iso_interval * evt->p_ft;
+ }
+ 
+-void hci_le_cis_established(struct net_buf *buf)
++void hci_le_cis_established(struct bt_dev *hdev, struct net_buf *buf)
+ {
+ 	struct bt_hci_evt_le_cis_established *evt = (void *)buf->data;
+ 	uint16_t handle = sys_le16_to_cpu(evt->conn_handle);
+@@ -2182,7 +2182,7 @@ int bt_iso_cig_reconfigure(struct bt_iso_cig *cig, const struct bt_iso_cig_param
+ 	/* Used to restore CIG in case of error */
+ 	existing_num_cis = cig->num_cis;
+ 
+-	err = cig_init_cis(cig, param);
++	err = cig_init_cis(cig->hdev, cig, param);
+ 	if (err != 0) {
+ 		LOG_DBG("Could not init CIS %d", err);
+ 		restore_cig(cig, existing_num_cis);
+@@ -2251,7 +2251,7 @@ int bt_iso_cig_terminate(struct bt_iso_cig *cig)
+ 		return -EINVAL;
+ 	}
+ 
+-	err = hci_le_remove_cig(cig->id);
++	err = hci_le_remove_cig(cig, cig->id);
+ 	if (err != 0) {
+ 		LOG_DBG("Failed to terminate CIG: %d", err);
+ 		return err;
+@@ -2512,7 +2512,7 @@ int bt_iso_chan_connect(const struct bt_iso_connect_param *param, size_t count)
+ 		}
+ 	}
+ 
+-	if (iso_chans_connecting()) {
++	if (iso_chans_connecting(param[0].acl->hdev)) {
+ 		LOG_DBG("There are pending ISO connections");
+ 		return -EBUSY;
+ 	}
+@@ -2941,7 +2941,7 @@ int bt_iso_big_create(struct bt_le_ext_adv *padv, struct bt_iso_big_create_param
+ 		return -EINVAL;
+ 	}
+ 
+-	big = get_free_big();
++	big = get_free_big(padv->hdev);
+ 
+ 	if (!big) {
+ 		return -ENOMEM;
+diff --git a/subsys/bluetooth/host/shell/bt.c b/subsys/bluetooth/host/shell/bt.c
+index ebc9257acf3..05b350ee957 100644
+--- a/subsys/bluetooth/host/shell/bt.c
++++ b/subsys/bluetooth/host/shell/bt.c
+@@ -1343,7 +1343,7 @@ static int cmd_init(const struct shell *sh, size_t argc, char *argv[])
+ 
+ 	if (sync) {
+ 		err = bt_enable(NULL);
+-		bt_ready(err);
++		bt_ready(BT_ID_DEFAULT, err);
+ 	} else {
+ 		err = bt_enable(bt_ready);
+ 		if (err) {
+diff --git a/subsys/bluetooth/mesh/adv_ext_internal.h b/subsys/bluetooth/mesh/adv_ext_internal.h
+index 372940c7f0e..efd41838287 100644
+--- a/subsys/bluetooth/mesh/adv_ext_internal.h
++++ b/subsys/bluetooth/mesh/adv_ext_internal.h
+@@ -2,7 +2,7 @@
+ 
+ #define  RELAY_ADV(i, _) &adv_relay[i]
+ struct bt_mesh_ext_adv * const _bt_mesh_ext_adv_list[] = {
+-	&adv_main,
++	&advs[0],
+ #if CONFIG_BT_MESH_RELAY_ADV_SETS
+ 	LISTIFY(CONFIG_BT_MESH_RELAY_ADV_SETS, RELAY_ADV, (,)),
+ #endif
+diff --git a/subsys/bluetooth/mesh/crypto_psa.c b/subsys/bluetooth/mesh/crypto_psa.c
+index 587c367a6bd..6c8e6f758a6 100644
+--- a/subsys/bluetooth/mesh/crypto_psa.c
++++ b/subsys/bluetooth/mesh/crypto_psa.c
+@@ -512,6 +512,7 @@ int bt_mesh_key_compare(const uint8_t raw_key[16], const struct bt_mesh_key *key
+ 	return memcmp(out, raw_key, 16);
+ }
+ 
++#ifndef CONFIG_BT_ORIGINAL_API
+ __weak int bt_rand(void *buf, size_t len)
+ {
+ 	CHECKIF(buf == NULL || len == 0) {
+@@ -520,3 +521,4 @@ __weak int bt_rand(void *buf, size_t len)
+ 
+ 	return psa_generate_random(buf, len) == PSA_SUCCESS ? 0 : -EIO;
+ }
++#endif /* !CONFIG_BT_ORIGINAL_API */
+diff --git a/subsys/bluetooth/mesh/pb_gatt.c b/subsys/bluetooth/mesh/pb_gatt.c
+index 849914f4b5f..2d14b9df928 100644
+--- a/subsys/bluetooth/mesh/pb_gatt.c
++++ b/subsys/bluetooth/mesh/pb_gatt.c
+@@ -35,23 +35,23 @@ struct prov_link {
+ 	struct k_work_delayable prot_timer;
+ };
+ 
+-static struct prov_link link;
++static struct prov_link prov_link_state;
+ 
+ static void reset_state(void)
+ {
+-	if (link.conn) {
+-		bt_conn_unref(link.conn);
+-		link.conn = NULL;
++	if (prov_link_state.conn) {
++		bt_conn_unref(prov_link_state.conn);
++		prov_link_state.conn = NULL;
+ 	}
+ 
+ 	/* If this fails, the protocol timeout handler will exit early. */
+-	(void)k_work_cancel_delayable(&link.prot_timer);
++	(void)k_work_cancel_delayable(&prov_link_state.prot_timer);
+ }
+ 
+ static void link_closed(enum prov_bearer_link_status status)
+ {
+-	const struct prov_bearer_cb *cb = link.cb;
+-	void *cb_data = link.cb_data;
++	const struct prov_bearer_cb *cb = prov_link_state.cb;
++	void *cb_data = prov_link_state.cb_data;
+ 
+ 	reset_state();
+ 
+@@ -67,8 +67,8 @@ static void protocol_timeout(struct k_work *work)
+ 	/* If connection failed or timeout, not allow establish connection */
+ 	if (IS_ENABLED(CONFIG_BT_MESH_PB_GATT_CLIENT) &&
+ 	    atomic_test_bit(bt_mesh_prov_link.flags, PROVISIONER)) {
+-		if (link.conn) {
+-			(void)bt_conn_disconnect(link.conn,
++		if (prov_link_state.conn) {
++			(void)bt_conn_disconnect(prov_link_state.conn,
+ 						 BT_HCI_ERR_REMOTE_USER_TERM_CONN);
+ 		} else {
+ 			(void)bt_mesh_pb_gatt_cli_setup(NULL);
+@@ -84,7 +84,7 @@ int bt_mesh_pb_gatt_recv(struct bt_conn *conn, struct net_buf_simple *buf)
+ {
+ 	LOG_DBG("%u bytes: %s", buf->len, bt_hex(buf->data, buf->len));
+ 
+-	if (link.conn != conn || !link.cb) {
++	if (prov_link_state.conn != conn || !prov_link_state.cb) {
+ 		LOG_WRN("Data for unexpected connection");
+ 		return -ENOTCONN;
+ 	}
+@@ -94,9 +94,9 @@ int bt_mesh_pb_gatt_recv(struct bt_conn *conn, struct net_buf_simple *buf)
+ 		return -EINVAL;
+ 	}
+ 
+-	k_work_reschedule(&link.prot_timer, bt_mesh_prov_protocol_timeout_get());
++	k_work_reschedule(&prov_link_state.prot_timer, bt_mesh_prov_protocol_timeout_get());
+ 
+-	link.cb->recv(&bt_mesh_pb_gatt, link.cb_data, buf);
++	prov_link_state.cb->recv(&bt_mesh_pb_gatt, prov_link_state.cb_data, buf);
+ 
+ 	return 0;
+ }
+@@ -105,14 +105,14 @@ int bt_mesh_pb_gatt_start(struct bt_conn *conn)
+ {
+ 	LOG_DBG("conn %p", (void *)conn);
+ 
+-	if (link.conn) {
++	if (prov_link_state.conn) {
+ 		return -EBUSY;
+ 	}
+ 
+-	link.conn = bt_conn_ref(conn);
+-	k_work_reschedule(&link.prot_timer, bt_mesh_prov_protocol_timeout_get());
++	prov_link_state.conn = bt_conn_ref(conn);
++	k_work_reschedule(&prov_link_state.prot_timer, bt_mesh_prov_protocol_timeout_get());
+ 
+-	link.cb->link_opened(&bt_mesh_pb_gatt, link.cb_data);
++	prov_link_state.cb->link_opened(&bt_mesh_pb_gatt, prov_link_state.cb_data);
+ 
+ 	return 0;
+ }
+@@ -121,7 +121,7 @@ int bt_mesh_pb_gatt_close(struct bt_conn *conn)
+ {
+ 	LOG_DBG("conn %p", (void *)conn);
+ 
+-	if (link.conn != conn) {
++	if (prov_link_state.conn != conn) {
+ 		LOG_DBG("Not connected");
+ 		return -ENOTCONN;
+ 	}
+@@ -136,12 +136,12 @@ int bt_mesh_pb_gatt_cli_start(struct bt_conn *conn)
+ {
+ 	LOG_DBG("conn %p", (void *)conn);
+ 
+-	if (link.conn) {
++	if (prov_link_state.conn) {
+ 		return -EBUSY;
+ 	}
+ 
+-	link.conn = bt_conn_ref(conn);
+-	k_work_reschedule(&link.prot_timer, bt_mesh_prov_protocol_timeout_get());
++	prov_link_state.conn = bt_conn_ref(conn);
++	k_work_reschedule(&prov_link_state.prot_timer, bt_mesh_prov_protocol_timeout_get());
+ 
+ 	return 0;
+ }
+@@ -150,12 +150,12 @@ int bt_mesh_pb_gatt_cli_open(struct bt_conn *conn)
+ {
+ 	LOG_DBG("conn %p", (void *)conn);
+ 
+-	if (link.conn != conn) {
++	if (prov_link_state.conn != conn) {
+ 		LOG_DBG("Not connected");
+ 		return -ENOTCONN;
+ 	}
+ 
+-	link.cb->link_opened(&bt_mesh_pb_gatt, link.cb_data);
++	prov_link_state.cb->link_opened(&bt_mesh_pb_gatt, prov_link_state.cb_data);
+ 
+ 	return 0;
+ }
+@@ -165,8 +165,8 @@ static int prov_link_open(const uint8_t uuid[16], uint8_t timeout,
+ {
+ 	LOG_DBG("uuid %s", bt_hex(uuid, 16));
+ 
+-	link.cb = cb;
+-	link.cb_data = cb_data;
++	prov_link_state.cb = cb;
++	prov_link_state.cb_data = cb_data;
+ 
+ 	k_work_reschedule(&link.prot_timer, K_SECONDS(timeout));
+ 
+@@ -175,7 +175,7 @@ static int prov_link_open(const uint8_t uuid[16], uint8_t timeout,
+ 
+ static void prov_link_close(enum prov_bearer_link_status status)
+ {
+-	(void)bt_conn_disconnect(link.conn, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
++	(void)bt_conn_disconnect(prov_link_state.conn, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
+ }
+ #endif
+ 
+@@ -193,8 +193,8 @@ static int link_accept(const struct prov_bearer_cb *cb, void *cb_data)
+ 	(void)bt_mesh_pb_gatt_srv_enable();
+ 	bt_mesh_adv_gatt_update();
+ 
+-	link.cb = cb;
+-	link.cb_data = cb_data;
++	prov_link_state.cb = cb;
++	prov_link_state.cb_data = cb_data;
+ 
+ 	return 0;
+ }
+@@ -202,24 +202,24 @@ static int link_accept(const struct prov_bearer_cb *cb, void *cb_data)
+ 
+ static void buf_send_end(struct bt_conn *conn, void *user_data)
+ {
+-	if (link.comp.cb) {
+-		link.comp.cb(0, link.comp.cb_data);
++	if (prov_link_state.comp.cb) {
++		prov_link_state.comp.cb(0, prov_link_state.comp.cb_data);
+ 	}
+ }
+ 
+ static int buf_send(struct net_buf_simple *buf, prov_bearer_send_complete_t cb,
+ 		    void *cb_data)
+ {
+-	if (!link.conn) {
++	if (!prov_link_state.conn) {
+ 		return -ENOTCONN;
+ 	}
+ 
+-	link.comp.cb = cb;
+-	link.comp.cb_data = cb_data;
++	prov_link_state.comp.cb = cb;
++	prov_link_state.comp.cb_data = cb_data;
+ 
+-	k_work_reschedule(&link.prot_timer, bt_mesh_prov_protocol_timeout_get());
++	k_work_reschedule(&prov_link_state.prot_timer, bt_mesh_prov_protocol_timeout_get());
+ 
+-	return bt_mesh_proxy_msg_send(link.conn, BT_MESH_PROXY_PROV,
++	return bt_mesh_proxy_msg_send(prov_link_state.conn, BT_MESH_PROXY_PROV,
+ 				      buf, buf_send_end, NULL);
+ }
+ 
+@@ -230,7 +230,7 @@ static void clear_tx(void)
+ 
+ void bt_mesh_pb_gatt_init(void)
+ {
+-	k_work_init_delayable(&link.prot_timer, protocol_timeout);
++	k_work_init_delayable(&prov_link_state.prot_timer, protocol_timeout);
+ }
+ 
+ void bt_mesh_pb_gatt_reset(void)
+diff --git a/subsys/bluetooth/mesh/settings.c b/subsys/bluetooth/mesh/settings.c
+index 6bd651c7493..5e002f72197 100644
+--- a/subsys/bluetooth/mesh/settings.c
++++ b/subsys/bluetooth/mesh/settings.c
+@@ -88,7 +88,8 @@ static int mesh_commit(void)
+ 		return 0;
+ 	}
+ 
+-	if (!atomic_test_bit(bt_dev.flags, BT_DEV_ENABLE)) {
++	struct bt_dev *hdev = bt_dev_get(0);
++	if (!hdev || !atomic_test_bit(hdev->flags, BT_DEV_ENABLE)) {
+ 		/* The Bluetooth Mesh settings loader calls bt_mesh_start() immediately
+ 		 * after loading the settings. This is not intended to work before
+ 		 * bt_enable(). The doc on @ref bt_enable requires the "bt/" settings
+diff --git a/subsys/bluetooth/mesh/shell/shell.c b/subsys/bluetooth/mesh/shell/shell.c
+index 511f50a78f9..dd5a7ce0d29 100644
+--- a/subsys/bluetooth/mesh/shell/shell.c
++++ b/subsys/bluetooth/mesh/shell/shell.c
+@@ -217,9 +217,36 @@ struct bt_mesh_health_cli bt_mesh_shell_health_cli = {
+ };
+ #endif /* CONFIG_BT_MESH_SHELL_HEALTH_CLI */
+ 
++#ifdef __NuttX__
++/* Keep model handlers reachable without Zephyr's sorted linker sections. */
++#define MESH_SHELL_MODEL(name) \
++	extern const struct shell_static_entry shell_subcmds_mesh_models_##name;
++#include "nuttx_models.h"
++#undef MESH_SHELL_MODEL
++
++static const struct shell_static_entry *const nuttx_models[] = {
++#define MESH_SHELL_MODEL(name) &shell_subcmds_mesh_models_##name,
++#include "nuttx_models.h"
++#undef MESH_SHELL_MODEL
++	NULL
++};
++static struct shell_static_entry nuttx_model_entries[ARRAY_SIZE(nuttx_models)];
++static const union shell_cmd_entry model_cmds = { .entry = nuttx_model_entries };
++
++static void nuttx_models_init(void)
++{
++	for (size_t i = 0; nuttx_models[i]; i++) {
++		nuttx_model_entries[i] = *nuttx_models[i];
++	}
++}
++#endif
++
+ static int cmd_init(const struct shell *sh, size_t argc, char *argv[])
+ {
+ 
++#ifdef __NuttX__
++	nuttx_models_init();
++#endif
+ 	bt_mesh_shell_ctx_shell = sh;
+ 	shell_print(sh, "Mesh shell initialized");
+ 
+@@ -1773,7 +1800,9 @@ SHELL_STATIC_SUBCMD_SET_CREATE(stat_cmds,
+ #endif
+ 
+ /* Placeholder for model shell modules that is configured in the application */
++#ifndef __NuttX__
+ SHELL_SUBCMD_SET_CREATE(model_cmds, (mesh, models));
++#endif
+ 
+ /* List of Mesh subcommands.
+  *
+diff --git a/subsys/settings/src/settings.c b/subsys/settings/src/settings.c
+index 0f198fc5cc5..6386e174dc5 100644
+--- a/subsys/settings/src/settings.c
++++ b/subsys/settings/src/settings.c
+@@ -228,8 +228,7 @@ int settings_call_set_handler(const char *name,
+ 		if (rc != 0) {
+ 			LOG_ERR("set-value failure. key: %s error(%d)",
+ 				name, rc);
+-			/* Ignoring the error */
+-			rc = 0;
++			/* A failed restore must not commit partially restored Mesh state. */
+ 		} else {
+ 			LOG_DBG("set-value OK. key: %s",
+ 				name);
+diff --git a/subsys/settings/src/settings_file.c b/subsys/settings/src/settings_file.c
+index 43dcd1004f5..d40863ae88a 100644
+--- a/subsys/settings/src/settings_file.c
++++ b/subsys/settings/src/settings_file.c
+@@ -116,6 +116,7 @@ static int settings_file_load_priv(struct settings_store *cs, line_load_cb cb,
+ {
+ 	struct settings_file *cf = CONTAINER_OF(cs, struct settings_file, cf_store);
+ 	struct fs_file_t file;
++	struct fs_dirent info;
+ 	int lines;
+ 	int rc;
+ 
+@@ -138,13 +139,22 @@ static int settings_file_load_priv(struct settings_store *cs, line_load_cb cb,
+ 		return -EINVAL;
+ 	}
+ 
++	rc = fs_stat(cf->cf_name, &info);
++	if (rc) { fs_close(&file); return rc; }
+ 	while (1) {
+ 		char name[SETTINGS_MAX_NAME_LEN + SETTINGS_EXTRA_LEN + 1];
+ 		size_t name_len;
+ 		bool pass_entry = true;
+ 
+ 		rc = settings_next_line_ctx(&entry_ctx);
+-		if (rc || entry_ctx.len == 0) {
++		if (rc) { break; }
++		if (entry_ctx.len == 0) {
++			if ((size_t)entry_ctx.seek != info.size) { rc = -EIO; }
++			break;
++		}
++		if (entry_ctx.seek < 0 || (size_t)entry_ctx.seek > info.size ||
++		    entry_ctx.len > info.size - (size_t)entry_ctx.seek) {
++			rc = -EIO;
+ 			break;
+ 		}
+ 
+@@ -152,6 +162,7 @@ static int settings_file_load_priv(struct settings_store *cs, line_load_cb cb,
+ 					     &entry_ctx);
+ 
+ 		if (rc || name_len == 0) {
++			if (!rc) { rc = -EIO; }
+ 			break;
+ 		}
+ 		name[name_len] = '\0';
+@@ -164,12 +175,14 @@ static int settings_file_load_priv(struct settings_store *cs, line_load_cb cb,
+ 		/*name, val-read_cb-ctx, val-off*/
+ 		/* take into account '=' separator after the name */
+ 		if (pass_entry) {
+-			cb(name, (void *)&entry_ctx, name_len + 1, cb_arg);
++			rc = cb(name, (void *)&entry_ctx, name_len + 1, cb_arg);
++			if (rc) { break; }
+ 		}
+ 		lines++;
+ 	}
+ 
+-	rc = fs_close(&file);
++	int close_rc = fs_close(&file);
++	if (!rc) { rc = close_rc; }
+ 	cf->cf_lines = lines;
+ 
+ 	return rc;
+@@ -181,10 +194,9 @@ static int settings_file_load_priv(struct settings_store *cs, line_load_cb cb,
+ static int settings_file_load(struct settings_store *cs,
+ 			      const struct settings_load_arg *arg)
+ {
+-	return settings_file_load_priv(cs,
+-				       settings_line_load_cb,
+-				       (void *)arg,
+-				       true);
++	int rc = settings_file_load_priv(cs, settings_line_load_cb,
++					 (void *)arg, true);
++	return rc == -ENOENT ? 0 : rc;
+ }
+ 
+ static void settings_tmpfile(char *dst, const char *src, char *pfx)
+@@ -270,7 +282,8 @@ static int settings_file_save_and_compress(struct settings_file *cf,
+ 	while (1) {
+ 		rc = settings_next_line_ctx(&loc1);
+ 
+-		if (rc || loc1.len == 0) {
++		if (rc) { goto end_rolback; }
++		if (loc1.len == 0) {
+ 			/* try to amend new value to the compressed file */
+ 			break;
+ 		}
+@@ -278,8 +291,8 @@ static int settings_file_save_and_compress(struct settings_file *cf,
+ 		rc = settings_line_name_read(name1, sizeof(name1), &val1_off,
+ 					     &loc1);
+ 		if (rc) {
+-			/* try to process next line */
+-			continue;
++			/* Never replace old keys after a failed read. */
++			goto end_rolback;
+ 		}
+ 
+ 		if (val1_off + 1 == loc1.len) {
+@@ -303,7 +316,8 @@ static int settings_file_save_and_compress(struct settings_file *cf,
+ 
+ 			rc = settings_next_line_ctx(&loc2);
+ 
+-			if (rc || loc2.len == 0) {
++			if (rc) { goto end_rolback; }
++			if (loc2.len == 0) {
+ 				/* try to amend new value to */
+ 				/* the compressed file */
+ 				break;
+@@ -312,8 +326,7 @@ static int settings_file_save_and_compress(struct settings_file *cf,
+ 			rc = settings_line_name_read(name2, sizeof(name2),
+ 						     &val2_off, &loc2);
+ 			if (rc) {
+-				/* try to process next line */
+-				continue;
++				goto end_rolback;
+ 			}
+ 			if ((val1_off == val2_off) &&
+ 			    !memcmp(name1, name2, val1_off)) {
+@@ -344,7 +357,9 @@ static int settings_file_save_and_compress(struct settings_file *cf,
+ 		goto end_rolback;
+ 	}
+ 
+-	rc = fs_close(&wf);
++	rc = fs_sync(&wf);
++	rc2 = fs_close(&wf);
++	if (!rc) { rc = rc2; }
+ 	rc2 = fs_close(&rf);
+ 	if (rc == 0 && rc2 == 0) {
+ 		if (fs_rename(tmp_file, cf->cf_name)) {
+@@ -358,7 +373,7 @@ static int settings_file_save_and_compress(struct settings_file *cf,
+ 	 * XXX at settings_file_load(), look for .cmp if actual file does not
+ 	 * exist.
+ 	 */
+-	return 0;
++	return rc;
+ end_rolback:
+ 	(void)fs_close(&wf);
+ 	if (fs_close(&rf) == 0) {
+@@ -436,7 +451,8 @@ static int settings_file_save(struct settings_store *cs, const char *name,
+ 	cdca.val = (char *)value;
+ 	cdca.is_dup = 0;
+ 	cdca.val_len = val_len;
+-	settings_file_load_priv(cs, settings_line_dup_check_cb, &cdca, false);
++	int rc = settings_file_load_priv(cs, settings_line_dup_check_cb, &cdca, false);
++	if (rc && rc != -ENOENT) { return rc; }
+ 	if (cdca.is_dup == 1) {
+ 		return 0;
+ 	}
+@@ -498,9 +514,7 @@ static int write_handler(void *ctx, off_t off, char const *buf, size_t len)
+ 	if (rc == 0) {
+ 		rc = fs_write(file, buf, len);
+ 
+-		if (rc > 0) {
+-			rc = 0;
+-		}
++		if (rc >= 0) { rc = (size_t)rc == len ? 0 : -EIO; }
+ 	}
+ 
+ 	return rc;
+diff --git a/subsys/settings/src/settings_line.c b/subsys/settings/src/settings_line.c
+index 84aac9a5736..1de050dbdcf 100644
+--- a/subsys/settings/src/settings_line.c
++++ b/subsys/settings/src/settings_line.c
+@@ -69,6 +69,7 @@ int settings_line_write(const char *name, const char *value, size_t val_len,
+ 	rem %= wbs;
+ 
+ 	rc = settings_io_cb.write_cb(cb_arg, w_loc, name, w_size);
++	if (rc) { return rc; }
+ 	w_loc += w_size;
+ 	name += w_size;
+ 	w_size = rem;
+diff --git a/subsys/settings/src/settings_store.c b/subsys/settings/src/settings_store.c
+index b697f993d94..d4a3d9e0b93 100644
+--- a/subsys/settings/src/settings_store.c
++++ b/subsys/settings/src/settings_store.c
+@@ -55,7 +55,11 @@ int settings_load_subtree(const char *subtree)
+ 	 */
+ 	k_mutex_lock(&settings_lock, K_FOREVER);
+ 	SYS_SLIST_FOR_EACH_CONTAINER(&settings_load_srcs, cs, cs_next) {
+-		cs->cs_itf->csi_load(cs, &arg);
++		rc = cs->cs_itf->csi_load(cs, &arg);
++		if (rc) {
++			k_mutex_unlock(&settings_lock);
++			return rc;
++		}
+ 	}
+ 	rc = settings_commit_subtree(subtree);
+ 	k_mutex_unlock(&settings_lock);
+@@ -68,6 +72,7 @@ int settings_load_subtree_direct(
+ 	void                   *param)
+ {
+ 	struct settings_store *cs;
++	int rc;
+ 
+ 	const struct settings_load_arg arg = {
+ 		.subtree = subtree,
+@@ -82,7 +87,11 @@ int settings_load_subtree_direct(
+ 	 */
+ 	k_mutex_lock(&settings_lock, K_FOREVER);
+ 	SYS_SLIST_FOR_EACH_CONTAINER(&settings_load_srcs, cs, cs_next) {
+-		cs->cs_itf->csi_load(cs, &arg);
++		rc = cs->cs_itf->csi_load(cs, &arg);
++		if (rc) {
++			k_mutex_unlock(&settings_lock);
++			return rc;
++		}
+ 	}
+ 	k_mutex_unlock(&settings_lock);
+ 	return 0;
+diff --git a/tests/bluetooth/mesh_shell/src/main.c b/tests/bluetooth/mesh_shell/src/main.c
+index 9048afeb117..fae0de50fba 100644
+--- a/tests/bluetooth/mesh_shell/src/main.c
++++ b/tests/bluetooth/mesh_shell/src/main.c
+@@ -6,6 +6,10 @@
+ 
+ #include <zephyr/sys/printk.h>
+ #include <stdlib.h>
++#include <zephyr/settings/settings.h>
++#if defined(__NuttX__) && defined(CONFIG_SETTINGS_FILE)
++#include <sys/statfs.h>
++#endif
+ #include <zephyr/kernel.h>
+ 
+ #include <zephyr/shell/shell.h>
+@@ -14,6 +18,15 @@
+ #include <zephyr/bluetooth/mesh.h>
+ #include <zephyr/bluetooth/mesh/shell.h>
+ 
++#ifdef __NuttX__
++/* Standalone NSH applications do not pass through the Bluetooth service's
++ * initialization path.  Run the port's SYS_INIT entries before bt_enable()
++ * so that the work queues and HCI transport are registered.
++ */
++extern void z_sys_init(void);
++extern int zblue_shell_run(void);
++#endif
++
+ static struct bt_mesh_cfg_cli cfg_cli;
+ 
+ #if defined(CONFIG_BT_MESH_DFD_SRV)
+@@ -127,10 +140,18 @@ static const struct bt_mesh_comp comp = {
+ 	.elem_count = ARRAY_SIZE(elements),
+ };
+ 
+-static void bt_ready(int err)
++static K_SEM_DEFINE(mesh_ready, 0, 1);
++static int mesh_init_result;
++static bool mesh_started;
++
++static void bt_ready(uint8_t dev_id, int err)
+ {
++	ARG_UNUSED(dev_id);
++
+ 	if (err && err != -EALREADY) {
+ 		printk("Bluetooth init failed (err %d)\n", err);
++		mesh_init_result = err;
++		k_sem_give(&mesh_ready);
+ 		return;
+ 	}
+ 
+@@ -139,11 +160,19 @@ static void bt_ready(int err)
+ 	err = bt_mesh_init(&bt_mesh_shell_prov, &comp);
+ 	if (err) {
+ 		printk("Initializing mesh failed (err %d)\n", err);
++		mesh_init_result = err;
++		k_sem_give(&mesh_ready);
+ 		return;
+ 	}
+ 
+ 	if (IS_ENABLED(CONFIG_SETTINGS)) {
+-		settings_load();
++		err = settings_load();
++		if (err) {
++			printk("Mesh settings restore failed (err %d); reboot after storage repair\n", err);
++			mesh_init_result = err;
++			k_sem_give(&mesh_ready);
++			return;
++		}
+ 	}
+ 
+ 	printk("Mesh initialized\n");
+@@ -154,23 +183,56 @@ static void bt_ready(int err)
+ 		printk("Use \"prov pb-adv on\" or \"prov pb-gatt on\" to "
+ 			    "enable advertising\n");
+ 	}
++	mesh_started = true;
++	k_sem_give(&mesh_ready);
+ }
+ 
+ int main(void)
+ {
+-	K_SEM_DEFINE(wait, 0, 1);
+ 	int err;
+ 
++#ifdef __NuttX__
++	if (mesh_started) {
++		return zblue_shell_run();
++	}
++#endif
++
++#if defined(__NuttX__) && defined(CONFIG_SETTINGS_FILE)
++	/* Refuse a volatile pseudo-filesystem fallback. Mount the existing
++	 * LittleFS volume first; this application never formats flash. */
++	struct statfs storage;
++	if (statfs("/data", &storage) < 0 ||
++	    storage.f_type != LITTLEFS_SUPER_MAGIC) {
++		printk("Mount existing LittleFS at /data before mesh; no format performed\n");
++		return EXIT_FAILURE;
++	}
++#endif
+ 	printk("Initializing...\n");
+ 
++#ifdef __NuttX__
++	z_sys_init();
++#endif
++
+ 	/* Initialize the Bluetooth Subsystem */
+ 	err = bt_enable(bt_ready);
+ 	if (err && err != -EALREADY) {
+ 		printk("Bluetooth init failed (err %d)\n", err);
++		return EXIT_FAILURE;
+ 	}
+ 
+-	printk("Press the <Tab> button for supported commands.\n");
++	k_sem_take(&mesh_ready, K_FOREVER);
++	if (mesh_init_result) {
++		return EXIT_FAILURE;
++	}
++
++	printk("Type help for commands, q to return to NSH.\n");
+ 	printk("Before any Mesh commands you must run \"mesh init\"\n");
+ 
+-	k_sem_take(&wait, K_FOREVER);
++#ifdef __NuttX__
++	return zblue_shell_run();
++#else
++	k_sleep(K_FOREVER);
++#endif
++
++	return 0;
+ }

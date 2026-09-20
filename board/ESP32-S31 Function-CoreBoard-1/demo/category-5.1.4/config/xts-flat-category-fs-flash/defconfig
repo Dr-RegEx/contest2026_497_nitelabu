@@ -1,0 +1,7 @@
+#include "../xts-flat-category-fs/defconfig"
+
+# Dedicated scratch filesystem for original persistence and power-cut cases.
+# Startup registers the MTD only; formatting/mounting is an explicit test step.
+CONFIG_ESP32S31_XTS_FLASH=y
+CONFIG_FS_LITTLEFS=y
+CONFIG_FS_TEST_POWEROFF=y

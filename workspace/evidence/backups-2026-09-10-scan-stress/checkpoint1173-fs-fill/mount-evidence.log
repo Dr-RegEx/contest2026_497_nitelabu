@@ -1,0 +1,92 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1102-flat-category-fs-sync.sha256
+IMAGE_SHA256=54d06bdefc5837541d08fbf3e66500d918d7ea4ce1f9d9efd5de80b8ff4c5ded
+xTS Flash scratch: /dev/xtsflash offset=0xd00000 size=0x300000
+XTS_BOOT_EVIDENCE_SHA256=d2f1441371240e102c2a39755efd4d5ace5a818798505f3f563c39c9b2070d8c
+
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=ls /dev/xtsflash
+--- CMD: ls /dev/xtsflash ---
+ls /dev/xtsflash
+ /dev/xtsflash
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mkdir -p /data
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mount -t littlefs -o sync /dev/xtsflash /data
+--- CMD: mount -t littlefs -o sync /dev/xtsflash /data ---
+mount -t littlefs -o sync /dev/xtsflash /data
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=ls -l /data
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+ drwxrwxrwx           0 .
+ dr--r--r--           0 ..
+ drwxrwxrwx           0 frag1164/
+ -rw-r--r--      405504 persist.db
+ drwxrwxrwx           0 s02/
+ drwxrwxrwx           0 s07b/
+ drwxrwxrwx           0 s07c/
+ drwxrwxrwx           0 s07/
+ drwxrwxrwx           0 s17/
+ drwxrwxrwx           0 s18c/
+ drwxrwxrwx           0 s18r/
+ drwxrwxrwx           0 s19s/
+ drwxrwxrwx           0 s19/
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        328         440 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17226456      19256   17207200      25208   16777200     43      4 Umem
+nsh> [K
+nsh> [K
+XTS_SYNC_MOUNT=PASS preparation_only

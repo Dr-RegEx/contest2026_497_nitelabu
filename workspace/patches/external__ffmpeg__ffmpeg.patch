@@ -1,0 +1,207 @@
+diff --git a/libavcodec/dct32.h b/libavcodec/dct32.h
+index 61bf223a8d..c0c504e0db 100644
+--- a/libavcodec/dct32.h
++++ b/libavcodec/dct32.h
+@@ -19,7 +19,9 @@
+ #ifndef AVCODEC_DCT32_H
+ #define AVCODEC_DCT32_H
+ 
++#include <stdint.h>
++
+ void ff_dct32_float(float *dst, const float *src);
+-void ff_dct32_fixed(int *dst, const int *src);
++void ff_dct32_fixed(int32_t *dst, const int32_t *src);
+ 
+ #endif /* AVCODEC_DCT32_H */
+diff --git a/libavcodec/dct32_template.c b/libavcodec/dct32_template.c
+index 51cebc053f..5becc1cf8d 100644
+--- a/libavcodec/dct32_template.c
++++ b/libavcodec/dct32_template.c
+@@ -41,8 +41,8 @@
+ #   define dct32 ff_dct32_fixed
+ #   define FIXHR(a)       ((int)((a) * (1LL<<32) + 0.5))
+ #   define MULH3(x, y, s) MULH((s)*(x), y)
+-#   define INTFLOAT int
+-#   define SUINTFLOAT SUINT
++#   define INTFLOAT int32_t
++#   define SUINTFLOAT SUINT32
+ #endif
+ 
+ 
+diff --git a/libavcodec/mpegaudiodec_common_tablegen.c b/libavcodec/mpegaudiodec_common_tablegen.c
+index a319df65ab..659e0d6a9a 100644
+--- a/libavcodec/mpegaudiodec_common_tablegen.c
++++ b/libavcodec/mpegaudiodec_common_tablegen.c
+@@ -23,6 +23,7 @@
+ 
+ #include <stdlib.h>
+ #define CONFIG_HARDCODED_TABLES 0
++#define BUILD_TABLES
+ #include "libavutil/tablegen.h"
+ #include "mpegaudiodec_common_tablegen.h"
+ #include "tableprint.h"
+diff --git a/libavcodec/mpegaudiodec_common_tablegen.h b/libavcodec/mpegaudiodec_common_tablegen.h
+index 66e93df27f..162b625826 100644
+--- a/libavcodec/mpegaudiodec_common_tablegen.h
++++ b/libavcodec/mpegaudiodec_common_tablegen.h
+@@ -36,8 +36,13 @@
+ #include "libavutil/attributes.h"
+ #include "libavutil/mem.h"
+ 
++#ifdef BUILD_TABLES
++int8_t   ff_table_4_3_exp[TABLE_4_3_SIZE];
++uint32_t ff_table_4_3_value[TABLE_4_3_SIZE];
++#else
+ int8_t   *ff_table_4_3_exp;
+ uint32_t *ff_table_4_3_value;
++#endif
+ 
+ #define FRAC_BITS 23
+ #define IMDCT_SCALAR 1.759
+@@ -52,7 +57,7 @@ static av_cold void mpegaudiodec_common_tableinit(void)
+     };
+     double pow43_val = 0;
+ 
+-#if !CONFIG_HARDCODED_TABLES
++#if !CONFIG_HARDCODED_TABLES && !defined(BUILD_TABLES)
+     ff_table_4_3_exp = (int8_t *)av_calloc(TABLE_4_3_SIZE, sizeof(int8_t));
+     ff_table_4_3_value = (uint32_t *)av_calloc(TABLE_4_3_SIZE, sizeof(uint32_t));
+ #endif
+diff --git a/libavcodec/mpegaudiodsp.h b/libavcodec/mpegaudiodsp.h
+index 5e47a263bb..701ec90a84 100644
+--- a/libavcodec/mpegaudiodsp.h
++++ b/libavcodec/mpegaudiodsp.h
+@@ -33,7 +33,7 @@ typedef struct MPADSPContext {
+                                int *dither_state, int16_t *samples,
+                                ptrdiff_t incr);
+     void (*dct32_float)(float *dst, const float *src);
+-    void (*dct32_fixed)(int *dst, const int *src);
++    void (*dct32_fixed)(int32_t *dst, const int32_t *src);
+ 
+     void (*imdct36_blocks_float)(float *out, float *buf, float *in,
+                                  int count, int switch_point, int block_type);
+diff --git a/libavcodec/pcm_tablegen.c b/libavcodec/pcm_tablegen.c
+index 473a47f6d9..7db6f5e58c 100644
+--- a/libavcodec/pcm_tablegen.c
++++ b/libavcodec/pcm_tablegen.c
+@@ -21,21 +21,34 @@
+  */
+ 
+ #include <stdlib.h>
++#include "config_components.h"
+ #define CONFIG_HARDCODED_TABLES 0
+ #include "pcm_tablegen.h"
+ #include "tableprint.h"
+ 
+ int main(void)
+ {
++#if CONFIG_PCM_ALAW_DECODER || CONFIG_PCM_ALAW_ENCODER
+     pcm_alaw_tableinit();
++#endif
++#if CONFIG_PCM_MULAW_DECODER || CONFIG_PCM_MULAW_ENCODER
+     pcm_ulaw_tableinit();
++#endif
++#if CONFIG_PCM_VIDC_DECODER || CONFIG_PCM_VIDC_ENCODER
+     pcm_vidc_tableinit();
++#endif
+ 
+     write_fileheader();
+ 
++#if CONFIG_PCM_ALAW_DECODER || CONFIG_PCM_ALAW_ENCODER
+     WRITE_ARRAY("static const", uint8_t, linear_to_alaw);
++#endif
++#if CONFIG_PCM_MULAW_DECODER || CONFIG_PCM_MULAW_ENCODER
+     WRITE_ARRAY("static const", uint8_t, linear_to_ulaw);
++#endif
++#if CONFIG_PCM_VIDC_DECODER || CONFIG_PCM_VIDC_ENCODER
+     WRITE_ARRAY("static const", uint8_t, linear_to_vidc);
++#endif
+ 
+     return 0;
+ }
+diff --git a/libavfilter/Makefile b/libavfilter/Makefile
+index 60f3b02f48..2f2d26b933 100644
+--- a/libavfilter/Makefile
++++ b/libavfilter/Makefile
+@@ -197,7 +197,7 @@ OBJS-$(CONFIG_ADEVSINK_FILTER)               += asink_adevsink.o
+ OBJS-$(CONFIG_ADEVSRC_FILTER)                += asrc_adevsrc.o mapping.o
+ OBJS-$(CONFIG_ALSASINK_FILTER)               += asink_alsasink.o alsa.o
+ OBJS-$(CONFIG_ANULLSINK_FILTER)              += asink_anullsink.o
+-OBJS-$(CONFIG_ASUBGRAPH_FILTER)              += af_asubgraph.o mapping.o
++OBJS-$(CONFIG_ASUBGRAPH_FILTER)              += af_asubgraph.o mapping.o amix.o
+ OBJS-$(CONFIG_ALSASRC_FILTER)                += asrc_alsasrc.o alsa.o volume.o mapping.o
+ OBJS-$(CONFIG_TINYCOMPRSINK_FILTER)         += asink_tinycomprsink.o amix.o
+ 
+diff --git a/libavfilter/af_asubgraph.c b/libavfilter/af_asubgraph.c
+index f279d26193..d93caf8158 100644
+--- a/libavfilter/af_asubgraph.c
++++ b/libavfilter/af_asubgraph.c
+@@ -67,9 +67,10 @@ typedef struct SubGraphPriv {
+     struct SubCmdQueue cmd_queue;
+ 
+     int nb_inputs;
+-    int nb_outputs;
+     char *map_str;
+     int *map;
++    /* AV_OPT_TYPE_FLAG_ARRAY stores its count immediately after the pointer. */
++    unsigned nb_outputs;
+ 
+     char *graph_desc;
+     AMixContext *mix;
+@@ -587,7 +588,7 @@ static int asubgraph_drain_mix(AVFilterContext *ctx)
+     }
+ 
+     priv->drained = true;
+-    if (ret = AVERROR(EAGAIN))
++    if (ret == AVERROR(EAGAIN))
+         ret = 0;
+     av_log(ctx, AV_LOG_INFO, "%s: drain mix %d\n", ctx->name, ret);
+     for (int i = 0; i < priv->nb_inputs; i++)
+@@ -670,8 +671,12 @@ static int asubgraph_output_frame(AVFilterContext *ctx, bool need_drain)
+     int i;
+ 
+     if (need_drain && !priv->drained) {
+-        asubgraph_drain_mix(ctx);
++        ret = asubgraph_drain_mix(ctx);
++        if (ret < 0 && ret != AVERROR_EOF)
++            return ret;
+         ret = av_buffersrc_add_frame_flags(priv->graph_inst.src_filter, NULL, 0);
++        if (ret < 0 && ret != AVERROR_EOF)
++            return ret;
+         av_log(ctx, AV_LOG_INFO, "%s: EOF is reached, send the eos to graph_inst.\n",
+                ctx->name);
+     }
+@@ -974,4 +979,4 @@ const AVFilter ff_af_asubgraph = {
+     .activate        = asubgraph_activate,
+     .process_command = asubgraph_process_command,
+     .flags           = AVFILTER_FLAG_DYNAMIC_INPUTS | AVFILTER_FLAG_DYNAMIC_OUTPUTS,
+-};
+\ No newline at end of file
++};
+diff --git a/libavfilter/asrc_abufsrc.c b/libavfilter/asrc_abufsrc.c
+index 22eada4237..af65e95a30 100644
+--- a/libavfilter/asrc_abufsrc.c
++++ b/libavfilter/asrc_abufsrc.c
+@@ -314,7 +314,8 @@ static int abufsrc_activate(AVFilterContext *ctx)
+         if (!priv->frame)
+             return AVERROR(ENOMEM);
+ 
+-        if (ret = priv->on_event_cb(priv->on_event_cb_udata, 0, (intptr_t)priv->frame) < 0) {
++        ret = priv->on_event_cb(priv->on_event_cb_udata, 0, (intptr_t)priv->frame);
++        if (ret < 0) {
+             av_frame_free(&priv->frame);
+             return ret;
+         }
+diff --git a/libavformat/wavdec.c b/libavformat/wavdec.c
+index 78e37b88d7..36c077d276 100644
+--- a/libavformat/wavdec.c
++++ b/libavformat/wavdec.c
+@@ -141,7 +141,7 @@ static int64_t wav_seek_tag(WAVDemuxContext * wav, AVIOContext *s, int64_t offse
+ /* return the size of the found tag */
+ static int64_t find_tag(WAVDemuxContext * wav, AVIOContext *pb, uint32_t tag1)
+ {
+-    unsigned int tag;
++    uint32_t tag;
+     int64_t size;
+ 
+     for (;;) {

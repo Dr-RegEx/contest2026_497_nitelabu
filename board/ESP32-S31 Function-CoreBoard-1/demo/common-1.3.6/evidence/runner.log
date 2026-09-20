@@ -1,0 +1,20 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x5f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2f000000,len:0x9a30
+entry 0x2f0083d0
+*** Booting NuttX ***
+dram: lma 0x00002020 vma 0x2f000000 len 0x9a30   (39472)
+padd: lma 0x0000ba88 vma 0x00000000 len 0x4590   (17808)
+imap: lma 0x00010020 vma 0x40030020 len 0x7eb0   (32432)
+padd: lma 0x00017ed8 vma 0x00000000 len 0x8220   (33312)
+imap: lma 0x00020100 vma 0x40000100 len 0x2fa30  (195120)
+total segments stored 5
+ABC
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/gpio-20260920/run.py", line 21, in <module>
+    print(cmd('ls /dev'),flush=True)
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/gpio-20260920/run.py", line 17, in cmd
+    raise RuntimeError('GPIO command timed out')
+RuntimeError: GPIO command timed out

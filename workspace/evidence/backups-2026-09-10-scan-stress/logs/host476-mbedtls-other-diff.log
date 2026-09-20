@@ -1,0 +1,78 @@
+--- HEAD/tf-psa-crypto/drivers/builtin/src/ecp_curves.c (prefix normalized)
++++ WORKTREE/tf-psa-crypto/drivers/builtin/src/ecp_curves.c (prefix normalized)
+@@ -4080,23 +4080,23 @@
+ 
+ #if defined(ECP_LOAD_GROUP)
+ #define LOAD_GROUP_A(G)   ecp_group_load(grp,            \
+-                                         G ## _p,  sizeof(G ## _p),   \
+-                                         G ## _a,  sizeof(G ## _a),   \
+-                                         G ## _b,  sizeof(G ## _b),   \
+-                                         G ## _gx, sizeof(G ## _gx),   \
+-                                         G ## _gy, sizeof(G ## _gy),   \
+-                                         G ## _n,  sizeof(G ## _n),   \
+-                                         G ## _T                         \
++                                          ## G ## _p,  sizeof( ## G ## _p),   \
++                                          ## G ## _a,  sizeof( ## G ## _a),   \
++                                          ## G ## _b,  sizeof( ## G ## _b),   \
++                                          ## G ## _gx, sizeof( ## G ## _gx),   \
++                                          ## G ## _gy, sizeof( ## G ## _gy),   \
++                                          ## G ## _n,  sizeof( ## G ## _n),   \
++                                          ## G ## _T                         \
+                                          )
+ 
+ #define LOAD_GROUP(G)     ecp_group_load(grp,            \
+-                                         G ## _p,  sizeof(G ## _p),   \
++                                          ## G ## _p,  sizeof( ## G ## _p),   \
+                                          NULL,     0,                    \
+-                                         G ## _b,  sizeof(G ## _b),   \
+-                                         G ## _gx, sizeof(G ## _gx),   \
+-                                         G ## _gy, sizeof(G ## _gy),   \
+-                                         G ## _n,  sizeof(G ## _n),   \
+-                                         G ## _T                         \
++                                          ## G ## _b,  sizeof( ## G ## _b),   \
++                                          ## G ## _gx, sizeof( ## G ## _gx),   \
++                                          ## G ## _gy, sizeof( ## G ## _gy),   \
++                                          ## G ## _n,  sizeof( ## G ## _n),   \
++                                          ## G ## _T                         \
+                                          )
+ #endif /* ECP_LOAD_GROUP */
+ 
+--- HEAD/tf-psa-crypto/drivers/builtin/src/ecp_curves_new.c (prefix normalized)
++++ WORKTREE/tf-psa-crypto/drivers/builtin/src/ecp_curves_new.c (prefix normalized)
+@@ -4106,23 +4106,23 @@
+ 
+ #if defined(ECP_LOAD_GROUP)
+ #define LOAD_GROUP_A(G)   ecp_group_load(grp,            \
+-                                         G ## _p,  sizeof(G ## _p),   \
+-                                         G ## _a,  sizeof(G ## _a),   \
+-                                         G ## _b,  sizeof(G ## _b),   \
+-                                         G ## _gx, sizeof(G ## _gx),   \
+-                                         G ## _gy, sizeof(G ## _gy),   \
+-                                         G ## _n,  sizeof(G ## _n),   \
+-                                         G ## _T                         \
++                                          ## G ## _p,  sizeof( ## G ## _p),   \
++                                          ## G ## _a,  sizeof( ## G ## _a),   \
++                                          ## G ## _b,  sizeof( ## G ## _b),   \
++                                          ## G ## _gx, sizeof( ## G ## _gx),   \
++                                          ## G ## _gy, sizeof( ## G ## _gy),   \
++                                          ## G ## _n,  sizeof( ## G ## _n),   \
++                                          ## G ## _T                         \
+                                          )
+ 
+ #define LOAD_GROUP(G)     ecp_group_load(grp,            \
+-                                         G ## _p,  sizeof(G ## _p),   \
++                                          ## G ## _p,  sizeof( ## G ## _p),   \
+                                          NULL,     0,                    \
+-                                         G ## _b,  sizeof(G ## _b),   \
+-                                         G ## _gx, sizeof(G ## _gx),   \
+-                                         G ## _gy, sizeof(G ## _gy),   \
+-                                         G ## _n,  sizeof(G ## _n),   \
+-                                         G ## _T                         \
++                                          ## G ## _b,  sizeof( ## G ## _b),   \
++                                          ## G ## _gx, sizeof( ## G ## _gx),   \
++                                          ## G ## _gy, sizeof( ## G ## _gy),   \
++                                          ## G ## _n,  sizeof( ## G ## _n),   \
++                                          ## G ## _T                         \
+                                          )
+ #endif /* ECP_LOAD_GROUP */
+ 

@@ -1,0 +1,50 @@
+--- CMD: ifup wlan0 ---
+ifup wlan0
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: wapi reconnect wlan0 ---
+wapi reconnect wlan0
+[CPU0] esp_event_post_wrapper: S31 associated: channel=6 auth=3 bssid=60:ce:41:46:0e:ec
+[CPU0] esp_evt_work_cb: S31 driver STA MAC: 30:ed:a0:f3:f7:b0
+[CPU1] esp_evt_work_cb: S31 driver power save: ret=0 mode=0
+[CPU0] esp_evt_work_cb: S31 driver protocol: ret=0 bitmap=7
+[CPU0] esp_evt_work_cb: S31 negotiated PHY: ret=0 mode=4
+[CPU1] esp_evt_work_cb: S31 HE SU beamformee disabled: ret=0 value=0
+[CPU1] s31_wifi_rx_counters: S31 modem clocks connected: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU1] s31_wifi_rx_counters: S31 RX counters connected: ret=0 mpdu=9254 data=15 fcs=438 abort=600 full=0 fifo=0 other=369
+[CPU1] s31_wifi_rx_counters: S31 HE counters: power=33 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU1] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU1] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=2 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+nsh> [K
+nsh> [K
+--- CMD: renew wlan0 ---
+renew wlan0
+nsh> [K
+nsh> [K
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: iperf2 -v ---
+iperf2 -v
+iperf version 2.1.8 (12 August 2022) pthreads
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892      83668     227224     108912     180592    214     15 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+{"case": "PREPARATION_ONLY", "status": "PASS", "receipt": "build1403-poll-notify.sha256"}

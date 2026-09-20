@@ -1,0 +1,31 @@
+
+HOST_COMMAND mount
+mount
+  /data type tmpfs
+  /proc type procfs
+  /tmp type tmpfs
+  /wav type littlefs
+nsh> [K
+HOST_COMMAND ls /dev/audio/pcm0p
+ls /dev/audio/pcm0p
+ /dev/audio/pcm0p
+nsh> [K
+HOST_COMMAND ls /dev/audio/pcm0c
+ls /dev/audio/pcm0c
+ /dev/audio/pcm0c
+nsh> [K
+HOST_COMMAND ls -l /data/criteria.txt
+ls -l /data/criteria.txt
+ -rwxrwxrwx          41 /data/criteria.txt
+nsh> [K
+HOST_COMMAND sb /data/criteria.txt
+sb /data/criteria.txt
+name:criteria.txt size:41
+100.00% 41:41 left:00h00m00s
+time used:0.0s speed 1.2kB/s
+
+ all time:0.05s average speed:0.79kB/snsh> [K
+HOST_COMMAND echo $?
+echo $?
+0
+nsh> [K

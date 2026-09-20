@@ -1,0 +1,13 @@
+{
+  "status": "INCOMPLETE",
+  "receipt": "build1623-spawn-parent-env.sha256",
+  "launch": "iperf2 -c 192.168.1.29 -i 1 -p 5002 -t 30 > /tmp/tcp1629.log &\r\niperf2 [26:101]\r\nnsh> \u001b[K\r\nnsh> \u001b[K[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29\r\n[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29\r\n[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1",
+  "uptime_before": ".29\r\n[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29\r\n[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29\r\ntcp connect failed: Network is unreachable\r\ncat /proc/uptime\r\n   1248.17\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "windows": {
+    "elapsed": 20.0557792
+  },
+  "uptime_after": "cat /proc/uptime\r\n   1268.75\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "linux_elapsed": 22.641923202987527,
+  "output": "cat /tmp/tcp1629.log\r\n------------------------------------------------------------\r\nClient connecting to 192.168.1.29, TCP port 5002\r\nTCP window size: 16.0 KByte\r\n------------------------------------------------------------\r\n[  1] local 0.0.0.0 port 0 connected with 192.168.1.29 port 5002\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "error": "30s summary missing"
+}

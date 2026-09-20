@@ -1,0 +1,9 @@
+cc: error: unrecognized command-line option ‘-ftrivial-auto-var-init=pattern’
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_i2c_commands.py", line 111, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_i2c_commands.py", line 103, in main
+    subprocess.run(["cc", "-std=c11", "-Wall", "-Wextra", "-Werror",
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '-ftrivial-auto-var-init=pattern', '-fsanitize=undefined', '-fno-sanitize-recover=all', '/tmp/esp-i2c-command-e58g5mqb/test.c', '-o', '/tmp/esp-i2c-command-e58g5mqb/test']' returned non-zero exit status 1.

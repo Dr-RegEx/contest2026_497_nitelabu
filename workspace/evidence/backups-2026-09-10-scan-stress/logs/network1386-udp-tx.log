@@ -1,0 +1,66 @@
+iperf2 -c 192.168.1.29 -i 1 -p 5004 -t 300 -u -b 40M
+[CPU1] riscv_exception: EXCEPTION: Load page fault. MCAUSE: 0000000d, EPC: 4003fc20, MTVAL: 20818000
+[CPU1] esp32s31_dump_mmu_fault: S31 MMU: satp=8002f04d status=00042100 saved=00042100 kernel=2f015000 kernel_pte=082000ef
+[CPU1] esp32s31_dump_mmu_fault: S31 MMU: root=2f04d000 index=130 pte=00000000
+[CPU1] riscv_exception: PANIC!!! Exception = 0000000d
+[CPU1] dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 17 2026 11:26:01 risc-v
+[CPU1] dump_assert_info: Assertion failed panic: at file: /arch/risc-v/src/common/riscv_exception.c:139 task(CPU1): hr_timer process: Kernel 0x2f003d8a
+[CPU1] up_dump_register: PC: 4002637e
+[CPU1] up_dump_register: A0: 2f01cb6c A1: 0000008b A2: 400e01d8 A3: 2f040634
+[CPU1] up_dump_register: A4: 00000001 A5: 2f0181c4 A6: 20810000 A7: 2038a000
+[CPU1] up_dump_register: T0: 49399db5 T1: 00000000 T2: 10000000 T3: 8c7064b5
+[CPU1] up_dump_register: T4: 74e551f8 T5: 01aa8ad6 T6: f1530bb5
+[CPU1] up_dump_register: S0: 0000010c S1: 2f01ca60 S2: 00000001 S3: 2f038b70
+[CPU1] up_dump_register: S4: 400e01d8 S5: 400e0468 S6: 2f018000 S7: 00000006
+[CPU1] up_dump_register: S8: 00000000 S9: 00000001 S10: 00000001 S11: 0000008b
+[CPU1] up_dump_register: SP: 2f018a78 FP: 0000010c TP: 00000000 RA: 4002637e
+[CPU1] dump_stackinfo: IRQ Stack:
+[CPU1] dump_stackinfo:   base: 0x2f018400
+[CPU1] dump_stackinfo:   size: 00002048
+[CPU1] dump_stackinfo:     sp: 0x2f018a78
+[CPU1] stack_dump:  2f018a58: 2f018000 400e0468 400e01d8 2f038b70 00042100 2f01ca60 2f01cb6c 40026602
+[CPU1] stack_dump:  2f018a78: 400e287c 2f003d8a 2f018b20 4000b900 00000000 2f018ac0 00000281 0a000000
+[CPU1] stack_dump:  2f018a98: 0000002f 00000001 2f038b70 2f01cb6c 400e01d8 400e0468 0000008b 7474754e
+[CPU1] stack_dump:  2f018ab8: 00000058 0000000d 2f040664 400e9000 2f010054 400e0448 0000000d 4000b7b6
+[CPU1] stack_dump:  2f018ad8: 00000082 0007f000 00000000 00000003 302e3000 0000302e 00000000 2f038b70
+[CPU1] stack_dump:  2f018af8: 00000000 3234000d 32353238 64383061 69642d62 20797472 20706553 32203731
+[CPU1] stack_dump:  2f018b18: 20363230 323a3131 31303a36 4000b800 4000b86c 2f038b70 736972a2 00762d63
+[CPU1] stack_dump:  2f018b38: 00000002 2f038b70 0000000d 40006daa 2f018000 325ac638 400e8b60 00000003
+[CPU1] stack_dump:  2f018b58: 00000002 00000001 00000000 2f038b70 00000000 0000000d 2f040634 400e9000
+[CPU1] stack_dump:  2f018b78: 00042100 2f038b70 0000000d 4000280c 00000000 00000034 2f0181d0 2f018080
+[CPU1] stack_dump:  2f018b98: 00000004 2f0181c0 2f040634 2f0083e8 80046020 4003c460 00000000 00000002
+[CPU1] stack_dump:  2f018bb8: 00000002 2f043c98 2f0111c4 0000000d 2f040634 ffffffff 0000000d 2f001e94
+[CPU1] stack_dump:  2f018bd8: 2f0181c0 4003b2d6 00000000 00000008 0000000d 4003fc20 2f018c00 2f000f1e
+[CPU1] stack_dump:  2f018bf8: 00000000 4003fc20 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] dump_stackinfo: User Stack:
+[CPU1] dump_stackinfo:   base: 0x2f040050
+[CPU1] dump_stackinfo:   size: 00001968
+[CPU1] dump_stackinfo:     sp: 0x2f040740
+[CPU1] stack_dump:  2f040720: 00000002 00000000 00010002 00000002 2f018104 00042020 00000001 00042020
+[CPU1] stack_dump:  2f040740: 00042022 00000000 2f018000 4003fbee 00000000 2f011730 2f080000 2f825f08
+[CPU1] stack_dump:  2f040760: 00000000 00000001 2f011730 40085e5a 2f011000 2f0111a8 2f011000 4004f6e0
+[CPU1] stack_dump:  2f040780: 00000002 2f0111c4 00000000 2f043c60 2f011000 2f0111a8 00000002 2f003efc
+[CPU1] stack_dump:  2f0407a0: 00000000 00000000 00000000 00042022 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f0407c0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f0407e0: 2f003d8a 2f038b70 00000002 4002ddf2 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f040800: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] sched_dumpstack: backtrace| 4: 0x4003fc20
+[CPU1] dump_fatal_info: Dump CPU0: RUNNING
+[CPU1] dump_tasks:    PID GROUP   CPU PRI POLICY   TYPE    NPX STATE   EVENT      SIGMASK          STACKBASE  STACKSIZE   COMMAND
+[CPU1] dump_tasks:   ----   ---     0 --- -------- ------- --- ------- ---------- ---------------- 0x2f018c00      2048   irq
+[CPU1] dump_tasks:   ----   ---     1 --- -------- ------- --- ------- ---------- ---------------- 0x2f018400      2048   irq
+[CPU1] dump_task:       0     0     0   0 FIFO     Kthread -   Assigned           0000000000000000 0x2f031b2c      3024   CPU0 IDLE
+[CPU1] dump_task:       1     0     1   0 FIFO     Kthread -   Assigned           0000000000000000 0x2f03272c      3024   CPU1 IDLE
+[CPU1] dump_task:       2     0     0 100 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f038060      1952   lpwork 0x2f011140 0x2f01118c
+[CPU1] dump_task:       4     0     1 223 RR       Kthread -   Running            0000000000000000 0x2f040050      1968   hr_timer
+[CPU1] dump_task:       5     0     0 253 RR       Kthread -   Waiting MQ empty   0000000000000000 0x2f044040      3520   wifi
+[CPU1] dump_task:       6     6     0 101 RR       Task    -   Running            0000000000000000 0x61804050      4016   /system/bin/init
+[CPU1] sched_dumpstack: backtrace| 0: 0x2f001e00
+[CPU1] sched_dumpstack: backtrace| 1: 0x2f001e00
+[CPU1] sched_dumpstack: backtrace| 2: 0x40028a6c
+[CPU1] sched_dumpstack: backtrace| 4: 0x4003fc20
+[CPU1] sched_dumpstack: backtrace| 5: 0x40028a6c
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/network-throughput-original.py", line 22, in <module>
+    time.sleep(.02)
+KeyboardInterrupt

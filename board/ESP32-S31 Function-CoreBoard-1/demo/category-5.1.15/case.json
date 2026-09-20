@@ -1,0 +1,84 @@
+{
+  "name": "category-5.1.15",
+  "keys": [
+    "category:5.1.15"
+  ],
+  "profile": "xts-flat-category-fs-name",
+  "sources": [
+    "apps/testing/fs/fstest"
+  ],
+  "evidence_ids": [
+    1181,
+    1184
+  ],
+  "note": "保留原始 1000 轮，不以少量循环替代；测试使用独立卷和目录。",
+  "original": "5.1.15",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/fs1181-running.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1181-fstest1000.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/xts1181-fstest1000.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/fs1183-verdict-note.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/fs1184-finish.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1184-fstest-finish.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/postcheck.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "文件系统fstest执行1000次",
+  "original_line": 2111,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/fstest",
+      "origin": "apps/testing/fs/fstest"
+    }
+  ],
+  "local_config": "config/xts-flat-category-fs-name/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/fs1183-verdict-note.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/fs1183-verdict-note.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/postcheck.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/postcheck.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/xts1181-fstest1000.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1184-fstest1000/xts1181-fstest1000.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/fs1181-running.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/fs1181-running.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/fs1184-finish.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/fs1184-finish.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1181-fstest1000.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1181-fstest1000.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1184-fstest-finish.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1184-fstest-finish.log"
+    }
+  ]
+}

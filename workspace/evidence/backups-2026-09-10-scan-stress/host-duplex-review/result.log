@@ -1,0 +1,4 @@
+PASS actual dup_service RX: three 4096-byte requests, 24 descriptor completions, all bytes ordered
+PASS actual dup_service TX: three 4096-byte requests, curbyte offset, ordered ring payloads, exact final completions
+PASS actual dup_cancel/dup_stop_dma: direction isolation, slot references cleared, RX clock state retained until both stop
+HOST LOGIC ONLY: not ISR/concurrency, real register, DMA timing, codec, callback dispatch, or board/xTS proof

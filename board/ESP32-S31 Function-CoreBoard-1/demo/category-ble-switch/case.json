@@ -1,0 +1,68 @@
+{
+  "name": "category-ble-switch",
+  "keys": [
+    "category:ble-switch"
+  ],
+  "profile": "xts-flat-bttool",
+  "sources": [
+    "frameworks/connectivity/bluetooth/tools"
+  ],
+  "evidence_ids": [
+    1085
+  ],
+  "note": "NSH 启动 bttool 后在 bttool 提示符依次 enable、state、disable、state、quit；state 应完成 2→0。蓝牙开关通过不等同于其他 BLE 用例通过。",
+  "original": "ble-switch",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/checkpoint1077-bttool-disable.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1085-ble-switch.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1085-ble-switch.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1084-flash1077-ble.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "开关BLE蓝牙",
+  "original_line": 4968,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/tools",
+      "origin": "frameworks/connectivity/bluetooth/tools"
+    }
+  ],
+  "local_config": "config/xts-flat-bttool/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/checkpoint1077-bttool-disable.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/checkpoint1077-bttool-disable.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1084-flash1077-ble.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1084-flash1077-ble.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1085-ble-switch.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/logs/xts1085-ble-switch.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1085-ble-switch/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1085-ble-switch.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1085-ble-switch.log"
+    }
+  ]
+}

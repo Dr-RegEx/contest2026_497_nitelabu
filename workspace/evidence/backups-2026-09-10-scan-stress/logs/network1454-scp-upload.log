@@ -1,0 +1,57 @@
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892     150388     160504     171848      77664    229     17 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /data type tmpfs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ping -c 3 192.168.1.29 ---
+ping -c 3 192.168.1.29
+PING 192.168.1.29 56 bytes of data
+No response from 192.168.1.29: icmp_seq=0 time=1000 ms
+No response from 192.168.1.29: icmp_seq=1 time=1000 ms
+No response from 192.168.1.29: icmp_seq=2 time=1000 ms
+3 packets transmitted, 0 received, 100% packet loss, time 3060 ms
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+ -rwxrwxrwx       65536 scp1453
+ -rwxrwxrwx           0 scp1451
+ -rwxrwxrwx           0 scp1450
+ -rwxrwxrwx           0 scp1447
+nsh> [K
+nsh> [K
+--- CMD: scp /data/scp1453 xts@192.168.1.29:/upload1454.bin ---
+scp /data/scp1453 xts@192.168.1.29:/upload1454.bin
+The server is unknown. Do you trust the host key (yes/no)?
+SHA256:4nAe7/uKJkVehh55aqbo0G9lS8tJYKz8LKUrTOMFF3g
+yes
+This new key will be written on disk for further usage. do you agree ?
+
+Automatic pubkey failed. Do you want to try a specific key? (y/n)
+
+Password:
+wrote 65536 bytes
+nsh> [K
+--- CMD: echo $? ---
+echo $?
+0
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data/scp1453 ---
+ls -l /data/scp1453
+ -rwxrwxrwx       65536 /data/scp1453
+nsh> [K
+nsh> [K
+{"case": "4.1.116", "status": "PASS", "receipt": "build1444-ssh-threading.sha256", "host_fingerprint": "SHA256:4nAe7/uKJkVehh55aqbo0G9lS8tJYKz8LKUrTOMFF3g", "source_bytes": 65536, "target_bytes": 65536, "verified_host": true, "roundtrip_sha256": "7daca2095d0438260fa849183dfc67faa459fdf4936e1bc91eec6b281b27e4c2"}

@@ -1,0 +1,50 @@
+ARCHIVED_VOLUME_SHA256=1cfcf8c2262fd2dc0bc39ede33a032f4278b4abed59bf2f9c6318c8fa2cd511b
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/s07/demo.txt
+--- CMD: ls -l /data/s07/demo.txt ---
+ls -l /data/s07/demo.txt
+ -rw-rw-rw-      800000 /data/s07/demo.txt
+nsh> [K
+nsh> [K
+XTS_COMMAND=rm /data/s07/demo.txt
+--- CMD: rm /data/s07/demo.txt ---
+rm /data/s07/demo.txt
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data/s07
+--- CMD: ls -l /data/s07 ---
+ls -l /data/s07
+/data/s07:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768         73         695 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+RELEASED_ONLY_ARCHIVED_1045_DEMO_TXT no_format other_evidence_retained

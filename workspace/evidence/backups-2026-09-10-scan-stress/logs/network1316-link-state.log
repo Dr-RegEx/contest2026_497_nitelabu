@@ -1,0 +1,40 @@
+--- CMD: wapi show wlan0 ---
+wapi show wlan0
+wlan0 Configuration:
+       IP: 192.168.1.60
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_AUTO
+  Channel: 1
+Frequency: 2412
+    ESSID: <redacted>
+     Flag: WAPI_ESSID_OFF
+     Mode: WAPI_MODE_MANAGED
+       AP: [CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35815
+[CPU0] wapi_get_pta_prio: ioctl(SIOCGIWPTAPRIO): Not a typewriter
+ff:ff:ff:ff:ff:ff
+  BitRate: 0
+     Flag: WAPI_BITRATE_AUTO
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -128
+  Country: 01
+nsh> [K
+nsh> [K
+--- CMD: wapi sense wlan0 ---
+wapi sense wlan0
+-128
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011000 0x2f01104c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+READ_CURRENT_FAILED_LINK_ONLY; NOT XTS RETEST

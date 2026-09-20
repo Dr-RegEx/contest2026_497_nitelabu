@@ -1,0 +1,61 @@
++ '[' '' = olddefconfig ']'
++ '[' '' = reconfigure ']'
++ '[' '' = resetconfig ']'
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6 -j8
+[0/35] Performing build step for 'nettest'
+[0/1] Re-running CMake...
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/apps/examples/nettest/nettest-prefix/src/nettest-build
+[1/4] Building C object CMakeFiles/tcpclient.dir/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_host.c.o
+[2/4] Building C object CMakeFiles/tcpclient.dir/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_cmdline.c.o
+[3/4] Building C object CMakeFiles/tcpclient.dir/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/nettest_client.c.o
+[4/4] Linking C executable tcpclient
+[6/35] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/syscall && cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/bin_host --target mksyscall
+[ 50%] Built target csvparser
+[100%] Built target mksyscall
+[7/35] Linking C static library apps/libapps.a
+[8/35] Performing install step for 'nettest'
+[0/1] Install the project...
+-- Install configuration: ""
+-- Installing: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/apps/examples/nettest/host/bin/tcpclient
+[10/35] Completed 'nettest'
+[11/35] Linking C static library libs/libc/libkc.a
+[12/35] Linking C static library libs/libc/libc.a
+[13/35] Refreshing ELF relink sentinel:renew
+[14/35] Refreshing ELF relink sentinel:init
+[15/35] Refreshing ELF relink sentinel:ping
+[16/35] Refreshing ELF relink sentinel:sh
+[17/35] Refreshing ELF relink sentinel:wapi
+[18/35] Refreshing ELF relink sentinel:nettest
+[19/35] Building C object apps/system/dhcpc/CMakeFiles/ELF_renew.dir/ELF_renew_relink.c.o
+[20/35] Building C object apps/system/ping/CMakeFiles/ELF_ping.dir/ELF_ping_relink.c.o
+[21/35] Building C object apps/wireless/wapi/CMakeFiles/ELF_wapi.dir/ELF_wapi_relink.c.o
+[22/35] Building C object apps/system/nsh/CMakeFiles/ELF_init.dir/ELF_init_relink.c.o
+[23/35] Building C object apps/examples/nettest/CMakeFiles/ELF_nettest.dir/ELF_nettest_relink.c.o
+[24/35] Building C object apps/system/nsh/CMakeFiles/ELF_sh.dir/ELF_sh_relink.c.o
+[25/35] Linking C static library apps/examples/nettest/libELF_nettest.a
+[26/35] Linking C static library apps/system/dhcpc/libELF_renew.a
+[27/35] Linking C static library apps/system/ping/libELF_ping.a
+[28/35] Linking C static library apps/wireless/wapi/libELF_wapi.a
+[29/35] Linking C static library apps/system/nsh/libELF_sh.a
+[30/35] Linking C static library apps/system/nsh/libELF_init.a
+[31/35] Generating external ESP32-S31 application ROMFS
+[32/35] Linking C executable nuttx
+[33/35] Generating nuttx.hex
+[34/35] Generating System.map
+[35/35] Generating ESP32-S31 simple-boot image for offset 0x2000
+esptool v5.4.0
+Creating ESP32-S31 image...
+Image has only RAM segments visible. ROM segments are hidden and SHA256 digest is not appended.
+Merged 1 ELF section.
+Successfully created ESP32-S31 image.
++ '[' -n /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/logs/build136c.sha256 ']'
++ set -o noclobber
++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/nuttx.bin /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/appfs.img
++ restore_cfg
++ '[' -f /tmp/esp32s31-source-config.RJ4uLf/.config ']'
++ mv /tmp/esp32s31-source-config.RJ4uLf/.config .config
++ '[' -f /tmp/esp32s31-source-config.RJ4uLf/config.h ']'
++ mv /tmp/esp32s31-source-config.RJ4uLf/config.h include/nuttx/config.h
++ rmdir /tmp/esp32s31-source-config.RJ4uLf

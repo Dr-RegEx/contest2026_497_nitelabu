@@ -1,0 +1,26 @@
++ '[' '' = configure ']'
++ make -j8
+Create version.h
+Copying local Espressif HAL: /home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty
+[1KCPP:  gnu-elf.ld.in-> gnu-elf.ld [1KCP:  /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/include/nuttx/config.h
+CC:  nettest_host.c
+CC:  nettest_client.c
+CP:  /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/include/nuttx/config.h
+CC:  udp_host.c
+LD:  tcpclient
+CC:  udp_cmdline.c
+CC:  udp_client.c
+/usr/bin/ld: nettest_client.hobj: warning: relocation against `g_nettestserver_ipv4' in read-only section `.text'
+/usr/bin/ld: nettest_host.hobj: in function `main':
+nettest_host.c:(.text.startup+0x9): undefined reference to `nettest_cmdline'
+/usr/bin/ld: nettest_client.hobj: in function `nettest_client':
+nettest_client.c:(.text+0x6b): undefined reference to `g_nettestserver_ipv4'
+/usr/bin/ld: warning: creating DT_TEXTREL in a PIE
+collect2: error: ld returned 1 exit status
+make[3]: *** [Makefile:111: tcpclient] Error 1
+make[2]: *** [Makefile:56: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/examples/nettest_context] Error 2
+make[2]: *** Waiting for unfinished jobs....
+LN: platform/board to /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/platform/dummy
+make[1]: *** [Makefile:190: context] Error 2
+make: *** [tools/Unix.mk:472: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/.context] Error 2
+make: *** Waiting for unfinished jobs....

@@ -1,0 +1,3 @@
+# TX resource pressure identified
+
+1412 short10sdiagnostic: all2986UNKNOWNERRORmessages raw0x101, translated-12. LockedIDF esp_err.h defines0x101=ESP_ERR_NO_MEM. esp_wifi_internal_tx documentsNO_MEM. Existingwlan_transmit leavespacketqueuedon-ENOMEM,retriesonTXcompletion/watchdog.1413 bypasseserrorloggingONLYforS31STA TX NO_MEM; preserves-ENOMEMreturnandallretrylogic, othererrorsstillloggedwithnumericcode. Removes1398temporaryUDPwait/pacinginstrumentation. Needoriginal300svalidation; shortdiagnosticnotPASS.

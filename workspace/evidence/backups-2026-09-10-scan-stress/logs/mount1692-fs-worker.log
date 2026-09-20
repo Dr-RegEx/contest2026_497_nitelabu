@@ -1,0 +1,133 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1690-fs-worker.sha256
+IMAGE_SHA256=882125d82238ddce387794ece21154467eebe5197c4906e42a34c4aca2f7a18b
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f0096c0 0x2f009708
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009640 0x2f009688
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f0096c0 0x2f009708
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009640 0x2f009688
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+mkdir -p /data
+nsh> [K
+nsh> [K
+--- CMD: mount -t littlefs /dev/xtsflash /data ---
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+ drwxrwxrwx           0 .
+ dr--r--r--           0 ..
+ -rw-rw-rw-     1474609 audio_file.aac
+ drwxrwxrwx           0 frag1164/
+ -rw-rw-rw-      405504 persist.db
+ drwxrwxrwx           0 s01_1173/
+ drwxrwxrwx           0 s02/
+ drwxrwxrwx           0 s07_1686/
+ drwxrwxrwx           0 s07_1687/
+ drwxrwxrwx           0 s07_1689/
+ drwxrwxrwx           0 s07b/
+ drwxrwxrwx           0 s07c/
+ drwxrwxrwx           0 s07/
+ drwxrwxrwx           0 s17/
+ drwxrwxrwx           0 s18c/
+ drwxrwxrwx           0 s18r/
+ drwxrwxrwx           0 s19s/
+ drwxrwxrwx           0 s19/
+nsh> [K
+nsh> [K
+ls -l /data
+/data:
+ drwxrwxrwx           0 .
+ dr--r--r--           0 ..
+ -rw-rw-rw-     1474609 audio_file.aac
+ drwxrwxrwx           0 frag1164/
+ -rw-rw-rw-      405504 persist.db
+ drwxrwxrwx           0 s01_1173/
+ drwxrwxrwx           0 s02/
+ drwxrwxrwx           0 s07_1686/
+ drwxrwxrwx           0 s07_1687/
+ drwxrwxrwx           0 s07_1689/
+ drwxrwxrwx           0 s07b/
+ drwxrwxrwx           0 s07c/
+ drwxrwxrwx           0 s07/
+ drwxrwxrwx           0 s17/
+ drwxrwxrwx           0 s18c/
+ drwxrwxrwx           0 s18r/
+ drwxrwxrwx           0 s19s/
+ drwxrwxrwx           0 s19/
+nsh> [K
+nsh> [K
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        697          71 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        697          71 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17221912      19256   17202656      25208   16777200     43      4 Umem
+nsh> [K
+nsh> [K
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17221912      19256   17202656      25208   16777200     43      4 Umem
+nsh> [K
+nsh> [K
+FS1692_MOUNT_ONLY_COMPLETE

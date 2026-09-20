@@ -1,0 +1,9 @@
+#include "../xts-flat-media/defconfig"
+
+# Diagnose original media playback from the existing dedicated Flash range.
+# Registration only: never mount or format at boot.
+CONFIG_ESP32S31_XTS_FLASH=y
+CONFIG_ESP32S31_XTS_FLASH_LARGE=y
+CONFIG_ESP32S31_SPIFLASH_PSRAM_STACK=y
+CONFIG_SCHED_LPWORKSTACKSIZE=4096
+CONFIG_FS_LITTLEFS=y

@@ -1,0 +1,83 @@
+[
+  {
+    "diagnostic_only": true,
+    "offered_rate": "5M",
+    "duration": 30,
+    "host_command": [
+      "/mnt/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/iperf2-select1656.exe",
+      "-B",
+      "192.168.1.29",
+      "-c",
+      "192.168.1.60",
+      "-p",
+      "5010",
+      "-i",
+      "1",
+      "-t",
+      "30",
+      "-u",
+      "-b",
+      "5M"
+    ],
+    "host_exit": 0,
+    "board_summaries": [
+      "[  1] 0.00-36.03 sec   676 KBytes   154 Kbits/sec  71.040 ms 46/524 (8.8%)",
+      "[  1] 0.00-36.03 sec  7 datagrams received out-of-order"
+    ],
+    "host_summaries": [
+      "[  1] 0.00-30.01 sec  18.8 MBytes  5.24 Mbits/sec"
+    ]
+  },
+  {
+    "diagnostic_only": true,
+    "offered_rate": "20M",
+    "duration": 30,
+    "host_command": [
+      "/mnt/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/iperf2-select1656.exe",
+      "-B",
+      "192.168.1.29",
+      "-c",
+      "192.168.1.60",
+      "-p",
+      "5011",
+      "-i",
+      "1",
+      "-t",
+      "30",
+      "-u",
+      "-b",
+      "20M"
+    ],
+    "host_exit": 0,
+    "board_summaries": [],
+    "host_summaries": [
+      "[  1] 0.00-30.00 sec  75.0 MBytes  21.0 Mbits/sec"
+    ]
+  },
+  {
+    "diagnostic_only": true,
+    "offered_rate": "40M",
+    "duration": 30,
+    "host_command": [
+      "/mnt/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/iperf2-select1656.exe",
+      "-B",
+      "192.168.1.29",
+      "-c",
+      "192.168.1.60",
+      "-p",
+      "5012",
+      "-i",
+      "1",
+      "-t",
+      "30",
+      "-u",
+      "-b",
+      "40M"
+    ],
+    "host_exit": 0,
+    "board_summaries": [],
+    "host_summaries": [
+      "[  1] 0.00-30.00 sec   128 MBytes  35.6 Mbits/sec"
+    ]
+  }
+]

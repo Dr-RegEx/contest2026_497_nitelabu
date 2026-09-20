@@ -1,0 +1,4 @@
+#include "../demo-rmt-xts-core/defconfig"
+# xTS 1.1.4 remains required; currently blocked by privileged spinlock code.
+CONFIG_TESTING_OSTEST=y
+CONFIG_TESTING_OSTEST_STACKSIZE=16384

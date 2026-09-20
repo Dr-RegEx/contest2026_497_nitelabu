@@ -1,0 +1,37 @@
+{
+  "firmware_kind": "openvela-nuttx-rgb565",
+  "nuttx_boot": true,
+  "native_application_start": true,
+  "rgb565_selftest": true,
+  "framebuffer": {
+    "device": "/dev/fb0",
+    "format": 11,
+    "width": 800,
+    "height": 480,
+    "bpp": 16,
+    "stride": 1600,
+    "bytes": 768000
+  },
+  "framebuffer_valid": true,
+  "patterns_observed_in_uart": [
+    "DASHBOARD",
+    "RED F800",
+    "GREEN 07E0",
+    "BLUE 001F",
+    "WHITE FFFF",
+    "BLACK 0000",
+    "CHECKERBOARD"
+  ],
+  "completed_frames_at_least": 100,
+  "runtime_error": false,
+  "runtime_error_lines": [],
+  "optical_result": "unverified",
+  "runtime_pass": true,
+  "port": "/dev/ttyUSB0",
+  "baud": 115200,
+  "requested_seconds": 40.0,
+  "elapsed_seconds": 40.221,
+  "flash_receipt": "flash-summary.json",
+  "uart_log": "uart.log",
+  "capture_error": null
+}

@@ -1,0 +1,24 @@
+/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/affinity1562-before.c: In function ‘nxsched_switch_running’:
+/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/affinity1562-before.c:69:18: warning: passing argument 1 of ‘dq_rem’ from incompatible pointer type [-Wincompatible-pointer-types]
+   69 |           dq_rem((FAR struct dq_entry_s *)btcb, list_readytorun());
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                  |
+      |                  struct dq_entry_s *
+/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/affinity1562-before.c:24:32: note: expected ‘dq_entry_t *’ {aka ‘struct tcb_s *’} but argument is of type ‘struct dq_entry_s *’
+   24 | static void dq_rem(dq_entry_t *t, struct queue_s *q) {q->head=NULL;}
+      |                    ~~~~~~~~~~~~^
+At top level:
+/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/affinity1562-before.c:29:13: warning: ‘nxsched_add_readytorun’ defined but not used [-Wunused-function]
+   29 | static bool nxsched_add_readytorun(struct tcb_s *t) {assert(t->affinity==2);delivered++;return false;}
+      |             ^~~~~~~~~~~~~~~~~~~~~~
+/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/affinity1562-before.c:28:13: warning: ‘nxsched_remove_readytorun’ defined but not used [-Wunused-function]
+   28 | static bool nxsched_remove_readytorun(struct tcb_s *t) {assert(t==&running);assigned[0]=&idle;return true;}
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/bin/ld: cannot open output file /home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/affinity1562-before: Is a directory
+collect2: error: ld returned 1 exit status
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/test1562-affinity-fallback.py", line 73, in <module>
+    subprocess.run(['cc','-std=c11','-Wall','-Wno-unused-parameter',str(c),'-o',str(exe)],check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Wno-unused-parameter', '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/affinity1562-before.c', '-o', '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/affinity1562-before']' returned non-zero exit status 1.

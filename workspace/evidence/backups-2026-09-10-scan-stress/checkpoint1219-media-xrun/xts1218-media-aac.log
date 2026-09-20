@@ -1,0 +1,31 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1212-media.sha256
+SCOPE=original file decode/driver execution; audible acceptance pending
+XTS_COMMAND=mediatool
+mediatool
+mediatool> 
+XTS_COMMAND=send all loglevel 24
+send all loglevel 24
+mediatool> 
+XTS_COMMAND=open Music
+open Music
+player ID 0
+mediatool> 
+XTS_COMMAND=prepare 0 url /data/audio_file.aac
+prepare 0 url /data/audio_file.aac
+[media][media_player_open_demuxer:909] protocol_map NOT found in options!
+[media][media_player_map_protocol:697] No protocol_map set or invalid proto.
+media_player_init_stream:784 stream 0, type 1.
+mediatool> [mediatool_event_callback][307] id:0, event:PREPARED(1) ret:0 extra:(null)
+
+XTS_COMMAND=start 0
+start 0
+asubgraph@Convert cannot find / format.
+mediatool> [mediatool_event_callback][307] id:0, event:STARTED(2) ret:0 extra:(null)
+ALSA buffer XRUN ret=-32.
+
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/run1218-media-aac.py", line 28, in <module>
+    m.k.require(not re.search(rb'error|fail|panic|assert|ESP-ROM:|ret:-|XRUN|underrun|overrun', output, re.I),
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: media execution error; preserve board state

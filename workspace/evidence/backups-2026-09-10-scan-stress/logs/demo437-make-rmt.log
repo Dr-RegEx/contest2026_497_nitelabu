@@ -1,0 +1,125 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x11238
+entry 0x2f00dd18
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x11238  (70200)
+padd: lma 0x000132a8 vma 0x00000000 len 0xcd70   (52592)
+imap: lma 0x00020020 vma 0x400c0020 len 0x1904c  (102476)
+padd: lma 0x00039074 vma 0x00000000 len 0x7084   (28804)
+imap: lma 0x00040100 vma 0x40000100 len 0xb5224  (741924)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+DEMO_BOOT=PASS seconds=3.503
+--- CMD: ls /system/bin/s31demo ---
+ls /system/bin/s31demo
+ /system/bin/s31demo
+nsh> [K
+nsh> [K
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+c2:b9:cc:e7:e8:dd	2412	-90	0800	Jackie_GU
+a4:ba:70:3a:61:31	2412	-90	0800	CU-C4F4_plus
+08:f4:58:ab:c0:18	2437	-89	0800	HDMRC
+f4:2a:7d:53:3f:88	2462	-87	0800	TP-LINK_901
+c4:16:c8:5a:e5:6c	2462	-87	0800	HUAWEI-J
+d8:31:39:80:18:b0	2457	-87	0800	CU_9wN9
+98:0d:51:96:33:54	2437	-87	0800	HDMRC
+10:9f:4f:43:b2:ca	2437	-86	0800	CMCC-C2C9
+30:99:35:5e:4f:63	2432	-85	0800	CU_nhbU
+ca:33:e5:05:fe:88	2432	-84	0800	阳光
+24:69:68:38:77:70	2412	-81	0800	wlj
+94:bf:80:7e:6f:c9	2452	-76	0800	CU_rfNY
+60:ce:41:46:0e:ec	2412	-76	0800	<redacted>
+bc:54:fc:36:e1:c2	2462	-74	0800	MERCURY_E1C2
+7c:39:85:2a:50:04	2462	-66	0800	<redacted>
+60:ce:41:ab:02:d2	2462	-62	0800	STB_T4Zp
+60:ce:41:ab:02:d0	2462	-57	0800	<redacted>
+nsh> [K
+nsh> [K
+--- CMD: wapi psk wlan0 <redacted> 3 2 ---
+wapi psk wlan0 <redacted> 3 2
+nsh> [K
+nsh> [K
+--- CMD: wapi essid wlan0 <redacted> 1 ---
+wapi essid wlan0 <redacted> 1
+nsh> [K
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:0.0.0.0 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: renew wlan0 ---
+renew wlan0
+nsh> [K
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: ping -c 4 192.168.1.1 ---
+ping -c 4 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+56 bytes from 192.168.1.1: icmp_seq=0 time=40.0 ms
+56 bytes from 192.168.1.1: icmp_seq=1 time=20.0 ms
+56 bytes from 192.168.1.1: icmp_seq=2 time=20.0 ms
+56 bytes from 192.168.1.1: icmp_seq=3 time=30.0 ms
+4 packets transmitted, 4 received, 0% packet loss, time 4040 ms
+rtt min/avg/max/mdev = 20.000/27.500/40.000/8.291 ms
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00e340 0x2f00e38c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: prlimit -s 8192 s31demo & ---
+prlimit -s 8192 s31demo &
+s31demo [12:101]
+nsh> [K
+nsh> [KS31_DEMO_READY port=8080 interface=wlan0
+NET_LEAK_LOAD_S31_DEMO_PID=12
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00e340 0x2f00e38c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   12    12 ---(0x00000003) 101 RR       Task      - Waiting  Semaphore 0000000000000000 0008128 s31demo
+nsh> [K
+nsh> [K
+S31_DEMO_STARTED pid=12 url=http://192.168.1.60:8080/
+HTTP reachability must be checked from the LAN client.

@@ -1,0 +1,66 @@
+IDLE_SAMPLE=0 monotonic=18353.236528
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=210493 replay=210493 ack=213384 drop=0 pending=0x0 sreplay=79
+MONIRQ: cpu=1 defer=1344546 replay=1344546 ack=1344908 drop=0 pending=0x0 sreplay=6
+ADDRENV: created=61 fail=0 destroyed=59 live=2 livemax=3 pages=8234 pgt=236
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     346380     101492     244888     138032     165224    230     12 Kmem
+   16777216    1265664   15511552   15511552 Page
+nsh> [K
+nsh> [K
+--- CMD: sleep 5 ---
+sleep 5
+nsh> [K
+nsh> [K
+IDLE_SAMPLE=1 monotonic=18359.134396
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=211254 replay=211254 ack=214145 drop=0 pending=0x0 sreplay=79
+MONIRQ: cpu=1 defer=1344930 replay=1344930 ack=1345292 drop=0 pending=0x0 sreplay=6
+ADDRENV: created=61 fail=0 destroyed=59 live=2 livemax=3 pages=8234 pgt=236
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     346380     101492     244888     138032     165224    230     12 Kmem
+   16777216    1265664   15511552   15511552 Page
+nsh> [K
+nsh> [K
+--- CMD: sleep 5 ---
+sleep 5
+nsh> [K
+nsh> [K
+IDLE_SAMPLE=2 monotonic=18365.042406
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=212031 replay=212031 ack=214922 drop=0 pending=0x0 sreplay=79
+MONIRQ: cpu=1 defer=1345315 replay=1345315 ack=1345677 drop=0 pending=0x0 sreplay=6
+ADDRENV: created=61 fail=0 destroyed=59 live=2 livemax=3 pages=8234 pgt=236
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     346380     101492     244888     138032     165224    230     12 Kmem
+   16777216    1265664   15511552   15511552 Page
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00e340 0x2f00e38c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   12    12 ---(0x00000003) 101 RR       Task      - Waiting  Semaphore 0000000000000000 0008128 s31demo
+nsh> [K
+nsh> [K
+IDLE_OBSERVATION=PASS measurement_only=1

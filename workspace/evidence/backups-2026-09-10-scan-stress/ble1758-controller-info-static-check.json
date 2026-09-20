@@ -1,0 +1,25 @@
+{
+  "candidate": 1747,
+  "scope": "BLE_5_4_CONTROLLER_EVIDENCE_PREPARATION_ONLY",
+  "runtime_test": false,
+  "serial_opened": false,
+  "flash_performed": false,
+  "checks": {
+    "capture_script_py_compile": "PASS",
+    "capture_script_help": "PASS",
+    "build_receipt_nuttx_sha256": "PASS",
+    "build_receipt_appfs_sha256": "PASS",
+    "config_esp32s31_ble": "PASS",
+    "config_bluetooth_tools": "PASS",
+    "config_bt_ext_adv_max_adv_set_2": "PASS",
+    "appfs_bttool_contains_hci_log_format": "PASS"
+  },
+  "runtime_hci_version": null,
+  "status": "BLOCKED_ON_BOARD_UART_CAPTURE",
+  "evidence": [
+    "ble1758-controller-info-prep.md",
+    "ble1747-controller-info-capture.py",
+    "build1747-ble-controller-info.sha256"
+  ],
+  "note": "Offline checks do not establish controller HCI version, BLE 5.4 compliance, or any xTS pass."
+}

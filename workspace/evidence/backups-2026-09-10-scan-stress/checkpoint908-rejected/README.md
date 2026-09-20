@@ -1,0 +1,1 @@
+Build908 rejected before hardware: local BCH API takes open flags, not old readonly boolean. false would not enable write access. Source/API audit detected this before flashing. Corrected candidate909 uses O_RDWR for both FTL and BCH. Receipt now points to the preserved908 binary here; its digest is unchanged. No target run.

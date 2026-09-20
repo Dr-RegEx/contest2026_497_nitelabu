@@ -1,0 +1,131 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x1032c
+load:0x2f010380,len:0x36d8
+entry 0x2f00fec4
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x1032c  (66348)
+dram: lma 0x00012374 vma 0x2f010380 len 0x36d8   (14040)
+padd: lma 0x00015a78 vma 0x00000000 len 0xa5a0   (42400)
+imap: lma 0x00020020 vma 0x400c0020 len 0x199cc  (104908)
+padd: lma 0x000399f4 vma 0x00000000 len 0x6704   (26372)
+imap: lma 0x00040100 vma 0x40000100 len 0xb2b28  (731944)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU1] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU1] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+BUTTON_BOOT=PASS seconds=0.640
+--- CMD: ls /dev/buttons ---
+ls /dev/buttons
+ /dev/buttons
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000002)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000002)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000002) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010b00 0x2f010b4c
+    4     0 ---(0x00000002) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 001(0x00000002) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: buttons & ---
+buttons &
+buttons [7:101]
+nsh> [K
+nsh> [Kbutton_daemon: Running
+button_daemon: Opening /dev/buttons
+button_daemon: Supported BUTTONs 0x01
+
+button_daemon: poll returned: 1
+Sample = 0
+NET_LEAK_LOAD_BUTTONS_PID=7
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 1
+Sample = 1
+BUTTON_EDGE=PASS cycle=1 state=1
+
+button_daemon: poll returned: 1
+Sample = 0
+BUTTON_EDGE=PASS cycle=1 state=0
+
+button_daemon: poll returned: 1
+Sample = 1
+BUTTON_EDGE=PASS cycle=2 state=1
+
+button_daemon: poll returned: 1
+Sample = 0
+BUTTON_EDGE=PASS cycle=2 state=0
+
+button_daemon: poll returned: 1
+Sample = 1
+BUTTON_EDGE=PASS cycle=3 state=1
+
+button_daemon: poll returned: 1
+Sample = 0
+BUTTON_EDGE=PASS cycle=3 state=0
+
+button_daemon: poll returned: 1
+Sample = 1
+BUTTON_EDGE=PASS cycle=4 state=1
+
+button_daemon: poll returned: 1
+Sample = 0
+BUTTON_EDGE=PASS cycle=4 state=0
+
+button_daemon: poll returned: 1
+Sample = 1
+BUTTON_EDGE=PASS cycle=5 state=1
+
+button_daemon: poll returned: 1
+Sample = 0
+BUTTON_EDGE=PASS cycle=5 state=0
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000002)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000002)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000002) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010b00 0x2f010b4c
+    4     0 ---(0x00000002) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 001(0x00000002) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+    7     7 ---(0x00000002) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0001984 buttons
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=4477 replay=4477 ack=4610 drop=0 pending=0x0 sreplay=1
+MONLAT: cpu=0 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0
+MONIRQ: cpu=1 defer=92 replay=92 ack=98 drop=0 pending=0x0 sreplay=1
+MONLAT: cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0
+ADDRENV: created=2 fail=0 destroyed=0 live=2 livemax=2 pages=0 pgt=0
+WAIT: pid=2 object=0x2f010b14
+LPTRACE: 0x4002480a
+WAIT: pid=4 object=0x2f010b6c
+WAIT: pid=7 object=0x2f042128
+nsh> [K
+nsh> [K
+S31_BOOT_ELECTRICAL_IRQ=PASS cycles=5 edges=10 manual_switch=untested
+--- CMD: kill 7 ---
+kill 7
+nsh> [K
+nsh> [K

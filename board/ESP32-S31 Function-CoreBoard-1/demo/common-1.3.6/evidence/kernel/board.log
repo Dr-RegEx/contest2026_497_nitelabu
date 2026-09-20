@@ -1,0 +1,67 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x5f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x1c1c0
+entry 0x2f017f84
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x1c1c0  (115136)
+padd: lma 0x0001e238 vma 0x00000000 len 0x1de0   (7648)
+imap: lma 0x00020020 vma 0x40140020 len 0x25fe4  (155620)
+padd: lma 0x0004600c vma 0x00000000 len 0xa0ec   (41196)
+imap: lma 0x00050100 vma 0x40000100 len 0x13ac9c (1289372)
+total segments stored 6
+ABC[CPU0] S31 hardware crypto: SHA1/SHA256/SHA512 PIO
+[CPU0] S31 hardware crypto: HMAC-SHA1/256 via SHA PIO
+[CPU0] S31 hardware crypto: ECDSA P256 verify only
+[CPU0] S31 hardware crypto: AES-CBC 128/256-bit PIO
+[CPU0] S31 hardware crypto: AES-CTR/XTS full-block PIO
+[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] S31_XTS_GPIO: /dev/gpio0=GPIO47 J2.13 /dev/gpio1=GPIO48 J2.14 (external jumper required)
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [Kls /dev
+/dev:
+ appfs
+ apps
+ buttons
+ console
+ crypto
+ gpio0
+ gpio1
+ i2c0
+ leds0
+ null
+ ptmx
+ random
+ rtc0
+ s31stat
+ tlbshoot
+ ttyHCI0
+ ttyS0
+ urandom
+ zero
+nsh> [Kcmocka_driver_gpio -i /dev/gpio0 -o /dev/gpio1 -p 0 -l -r 1
+[CPU1] [==========] tests: Running 4 test(s).
+[CPU1] [ RUN      ] drivertest_gpio_bool
+[CPU1] [       OK ] drivertest_gpio_bool
+[CPU1] [ RUN      ] drivertest_gpio_loop
+[CPU1] [       OK ] drivertest_gpio_loop
+[CPU1] [ RUN      ] drivertest_gpio_rw
+[CPU1] [       OK ] drivertest_gpio_rw
+[CPU1] [ RUN      ] drivertest_gpio_interrupt
+[write and read output]  writevalue is 0, outvalue is 0
+[Loop test]  outvalue is 0, invalue is 0
+[input and output test]  outvalue is 48, invalue is 48
+[CPU0] S31_GPIO_IRQ pin=47 type=1 count=1
+[CPU0] [       OK ] drivertest_gpio_interrupt
+[CPU0] [==========] tests: 4 test(s) run.
+[CPU0] [  PASSED  ] 4 test(s).
+nsh> [Kcmocka_driver_gpio -i /dev/gpio0 -o /dev/gpio1 -p 1 -l -r 1

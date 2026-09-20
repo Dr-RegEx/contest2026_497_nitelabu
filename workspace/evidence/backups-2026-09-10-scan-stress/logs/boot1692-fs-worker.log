@@ -1,0 +1,22 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1690-fs-worker.sha256
+IMAGE_SHA256=882125d82238ddce387794ece21154467eebe5197c4906e42a34c4aca2f7a18b
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xba68
+entry 0x2f008ec0
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xba68   (47720)
+padd: lma 0x0000dad8 vma 0x00000000 len 0x2540   (9536)
+imap: lma 0x00010020 vma 0x40050020 len 0xd6f8   (55032)
+padd: lma 0x0001d720 vma 0x00000000 len 0x29d8   (10712)
+imap: lma 0x00020100 vma 0x40000100 len 0x490d0  (299216)
+total segments stored 6
+ABCxTS Flash scratch: /dev/xtsflash offset=0xd00000 size=0x300000
+
+NuttShell (NSH)
+nsh> [K
+XTS_1690_BOOT=READY unmounted

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "scope": "SPAWN_REDIRECTION_REGRESSION",
+  "receipt": "build1612-spawn-parent-env.sha256",
+  "launch": "s31simd > /tmp/simd1614.log\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "redirected_output": "cat /tmp/simd1614.log\r\nSIMD worker=1 initial_cpu=0\r\nSIMD worker=2 initial_cpu=0\r\nSIMD worker=1 affinity_switches=20 PASS\r\nSIMD worker=1 cpu=1\r\nSIMD worker=2 affinity_switches=20 PASS\r\nSIMD worker=2 cpu=1\r\nSIMD INT8 dot16 worker=1 checked=100 PASS\r\nSIMD INT8 dot16 worker=2 checked=100 PASS\r\nSIMD CPU1 worker=1 completed=100 error=0\r\nSIMD CPU1 worker=2 completed=100 error=0\r\nSIMD arithmetic and full-bank sleep-switch: PASS\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "open_failure": "s31simd > /missing1612/out &\r\nnsh: sh: spawn failed: No such file or directory\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "after_failure": "s31simd\r\nSIMD worker=1 initial_cpu=0\r\nSIMD worker=2 initial_cpu=0\r\nSIMD worker=1 affinity_switches=20 PASS\r\nSIMD worker=1 cpu=1\r\nSIMD worker=2 affinity_switches=20 PASS\r\nSIMD worker=2 cpu=1\r\nSIMD INT8 dot16 worker=1 checked=100 PASS\r\nSIMD INT8 dot16 worker=2 checked=100 PASS\r\nSIMD CPU1 worker=1 completed=100 error=0\r\nSIMD CPU1 worker=2 completed=100 error=0\r\nSIMD arithmetic and full-bank sleep-switch: PASS\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "cleanup": "rm /tmp/simd1614.log\r\nnsh> \u001b[K\r\nnsh> \u001b[K",
+  "free": "free\r\n      total       used       free    maxused    maxfree  nused  nfree name\r\n     277548     128772     148776     155336      58696    205     23 Kmem\r\n   16777216    1929216   14848000   14848000 Page\r\nnsh> \u001b[K\r\nnsh> \u001b[K"
+}

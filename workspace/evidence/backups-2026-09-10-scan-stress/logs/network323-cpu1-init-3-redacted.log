@@ -1,0 +1,266 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x58 (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x1032c
+load:0x2f010380,len:0x36d8
+entry 0x2f00fec4
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x1032c  (66348)
+dram: lma 0x00012374 vma 0x2f010380 len 0x36d8   (14040)
+padd: lma 0x00015a78 vma 0x00000000 len 0xa5a0   (42400)
+imap: lma 0x00020020 vma 0x400c0020 len 0x199cc  (104908)
+padd: lma 0x000399f4 vma 0x00000000 len 0x6704   (26372)
+imap: lma 0x00040100 vma 0x40000100 len 0xb2b28  (731944)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU1] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU1] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_BOOT=PASS seconds=0.649
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+[CPU1] esp_wifi_start_scan: S31 scan request: type=0 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=10 id=128
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=50 cpu1=0
+[CPU1] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=10
+bssid / frequency / signal level / encode / ssid
+3c:06:a7:2a:3e:71	2437	-89	0800	KYAFL
+08:f4:58:ab:c0:18	2437	-88	0800	HDMRC
+10:9f:4f:43:b2:ca	2437	-86	0800	CMCC-C2C9
+ca:33:e5:05:fe:88	2432	-83	0800	阳光
+90:7e:43:c9:d4:3c	2427	-82	0800	XXN3M
+60:ce:41:46:0e:ec	2412	-76	0800	<redacted>
+bc:54:fc:36:e1:c2	2462	-75	0800	MERCURY_E1C2
+7c:39:85:2a:50:04	2462	-66	0800	<redacted>
+60:ce:41:ab:02:d2	2462	-66	0800	STB_T4Zp
+60:ce:41:ab:02:d0	2462	-62	0800	<redacted>
+nsh> [K
+nsh> [K
+SCAN_SECONDS=2.889
+SCAN_IOCTL=PASS
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+[CPU1] esp_wifi_start_scan: S31 scan request: type=1 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=22 id=129
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=126 cpu1=0
+[CPU1] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=22
+bssid / frequency / signal level / encode / ssid
+c0:a4:76:31:54:9e	2462	-91	0800	爱我的女孩
+10:9f:4f:43:b2:ca	2437	-90	0800	CMCC-C2C9
+3c:06:a7:2a:3e:71	2437	-89	0800	KYAFL
+a4:ba:70:3a:61:31	2412	-89	0800	CU-C4F4_plus
+68:dd:b7:77:db:38	2462	-88	0800	JSL
+8c:de:f9:a0:3f:6c	2442	-88	0800	Xiaomi_DDB3
+08:f4:58:ab:bf:e8	2437	-88	0800	HDMRC
+60:10:9e:e0:ae:2c	2417	-88	0800	HUAWEI-J
+64:75:20:ad:ed:3e	2452	-87	0800	CU_6hQR
+98:bb:99:0b:c8:d8	2432	-86	0800	ASUS_1502
+60:10:9e:e0:ae:2e	2417	-86	0800	STB_dK89
+08:f4:58:ab:c0:18	2437	-85	0800	HDMRC
+c8:cd:55:f5:00:a1	2422	-85	0800	海淀区物资回收公司
+c4:16:c8:5a:e5:6c	2412	-85	0800	HUAWEI-J
+ca:33:e5:05:fe:88	2432	-84	0800	阳光
+b4:7c:a6:58:15:fe	2432	-84	0800	Home-Wireless
+24:69:68:38:77:70	2412	-81	0800	wlj
+bc:54:fc:36:e1:c2	2462	-75	0800	MERCURY_E1C2
+60:ce:41:46:0e:ec	2412	-71	0800	<redacted>
+60:ce:41:ab:02:d2	2462	-66	0800	STB_T4Zp
+7c:39:85:2a:50:04	2462	-62	0800	<redacted>
+60:ce:41:ab:02:d0	2462	-62	0800	<redacted>
+nsh> [K
+nsh> [K
+PSCAN_SECONDS=5.840
+PSCAN_IOCTL=PASS
+--- CMD: wapi psk wlan0 <redacted> 3 2 ---
+wapi psk wlan0 <redacted> 3 2
+nsh> [K
+nsh> [K
+--- CMD: wapi essid wlan0 <redacted> 1 ---
+wapi essid wlan0 <redacted> 1
+[CPU0] esp_event_post_wrapper: S31 associated: channel=1 auth=3 bssid=60:ce:41:46:0e:ec
+[CPU1] esp_evt_work_cb: S31 driver STA MAC: 30:ed:a0:f3:f7:b0
+[CPU1] esp_evt_work_cb: S31 driver power save: ret=0 mode=0
+[CPU1] esp_evt_work_cb: S31 driver protocol: ret=0 bitmap=7
+[CPU1] esp_evt_work_cb: S31 negotiated PHY: ret=0 mode=4
+[CPU1] esp_evt_work_cb: S31 HE SU beamformee disabled: ret=0 value=0
+[CPU1] s31_wifi_rx_counters: S31 modem clocks connected: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU1] s31_wifi_rx_counters: S31 RX counters connected: ret=0 mpdu=22837 data=113 fcs=2331 abort=2808 full=0 fifo=0 other=1617
+[CPU1] s31_wifi_rx_counters: S31 HE counters: power=378 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU1] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU1] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU1] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=3 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU1] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+nsh> [K
+nsh> [K
+PROTOCOL_PROFILE=PASS bitmap=7 phy=4
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000002)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000002)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000002) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010b00 0x2f010b4c
+    4     0 ---(0x00000002) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 001(0x00000002) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=10830 replay=10830 ack=11006 drop=0 pending=0x0 sreplay=2
+MONLAT: cpu=0 input=1 last=3727 max=5630 samples=225 over32=0 over100=0 over1000=0 sum=62175
+MONIRQ: cpu=1 defer=256 replay=256 ack=268 drop=0 pending=0x0 sreplay=1
+MONLAT: cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0
+ADDRENV: created=5 fail=0 destroyed=4 live=1 livemax=2 pages=604 pgt=16
+WAIT: pid=4 object=0x2f010b6c
+LPTRACE: 0x4002480a
+WAIT: pid=4 object=0x2f010b6c
+nsh> [K
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:0.0.0.0 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: renew wlan0 ---
+renew wlan0
+nsh> [K
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+DHCP=PASS address=192.168.1.60
+--- CMD: arp -i wlan0 -a 192.168.1.1 ---
+arp -i wlan0 -a 192.168.1.1
+nsh: arp: no such ARP entry: 192.168.1.1
+nsh> [K
+nsh> [K
+--- CMD: ping -c 4 192.168.1.1 ---
+ping -c 4 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+56 bytes from 192.168.1.1: icmp_seq=0 time=40.0 ms
+56 bytes from 192.168.1.1: icmp_seq=1 time=30.0 ms
+56 bytes from 192.168.1.1: icmp_seq=2 time=20.0 ms
+56 bytes from 192.168.1.1: icmp_seq=3 time=20.0 ms
+4 packets transmitted, 4 received, 0% packet loss, time 4040 ms
+rtt min/avg/max/mdev = 20.000/27.500/40.000/8.291 ms
+nsh> [K
+nsh> [K
+--- CMD: arp -i wlan0 -a 192.168.1.1 ---
+arp -i wlan0 -a 192.168.1.1
+HWaddr: 60:ce:41:ab:02:ca
+nsh> [K
+nsh> [K
+--- CMD: ping -c 4 192.168.1.1 ---
+ping -c 4 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+56 bytes from 192.168.1.1: icmp_seq=0 time=20.0 ms
+56 bytes from 192.168.1.1: icmp_seq=1 time=30.0 ms
+56 bytes from 192.168.1.1: icmp_seq=2 time=30.0 ms
+56 bytes from 192.168.1.1: icmp_seq=3 time=20.0 ms
+4 packets transmitted, 4 received, 0% packet loss, time 4050 ms
+rtt min/avg/max/mdev = 20.000/25.000/30.000/5.000 ms
+nsh> [K
+nsh> [K
+WARM_ARP_PING=PASS
+COLD_GATEWAY_PING=PASS
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=16557 replay=16557 ack=16733 drop=0 pending=0x0 sreplay=2
+MONLAT: cpu=0 input=1 last=3725 max=97345 samples=1364 over32=7 over100=3 over1000=0 sum=689410
+MONIRQ: cpu=1 defer=490 replay=490 ack=503 drop=0 pending=0x0 sreplay=1
+MONLAT: cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0
+ADDRENV: created=8 fail=0 destroyed=7 live=1 livemax=2 pages=1028 pgt=28
+WAIT: pid=2 object=0x2f010b14
+LPTRACE: 0x4002480a
+WAIT: pid=4 object=0x2f010b6c
+nsh> [K
+nsh> [K
+GATEWAY_PING=PASS
+WPA2_DHCP_GATEWAY=PASS
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU1] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU1] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=39428 data=562 fcs=2982 abort=4280 full=0 fifo=0 other=2133
+[CPU1] s31_wifi_rx_counters: S31 HE counters: power=410 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU1] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU1] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU1] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=22 ht=14 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU1] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=38 complete=38 succ=20 ack=8 ba=12 retry=16 nomem=0 timeout=0
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=8 rssi=-68
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+[CPU1] esp_evt_work_cb: Failed to connect AP error=12290
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+PRE_RESET_IFDOWN=PASS
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x1032c
+load:0x2f010380,len:0x36d8
+entry 0x2f00fec4
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x1032c  (66348)
+dram: lma 0x00012374 vma 0x2f010380 len 0x36d8   (14040)
+padd: lma 0x00015a78 vma 0x00000000 len 0xa5a0   (42400)
+imap: lma 0x00020020 vma 0x400c0020 len 0x199cc  (104908)
+padd: lma 0x000399f4 vma 0x00000000 len 0x6704   (26372)
+imap: lma 0x00040100 vma 0x40000100 len 0xb2b28  (731944)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU1] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU1] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_CLEANUP_BOOT=PASS seconds=0.633
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU1] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU1] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=61 data=0 fcs=9 abort=9 full=0 fifo=0 other=1
+[CPU1] s31_wifi_rx_counters: S31 HE counters: power=0 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU1] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU1] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU1] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU1] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K

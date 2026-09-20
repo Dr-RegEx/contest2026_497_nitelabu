@@ -1,0 +1,335 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x10798
+load:0x2f010800,len:0x3720
+entry 0x2f010360
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x10798  (67480)
+dram: lma 0x000127e0 vma 0x2f010800 len 0x3720   (14112)
+padd: lma 0x00015f38 vma 0x00000000 len 0xa0e0   (41184)
+imap: lma 0x00020020 vma 0x400c0020 len 0x19aa8  (105128)
+padd: lma 0x00039ad0 vma 0x00000000 len 0x6628   (26152)
+imap: lma 0x00040100 vma 0x40000100 len 0xb62e8  (746216)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_BOOT=PASS seconds=0.639
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+24:69:68:38:77:70	2412	-82	0800	wlj
+bc:54:fc:36:e1:c2	2462	-76	0800	MERCURY_E1C2
+7c:39:85:2a:50:04	2462	-75	0800	<redacted>
+60:ce:41:46:0e:ec	2412	-73	0800	<redacted>
+60:ce:41:ab:02:d2	2462	-65	0800	STB_T4Zp
+60:ce:41:ab:02:d0	2462	-64	0800	<redacted>
+nsh> [K
+nsh> [K
+SCAN_SECONDS=2.945
+SCAN_IOCTL=PASS
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+24:69:68:a9:77:6f	2412	-89	0800	TP-LINK_776F
+50:78:b3:a3:c4:f4	2412	-82	0800	CU-C4F4
+24:69:68:38:77:70	2412	-80	0800	wlj
+bc:54:fc:36:e1:c2	2462	-79	0800	MERCURY_E1C2
+60:ce:41:ab:02:d2	2462	-67	0800	STB_T4Zp
+60:ce:41:ab:02:d0	2462	-65	0800	<redacted>
+7c:39:85:2a:50:04	2462	-64	0800	<redacted>
+nsh> [K
+nsh> [K
+PSCAN_SECONDS=5.962
+PSCAN_IOCTL=PASS
+--- CMD: wapi psk wlan0 <redacted> 3 2 ---
+wapi psk wlan0 <redacted> 3 2
+nsh> [K
+nsh> [K
+--- CMD: wapi essid wlan0 <redacted> 2 ---
+wapi essid wlan0 <redacted> 2
+nsh> [K
+nsh> [K
+--- CMD: wapi ap wlan0 60:ce:41:ab:02:d0 ---
+wapi ap wlan0 60:ce:41:ab:02:d0
+nsh> [K
+nsh> [K
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010f80 0x2f010fcc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=2084 replay=2084 ack=2493 drop=0 pending=0x0 sreplay=1
+MONIRQ: cpu=1 defer=10416 replay=10416 ack=10419 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=6 fail=0 destroyed=5 live=1 livemax=2 pages=755 pgt=20
+nsh> [K
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:0.0.0.0 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: renew wlan0 ---
+renew wlan0
+nsh> [K
+nsh> [K
+--- CMD: ifconfig wlan0 ---
+ifconfig wlan0
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+DHCP=PASS address=192.168.1.60
+--- CMD: arp -i wlan0 -a 192.168.1.1 ---
+arp -i wlan0 -a 192.168.1.1
+nsh: arp: no such ARP entry: 192.168.1.1
+nsh> [K
+nsh> [K
+--- CMD: ping -c 4 192.168.1.1 ---
+ping -c 4 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+56 bytes from 192.168.1.1: icmp_seq=0 time=70.0 ms
+56 bytes from 192.168.1.1: icmp_seq=1 time=40.0 ms
+56 bytes from 192.168.1.1: icmp_seq=2 time=20.0 ms
+56 bytes from 192.168.1.1: icmp_seq=3 time=30.0 ms
+4 packets transmitted, 4 received, 0% packet loss, time 4040 ms
+rtt min/avg/max/mdev = 20.000/40.000/70.000/18.708 ms
+nsh> [K
+nsh> [K
+--- CMD: arp -i wlan0 -a 192.168.1.1 ---
+arp -i wlan0 -a 192.168.1.1
+HWaddr: 60:ce:41:ab:02:ca
+nsh> [K
+nsh> [K
+--- CMD: ping -c 4 192.168.1.1 ---
+ping -c 4 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+56 bytes from 192.168.1.1: icmp_seq=0 time=40.0 ms
+56 bytes from 192.168.1.1: icmp_seq=1 time=20.0 ms
+56 bytes from 192.168.1.1: icmp_seq=2 time=20.0 ms
+56 bytes from 192.168.1.1: icmp_seq=3 time=30.0 ms
+4 packets transmitted, 4 received, 0% packet loss, time 4040 ms
+rtt min/avg/max/mdev = 20.000/27.500/40.000/8.291 ms
+nsh> [K
+nsh> [K
+WARM_ARP_PING=PASS
+COLD_GATEWAY_PING=PASS
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=5341 replay=5341 ack=5989 drop=0 pending=0x0 sreplay=1
+MONIRQ: cpu=1 defer=13673 replay=13673 ack=13677 drop=0 pending=0x0 sreplay=2
+ADDRENV: created=9 fail=0 destroyed=8 live=1 livemax=2 pages=1179 pgt=32
+nsh> [K
+nsh> [K
+GATEWAY_PING=PASS
+WPA2_DHCP_GATEWAY=PASS
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010f80 0x2f010fcc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: nettest & ---
+nettest &
+nettest [15:101]
+nsh> [K
+nsh> [KBinding to IPv4 Address: 00000000
+server: Accepting connections on port 5471
+NET_LEAK_LOAD_TCP_TEST_PID=15
+--- CMD: arp -i wlan0 -d 192.168.1.29 ---
+arp -i wlan0 -d 192.168.1.29
+nsh> [K
+nsh> [K
+--- CMD: arp -i wlan0 -a 192.168.1.29 ---
+arp -i wlan0 -a 192.168.1.29
+nsh: arp: no such ARP entry: 192.168.1.29
+nsh> [K
+nsh> [K
+--- CMD: ping -c 1 192.168.1.29 ---
+ping -c 1 192.168.1.29
+PING 192.168.1.29 56 bytes of data
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 0: 101
+1 packets transmitted, 0 received, 100% packet loss, time 1010 ms
+nsh> [K
+nsh> [K
+--- CMD: arp -i wlan0 -a 192.168.1.29 ---
+arp -i wlan0 -a 192.168.1.29
+nsh: arp: no such ARP entry: 192.168.1.29
+nsh> [K
+nsh> [K
+ACTIVE_PEER_ARP=ABSENT seconds=1.859 icmp=FAIL
+TCP_ARP_MODE=resolve cleanup=board-reset
+--- CMD: arp -i wlan0 -a 192.168.1.29 ---
+arp -i wlan0 -a 192.168.1.29
+nsh: arp: no such ARP entry: 192.168.1.29
+nsh> [K
+nsh> [K
+--- CMD: cat /proc/net/tcp ---
+cat /proc/net/tcp
+nsh> [K
+nsh> [K
+--- CMD: cat /proc/net/stat ---
+cat /proc/net/stat
+             IPv4   TCP   UDP  ICMP
+Received     0018  0000  0009  0008
+Dropped      0007  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         000a  0000  0002  0008
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+nsh> [K
+TCP_CONNECTED local=192.168.1.29 remote=192.168.1.60:5471
+TCP_NETTEST=PASS bytes=4096 sha256=1301c7362ff8a67293b6cda58d8bbe583d48d90eac8acb0ef0d61fd5e66f6e62
+
+
+--- SERIAL DURING TCP TEST ---
+server: Connection accepted -- receiving
+server: Reading...
+server: Received 1460 of 4096 bytes
+server: Reading...
+server: Received 4096 of 4096 bytes
+server: Sending 4096 bytes
+server: Sent 4096 bytes
+server: Wait before closing
+server: Terminating
+
+--- CMD: arp -i wlan0 -a 192.168.1.29 ---
+arp -i wlan0 -a 192.168.1.29
+HWaddr: a8:e2:91:97:1c:b4
+nsh> [K
+nsh> [K
+--- CMD: cat /proc/net/tcp ---
+cat /proc/net/tcp
+TCP sl  st flg ref tmr uack nrt   rxsz local_address           remote_address         
+     1: 09  40   0 240    0   0      0     192.168.1.60:5471       192.168.1.29:6637  
+nsh> [K
+nsh> [K
+--- CMD: cat /proc/net/stat ---
+cat /proc/net/stat
+             IPv4   TCP   UDP  ICMP
+Received     0023  000b  0009  0008
+Dropped      0007  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0013  0009  0002  0008
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=6738 replay=6738 ack=7719 drop=0 pending=0x0 sreplay=1
+MONIRQ: cpu=1 defer=16638 replay=16638 ack=16650 drop=0 pending=0x0 sreplay=2
+ADDRENV: created=11 fail=0 destroyed=10 live=1 livemax=3 pages=1459 pgt=40
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010f80 0x2f010fcc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f010f80 0x2f010fcc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+TCP_SERVER_EXIT=PASS
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=8 rssi=-63
+[CPU0] esp_evt_work_cb: Failed to connect AP error=12290
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+PRE_RESET_IFDOWN=PASS
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x10798
+load:0x2f010800,len:0x3720
+entry 0x2f010360
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x10798  (67480)
+dram: lma 0x000127e0 vma 0x2f010800 len 0x3720   (14112)
+padd: lma 0x00015f38 vma 0x00000000 len 0xa0e0   (41184)
+imap: lma 0x00020020 vma 0x400c0020 len 0x19aa8  (105128)
+padd: lma 0x00039ad0 vma 0x00000000 len 0x6628   (26152)
+imap: lma 0x00040100 vma 0x40000100 len 0xb62e8  (746216)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+NETWORK_CLEANUP_BOOT=PASS seconds=0.628
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K

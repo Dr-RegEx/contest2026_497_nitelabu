@@ -1,0 +1,97 @@
+XTS_COMMAND=ifconfig
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    0000010c 00000000 00000000 1b900000000     
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000000 00000000 00000000 00000000 400e7138         
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0038  0000  0022  0014
+Dropped      0002  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0019  0000  0002  0017
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+nsh> [K
+XTS_COMMAND=cat /proc/net/tcp
+--- CMD: cat /proc/net/tcp ---
+cat /proc/net/tcp
+nsh> [K
+nsh> [K
+XTS_COMMAND=iperf2 -c 192.168.1.29 -i 1 -p 5002 -t 10
+--- CMD: iperf2 -c 192.168.1.29 -i 1 -p 5002 -t 10 ---
+iperf2 -c 192.168.1.29 -i 1 -p 5002 -t 10
+------------------------------------------------------------
+Client connecting to 192.168.1.29, TCP port 5002
+TCP window size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 192.168.1.60 port 15009 connected with 192.168.1.29 port 5002
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.00-1.00 sec  44.5 KBytes   365 Kbits/sec
+[  1] 1.00-2.00 sec  29.6 KBytes   243 Kbits/sec
+[  1] 2.00-3.00 sec  28.5 KBytes   234 Kbits/sec
+[  1] 3.00-4.00 sec  32.0 KBytes   262 Kbits/sec
+[  1] 4.00-5.00 sec  13.6 KBytes   112 Kbits/sec
+[  1] 5.00-6.00 sec  0.000 Bytes  0.000 bits/sec
+[  1] 6.00-7.00 sec  27.4 KBytes   225 Kbits/sec
+[  1] 7.00-8.00 sec  28.5 KBytes   234 Kbits/sec
+[  1] 8.00-9.00 sec  28.5 KBytes   234 Kbits/sec
+[  1] 9.00-10.00 sec  39.9 KBytes   327 Kbits/sec
+[CPU0] S31_TCP_SHUTDOWN state=4 how=2 write_empty=1 unacked_empty=1 tx_unacked=0 seq=1788637557
+[  1] 10.00-11.45 sec  12.5 KBytes  70.7 Kbits/sec
+[  1] 0.00-11.45 sec   285 KBytes   204 Kbits/sec
+nsh> [K
+nsh> [K
+XTS_COMMAND=ifconfig
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    000001b0 00000000 00000000 1b900000000     
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000000 00000000 00000000 00000000 400e7138         
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     00d3  0099  0024  0014
+Dropped      0002  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         00e7  00ce  0002  0017
+  Rexmit     ----  0002  ----  ----
+nsh> [K
+nsh> [K
+XTS_COMMAND=cat /proc/net/tcp
+--- CMD: cat /proc/net/tcp ---
+cat /proc/net/tcp
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310628     100892     209736     137816     152904    227     18 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+{"scope": "DIAGNOSTIC_ONLY", "receipt": "build1493-wifi-rx-window.sha256", "status": "DIAGNOSTIC_RETURNED"}

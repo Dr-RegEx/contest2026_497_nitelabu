@@ -1,0 +1,15 @@
+iperf2 -c 192.168.1.29 -i 1 -p 5002 -t 300
+------------------------------------------------------------
+Client connecting to 192.168.1.29, TCP port 5002
+TCP window size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 192.168.1.60 port 14109 connected with 192.168.1.29 port 5002
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.00-1.00 sec  44.5 KBytes   365 Kbits/sec
+[CPU0] psock_tcp_send: ERROR: No longer connected
+[CPU0] psock_tcp_send: ERROR: Not connected
+tcp write failed: Transport endpoint is not connected
+[  1] 1.00-2.00 sec  18.2 KBytes   149 Kbits/sec
+[  1] 0.00-2.25 sec  68.4 KBytes   249 Kbits/sec
+nsh> [K
+nsh> [K{"case": "5.1.23", "command": "iperf2 -c 192.168.1.29 -i 1 -p 5002 -t 300", "status": "FAIL", "rate_acceptance": "pending criterion and both endpoint logs", "wall_seconds": 2.864305665018037, "full_duration_summary": false, "uart_sha256": "b3da8c9304e923c739a90389c996f140fad59db24ebf3ea12a5bfc11e67ab8a4"}

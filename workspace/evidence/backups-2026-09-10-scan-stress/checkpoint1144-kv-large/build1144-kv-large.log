@@ -1,0 +1,1743 @@
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144 -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:xts-flat-category-kv-large1144 -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- Found Python3: /home/regex/work/esp32s31-openvela/s31-reference/.venv-nuttx/bin/python3.10 (found version "3.10.12") found components: Interpreter 
+-- Processing includes: /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-category-kv-large1144/defconfig → /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.defconfig.processed
+-- Initializing NuttX
+Loaded configuration '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config.compressed'
+Minimal configuration saved to '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/defconfig.tmp'
+  Select HOST_LINUX=y
+--   CMake:  3.22.1
+--   Ninja:  1.10.1
+--   Board:  esp32s31-core-function-board
+--   Config: xts-flat-category-kv-large1144
+--   Appdir: /home/regex/work/esp32s31-openvela/openvela-dev/apps
+-- The C compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/bin_host
+-- The C compiler identification is GNU 15.2.0
+-- The CXX compiler identification is GNU 15.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: /home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-gcc
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /home/regex/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144 --target resetconfig
+[1/1] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.defconfig.processed /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config && /usr/bin/cmake -E env KCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config EXTERNALDIR=dummy APPSDIR=/home/regex/work/esp32s31-openvela/openvela-dev/apps DRIVERS_PLATFORM_DIR=dummy APPSBINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/apps BINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144 olddefconfig && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config.orig && /usr/bin/cmake -E remove -f /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/include/nuttx/config.h && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/CMakeLists.txt
+Loaded configuration '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config'
+Configuration saved to '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config'
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144 -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:xts-flat-category-kv-large1144 -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- Processing includes: /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-category-kv-large1144/defconfig → /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.defconfig.processed
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/bin_host
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_ARCH_CHIP_ESP32S31=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_ESPRESSIF_ESP32S31=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_BUILD_FLAT=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_TESTING_MM=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_TESTING_CMOCKA=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_TESTING_DRIVER_TEST=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_BCH=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH ESPRESSIF_SPIRAM_USE_8LINE_MODE
++ rg -q '^CONFIG_ESPRESSIF_SPIRAM_USE_8LINE_MODE=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ rg -q '^CONFIG_BUILD_(KERNEL|PROTECTED)=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144 -j8
+[1/1553] Generating esp32s31.rom.libc.ld.2.tmp
+[2/1553] Generating esp32s31.rom.coexist.ld.0.tmp
+[3/1553] Generating esp32s31.rom.ld.1.tmp
+[4/1553] Generating esp32s31.rom.rvfp.ld.3.tmp
+[5/1553] Generating esp32s31.rom.net80211.ld.4.tmp
+[6/1553] Generating esp32s31.rom.phy.ld.5.tmp
+[7/1553] Generating esp32s31.rom.pp.ld.6.tmp
+[8/1553] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -DKCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.defconfig.processed -DNUTTX_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx -DCMAKE_BINARY_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144 -P /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/cmake/nuttx_generate_dts.cmake
+[9/1553] Generating esp32s31.rom.api.ld.7.tmp
+[10/1553] Generating esp32s31.peripherals.ld.9.tmp
+[11/1553] Generating rom.api.ld.10.tmp
+[12/1553] Generating esp32s31.rom.version.ld.8.tmp
+[13/1553] Generating esp32s31_aliases.ld.11.tmp
+[14/1553] Generating esp32s31_sections.ld.13.tmp
+[15/1553] Generating esp32s31_flat_memory.ld.12.tmp
+[16/1553] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/libs/libc/misc && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/libs/libc/misc/lib_utsname.c
+[17/1553] Installing locked ESP32-S31 architecture headers
+[18/1553] Building C object CMakeFiles/nuttx.dir/empty.c.o
+[19/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_efuse.c.o
+[20/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/esp32s31/esp_efuse_utility.c.o
+[21/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_clock/esp32s31/clk_tree_hal.c.o
+[22/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_dma/esp32s31/gdma_periph.c.o
+[23/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/src/efuse_controller/keys/with_key_purposes/esp_efuse_api_key.c.o
+[24/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/src/esp_efuse_utility.c.o
+[25/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/flash_encrypt.c.o
+[26/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/src/esp_efuse_api.c.o
+[27/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_init.c.o
+[28/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/esp32s31/esp_efuse_table.c.o
+[29/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/esp32s31/esp_efuse_fields.c.o
+[30/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/esp32s31/dedic_gpio_periph.c.o
+[31/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_dma/gdma_hal_crc_gen.c.o
+[32/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_dma/gdma_hal_top.c.o
+[33/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_dma/gdma_hal_ahb_v2.c.o
+[34/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/esp_image_format.c.o
+[35/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/esp32s31/rtc_io_periph.c.o
+[36/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/esp32s31/sdm_periph.c.o
+[37/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/sdm_hal.c.o
+[38/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_dma/gdma_hal_axi.c.o
+[39/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/gpio_hal.c.o
+[40/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_gpio/rtc_io_hal.c.o
+[41/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_mspi/spi_flash_encrypt_hal_iram.c.o
+[42/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_pmu/esp32s31/pmu_hal.c.o
+[43/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_systimer/systimer_hal.c.o
+[44/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/clk_ctrl_os.c.o
+[45/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_wdt/wdt_hal_iram.c.o
+[46/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_mspi/spi_flash_hal_gpspi.c.o
+[47/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_start.c.o
+[48/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_mspi/spi_flash_hal.c.o
+[49/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_uart/uart_hal.c.o
+[50/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_timg/esp32s31/timer_periph.c.o
+[51/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_uart/esp32s31/uart_periph.c.o
+[52/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/clk_utils.c.o
+[53/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_mspi/spi_flash_hal_iram.c.o
+[54/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_timg/timer_hal.c.o
+[55/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/cpu.c.o
+[56/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_uart/uart_hal_iram.c.o
+[57/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/esp_clk.c.o
+[58/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/esp_cpu_intr.c.o
+[59/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/mac_addr.c.o
+[60/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/periph_ctrl.c.o
+[61/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/ldo/esp_ldo_regulator.c.o
+[62/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/hal_backports/esp_gpio_reserve.c.o
+[63/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/mspi/mspi_timing_tuning/mspi_timing_tuning.c.o
+[64/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/esp_memory_utils.c.o
+[65/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/cpu_region_protect.c.o
+[66/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/hw_random.c.o
+[67/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/systimer.c.o
+[68/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/esp_clk_tree.c.o
+[69/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/hal_backports/rtc_clk_init.c.o
+[70/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/rtc_time.c.o
+[71/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/io_mux.c.o
+[72/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/regi2c_ctrl.c.o
+[73/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/rtc_module.c.o
+[74/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_crc.c.o
+[75/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_efuse.c.o
+[76/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/pmu_param.c.o
+[77/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/intr_alloc.c.o
+[78/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_gpio.c.o
+[79/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp_clk_tree_common.c.o
+[80/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_mm/esp_cache_msync.c.o
+[81/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/pmu_init.c.o
+[82/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_mm/port/esp32s31/ext_mem_layout.c.o
+[83/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_serial_output.c.o
+[84/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_clic.c.o
+[85/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_spiflash.c.o
+[86/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_print.c.o
+[87/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_mm/esp_cache_utils.c.o
+[88/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/startup.c.o
+[89/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/port/soc/esp32s31/reset_reason.c.o
+[90/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_rom/patches/esp_rom_sys.c.o
+[91/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/port/esp32s31/rtc_clk.c.o
+[92/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/port/soc/esp32s31/clk.c.o
+[93/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_common/src/esp_err_to_name.c.o
+[94/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/port/soc/esp32s31/system_internal.c.o
+[95/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/startup_funcs.c.o
+[96/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_mm/esp_mmu_map.c.o
+[97/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/esp_err.c.o
+[98/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/system_time.c.o
+[99/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/hal/esp32s31/efuse_hal.c.o
+[100/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_system/esp_system.c.o
+[101/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/hal/efuse_hal.c.o
+[102/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/log_level/log_level.c.o
+[103/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/hal/hal_utils.c.o
+[104/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_timer/src/system_time.c.o
+[105/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_timer/src/esp_timer_init.c.o
+[106/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/hal/cache_hal.c.o
+[107/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/log_level/tag_log_level/linked_list/log_linked_list.c.o
+[108/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/os/log_write.c.o
+[109/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_timer/src/esp_timer_impl_common.c.o
+[110/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/riscv/instruction_decode.c.o
+[111/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_timer/src/esp_timer.c.o
+[112/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/hal/mmu_hal.c.o
+[113/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_timer/src/esp_timer_impl_systimer.c.o
+[114/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/os/util.c.o
+[115/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/riscv/rv_utils.c.o
+[116/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/riscv/interrupt.c.o
+[117/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/riscv/interrupt_clic.c.o
+[118/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/noos/log_lock.c.o
+[119/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/log_level/tag_log_level/tag_log_level.c.o
+[120/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/log.c.o
+[121/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/log/src/noos/log_timestamp.c.o
+[122/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/soc/esp32s31/gpio_periph.c.o
+[123/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/flash_brownout_hook.c.o
+[124/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/soc/esp32s31/interrupts.c.o
+[125/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/soc/lldesc.c.o
+[126/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_chip_drivers.c.o
+[127/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/flash_mmap.c.o
+[128/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/flash_ops.c.o
+[129/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/memspi_host_driver.c.o
+[130/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_os_func_noos.c.o
+[131/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_spi_init.c.o
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_spi_init.c: In function 'acquire_spi_device':
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_spi_init.c:234:35: warning: declaration of 'config' shadows a parameter [-Wshadow]
+  234 |         spi_bus_lock_dev_config_t config = {.flags = SPI_BUS_LOCK_DEV_FLAG_CS_REQUIRED};
+      |                                   ^~~~~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_spi_init.c:226:74: note: shadowed declaration is here
+  226 | static esp_err_t acquire_spi_device(const esp_flash_spi_device_config_t *config, int* out_dev_id, spi_bus_lock_dev_handle_t* out_dev_handle)
+      |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+[132/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/cache_utils.c.o
+[133/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c.o
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c: In function 'esp_flash_write':
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:57:23: warning: declaration of 'ret' shadows a previous local [-Wshadow]
+   57 |             esp_err_t ret = CHIP->os_func->region_protected(CHIP->os_func_data, ADDR, SIZE); \
+      |                       ^~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:1121:5: note: in expansion of macro 'CHECK_WRITE_ADDRESS'
+ 1121 |     CHECK_WRITE_ADDRESS(chip, address, length);
+      |     ^~~~~~~~~~~~~~~~~~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:1113:15: note: shadowed declaration is here
+ 1113 |     esp_err_t ret = ESP_FAIL;
+      |               ^~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c: In function 'esp_flash_write_encrypted':
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:57:23: warning: declaration of 'ret' shadows a previous local [-Wshadow]
+   57 |             esp_err_t ret = CHIP->os_func->region_protected(CHIP->os_func_data, ADDR, SIZE); \
+      |                       ^~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:1362:5: note: in expansion of macro 'CHECK_WRITE_ADDRESS'
+ 1362 |     CHECK_WRITE_ADDRESS(chip, address, length);
+      |     ^~~~~~~~~~~~~~~~~~~
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/esp_flash_api.c:1350:15: note: shadowed declaration is here
+ 1350 |     esp_err_t ret = ESP_FAIL;
+      |               ^~~
+[134/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_dma/src/esp_dma_utils.c.o
+[135/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_os_func_app.c.o
+[136/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_chip_gd.c.o
+[137/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_dma/src/gdma_link.c.o
+[138/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp32s31_pm_stubs.c.o
+[139/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_regi2c/esp32s31/regi2c_impl.c.o
+[140/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_chip_winbond.c.o
+[141/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_hpm_enable.c.o
+[142/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp32s31_os_adapter.c.o
+[143/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_mem.c.o
+[144/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_dma/src/gdma.c.o
+[145/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/nuttx/src/components/newlib/newlib/libc/misc/init.c.o
+[146/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/spi_flash/spi_flash_chip_generic.c.o
+[147/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_uart/src/uart_wakeup.c.o
+[148/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_gpio/src/rtc_io.c.o
+[149/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/nuttx/src/heap_caps.c.o
+[150/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/bootloader_flash/src/bootloader_flash_config_esp32s31.c.o
+[151/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_console_loader.c.o
+[152/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/bootloader_flash/src/flash_qio_mode.c.o
+[153/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_gpio/src/gpio.c.o
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_gpio/src/gpio.c: In function 'gpio_dump_io_configuration':
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_gpio/src/gpio.c:1105:29: warning: format '%lu' expects argument of type 'long unsigned int', but argument 3 has type 'int' [-Wformat=]
+ 1105 |         fprintf(out_stream, "  FuncSel: %"PRIu32" (%s)\n", io_config.fun_sel, (io_config.fun_sel == PIN_FUNC_GPIO) ? "GPIO" : "IOMUX");
+      |                             ^~~~~~~~~~~~~~                 ~~~~~~~~~~~~~~~~~
+      |                                                                     |
+      |                                                                     int
+In file included from /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include/stdint.h:37,
+                 from /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include/sys/types.h:34,
+                 from /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/arch/risc-v/src/esp32s31/include/esp32s31/rom/ets_sys.h:15,
+                 from <command-line>:
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include/arch/inttypes.h:79:35: note: format string is defined here
+   79 | #define PRIu32      _PRI32PREFIX "u"
+/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/upper_hal_gpio/src/gpio.c:1107:33: warning: format '%lu' expects argument of type 'long unsigned int', but argument 3 has type 'int' [-Wformat=]
+ 1107 |             fprintf(out_stream, "  GPIO Matrix SigOut ID: %"PRIu32"%s\n", io_config.sig_out, (io_config.sig_out == SIG_GPIO_OUT_IDX) ? " (simple GPIO output)" : "");
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~              ~~~~~~~~~~~~~~~~~
+      |                                                                                    |
+      |                                                                                    int
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include/arch/inttypes.h:79:35: note: format string is defined here
+   79 | #define PRIu32      _PRI32PREFIX "u"
+[154/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_common_loader.c.o
+[155/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_random.c.o
+[156/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/bootloader_flash/src/bootloader_flash.c.o
+[157/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_clock_loader.c.o
+[158/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_console.c.o
+[159/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_clock_init.c.o
+[160/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/hal_backports/bootloader_random_esp32s31.c.o
+[161/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/esp32s31/bootloader_soc.c.o
+[162/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_reset_common.c.o
+[163/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_common.c.o
+[164/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/mspi/mspi_timing_tuning/port/esp32s31/mspi_timing_config.c.o
+[165/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/bootloader_sha.c.o
+[166/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_psram/system_layer/esp_psram_mspi.c.o
+[167/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/nuttx/src/bootloader_banner_wrap.c.o
+[168/1553] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_vectors.S.o
+[169/1553] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_head.S.o
+[170/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hw_support/mspi/mspi_timing_tuning/tuning_scheme_impl/mspi_timing_by_dqs.c.o
+[171/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_hal_mspi/esp32s31/mspi_periph.c.o
+[172/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/efuse/src/esp_efuse_fields.c.o
+[173/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/bootloader_support/src/esp32s31/bootloader_esp32s31.c.o
+[174/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_psram/device/esp_psram_impl_ap_hex.c.o
+[175/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_allocateheap.c.o
+[176/1553] Building C object arch/CMakeFiles/arch.dir/home/regex/work/esp32s31-openvela/s31-reference/deps/esp-hal-3rdparty/components/esp_psram/system_layer/esp_psram.c.o
+[177/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_idle.c.o
+[178/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_rtc_gpio.c.o
+[179/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_irq.c.o
+[180/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_ets_timer_legacy.c.o
+[181/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_gpio.c.o
+[182/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_rtc.c.o
+[183/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp_chip_rev.c.o
+[184/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_libc_stubs.c.o
+[185/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_hr_timer.c.o
+[186/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_spiflash_mtd.c.o
+[187/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp32s31_heap.c.o
+[188/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_systemreset.c.o
+[189/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_spiflash.c.o
+[190/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_random.c.o
+[191/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_lowputc.c.o
+[192/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_timerisr.c.o
+[193/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_cpuinfo.c.o
+[194/1553] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_exception_common.S.o
+[195/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/espressif/esp_serial.c.o
+[196/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/esp32s31/esp32s31_rtc_periodic.c.o
+[197/1553] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_mhartid.S.o
+[198/1553] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_saveusercontext.S.o
+[199/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_createstack.c.o
+[200/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_doirq.c.o
+[201/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_exception.c.o
+[202/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_exit.c.o
+[203/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_getintstack.c.o
+[204/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_cpuidlestack.c.o
+[205/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_allocateheap.c.o
+[206/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_getnewintctx.c.o
+[207/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_tcbinfo.c.o
+[208/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_registerdump.c.o
+[209/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_releasestack.c.o
+[210/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_stackframe.c.o
+[211/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_switchcontext.c.o
+[212/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_usestack.c.o
+[213/1553] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/fork.S.o
+[214/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_initialize.c.o
+[215/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_swint.c.o
+[216/1553] Building ASM object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_fpu.S.o
+[217/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_initialstate.c.o
+[218/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_modifyreg32.c.o
+[219/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_nputs.c.o
+[220/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_udelay.c.o
+[221/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_globals.c.o
+[222/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_fpucmp.c.o
+[223/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_fork.c.o
+[224/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_idle.c.o
+[225/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_mdelay.c.o
+[226/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_schedulesigaction.c.o
+[227/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_initialize.c.o
+[228/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_register.c.o
+[229/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_sigdeliver.c.o
+[230/1553] Building C object arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_pmp.c.o
+[231/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_unregister.c.o
+[232/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_copyargv.c.o
+[233/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_copyactions.c.o
+[234/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_loadmodule.c.o
+[235/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_unloadmodule.c.o
+[236/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_exec.c.o
+[237/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_copyattr.c.o
+[238/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_execmodule.c.o
+[239/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_dumpmodule.c.o
+[240/1553] Building C object binfmt/CMakeFiles/binfmt.dir/builtin.c.o
+[241/1553] Building C object binfmt/CMakeFiles/binfmt.dir/binfmt_execsymtab.c.o
+[242/1553] Building C object drivers/CMakeFiles/drivers.dir/bch/bchlib_setup.c.o
+[243/1553] Building C object drivers/CMakeFiles/drivers.dir/bch/bchlib_teardown.c.o
+[244/1553] Linking C static library binfmt/libbinfmt.a
+[245/1553] Building C object drivers/CMakeFiles/drivers.dir/bch/bchlib_read.c.o
+[246/1553] Building C object drivers/CMakeFiles/drivers.dir/bch/bchlib_write.c.o
+[247/1553] Building C object drivers/CMakeFiles/drivers.dir/bch/bchlib_cache.c.o
+[248/1553] Building C object drivers/CMakeFiles/drivers.dir/bch/bchdev_register.c.o
+[249/1553] Building C object drivers/CMakeFiles/drivers.dir/bch/bchdev_unregister.c.o
+[250/1553] Building C object drivers/CMakeFiles/drivers.dir/misc/dev_null.c.o
+[251/1553] Linking C static library arch/libarch.a
+[252/1553] Building C object drivers/CMakeFiles/drivers.dir/misc/dev_zero.c.o
+[253/1553] Building C object drivers/CMakeFiles/drivers.dir/misc/mkrd.c.o
+[254/1553] Building C object drivers/CMakeFiles/drivers.dir/misc/ramdisk.c.o
+[255/1553] Building C object drivers/CMakeFiles/drivers.dir/loop/losetup.c.o
+[256/1553] Building C object drivers/CMakeFiles/drivers.dir/bch/bchdev_driver.c.o
+[257/1553] Building C object drivers/CMakeFiles/drivers.dir/pipes/fifo.c.o
+[258/1553] Building C object drivers/CMakeFiles/drivers.dir/pipes/pipe.c.o
+[259/1553] Building C object drivers/CMakeFiles/drivers.dir/mtd/mtd_partition.c.o
+[260/1553] Building C object drivers/CMakeFiles/drivers.dir/syslog/syslog_initialize.c.o
+[261/1553] Building C object drivers/CMakeFiles/drivers.dir/misc/rwbuffer.c.o
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/misc/rwbuffer.c: In function 'rwb_readbytes':
+/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/drivers/misc/rwbuffer.c:1174:2: warning: #warning Not Implemented [-Wcpp]
+ 1174 | #warning Not Implemented
+      |  ^~~~~~~
+[262/1553] Building C object drivers/CMakeFiles/drivers.dir/mtd/ftl.c.o
+[263/1553] Building C object drivers/CMakeFiles/drivers.dir/serial/serial_io.c.o
+[264/1553] Building C object drivers/CMakeFiles/drivers.dir/syslog/setlogmask.c.o
+[265/1553] Building C object drivers/CMakeFiles/drivers.dir/syslog/vsyslog.c.o
+[266/1553] Building C object drivers/CMakeFiles/drivers.dir/syslog/syslog_flush.c.o
+[267/1553] Building C object drivers/CMakeFiles/drivers.dir/syslog/syslog_channel.c.o
+[268/1553] Building C object drivers/CMakeFiles/drivers.dir/syslog/syslog_write.c.o
+[269/1553] Building C object drivers/CMakeFiles/drivers.dir/net/netdev_upperhalf.c.o
+[270/1553] Building C object drivers/CMakeFiles/drivers.dir/pipes/pipe_common.c.o
+[271/1553] Building C object libs/libc/CMakeFiles/c.dir/assert/lib_stackchk.c.o
+[272/1553] Building C object libs/libc/CMakeFiles/c.dir/builtin/lib_builtin_getname.c.o
+[273/1553] Building C object libs/libc/CMakeFiles/c.dir/assert/lib_assert.c.o
+[274/1553] Building C object libs/libc/CMakeFiles/c.dir/builtin/lib_builtin_isavail.c.o
+[275/1553] Building C object drivers/CMakeFiles/drivers.dir/drivers_initialize.c.o
+[276/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_killpg.c.o
+[277/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_longjmp.c.o
+[278/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_isemptyset.c.o
+[279/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_ismember.c.o
+[280/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_orset.c.o
+[281/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_nandset.c.o
+[282/1553] Building C object fs/CMakeFiles/fs.dir/fs_heap.c.o
+[283/1553] Building C object drivers/CMakeFiles/drivers.dir/timers/rtc.c.o
+[284/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_registerdriver.c.o
+[285/1553] Building C object fs/CMakeFiles/fs.dir/fs_initialize.c.o
+[286/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_unregisterdriver.c.o
+[287/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_registerpipedriver.c.o
+[288/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_unregisterpipedriver.c.o
+[289/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_unregisterblockdriver.c.o
+[290/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_registerblockdriver.c.o
+[291/1553] Building C object drivers/CMakeFiles/drivers.dir/serial/serial.c.o
+[292/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_openblockdriver.c.o
+[293/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_closeblockdriver.c.o
+[294/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_findblockdriver.c.o
+[295/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_closemtddriver.c.o
+[296/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_findmtddriver.c.o
+[297/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_blockpartition.c.o
+[298/1553] Linking C static library drivers/libdrivers.a
+[299/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_registermtddriver.c.o
+[300/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_unregistermtddriver.c.o
+[301/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_blockmerge.c.o
+[302/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_mtdpartition.c.o
+[303/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_mtdproxy.c.o
+[304/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_foreachinode.c.o
+[305/1553] Building C object fs/CMakeFiles/fs.dir/driver/fs_blockproxy.c.o
+[306/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_inodeaddref.c.o
+[307/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_inode.c.o
+[308/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_inodebasename.c.o
+[309/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_inodefind.c.o
+[310/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_inodefree.c.o
+[311/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_inodegetpath.c.o
+[312/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_inoderelease.c.o
+[313/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_inoderemove.c.o
+[314/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_inodereserve.c.o
+[315/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_files.c.o
+[316/1553] Building C object fs/CMakeFiles/fs.dir/inode/fs_inodesearch.c.o
+[317/1553] Building C object fs/CMakeFiles/fs.dir/littlefs/littlefs/lfs_util.c.o
+[318/1553] Building C object fs/CMakeFiles/fs.dir/mmap/fs_mmisc.c.o
+[319/1553] Building C object fs/CMakeFiles/fs.dir/mmap/fs_munmap.c.o
+[320/1553] Building C object fs/CMakeFiles/fs.dir/mmap/fs_mmap.c.o
+[321/1553] Building C object fs/CMakeFiles/fs.dir/mmap/fs_msync.c.o
+[322/1553] Building C object fs/CMakeFiles/fs.dir/mmap/fs_anonmap.c.o
+[323/1553] Building C object fs/CMakeFiles/fs.dir/mount/fs_umount2.c.o
+[324/1553] Building C object fs/CMakeFiles/fs.dir/mount/fs_foreachmountpoint.c.o
+[325/1553] Building C object fs/CMakeFiles/fs.dir/mount/fs_gettype.c.o
+[326/1553] Building C object fs/CMakeFiles/fs.dir/mount/fs_mount.c.o
+[327/1553] Building C object fs/CMakeFiles/fs.dir/mount/fs_procfs_mount.c.o
+[328/1553] Building C object fs/CMakeFiles/fs.dir/mqueue/mq_close.c.o
+[329/1553] Building C object fs/CMakeFiles/fs.dir/mqueue/mq_unlink.c.o
+[330/1553] Building C object fs/CMakeFiles/fs.dir/partition/fs_partition.c.o
+[331/1553] Building C object fs/CMakeFiles/fs.dir/mqueue/mq_open.c.o
+[332/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfscpuload.c.o
+[333/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfscpuinfo.c.o
+[334/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfscritmon.c.o
+[335/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsfdt.c.o
+[336/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsiobinfo.c.o
+[337/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfs.c.o
+[338/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfstcbinfo.c.o
+[339/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsuptime.c.o
+[340/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsmeminfo.c.o
+[341/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsutil.c.o
+[342/1553] Building C object fs/CMakeFiles/fs.dir/semaphore/sem_close.c.o
+[343/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsversion.c.o
+[344/1553] Building C object fs/CMakeFiles/fs.dir/semaphore/sem_open.c.o
+[345/1553] Building C object fs/CMakeFiles/fs.dir/semaphore/sem_unlink.c.o
+[346/1553] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsproc.c.o
+[347/1553] Building C object fs/CMakeFiles/fs.dir/socket/accept.c.o
+[348/1553] Building C object fs/CMakeFiles/fs.dir/socket/socketpair.c.o
+[349/1553] Building C object fs/CMakeFiles/fs.dir/littlefs/lfs_vfs.c.o
+[350/1553] Building C object fs/CMakeFiles/fs.dir/socket/socket.c.o
+[351/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_chstat.c.o
+[352/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_close.c.o
+[353/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_dup.c.o
+[354/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_dup3.c.o
+[355/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_fcntl.c.o
+[356/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_dup2.c.o
+[357/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_fstatfs.c.o
+[358/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_fchstat.c.o
+[359/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_fstat.c.o
+[360/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_lseek.c.o
+[361/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_ioctl.c.o
+[362/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_mkdir.c.o
+[363/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_open.c.o
+[364/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_pread.c.o
+[365/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_pwrite.c.o
+[366/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_poll.c.o
+[367/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_read.c.o
+[368/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_rmdir.c.o
+[369/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_rename.c.o
+[370/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_select.c.o
+[371/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_sendfile.c.o
+[372/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_stat.c.o
+[373/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_epoll.c.o
+[374/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_statfs.c.o
+[375/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_unlink.c.o
+[376/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_uio.c.o
+[377/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_syncfs.c.o
+[378/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_write.c.o
+[379/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_fsync.c.o
+[380/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_dir.c.o
+[381/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_link.c.o
+[382/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_truncate.c.o
+[383/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_symlink.c.o
+[384/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_readlink.c.o
+[385/1553] Building C object libs/libc/CMakeFiles/c.dir/builtin/lib_builtin_forindex.c.o
+[386/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_isalnum.c.o
+[387/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_isalpha.c.o
+[388/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_isascii.c.o
+[389/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_isblank.c.o
+[390/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_iscntrl.c.o
+[391/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_isdigit.c.o
+[392/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_isgraph.c.o
+[393/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_islower.c.o
+[394/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_isprint.c.o
+[395/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_ispunct.c.o
+[396/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_isupper.c.o
+[397/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_isspace.c.o
+[398/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_isxdigit.c.o
+[399/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_tolower.c.o
+[400/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_ctype.c.o
+[401/1553] Building C object fs/CMakeFiles/fs.dir/vfs/fs_lock.c.o
+[402/1553] Building C object libs/libc/CMakeFiles/c.dir/ctype/lib_toupper.c.o
+[403/1553] Building C object fs/CMakeFiles/fs.dir/littlefs/littlefs/lfs.c.o
+[404/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_alphasort.c.o
+[405/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_readdirr.c.o
+[406/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_telldir.c.o
+[407/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_ftw.c.o
+[408/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_scandir.c.o
+[409/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_opendir.c.o
+[410/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_fdopendir.c.o
+[411/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_closedir.c.o
+[412/1553] Building C object fs/CMakeFiles/fs.dir/tmpfs/fs_tmpfs.c.o
+[413/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_readdir.c.o
+[414/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_rewinddir.c.o
+[415/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_nftw.c.o
+[416/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_dirfd.c.o
+[417/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_versionsort.c.o
+[418/1553] Building C object libs/libc/CMakeFiles/c.dir/dirent/lib_seekdir.c.o
+[419/1553] Building C object libs/libc/CMakeFiles/c.dir/dlfcn/lib_dlfind_object.c.o
+[420/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_getenvironptr.c.o
+[421/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_release.c.o
+[422/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_findvar.c.o
+[423/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_clearenv.c.o
+[424/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_removevar.c.o
+[425/1553] Linking C static library fs/libfs.a
+[426/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_dup.c.o
+[427/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_putenv.c.o
+[428/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_getenv.c.o
+[429/1553] Building C object libs/libc/CMakeFiles/c.dir/fixedmath/lib_fixedmath.c.o
+[430/1553] Building C object libs/libc/CMakeFiles/c.dir/errno/lib_errno.c.o
+[431/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_foreach.c.o
+[432/1553] Building C object libs/libc/CMakeFiles/c.dir/fixedmath/lib_b16sin.c.o
+[433/1553] Building C object libs/libc/CMakeFiles/c.dir/fixedmath/lib_b16cos.c.o
+[434/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_unsetenv.c.o
+[435/1553] Building C object libs/libc/CMakeFiles/c.dir/fixedmath/lib_b16atan2.c.o
+[436/1553] Building C object libs/libc/CMakeFiles/c.dir/fixedmath/lib_ubsqrt.c.o
+[437/1553] Building C object libs/libc/CMakeFiles/c.dir/environ/env_setenv.c.o
+[438/1553] Building C object libs/libc/CMakeFiles/c.dir/grp/lib_getgrgidr.c.o
+[439/1553] Building C object libs/libc/CMakeFiles/c.dir/grp/lib_getgrnamr.c.o
+[440/1553] Building C object libs/libc/CMakeFiles/c.dir/grp/lib_getgrgid.c.o
+[441/1553] Building C object libs/libc/CMakeFiles/c.dir/grp/lib_initgroups.c.o
+[442/1553] Building C object libs/libc/CMakeFiles/c.dir/grp/lib_getgrnam.c.o
+[443/1553] Building C object libs/libc/CMakeFiles/c.dir/inttypes/lib_imaxabs.c.o
+[444/1553] Building C object libs/libc/CMakeFiles/c.dir/grp/lib_getgrbufr.c.o
+[445/1553] Building C object libs/libc/CMakeFiles/c.dir/inttypes/lib_imaxdiv.c.o
+[446/1553] Building ASM object libs/libc/CMakeFiles/c.dir/machine/risc-v/arch_setjmp.S.o
+[447/1553] Building C object libs/libc/CMakeFiles/c.dir/grp/lib_getgrbuf.c.o
+[448/1553] Building C object libs/libc/CMakeFiles/c.dir/libgen/lib_basename.c.o
+[449/1553] Building C object libs/libc/CMakeFiles/c.dir/inttypes/lib_strtoimax.c.o
+[450/1553] Building C object libs/libc/CMakeFiles/c.dir/libgen/lib_dirname.c.o
+[451/1553] Building C object libs/libc/CMakeFiles/c.dir/inttypes/lib_strtoumax.c.o
+[452/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_creat.c.o
+[453/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_xorshift128.c.o
+[454/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_mknod.c.o
+[455/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_utsname.c.o
+[456/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_tea_encrypt.c.o
+[457/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_umask.c.o
+[458/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_bitmap.c.o
+[459/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_getrandom.c.o
+[460/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_impure.c.o
+[461/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_tea_decrypt.c.o
+[462/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_circbuf.c.o
+[463/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_fstatat.c.o
+[464/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_cxx_initialize.c.o
+[465/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_fchmodat.c.o
+[466/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_memfd.c.o
+[467/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_getfullpath.c.o
+[468/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_openat.c.o
+[469/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_mallopt.c.o
+[470/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_getnprocs.c.o
+[471/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_mkdirat.c.o
+[472/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_utimensat.c.o
+[473/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_sem_mutex_noinline.c.o
+[474/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_ratelimit.c.o
+[475/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_umul64.c.o
+[476/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_umul32.c.o
+[477/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_umul32x64.c.o
+[478/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_tempbuffer.c.o
+[479/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_uadd32x64.c.o
+[480/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_uadd64.c.o
+[481/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_usub64x32.c.o
+[482/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_usub64.c.o
+[483/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_mkfifo.c.o
+[484/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_dumpbuffer.c.o
+[485/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_fnmatch.c.o
+[486/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_idr.c.o
+[487/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_debug.c.o
+[488/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc64.c.o
+[489/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc64emac.c.o
+[490/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_dumpvbuffer.c.o
+[491/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc32.c.o
+[492/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc32h04c11db7.c.o
+[493/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc32hf4acfb13.c.o
+[494/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc16.c.o
+[495/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc16ccitt.c.o
+[496/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc16h8005.c.o
+[497/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc16h1021.c.o
+[498/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc8.c.o
+[499/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc8ccitt.c.o
+[500/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc8h1d.c.o
+[501/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc8h2f.c.o
+[502/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc8rohc.c.o
+[503/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_crc8table.c.o
+[504/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_ftok.c.o
+[505/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_instrument.c.o
+[506/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_addrconfig.c.o
+[507/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_fdcheck.c.o
+[508/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_err.c.o
+[509/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_backtrace.c.o
+[510/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_htons.c.o
+[511/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_htonl.c.o
+[512/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_htonq.c.o
+[513/1553] Building C object libs/libc/CMakeFiles/c.dir/sched/clock_getcpuclockid.c.o
+[514/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_base64.c.o
+[515/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_inetaddr.c.o
+[516/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_inetaton.c.o
+[517/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_glob.c.o
+[518/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_inetntop.c.o
+[519/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_inetntoa.c.o
+[520/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_accept.c.o
+[521/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_inetpton.c.o
+[522/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_inetnetwork.c.o
+[523/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_etherntoa.c.o
+[524/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_alloc.c.o
+[525/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_init.c.o
+[526/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_copy.c.o
+[527/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_free.c.o
+[528/1553] Building C object libs/libc/CMakeFiles/c.dir/net/lib_etheraton.c.o
+[529/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_blank.c.o
+[530/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_make_room.c.o
+[531/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_object_size.c.o
+[532/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_finish.c.o
+[533/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_grow.c.o
+[534/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_room.c.o
+[535/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_printf.c.o
+[536/1553] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_lrucache.c.o
+[537/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_vprintf.c.o
+[538/1553] Building C object libs/libc/CMakeFiles/c.dir/obstack/lib_obstack_malloc.c.o
+[539/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_init.c.o
+[540/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_destroy.c.o
+[541/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_setschedpolicy.c.o
+[542/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_getschedpolicy.c.o
+[543/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_setinheritsched.c.o
+[544/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_getinheritsched.c.o
+[545/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_setdetachstate.c.o
+[546/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_getdetachstate.c.o
+[547/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_setstackaddr.c.o
+[548/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_getstackaddr.c.o
+[549/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_setstacksize.c.o
+[550/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_setstack.c.o
+[551/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_getstacksize.c.o
+[552/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_getstack.c.o
+[553/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_setschedparam.c.o
+[554/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_setscope.c.o
+[555/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_getscope.c.o
+[556/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_getschedparam.c.o
+[557/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_setguardsize.c.o
+[558/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_attr_getguardsize.c.o
+[559/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_barrierattr_init.c.o
+[560/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_barrierattr_destroy.c.o
+[561/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_barrierattr_setpshared.c.o
+[562/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_barrierattr_getpshared.c.o
+[563/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_barrierdestroy.c.o
+[564/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condattr_init.c.o
+[565/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_barrierinit.c.o
+[566/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condattr_getpshared.c.o
+[567/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condattr_destroy.c.o
+[568/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_barrierwait.c.o
+[569/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condattr_setpshared.c.o
+[570/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condattr_setclock.c.o
+[571/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condattr_getclock.c.o
+[572/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condbroadcast.c.o
+[573/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condinit.c.o
+[574/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_conddestroy.c.o
+[575/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condclockwait.c.o
+[576/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condtimedwait.c.o
+[577/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_create.c.o
+[578/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condsignal.c.o
+[579/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_equal.c.o
+[580/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_exit.c.o
+[581/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_kill.c.o
+[582/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_condwait.c.o
+[583/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_setname_np.c.o
+[584/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_getname_np.c.o
+[585/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_get_stacksize_np.c.o
+[586/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_get_stackaddr_np.c.o
+[587/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_init.c.o
+[588/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_destroy.c.o
+[589/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_getpshared.c.o
+[590/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_setpshared.c.o
+[591/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_setprotocol.c.o
+[592/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_getprotocol.c.o
+[593/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_settype.c.o
+[594/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_gettype.c.o
+[595/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_setrobust.c.o
+[596/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_setprioceiling.c.o
+[597/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_getrobust.c.o
+[598/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutexattr_getprioceiling.c.o
+[599/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex_destroy.c.o
+[600/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex_lock.c.o
+[601/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex_getprioceiling.c.o
+[602/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex_setprioceiling.c.o
+[603/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex_init.c.o
+[604/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex_timedlock.c.o
+[605/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex_trylock.c.o
+[606/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_yield.c.o
+[607/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex.c.o
+[608/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex_unlock.c.o
+[609/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_once.c.o
+[610/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_atfork.c.o
+[611/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_rwlockattr_init.c.o
+[612/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_rwlockattr_destroy.c.o
+[613/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_rwlockattr_getpshared.c.o
+[614/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_rwlockattr_setpshared.c.o
+[615/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_setcanceltype.c.o
+[616/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_setcancelstate.c.o
+[617/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_testcancel.c.o
+[618/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_rwlock.c.o
+[619/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_rwlock_rdlock.c.o
+[620/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_rwlock_wrlock.c.o
+[621/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_getcpuclockid.c.o
+[622/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_self.c.o
+[623/1553] Building C object libs/libc/CMakeFiles/c.dir/pwd/lib_getpwnam.c.o
+[624/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_gettid_np.c.o
+[625/1553] Building C object libs/libc/CMakeFiles/c.dir/pwd/lib_getpwnamr.c.o
+[626/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_concurrency.c.o
+[627/1553] Building C object libs/libc/CMakeFiles/c.dir/pwd/lib_getpwuid.c.o
+[628/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex_inconsistent.c.o
+[629/1553] Building C object libs/libc/CMakeFiles/c.dir/pthread/pthread_mutex_consistent.c.o
+[630/1553] Building C object libs/libc/CMakeFiles/c.dir/queue/queue.c.o
+[631/1553] Building C object libs/libc/CMakeFiles/c.dir/pwd/lib_getpwuidr.c.o
+[632/1553] Building C object libs/libc/CMakeFiles/c.dir/pwd/lib_getpwbufr.c.o
+[633/1553] Building C object libs/libc/CMakeFiles/c.dir/pwd/lib_getspnam.c.o
+[634/1553] Building C object libs/libc/CMakeFiles/c.dir/pwd/lib_getpwbuf.c.o
+[635/1553] Building C object libs/libc/CMakeFiles/c.dir/pwd/lib_getpwent.c.o
+[636/1553] Building C object libs/libc/CMakeFiles/c.dir/regex/regerror.c.o
+[637/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_mempcpy.c.o
+[638/1553] Building C object libs/libc/CMakeFiles/c.dir/regex/tre-mem.c.o
+[639/1553] Building C object libs/libc/CMakeFiles/c.dir/sched/task_cancelpt.c.o
+[640/1553] Building C object libs/libc/CMakeFiles/c.dir/sched/sched_getprioritymax.c.o
+[641/1553] Building C object libs/libc/CMakeFiles/c.dir/sched/sched_getprioritymin.c.o
+[642/1553] Building C object libs/libc/CMakeFiles/c.dir/sched/task_testcancel.c.o
+[643/1553] Building C object libs/libc/CMakeFiles/c.dir/sched/task_setcancelstate.c.o
+[644/1553] Building C object libs/libc/CMakeFiles/c.dir/sched/task_setcanceltype.c.o
+[645/1553] Building C object libs/libc/CMakeFiles/c.dir/search/hash_func.c.o
+[646/1553] Building C object libs/libc/CMakeFiles/c.dir/sched/task_getpid.c.o
+[647/1553] Building C object libs/libc/CMakeFiles/c.dir/sched/task_startup.c.o
+[648/1553] Building C object libs/libc/CMakeFiles/c.dir/search/hcreate.c.o
+[649/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_init.c.o
+[650/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_setprotocol.c.o
+[651/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_getprotocol.c.o
+[652/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_getvalue.c.o
+[653/1553] Building C object libs/libc/CMakeFiles/c.dir/search/hcreate_r.c.o
+[654/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_destroy.c.o
+[655/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_timedwait.c.o
+[656/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_wait.c.o
+[657/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_trywait.c.o
+[658/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_post.c.o
+[659/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_clockwait.c.o
+[660/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_open.c.o
+[661/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_andset.c.o
+[662/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_altstack.c.o
+[663/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_close.c.o
+[664/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_addset.c.o
+[665/1553] Building C object libs/libc/CMakeFiles/c.dir/semaphore/sem_unlink.c.o
+[666/1553] Building C object libs/libc/CMakeFiles/c.dir/regex/regexec.c.o
+[667/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_hold.c.o
+[668/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_emptyset.c.o
+[669/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_delset.c.o
+[670/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_fillset.c.o
+[671/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_pause.c.o
+[672/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_psignal.c.o
+[673/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_relse.c.o
+[674/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_wait.c.o
+[675/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_raise.c.o
+[676/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_ignore.c.o
+[677/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_xorset.c.o
+[678/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_interrupt.c.o
+[679/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_set.c.o
+[680/1553] Building C object libs/libc/CMakeFiles/c.dir/signal/sig_signal.c.o
+[681/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psfa_addaction.c.o
+[682/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psfa_addclose.c.o
+[683/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psfa_destroy.c.o
+[684/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psfa_adddup2.c.o
+[685/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psfa_addopen.c.o
+[686/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psfa_init.c.o
+[687/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_getflags.c.o
+[688/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_getschedparam.c.o
+[689/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_getschedpolicy.c.o
+[690/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_setflags.c.o
+[691/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_setschedparam.c.o
+[692/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_setschedpolicy.c.o
+[693/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_getsigmask.c.o
+[694/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_init.c.o
+[695/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_setsigmask.c.o
+[696/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_getstacksize.c.o
+[697/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_setstacksize.c.o
+[698/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_getpriority.c.o
+[699/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_setpriority.c.o
+[700/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_getstackaddr.c.o
+[701/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_setstackaddr.c.o
+[702/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_destroy.c.o
+[703/1553] Building C object libs/libc/CMakeFiles/c.dir/regex/regcomp.c.o
+[704/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fileno.c.o
+[705/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psfa_dump.c.o
+[706/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_sprintf.c.o
+[707/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_asprintf.c.o
+[708/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_printf.c.o
+[709/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_snprintf.c.o
+[710/1553] Building C object libs/libc/CMakeFiles/c.dir/spawn/lib_psa_dump.c.o
+[711/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_vsprintf.c.o
+[712/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_vsnprintf.c.o
+[713/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_dprintf.c.o
+[714/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_vdprintf.c.o
+[715/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_vasprintf.c.o
+[716/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_vprintf.c.o
+[717/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_perror.c.o
+[718/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_putchar.c.o
+[719/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_getchar.c.o
+[720/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_puts.c.o
+[721/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_gets_s.c.o
+[722/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_gets.c.o
+[723/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_sscanf.c.o
+[724/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_vsscanf.c.o
+[725/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_remove.c.o
+[726/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_libdgets.c.o
+[727/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_tempnam.c.o
+[728/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_tmpnam.c.o
+[729/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_renameat.c.o
+[730/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_putwchar.c.o
+[731/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_freopen.c.o
+[732/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fread.c.o
+[733/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fseek.c.o
+[734/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_ftell.c.o
+[735/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fopen.c.o
+[736/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fclose.c.o
+[737/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fseeko.c.o
+[738/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_libfread_unlocked.c.o
+[739/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fsetpos.c.o
+[740/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_ftello.c.o
+[741/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_getdelim.c.o
+[742/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fgetpos.c.o
+[743/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_getc.c.o
+[744/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fgetc.c.o
+[745/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fgets.c.o
+[746/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fwrite.c.o
+[747/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fflush.c.o
+[748/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_libfgets.c.o
+[749/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_wrflush_unlocked.c.o
+[750/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_libfwrite.c.o
+[751/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_libfflush.c.o
+[752/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_rdflush_unlocked.c.o
+[753/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_putc.c.o
+[754/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_libflushall.c.o
+[755/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fputc.c.o
+[756/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_ungetc.c.o
+[757/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fprintf.c.o
+[758/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fputs.c.o
+[759/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_feof.c.o
+[760/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_vfprintf.c.o
+[761/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_ferror.c.o
+[762/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_rewind.c.o
+[763/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_clearerr.c.o
+[764/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_scanf.c.o
+[765/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fscanf.c.o
+[766/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_vscanf.c.o
+[767/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_vfscanf.c.o
+[768/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_setbuf.c.o
+[769/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_tmpfile.c.o
+[770/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_setvbuf.c.o
+[771/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_putwc.c.o
+[772/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fputwc.c.o
+[773/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_libgetstreams.c.o
+[774/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_setbuffer.c.o
+[775/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fputws.c.o
+[776/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fopencookie.c.o
+[777/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_libfilelock.c.o
+[778/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_abs.c.o
+[779/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fgetwc.c.o
+[780/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_getwc.c.o
+[781/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_ungetwc.c.o
+[782/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_fmemopen.c.o
+[783/1553] Building C object libs/libc/CMakeFiles/c.dir/stdio/lib_open_memstream.c.o
+[784/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_atof.c.o
+[785/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_abort.c.o
+[786/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_atoi.c.o
+[787/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_atol.c.o
+[788/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_atoll.c.o
+[789/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_div.c.o
+[790/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_getprogname.c.o
+[791/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_ldiv.c.o
+[792/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_lldiv.c.o
+[793/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_labs.c.o
+[794/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_llabs.c.o
+[795/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_itoa.c.o
+[796/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_exit.c.o
+[797/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_bsearch.c.o
+[798/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_rand.c.o
+[799/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_reallocarray.c.o
+[800/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_realpath.c.o
+[801/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_strtol.c.o
+[802/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_rand48.c.o
+[803/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_srand.c.o
+[804/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_strtoll.c.o
+[805/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_strtoul.c.o
+[806/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_qsort.c.o
+[807/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_strtoull.c.o
+[808/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_checkbase.c.o
+[809/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_aligned_alloc.c.o
+[810/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_mkstemp.c.o
+[811/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_mkdtemp.c.o
+[812/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_posix_memalign.c.o
+[813/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_mktemp.c.o
+[814/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_mblen.c.o
+[815/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_valloc.c.o
+[816/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_wctomb.c.o
+[817/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_mbtowc.c.o
+[818/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_mbstowcs.c.o
+[819/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_wcstombs.c.o
+[820/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_arc4random.c.o
+[821/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_atexit.c.o
+[822/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_meminstream.c.o
+[823/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_memoutstream.c.o
+[824/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_memsistream.c.o
+[825/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_memsostream.c.o
+[826/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_lowoutstream.c.o
+[827/1553] Building C object libs/libc/CMakeFiles/c.dir/stdlib/lib_strtold.c.o
+[828/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_rawinstream.c.o
+[829/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_zeroinstream.c.o
+[830/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_nullinstream.c.o
+[831/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_rawoutstream.c.o
+[832/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_rawsistream.c.o
+[833/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_nulloutstream.c.o
+[834/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_rawsostream.c.o
+[835/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_libnoflush.c.o
+[836/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_libsnoflush.c.o
+[837/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_mtdoutstream.c.o
+[838/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_syslogstream.c.o
+[839/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_base64outstream.c.o
+[840/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_hexdumpstream.c.o
+[841/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_bufferedoutstream.c.o
+[842/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_mtdsostream.c.o
+[843/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_filesistream.c.o
+[844/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_fileoutstream.c.o
+[845/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_ultoa_invert.c.o
+[846/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_dtoa_data.c.o
+[847/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_libbsprintf.c.o
+[848/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_syslograwstream.c.o
+[849/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_libosprintf.c.o
+[850/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_dtoa_engine.c.o
+[851/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_stdinstream.c.o
+[852/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_stdoutstream.c.o
+[853/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_stdsistream.c.o
+[854/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bzero.c.o
+[855/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_ffs.c.o
+[856/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_ffsll.c.o
+[857/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_stdsostream.c.o
+[858/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_ffsl.c.o
+[859/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_flsll.c.o
+[860/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_fls.c.o
+[861/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_flsl.c.o
+[862/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_blkoutstream.c.o
+[863/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_libvscanf.c.o
+[864/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_isbasedigit.c.o
+[865/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_popcountl.c.o
+[866/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_popcount.c.o
+[867/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_popcountll.c.o
+[868/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_memmem.c.o
+[869/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_skipspace.c.o
+[870/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strcspn.c.o
+[871/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strcasecmp.c.o
+[872/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strerror.c.o
+[873/1553] Building C object libs/libc/CMakeFiles/c.dir/stream/lib_libvsprintf.c.o
+[874/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strncasecmp.c.o
+[875/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strdup.c.o
+[876/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strncat.c.o
+[877/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strcasestr.c.o
+[878/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strpbrk.c.o
+[879/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strndup.c.o
+[880/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strspn.c.o
+[881/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strtokr.c.o
+[882/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strsep.c.o
+[883/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strstr.c.o
+[884/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strtok.c.o
+[885/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strerrorr.c.o
+[886/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_explicit_bzero.c.o
+[887/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_index.c.o
+[888/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_rindex.c.o
+[889/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strsignal.c.o
+[890/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_timingsafe_bcmp.c.o
+[891/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_rawmemchr.c.o
+[892/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_memmove.c.o
+[893/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strlcpy.c.o
+[894/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strverscmp.c.o
+[895/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strnlen.c.o
+[896/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_strlcat.c.o
+[897/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdmemcpy.c.o
+[898/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdmemcmp.c.o
+[899/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdmemset.c.o
+[900/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdmemccpy.c.o
+[901/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstrchr.c.o
+[902/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstrlen.c.o
+[903/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstrcmp.c.o
+[904/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdmemrchr.c.o
+[905/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstpncpy.c.o
+[906/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstrncpy.c.o
+[907/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdmemchr.c.o
+[908/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstrcpy.c.o
+[909/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstrchrnul.c.o
+[910/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstrcat.c.o
+[911/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstpcpy.c.o
+[912/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstrrchr.c.o
+[913/1553] Building C object libs/libc/CMakeFiles/c.dir/string/lib_bsdstrncmp.c.o
+[914/1553] Building C object libs/libc/CMakeFiles/c.dir/symtab/symtab_findbyname.c.o
+[915/1553] Building C object libs/libc/CMakeFiles/c.dir/symtab/symtab_findbyvalue.c.o
+[916/1553] Building C object libs/libc/CMakeFiles/c.dir/symtab/symtab_sortbyname.c.o
+[917/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_cfspeed.c.o
+[918/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_cfmakeraw.c.o
+[919/1553] Building C object libs/libc/CMakeFiles/c.dir/syslog/lib_setlogmask.c.o
+[920/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_tcflush.c.o
+[921/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_isatty.c.o
+[922/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_tcdrain.c.o
+[923/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_tcflow.c.o
+[924/1553] Building C object libs/libc/CMakeFiles/c.dir/syslog/lib_syslog.c.o
+[925/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_tcgetattr.c.o
+[926/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_tcsetattr.c.o
+[927/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_tcsendbreak.c.o
+[928/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_daysbeforemonth.c.o
+[929/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_ttyname.c.o
+[930/1553] Building C object libs/libc/CMakeFiles/c.dir/termios/lib_ttynamer.c.o
+[931/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_calendar2utc.c.o
+[932/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_gettimeofday.c.o
+[933/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_isleapyear.c.o
+[934/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_settimeofday.c.o
+[935/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_time.c.o
+[936/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_timespec_get.c.o
+[937/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_nanosleep.c.o
+[938/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_difftime.c.o
+[939/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_dayofweek.c.o
+[940/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_strftime.c.o
+[941/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_ctime.c.o
+[942/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_asctime.c.o
+[943/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_ctimer.c.o
+[944/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_asctimer.c.o
+[945/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_gethrtime.c.o
+[946/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_gmtime.c.o
+[947/1553] Building C object libs/libc/CMakeFiles/c.dir/tls/tls_getinfo.c.o
+[948/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_timegm.c.o
+[949/1553] Building C object libs/libc/CMakeFiles/c.dir/tls/task_tls.c.o
+[950/1553] Building C object libs/libc/CMakeFiles/c.dir/uio/lib_preadv.c.o
+[951/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_gmtimer.c.o
+[952/1553] Building C object libs/libc/CMakeFiles/c.dir/time/lib_strptime.c.o
+[953/1553] Building C object libs/libc/CMakeFiles/c.dir/tls/task_tls_destruct.c.o
+[954/1553] Building C object libs/libc/CMakeFiles/c.dir/uio/lib_pwritev.c.o
+[955/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_daemon.c.o
+[956/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_access.c.o
+[957/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_swab.c.o
+[958/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_pathconf.c.o
+[959/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_sysconf.c.o
+[960/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getentropy.c.o
+[961/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getcwd.c.o
+[962/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getopt.c.o
+[963/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getopt_long.c.o
+[964/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getopt_longonly.c.o
+[965/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getoptvars.c.o
+[966/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getoptargp.c.o
+[967/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getopterrp.c.o
+[968/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getopt_common.c.o
+[969/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getoptindp.c.o
+[970/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_times.c.o
+[971/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_statvfs.c.o
+[972/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_fstatvfs.c.o
+[973/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getoptoptp.c.o
+[974/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_alarm.c.o
+[975/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_utime.c.o
+[976/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getrusage.c.o
+[977/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_sleep.c.o
+[978/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_setrlimit.c.o
+[979/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_setregid.c.o
+[980/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_nice.c.o
+[981/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_setreuid.c.o
+[982/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_utimes.c.o
+[983/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_futimes.c.o
+[984/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_lutimes.c.o
+[985/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_setpriority.c.o
+[986/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getrlimit.c.o
+[987/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getpriority.c.o
+[988/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_gethostname.c.o
+[989/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_sethostname.c.o
+[990/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_fchownat.c.o
+[991/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_linkat.c.o
+[992/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_readlinkat.c.o
+[993/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_symlinkat.c.o
+[994/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_usleep.c.o
+[995/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_unlinkat.c.o
+[996/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getpgrp.c.o
+[997/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getpgid.c.o
+[998/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_lockf.c.o
+[999/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_flock.c.o
+[1000/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getpass.c.o
+[1001/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_confstr.c.o
+[1002/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_ulimit.c.o
+[1003/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_setuid.c.o
+[1004/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_setgid.c.o
+[1005/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getuid.c.o
+[1006/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getgid.c.o
+[1007/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_seteuid.c.o
+[1008/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_geteuid.c.o
+[1009/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_getegid.c.o
+[1010/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_setegid.c.o
+[1011/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_restoredir.c.o
+[1012/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_chdir.c.o
+[1013/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_fchdir.c.o
+[1014/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_execl.c.o
+[1015/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_execv.c.o
+[1016/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_execle.c.o
+[1017/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_truncate.c.o
+[1018/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_posix_fallocate.c.o
+[1019/1553] Building C object libs/libc/CMakeFiles/c.dir/uuid/lib_uuid_compare.c.o
+[1020/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_pipe.c.o
+[1021/1553] Building C object libs/libc/CMakeFiles/c.dir/uuid/lib_uuid_create.c.o
+[1022/1553] Building C object libs/libc/CMakeFiles/c.dir/unistd/lib_fork.c.o
+[1023/1553] Building C object libs/libc/CMakeFiles/c.dir/uuid/lib_uuid_create_nil.c.o
+[1024/1553] Building C object libs/libc/CMakeFiles/c.dir/uuid/lib_uuid_hash.c.o
+[1025/1553] Building C object libs/libc/CMakeFiles/c.dir/uuid/lib_uuid_equal.c.o
+[1026/1553] Building C object libs/libc/CMakeFiles/c.dir/uuid/lib_uuid_from_string.c.o
+[1027/1553] Building C object libs/libc/CMakeFiles/c.dir/uuid/lib_uuid_is_nil.c.o
+[1028/1553] Building C object libs/libc/CMakeFiles/c.dir/uuid/lib_uuid_stream.c.o
+[1029/1553] Building C object libs/libc/CMakeFiles/c.dir/uuid/lib_uuid_to_string.c.o
+[1030/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcscmp.c.o
+[1031/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcslen.c.o
+[1032/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wmemchr.c.o
+[1033/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wmemcmp.c.o
+[1034/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wmemcpy.c.o
+[1035/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wmemmove.c.o
+[1036/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wmemset.c.o
+[1037/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_btowc.c.o
+[1038/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wctob.c.o
+[1039/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcsxfrm.c.o
+[1040/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcslcpy.c.o
+[1041/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_mbrtowc.c.o
+[1042/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcsftime.c.o
+[1043/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcrtomb.c.o
+[1044/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcscoll.c.o
+[1045/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcstol.c.o
+[1046/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcstoll.c.o
+[1047/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcstoul.c.o
+[1048/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcstoull.c.o
+[1049/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcstold.c.o
+[1050/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcstof.c.o
+[1051/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcstod.c.o
+[1052/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_swprintf.c.o
+[1053/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_mbsinit.c.o
+[1054/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_mbsnrtowcs.c.o
+[1055/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_mbrlen.c.o
+[1056/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcsnrtombs.c.o
+[1057/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_mbsrtowcs.c.o
+[1058/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcsrtombs.c.o
+[1059/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcscpy.c.o
+[1060/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcscat.c.o
+[1061/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcsncat.c.o
+[1062/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcslcat.c.o
+[1063/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcsrchr.c.o
+[1064/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcschr.c.o
+[1065/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcsncpy.c.o
+[1066/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcsncmp.c.o
+[1067/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcscspn.c.o
+[1068/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcspbrk.c.o
+[1069/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcsspn.c.o
+[1070/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcswcs.c.o
+[1071/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcstok.c.o
+[1072/1553] Building C object libs/libc/CMakeFiles/c.dir/wctype/lib_wctype.c.o
+[1073/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcwidth.c.o
+[1074/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcswidth.c.o
+[1075/1553] Building C object libs/libc/CMakeFiles/c.dir/wchar/lib_wcsstr.c.o
+[1076/1553] Building C object libs/libc/CMakeFiles/c.dir/wctype/lib_towlower.c.o
+[1077/1553] Building C object libs/libc/CMakeFiles/c.dir/wctype/lib_towupper.c.o
+[1078/1553] Building C object libs/libc/CMakeFiles/c.dir/wctype/lib_iswctype.c.o
+[1079/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_add_queue.c.o
+[1080/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_alloc_qentry.c.o
+[1081/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_concat.c.o
+[1082/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_clone.c.o
+[1083/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_copyout.c.o
+[1084/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_copyin.c.o
+[1085/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_alloc.c.o
+[1086/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_contig.c.o
+[1087/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_free.c.o
+[1088/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_free_qentry.c.o
+[1089/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_free_chain.c.o
+[1090/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_free_queue.c.o
+[1091/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_peek_queue.c.o
+[1092/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_initialize.c.o
+[1093/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_remove_queue.c.o
+[1094/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_pack.c.o
+[1095/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_trimhead_queue.c.o
+[1096/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_statistics.c.o
+[1097/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_trimhead.c.o
+[1098/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_free_queue_qentry.c.o
+[1099/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_navail.c.o
+[1100/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_trimtail.c.o
+[1101/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_tailroom.c.o
+[1102/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_get_queue_info.c.o
+[1103/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_reserve.c.o
+[1104/1553] Building C object mm/CMakeFiles/mm.dir/kasan/hook.c.o
+[1105/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_count.c.o
+[1106/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_update_pktlen.c.o
+[1107/1553] Building C object mm/CMakeFiles/mm.dir/iob/iob_dump.c.o
+[1108/1553] Building C object mm/CMakeFiles/mm.dir/mempool/mempool_procfs.c.o
+[1109/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_malloc_size.c.o
+[1110/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_shrinkchunk.c.o
+[1111/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_initialize.c.o
+[1112/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_calloc.c.o
+[1113/1553] Building C object mm/CMakeFiles/mm.dir/map/mm_map.c.o
+[1114/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_brkaddr.c.o
+[1115/1553] Building C object mm/CMakeFiles/mm.dir/mempool/mempool.c.o
+[1116/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_extend.c.o
+[1117/1553] Building C object mm/CMakeFiles/mm.dir/mempool/mempool_multiple.c.o
+[1118/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_mallinfo.c.o
+[1119/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_free.c.o
+[1120/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_foreach.c.o
+[1121/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_malloc.c.o
+[1122/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_memalign.c.o
+[1123/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_zalloc.c.o
+[1124/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_globals.c.o
+[1125/1553] Linking C static library libs/libc/libc.a
+[1126/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_initialize.c.o
+[1127/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_heapmember.c.o
+[1128/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_addregion.c.o
+[1129/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_malloc_size.c.o
+[1130/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_brkaddr.c.o
+[1131/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_memdump.c.o
+[1132/1553] Building C object mm/CMakeFiles/mm.dir/mm_heap/mm_realloc.c.o
+[1133/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_extend.c.o
+[1134/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_calloc.c.o
+[1135/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_free.c.o
+[1136/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_mallinfo.c.o
+[1137/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_memalign.c.o
+[1138/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_malloc.c.o
+[1139/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_realloc.c.o
+[1140/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_zalloc.c.o
+[1141/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_heapmember.c.o
+[1142/1553] Building C object mm/CMakeFiles/mm.dir/umm_heap/umm_memdump.c.o
+[1143/1553] Building C object net/CMakeFiles/net.dir/arp/arp_input.c.o
+[1144/1553] Building C object net/CMakeFiles/net.dir/arp/arp_out.c.o
+[1145/1553] Building C object net/CMakeFiles/net.dir/arp/arp_format.c.o
+[1146/1553] Building C object net/CMakeFiles/net.dir/arp/arp_poll.c.o
+[1147/1553] Linking C static library mm/libmm.a
+[1148/1553] Building C object net/CMakeFiles/net.dir/arp/arp_table.c.o
+[1149/1553] Building C object net/CMakeFiles/net.dir/arp/arp_notify.c.o
+[1150/1553] Building C object net/CMakeFiles/net.dir/devif/devif_send.c.o
+[1151/1553] Building C object net/CMakeFiles/net.dir/devif/devif_loopback.c.o
+[1152/1553] Building C object net/CMakeFiles/net.dir/arp/arp_send.c.o
+[1153/1553] Building C object net/CMakeFiles/net.dir/devif/devif_iobsend.c.o
+[1154/1553] Building C object net/CMakeFiles/net.dir/devif/devif_callback.c.o
+[1155/1553] Building C object net/CMakeFiles/net.dir/devif/devif_filesend.c.o
+[1156/1553] Building C object net/CMakeFiles/net.dir/devif/ipv4_input.c.o
+[1157/1553] Building C object net/CMakeFiles/net.dir/icmp/icmp_input.c.o
+[1158/1553] Building C object net/CMakeFiles/net.dir/devif/devif_poll.c.o
+[1159/1553] Building C object net/CMakeFiles/net.dir/inet/inet_globals.c.o
+[1160/1553] Building C object net/CMakeFiles/net.dir/icmp/icmp_reply.c.o
+[1161/1553] Building C object net/CMakeFiles/net.dir/inet/inet_txdrain.c.o
+[1162/1553] Building C object net/CMakeFiles/net.dir/inet/inet_sockif.c.o
+[1163/1553] Building C object net/CMakeFiles/net.dir/inet/ipv4_getsockname.c.o
+[1164/1553] Building C object net/CMakeFiles/net.dir/inet/ipv4_getpeername.c.o
+[1165/1553] Building C object net/CMakeFiles/net.dir/inet/ipv4_getsockopt.c.o
+[1166/1553] Building C object net/CMakeFiles/net.dir/inet/ipv4_build_header.c.o
+[1167/1553] Building C object net/CMakeFiles/net.dir/inet/ipv4_setsockopt.c.o
+[1168/1553] Building C object net/CMakeFiles/net.dir/local/local_release.c.o
+[1169/1553] Building C object net/CMakeFiles/net.dir/local/local_bind.c.o
+[1170/1553] Building C object net/CMakeFiles/net.dir/local/local_conn.c.o
+[1171/1553] Building C object net/CMakeFiles/net.dir/local/local_sendpacket.c.o
+[1172/1553] Building C object net/CMakeFiles/net.dir/local/local_recvutils.c.o
+[1173/1553] Building C object net/CMakeFiles/net.dir/local/local_fifo.c.o
+[1174/1553] Building C object net/CMakeFiles/net.dir/local/local_recvmsg.c.o
+[1175/1553] Building C object net/CMakeFiles/net.dir/local/local_sendmsg.c.o
+[1176/1553] Building C object net/CMakeFiles/net.dir/local/local_netpoll.c.o
+[1177/1553] Building C object net/CMakeFiles/net.dir/local/local_connect.c.o
+[1178/1553] Building C object net/CMakeFiles/net.dir/local/local_listen.c.o
+[1179/1553] Building C object net/CMakeFiles/net.dir/local/local_accept.c.o
+[1180/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_register.c.o
+[1181/1553] Building C object net/CMakeFiles/net.dir/local/local_sockif.c.o
+[1182/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_txnotify.c.o
+[1183/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_findbyname.c.o
+[1184/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_findbyindex.c.o
+[1185/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_findbyaddr.c.o
+[1186/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_count.c.o
+[1187/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_ioctl.c.o
+[1188/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_ifconf.c.o
+[1189/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_foreach.c.o
+[1190/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_unregister.c.o
+[1191/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_carrier.c.o
+[1192/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_default.c.o
+[1193/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_verify.c.o
+[1194/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_lladdrsize.c.o
+[1195/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_input.c.o
+[1196/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_checksum.c.o
+[1197/1553] Building C object net/CMakeFiles/net.dir/netdev/netdev_iob.c.o
+[1198/1553] Building C object net/CMakeFiles/net.dir/socket/accept.c.o
+[1199/1553] Building C object net/CMakeFiles/net.dir/socket/bind.c.o
+[1200/1553] Building C object net/CMakeFiles/net.dir/procfs/netdev_statistics.c.o
+[1201/1553] Building C object net/CMakeFiles/net.dir/socket/connect.c.o
+[1202/1553] Building C object net/CMakeFiles/net.dir/socket/getsockname.c.o
+[1203/1553] Building C object net/CMakeFiles/net.dir/socket/getpeername.c.o
+[1204/1553] Building C object net/CMakeFiles/net.dir/procfs/net_procfs.c.o
+[1205/1553] Building C object net/CMakeFiles/net.dir/socket/recv.c.o
+[1206/1553] Building C object net/CMakeFiles/net.dir/socket/listen.c.o
+[1207/1553] Building C object net/CMakeFiles/net.dir/socket/recvfrom.c.o
+[1208/1553] Building C object net/CMakeFiles/net.dir/socket/send.c.o
+[1209/1553] Building C object net/CMakeFiles/net.dir/socket/sendto.c.o
+[1210/1553] Building C object net/CMakeFiles/net.dir/socket/socket.c.o
+[1211/1553] Building C object net/CMakeFiles/net.dir/socket/socketpair.c.o
+[1212/1553] Building C object net/CMakeFiles/net.dir/socket/net_close.c.o
+[1213/1553] Building C object net/CMakeFiles/net.dir/socket/recvmsg.c.o
+[1214/1553] Building C object net/CMakeFiles/net.dir/socket/sendmsg.c.o
+[1215/1553] Building C object net/CMakeFiles/net.dir/socket/shutdown.c.o
+[1216/1553] Building C object net/CMakeFiles/net.dir/socket/net_poll.c.o
+[1217/1553] Building C object net/CMakeFiles/net.dir/socket/net_sockif.c.o
+[1218/1553] Building C object net/CMakeFiles/net.dir/socket/net_mmap.c.o
+[1219/1553] Building C object net/CMakeFiles/net.dir/socket/net_fstat.c.o
+[1220/1553] Building C object net/CMakeFiles/net.dir/socket/net_dup2.c.o
+[1221/1553] Building C object net/CMakeFiles/net.dir/socket/net_timeo.c.o
+[1222/1553] Building C object net/CMakeFiles/net.dir/socket/getsockopt.c.o
+[1223/1553] Building C object net/CMakeFiles/net.dir/utils/net_dsec2tick.c.o
+[1224/1553] Building C object net/CMakeFiles/net.dir/utils/net_dsec2timeval.c.o
+[1225/1553] Building C object net/CMakeFiles/net.dir/utils/net_timeval2dsec.c.o
+[1226/1553] Building C object net/CMakeFiles/net.dir/socket/setsockopt.c.o
+[1227/1553] Building C object net/CMakeFiles/net.dir/utils/net_ipchksum.c.o
+[1228/1553] Building C object net/CMakeFiles/net.dir/utils/net_incr32.c.o
+[1229/1553] Building C object net/CMakeFiles/net.dir/utils/net_chksum.c.o
+[1230/1553] Building C object net/CMakeFiles/net.dir/utils/net_iob_concat.c.o
+[1231/1553] Building C object net/CMakeFiles/net.dir/utils/net_cmsg.c.o
+[1232/1553] Building C object net/CMakeFiles/net.dir/utils/net_mask2pref.c.o
+[1233/1553] Building C object sched/CMakeFiles/sched.dir/clock/clock.c.o
+[1234/1553] Building C object net/CMakeFiles/net.dir/utils/net_icmpchksum.c.o
+[1235/1553] Building C object net/CMakeFiles/net.dir/net_initialize.c.o
+[1236/1553] Building C object net/CMakeFiles/net.dir/utils/net_snoop.c.o
+[1237/1553] Building C object sched/CMakeFiles/sched.dir/clock/clock_initialize.c.o
+[1238/1553] Building C object sched/CMakeFiles/sched.dir/clock/clock_getres.c.o
+[1239/1553] Building C object sched/CMakeFiles/sched.dir/clock/clock_settime.c.o
+[1240/1553] Building C object sched/CMakeFiles/sched.dir/clock/clock_notifier.c.o
+[1241/1553] Building C object sched/CMakeFiles/sched.dir/clock/clock_gettime.c.o
+[1242/1553] Building C object sched/CMakeFiles/sched.dir/clock/clock_systime_ticks.c.o
+[1243/1553] Building C object net/CMakeFiles/net.dir/utils/net_lock.c.o
+[1244/1553] Building C object sched/CMakeFiles/sched.dir/clock/clock_realtime2absticks.c.o
+[1245/1553] Building C object sched/CMakeFiles/sched.dir/clock/clock_systime_timespec.c.o
+[1246/1553] Building C object sched/CMakeFiles/sched.dir/clock/clock_perf.c.o
+[1247/1553] Building C object sched/CMakeFiles/sched.dir/group/group_join.c.o
+[1248/1553] Building C object sched/CMakeFiles/sched.dir/group/group_create.c.o
+[1249/1553] Building C object sched/CMakeFiles/sched.dir/group/group_setupidlefiles.c.o
+[1250/1553] Building C object sched/CMakeFiles/sched.dir/group/group_leave.c.o
+[1251/1553] Building C object sched/CMakeFiles/sched.dir/group/group_setuptaskfiles.c.o
+[1252/1553] Building C object sched/CMakeFiles/sched.dir/group/group_foreachchild.c.o
+[1253/1553] Building C object sched/CMakeFiles/sched.dir/group/group_killchildren.c.o
+[1254/1553] Linking C static library net/libnet.a
+[1255/1553] Building C object sched/CMakeFiles/sched.dir/instrument/instrument.c.o
+[1256/1553] Building C object sched/CMakeFiles/sched.dir/init/nx_bringup.c.o
+[1257/1553] Building C object sched/CMakeFiles/sched.dir/group/group_signal.c.o
+[1258/1553] Building C object sched/CMakeFiles/sched.dir/irq/irq_initialize.c.o
+[1259/1553] Building C object sched/CMakeFiles/sched.dir/irq/irq_attach.c.o
+[1260/1553] Building C object sched/CMakeFiles/sched.dir/init/nx_start.c.o
+[1261/1553] Building C object sched/CMakeFiles/sched.dir/irq/irq_dispatch.c.o
+[1262/1553] Building C object sched/CMakeFiles/sched.dir/irq/irq_csection.c.o
+[1263/1553] Building C object sched/CMakeFiles/sched.dir/irq/irq_attach_thread.c.o
+[1264/1553] Building C object sched/CMakeFiles/sched.dir/irq/irq_unexpectedisr.c.o
+[1265/1553] Building C object sched/CMakeFiles/sched.dir/irq/irq_attach_wqueue.c.o
+[1266/1553] Building C object sched/CMakeFiles/sched.dir/misc/panic_notifier.c.o
+[1267/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_initialize.c.o
+[1268/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_recover.c.o
+[1269/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_waitirq.c.o
+[1270/1553] Building C object sched/CMakeFiles/sched.dir/misc/reboot_notifier.c.o
+[1271/1553] Building C object sched/CMakeFiles/sched.dir/misc/assert.c.o
+[1272/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_send.c.o
+[1273/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_sndinternal.c.o
+[1274/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_msgfree.c.o
+[1275/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_msgqalloc.c.o
+[1276/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_receive.c.o
+[1277/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_rcvinternal.c.o
+[1278/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_msgqfree.c.o
+[1279/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_setattr.c.o
+[1280/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_getattr.c.o
+[1281/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/mq_notify.c.o
+[1282/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/msgctl.c.o
+[1283/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/msgget.c.o
+[1284/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/msginternal.c.o
+[1285/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/msgrcv.c.o
+[1286/1553] Building C object sched/CMakeFiles/sched.dir/mqueue/msgsnd.c.o
+[1287/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_create.c.o
+[1288/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_exit.c.o
+[1289/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_getschedparam.c.o
+[1290/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_setschedparam.c.o
+[1291/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_detach.c.o
+[1292/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_sigmask.c.o
+[1293/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_join.c.o
+[1294/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_cancel.c.o
+[1295/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_release.c.o
+[1296/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_setschedprio.c.o
+[1297/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_getfiles.c.o
+[1298/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_findjoininfo.c.o
+[1299/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_profil.c.o
+[1300/1553] Building C object sched/CMakeFiles/sched.dir/pthread/pthread_completejoin.c.o
+[1301/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_removereadytorun.c.o
+[1302/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_addreadytorun.c.o
+[1303/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_removeblocked.c.o
+[1304/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_addblocked.c.o
+[1305/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_verifytcb.c.o
+[1306/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_gettcb.c.o
+[1307/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_setparam.c.o
+[1308/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_getparam.c.o
+[1309/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_releasetcb.c.o
+[1310/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_setpriority.c.o
+[1311/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_getscheduler.c.o
+[1312/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_yield.c.o
+[1313/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_setscheduler.c.o
+[1314/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_foreach.c.o
+[1315/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_rrgetinterval.c.o
+[1316/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_lock.c.o
+[1317/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_unlock.c.o
+[1318/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_lockcount.c.o
+[1319/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_idletask.c.o
+[1320/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_self.c.o
+[1321/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_getcpu.c.o
+[1322/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_get_tls.c.o
+[1323/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_sysinfo.c.o
+[1324/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_get_stackinfo.c.o
+[1325/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_switchcontext.c.o
+[1326/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_get_stateinfo.c.o
+[1327/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_reprioritizertr.c.o
+[1328/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_mergepending.c.o
+[1329/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_waitpid.c.o
+[1330/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_destroy.c.o
+[1331/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_processtimer.c.o
+[1332/1553] Building C object sched/CMakeFiles/sched.dir/sched/sched_roundrobin.c.o
+[1333/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_trywait.c.o
+[1334/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_wait.c.o
+[1335/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_tickwait.c.o
+[1336/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_timeout.c.o
+[1337/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_clockwait.c.o
+[1338/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_post.c.o
+[1339/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_recover.c.o
+[1340/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_waitirq.c.o
+[1341/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_reset.c.o
+[1342/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_allocpendingsigaction.c.o
+[1343/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_action.c.o
+[1344/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_cleanup.c.o
+[1345/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_findaction.c.o
+[1346/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_deliver.c.o
+[1347/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_pending.c.o
+[1348/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_initialize.c.o
+[1349/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_releasependingsigaction.c.o
+[1350/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_releasependingsignal.c.o
+[1351/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_removependingsignal.c.o
+[1352/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_unmaskpendingsignal.c.o
+[1353/1553] Building C object sched/CMakeFiles/sched.dir/semaphore/sem_rw.c.o
+[1354/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_lowest.c.o
+[1355/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_kill.c.o
+[1356/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_nanosleep.c.o
+[1357/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_notification.c.o
+[1358/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_pause.c.o
+[1359/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_dispatch.c.o
+[1360/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_ppoll.c.o
+[1361/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_pselect.c.o
+[1362/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_sleep.c.o
+[1363/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_queue.c.o
+[1364/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_procmask.c.o
+[1365/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_usleep.c.o
+[1366/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_suspend.c.o
+[1367/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_tgkill.c.o
+[1368/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_waitinfo.c.o
+[1369/1553] Building C object sched/CMakeFiles/sched.dir/task/task_argvstr.c.o
+[1370/1553] Building C object sched/CMakeFiles/sched.dir/task/task_create.c.o
+[1371/1553] Building C object sched/CMakeFiles/sched.dir/task/task_init.c.o
+[1372/1553] Building C object sched/CMakeFiles/sched.dir/task/task_start.c.o
+[1373/1553] Building C object sched/CMakeFiles/sched.dir/task/task_delete.c.o
+[1374/1553] Building C object sched/CMakeFiles/sched.dir/task/task_activate.c.o
+[1375/1553] Building C object sched/CMakeFiles/sched.dir/task/task_exit.c.o
+[1376/1553] Building C object sched/CMakeFiles/sched.dir/signal/sig_timedwait.c.o
+[1377/1553] Building C object sched/CMakeFiles/sched.dir/task/task_setup.c.o
+[1378/1553] Building C object sched/CMakeFiles/sched.dir/task/task_prctl.c.o
+[1379/1553] Building C object sched/CMakeFiles/sched.dir/task/task_exithook.c.o
+[1380/1553] Building C object sched/CMakeFiles/sched.dir/task/task_recover.c.o
+[1381/1553] Building C object sched/CMakeFiles/sched.dir/task/task_cancelpt.c.o
+[1382/1553] Building C object sched/CMakeFiles/sched.dir/task/task_terminate.c.o
+[1383/1553] Building C object sched/CMakeFiles/sched.dir/task/task_restart.c.o
+[1384/1553] Building C object sched/CMakeFiles/sched.dir/task/task_join.c.o
+[1385/1553] Building C object sched/CMakeFiles/sched.dir/task/exit.c.o
+[1386/1553] Building C object sched/CMakeFiles/sched.dir/task/task_spawnparms.c.o
+[1387/1553] Building C object sched/CMakeFiles/sched.dir/task/task_fork.c.o
+[1388/1553] Building C object sched/CMakeFiles/sched.dir/task/task_spawn.c.o
+[1389/1553] Building C object sched/CMakeFiles/sched.dir/task/task_execve.c.o
+[1390/1553] Building C object sched/CMakeFiles/sched.dir/task/task_posixspawn.c.o
+[1391/1553] Building C object sched/CMakeFiles/sched.dir/timer/timer_delete.c.o
+[1392/1553] Building C object sched/CMakeFiles/sched.dir/timer/timer_initialize.c.o
+[1393/1553] Building C object sched/CMakeFiles/sched.dir/timer/timer_getoverrun.c.o
+[1394/1553] Building C object sched/CMakeFiles/sched.dir/timer/timer_create.c.o
+[1395/1553] Building C object sched/CMakeFiles/sched.dir/timer/timer_getitimer.c.o
+[1396/1553] Building C object sched/CMakeFiles/sched.dir/timer/timer_gettime.c.o
+[1397/1553] Building C object sched/CMakeFiles/sched.dir/timer/timer_release.c.o
+[1398/1553] Building C object sched/CMakeFiles/sched.dir/tls/tls_initinfo.c.o
+[1399/1553] Building C object sched/CMakeFiles/sched.dir/timer/timer_setitimer.c.o
+[1400/1553] Building C object sched/CMakeFiles/sched.dir/tls/task_uninitinfo.c.o
+[1401/1553] Building C object sched/CMakeFiles/sched.dir/tls/task_initinfo.c.o
+[1402/1553] Building C object sched/CMakeFiles/sched.dir/wdog/wd_initialize.c.o
+[1403/1553] Building C object sched/CMakeFiles/sched.dir/tls/tls_dupinfo.c.o
+[1404/1553] Building C object sched/CMakeFiles/sched.dir/timer/timer_settime.c.o
+[1405/1553] Building C object sched/CMakeFiles/sched.dir/wdog/wd_gettime.c.o
+[1406/1553] Building C object sched/CMakeFiles/sched.dir/wdog/wd_cancel.c.o
+[1407/1553] Building C object sched/CMakeFiles/sched.dir/wdog/wd_start.c.o
+[1408/1553] Building C object boards/CMakeFiles/board.dir/__/dummy.c.o
+[1409/1553] Building C object sched/CMakeFiles/sched.dir/wqueue/kwork_queue.c.o
+[1410/1553] Building C object sched/CMakeFiles/sched.dir/wqueue/kwork_cancel.c.o
+[1411/1553] Building C object apps/CMakeFiles/apps.dir/dummy.c.o
+[1412/1553] Building C object boards/CMakeFiles/board.dir/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_bringup.c.o
+[1413/1553] Building C object boards/CMakeFiles/board.dir/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_xts_flash.c.o
+[1414/1553] Building C object boards/CMakeFiles/board.dir/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_reset.c.o
+[1415/1553] Building C object boards/CMakeFiles/board.dir/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_boot.c.o
+[1416/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netinit/netinit.c.o
+[1417/1553] Building C object sched/CMakeFiles/sched.dir/wqueue/kwork_thread.c.o
+[1418/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_ipv4addrconv.c.o
+[1419/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_ethaddrconv.c.o
+[1420/1553] Building C object boards/CMakeFiles/board.dir/boardctl.c.o
+[1421/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_parsehttpurl.c.o
+[1422/1553] Linking C static library boards/libboard.a
+[1423/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_setifstatus.c.o
+[1424/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_getifstatus.c.o
+[1425/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_setipv4addr.c.o
+[1426/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_getipv4addr.c.o
+[1427/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_setdripv4addr.c.o
+[1428/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_setipv4netmask.c.o
+[1429/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_getdripv4addr.c.o
+[1430/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_getipv4netmask.c.o
+[1431/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_getarp.c.o
+[1432/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_ipv4adaptor.c.o
+[1433/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_setarp.c.o
+[1434/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_delarp.c.o
+[1435/1553] Linking C static library sched/libsched.a
+[1436/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_setmacaddr.c.o
+[1437/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_getmacaddr.c.o
+[1438/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_setmtu.c.o
+[1439/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_getiobinfo.c.o
+[1440/1553] Building C object apps/CMakeFiles/apps.dir/netutils/netlib/netlib_checkhttpconnectivity.c.o
+[1441/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_init.c.o
+[1442/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_system.c.o
+[1443/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_script.c.o
+[1444/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_console.c.o
+[1445/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_mmcmds.c.o
+[1446/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_command.c.o
+[1447/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_ddcmd.c.o
+[1448/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_timcmds.c.o
+[1449/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_prompt.c.o
+[1450/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_envcmds.c.o
+[1451/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_proccmds.c.o
+[1452/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_syscmds.c.o
+[1453/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_session.c.o
+[1454/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_dbgcmds.c.o
+[1455/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_parse.c.o
+[1456/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_fileapps.c.o
+[1457/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_consolemain.c.o
+[1458/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_mntcmds.c.o
+[1459/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_fsutils.c.o
+[1460/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_fscmds.c.o
+[1461/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_printf.c.o
+[1462/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_netcmds.c.o
+[1463/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_wait.c.o
+[1464/1553] Building C object apps/CMakeFiles/apps.dir/system/readline/readline.c.o
+[1465/1553] Building C object apps/CMakeFiles/apps.dir/system/readline/readline_stream.c.o
+[1466/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_test.c.o
+[1467/1553] Building C object apps/CMakeFiles/apps.dir/system/readline/readline_fd.c.o
+[1468/1553] Building C object apps/system/nsh/CMakeFiles/apps_sh.dir/sh_main.c.o
+[1469/1553] Building C object apps/CMakeFiles/apps.dir/system/readline/readline_common.c.o
+[1470/1553] Building C object apps/system/nsh/CMakeFiles/apps_nsh.dir/nsh_main.c.o
+[1471/1553] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_alias.c.o
+[1472/1553] Linking C static library apps/system/nsh/libapps_sh.a
+[1473/1553] Linking C static library apps/system/nsh/libapps_nsh.a
+[1474/1553] Building C object apps/testing/drivers/drivertest/CMakeFiles/apps_cmocka_driver_simple.dir/drivertest_simple.c.o
+[1475/1553] Building C object apps/testing/cmocka/CMakeFiles/apps_cmocka.dir/cmocka_main.c.o
+[1476/1553] Linking C static library apps/libapps.a
+[1477/1553] Building C object apps/testing/drivers/drivertest/CMakeFiles/apps_cmocka_posix_timer.dir/drivertest_posix_timer.c.o
+[1478/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cmocka_kv_test.c.o
+[1479/1553] Building C object apps/testing/drivers/drivertest/CMakeFiles/apps_cmocka_driver_rtc.dir/drivertest_rtc.c.o
+[1480/1553] Building C object apps/testing/drivers/drivertest/CMakeFiles/apps_cmocka_driver_uart.dir/drivertest_uart.c.o
+[1481/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_001.c.o
+[1482/1553] Building C object apps/testing/drivers/drivertest/CMakeFiles/apps_cmocka_driver_block.dir/drivertest_block.c.o
+[1483/1553] Building C object apps/testing/mm/heaptest/CMakeFiles/apps_mm.dir/mm_main.c.o
+[1484/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_002.c.o
+[1485/1553] Linking C static library apps/testing/mm/heaptest/libapps_mm.a
+[1486/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_003.c.o
+[1487/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_004.c.o
+[1488/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_005.c.o
+[1489/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_007.c.o
+[1490/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_006.c.o
+[1491/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_008.c.o
+[1492/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_009.c.o
+[1493/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_010.c.o
+[1494/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_011.c.o
+[1495/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_012.c.o
+[1496/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_013.c.o
+[1497/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_014.c.o
+[1498/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_015.c.o
+[1499/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_016.c.o
+[1500/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_017.c.o
+[1501/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_018.c.o
+[1502/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_019.c.o
+[1503/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_020.c.o
+[1504/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_021.c.o
+[1505/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_022.c.o
+[1506/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_023.c.o
+[1507/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_024.c.o
+[1508/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_025.c.o
+[1509/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_026.c.o
+[1510/1553] Building C object apps/external/android/CMakeFiles/android.dir/dummy.c.o
+[1511/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_027.c.o
+[1512/1553] Linking C static library apps/external/android/libandroid.a
+[1513/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_028.c.o
+[1514/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_029.c.o
+[1515/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/common/test_kv_common.c.o
+[1516/1553] Building C object apps/testing/testsuites/CMakeFiles/apps_cmocka_kv_test.dir/kernel/kv/cases/kv_test_030.c.o
+[1517/1553] Building C object apps/frameworks/system/utils/CMakeFiles/framework_utils.dir/trace/trace.c.o
+[1518/1553] Building C object apps/tests/testcases/kvtest/CMakeFiles/apps_vela_kvdb_stability_test01.dir/stability/test01.c.o
+In file included from /home/regex/work/esp32s31-openvela/openvela-dev/apps/tests/testcases/kvtest/stability/test01.c:7:
+/home/regex/work/esp32s31-openvela/openvela-dev/apps/tests/testcases/kvtest/include/kvtest.h:61:13: warning: 'clean_up' defined but not used [-Wunused-function]
+   61 | static void clean_up(void)
+      |             ^~~~~~~~
+[1519/1553] Building C object apps/tests/testcases/kvtest/CMakeFiles/apps_vela_kvdb_stability_test02.dir/stability/test02.c.o
+In file included from /home/regex/work/esp32s31-openvela/openvela-dev/apps/tests/testcases/kvtest/stability/test02.c:2:
+/home/regex/work/esp32s31-openvela/openvela-dev/apps/tests/testcases/kvtest/include/kvtest.h:61:13: warning: 'clean_up' defined but not used [-Wunused-function]
+   61 | static void clean_up(void)
+      |             ^~~~~~~~
+[1520/1553] Linking C static library apps/tests/testcases/kvtest/libapps_vela_kvdb_stability_test01.a
+[1521/1553] Linking C static library apps/tests/testcases/kvtest/libapps_vela_kvdb_stability_test02.a
+[1522/1553] Building C object apps/frameworks/system/utils/CMakeFiles/framework_utils.dir/kvdb/system_properties.c.o
+[1523/1553] Building C object apps/testing/cmocka/CMakeFiles/cmocka.dir/cmocka/src/cmocka.c.o
+[1524/1553] Linking C static library apps/testing/cmocka/libcmocka.a
+[1525/1553] Building C object apps/frameworks/system/utils/CMakeFiles/apps_exitprop.dir/kvdb/exitprop.c.o
+[1526/1553] Building C object apps/frameworks/system/utils/CMakeFiles/framework_utils.dir/kvdb/backend.c.o
+[1527/1553] Linking C static library apps/testing/cmocka/libapps_cmocka.a
+[1528/1553] Linking C static library apps/testing/drivers/drivertest/libapps_cmocka_driver_simple.a
+[1529/1553] Building C object apps/frameworks/system/utils/CMakeFiles/framework_utils.dir/kvdb/common.c.o
+[1530/1553] Building C object apps/frameworks/system/utils/CMakeFiles/framework_utils.dir/kvdb/client.c.o
+[1531/1553] Linking C static library apps/testing/drivers/drivertest/libapps_cmocka_driver_block.a
+[1532/1553] Linking C static library apps/testing/drivers/drivertest/libapps_cmocka_driver_rtc.a
+[1533/1553] Linking C static library apps/testing/drivers/drivertest/libapps_cmocka_posix_timer.a
+[1534/1553] Building C object apps/frameworks/system/utils/CMakeFiles/framework_utils.dir/kvdb/unqlite.c.o
+[1535/1553] Linking C static library apps/testing/drivers/drivertest/libapps_cmocka_driver_uart.a
+[1536/1553] Building C object apps/frameworks/system/utils/CMakeFiles/framework_utils.dir/kvdb/file.c.o
+[1537/1553] Building C object apps/builtin/CMakeFiles/apps_builtin.dir/builtin_list.c.o
+[1538/1553] Linking C static library apps/frameworks/system/utils/libframework_utils.a
+[1539/1553] Linking C static library apps/testing/testsuites/libapps_cmocka_kv_test.a
+[1540/1553] Linking C static library apps/builtin/libapps_builtin.a
+[1541/1553] Linking C static library apps/frameworks/system/utils/libapps_exitprop.a
+[1542/1553] Building C object apps/frameworks/system/utils/CMakeFiles/apps_setprop.dir/kvdb/setprop.c.o
+[1543/1553] Building C object apps/frameworks/system/utils/CMakeFiles/apps_getprop.dir/kvdb/getprop.c.o
+[1544/1553] Linking C static library apps/frameworks/system/utils/libapps_setprop.a
+[1545/1553] Linking C static library apps/frameworks/system/utils/libapps_getprop.a
+[1546/1553] Building C object apps/frameworks/system/utils/CMakeFiles/apps_kvdbd.dir/kvdb/server.c.o
+[1547/1553] Linking C static library apps/frameworks/system/utils/libapps_kvdbd.a
+[1548/1553] Building C object apps/external/unqlite/CMakeFiles/unqlite.dir/unqlite/unqlite.c.o
+[1549/1553] Linking C static library apps/external/unqlite/libunqlite.a
+[1550/1553] Linking C executable nuttx
+[1551/1553] Generating nuttx.hex
+[1552/1553] Generating System.map
+[1553/1553] Generating ESP32-S31 simple-boot image for offset 0x2000
+esptool v5.4.0
+Creating ESP32-S31 image...
+Image has only RAM segments visible. ROM segments are hidden and SHA256 digest is not appended.
+Merged 1 ELF section.
+Successfully created ESP32-S31 image.
++ test -f /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/nuttx.bin
+++ stat -c %s /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/nuttx.bin
++ test 451436 -le 2088960
++ rg -q mm_main /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/System.map
++ rg -q cmocka_driver_block_main /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/System.map
++ '[' xts-flat-category-kv-large1144 = xts-flat-rtc ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-flash ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-flash ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-wdt ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-wdt-romdelay ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-gpio ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-bmi160 ']'
++ [[ xts-flat-category-kv-large1144 = xts-flat-category-fs* ]]
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-kv ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-bmi160-uorb ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-pwm ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-flash ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-perf ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-name ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-recovery ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-internal ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-perf ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-name ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-large ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-sync ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-internal ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-category-fs-recovery ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-flash-raw ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-media ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-media-volume ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-media-volume ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-wdt-romdelay ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-audio-mono ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-audio-duplex ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-audio-continuous ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-audio-final ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-audio-continuous ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-audio-final ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-audio ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-ble ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-bttool ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-bttool ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-usb-adb ']'
++ '[' xts-flat-category-kv-large1144 = xts-flat-adc ']'
++ rg -q '^CONFIG_ESP32S31_XTS_FLASH=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ rg -q '^CONFIG_ESPRESSIF_SPIRAM_USER_HEAP=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ rg -q '^CONFIG_ESP32S31_SPIFLASH_PSRAM_STACK=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ rg -q '^CONFIG_SCHED_LPWORK=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/.config
++ rg -q ' [Tt] esp_flash_dispatch$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/System.map
++ set -o noclobber
++ sha256sum /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-kv1144/nuttx.bin
++ restore_config
++ '[' -f /tmp/s31-flat-source-config.SWmwXn/.config ']'
++ mv /tmp/s31-flat-source-config.SWmwXn/.config .config
++ '[' -f /tmp/s31-flat-source-config.SWmwXn/config.h ']'
++ mv /tmp/s31-flat-source-config.SWmwXn/config.h include/nuttx/config.h
++ rmdir /tmp/s31-flat-source-config.SWmwXn

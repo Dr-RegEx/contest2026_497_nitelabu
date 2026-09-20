@@ -1,0 +1,49 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1285-media-flash-trace.sha256
+XTS_COMMAND=mv /data/graph.conf /data/media/graph.conf
+--- CMD: mv /data/graph.conf /data/media/graph.conf ---
+mv /data/graph.conf /data/media/graph.conf
+nsh> [K
+nsh> [K
+XTS_COMMAND=mv /data/criteria.txt /data/media/criteria.txt
+--- CMD: mv /data/criteria.txt /data/media/criteria.txt ---
+mv /data/criteria.txt /data/media/criteria.txt
+nsh> [K
+nsh> [K
+XTS_COMMAND=mv /data/settings.pfw /data/media/settings.pfw
+--- CMD: mv /data/settings.pfw /data/media/settings.pfw ---
+mv /data/settings.pfw /data/media/settings.pfw
+nsh> [K
+nsh> [K
+XTS_COMMAND=mediad &
+--- CMD: mediad & ---
+mediad &
+asubgraph@Convert init inst success
+pfw domain:S31Music switch to conf:Speaker
+cmd:set_parameter args:player_volume=1
+Parsing args: player_volume=1
+Parsed Key: player_volume, Value: 1
+mediad [13:100]
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009900 0x2f009948
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009880 0x2f0098c8
+    4     0 253 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 s31_duplex
+    5     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 hr_timer
+    6     6 100 RR       Task      - Running            0000000000000000 0008120 nsh_main
+   13    13 245 RR       Task      - Waiting  Semaphore 0000000000000000 0081872 mediad
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   16839520     122512   16717008     199344   16695272    160      4 Umem
+nsh> [K
+nsh> [K
+MEDIA_DAEMON_ALIVE; original playback/listening pending

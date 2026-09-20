@@ -1,0 +1,60 @@
+XTS_FLASH_BACKUP=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/flash-scratch-before-test/manifest.json
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build946-flat-flash.sha256
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x90a4
+load:0x2f009100,len:0x1350
+entry 0x2f008d1c
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x90a4   (37028)
+dram: lma 0x0000b0ec vma 0x2f009100 len 0x1350   (4944)
+padd: lma 0x0000c468 vma 0x00000000 len 0x3bb0   (15280)
+imap: lma 0x00010020 vma 0x40040020 len 0x8624   (34340)
+padd: lma 0x0001864c vma 0x00000000 len 0x7aac   (31404)
+imap: lma 0x00020100 vma 0x40000100 len 0x329c0  (207296)
+total segments stored 7
+ABCxTS Flash scratch: /dev/xtsflash offset=0xc00000 size=0x100000
+
+NuttShell (NSH)
+nsh> [K
+XTS_COMMAND=uname -a
+uname -a
+NuttX 0.0.0 428252a08db-dirty Sep 16 2026 00:23:00 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [KXTS_COMMAND=free
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17236640      18256   17218384      25208   16777200     38      3 Umem
+nsh> [K
+nsh> [KXTS_COMMAND=mount
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [KXTS_COMMAND=ls /dev/xtsflash
+ls /dev/xtsflash
+ /dev/xtsflash
+nsh> [K
+nsh> [KXTS_COMMAND=cmocka_driver_block -m /dev/xtsflash
+cmocka_driver_block -m /dev/xtsflash
+[==========] tests: Running 3 test(s).
+[ RUN      ] drivertest_block_stress
+[       OK ] drivertest_block_stress
+[ RUN      ] drivertest_block_single_write
+[       OK ] drivertest_block_single_write
+[ RUN      ] drivertest_block_cache_write
+[       OK ] drivertest_block_cache_write
+[==========] tests: 3 test(s) run.
+[  PASSED  ] 3 test(s).
+nsh> [K
+nsh> [KXTS_STANDARD=cmocka_driver_block -m /dev/xtsflash PASS seconds=5.337
+XTS_COMMAND=free
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   17236640      18256   17218384      27864   16777200     38      3 Umem
+nsh> [K
+nsh> [K

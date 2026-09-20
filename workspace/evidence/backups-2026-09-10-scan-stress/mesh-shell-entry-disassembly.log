@@ -1,0 +1,54 @@
+
+openvela-dev/out/esp32s31-xts-flat-ble-mesh-shell-20260919/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+4009ac58 <mesh_main>:
+4009ac58:	2f0157b7          	lui	a5,0x2f015
+4009ac5c:	dc07c783          	lbu	a5,-576(a5) # 2f014dc0 <mesh_started>
+4009ac60:	c399                	beqz	a5,4009ac66 <mesh_main+0xe>
+4009ac62:	d45ff06f          	j	4009a9a6 <zblue_shell_run>
+4009ac66:	401175b7          	lui	a1,0x40117
+4009ac6a:	1141                	addi	sp,sp,-16
+4009ac6c:	76058593          	addi	a1,a1,1888 # 40117760 <_flash_rodata_start+0x7740>
+4009ac70:	4519                	li	a0,6
+4009ac72:	c606                	sw	ra,12(sp)
+4009ac74:	c43970ef          	jal	400328b6 <syslog>
+4009ac78:	46b250ef          	jal	400c08e2 <z_sys_init>
+4009ac7c:	4009b5b7          	lui	a1,0x4009b
+4009ac80:	bb258593          	addi	a1,a1,-1102 # 4009abb2 <bt_ready>
+4009ac84:	4501                	li	a0,0
+4009ac86:	3480a0ef          	jal	400a4fce <bt_enable_mc>
+4009ac8a:	07250793          	addi	a5,a0,114
+4009ac8e:	862a                	mv	a2,a0
+4009ac90:	cf89                	beqz	a5,4009acaa <mesh_main+0x52>
+4009ac92:	cd01                	beqz	a0,4009acaa <mesh_main+0x52>
+4009ac94:	401175b7          	lui	a1,0x40117
+4009ac98:	68858593          	addi	a1,a1,1672 # 40117688 <_flash_rodata_start+0x7668>
+4009ac9c:	4519                	li	a0,6
+4009ac9e:	c19970ef          	jal	400328b6 <syslog>
+4009aca2:	40b2                	lw	ra,12(sp)
+4009aca4:	4505                	li	a0,1
+4009aca6:	0141                	addi	sp,sp,16
+4009aca8:	8082                	ret
+4009acaa:	2f012537          	lui	a0,0x2f012
+4009acae:	55fd                	li	a1,-1
+4009acb0:	b5850513          	addi	a0,a0,-1192 # 2f011b58 <mesh_ready>
+4009acb4:	1b7260ef          	jal	400c166a <k_sem_take>
+4009acb8:	2f0157b7          	lui	a5,0x2f015
+4009acbc:	dc47a783          	lw	a5,-572(a5) # 2f014dc4 <mesh_init_result>
+4009acc0:	f3ed                	bnez	a5,4009aca2 <mesh_main+0x4a>
+4009acc2:	401175b7          	lui	a1,0x40117
+4009acc6:	77458593          	addi	a1,a1,1908 # 40117774 <_flash_rodata_start+0x7754>
+4009acca:	4519                	li	a0,6
+4009accc:	beb970ef          	jal	400328b6 <syslog>
+4009acd0:	401175b7          	lui	a1,0x40117
+4009acd4:	7a458593          	addi	a1,a1,1956 # 401177a4 <_flash_rodata_start+0x7784>
+4009acd8:	4519                	li	a0,6
+4009acda:	bdd970ef          	jal	400328b6 <syslog>
+4009acde:	40b2                	lw	ra,12(sp)
+4009ace0:	0141                	addi	sp,sp,16
+4009ace2:	b741                	j	4009ac62 <mesh_main+0xa>

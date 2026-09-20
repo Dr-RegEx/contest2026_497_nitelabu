@@ -1,0 +1,37 @@
+
+openvela-dev/out/esp32s31-xts-flat-wdt/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+40026186 <drivertest_watchdog_interrupts>:
+40026186:	1101                	addi	sp,sp,-32
+40026188:	ce06                	sw	ra,28(sp)
+4002618a:	cc22                	sw	s0,24(sp)
+4002618c:	4100                	lw	s0,0(a0)
+4002618e:	4785                	li	a5,1
+40026190:	11042703          	lw	a4,272(s0)
+40026194:	02f71c63          	bne	a4,a5,400261cc <drivertest_watchdog_interrupts+0x46>
+40026198:	6541                	lui	a0,0x10
+4002619a:	002c                	addi	a1,sp,8
+4002619c:	f1450513          	addi	a0,a0,-236 # ff14 <_image_drom_size+0x73a4>
+400261a0:	b77fd0ef          	jal	40023d16 <boardctl>
+400261a4:	4522                	lw	a0,8(sp)
+400261a6:	40045737          	lui	a4,0x40045
+400261aa:	17900793          	li	a5,377
+400261ae:	f7870713          	addi	a4,a4,-136 # 40044f78 <_flash_rodata_start+0x4f58>
+400261b2:	4609                	li	a2,2
+400261b4:	4681                	li	a3,0
+400261b6:	4581                	li	a1,0
+400261b8:	6f5010ef          	jal	400280ac <_assert_int_equal>
+400261bc:	8522                	mv	a0,s0
+400261be:	f3fff0ef          	jal	400260fc <wdg_init>
+400261c2:	0df00793          	li	a5,223
+400261c6:	347797f3          	csrrw	a5,0x347,a5
+400261ca:	a001                	j	400261ca <drivertest_watchdog_interrupts+0x44>
+400261cc:	40f2                	lw	ra,28(sp)
+400261ce:	4462                	lw	s0,24(sp)
+400261d0:	6105                	addi	sp,sp,32
+400261d2:	8082                	ret

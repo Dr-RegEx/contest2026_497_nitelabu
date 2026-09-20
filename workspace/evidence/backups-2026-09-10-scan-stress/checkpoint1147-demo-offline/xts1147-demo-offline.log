@@ -1,0 +1,59 @@
+S31_EXPECTED_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1078-wifi-mmu.sha256
+--- CMD: prlimit -s 8192 s31demo --status ---
+prlimit -s 8192 s31demo --status
+S31_DEMO_INTERFACE=wlan0
+S31_DEMO_UPTIME_SECONDS=30
+S31_DEMO_INTERFACE_UP=0
+S31_DEMO_IPV4=0.0.0.0
+S31_DEMO_DEVICE=/dev/leds0 STATE=PRESENT
+S31_DEMO_DEVICE=/dev/buttons STATE=PRESENT
+S31_DEMO_DEVICE=/dev/i2c0 STATE=PRESENT
+S31_DEMO_DEVICE=/dev/audio/pcm0p STATE=ABSENT
+S31_DEMO_DEVICE=/dev/audio/pcm0c STATE=ABSENT
+S31_DEMO_DEVICE=/dev/ttyHCI0 STATE=ABSENT
+S31_DEMO_STATUS=OK
+nsh> [K
+nsh> [K
+--- CMD: s31led 1 ---
+s31led 1
+S31_LED=PASS frames=4 brightness=8 final=off optical=unverified
+nsh> [K
+nsh> [K
+--- CMD: i2c get -b0 -a18 -rfd -w8 -f100000 ---
+i2c get -b0 -a18 -rfd -w8 -f100000
+READ Bus: 0 Addr: 18 Subaddr: fd Value: 83
+nsh> [K
+nsh> [K
+--- CMD: i2c get -b0 -a18 -rfe -w8 -f400000 ---
+i2c get -b0 -a18 -rfe -w8 -f400000
+READ Bus: 0 Addr: 18 Subaddr: fe Value: 11
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     327276      77388     249888     103256     189768    182     12 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011000 0x2f01104c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: df -h ---
+df -h
+  Filesystem      Size      Used  Available Mounted on
+  littlefs          7M        8K      7160K /apps
+  procfs            0B        0B         0B /proc
+  romfs          2293K     2293K         0B /system/bin
+  tmpfs           512B      512B         0B /tmp
+nsh> [K
+nsh> [K
+S31_OFFLINE_COMMANDS=COMPLETE optical_review=PENDING button_review=PENDING audio_review=PENDING

@@ -1,0 +1,427 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1062-flat-bttool-buffers.sha256
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x11134
+load:0x2f011180,len:0x28f4
+entry 0x2f010dac
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x11134  (69940)
+dram: lma 0x0001317c vma 0x2f011180 len 0x28f4   (10484)
+padd: lma 0x00015aa8 vma 0x00000000 len 0xa570   (42352)
+imap: lma 0x00020020 vma 0x400f0020 len 0x1f09c  (127132)
+padd: lma 0x0003f0c4 vma 0x00000000 len 0x1034   (4148)
+imap: lma 0x00040100 vma 0x40000100 len 0xe97c4  (956356)
+total segments stored 7
+ABC
+NuttShell (NSH)
+nsh> [K
+XTS_COMMAND=ls /dev/ttyHCI0
+--- CMD: ls /dev/ttyHCI0 ---
+ls /dev/ttyHCI0
+ /dev/ttyHCI0
+nsh> [K
+nsh> [K
+ls /dev/ttyHCI0
+ /dev/ttyHCI0
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls /data
+--- CMD: ls /data ---
+ls /data
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+ls /data
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data
+--- CMD: mkdir /data ---
+mkdir /data
+nsh> [K
+nsh> [K
+mkdir /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount -t tmpfs /data
+--- CMD: mount -t tmpfs /data ---
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/misc
+--- CMD: mkdir /data/misc ---
+mkdir /data/misc
+nsh> [K
+nsh> [K
+mkdir /data/misc
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/misc/bt
+--- CMD: mkdir /data/misc/bt ---
+mkdir /data/misc/bt
+nsh> [K
+nsh> [K
+mkdir /data/misc/bt
+nsh> [K
+nsh> [K
+XTS_COMMAND=bttool
+bttool
+/data/misc/bt folder create: 0
+[async_queue:91]uv_async_queue_init
+bttool> XTS_COMMAND=enable
+enable
+S31 BLE: controller open
+S31 BLE: controller ready, VHCI registered
+dev:0: Sending HCI_RESET
+S31 BLE host: allocating opcode=0c03
+S31 BLE host: opcode=0c03 buffer=0x2f01d22c
+S31 BLE host: opcode=0c03 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=0c03 len=3
+S31 BLE: complete opcode=0c03 status=0 len=7
+S31 BLE: TX opcode=0c03 result=3
+S31 BLE host: opcode=0c03 wait=0 status=0 ref=1
+S31 BLE host: opcode=0c03 returned
+S31 BLE host: reset state complete
+S31 BLE host: allocating opcode=1003
+S31 BLE host: opcode=1003 buffer=0x2f01d22c
+S31 BLE host: opcode=1003 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=1003 len=3
+S31 BLE: complete opcode=1003 status=0 len=15
+S31 BLE: TX opcode=1003 result=3
+S31 BLE host: opcode=1003 wait=0 status=0 ref=1
+S31 BLE host: opcode=1003 returned
+S31 BLE host: allocating opcode=1001
+S31 BLE host: opcode=1001 buffer=0x2f01d22c
+S31 BLE host: opcode=1001 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=1001 len=3
+S31 BLE: complete opcode=1001 status=0 len=15
+S31 BLE: TX opcode=1001 result=3
+S31 BLE host: opcode=1001 wait=0 status=0 ref=1
+S31 BLE host: opcode=1001 returned
+S31 BLE host: allocating opcode=1002
+S31 BLE host: opcode=1002 buffer=0x2f01d22c
+S31 BLE host: opcode=1002 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=1002 len=3
+S31 BLE: complete opcode=1002 status=0 len=71
+S31 BLE: TX opcode=1002 result=3
+S31 BLE host: opcode=1002 wait=0 status=0 ref=1
+S31 BLE host: opcode=1002 returned
+S31 BLE host: initializing PSA PRNG
+S31 BLE host: PSA PRNG result=0
+S31 BLE host: buffers ACL=1021/12 SCO=255/0
+S31 BLE host: opcode=0c33 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=0c33 len=10
+S31 BLE: complete opcode=0c33 status=0 len=7
+S31 BLE: TX opcode=0c33 result=10
+S31 BLE host: opcode=0c33 wait=0 status=0 ref=1
+S31 BLE host: opcode=0c33 returned
+S31 BLE host: opcode=0c31 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=0c31 len=4
+S31 BLE: complete opcode=0c31 status=0 len=7
+S31 BLE: TX opcode=0c31 result=4
+S31 BLE host: opcode=0c31 wait=0 status=0 ref=1
+S31 BLE host: opcode=0c31 returned
+S31 BLE host: allocating opcode=2003
+S31 BLE host: opcode=2003 buffer=0x2f01d22c
+S31 BLE host: opcode=2003 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=2003 len=3
+S31 BLE: complete opcode=2003 status=0 len=15
+S31 BLE: TX opcode=2003 result=3
+S31 BLE host: opcode=2003 wait=0 status=0 ref=1
+S31 BLE host: opcode=2003 returned
+S31 BLE host: allocating opcode=2002
+S31 BLE host: opcode=2002 buffer=0x2f01d22c
+S31 BLE host: opcode=2002 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=2002 len=3
+S31 BLE: complete opcode=2002 status=0 len=10
+S31 BLE: TX opcode=2002 result=3
+S31 BLE host: opcode=2002 wait=0 status=0 ref=1
+S31 BLE host: opcode=2002 returned
+S31 BLE host: allocating opcode=203a
+S31 BLE host: opcode=203a buffer=0x2f01d22c
+S31 BLE host: opcode=203a queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=203a len=3
+S31 BLE: complete opcode=203a status=0 len=9
+S31 BLE: TX opcode=203a result=3
+S31 BLE host: opcode=203a wait=0 status=0 ref=1
+S31 BLE host: opcode=203a returned
+S31 BLE host: allocating opcode=201c
+S31 BLE host: opcode=201c buffer=0x2f01d22c
+S31 BLE host: opcode=201c queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=201c len=3
+S31 BLE: complete opcode=201c status=0 len=15
+S31 BLE: TX opcode=201c result=3
+S31 BLE host: opcode=201c wait=0 status=0 ref=1
+S31 BLE host: opcode=201c returned
+S31 BLE host: allocating opcode=202f
+S31 BLE host: opcode=202f buffer=0x2f01d22c
+S31 BLE host: opcode=202f queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=202f len=3
+S31 BLE: complete opcode=202f status=0 len=15
+S31 BLE: TX opcode=202f result=3
+S31 BLE host: opcode=202f wait=0 status=0 ref=1
+S31 BLE host: opcode=202f returned
+S31 BLE host: opcode=2024 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=2024 len=7
+S31 BLE: complete opcode=2024 status=0 len=7
+S31 BLE: TX opcode=2024 result=7
+S31 BLE host: opcode=2024 wait=0 status=0 ref=1
+S31 BLE host: opcode=2024 returned
+S31 BLE host: opcode=202e queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=202e len=5
+S31 BLE: complete opcode=202e status=0 len=7
+S31 BLE: TX opcode=202e result=5
+S31 BLE host: opcode=202e wait=0 status=0 ref=1
+S31 BLE host: opcode=202e returned
+S31 BLE host: allocating opcode=202a
+S31 BLE host: opcode=202a buffer=0x2f01d22c
+S31 BLE host: opcode=202a queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=202a len=3
+S31 BLE: complete opcode=202a status=0 len=8
+S31 BLE: TX opcode=202a result=3
+S31 BLE host: opcode=202a wait=0 status=0 ref=1
+S31 BLE host: opcode=202a returned
+S31 BLE host: opcode=2001 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=2001 len=11
+S31 BLE: complete opcode=2001 status=0 len=7
+S31 BLE: TX opcode=2001 result=11
+S31 BLE host: opcode=2001 wait=0 status=0 ref=1
+S31 BLE host: opcode=2001 returned
+S31 BLE host: opcode=0c01 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=0c01 len=11
+S31 BLE: complete opcode=0c01 status=0 len=7
+S31 BLE: TX opcode=0c01 result=11
+S31 BLE host: opcode=0c01 wait=0 status=0 ref=1
+S31 BLE host: opcode=0c01 returned
+S31 BLE host: allocating opcode=1009
+S31 BLE host: opcode=1009 buffer=0x2f01d22c
+S31 BLE host: opcode=1009 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=1009 len=3
+S31 BLE: complete opcode=1009 status=0 len=13
+S31 BLE: TX opcode=1009 result=3
+S31 BLE host: opcode=1009 wait=0 status=0 ref=1
+S31 BLE host: opcode=1009 returned
+S31 BLE host: opcode=2005 queued current=0x2f01e590 syswq=0x2f01e590
+S31 BLE: TX opcode=2005 len=9
+S31 BLE: complete opcode=2005 status=0 len=7
+S31 BLE: TX opcode=2005 result=9
+S31 BLE host: opcode=2005 wait=0 status=0 ref=1
+S31 BLE host: opcode=2005 returned
+S31 BLE host: initialization result=0
+[bttool] Context:0x2f033c48, Adapter state changed: 1
+bttool> [bttool] Context:0x2f033c48, Adapter state changed: 2
+dump_asseXTS_COMMAND=state
+rt_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 16 2026 19:24:31 risc-v
+dump_assert_info: Assertion failed : at file: /frameworks/connectivity/bluetooth/service/stacks/zephyr/sal_adapter_le_interface.c:1807 task: bt_service_6 process: bttool 0x400a3300
+up_dump_register: PC: 40013b56
+up_dump_register: A0: 2f015580 A1: 0000070f A2: 00000000 A3: 2f0333d8
+up_dump_register: A4: 00000000 A5: 2f014000 A6: 0000070f A7: 400fc340
+up_dump_register: T0: 2f014510 T1: 2f013d10 T2: 40000000 T3: f7000000
+up_dump_register: T4: 00000000 T5: 00002228 T6: 000000e0
+up_dump_register: S0: 2f031ac8 S1: 2f014000 S2: 00000000 S3: 400fc340
+up_dump_register: S4: 00000000 S5: 0000000b S6: 2f014000 S7: 00000006
+up_dump_register: S8: 2f014000 S9: 2f015000 S10: 2f033a60 S11: 0000070f
+up_dump_register: SP: 2f0143c8 FP: 2f031ac8 TP: 00000000 RA: 40013b56
+dump_stackinfo: IRQ Stack:
+dump_stackinfo:   base: 0x2f013d10
+dump_stackinfo:   size: 00002048
+dump_stackinfo:     sp: 0x2f0143c8
+stack_dump:  2f0143a8: 2f015000 2f033a60 401036f8 00000000 2f013d10 2f031bd8 00001fd8 40013d30
+stack_dump:  2f0143c8: 400a3300 00000000 00000000 00000000 00000000 00000000 00000000 2f0143c8
+stack_dump:  2f0143e8: 00000000 00000000 2f031ac8 2f015580 00000000 400fc340 0000070f 7474754e
+stack_dump:  2f014408: 00000058 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f014428: 00000000 00000000 00000000 00000000 302e3000 0000302e 00000000 00000000
+stack_dump:  2f014448: 00000000 32340000 32353238 64383061 69642d62 20797472 20706553 32203631
+stack_dump:  2f014468: 20363230 323a3931 31333a34 40007400 00005880 2f0111a4 73697204 00762d63
+stack_dump:  2f014488: 00003880 00000037 2f0111a4 40008460 2f011180 00004002 00000100 2f022710
+stack_dump:  2f0144a8: 2f033a60 00000000 00000001 ffffffff 00000000 0000000b 00000000 2f014000
+stack_dump:  2f0144c8: 2f012640 2f014000 2f031ac8 40006c68 2f012640 2f014000 2f0333d8 2f009236
+stack_dump:  2f0144e8: 00000000 2f0226fc 00000400 2f0334e0 3800000b 4000be40 2f014510 2f000182
+stack_dump:  2f014508: 2f0333d8 400a9210 00000000 00000000 00000000 00000000 00000000 00000000
+dump_stackinfo: User Stack:
+dump_stackinfo:   base: 0x2f031bd8
+dump_stackinfo:   size: 00008152
+dump_stackinfo:     sp: 0x2f0334e0
+stack_dump:  2f0334c0: 00000001 2f033508 00000001 40009fa4 00000001 2f012640 2f018b71 400bf230
+stack_dump:  2f0334e0: 2f02e72c 00000000 2f018b71 400a9210 00000000 00000001 ecd0aa01 ffe97e2c
+stack_dump:  2f033500: 00000000 2f0226fc 2f019000 400a4efa 2f02f870 00000002 2f033c58 400a4dd0
+stack_dump:  2f033520: 2f02e640 2f033598 00000400 00000001 2f02e72c 2f02f8a8 00000000 ffffffff
+stack_dump:  2f033540: 2f02e72c 2f02f8a8 2f02f8a8 400a6466 00000001 2f033598 00000001 401073b0
+stack_dump:  2f033560: 00000000 2f0226fc 00000011 400a62f0 2f02e72c 2f02e660 2f040890 400a6b84
+stack_dump:  2f033580: 2f02e72c 2f02e660 2f042d00 400a2e88 8f2b4dda 6fb64b7b 2f0335c0 ffffffff
+stack_dump:  2f0335a0: 2f0226f0 2f0335b8 2f0225e0 400a035a 0924a8ac 34819ecb 2f0335b8 2f0335b8
+stack_dump:  2f0335c0: b4592f00 9978007a 63e69542 5e7fe7ee 8d422038 f99e3b61 c89d244f bdeaf6c4
+stack_dump:  2f0335e0: 76394377 2cc4040f b1bfd01c ae656496 0478b672 9295b068 c35d70d5 e5726993
+stack_dump:  2f033600: 98938bb7 6263e697 5948574f 9093f9b7 228b0474 757a507e 6a3abafc dbd5ca00
+stack_dump:  2f033620: 2e9f28b3 0a4bfa32 c4430a67 86e2e4eb 6fcbcbbb 70068563 f531978b ba2189c0
+stack_dump:  2f033640: 5b5d12c0 ce30e2ce 0a48c1ce 7a7dc5e6 e9ce61d7 efc7d94c 10097da3 42c8dd95
+stack_dump:  2f033660: f82a7fdc 8aaf3edc 29588061 482de84e 610828c1 1446d332 6c303e73 4edd7b6e
+stack_dump:  2f033680: b4f7be75 3317e774 9b6d6660 8f697409 cea44e68 afa24ea3 fb5b0636 af804664
+stack_dump:  2f0336a0: ba0913bd b1171a03 5442df27 5610a94b 3dbf1078 57479c4d 6ac6915a a0775ac8
+stack_dump:  2f0336c0: d3e6182c 9d424e61 e23dcdd9 de248abd 0d9f4ca2 cf95b691 1ee73690 4925df6c
+stack_dump:  2f0336e0: 6ca19dc8 f9124cf9 53fc4a0c df1ab8e3 0a3a2dc2 eaaf0856 af1f33e5 e29b271a
+stack_dump:  2f033700: 9a7c1f8f 482e21b2 c927265e d66594b7 8cb59e78 8d357243 a9d3cb26 d4ba3e73
+stack_dump:  2f033720: 16bf94d2 b2926949 a163097d 74bbe8b3 220fe6d3 09bda3cd 4a3d0041 f6a78839
+stack_dump:  2f033740: 90edbff7 e1caf673 4485495a fbf3f7a9 cace1440 7c537970 0ea8c2af 80b3f8b7
+stack_dump:  2f033760: 7a55840a 08bc907f f9a388e1 36acd141 a5429329 f4202d36 04eaca27 3946726a
+stack_dump:  2f033780: 4e0d49c6 9249add3 7f7d9638 232f8280 dab77d8d 9849a9b9 a6454f9a dbe5074b
+stack_dump:  2f0337a0: ca9de99f 740280d4 32f54af7 eccd78fb c9047733 3a2dcf1a 840f6e70 82fe3549
+stack_dump:  2f0337c0: c9cacf09 3b1fd10f 2a2edac1 e55a415e 60af78c3 c4fb035a f485593d fd5ee459
+stack_dump:  2f0337e0: 7dce1eea 9450cc13 b35f8280 fa041c43 502ad87e d82fde43 400cb06c 400bc98e
+stack_dump:  2f033800: 2f033900 3471a7b6 00000000 2f8220f6 2f80007a 40000000 2f01d22c 00000000
+stack_dump:  2f033820: 2f01d238 2f01cf0a 4001935c 40017bd0 2f033930 2f01d025 00000000 2f8220f6
+stack_dump:  2f033840: 00000000 40000000 2f008fe0 2f008fa0 2f033950 2f0339a8 00000000 2f8220f6
+stack_dump:  2f033860: 0000006e 40000000 2f008fe0 2f008fa0 2f033970 2f031ac8 00000000 2f8220f6
+stack_dump:  2f033880: 00000000 40000000 2f031ac8 2f02daa4 00000002 2f031ac8 2f012640 00000000
+stack_dump:  2f0338a0: 00000067 00000000 2f027140 00000001 2f012640 00002088 2f014000 2f014000
+stack_dump:  2f0338c0: 00000005 ffffffff 2f033a60 00000008 00000000 00000000 f7000000 00000000
+stack_dump:  2f0338e0: 00002228 000000e0 00003800 2f031ac8 2f01d008 00000000 2f01d22c 2f01cf05
+stack_dump:  2f033900: 00000006 2f014000 00002088 400cac10 00002088 2f012640 2f02e190 40028778
+stack_dump:  2f033920: 00000006 00000000 2f012640 40028aa2 00000000 00000000 2f012640 2f02dba0
+stack_dump:  2f033940: 00000001 2f02db8c 2f02da88 40009666 00000000 2f02db8c 2f02da88 2f02dba0
+stack_dump:  2f033960: 2f018ce8 00000000 00000000 400ad00e 2f018ce8 2f0121f8 2f0225e0 ffffffff
+stack_dump:  2f033980: 00000005 2f014000 2f014000 ffffffff 2f02da88 2f02daa4 2f0339c8 400134a8
+stack_dump:  2f0339a0: ffffffff 2f023588 2f0225e0 40013510 00000000 00000000 00000001 4009db6c
+stack_dump:  2f0339c0: 00000000 00000000 ffffffff 00000000 ffffffff 2f023460 2f0225e0 4009e7f6
+stack_dump:  2f0339e0: 090a770b 122a69e8 0000000a 2f0234ec 00000030 00000000 00000000 00000000
+stack_dump:  2f033a00: 2f03cf90 2f03cf90 2f0226fc 00000001 000008f9 2f022748 00000000 2f022608
+stack_dump:  2f033a20: 00000001 2f0226d8 00000000 0000076a 2f0226d8 2f033a40 2f033a60 00000001
+stack_dump:  2f033a40: 0000000e 0000275e 00000001 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f033a60: 00000001 00000007 0000000e 00000000 6dbfd462 96170084 401019ec 00000000
+stack_dump:  2f033a80: 3ae5e50b cbfab550 7fb768f4 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f033aa0: 2f02e620 7fffffff 00000001 00000000 2f02e5f0 2f033b28 00000000 40009f36
+stack_dump:  2f033ac0: 00000000 00000000 2f033af8 400134a8 00000000 00000000 2f0225e0 40013510
+stack_dump:  2f033ae0: 00000001 2f033b28 00000001 00000000 00000000 00000000 00000001 0000275e
+stack_dump:  2f033b00: 0000000e 00000004 0000000f 2f022608 00000000 00000008 2f0225e0 4009ce7c
+stack_dump:  2f033b20: 400a2ee2 2f02e660 401019ec 00000001 00000000 00000000 00000000 00000000
+stack_dump:  2f033b40: 00000000 00000000 00000000 2f02e660 400a3300 400add70 2f02e660 400a3382
+stack_dump:  2f033b60: 00000000 00000000 00000000 00000000 00000000 400add70 400ff000 400add8e
+stack_dump:  2f033b80: 00000000 00000000 00000000 400b2efe 00000000 00000000 00000000 00000000
+stack_dump:  2f033ba0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 16 2026 19:24:31 risc-v
+dump_assert_info: Assertion failed : at file: /esp32s31_ble_osal.c:764 task: bt_service_6 process: Kernel 0x400a3300
+up_dump_register: PC: 40013b56
+up_dump_register: A0: 2f015580 A1: 000002fc A2: 00000000 A3: 2f033288
+up_dump_register: A4: 00000000 A5: 2f014000 A6: 000002fc A7: 400f31a4
+up_dump_register: T0: 2f014510 T1: 2f013d10 T2: ffffffff T3: f7000000
+up_dump_register: T4: 00000000 T5: 00002228 T6: 000000e0
+up_dump_register: S0: 2f031ac8 S1: 2f014000 S2: 00000000 S3: 400f31a4
+up_dump_register: S4: 00000000 S5: 0000000b S6: 2f014000 S7: 00000006
+up_dump_register: S8: 2f014000 S9: 2f015000 S10: 2f033a60 S11: 000002fc
+up_dump_register: SP: 2f0143c8 FP: 2f031ac8 TP: 00000000 RA: 40013b56
+dump_stackinfo: IRQ Stack:
+dump_stackinfo:   base: 0x2f013d10
+dump_stackinfo:   size: 00002048
+dump_stackinfo:     sp: 0x2f0143c8
+stack_dump:  2f0143a8: 2f015000 2f033a60 401036f8 00000000 2f013d10 2f031bd8 00001fd8 40013d30
+stack_dump:  2f0143c8: 400a3300 00000000 00000000 00000000 00000000 00000000 00000000 2f0143c8
+stack_dump:  2f0143e8: 00000000 00000000 2f031ac8 2f015580 00000000 400f31a4 000002fc 7474754e
+stack_dump:  2f014408: 00000058 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f014428: 00000000 00000000 00000000 00000000 302e3000 0000302e 00000000 00000000
+stack_dump:  2f014448: 00000000 32340000 32353238 64383061 69642d62 20797472 20706553 32203631
+stack_dump:  2f014468: 20363230 323a3931 31333a34 40007400 00003880 2f0111a4 73697200 00762d63
+stack_dump:  2f014488: 00003880 00000037 00000004 2f008cea 2f011180 00004002 00000100 2f022710
+stack_dump:  2f0144a8: 2f033a60 00000000 00000001 ffffffff 00000000 0000000b 00000000 2f014000
+stack_dump:  2f0144c8: 2f012640 2f014000 2f031ac8 40006c68 2f012640 2f014000 2f033288 2f009236
+stack_dump:  2f0144e8: 00000000 00000006 00000006 2f033390 3000000b 4000be40 2f014510 2f000182
+stack_dump:  2f014508: 2f033288 4002579a 00000000 00000000 00000000 00000000 00000000 00000000
+dump_stackinfo: User Stack:
+dump_stackinfo:   base: 0x2f031bd8
+dump_stackinfo:   size: 00008152
+dump_stackinfo:     sp: 0x2f033390
+stack_dump:  2f033370: 2f012640 ffffffff 2f014000 0000000d 2f012640 2f040868 2f03bda8 400185ee
+stack_dump:  2f033390: 2f011760 2f035fa8 2f018738 4002579a 2f011760 2f035fa8 2f018738 4003ad62
+stack_dump:  2f0333b0: 00000002 2f011000 2f011000 40022386 00002080 2f012640 2f02e1c0 400224fa
+stack_dump:  2f0333d0: 00000002 2f012640 2f02e190 40021d7a 00002080 2f012640 00000001 2f02dabc
+stack_dump:  2f0333f0: 2f0248d8 2f0258d8 2f025114 40028f66 2f027140 2f033c68 00000000 40009072
+stack_dump:  2f033410: 2f02db8c 00000000 2f033c68 4000b1ee 00002080 00000000 2f02da88 400ad328
+stack_dump:  2f033430: 00000000 00000006 00000006 ffffffff 2f012224 2f023588 00000000 40009072
+stack_dump:  2f033450: 00000003 2f021c30 2f023588 4000b1ee ffffffff 2f021c30 00000001 4000b4d2
+stack_dump:  2f033470: 00000001 2f0226fc 00000400 ffffffff 00000001 00000001 2f021be0 40016a84
+stack_dump:  2f033490: 00000001 2f031b14 2f031ac8 40015f2e 2f02e72c 00000000 2f018b71 4000c7f6
+stack_dump:  2f0334b0: 00000000 00000040 00000000 00000000 00000000 00000000 00000000 40009fa4
+stack_dump:  2f0334d0: 00000001 2f012640 2f018b71 4000be3a 2f02e72c 00000000 2f018b71 400a9210
+stack_dump:  2f0334f0: 00000000 00000001 ecd0aa01 ffe97e2c 00000000 2f0226fc 2f019000 400a4efa
+stack_dump:  2f033510: 2f02f870 00000002 2f033c58 400a4dd0 2f02e640 2f033598 00000400 00000001
+stack_dump:  2f033530: 2f02e72c 2f02f8a8 00000000 ffffffff 2f02e72c 2f02f8a8 2f02f8a8 400a6466
+stack_dump:  2f033550: 00000001 2f033598 00000001 401073b0 00000000 2f0226fc 00000011 400a62f0
+stack_dump:  2f033570: 2f02e72c 2f02e660 2f040890 400a6b84 2f02e72c 2f02e660 2f042d00 400a2e88
+stack_dump:  2f033590: 8f2b4dda 6fb64b7b 2f0335c0 ffffffff 2f0226f0 2f0335b8 2f0225e0 400a035a
+stack_dump:  2f0335b0: 0924a8ac 34819ecb 2f0335b8 2f0335b8 b4592f00 9978007a 63e69542 5e7fe7ee
+stack_dump:  2f0335d0: 8d422038 f99e3b61 c89d244f bdeaf6c4 76394377 2cc4040f b1bfd01c ae656496
+stack_dump:  2f0335f0: 0478b672 9295b068 c35d70d5 e5726993 98938bb7 6263e697 5948574f 9093f9b7
+stack_dump:  2f033610: 228b0474 757a507e 6a3abafc dbd5ca00 2e9f28b3 0a4bfa32 c4430a67 86e2e4eb
+stack_dump:  2f033630: 6fcbcbbb 70068563 f531978b ba2189c0 5b5d12c0 ce30e2ce 0a48c1ce 7a7dc5e6
+stack_dump:  2f033650: e9ce61d7 efc7d94c 10097da3 42c8dd95 f82a7fdc 8aaf3edc 29588061 482de84e
+stack_dump:  2f033670: 610828c1 1446d332 6c303e73 4edd7b6e b4f7be75 3317e774 9b6d6660 8f697409
+stack_dump:  2f033690: cea44e68 afa24ea3 fb5b0636 af804664 ba0913bd b1171a03 5442df27 5610a94b
+stack_dump:  2f0336b0: 3dbf1078 57479c4d 6ac6915a a0775ac8 d3e6182c 9d424e61 e23dcdd9 de248abd
+stack_dump:  2f0336d0: 0d9f4ca2 cf95b691 1ee73690 4925df6c 6ca19dc8 f9124cf9 53fc4a0c df1ab8e3
+stack_dump:  2f0336f0: 0a3a2dc2 eaaf0856 af1f33e5 e29b271a 9a7c1f8f 482e21b2 c927265e d66594b7
+stack_dump:  2f033710: 8cb59e78 8d357243 a9d3cb26 d4ba3e73 16bf94d2 b2926949 a163097d 74bbe8b3
+stack_dump:  2f033730: 220fe6d3 09bda3cd 4a3d0041 f6a78839 90edbff7 e1caf673 4485495a fbf3f7a9
+stack_dump:  2f033750: cace1440 7c537970 0ea8c2af 80b3f8b7 7a55840a 08bc907f f9a388e1 36acd141
+stack_dump:  2f033770: a5429329 f4202d36 04eaca27 3946726a 4e0d49c6 9249add3 7f7d9638 232f8280
+stack_dump:  2f033790: dab77d8d 9849a9b9 a6454f9a dbe5074b ca9de99f 740280d4 32f54af7 eccd78fb
+stack_dump:  2f0337b0: c9047733 3a2dcf1a 840f6e70 82fe3549 c9cacf09 3b1fd10f 2a2edac1 e55a415e
+stack_dump:  2f0337d0: 60af78c3 c4fb035a f485593d fd5ee459 7dce1eea 9450cc13 b35f8280 fa041c43
+stack_dump:  2f0337f0: 502ad87e d82fde43 400cb06c 400bc98e 2f033900 3471a7b6 00000000 2f8220f6
+stack_dump:  2f033810: 2f80007a 40000000 2f01d22c 00000000 2f01d238 2f01cf0a 4001935c 40017bd0
+stack_dump:  2f033830: 2f033930 2f01d025 00000000 2f8220f6 00000000 40000000 2f008fe0 2f008fa0
+stack_dump:  2f033850: 2f033950 2f0339a8 00000000 2f8220f6 0000006e 40000000 2f008fe0 2f008fa0
+stack_dump:  2f033870: 2f033970 2f031ac8 00000000 2f8220f6 00000000 40000000 2f031ac8 2f02daa4
+stack_dump:  2f033890: 00000002 2f031ac8 2f012640 00000000 00000067 00000000 2f027140 00000001
+stack_dump:  2f0338b0: 2f012640 00002088 2f014000 2f014000 00000005 ffffffff 2f033a60 00000008
+stack_dump:  2f0338d0: 00000000 00000000 f7000000 00000000 00002228 000000e0 00003800 2f031ac8
+stack_dump:  2f0338f0: 2f01d008 00000000 2f01d22c 2f01cf05 00000006 2f014000 00002088 400cac10
+stack_dump:  2f033910: 00002088 2f012640 2f02e190 40028778 00000006 00000000 2f012640 40028aa2
+stack_dump:  2f033930: 00000000 00000000 2f012640 2f02dba0 00000001 2f02db8c 2f02da88 40009666
+stack_dump:  2f033950: 00000000 2f02db8c 2f02da88 2f02dba0 2f018ce8 00000000 00000000 400ad00e
+stack_dump:  2f033970: 2f018ce8 2f0121f8 2f0225e0 ffffffff 00000005 2f014000 2f014000 ffffffff
+stack_dump:  2f033990: 2f02da88 2f02daa4 2f0339c8 400134a8 ffffffff 2f023588 2f0225e0 40013510
+stack_dump:  2f0339b0: 00000000 00000000 00000001 4009db6c 00000000 00000000 ffffffff 00000000
+stack_dump:  2f0339d0: ffffffff 2f023460 2f0225e0 4009e7f6 090a770b 122a69e8 0000000a 2f0234ec
+stack_dump:  2f0339f0: 00000030 00000000 00000000 00000000 2f03cf90 2f03cf90 2f0226fc 00000001
+stack_dump:  2f033a10: 000008f9 2f022748 00000000 2f022608 00000001 2f0226d8 00000000 0000076a
+stack_dump:  2f033a30: 2f0226d8 2f033a40 2f033a60 00000001 0000000e 0000275e 00000001 00000000
+stack_dump:  2f033a50: 00000000 00000000 00000000 00000000 00000001 00000007 0000000e 00000000
+stack_dump:  2f033a70: 6dbfd462 96170084 401019ec 00000000 3ae5e50b cbfab550 7fb768f4 00000000
+stack_dump:  2f033a90: 00000000 00000000 00000000 00000000 2f02e620 7fffffff 00000001 00000000
+stack_dump:  2f033ab0: 2f02e5f0 2f033b28 00000000 40009f36 00000000 00000000 2f033af8 400134a8
+stack_dump:  2f033ad0: 00000000 00000000 2f0225e0 40013510 00000001 2f033b28 00000001 00000000
+stack_dump:  2f033af0: 00000000 00000000 00000001 0000275e 0000000e 00000004 0000000f 2f022608
+stack_dump:  2f033b10: 00000000 00000008 2f0225e0 4009ce7c 400a2ee2 2f02e660 401019ec 00000001
+stack_dump:  2f033b30: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 2f02e660
+stack_dump:  2f033b50: 400a3300 400add70 2f02e660 400a3382 00000000 00000000 00000000 00000000
+stack_dump:  2f033b70: 00000000 400add70 400ff000 400add8e 00000000 00000000 00000000 400b2efe
+stack_dump:  2f033b90: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f033bb0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+nsh> [Kstate
+nsh: state: command not found
+nsh> [KTraceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-ble-switch.py", line 118, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-ble-switch.py", line 104, in main
+    interactive('state', r'Adapter State:\s*2\b')
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-ble-switch.py", line 94, in interactive
+    raise RuntimeError('target fault/reset; panic retained, no retry')
+RuntimeError: target fault/reset; panic retained, no retry

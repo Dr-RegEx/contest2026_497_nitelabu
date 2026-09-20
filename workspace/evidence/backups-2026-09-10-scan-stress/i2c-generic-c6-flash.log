@@ -1,0 +1,68 @@
+[1/4] cd /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build && /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build/partition_table/partition-table.bin /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build/esp32c6_i2c_slave.bin
+esp32c6_i2c_slave.bin binary size 0x26aa0 bytes. Smallest app partition is 0x100000 bytes. 0xd9560 bytes (85%) free.
+[2/4] Performing build step for 'bootloader'
+[1/1] cd /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build/bootloader && /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build/bootloader/bootloader.bin
+Bootloader binary size 0x5640 bytes. 0x29c0 bytes (33%) free.
+Adding "flash"'s dependency "all" to list of commands with default set of options.
+Executing action: all (aliases: build)
+Running ninja in directory /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build
+Executing "ninja all"...
+Executing action: flash
+Running ninja in directory /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build
+Executing "ninja flash"...
+[1/5] cd /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build && /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build/partition_table/partition-table.bin /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build/esp32c6_i2c_slave.bin
+esp32c6_i2c_slave.bin binary size 0x26aa0 bytes. Smallest app partition is 0x100000 bytes. 0xd9560 bytes (85%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] cd /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build/bootloader && /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/regex/work/esp32s31-openvela/tools/esp32c6-i2c-slave/build/bootloader/bootloader.bin
+Bootloader binary size 0x5640 bytes. 0x29c0 bytes (33%) free.
+[2/3] Running utility command for flash
+esptool --chip esp32c6 -p /dev/ttyACM0 -b 460800 --before=default-reset --after=hard-reset write-flash --flash-mode dio --flash-freq 80m --flash-size 2MB 0x0 bootloader/bootloader.bin 0x8000 partition_table/partition-table.bin 0x10000 esp32c6_i2c_slave.bin --skip-flashed
+esptool v5.4.0
+Serial port /dev/ttyACM0:
+Connecting....
+Connected to ESP32-C6 on /dev/ttyACM0:
+Chip type:          ESP32-C6 (QFN40) (revision v0.2)
+Features:           Wi-Fi 6, BT 5 (LE), IEEE802.15.4, Single Core + LP Core, 160MHz, Unknown Embedded Flash
+Crystal frequency:  40MHz
+MAC:                20:6e:f1:ff:fe:11:23:40
+BASE MAC:           20:6e:f1:11:23:40
+MAC_EXT:            ff:fe
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing 'bootloader/bootloader.bin' at 0x00000000...
+SHA digest in image updated.
+Comparing flash contents against new data...
+Flash will be erased from 0x00000000 to 0x00005fff...
+Compressed 22080 bytes to 13938...
+Writing at 0x00005640 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 13.61kB/13.61kB [0s] 
+Wrote 22080 bytes (13938 compressed) at 0x00000000 in 0.5 seconds (343.1 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Writing 'partition_table/partition-table.bin' at 0x00008000...
+Comparing flash contents against new data...
+'partition_table/partition-table.bin' at 0x00008000 already in flash, skipping write.
+
+Writing 'esp32c6_i2c_slave.bin' at 0x00010000...
+Comparing flash contents against new data...
+Flash will be erased from 0x00010000 to 0x00036fff...
+Compressed 158368 bytes to 83639...
+Writing at 0x00019aae ━━━━━╸                          19.6% 16.00kB/81.68kB [0s] 
+Writing at 0x00020b36 ━━━━━━━━━━━╸                    39.2% 32.00kB/81.68kB [0s] 
+Writing at 0x0002790b ━━━━━━━━━━━━━━━━━╸              58.8% 48.00kB/81.68kB [1s] 
+Writing at 0x0002e2cc ━━━━━━━━━━━━━━━━━━━━━━━╸        78.4% 64.00kB/81.68kB [1s] 
+Writing at 0x00035c7e ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   97.9% 80.00kB/81.68kB [1s] 
+Writing at 0x00036aa0 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% 81.68kB/81.68kB [2s] 
+Wrote 158368 bytes (83639 compressed) at 0x00010000 in 2.2 seconds (585.6 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Hard resetting via RTS pin...
+Done

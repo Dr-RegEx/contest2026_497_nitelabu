@@ -1,0 +1,10 @@
+{
+  "state": "BLE_SMP_MMU_GATT_PASS",
+  "board_receipt": "build1543-ble-kernel-stack-min.sha256",
+  "board": "NSH, BLE disabled, no WiFi in image, UART free",
+  "source": "controller kernel dispatcher + kernel OSAL tasks + Zblue user clock/IRQ mutex/timer tickets/sleep + OS allocated min-size pthread stacks; BLE-only BR event guard",
+  "evidence": "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/checkpoint1544-ble-smp-mmu-gatt",
+  "next": "WiFi/BLE coexistence integration before SIMD; old selected network/fixture gaps retained",
+  "counts": "70/88",
+  "unresolved": "Coexistence off; 24h/xTS old evidence remains scoped to prior images; no claim all final image tests passed"
+}

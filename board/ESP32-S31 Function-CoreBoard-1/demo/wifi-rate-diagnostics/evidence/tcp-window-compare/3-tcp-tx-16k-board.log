@@ -1,0 +1,13 @@
+iperf2 -c 192.168.1.29 -p 5103 -i 1 -t 30 -l 16384 -w 16k
+------------------------------------------------------------
+Client connecting to 192.168.1.29, TCP port 5103
+TCP window size: 15.6 KByte
+------------------------------------------------------------
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+tcp connect failed: Network is unreachable
+[  1] local 0.0.0.0 port 0 connected with 192.168.1.29 port 5103
+nsh> [K

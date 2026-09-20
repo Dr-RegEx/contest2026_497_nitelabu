@@ -1,0 +1,48 @@
+{
+  "name": "common-1.3.10",
+  "keys": [
+    "common:1.3.10"
+  ],
+  "profile": "demo-rmt-xts-drivers",
+  "sources": [
+    "apps/testing/drivers/drivertest/drivertest_uart.c"
+  ],
+  "evidence_ids": [
+    744
+  ],
+  "note": "历史命令 `cmocka_driver_uart -d /dev/ttyS0 -n0`、`-n1`、`-n2`，主机按原文发送规定字符与 10 次突发数据，测试时独占串口。",
+  "original": "1.3.10",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint744-xts.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts744-uart.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "Uart串口功能测试",
+  "original_line": 719,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/drivertest_uart.c",
+      "origin": "apps/testing/drivers/drivertest/drivertest_uart.c"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-drivers/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint744-xts.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint744-xts.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts744-uart.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts744-uart.log"
+    }
+  ]
+}

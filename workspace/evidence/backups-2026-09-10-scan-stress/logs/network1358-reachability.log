@@ -1,0 +1,45 @@
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: ping -c 3 192.168.1.1 ---
+ping -c 3 192.168.1.1
+PING 192.168.1.1 56 bytes of data
+56 bytes from 192.168.1.1: icmp_seq=0 time=40.0 ms
+56 bytes from 192.168.1.1: icmp_seq=1 time=40.0 ms
+56 bytes from 192.168.1.1: icmp_seq=2 time=50.0 ms
+3 packets transmitted, 3 received, 0% packet loss, time 3030 ms
+rtt min/avg/max/mdev = 40.000/43.333/50.000/4.717 ms
+nsh> [K
+nsh> [K
+--- CMD: ping -c 3 192.168.1.29 ---
+ping -c 3 192.168.1.29
+PING 192.168.1.29 56 bytes of data
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 0: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 1: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 2: 101
+3 packets transmitted, 0 received, 100% packet loss, time 3030 ms
+nsh> [K
+nsh> [K
+--- CMD: cat /proc/net/arp ---
+cat /proc/net/arp
+nsh: cat: Could not open /proc/net/arp (is procfs mounted?)
+nsh: cat: open failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892      83748     227144     113032     164248    216     16 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K
+nsh> [K

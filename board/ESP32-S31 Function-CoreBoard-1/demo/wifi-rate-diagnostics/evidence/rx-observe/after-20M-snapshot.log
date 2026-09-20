@@ -1,0 +1,48 @@
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=106504 replay=106503 ack=111966 drop=0 pending=0x2 sreplay=17
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=3180 max=47810892 samples=18306 over32=765 over100=471 over1000=15 sum=201596891 direct=30 directmax=16436 deferred=18276 deferredmax=47810892
+MONIRQ: cpu=1 defer=19335 replay=19335 ack=19658 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=8 fail=0 destroyed=6 live=2 livemax=2 pages=944 pgt=24
+WIFIRX: callbacks=3821
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=14033 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=3263 fail=0 invalid=411 nonarp=2852
+TXSHAPE: snap=2852 arphdr=9 arpfail=0 offset=34 len=600
+ARPREQ: seen=0 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=9 bad=0 req=0 reply=9 peer=2 peerreply=2 lastlen=60 srcdifff=0 ok=9 drop=0
+ARPDIAG: dir=1 frames=47 bad=0 req=47 reply=0 peer=13 peerreply=0 lastlen=60 srcdiff=0 ok=47 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+WAIT: pid=24 object=0x614013e4
+WAIT: pid=25 object=0x61401394
+WAIT: pid=26 object=0x2f064874
+object=0x61401394
+WAIT: pid=26 object=0x2f064874
+nsh> [Krecvfrom failed: Interrupted system call
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000f30 00000000 00000000 57a6da          
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000d05 00000d04 00000000 00000000 1de583           
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0ede  0000  0ede  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0006  0000  0006  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K

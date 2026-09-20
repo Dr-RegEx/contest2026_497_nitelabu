@@ -1,0 +1,23 @@
+In file included from /tmp/nettest-cmdline-v1xdz6u4/nettest_cmdline.c:31:
+/tmp/nettest-cmdline-v1xdz6u4/nettest.h:45:26: error: initializer element is not constant
+   45 | #  define HTONL(a)       htonl(a)
+      |                          ^~~~~
+/tmp/nettest-cmdline-v1xdz6u4/nettest_cmdline.c:67:33: note: in expansion of macro ‘HTONL’
+   67 | uint32_t g_nettestserver_ipv4 = HTONL(CONFIG_EXAMPLES_NETTEST_SERVERIP);
+      |                                 ^~~~~
+/tmp/nettest-cmdline-v1xdz6u4/nettest_cmdline.c:80:24: error: unknown type name ‘FAR’
+   80 | static void show_usage(FAR const char *progname)
+      |                        ^~~
+/tmp/nettest-cmdline-v1xdz6u4/nettest_cmdline.c: In function ‘nettest_cmdline’:
+/tmp/nettest-cmdline-v1xdz6u4/nettest_cmdline.c:114:11: error: implicit declaration of function ‘show_usage’ [-Werror=implicit-function-declaration]
+  114 |           show_usage(argv[0]);
+      |           ^~~~~~~~~~
+cc1: all warnings being treated as errors
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/test_cmdline.py", line 82, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/apps/examples/nettest/test_cmdline.py", line 65, in main
+    subprocess.run(['cc', '-std=c11', '-Wall', '-Wextra', '-Werror',
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '-Wno-unused-parameter', '-DNETTEST_HOST=1', '-I', '/tmp/nettest-cmdline-v1xdz6u4', '/tmp/nettest-cmdline-v1xdz6u4/nettest_host.c', '/tmp/nettest-cmdline-v1xdz6u4/nettest_cmdline.c', '/tmp/nettest-cmdline-v1xdz6u4/endpoint.c', '-o', '/tmp/nettest-cmdline-v1xdz6u4/test']' returned non-zero exit status 1.

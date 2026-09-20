@@ -1,0 +1,276 @@
+
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/arch/CMakeFiles/arch.dir/risc-v/src/common/riscv_exception_common.S.o:     file format elf32-littleriscv
+
+
+Disassembly of section .iram1:
+
+00000000 <exception_common>:
+   0:	14051573          	csrrw	a0,sscratch,a0
+   4:	00252623          	sw	sp,12(a0)
+   8:	01052103          	lw	sp,16(a0)
+   c:	00052823          	sw	zero,16(a0)
+  10:	00011463          	bnez	sp,18 <.L1^B1>
+  14:	00c52103          	lw	sp,12(a0)
+
+00000018 <.L1^B1>:
+  18:	14051573          	csrrw	a0,sscratch,a0
+  1c:	ef410113          	addi	sp,sp,-268
+  20:	c206                	sw	ra,4(sp)
+  22:	c812                	sw	tp,16(sp)
+  24:	ca16                	sw	t0,20(sp)
+  26:	cc1a                	sw	t1,24(sp)
+  28:	ce1e                	sw	t2,28(sp)
+  2a:	d022                	sw	s0,32(sp)
+  2c:	d226                	sw	s1,36(sp)
+  2e:	d42a                	sw	a0,40(sp)
+  30:	d62e                	sw	a1,44(sp)
+  32:	d832                	sw	a2,48(sp)
+  34:	da36                	sw	a3,52(sp)
+  36:	dc3a                	sw	a4,56(sp)
+  38:	de3e                	sw	a5,60(sp)
+  3a:	c0c2                	sw	a6,64(sp)
+  3c:	c2c6                	sw	a7,68(sp)
+  3e:	c4ca                	sw	s2,72(sp)
+  40:	c6ce                	sw	s3,76(sp)
+  42:	c8d2                	sw	s4,80(sp)
+  44:	cad6                	sw	s5,84(sp)
+  46:	ccda                	sw	s6,88(sp)
+  48:	cede                	sw	s7,92(sp)
+  4a:	d0e2                	sw	s8,96(sp)
+  4c:	d2e6                	sw	s9,100(sp)
+  4e:	d4ea                	sw	s10,104(sp)
+  50:	d6ee                	sw	s11,108(sp)
+  52:	d8f2                	sw	t3,112(sp)
+  54:	daf6                	sw	t4,116(sp)
+  56:	dcfa                	sw	t5,120(sp)
+  58:	defe                	sw	t6,124(sp)
+  5a:	10002473          	csrr	s0,sstatus
+  5e:	141024f3          	csrr	s1,sepc
+  62:	14202973          	csrr	s2,scause
+  66:	140029f3          	csrr	s3,sscratch
+  6a:	00c9a983          	lw	s3,12(s3)
+  6e:	c122                	sw	s0,128(sp)
+  70:	c026                	sw	s1,0(sp)
+  72:	c44e                	sw	s3,8(sp)
+  74:	142022f3          	csrr	t0,scause
+  78:	c8000337          	lui	t1,0xc8000
+  7c:	137d                	addi	t1,t1,-1 # c7ffffff <g_intstacktop+0xc7ffefff>
+  7e:	0062f2b3          	and	t0,t0,t1
+  82:	430a                	lw	t1,128(sp)
+  84:	10037393          	andi	t2,t1,256
+  88:	00038663          	beqz	t2,94 <.L7^B1>
+  8c:	100003b7          	lui	t2,0x10000
+  90:	0072e2b3          	or	t0,t0,t2
+
+00000094 <.L7^B1>:
+  94:	02037313          	andi	t1,t1,32
+  98:	00030663          	beqz	t1,a4 <.L7^B2>
+  9c:	08000337          	lui	t1,0x8000
+  a0:	0062e2b3          	or	t0,t0,t1
+
+000000a4 <.L7^B2>:
+  a4:	c316                	sw	t0,132(sp)
+  a6:	04094563          	bltz	s2,f0 <handle_irq>
+  aa:	6985                	lui	s3,0x1
+  ac:	19fd                	addi	s3,s3,-1 # fff <riscv_jump_to_user+0xdd1>
+  ae:	01397933          	and	s2,s2,s3
+  b2:	49a1                	li	s3,8
+  b4:	03391e63          	bne	s2,s3,f0 <handle_irq>
+  b8:	4999                	li	s3,6
+  ba:	03354b63          	blt	a0,s3,f0 <handle_irq>
+  be:	02047993          	andi	s3,s0,32
+  c2:	00098463          	beqz	s3,ca <.L1^B2>
+  c6:	10016073          	csrsi	sstatus,2
+
+000000ca <.L1^B2>:
+  ca:	0491                	addi	s1,s1,4
+  cc:	c026                	sw	s1,0(sp)
+  ce:	14002273          	csrr	tp,sscratch
+  d2:	00022203          	lw	tp,0(tp) # 0 <exception_common>
+  d6:	888a                	mv	a7,sp
+  d8:	00000317          	auipc	t1,0x0
+  dc:	000300e7          	jalr	t1 # d8 <.L1^B2+0xe>
+
+000000e0 <return_from_syscall>:
+  e0:	10017073          	csrci	sstatus,2
+  e4:	d42a                	sw	a0,40(sp)
+  e6:	850a                	mv	a0,sp
+  e8:	00000317          	auipc	t1,0x0
+  ec:	00030067          	jr	t1 # e8 <return_from_syscall+0x8>
+
+000000f0 <handle_irq>:
+  f0:	854a                	mv	a0,s2
+  f2:	858a                	mv	a1,sp
+  f4:	842e                	mv	s0,a1
+  f6:	4082                	lw	ra,0(sp)
+  f8:	5402                	lw	s0,32(sp)
+  fa:	140022f3          	csrr	t0,sscratch
+  fe:	0082a283          	lw	t0,8(t0)
+ 102:	6305                	lui	t1,0x1
+ 104:	80030313          	addi	t1,t1,-2048 # 800 <riscv_jump_to_user+0x5d2>
+ 108:	40628333          	sub	t1,t0,t1
+ 10c:	00614563          	blt	sp,t1,116 <.L1^B3>
+ 110:	0022c363          	blt	t0,sp,116 <.L1^B3>
+ 114:	a011                	j	118 <.L2^B1>
+
+00000116 <.L1^B3>:
+ 116:	8116                	mv	sp,t0
+
+00000118 <.L2^B1>:
+ 118:	1161                	addi	sp,sp,-8
+ 11a:	c206                	sw	ra,4(sp)
+ 11c:	c022                	sw	s0,0(sp)
+ 11e:	0020                	addi	s0,sp,8
+ 120:	ee1ff0ef          	jal	0 <exception_common>
+ 124:	4092                	lw	ra,4(sp)
+ 126:	4402                	lw	s0,0(sp)
+ 128:	0121                	addi	sp,sp,8
+
+0000012a <return_from_exception>:
+ 12a:	812a                	mv	sp,a0
+ 12c:	4402                	lw	s0,0(sp)
+ 12e:	14141073          	csrw	sepc,s0
+ 132:	440a                	lw	s0,128(sp)
+ 134:	10041073          	csrw	sstatus,s0
+ 138:	00000317          	auipc	t1,0x0
+ 13c:	000300e7          	jalr	t1 # 138 <return_from_exception+0xe>
+ 140:	140024f3          	csrr	s1,sscratch
+ 144:	c088                	sw	a0,0(s1)
+ 146:	10000493          	li	s1,256
+ 14a:	8c65                	and	s0,s0,s1
+ 14c:	e409                	bnez	s0,156 <.L1^B4>
+ 14e:	0268                	addi	a0,sp,268
+ 150:	14002473          	csrr	s0,sscratch
+ 154:	c808                	sw	a0,16(s0)
+
+00000156 <.L1^B4>:
+ 156:	429a                	lw	t0,132(sp)
+ 158:	14229073          	csrw	scause,t0
+ 15c:	100022f3          	csrr	t0,sstatus
+ 160:	1002f293          	andi	t0,t0,256
+ 164:	08028463          	beqz	t0,1ec <.Lesp32s31_user_return>
+ 168:	a089                	j	1aa <.Lesp32s31_supervisor_return>
+ 16a:	4092                	lw	ra,4(sp)
+ 16c:	4242                	lw	tp,16(sp)
+ 16e:	42d2                	lw	t0,20(sp)
+ 170:	4362                	lw	t1,24(sp)
+ 172:	43f2                	lw	t2,28(sp)
+ 174:	5402                	lw	s0,32(sp)
+ 176:	5492                	lw	s1,36(sp)
+ 178:	5522                	lw	a0,40(sp)
+ 17a:	55b2                	lw	a1,44(sp)
+ 17c:	5642                	lw	a2,48(sp)
+ 17e:	56d2                	lw	a3,52(sp)
+ 180:	5762                	lw	a4,56(sp)
+ 182:	57f2                	lw	a5,60(sp)
+ 184:	4806                	lw	a6,64(sp)
+ 186:	4896                	lw	a7,68(sp)
+ 188:	4926                	lw	s2,72(sp)
+ 18a:	49b6                	lw	s3,76(sp)
+ 18c:	4a46                	lw	s4,80(sp)
+ 18e:	4ad6                	lw	s5,84(sp)
+ 190:	4b66                	lw	s6,88(sp)
+ 192:	4bf6                	lw	s7,92(sp)
+ 194:	5c06                	lw	s8,96(sp)
+ 196:	5c96                	lw	s9,100(sp)
+ 198:	5d26                	lw	s10,104(sp)
+ 19a:	5db6                	lw	s11,108(sp)
+ 19c:	5e46                	lw	t3,112(sp)
+ 19e:	5ed6                	lw	t4,116(sp)
+ 1a0:	5f66                	lw	t5,120(sp)
+ 1a2:	5ff6                	lw	t6,124(sp)
+ 1a4:	4122                	lw	sp,8(sp)
+ 1a6:	10200073          	sret
+
+000001aa <.Lesp32s31_supervisor_return>:
+ 1aa:	4092                	lw	ra,4(sp)
+ 1ac:	4242                	lw	tp,16(sp)
+ 1ae:	42d2                	lw	t0,20(sp)
+ 1b0:	4362                	lw	t1,24(sp)
+ 1b2:	43f2                	lw	t2,28(sp)
+ 1b4:	5402                	lw	s0,32(sp)
+ 1b6:	5492                	lw	s1,36(sp)
+ 1b8:	5522                	lw	a0,40(sp)
+ 1ba:	55b2                	lw	a1,44(sp)
+ 1bc:	5642                	lw	a2,48(sp)
+ 1be:	56d2                	lw	a3,52(sp)
+ 1c0:	5762                	lw	a4,56(sp)
+ 1c2:	57f2                	lw	a5,60(sp)
+ 1c4:	4806                	lw	a6,64(sp)
+ 1c6:	4896                	lw	a7,68(sp)
+ 1c8:	4926                	lw	s2,72(sp)
+ 1ca:	49b6                	lw	s3,76(sp)
+ 1cc:	4a46                	lw	s4,80(sp)
+ 1ce:	4ad6                	lw	s5,84(sp)
+ 1d0:	4b66                	lw	s6,88(sp)
+ 1d2:	4bf6                	lw	s7,92(sp)
+ 1d4:	5c06                	lw	s8,96(sp)
+ 1d6:	5c96                	lw	s9,100(sp)
+ 1d8:	5d26                	lw	s10,104(sp)
+ 1da:	5db6                	lw	s11,108(sp)
+ 1dc:	5e46                	lw	t3,112(sp)
+ 1de:	5ed6                	lw	t4,116(sp)
+ 1e0:	5f66                	lw	t5,120(sp)
+ 1e2:	5ff6                	lw	t6,124(sp)
+ 1e4:	4122                	lw	sp,8(sp)
+
+000001e6 <esp32s31_supervisor_return_ecall>:
+ 1e6:	00000073          	ecall
+	...
+
+000001ec <.Lesp32s31_user_return>:
+ 1ec:	4092                	lw	ra,4(sp)
+ 1ee:	4242                	lw	tp,16(sp)
+ 1f0:	42d2                	lw	t0,20(sp)
+ 1f2:	4362                	lw	t1,24(sp)
+ 1f4:	43f2                	lw	t2,28(sp)
+ 1f6:	5402                	lw	s0,32(sp)
+ 1f8:	5492                	lw	s1,36(sp)
+ 1fa:	5522                	lw	a0,40(sp)
+ 1fc:	55b2                	lw	a1,44(sp)
+ 1fe:	5642                	lw	a2,48(sp)
+ 200:	56d2                	lw	a3,52(sp)
+ 202:	5762                	lw	a4,56(sp)
+ 204:	57f2                	lw	a5,60(sp)
+ 206:	4806                	lw	a6,64(sp)
+ 208:	4896                	lw	a7,68(sp)
+ 20a:	4926                	lw	s2,72(sp)
+ 20c:	49b6                	lw	s3,76(sp)
+ 20e:	4a46                	lw	s4,80(sp)
+ 210:	4ad6                	lw	s5,84(sp)
+ 212:	4b66                	lw	s6,88(sp)
+ 214:	4bf6                	lw	s7,92(sp)
+ 216:	5c06                	lw	s8,96(sp)
+ 218:	5c96                	lw	s9,100(sp)
+ 21a:	5d26                	lw	s10,104(sp)
+ 21c:	5db6                	lw	s11,108(sp)
+ 21e:	5e46                	lw	t3,112(sp)
+ 220:	5ed6                	lw	t4,116(sp)
+ 222:	5f66                	lw	t5,120(sp)
+ 224:	5ff6                	lw	t6,124(sp)
+ 226:	4122                	lw	sp,8(sp)
+
+00000228 <esp32s31_user_return_ecall>:
+ 228:	00000073          	ecall
+	...
+
+0000022e <riscv_jump_to_user>:
+ 22e:	10017073          	csrci	sstatus,2
+ 232:	813e                	mv	sp,a5
+ 234:	c02a                	sw	a0,0(sp)
+ 236:	d42e                	sw	a1,40(sp)
+ 238:	d632                	sw	a2,44(sp)
+ 23a:	d836                	sw	a3,48(sp)
+ 23c:	c43a                	sw	a4,8(sp)
+ 23e:	10002573          	csrr	a0,sstatus
+ 242:	eff00593          	li	a1,-257
+ 246:	8d6d                	and	a0,a0,a1
+ 248:	c12a                	sw	a0,128(sp)
+ 24a:	459a                	lw	a1,132(sp)
+ 24c:	f0000637          	lui	a2,0xf0000
+ 250:	167d                	addi	a2,a2,-1 # efffffff <g_intstacktop+0xefffefff>
+ 252:	8df1                	and	a1,a1,a2
+ 254:	c32e                	sw	a1,132(sp)
+ 256:	850a                	mv	a0,sp
+ 258:	00000317          	auipc	t1,0x0
+ 25c:	00030067          	jr	t1 # 258 <riscv_jump_to_user+0x2a>

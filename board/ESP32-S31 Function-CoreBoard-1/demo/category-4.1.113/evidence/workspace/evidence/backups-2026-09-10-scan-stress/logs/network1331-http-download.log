@@ -1,0 +1,30 @@
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: mount -t tmpfs /data ---
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+--- CMD: curl -o /data/x http://192.168.1.29:8000/x1327.bin ---
+curl -o /data/x http://192.168.1.29:8000/x1327.bin
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0 35 65536   35 23360    0     0  86518      0 --:--:-- --:--:-- --:--:-- 86518100 65536  100 65536    0     0   148k      0 --:--:-- --:--:-- --:--:--  148k
+nsh> [K
+nsh> [K
+--- CMD: echo $? ---
+echo $?
+0
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data/x ---
+ls -l /data/x
+ -rwxrwxrwx       65536 /data/x
+nsh> [K
+nsh> [K
+{"case": "4.1.113", "status": "PASS", "receipt": "build1328-network-stack.sha256", "source_bytes": 65536, "source_sha256": "7daca2095d0438260fa849183dfc67faa459fdf4936e1bc91eec6b281b27e4c2", "target_bytes": 65536}

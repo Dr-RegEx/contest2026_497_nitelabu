@@ -1,0 +1,61 @@
+[
+  {
+    "case": "5.1.23",
+    "direction_from_board": "tx",
+    "protocol": "TCP",
+    "status": "MEASURED_REQUIRES_REVIEW",
+    "start": "2026-09-20T02:37:41.096091+08:00",
+    "requested_duration_seconds": 300,
+    "board_summaries": [
+      "[  1] 0.00-300.05 sec   121 MBytes  3.38 Mbits/sec"
+    ],
+    "host_summaries": [
+      "[  1] 0.00-300.05 sec   121 MBytes  3.38 Mbits/sec"
+    ],
+    "both_duration_at_least_300": true,
+    "end": "2026-09-20T02:42:51.618198+08:00",
+    "log_sha256": {
+      "5.1.23-tx-board.log": "4f01ae8c424162e8b90bb4c2ce1016369893fcfebf3f9b21f427a39eb31e1c70",
+      "5.1.23-tx-host.log": "8d2411058a1fbe9230613e371fc98102a20a4d85a7d58b34e19e4897236ef86a"
+    }
+  },
+  {
+    "case": "5.1.24",
+    "direction_from_board": "rx",
+    "protocol": "UDP",
+    "status": "MEASURED_REQUIRES_REVIEW",
+    "start": "2026-09-20T02:42:51.619368+08:00",
+    "requested_duration_seconds": 300,
+    "host_exit": 0,
+    "board_summaries": [
+      "[  1] 0.00-307.01 sec  33.3 MBytes   910 Kbits/sec   8.382 ms 613255/637007 (96%)",
+      "[  1] 0.00-307.01 sec  253 datagrams received out-of-order"
+    ],
+    "host_summaries": [
+      "[  1] 0.00-300.02 sec  1.37 GBytes  39.2 Mbits/sec"
+    ],
+    "both_duration_at_least_300": true,
+    "end": "2026-09-20T02:47:58.505743+08:00",
+    "log_sha256": {
+      "5.1.24-rx-board.log": "97fe8c8158f2d9e7b732e8bd0316b12e98dfb0c3d8262c8ca30a4df80174bca8",
+      "5.1.24-rx-host.log": "321cb3d37e85cd6afd8b14d709326c1d0cfbf2e9be8888ecdbd75cb82bf80c9a"
+    }
+  },
+  {
+    "case": "5.1.22",
+    "direction_from_board": "rx",
+    "protocol": "TCP",
+    "status": "INCOMPLETE",
+    "start": "2026-09-20T02:47:58.506560+08:00",
+    "requested_duration_seconds": 300,
+    "host_exit": 0,
+    "board_summaries": [],
+    "host_summaries": [],
+    "both_duration_at_least_300": false,
+    "end": "2026-09-20T02:48:27.305330+08:00",
+    "log_sha256": {
+      "5.1.22-rx-board.log": "535b3dd091d2740378e6d761afd32ea6d5458b1f326e2f0fc75fd7322c92ad7a",
+      "5.1.22-rx-host.log": "40441da5a87179719e437d3a643b4b190bebd9446cfac6b818f55f3a3355991c"
+    }
+  }
+]

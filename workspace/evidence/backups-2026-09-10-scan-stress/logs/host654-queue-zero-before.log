@@ -1,0 +1,33 @@
+/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c:149:12: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘is’
+  149 | } *   This is an internal function of file_mq_timedsend()/file_mq_ticksend(),
+      |            ^~
+/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c:149:12: error: unknown type name ‘is’
+/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c:171:15: error: character constant too long for its type [-Werror]
+  171 |  *   EMSGSIZE 'msglen' was greater than the maxmsgsize attribute of the
+      |               ^~~~~~~~
+/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c:273:12: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘is’
+  273 | } *   This is an internal function of file_mq_timedsend()/file_mq_ticksend(),
+      |            ^~
+/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c:273:12: error: unknown type name ‘is’
+/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c:295:15: error: character constant too long for its type [-Werror]
+  295 |  *   EMSGSIZE 'msglen' was greater than the maxmsgsize attribute of the
+      |               ^~~~~~~~
+/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c: In function ‘xqueue_send_adapter’:
+/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c:435:13: error: implicit declaration of function ‘file_mq_timedsend’; did you mean ‘file_mq_send’? [-Werror=implicit-function-declaration]
+  435 |       ret = file_mq_timedsend(&mq_adpt->mq, (const char *)item,
+      |             ^~~~~~~~~~~~~~~~~
+      |             file_mq_send
+In file included from /tmp/esp-wifi-queue-zero-v8l_6fhd/test.c:3:
+/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c: In function ‘main’:
+/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c:459:10: error: implicit declaration of function ‘file_mq_ticksend’; did you mean ‘file_mq_send’? [-Werror=implicit-function-declaration]
+  459 |   assert(file_mq_ticksend(&adapter.mq, "test", 4, 0, 0) == -ETIMEDOUT);
+      |          ^~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_queue_zero.py", line 132, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_queue_zero.py", line 125, in main
+    subprocess.run(['cc', '-std=c11', '-Wall', '-Wextra', '-Werror',
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '-fsanitize=undefined', '-fno-sanitize-recover=all', '/tmp/esp-wifi-queue-zero-v8l_6fhd/test.c', '-o', '/tmp/esp-wifi-queue-zero-v8l_6fhd/test']' returned non-zero exit status 1.

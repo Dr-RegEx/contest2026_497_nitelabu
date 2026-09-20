@@ -1,0 +1,44 @@
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=47487 replay=47487 ack=52942 drop=0 pending=0x0 sreplay=14
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=1047 max=39187881 samples=1861 over32=206 over100=105 over1000=11 sum=79219540 direct=27 directmax=9338 deferred=1834 deferredmax=39187881
+MONIRQ: cpu=1 defer=15117 replay=15117 ack=15439 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=7 fail=0 destroyed=6 live=1 livemax=2 pages=944 pgt=24
+WIFIRX: callbacks=534
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=1627 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=14 fail=0 invalid=0 nonarp=14
+TXSHAPE: snap=14 arphdr=5 arpfail=0 offset=34 len=74
+ARPREQ: seen=0 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=5 bad=0 req=0 reply=5 peer=1 peerreply=1 lastlen=60 srcdiff=0 ok=5 drop=0
+ARPDIAG: dir=1 frames=31 bad=0 req=31 reply=0 peer=10 peerreply=0 lastlen=60 srcdiff=0 ok=31 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=2 object=0x2f018bd4
+LPTRACE: 0x2f00c73e
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000231 00000000 00000000 ba94b           
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000026 00000025 00000000 00000000 4421             
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     01fe  0000  01fe  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0006  0000  0006  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K

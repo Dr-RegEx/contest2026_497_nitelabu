@@ -1,0 +1,228 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x8d20
+load:0x2f008d80,len:0x1344
+entry 0x2f008998
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x8d20   (36128)
+dram: lma 0x0000ad68 vma 0x2f008d80 len 0x1344   (4932)
+padd: lma 0x0000c0d8 vma 0x00000000 len 0x3f40   (16192)
+imap: lma 0x00010020 vma 0x40040020 len 0x8bec   (35820)
+padd: lma 0x00018c14 vma 0x00000000 len 0x74e4   (29924)
+imap: lma 0x00020100 vma 0x40000100 len 0x32afc  (207612)
+total segments stored 7
+ABCS31 WDT delay check: requested=500ms measured=500ms
+
+NuttShell (NSH)
+nsh> [K
+--- CMD: ls /dev/watchdog0 ---
+ls /dev/watchdog0
+ /dev/watchdog0
+nsh> [K
+nsh> [K
+XTS_COMMAND=cmocka_driver_watchdog -r 0
+cmocka_driver_watchdog -r 0
+[==========] tests: Running 4 test(s).
+[ RUN      ] drivertest_watchdog_feeding
+S31 RWDT timeout; hardware reset after panic dump
+dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 16 2026 17:13:29 risc-v
+dump_assert_info: Assertion failed panic: at file: /esp32s31_wdt.c:226 task: cmocka_driver_watchdog process: cmocka_driver_watchdog 0x400266ce
+up_dump_register: PC: 4000acda
+up_dump_register: A0: 2f00cfb0 A1: 000000e2 A2: 4004014c A3: 00000000
+up_dump_register: A4: 00000001 A5: 00000001 A6: 000000e2 A7: 400426f4
+up_dump_register: T0: 2f00c290 T1: 00000000 T2: 00000000 T3: 00000000
+up_dump_register: T4: 00000000 T5: 00000000 T6: 00000000
+up_dump_register: S0: 2f010f28 S1: 2f0092a0 S2: 4004014c S3: 400426f4
+up_dump_register: S4: 0000000f S5: 00000000 S6: 00000000 S7: 00000006
+up_dump_register: S8: 00000000 S9: 2f00d000 S10: 00000000 S11: 000000e2
+up_dump_register: SP: 2f00c128 FP: 2f010f28 TP: 00000000 RA: 4000acda
+dump_stackinfo: IRQ Stack:
+dump_stackinfo:   base: 0x2f00a290
+dump_stackinfo:   size: 00008192
+dump_stackinfo:     sp: 0x2f00c128
+stack_dump:  2f00c108: 2f00d000 00000000 40046ff4 00001fb0 2f00a290 2f016480 2f010f28 4000aeb2
+stack_dump:  2f00c128: 400266ce 0000000a 2f00c1e0 40008430 00000000 00000000 00000000 2f00c128
+stack_dump:  2f00c148: 00000032 2f0092a0 2f010f28 2f00cfb0 4004014c 400426f4 000000e2 7474754e
+stack_dump:  2f00c168: 00000058 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f00c188: 00000000 00000000 00000000 2f0113e8 302e3000 0000302e 00000000 00000000
+stack_dump:  2f00c1a8: 00000000 32340000 32353238 64383061 69642d62 20797472 20706553 32203631
+stack_dump:  2f00c1c8: 20363230 313a3731 39323a33 40042600 00000000 00000000 73697232 00762d63
+stack_dump:  2f00c1e8: 4000839c 2f008da4 400077f6 0000000a 0000000f 2f008da4 2f009000 2f0113e8
+stack_dump:  2f00c208: 00000000 00000000 00000000 00000000 00000000 00000000 0000000f 2f009318
+stack_dump:  2f00c228: 00000099 2f0092a0 2f009000 40006eb8 00000000 20801000 0000000f 40018072
+stack_dump:  2f00c248: b8000010 2f018034 00000032 2f018034 b8000014 2f018034 00000099 2f001702
+stack_dump:  2f00c268: 00000000 0000046a 0000000f 2f018140 b8000014 2f8036cc 2f00c290 2f00018c
+stack_dump:  2f00c288: 001e8868 2f8036cc 00000000 00000000 00000000 00000000 00000000 00000000
+dump_stackinfo: User Stack:
+dump_stackinfo:   base: 0x2f016480
+dump_stackinfo:   size: 00008112
+dump_stackinfo:     sp: 0x2f018140
+stack_dump:  2f018120: 000003e8 40045000 2f0182c8 400262b4 40044fb8 0000009d 00000006 07bfa480
+stack_dump:  2f018140: 7635afe1 40045000 2f0182c8 40026672 00000000 00000000 00000001 00000000
+stack_dump:  2f018160: 00000000 00000000 00000014 40048514 40027d78 2f00fa90 00000000 40028506
+stack_dump:  2f018180: 00000004 00000000 00000000 400265fc 40045290 00000000 00000000 2f0113e8
+stack_dump:  2f0181a0: 7fffffff 00000002 2f00faa4 00000000 2f011470 40044a48 2f0113e0 00000004
+stack_dump:  2f0181c0: 00000000 00000000 00000001 40028a5e 00000000 41cdcd65 40044a48 2f00faa4
+stack_dump:  2f0181e0: 2a3f58a8 5addf8cf 00000000 3ef0f3ac 00800000 41cdcd65 ad6dfd9e 6ee9c2d2
+stack_dump:  2f018200: 5532f345 00000000 00000001 07270e00 00000000 00000000 1a2f7d3b 0c06b4a6
+stack_dump:  2f018220: d9f8d202 2f016450 2f0182c8 4002158e 867d3bb3 652a157e 0000000a 00000000
+stack_dump:  2f018240: 00000000 00000000 00000000 00000003 40045280 ffffffff 00000013 0000003f
+stack_dump:  2f018260: 4004802c 2f016450 2f0182c8 400267b2 e255789e 3b19930c 40045290 400265fc
+stack_dump:  2f018280: 00000000 00000000 2f0182c8 400452ac 4002625a 00000000 00000000 2f0182c8
+stack_dump:  2f0182a0: 400452cc 400264d4 00000000 00000000 2f0182c8 400452e8 400262d4 00000000
+stack_dump:  2f0182c0: 00000000 2f0182c8 7665642f 7461772f 6f646863 00003067 00000000 00000000
+stack_dump:  2f0182e0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018300: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018320: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018340: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018360: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018380: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f0183a0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f0183c0: 00000000 00000000 00001388 000001f4 000007d0 00000014 00000000 00000001
+stack_dump:  2f0183e0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018400: 00000000 400266ce 00000000 40020ff0 00000000 00000000 00000000 4000ceb2
+stack_dump:  2f018420: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+sched_dumpstack: backtrace| 6: 0x2f8036cc
+dump_tasks:    PID GROUP PRI POLICY   TYPE    NPX STATE   EVENT      SIGMASK          STACKBASE  STACKSIZE   COMMAND
+dump_tasks:   ----   --- --- -------- ------- --- ------- ---------- ---------------- 0x2f00a290      8192   irq
+dump_task:       0     0   0 FIFO     Kthread -   Ready              0000000000000000 0x2f00fb84      2016   CPU0 IDLE
+dump_task:       1     0 224 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f00e920      4016   hpwork 0x2f0091c0 0x2f009208
+dump_task:       2     0 100 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f00d920      4016   lpwork 0x2f009140 0x2f009188
+dump_task:       4     0 223 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f012f38      4024   hr_timer
+dump_task:       5     5 100 RR       Task    -   Waiting Semaphore  0000000000000000 0x2f014468      8120   nsh_main
+dump_task:       6     6 100 RR       Task    -   Running            0000000000000000 0x2f016480      8112   cmocka_driver_watchdog -r 0
+sched_dumpstack: backtrace| 0: 0x4001756a
+sched_dumpstack: backtrace| 1: 0x400188ec
+sched_dumpstack: backtrace| 2: 0x400188ec
+sched_dumpstack: backtrace| 4: 0x400188ec
+sched_dumpstack: backtrace| 5: 0x400188ec
+sched_dumpstack: backtrace| 6: 0x2f8036cc
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x10 (CHIP_LP_WDT_RESET),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x8d20
+load:0x2f008d80,len:0x1344
+entry 0x2f008998
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x8d20   (36128)
+dram: lma 0x0000ad68 vma 0x2f008d80 len 0x1344   (4932)
+padd: lma 0x0000c0d8 vma 0x00000000 len 0x3f40   (16192)
+imap: lma 0x00010020 vma 0x40040020 len 0x8bec   (35820)
+padd: lma 0x00018c14 vma 0x00000000 len 0x74e4   (29924)
+imap: lma 0x00020100 vma 0x40000100 len 0x32afc  (207612)
+total segments stored 7
+ABCS31 WDT delay check: requested=500ms measured=500ms
+
+NuttShell (NSH)
+nsh> [KXTS_WATCHDOG_MODE=0 PASS seconds=13.369
+XTS_COMMAND=cmocka_driver_watchdog -r 1
+cmocka_driver_watchdog -r 1
+[==========] tests: Running 4 test(s).
+[ RUN      ] drivertest_watchdog_feeding
+[       OK ] drivertest_watchdog_feeding
+[ RUN      ] drivertest_watchdog_interrupts
+S31 RWDT timeout; hardware reset after panic dump
+dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 16 2026 17:13:29 risc-v
+dump_assert_info: Assertion failed panic: at file: /esp32s31_wdt.c:226 task: cmocka_driver_watchdog process: cmocka_driver_watchdog 0x400266ce
+up_dump_register: PC: 4000acda
+up_dump_register: A0: 2f00cfb0 A1: 000000e2 A2: 4004014c A3: 00000000
+up_dump_register: A4: 00000001 A5: 00000001 A6: 000000e2 A7: 400426f4
+up_dump_register: T0: 2f00c290 T1: 00000000 T2: 00000000 T3: 00000000
+up_dump_register: T4: 00000000 T5: 00000000 T6: 00000000
+up_dump_register: S0: 2f010f28 S1: 2f0092a0 S2: 4004014c S3: 400426f4
+up_dump_register: S4: 000000df S5: 00000000 S6: 00000000 S7: 00000006
+up_dump_register: S8: 00000000 S9: 2f00d000 S10: 00000000 S11: 000000e2
+up_dump_register: SP: 2f00c128 FP: 2f010f28 TP: 00000000 RA: 4000acda
+dump_stackinfo: IRQ Stack:
+dump_stackinfo:   base: 0x2f00a290
+dump_stackinfo:   size: 00008192
+dump_stackinfo:     sp: 0x2f00c128
+stack_dump:  2f00c108: 2f00d000 00000000 40046ff4 00001fb0 2f00a290 2f016480 2f010f28 4000aeb2
+stack_dump:  2f00c128: 400266ce 0000000a 2f00c1e0 40008430 00000000 00000000 00000000 2f00c128
+stack_dump:  2f00c148: 00000032 2f0092a0 2f010f28 2f00cfb0 4004014c 400426f4 000000e2 7474754e
+stack_dump:  2f00c168: 00000058 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f00c188: 00000000 00000000 00000000 2f011408 302e3000 0000302e 00000000 00000001
+stack_dump:  2f00c1a8: 00000000 32340000 32353238 64383061 69642d62 20797472 20706553 32203631
+stack_dump:  2f00c1c8: 20363230 313a3731 39323a33 40042600 00000000 00000000 73697232 00762d63
+stack_dump:  2f00c1e8: 4000839c 2f008da4 400077f6 0000000a 0000000f 2f008da4 2f009000 2f011408
+stack_dump:  2f00c208: 00000000 00000000 00000000 00000001 00000000 00000000 000000df 2f009318
+stack_dump:  2f00c228: 00000099 2f0092a0 2f009000 40006eb8 00000000 20801000 00000000 40018072
+stack_dump:  2f00c248: b8000012 2f0160f4 000000df 2f018054 b8000014 2f018054 00000099 2f001702
+stack_dump:  2f00c268: 00000000 00000000 000000df 2f018160 b8000014 4002629e 2f00c290 2f00018c
+stack_dump:  2f00c288: 2f0182c8 4002629e 00000000 00000000 00000000 00000000 00000000 00000000
+dump_stackinfo: User Stack:
+dump_stackinfo:   base: 0x2f016480
+dump_stackinfo:   size: 00008112
+dump_stackinfo:     sp: 0x2f018160
+stack_dump:  2f018140: 40044fb8 0000009d 00000000 00002680 40027d78 2f00fa90 2f0182c8 40026296
+stack_dump:  2f018160: 00000000 00000000 00000002 00000000 40027d78 2f00fa90 00000000 40028506
+stack_dump:  2f018180: 00000004 00000000 00000000 4002625a 400452ac 00000000 00000000 2f011408
+stack_dump:  2f0181a0: 7fffffff 00000002 2f00faa4 00000000 00000000 00000000 2f0113e0 00000004
+stack_dump:  2f0181c0: 00000000 00000000 00000002 40028a5e 00000000 41cdcd65 40044a48 2f00faa4
+stack_dump:  2f0181e0: 00000000 00000000 00000000 00000000 00800000 41cdcd65 ad6dfd9e 6ee9c2d2
+stack_dump:  2f018200: 5532f345 00000000 e69f05ea 2e7ddb00 00000000 00000000 1a2f7d3b 0c06b4a6
+stack_dump:  2f018220: d9f8d202 2f016450 2f0182c8 4002158e 867d3bb3 652a157e 0000000a 00000000
+stack_dump:  2f018240: 00000000 00000000 00000000 00000003 40045280 ffffffff 00000013 0000003f
+stack_dump:  2f018260: 4004802c 2f016450 2f0182c8 400267b2 e255789e 3b19930c 40045290 400265fc
+stack_dump:  2f018280: 00000000 00000000 2f0182c8 400452ac 4002625a 00000000 00000000 2f0182c8
+stack_dump:  2f0182a0: 400452cc 400264d4 00000000 00000000 2f0182c8 400452e8 400262d4 00000000
+stack_dump:  2f0182c0: 00000000 2f0182c8 7665642f 7461772f 6f646863 00003067 00000000 00000000
+stack_dump:  2f0182e0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018300: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018320: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018340: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018360: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018380: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f0183a0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f0183c0: 00000000 00000000 00001388 000001f4 000007d0 00000014 00000001 00000001
+stack_dump:  2f0183e0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+stack_dump:  2f018400: 00000000 400266ce 00000000 40020ff0 00000000 00000000 00000000 4000ceb2
+stack_dump:  2f018420: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+sched_dumpstack: backtrace| 6: 0x4002629e 0x2f0182c8
+dump_tasks:    PID GROUP PRI POLICY   TYPE    NPX STATE   EVENT      SIGMASK          STACKBASE  STACKSIZE   COMMAND
+dump_tasks:   ----   --- --- -------- ------- --- ------- ---------- ---------------- 0x2f00a290      8192   irq
+dump_task:       0     0   0 FIFO     Kthread -   Ready              0000000000000000 0x2f00fb84      2016   CPU0 IDLE
+dump_task:       1     0 224 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f00e920      4016   hpwork 0x2f0091c0 0x2f009208
+dump_task:       2     0 100 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f00d920      4016   lpwork 0x2f009140 0x2f009188
+dump_task:       4     0 223 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f012f38      4024   hr_timer
+dump_task:       5     5 100 RR       Task    -   Waiting Semaphore  0000000000000000 0x2f014468      8120   nsh_main
+dump_task:       6     6 100 RR       Task    -   Running            0000000000000000 0x2f016480      8112   cmocka_driver_watchdog -r 1
+sched_dumpstack: backtrace| 0: 0x4001756a
+sched_dumpstack: backtrace| 1: 0x400188ec
+sched_dumpstack: backtrace| 2: 0x400188ec
+sched_dumpstack: backtrace| 4: 0x400188ec
+sched_dumpstack: backtrace| 5: 0x400188ec
+sched_dumpstack: backtrace| 6: 0x4002629e 0x2f0182c8
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x10 (CHIP_LP_WDT_RESET),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x8d20
+load:0x2f008d80,len:0x1344
+entry 0x2f008998
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x8d20   (36128)
+dram: lma 0x0000ad68 vma 0x2f008d80 len 0x1344   (4932)
+padd: lma 0x0000c0d8 vma 0x00000000 len 0x3f40   (16192)
+imap: lma 0x00010020 vma 0x40040020 len 0x8bec   (35820)
+padd: lma 0x00018c14 vma 0x00000000 len 0x74e4   (29924)
+imap: lma 0x00020100 vma 0x40000100 len 0x32afc  (207612)
+total segments stored 7
+ABCS31 WDT delay check: requested=500ms measured=500ms
+
+NuttShell (NSH)
+nsh> [KXTS_WATCHDOG_MODE=1 PASS seconds=8.073
+XTS_COMMAND=cmocka_driver_watchdog -r 2
+cmocka_driver_watchdog Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-watchdog.py", line 98, in <module>
+    raise TimeoutError('watchdog mode timed out; no host reset performed')
+TimeoutError: watchdog mode timed out; no host reset performed

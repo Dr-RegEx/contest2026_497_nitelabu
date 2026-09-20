@@ -1,0 +1,18 @@
+# Isolated Wi-Fi throughput candidate.  Keep the original SACK profile intact
+# and make the larger TCP/UDP windows opt-in for 5.1.22-5.1.25 comparison.
+#include "../demo-rmt-bttool-coex-pie-netdiag-sack/defconfig"
+
+# Permit a bandwidth-delay product larger than the default 16 KiB window.
+CONFIG_NET_TCP_WINDOW_SCALE=y
+CONFIG_NET_TCP_WINDOW_SCALE_FACTOR=3
+CONFIG_NET_RECV_BUFSIZE=65536
+CONFIG_NET_MAX_RECV_BUFSIZE=65536
+CONFIG_NET_SEND_BUFSIZE=65536
+CONFIG_NET_MAX_SEND_BUFSIZE=65536
+
+# Retain out-of-order/SACK recovery while allowing more in-flight segments.
+CONFIG_NET_TCP_OUT_OF_ORDER_BUFSIZE=65536
+
+# Keep more packet buffers available during bursty Wi-Fi RX/TX.  This is
+# isolated to the candidate because it increases static RAM use.
+CONFIG_IOB_NBUFFERS=192

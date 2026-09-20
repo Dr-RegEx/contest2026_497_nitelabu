@@ -1,0 +1,34 @@
+{
+  "status": "BUILD_COMPLETE_NOT_FLASHED",
+  "baseline_config": "/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-wifi-ap-selection/.config",
+  "baseline_config_sha256": "7eb05befefbef8aed0d79477db951f35cc1a7e414ccd24b60690ee9812f50488",
+  "baseline_config_verified_byte_exact_except_one_setting": true,
+  "configuration_difference": {
+    "CONFIG_UTILS_IPERF2_RECV_BUFSIZE": [
+      16384,
+      65536
+    ]
+  },
+  "files": {
+    "openvela-dev/out/esp32s31-wifi-window64/nuttx.bin": {
+      "sha256": "00601eb9ca9b82fbcdb62d59824be2f482d860b366afe8d0898f6a5230e54a75",
+      "bytes": 1606988
+    },
+    "openvela-dev/out/esp32s31-wifi-window64/appfs.img": {
+      "sha256": "df739bb6a8cbf771e8ea65a739962aed9653007140ba6c975448d7a079e33e5f",
+      "bytes": 3089408
+    },
+    "openvela-dev/out/esp32s31-wifi-window64/.config": {
+      "sha256": "1c9f03daa393fdcdc842f24ed186a2e5a603d404cbed3ba44d66f2aa8ccfa0e4",
+      "bytes": 97925
+    },
+    "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-wifi-rate-window64/defconfig": {
+      "sha256": "627af03c37f8fc32ba91d2d0ba8dc504580768ae4cdc46ac35fbed5b79ad1f17",
+      "bytes": 190
+    },
+    "backups/2026-09-10-scan-stress/build-wifi-window64.sh": {
+      "sha256": "47961afc4cbb4848f1b96e4c8b27961f417208680f2a1fefa67feaabc0590406",
+      "bytes": 2261
+    }
+  }
+}

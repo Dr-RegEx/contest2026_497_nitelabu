@@ -1,0 +1,8 @@
+{
+  "state": "BUILD_AND_PACKAGING_PASS_TARGET_PENDING",
+  "coexistence": "Pinned SDK btdm_coex wrappers compile with CONFIG_SW_COEXIST_ENABLE through existing WiFi SDK config mapping. WiFi init already registers adapter and coex_pre_init/coex_init. No fake radio arbitration hooks added.",
+  "1546": "Built but AppFS3710976 exceeds3MiB; never flashed. Receipt preserved.",
+  "1547": "Only standalone adapter_test CLI omitted through new default-on build option; bttool,curl,scp,iperf2,s31demo,wapi retained; AppFS3059712 bytes. No partition change.",
+  "dependency": "Controller/user host fixes archived in checkpoint1544-ble-smp-mmu-gatt",
+  "test_plan": "Gateway ping3/3 before;20 simultaneous with GATT;3/3 after Bluetooth disabled; require actual replies while PC GATT client runs. Development integration evidence, not full xTS throughput/stress acceptance."
+}

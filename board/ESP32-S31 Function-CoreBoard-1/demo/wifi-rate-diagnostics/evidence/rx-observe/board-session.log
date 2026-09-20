@@ -1,0 +1,367 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x59 (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x1c150
+entry 0x2f017f84
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x1c150  (115024)
+padd: lma 0x0001e1c8 vma 0x00000000 len 0x1e50   (7760)
+imap: lma 0x00020020 vma 0x40140020 len 0x25eac  (155308)
+padd: lma 0x00045ed4 vma 0x00000000 len 0xa224   (41508)
+imap: lma 0x00050100 vma 0x40000100 len 0x13a44c (1287244)
+total segments stored 6
+ABC[CPU0] S31 hardware crypto: SHA1/SHA256/SHA512 PIO
+[CPU0] S31 hardware crypto: HMAC-SHA1/256 via SHA PIO
+[CPU0] S31 hardware crypto: ECDSA P256 verify only
+[CPU0] S31 hardware crypto: AES-CBC 128/256-bit PIO
+[CPU0] S31 hardware crypto: AES-CTR/XTS full-block PIO
+[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [Kuname -a
+NuttX  0.0.0 428252a08db-dirty Sep 20 2026 02:48:13 risc-v esp32s31-core-function-board
+nsh> [Kifup wlan0
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+ifup wlan0...OK
+nsh> [Kwapi mode wlan0 2
+nsh> [Kwapi psk wlan0 <REDACTED> 3
+nsh> [Kwapi essid wlan0 "[REDACTED]" 1
+[CPU0] esp_event_post_wrapper: S31 associated: channel=1 auth=3 bssid=60:ce:41:46:0e:ec
+[CPU1] esp_evt_work_cb: S31 driver STA MAC: 30:ed:a0:f3:f7:b0
+[CPU1] esp_evt_work_cb: S31 driver power save: ret=0 mode=0
+[CPU0] esp_evt_work_cb: S31 driver protocol: ret=0 bitmap=7
+[CPU0] esp_evt_work_cb: S31 negotiated PHY: ret=0 mode=4
+[CPU0] esp_evt_work_cb: S31 HE SU beamformee disabled: ret=0 value=0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks connected: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters connected: ret=0 mpdu=2409 data=9 fcs=106 abort=211 full=0 fifo=0 other=97
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=84 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=2 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+nsh> [Krenew wlan0
+nsh> [Kwapi show wlan0
+wlan0 Configuration:
+       IP: 192.168.1.60
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_FIXED
+  Channel: 1
+Frequency: 2412
+    ESSID: [REDACTED]
+     Flag: WAPI_ESSID_ON
+     Mode: WAPI_MODE_MANAGED
+       AP: 60:ce:41:46:0e:ec
+  BitRate: 72
+     Flag: WAPI_BITRATE_FIXED
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -63
+  Country: 01
+ PTA prio: not supported
+nsh> [Kcat /dev/s31stat
+MONIRQ: cpu=0 defer=7777 replay=7777 ack=13171 drop=0 pending=0x0 sreplay=11
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=1214 max=14716297 samples=205 over32=14 over100=7 over1000=1 sum=15570313 direct=10 directmax=9282 deferred=195 deferredmax=14716297
+MONIRQ: cpu=1 defer=10556 replay=10556 ack=10876 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=6 fail=0 destroyed=5 live=1 livemax=2 pages=756 pgt=20
+WIFIRX: callbacks=9
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=182 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=5 fail=0 invalid=0 nonarp=5
+TXSHAPE: snap=5 arphdr=0 arpfail=0 offset=34 len=328
+ARPREQ: seen=0 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+ARPDIAG: dir=1 frames=4 bad=0 req=4 reply=0 peer=0 peerreply=0 lastlen=60 srcdiff=0 ok=4 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=2 object=0x2f018bd4
+LPTRACE: 0x2f00c73e
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000009 00000000 00000000 644             
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000002 00000005 00000000 00000000 26d              
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0002  0000  0002  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0002  0000  0002  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [Kiperf2 -s -u -p 5010 -i 1 &
+iperf2 [13:101]
+nsh> [K------------------------------------------------------------
+Server listening on UDP port 5010
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 5010 connected with 192.168.1.29 port 50062
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-1.00 sec   111 KBytes   906 Kbits/sec  153900.531 ms 0/77 (0%)
+[  1] 1.00-2.00 sec   162 KBytes  1.33 Mbits/sec  112.249 ms 0/113 (0%)
+[  1] 2.00-3.00 sec  18.7 KBytes   153 Kbits/sec  94.580 ms 0/13 (0%)
+[  1] 3.00-4.00 sec  17.2 KBytes   141 Kbits/sec  83.151 ms 0/12 (0%)
+[  1] 4.00-5.00 sec  28.7 KBytes   235 Kbits/sec  57.648 ms 0/20 (0%)
+[  1] 5.00-6.00 sec  34.5 KBytes   282 Kbits/sec  41.687 ms 0/24 (0%)
+[  1] 6.00-7.00 sec  15.8 KBytes   129 Kbits/sec  60.546 ms 0/11 (0%)
+[  1] 7.00-8.00 sec  10.0 KBytes  82.3 Kbits/sec  73.487 ms 0/7 (0%)
+[  1] 8.00-9.00 sec  10.0 KBytes  82.3 Kbits/sec  109.608 ms 3/10 (30%)
+[  1] 9.00-10.00 sec  4.31 KBytes  35.3 Kbits/sec  121.899 ms 1/4 (25%)
+[  1] 10.00-11.00 sec  18.7 KBytes   153 Kbits/sec  109.016 ms 1/15 (6.7%)
+[  1] 10.00-11.00 sec  1 datagrams received out-of-order
+[  1] 11.00-12.00 sec  1.44 KBytes  11.8 Kbits/sec  144.313 ms 3/4 (75%)
+[  1] 12.00-13.00 sec  7.18 KBytes  58.8 Kbits/sec  173.466 ms 2/8 (25%)
+[  1] 12.00-13.00 sec  1 datagrams received out-of-order
+[  1] 13.00-14.00 sec  4.31 KBytes  35.3 Kbits/sec  202.134 ms 4/7 (57%)
+[  1] 14.00-15.00 sec  8.61 KBytes  70.6 Kbits/sec  163.663 ms 1/7 (14%)
+[  1] 15.00-16.00 sec  2.87 KBytes  23.5 Kbits/sec  214.795 ms 1/4 (25%)
+[  1] 15.00-16.00 sec  1 datagrams received out-of-order
+[  1] 16.00-17.00 sec  2.87 KBytes  23.5 Kbits/sec  248.812 ms 4/6 (67%)
+[  1] 17.00-18.00 sec  12.9 KBytes   106 Kbits/sec  174.626 ms 0/9 (0%)
+[  1] 18.00-19.00 sec  11.5 KBytes  94.1 Kbits/sec  147.765 ms 0/8 (0%)
+[  1] 19.00-20.00 sec  14.4 KBytes   118 Kbits/sec  126.630 ms 2/12 (17%)
+[  1] 20.00-21.00 sec  10.0 KBytes  82.3 Kbits/sec  115.898 ms 0/7 (0%)
+[  1] 21.00-22.00 sec  11.5 KBytes  94.1 Kbits/sec  124.818 ms 2/11 (18%)
+[  1] 21.00-22.00 sec  1 datagrams received out-of-order
+[  1] 22.00-23.00 sec  5.74 KBytes  47.0 Kbits/sec  144.965 ms 2/6 (33%)
+[  1] 23.00-24.00 sec  15.8 KBytes   129 Kbits/sec  118.528 ms 2/13 (15%)
+[  1] 24.00-25.00 sec  11.5 KBytes  94.1 Kbits/sec  120.097 ms 2/10 (20%)
+[  1] 25.00-26.00 sec  10.0 KBytes  82.3 Kbits/sec  118.300 ms 1/9 (11%)
+[  1] 25.00-26.00 sec  1 datagrams received out-of-order
+[  1] 26.00-27.00 sec  10.0 KBytes  82.3 Kbits/sec  116.147 ms 0/8 (0%)
+[  1] 26.00-27.00 sec  1 datagrams received out-of-order
+[  1] 27.00-28.00 sec  8.61 KBytes  70.6 Kbits/sec  116.156 ms 1/7 (14%)
+[  1] 28.00-29.00 sec  5.74 KBytes  47.0 Kbits/sec  158.261 ms 3/7 (43%)
+[  1] 29.00-30.00 sec  8.61 KBytes  70.6 Kbits/sec  137.336 ms 0/7 (0%)
+[  1] 29.00-30.00 sec  1 datagrams received out-of-order
+[  1] 30.00-31.00 sec  11.5 KBytes  94.1 Kbits/sec  136.166 ms 2/10 (20%)
+[  1] 31.00-32.00 sec  7.18 KBytes  58.8 Kbits/sec  133.979 ms 2/7 (29%)
+[  1] 32.00-33.00 sec  7.18 KBytes  58.8 Kbits/sec  143.769 ms 3/8 (38%)
+[  1] 33.00-34.00 sec  10.0 KBytes  82.3 Kbits/sec  140.993 ms 3/10 (30%)
+[  1] 34.00-35.00 sec  25.8 KBytes   212 Kbits/sec  86.131 ms 0/18 (0%)
+kill -15 13
+nsh> [KWaiting for server threads to complete. Interrupt again to force quit.
+[  1] 35.00-36.00 sec  20.1 KBytes   165 Kbits/sec  71.040 ms 1/15 (6.7%)
+[  1] 0.00-36.03 sec   676 KBytes   154 Kbits/sec  71.040 ms 46/524 (8.8%)
+[  1] 0.00-36.03 sec  7 datagrams received out-of-order
+recvfrom failed: Interrupted system call
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=47487 replay=47487 ack=52942 drop=0 pending=0x0 sreplay=14
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=1047 max=39187881 samples=1861 over32=206 over100=105 over1000=11 sum=79219540 direct=27 directmax=9338 deferred=1834 deferredmax=39187881
+MONIRQ: cpu=1 defer=15117 replay=15117 ack=15439 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=7 fail=0 destroyed=6 live=1 livemax=2 pages=944 pgt=24
+WIFIRX: callbacks=534
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=1627 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=14 fail=0 invalid=0 nonarp=14
+TXSHAPE: snap=14 arphdr=5 arpfail=0 offset=34 len=74
+ARPREQ: seen=0 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=5 bad=0 req=0 reply=5 peer=1 peerreply=1 lastlen=60 srcdiff=0 ok=5 drop=0
+ARPDIAG: dir=1 frames=31 bad=0 req=31 reply=0 peer=10 peerreply=0 lastlen=60 srcdiff=0 ok=31 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=2 object=0x2f018bd4
+LPTRACE: 0x2f00c73e
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000231 00000000 00000000 ba94b           
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000026 00000025 00000000 00000000 4421             
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     01fe  0000  01fe  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0006  0000  0006  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [Kiperf2 -s -u -p 5011 -i 1 &
+iperf2 [24:101]
+nsh> [K------------------------------------------------------------
+Server listening on UDP port 5011
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+kill -15 24
+nsh> [Kcat /dev/s31stat
+MONIRQ: cpu=0 defer=106504 replay=106503 ack=111966 drop=0 pending=0x2 sreplay=17
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=3180 max=47810892 samples=18306 over32=765 over100=471 over1000=15 sum=201596891 direct=30 directmax=16436 deferred=18276 deferredmax=47810892
+MONIRQ: cpu=1 defer=19335 replay=19335 ack=19658 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=8 fail=0 destroyed=6 live=2 livemax=2 pages=944 pgt=24
+WIFIRX: callbacks=3821
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=14033 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=3263 fail=0 invalid=411 nonarp=2852
+TXSHAPE: snap=2852 arphdr=9 arpfail=0 offset=34 len=600
+ARPREQ: seen=0 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=9 bad=0 req=0 reply=9 peer=2 peerreply=2 lastlen=60 srcdifff=0 ok=9 drop=0
+ARPDIAG: dir=1 frames=47 bad=0 req=47 reply=0 peer=13 peerreply=0 lastlen=60 srcdiff=0 ok=47 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+WAIT: pid=24 object=0x614013e4
+WAIT: pid=25 object=0x61401394
+WAIT: pid=26 object=0x2f064874
+object=0x61401394
+WAIT: pid=26 object=0x2f064874
+nsh> [Krecvfrom failed: Interrupted system call
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000f30 00000000 00000000 57a6da          
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000d05 00000d04 00000000 00000000 1de583           
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0ede  0000  0ede  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0006  0000  0006  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [Kiperf2 -s -u -p 5012 -i 1 &
+iperf2 [27:101]
+nsh> [K------------------------------------------------------------
+Server listening on UDP port 5012
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+kill -15 27
+nsh> [Kcat /dev/s31stat
+MONIRQ: cpu=0 defer=165051 replay=165051 ack=170523 drop=0 pending=0x0 sreplay=19
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=1270702 max=47856173 samples=34069 over32=1443 over100=951 over1000=21 sum=340253009 direct=33 directmax=16448 deferred=34036 deferredmax=47856173
+MONIRQ: cpu=1 defer=23437 replay=23437 ack=23760 drop=0 pending=0x0 sreplay=2
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 erred=0 deferredmax=0
+ADDRENV: created=9 fail=0 destroyed=7 live=2 livemax=2 pages=1132 pgt=28
+WIFIRX: callbacks=7597
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=26769 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=7010 fail=0 invalid=972 nonarp=6038
+TXSHAPE: snap=6038 arphdr=14 arpfail=0 offset=34 len=600
+ARPREQ: seen=0 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=14 bad=0 req=0 reply=14 peer=3 peerreply=3 lastlen=44 srcdiff=0 ok=14 drop=0
+ARPDIAG: dir=1 frames=63 bad=0 req=63 reply=0 peer=18 peerreply=0 lastlen=44 srcdiff=0 ok=63 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=2 object=0x2f018bd4
+LPTRACE: 0x2f00c73e
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+WAIT: pid=27 object=0x614013e4
+WAIT: pid=28 object=0x61401394
+WAIT: pid=29 object=0x2f064874
+recvfrom failed: Interrupted system call
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00001dce 00000000 00000000 ad27ce          
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00001b81 00001b84 00000000 00000000 3f3c97           
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     1d5d  0000  1d5d  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0006  0000  0006  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [Kwapi disconnect wlan0
+nsh> [Kcat /dev/s31stat
+MONIRQ: cpu=0 defer=177083 replay=177083 ack=182559 drop=0 pending=0x0 sreplay=19
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=33021 max=47856173 samples=36304 over32=1518 over100=996 over1000=26 sum=352124374 direct=33 directmax=16448 deferred=36271 deferredmax=47856173
+MONIRQ: cpu=1 defer=23729 replay=23729 ack=24052 drop=0 pending=0x0 sreplay=2
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=10 fail=0 destroyed=9 live=1 livemax=2 pages=1474 pgt=36
+WIFIRX: callbacks=8002
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=28617 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=7410 fail=0 invalid=1038 nonarp=6372
+TXSHAPE: snap=6372 arphdr=14 arpfail=0 offset=34 len=600
+ARPREQ: seen=0 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=14 bad=0 req=0 reply=14 peer=3 peerreply=3 lastlen=44 srcdiff=0 ok=14 drop=0
+ARPDIAG: dir=1 frames=65 bad=0 req=65 reply=0 peer=18 peerreply=0 lastlen=44 srcdiff=0 ok=65 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=2 object=0x2f018bd4
+LPTRACE: 0x2f00c73e
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at UP mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00001f42 00000000 00000000 b59ac6          
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00001cef 00001cf2 00000000 00000000 42881b           
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     1eca  0000  1eca  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0006  0000  0006  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K

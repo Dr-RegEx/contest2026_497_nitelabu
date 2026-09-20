@@ -1,0 +1,81 @@
+[
+  {
+    "case": "5.1.22",
+    "direction_from_board": "rx",
+    "protocol": "TCP",
+    "status": "MEASURED_REQUIRES_REVIEW",
+    "start": "2026-09-20T03:59:57.354599+08:00",
+    "requested_duration_seconds": 300,
+    "host_exit": 0,
+    "board_summaries": [
+      "[  1] 0.00-300.35 sec   225 MBytes  6.29 Mbits/sec"
+    ],
+    "host_summaries": [
+      "[  1] 0.00-300.44 sec   225 MBytes  6.29 Mbits/sec"
+    ],
+    "both_duration_at_least_300": true,
+    "end": "2026-09-20T04:05:05.701567+08:00",
+    "log_sha256": {
+      "5.1.22-rx-board.log": "4d1a55d12f543d2bcccfdd4113624457551a476af12aa465d241fff8ce0b3210",
+      "5.1.22-rx-host.log": "752d49e617aee05266aa63ccda77ef8c64805f21faa5f7ec333c9596e48e276e"
+    }
+  },
+  {
+    "case": "5.1.24",
+    "direction_from_board": "rx",
+    "protocol": "UDP",
+    "status": "MEASURED_REQUIRES_REVIEW",
+    "start": "2026-09-20T04:05:05.702212+08:00",
+    "requested_duration_seconds": 300,
+    "host_exit": 0,
+    "board_summaries": [
+      "[  1] 0.00-304.03 sec   358 MBytes  9.86 Mbits/sec   2.747 ms 794227/1049248 (76%)",
+      "[  1] 0.00-304.03 sec  263 datagrams received out-of-order"
+    ],
+    "host_summaries": [
+      "[  1] 0.00-300.00 sec  1.44 GBytes  41.1 Mbits/sec"
+    ],
+    "both_duration_at_least_300": true,
+    "end": "2026-09-20T04:10:13.906255+08:00",
+    "log_sha256": {
+      "5.1.24-rx-board.log": "ba939cd1b8931b940a8f5703646062bb6490ef1019d5b24afc819509ea704181",
+      "5.1.24-rx-host.log": "bbe22f6817d26ab9bb5873e1faa2cb175c4fe02f8c7e086e8de854debfe2c12f"
+    }
+  },
+  {
+    "case": "5.1.23",
+    "direction_from_board": "tx",
+    "protocol": "TCP",
+    "status": "INCOMPLETE",
+    "start": "2026-09-20T04:10:13.906563+08:00",
+    "requested_duration_seconds": 300,
+    "board_summaries": [
+      "[  1] 0.00-124.50 sec  0.000 Bytes  0.000 bits/sec"
+    ],
+    "host_summaries": [],
+    "both_duration_at_least_300": false,
+    "end": "2026-09-20T04:12:25.526177+08:00",
+    "log_sha256": {
+      "5.1.23-tx-board.log": "edbbd79212598f47bb4dadfe8fd6e330bb7077e508d7e03501974084734e375b",
+      "5.1.23-tx-host.log": "26c4f781ef341e182a73f38fada7e8381df367d78ea619995c35605cf35d390e"
+    }
+  },
+  {
+    "case": "5.1.25",
+    "direction_from_board": "tx",
+    "protocol": "UDP",
+    "status": "INCOMPLETE",
+    "start": "2026-09-20T04:12:25.526906+08:00",
+    "requested_duration_seconds": 300,
+    "board_summaries": [
+      "[  1] 0.00-300.95 sec  0.000 Bytes  0.000 bits/sec"
+    ],
+    "host_summaries": [],
+    "both_duration_at_least_300": false,
+    "end": "2026-09-20T04:19:19.559804+08:00",
+    "log_sha256": {
+      "5.1.25-tx-board.log": "5461462920d0e513741a5afeaa2a346b4cc8119afd73c05df72e16f2c7104366",
+      "5.1.25-tx-host.log": "84b5dd64dfd707e7b5ce417d650710cbde57e352d904fac48de937a5f6a7bedc"
+    }
+  }
+]

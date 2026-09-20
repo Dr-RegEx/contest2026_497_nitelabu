@@ -1,0 +1,591 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1032-flat-category-fs-large.sha256
+IMAGE_SHA256=7b0e0dd869e157a1620297412caba0d99b5e6b068fff0e3a00bf05ceb7ced47a
+XTS_CASE=18-reboot
+
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=ls /dev/xtsflash
+--- CMD: ls /dev/xtsflash ---
+ls /dev/xtsflash
+ /dev/xtsflash
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        202         566 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mkdir /data/s18r
+--- CMD: mkdir /data/s18r ---
+mkdir /data/s18r
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=vela_fs_stability_test03 mode=reboot /data/s18r
+vela_fs_stability_test03 mode=reboot /data/s18r
+The test mode is [reboot]
+fs system partion is OK !
+NO.1 write to the filesystem .
+NO.2 write to the filesystem .
+NO.3 write to the filesystem .
+NO.4 write to the filesystem .
+NO.5 write to the filesystem .
+NO.6 write to the filesystem .
+NO.7 write to the filesystem .
+NO.8 write to the filesystem .
+NO.9 write to the filesystem .
+NO.10 write to the filesystem .
+NO.11 write to the filesystem .
+NO.12 write to the filesystem .
+NO.13 write to the filesystem .
+NO.14 write to the filesystem .
+NO.15 write to the filesystem .
+NO.16 write to the filesystem .
+NO.17 write to the filesystem .
+NO.18 write to the filesystem .
+NO.19 write to the filesystem .
+NO.20 write to the filesystem .
+NO.21 write to the filesystem .
+NO.22 write to the filesystem .
+NO.23 write to the filesystem .
+NO.24 write to the filesystem .
+NO.25 write to the filesystem .
+NO.26 write to the filesystem .
+NO.27 write to the filesystem .
+NO.28 write to the filesystem .
+NO.29 write to the filesystem .
+NO.30 write to the filesystem .
+NO.31 write to the filesystem .
+NO.32 write to the filesystem .
+NO.33 write to the filesystem .
+NO.34 write to the filesystem .
+NO.35 write to the filesystem .
+NO.36 write to the filesystem .
+NO.37 write to the filesystem .
+NO.38 write to the filesystem .
+NO.39 write to the filesystem .
+NO.40 write to the filesystem .
+NO.41 write to the filesystem .
+NO.42 write to the filesystem .
+NO.43 write to the filesystem .
+NO.44 write to the filesystem .
+NO.45 write to the filesystem .
+NO.46 write to the filesystem .
+NO.47 write to the filesystem .
+NO.48 write to the filesystem .
+NO.49 write to the filesystem .
+NO.50 write to the filesystem .
+NO.51 write to the filesystem .
+NO.52 write to the filesystem .
+NO.53 write to the filesystem .
+NO.54 write to the filesystem .
+NO.55 write to the filesystem .
+NO.56 write to the filesystem .
+NO.57 write to the filesystem .
+NO.58 write to the filesystem .
+NO.59 write to the filesystem .
+NO.60 write to the filesystem .
+NO.61 write to the filesystem .
+NO.62 write to the filesystem .
+NO.63 write to the filesystem .
+NO.64 write to the filesystem .
+NO.65 write to the filesystem .
+NO.66 write to the filesystem .
+NO.67 write to the filesystem .
+NO.68 write to the filesystem .
+NO.69 write to the filesystem .
+NO.70 write to the filesystem .
+NO.71 write to the filesystem .
+NO.72 write to the filesystem .
+NO.73 write to the filesystem .
+NO.74 write to the filesystem .
+NO.75 write to the filesystem .
+NO.76 write to the filesystem .
+NO.77 write to the filesystem .
+NO.78 write to the filesystem .
+NO.79 write to the filesystem .
+NO.80 write to the filesystem .
+NO.81 write to the filesystem .
+NO.82 write to the filesystem .
+NO.83 write to the filesystem .
+NO.84 write to the filesystem .
+NO.85 write to the filesystem .
+NO.86 write to the filesystem .
+NO.87 write to the filesystem .
+NO.88 write to the filesystem .
+NO.89 write to the filesystem .
+NO.90 write to the filesystem .
+NO.91 write to the filesystem .
+NO.92 write to the filesystem .
+NO.93 write to the filesystem .
+NO.94 write to the filesystem .
+NO.95 write to the filesystem .
+NO.96 write to the filesystem .
+NO.97 write to the filesystem .
+NO.98 write to the filesystem .
+NO.99 write to the filesystem .
+NO.100 write to the filesystem .
+NO.101 write to the filesystem .
+NO.102 write to the filesystem .
+NO.103 write to the filesystem .
+NO.104 write to the filesystem .
+NO.105 write to the filesystem .
+NO.106 write to the filesystem .
+NO.107 write to the filesystem .
+NO.108 write to the filesystem .
+NO.109 write to the filesystem .
+NO.110 write to the filesystem .
+NO.111 write to the filesystem .
+NO.112 write to the filesystem .
+NO.113 write to the filesystem .
+NO.114 write to the filesystem .
+NO.115 write to the filesystem .
+NO.116 write to the filesystem .
+NO.117 write to the filesystem .
+NO.118 write to the filesystem .
+NO.119 write to the filesystem .
+NO.120 write to the filesystem .
+NO.121 write to the filesystem .
+NO.122 write to the filesystem .
+NO.123 write to the filesystem .
+NO.124 write to the filesystem .
+NO.125 write to the filesystem .
+NO.126 write to the filesystem .
+NO.127 write to the filesystem .
+NO.128 write to the filesystem .
+NO.129 write to the filesystem .
+NO.130 write to the filesystem .
+NO.131 write to the filesystem .
+NO.132 write to the filesystem .
+NO.133 write to the filesystem .
+NO.134 write to the filesystem .
+NO.135 write to the filesystem .
+NO.136 write to the filesystem .
+NO.137 write to the filesystem .
+NO.138 write to the filesystem .
+NO.139 write to the filesystem .
+NO.140 write to the filesystem .
+NO.141 write to the filesystem .
+NO.142 write to the filesystem .
+NO.143 write to the filesystem .
+NO.144 write to the filesystem .
+NO.145 write to the filesystem .
+NO.146 write to the filesystem .
+NO.147 write to the filesystem .
+NO.148 write to the filesystem .
+NO.149 write to the filesystem .
+NO.150 write to the filesystem .
+NO.151 write to the filesystem .
+NO.152 write to the filesystem .
+NO.153 write to the filesystem .
+NO.154 write to the filesystem .
+NO.155 write to the filesystem .
+NO.156 write to the filesystem .
+NO.157 write to the filesystem .
+NO.158 write to the filesystem .
+NO.159 write to the filesystem .
+NO.160 write to the filesystem .
+NO.161 write to the filesystem .
+NO.162 write to the filesystem .
+NO.163 write to the filesystem .
+NO.164 write to the filesystem .
+NO.165 write to the filesystem .
+NO.166 write to the filesystem .
+NO.167 write to the filesystem .
+NO.168 write to the filesystem .
+NO.169 write to the filesystem .
+NO.170 write to the filesystem .
+NO.171 write to the filesystem .
+NO.172 write to the filesystem .
+NO.173 write to the filesystem .
+NO.174 write to the filesystem .
+NO.175 write to the filesystem .
+NO.176 write to the filesystem .
+NO.177 write to the filesystem .
+NO.178 write to the filesystem .
+NO.179 write to the filesystem .
+NO.180 write to the filesystem .
+NO.181 write to the filesystem .
+NO.182 write to the filesystem .
+NO.183 write to the filesystem .
+NO.184 write to the filesystem .
+NO.185 write to the filesystem .
+NO.186 write to the filesystem .
+NO.187 write to the filesystem .
+NO.188 write to the filesystem .
+NO.189 write to the filesystem .
+NO.190 write to the filesystem .
+NO.191 write to the filesystem .
+NO.192 write to the filesystem .
+NO.193 write to the filesystem .
+NO.194 write to the filesystem .
+NO.195 write to the filesystem .
+NO.196 write to the filesystem .
+NO.197 write to the filesystem .
+NO.198 write to the filesystem .
+NO.199 write to the filesystem .
+NO.200 write to the filesystem .
+NO.201 write to the filesystem .
+NO.202 write to the filesystem .
+NO.203 write to the filesystem .
+NO.204 write to the filesystem .
+NO.205 write to the filesystem .
+NO.206 write to the filesystem .
+NO.207 write to the filesystem .
+NO.208 write to the filesystem .
+NO.209 write to the filesystem .
+NO.210 write to the filesystem .
+NO.211 write to the filesystem .
+NO.212 write to the filesystem .
+NO.213 write to the filesystem .
+NO.214 write to the filesystem .
+NO.215 write to the filesystem .
+NO.216 write to the filesystem .
+NO.217 write to the filesystem .
+NO.218 write to the filesystem .
+NO.219 write to the filesystem .
+NO.220 write to the filesystem .
+NO.221 write to the filesystem .
+NO.222 write to the filesystem .
+NO.223 write to the filesystem .
+NO.224 write to the filesystem .
+NO.225 write to the filesystem .
+NO.226 write to the filesystem .
+NO.227 write to the filesystem .
+NO.228 write to the filesystem .
+NO.229 write to the filesystem .
+NO.230 write to the filesystem .
+NO.231 write to the filesystem .
+NO.232 write to the filesystem .
+NO.233 write to the filesystem .
+NO.234 write to the filesystem .
+NO.235 write to the filesystem .
+NO.236 write to the filesystem .
+NO.237 write to the filesystem .
+NO.238 write to the filesystem .
+NO.239 write to the filesystem .
+NO.240 write to the filesystem .
+NO.241 write to the filesystem .
+NO.242 write to the filesystem .
+NO.243 write to the filesystem .
+NO.244 write to the filesystem .
+NO.245 write to the filesystem .
+NO.246 write to the filesystem .
+NO.247 write to the filesystem .
+NO.248 write to the filesystem .
+NO.249 write to the filesystem .
+NO.250 write to the filesystem .
+NO.251 write to the filesystem .
+NO.252 write to the filesystem .
+NO.253 write to the filesystem .
+NO.254 write to the filesystem .
+NO.255 write to the filesystem .
+NO.256 write to the filesystem .
+NO.257 write to the filesystem .
+NO.258 write to the filesystem .
+NO.259 write to the filesystem .
+NO.260 write to the filesystem .
+NO.261 write to the filesystem .
+NO.262 write to the filesystem .
+NO.263 write to the filesystem .
+NO.264 write to the filesystem .
+NO.265 write to the filesystem .
+NO.266 write to the filesystem .
+NO.267 write to the filesystem .
+NO.268 write to the filesystem .
+NO.269 write to the filesystem .
+NO.270 write to the filesystem .
+NO.271 write to the filesystem .
+NO.272 write to the filesystem .
+NO.273 write to the filesystem .
+NO.274 write to the filesystem .
+NO.275 write to the filesystem .
+NO.276 write to the filesystem .
+NO.277 write to the filesystem .
+NO.278 write to the filesystem .
+NO.279 write to the filesystem .
+NO.280 write to the filesystem .
+NO.281 write to the filesystem .
+NO.282 write to the filesystem .
+NO.283 write to the filesystem .
+NO.284 write to the filesystem .
+NO.285 write to the filesystem .
+NO.286 write to the filesystem .
+NO.287 write to the filesystem .
+NO.288 write to the filesystem .
+NO.289 write to the filesystem .
+NO.290 write to the filesystem .
+NO.291 write to the filesystem .
+NO.292 write to the filesystem .
+NO.293 write to the filesystem .
+NO.294 write to the filesystem .
+NO.295 write to the filesystem .
+NO.296 write to the filesystem .
+NO.297 write to the filesystem .
+NO.298 write to the filesystem .
+NO.299 write to the filesystem .
+NO.300 write to the filesystem .
+NO.301 write to the filesystem .
+NO.302 write to the filesystem .
+NO.303 write to the filesystem .
+NO.304 write to the filesystem .
+NO.305 write to the filesystem .
+NO.306 write to the filesystem .
+NO.307 write to the filesystem .
+NO.308 write to the filesystem .
+NO.309 write to the filesystem .
+NO.310 write to the filesystem .
+NO.311 write to the filesystem .
+NO.312 write to the filesystem .
+NO.313 write to the filesystem .
+NO.314 write to the filesystem .
+NO.315 write to the filesystem .
+NO.316 write to the filesystem .
+NO.317 write to the filesystem .
+NO.318 write to the filesystem .
+NO.319 write to the filesystem .
+NO.320 write to the filesystem .
+NO.321 write to the filesystem .
+NO.322 write to the filesystem .
+NO.323 write to the filesystem .
+NO.324 write to the filesystem .
+NO.325 write to the filesystem .
+NO.326 write to the filesystem .
+NO.327 write to the filesystem .
+NO.328 write to the filesystem .
+NO.329 write to the filesystem .
+NO.330 write to the filesystem .
+NO.331 write to the filesystem .
+NO.332 write to the filesystem .
+NO.333 write to the filesystem .
+NO.334 write to the filesystem .
+NO.335 write to the filesystem .
+NO.336 write to the filesystem .
+NO.337 write to the filesystem .
+NO.338 write to the filesystem .
+NO.339 write to the filesystem .
+NO.340 write to the filesystem .
+NO.341 write to the filesystem .
+NO.342 write to the filesystem .
+NO.343 write to the filesystem .
+NO.344 write to the filesystem .
+NO.345 write to the filesystem .
+NO.346 write to the filesystem .
+NO.347 write to the filesystem .
+NO.348 write to the filesystem .
+NO.349 write to the filesystem .
+NO.350 write to the filesystem .
+NO.351 write to the filesystem .
+NO.352 write to the filesystem .
+NO.353 write to the filesystem .
+NO.354 write to the filesystem .
+NO.355 write to the filesystem .
+NO.356 write to the filesystem .
+NO.357 write to the filesystem .
+NO.358 write to the filesystem .
+NO.359 write to the filesystem .
+NO.360 write to the filesystem .
+NO.361 write to the filesystem .
+NO.362 write to the filesystem .
+NO.363 write to the filesystem .
+NO.364 write to the filesystem .
+NO.365 write to the filesystem .
+NO.366 write to the filesystem .
+NO.367 write to the filesystem .
+NO.368 write to the filesystem .
+NO.369 write to the filesystem .
+NO.370 write to the filesystem .
+NO.371 write to the filesystem .
+NO.372 write to the filesystem .
+NO.373 write to the filesystem .
+NO.374 write to the filesystem .
+NO.375 write to the filesystem .
+NO.376 write to the filesystem .
+NO.377 write to the filesystem .
+NO.378 write to the filesystem .
+NO.379 write to the filesystem .
+NO.380 write to the filesystem .
+NO.381 write to the filesystem .
+NO.382 write to the filesystem .
+NO.383 write to the filesystem .
+NO.384 write to the filesystem .
+NO.385 write to the filesystem .
+NO.386 write to the filesystem .
+NO.387 write to the filesystem .
+NO.388 write to the filesystem .
+NO.389 write to the filesystem .
+NO.390 write to the filesystem .
+NO.391 write to the filesystem .
+NO.392 write to the filesystem .
+NO.393 write to the filesystem .
+NO.394 write to the filesystem .
+NO.395 write to the filesystem .
+NO.396 write to the filesystem .
+NO.397 write to the filesystem .
+NO.398 write to the filesystem .
+NO.399 write to the filesystem .
+NO.400 write to the filesystem .
+NO.401 write to the filesystem .
+NO.402 write to the filesystem .
+NO.403 write to the filesystem .
+NO.404 write to the filesystem .
+NO.405 write to the filesystem .
+NO.406 write to the filesystem .
+NO.407 write to the filesystem .
+NO.408 write to the filesystem .
+NO.409 write to the filesystem .
+NO.410 write to the filesystem .
+NO.411 write to the filesystem .
+NO.412 write to the filesystem .
+NO.413 write to the filesystem .
+NO.414 write to the filesystem .
+NO.415 write to the filesystem .
+NO.416 write to the filesystem .
+NO.417 write to the filesystem .
+NO.418 write to the filesystem .
+NO.419 write to the filesystem .
+NO.420 write to the filesystem .
+NO.421 write to the filesystem .
+NO.422 write to the filesystem .
+NO.423 write to the filesystem .
+NO.424 write to the filesystem .
+NO.425 write to the filesystem .
+NO.426 write to the filesystem .
+NO.427 write to the filesystem .
+NO.428 write to the filesystem .
+NO.429 write to the filesystem .
+NO.430 write to the filesystem .
+NO.431 write to the filesystem .
+NO.432 write to the filesystem .
+NO.433 write to the filesystem .
+NO.434 write to the filesystem .
+NO.435 write to the filesystem .
+NO.436 write to the filesystem .
+NO.437 write to the filesystem .
+NO.438 write to the filesystem .
+NO.439 write to the filesystem .
+NO.440 write to the filesystem .
+NO.441 write to the filesystem .
+NO.442 write to the filesystem .
+NO.443 write to the filesystem .
+NO.444 write to the filesystem .
+NO.445 write to the filesystem .
+NO.446 write to the filesystem .
+NO.447 write to the filesystem .
+Simulate device reboot ...
+reboot status=0
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0xc (SW_CPU_RESET),boot:0x7f (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x2f0018e4
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x9098
+load:0x2f009100,len:0x17c8
+entry 0x2f008d10
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x9098   (37016)
+dram: lma 0x0000b0e0 vma 0x2f009100 len 0x17c8   (6088)
+padd: lma 0x0000c8d8 vma 0x00000000 len 0x3740   (14144)
+imap: lma 0x00010020 vma 0x40050020 len 0xd6e8   (55016)
+padd: lma 0x0001d710 vma 0x00000000 len 0x29e8   (10728)
+imap: lma 0x00020100 vma 0x40000100 len 0x485a4  (296356)
+total segments stored 7
+ABCxTS Flash scratch: /dev/xtsflash offset=0xd00000 size=0x300000
+
+NuttShell (NSH)
+nsh> [K
+XTS_RECOVERY_MOUNT_BEGIN
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1032-flat-category-fs-large.sha256
+IMAGE_SHA256=7b0e0dd869e157a1620297412caba0d99b5e6b068fff0e3a00bf05ceb7ced47a
+xTS Flash scratch: /dev/xtsflash offset=0xd00000 size=0x300000
+
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mkdir -p /data
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mount -t littlefs /dev/xtsflash /data
+--- CMD: mount -t littlefs /dev/xtsflash /data ---
+mount -t littlefs /dev/xtsflash /data
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=ls -l /data/s18r
+--- CMD: ls -l /data/s18r ---
+ls -l /data/s18r
+/data/s18r:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+ -rw-rw-rw-      463092 stability_test03_file
+nsh> [K
+nsh> [K
+XTS_RECOVERED_FILE_BYTES=463092 records=447
+
+XTS_COMMAND=vela_fs_stability_test03 mode=reboot /data/s18r
+--- CMD: vela_fs_stability_test03 mode=reboot /data/s18r ---
+vela_fs_stability_test03 mode=reboot /data/s18r
+The test mode is [reboot]
+fs system partion is OK !
+file is exit !
+check crc OK !  
+TEST PASS !
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768        204         564 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_RECOVERY=18-reboot PASS single_original_run

@@ -1,0 +1,8 @@
+#include "../xts-flat-media/defconfig"
+
+# Intact original WAV storage, registered only; explicit guarded format later.
+CONFIG_ESP32S31_XTS_MEDIA_VOLUME=y
+CONFIG_ESP32S31_SPIFLASH_PSRAM_STACK=y
+CONFIG_SCHED_LPWORKSTACKSIZE=4096
+CONFIG_FS_LITTLEFS=y
+CONFIG_RAMMTD=y

@@ -1,0 +1,28 @@
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=403553 replay=403553 ack=412476 drop=0 pending=0x0 sreplay=14
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=1217 max=44716829 samples=98663 over32=64702 over100=54766 over1000=22786 sum=1483011105 direct=709 directmax=30467 deferred=97954 deferredmax=44716829
+MONIRQ: cpu=1 defer=107030 replay=107030 ack=107366 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=9 fail=0 destroyed=8 live=1 livemax=2 pages=1274 pgt=32
+WIFIRX: callbacks=168439
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=97196 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=99320 fail=0 invalid=443 nonarp=98877
+TXSHAPE: snap=98877 arphdr=22 arpfail=0 offset=34 len=64
+ARPREQ: seen=1 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=22 bad=0 req=1 reply=21 peer=2 peerreplyy=1 lastlen=60 srcdiff=0 ok=22 drop=0
+ARPDIAG: dir=1 frames=136 bad=0 req=136 reply=0 peer=23 peerreply=0 lastlen=60 srcdiff=0 ok=136 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=2 object=0x2f018bd4
+LPTRACE: 0x2f00c73e
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+nsh> [Kcat /proc/iobinfo
+    ntotal     nfree     nwait nthrottle
+       128       128         0       104
+nsh> [Kfree
+      total       used       free    maxused    maxfree  nused  nfree name
+     261660     102324     159336     187552      83272    229     19 Kmem
+   16777216     684032   16093184   16093184 Page
+nsh> [K

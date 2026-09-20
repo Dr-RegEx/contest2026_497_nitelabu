@@ -1,0 +1,71 @@
+{
+  "status": "DIAGNOSTIC_COMPLETE",
+  "receipt": "build1615-spawn-parent-env.sha256",
+  "samples": [
+    {
+      "unacked_bytes": 1460,
+      "retransmit_count": 0,
+      "queued_bytes": 17520,
+      "iob_free": 46,
+      "iob_waiters": 0
+    },
+    {
+      "unacked_bytes": 1460,
+      "retransmit_count": 0,
+      "queued_bytes": 18980,
+      "iob_free": 46,
+      "iob_waiters": 0
+    },
+    {
+      "unacked_bytes": 0,
+      "retransmit_count": 0,
+      "queued_bytes": 18980,
+      "iob_free": 42,
+      "iob_waiters": 0
+    },
+    {
+      "unacked_bytes": 1460,
+      "retransmit_count": 0,
+      "queued_bytes": 17520,
+      "iob_free": 43,
+      "iob_waiters": 0
+    },
+    {
+      "unacked_bytes": 1460,
+      "retransmit_count": 0,
+      "queued_bytes": 18980,
+      "iob_free": 46,
+      "iob_waiters": 0
+    },
+    {
+      "unacked_bytes": 1460,
+      "retransmit_count": 0,
+      "queued_bytes": 18980,
+      "iob_free": 45,
+      "iob_waiters": 0
+    },
+    {
+      "unacked_bytes": 1460,
+      "retransmit_count": 0,
+      "queued_bytes": 18980,
+      "iob_free": 48,
+      "iob_waiters": 0
+    },
+    {
+      "unacked_bytes": 0,
+      "retransmit_count": 0,
+      "queued_bytes": 17520,
+      "iob_free": 51,
+      "iob_waiters": 0
+    }
+  ],
+  "tcp_total": [
+    "[  1] 20.00-21.17 sec  16.0 KBytes   113 Kbits/sec\r",
+    "[  1] 0.00-21.17 sec   683 KBytes   264 Kbits/sec\r"
+  ],
+  "observation": "Application queue17520..18980B; unacked0 or1460B; freeIOB42..51, no IOBwaiters. Sender generally has only one MSS outstanding despite queued data.",
+  "limit": "No advertised-window or poll/completion counters captured; not enough to attribute to a particular callback yet. Eight point samples may miss bursts. Custom Windows TCP sink and20s duration, not original xTS acceptance.",
+  "next": "Check advertised snd_wnd and TX-done/poll continuation. Prior1528 eight-pass poll candidate did not improve rate; avoid assuming same patch now works.",
+  "serial_owner": null,
+  "sprint_count": "76/88"
+}

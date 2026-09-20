@@ -1,0 +1,119 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x11238
+entry 0x2f00dd18
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x11238  (70200)
+padd: lma 0x000132a8 vma 0x00000000 len 0xcd70   (52592)
+imap: lma 0x00020020 vma 0x400c0020 len 0x1904c  (102476)
+padd: lma 0x00039074 vma 0x00000000 len 0x7084   (28804)
+imap: lma 0x00040100 vma 0x40000100 len 0xb5224  (741924)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+BUTTON_BOOT=PASS seconds=3.482
+--- CMD: ls /dev/buttons ---
+ls /dev/buttons
+ /dev/buttons
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00e340 0x2f00e38c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: buttons & ---
+buttons &
+buttons [7:101]
+nsh> [Kbutton_daemon: Running
+
+button_daemon: Opening /dev/buttons
+nsh> [Kbutton_daemon: Supported BUTTONs 0x01
+
+button_daemon: poll returned: 1
+Sample = 0
+NET_LEAK_LOAD_BUTTONS_PID=7
+
+button_daemon: poll returned: 0
+button_daemon: Timeout
+
+button_daemon: poll returned: 1
+Sample = 1
+BUTTON_EDGE=PASS cycle=1 state=1
+
+button_daemon: poll returned: 1
+Sample = 0
+BUTTON_EDGE=PASS cycle=1 state=0
+
+button_daemon: poll returned: 1
+Sample = 1
+BUTTON_EDGE=PASS cycle=2 state=1
+
+button_daemon: poll returned: 1
+Sample = 0
+BUTTON_EDGE=PASS cycle=2 state=0
+
+button_daemon: poll returned: 1
+Sample = 1
+BUTTON_EDGE=PASS cycle=3 state=1
+
+button_daemon: poll returned: 1
+Sample = 0
+BUTTON_EDGE=PASS cycle=3 state=0
+
+button_daemon: poll returned: 1
+Sample = 1
+BUTTON_EDGE=PASS cycle=4 state=1
+
+button_daemon: poll returned: 1
+Sample = 0
+BUTTON_EDGE=PASS cycle=4 state=0
+
+button_daemon: poll returned: 1
+Sample = 1
+BUTTON_EDGE=PASS cycle=5 state=1
+
+button_daemon: poll returned: 1
+Sample = 0
+BUTTON_EDGE=PASS cycle=5 state=0
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00e340 0x2f00e38c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+    7     7 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0001984 buttons
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=4871 replay=4871 ack=5469 drop=0 pending=0x0 sreplay=2
+MONIRQ: cpu=1 defer=91886 replay=91886 ack=92209 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=2 fail=0 destroyed=0 live=2 livemax=2 pages=0 pgt=0
+nsh> [K
+nsh> [K
+S31_BOOT_ELECTRICAL_IRQ=PASS cycles=5 edges=10 manual_switch=untested
+--- CMD: kill 7 ---
+kill 7
+nsh> [K
+nsh> [K

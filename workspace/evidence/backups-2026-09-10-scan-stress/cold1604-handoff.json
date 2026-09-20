@@ -1,0 +1,28 @@
+{
+  "case": "common2.1.3",
+  "state": "COMPLETE_PASS",
+  "board_receipt": "build1565-simd-int8.sha256",
+  "flash_log": "logs/flash1604-coldboot-pair.log",
+  "setup_boot_log": "logs/boot1604-coldboot-pair.log",
+  "setup_boot_counts_as_cold_sample": false,
+  "samples": 10,
+  "required": 10,
+  "mean_limit_seconds": 4,
+  "capture_script": "cold1604-capture.py",
+  "next": "Cold boot complete; no further physical power cycles needed for common2.1.3",
+  "count": "75/88",
+  "sample_seconds": [
+    0.265929917,
+    0.265819332,
+    0.265796453,
+    0.265688396,
+    0.26570454,
+    0.266088773,
+    0.265877976,
+    0.2656866,
+    0.265712441,
+    0.266007592
+  ],
+  "mean_seconds": 0.26583120200000004,
+  "evidence": "checkpoint1604-coldboot-pass"
+}

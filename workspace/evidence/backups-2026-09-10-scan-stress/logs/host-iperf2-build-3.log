@@ -1,0 +1,77 @@
+make  all-recursive
+make[1]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2'
+Making all in compat
+make[2]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2/compat'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2/compat'
+Making all in doc
+make[2]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2/doc'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2/doc'
+Making all in include
+make[2]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2/include'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2/include'
+Making all in src
+make[2]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2/src'
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT Client.o -MD -MP -MF .deps/Client.Tpo -c -o Client.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Client.cpp
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT Settings.o -MD -MP -MF .deps/Settings.Tpo -c -o Settings.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT gnu_getopt.o -MD -MP -MF .deps/gnu_getopt.Tpo -c -o gnu_getopt.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/gnu_getopt.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT gnu_getopt_long.o -MD -MP -MF .deps/gnu_getopt_long.Tpo -c -o gnu_getopt_long.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/gnu_getopt_long.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT histogram.o -MD -MP -MF .deps/histogram.Tpo -c -o histogram.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/histogram.c
+g++ -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT main.o -MD -MP -MF .deps/main.Tpo -c -o main.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/main.cpp
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT service.o -MD -MP -MF .deps/service.Tpo -c -o service.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/service.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT socket_io.o -MD -MP -MF .deps/socket_io.Tpo -c -o socket_io.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/socket_io.c
+mv -f .deps/service.Tpo .deps/service.Po
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT stdio.o -MD -MP -MF .deps/stdio.Tpo -c -o stdio.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/stdio.c
+mv -f .deps/gnu_getopt_long.Tpo .deps/gnu_getopt_long.Po
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT packet_ring.o -MD -MP -MF .deps/packet_ring.Tpo -c -o packet_ring.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/packet_ring.c
+mv -f .deps/socket_io.Tpo .deps/socket_io.Po
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -Wall  -O2 -O2  -MT tcp_window_size.o -MD -MP -MF .deps/tcp_window_size.Tpo -c -o tcp_window_size.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/tcp_window_size.c
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/main.cpp: In function ‘int main(int, char**)’:
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/main.cpp:177:5: error: ‘gnu_reset’ was not declared in this scope
+  177 |     gnu_reset();
+      |     ^~~~~~~~~
+make[2]: *** [Makefile:538: main.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+mv -f .deps/stdio.Tpo .deps/stdio.Po
+mv -f .deps/histogram.Tpo .deps/histogram.Po
+mv -f .deps/gnu_getopt.Tpo .deps/gnu_getopt.Po
+mv -f .deps/packet_ring.Tpo .deps/packet_ring.Po
+mv -f .deps/tcp_window_size.Tpo .deps/tcp_window_size.Po
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:137:25: error: elements of array ‘const gnu_option long_options []’ have incomplete type
+  137 | const struct gnu_option long_options[] =
+      |                         ^~~~~~~~~~~~
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:137:25: error: storage size of ‘long_options’ isn’t known
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:240:25: error: elements of array ‘const gnu_option env_options []’ have incomplete type
+  240 | const struct gnu_option env_options[] =
+      |                         ^~~~~~~~~~~
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:240:25: error: storage size of ‘env_options’ isn’t known
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Client.cpp: In member function ‘void Client::AwaitServerFinPacket()’:
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Client.cpp:1593:50: error: ‘MIN’ was not declared in this scope; did you mean ‘CMIN’?
+ 1593 |             rc = read(mySocket, mSettings->mBuf, MIN(MAXUDPBUF, mSettings->mBufLen));
+      |                                                  ^~~
+      |                                                  CMIN
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp: In function ‘void Settings_ParseCommandLine(int, char**, thread_Settings*)’:
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:513:5: error: ‘gnu_opterr’ was not declared in this scope; did you mean ‘gnu_option’?
+  513 |     gnu_opterr = 1; // Fail on an unrecognized command line option
+      |     ^~~~~~~~~~
+      |     gnu_option
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:515:14: error: ‘gnu_getopt_long’ was not declared in this scope; did you mean ‘getopt_long’?
+  515 |              gnu_getopt_long(argc, argv, short_options,
+      |              ^~~~~~~~~~~~~~~
+      |              getopt_long
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:517:36: error: ‘gnu_optarg’ was not declared in this scope; did you mean ‘gnu_option’?
+  517 |         Settings_Interpret(option, gnu_optarg, mSettings);
+      |                                    ^~~~~~~~~~
+      |                                    gnu_option
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/src/Settings.cpp:520:18: error: ‘gnu_optind’ was not declared in this scope; did you mean ‘gnu_option’?
+  520 |     for (int i = gnu_optind; i < argc; i++) {
+      |                  ^~~~~~~~~~
+      |                  gnu_option
+make[2]: *** [Makefile:538: Client.o] Error 1
+make[2]: *** [Makefile:538: Settings.o] Error 1
+make[2]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2/src'
+make[1]: *** [Makefile:596: all-recursive] Error 1
+make[1]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2'
+make: *** [Makefile:536: all] Error 2

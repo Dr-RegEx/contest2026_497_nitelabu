@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config EXAMPLES_S31PREVIEW
+	tristate "ESP32-S31 camera to framebuffer preview"
+	default n
+	depends on ESP32S31_CAMERA_V4L2 && VIDEO_FB && FB_UPDATE
+	---help---
+		Capture real 640x480 RGB565 USERPTR frames from /dev/video0 and
+		present them centered on an 800x480 RGB565 /dev/fb0 framebuffer.
+		The default run displays 60 frames with a finite capture timeout.
+
+if EXAMPLES_S31PREVIEW
+
+config EXAMPLES_S31PREVIEW_PROGNAME
+	string "Program name"
+	default "s31preview"
+
+config EXAMPLES_S31PREVIEW_PRIORITY
+	int "Task priority"
+	default 100
+
+config EXAMPLES_S31PREVIEW_STACKSIZE
+	int "Stack size"
+	default 8192
+
+endif

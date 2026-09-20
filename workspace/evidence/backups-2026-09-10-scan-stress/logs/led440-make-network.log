@@ -1,0 +1,27 @@
+--- CMD: uname -a ---
+uname -a
+NuttX  0.0.0 21ebb146256-dirty Sep 14 2026 15:41:58 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: ls /dev/leds0 ---
+ls /dev/leds0
+ /dev/leds0
+nsh> [K
+nsh> [K
+--- CMD: s31led 10 ---
+s31led 10
+S31_LED=PASS frames=40 brightness=8 final=off optical=unverified
+nsh> [K
+nsh> [K
+--- CMD: sleep 2 ---
+sleep 2
+nsh> [K
+nsh> [K
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=189560 replay=189560 ack=192451 drop=0 pending=0x0 sreplay=79
+MONIRQ: cpu=1 defer=1344418 replay=1344418 ack=1344780 drop=0 pending=0x0 sreplay=6
+ADDRENV: created=61 fail=0 destroyed=59 live=2 livemax=3 pages=8234 pgt=236
+nsh> [K
+nsh> [K
+S31_LED_SMOKE=PASS optical=unverified

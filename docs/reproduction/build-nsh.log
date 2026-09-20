@@ -1,0 +1,27 @@
+/home/regex/work/s31-reproduce-public-20260919/.s31-deps/riscv32-esp-elf/bin/riscv32-esp-elf-gcc
+/home/regex/work/s31-reproduce-public-20260919/.s31-deps/venv/bin/olddefconfig
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/s31-reproduce-public-20260919/out/esp32s31-nsh/bin_host
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/s31-reproduce-public-20260919/out/esp32s31-nsh
+[1/13] cd /home/regex/work/s31-reproduce-public-20260919/out/esp32s31-nsh/libs/libc/misc && /usr/bin/cmake -E touch /home/regex/work/s31-reproduce-public-20260919/nuttx/libs/libc/misc/lib_utsname.c
+[2/13] cd /home/regex/work/s31-reproduce-public-20260919/nuttx && /usr/bin/cmake -DKCONFIG_CONFIG=/home/regex/work/s31-reproduce-public-20260919/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/nsh/defconfig -DNUTTX_DIR=/home/regex/work/s31-reproduce-public-20260919/nuttx -DCMAKE_BINARY_DIR=/home/regex/work/s31-reproduce-public-20260919/out/esp32s31-nsh -P /home/regex/work/s31-reproduce-public-20260919/nuttx/cmake/nuttx_generate_dts.cmake
+[3/13] Building C object CMakeFiles/nuttx.dir/empty.c.o
+[4/13] Building C object apps/CMakeFiles/apps.dir/dummy.c.o
+[5/13] Building C object boards/CMakeFiles/board.dir/__/dummy.c.o
+[6/13] Building C object apps/external/android/CMakeFiles/android.dir/dummy.c.o
+[7/13] Linking C static library apps/external/android/libandroid.a
+[8/13] Linking C static library boards/libboard.a
+[9/13] Linking C static library apps/libapps.a
+[10/13] Linking C executable nuttx
+[11/13] Generating nuttx.hex
+[12/13] Generating System.map
+[13/13] Generating ESP32-S31 simple-boot image for offset 0x2000
+esptool v5.4.0
+Creating ESP32-S31 image...
+Image has only RAM segments visible. ROM segments are hidden and SHA256 digest is not appended.
+Merged 1 ELF section.
+Successfully created ESP32-S31 image.

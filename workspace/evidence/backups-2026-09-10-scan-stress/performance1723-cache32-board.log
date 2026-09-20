@@ -1,0 +1,66 @@
+XTS_BOOT_READY image_sha256=8a4dc9fa464e358fc043b765af23665ee1269e8579b3a3f63c36124ef57f3348
+XTS_COMMAND=mount -t littlefs -o forceformat /dev/xtsflash /data
+mount -t littlefs -o forceformat /dev/xtsflash /data
+nsh> [K
+nsh> [K
+XTS_COMMAND=mount
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768          2         766 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/s11
+mkdir /data/s11
+nsh> [K
+nsh> [K
+XTS_COMMAND=performance_test -d/data/s11 -b4096 -c64 -m1
+performance_test -d/data/s11 -b4096 -c64 -m1
+write speed is 172.972973
+nsh> [K
+nsh> [K
+XTS_PERF_MODE=1 label=write rate_KiB_s=172.972973
+XTS_COMMAND=performance_test -d/data/s11 -b4096 -c64 -m2
+performance_test -d/data/s11 -b4096 -c64 -m2
+read speed is 2133.333333
+nsh> [K
+nsh> [K
+XTS_PERF_MODE=2 label=read rate_KiB_s=2133.333333
+XTS_COMMAND=performance_test -d/data/s11 -b4096 -c64 -m3
+performance_test -d/data/s11 -b4096 -c64 -m3
+random write speed is 4.901398
+nsh> [K
+nsh> [K
+XTS_PERF_MODE=3 label=random write rate_KiB_s=4.901398
+XTS_COMMAND=performance_test -d/data/s11 -b4096 -c64 -m4
+performance_test -d/data/s11 -b4096 -c64 -m4
+random read speed is 1347.368421
+nsh> [K
+nsh> [K
+XTS_PERF_MODE=4 label=random read rate_KiB_s=1347.368421
+XTS_COMMAND=ls -l /data/s11
+ls -l /data/s11
+/data/s11:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+ -rwx------      262144 performance_test
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        768         69         699 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K

@@ -1,0 +1,15 @@
+# Conservative follow-up to the isolated 1713 Wi-Fi window candidate.
+# Keep the SACK profile inherited and reduce the packet-buffer pool so the
+# larger socket windows do not consume the full static RAM margin.
+#include "../demo-rmt-bttool-coex-pie-netdiag-sack/defconfig"
+
+CONFIG_NET_TCP_WINDOW_SCALE=y
+CONFIG_NET_TCP_WINDOW_SCALE_FACTOR=3
+CONFIG_NET_RECV_BUFSIZE=65536
+CONFIG_NET_MAX_RECV_BUFSIZE=65536
+CONFIG_NET_SEND_BUFSIZE=65536
+CONFIG_NET_MAX_SEND_BUFSIZE=65536
+CONFIG_NET_TCP_OUT_OF_ORDER_BUFSIZE=65536
+
+# 128 * CONFIG_IOB_BUFSIZE (400) is about 25 KiB smaller than 192 IOBs.
+CONFIG_IOB_NBUFFERS=128

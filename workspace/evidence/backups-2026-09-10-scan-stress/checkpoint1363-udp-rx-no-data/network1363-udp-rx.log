@@ -1,0 +1,36 @@
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: iperf2 -s -p 5003 -i 1 -u & ---
+iperf2 -s -p 5003 -i 1 -u &
+iperf2 [29:101]
+nsh> [K
+nsh> [K------------------------------------------------------------
+Server listening on UDP port 5003
+UDP buffer size: -1.00 Byte (WARNING: requested 16.0 KByte)
+------------------------------------------------------------
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011140 0x2f01118c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   25    25 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5001 -i 1
+   27    25 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   29    29 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   30    29 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   31    29 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+nsh> [K
+nsh> [K
+--- CMD: kill -15 29 ---
+kill -15 29
+nsh> [K
+nsh> [K
+{"case": "5.1.24", "status": "FAIL", "receipt": "build1354-network-sendbuf.sha256", "duration_seconds": 300, "offered_load": "40M", "host_topology": "Existing Linux iperf2 on Windows WSL, outbound LAN via Windows NAT; no UDP relay in RX direction", "server_pid": 29, "client_exit": 0, "wall_seconds": 302.11231411100016, "host_full_duration": true, "board_summary_present": false, "rate_acceptance": "Numeric standard not specified in original; actual rates retained for review", "board_capture_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}

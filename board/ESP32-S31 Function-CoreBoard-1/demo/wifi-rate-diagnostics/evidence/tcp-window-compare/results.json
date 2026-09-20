@@ -1,0 +1,26 @@
+[
+  {
+    "diagnostic_only": true,
+    "window": "16k",
+    "duration": 30,
+    "command": "iperf2 -c 192.168.1.29 -p 5101 -i 1 -t 30 -l 16384 -w 16k",
+    "board": [],
+    "host": []
+  },
+  {
+    "diagnostic_only": true,
+    "window": "64k",
+    "duration": 30,
+    "command": "iperf2 -c 192.168.1.29 -p 5102 -i 1 -t 30 -l 16384 -w 64k",
+    "board": [],
+    "host": []
+  },
+  {
+    "diagnostic_only": true,
+    "window": "16k",
+    "duration": 30,
+    "command": "iperf2 -c 192.168.1.29 -p 5103 -i 1 -t 30 -l 16384 -w 16k",
+    "board": [],
+    "host": []
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "base_config": "/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-wifi-ap-selection/.config",
+  "base_sha256": "7eb05befefbef8aed0d79477db951f35cc1a7e414ccd24b60690ee9812f50488",
+  "candidate_config_sha256": "edaab1282f7c1146b21b2f14232a4be1a744ab5ca5361bee444d98e333a7761e",
+  "only_change": {
+    "CONFIG_ARP_SEND_DELAYMSEC": {
+      "before": 20,
+      "after": 200
+    }
+  },
+  "patch_sha256": "8feef60556f4f91bbe57a46b398bdc3e3bc4f4dcc2b72ddd25a4097b727a6994",
+  "state": "prepared only; no configuration modified, build, flash or hardware test"
+}

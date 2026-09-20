@@ -1,0 +1,1269 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xee94
+load:0x2f00ef00,len:0x368c
+entry 0x2f00ea5a
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xee94   (61076)
+dram: lma 0x00010edc vma 0x2f00ef00 len 0x368c   (13964)
+padd: lma 0x00014598 vma 0x00000000 len 0xba80   (47744)
+imap: lma 0x00020020 vma 0x400c0020 len 0x19054  (102484)
+padd: lma 0x0003907c vma 0x00000000 len 0x707c   (28796)
+imap: lma 0x00040100 vma 0x40000100 len 0xb1380  (725888)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+SCAN_HEAP_BOOT=PASS seconds=0.589
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      73308     270744      95336     238952    158      8 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP boot used=73308 blocks=158 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=3 replay=3 ack=452 drop=0 pending=0x0 sreplay=0
+MONIRQ: cpu=1 defer=351 replay=351 ack=3014 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=1 fail=0 destroyed=0 live=1 livemax=1 pages=0 pgt=0
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi help ---
+wapi help
+Usage:
+	wapi show         <ifname>
+	wapi scan         <ifname>
+	wapi pscan        <ifname>
+	wapi scan_results <ifname>
+	wapi ip           <ifname> <IP address>
+	wapi mask         <ifname> <mask>
+	wapi freq         <ifname> <frequency>  <index/flag>
+	wapi essid        <ifname> <essid>      <index/flag>
+	wapi psk          <ifname> <passphrase> <index/flag> [wpa]
+	wapi disconnect   <ifname>
+	wapi mode         <ifname>              <index/mode>
+	wapi ap           <ifname>              <MAC address>
+	wapi bitrate      <ifname> <bitrate>    <index/flag>
+	wapi txpower      <ifname> <txpower>    <index/flag>
+	wapi country      <ifname> <country code>
+	wapi sense        <ifname>
+	wapi pta_prio     <ifname>  <index/flag>
+	wapi power_save   <ifname>  <on|off>
+	wapi help
+
+Frequency Flags:
+	[0] WAPI_FREQ_AUTO
+	[1] WAPI_FREQ_FIXED
+
+ESSID Flags:
+	[0] WAPI_ESSID_OFF
+	[1] WAPI_ESSID_ON
+	[2] WAPI_ESSID_DELAY_ON
+
+Passphrase algorithm Flags:
+	[0] WPA_ALG_NONE
+	[1] WPA_ALG_WEP
+	[2] WPA_ALG_TKIP
+	[3] WPA_ALG_CCMP
+
+Passphrase WPA version:
+	[0] WPA_VER_NONE
+	[1] WPA_VER_1
+	[2] WPA_VER_2
+	[3] WPA_VER_3
+
+Operating Modes:
+	[0] WAPI_MODE_AUTO
+	[1] WAPI_MODE_ADHOC
+	[2] WAPI_MODE_MANAGED
+	[3] WAPI_MODE_MASTER
+	[4] WAPI_MODE_REPEAT
+	[5] WAPI_MODE_SECOND
+	[6] WAPI_MODE_MONITOR
+	[7] WAPI_MODE_MESH
+
+Bitrate Flags:
+	[0] WAPI_BITRATE_AUTO
+	[1] WAPI_BITRATE_FIXED
+
+TX power Flags:
+	[0] WAPI_TXPOWER_DBM
+	[1] WAPI_TXPOWER_MWATT
+	[2] WAPI_TXPOWER_RELATIVE
+
+pta prio Flags:
+	[0] WAPI_PTA_PRIORITY_COEX_MAXIMIZED
+	[1] WAPI_PTA_PRIORITY_COEX_HIGH
+	[2] WAPI_PTA_PRIORITY_BALANCED
+	[3] WAPI_PTA_PRIORITY_WLAN_HIGHD
+	[4] WAPI_PTA_PRIORITY_WLAN_MAXIMIZED
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76860     267192     109752     197992    160     10 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP help-1 used=76860 blocks=160 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=483 replay=483 ack=998 drop=0 pending=0x0 sreplay=2
+MONIRQ: cpu=1 defer=2293 replay=2293 ack=4972 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=2 fail=0 destroyed=1 live=1 livemax=2 pages=151 pgt=4
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi help ---
+wapi help
+Usage:
+	wapi show         <ifname>
+	wapi scan         <ifname>
+	wapi pscan        <ifname>
+	wapi scan_results <ifname>
+	wapi ip           <ifname> <IP address>
+	wapi mask         <ifname> <mask>
+	wapi freq         <ifname> <frequency>  <index/flag>
+	wapi essid        <ifname> <essid>      <index/flag>
+	wapi psk          <ifname> <passphrase> <index/flag> [wpa]
+	wapi disconnect   <ifname>
+	wapi mode         <ifname>              <index/mode>
+	wapi ap           <ifname>              <MAC address>
+	wapi bitrate      <ifname> <bitrate>    <index/flag>
+	wapi txpower      <ifname> <txpower>    <index/flag>
+	wapi country      <ifname> <country code>
+	wapi sense        <ifname>
+	wapi pta_prio     <ifname>  <index/flag>
+	wapi power_save   <ifname>  <on|off>
+	wapi help
+
+Frequency Flags:
+	[0] WAPI_FREQ_AUTO
+	[1] WAPI_FREQ_FIXED
+
+ESSID Flags:
+	[0] WAPI_ESSID_OFF
+	[1] WAPI_ESSID_ON
+	[2] WAPI_ESSID_DELAY_ON
+
+Passphrase algorithm Flags:
+	[0] WPA_ALG_NONE
+	[1] WPA_ALG_WEP
+	[2] WPA_ALG_TKIP
+	[3] WPA_ALG_CCMP
+
+Passphrase WPA version:
+	[0] WPA_VER_NONE
+	[1] WPA_VER_1
+	[2] WPA_VER_2
+	[3] WPA_VER_3
+
+Operating Modes:
+	[0] WAPI_MODE_AUTO
+	[1] WAPI_MODE_ADHOC
+	[2] WAPI_MODE_MANAGED
+	[3] WAPI_MODE_MASTER
+	[4] WAPI_MODE_REPEAT
+	[5] WAPI_MODE_SECOND
+	[6] WAPI_MODE_MONITOR
+	[7] WAPI_MODE_MESH
+
+Bitrate Flags:
+	[0] WAPI_BITRATE_AUTO
+	[1] WAPI_BITRATE_FIXED
+
+TX power Flags:
+	[0] WAPI_TXPOWER_DBM
+	[1] WAPI_TXPOWER_MWATT
+	[2] WAPI_TXPOWER_RELATIVE
+
+pta prio Flags:
+	[0] WAPI_PTA_PRIORITY_COEX_MAXIMIZED
+	[1] WAPI_PTA_PRIORITY_COEX_HIGH
+	[2] WAPI_PTA_PRIORITY_BALANCED
+	[3] WAPI_PTA_PRIORITY_WLAN_HIGHD
+	[4] WAPI_PTA_PRIORITY_WLAN_MAXIMIZED
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76860     267192     113296     189800    160      9 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP help-2 used=76860 blocks=160 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=966 replay=966 ack=1544 drop=0 pending=0x0 sreplay=2
+MONIRQ: cpu=1 defer=4250 replay=4250 ack=6929 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=3 fail=0 destroyed=2 live=1 livemax=2 pages=302 pgt=8
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi help ---
+wapi help
+Usage:
+	wapi show         <ifname>
+	wapi scan         <ifname>
+	wapi pscan        <ifname>
+	wapi scan_results <ifname>
+	wapi ip           <ifname> <IP address>
+	wapi mask         <ifname> <mask>
+	wapi freq         <ifname> <frequency>  <index/flag>
+	wapi essid        <ifname> <essid>      <index/flag>
+	wapi psk          <ifname> <passphrase> <index/flag> [wpa]
+	wapi disconnect   <ifname>
+	wapi mode         <ifname>              <index/mode>
+	wapi ap           <ifname>              <MAC address>
+	wapi bitrate      <ifname> <bitrate>    <index/flag>
+	wapi txpower      <ifname> <txpower>    <index/flag>
+	wapi country      <ifname> <country code>
+	wapi sense        <ifname>
+	wapi pta_prio     <ifname>  <index/flag>
+	wapi power_save   <ifname>  <on|off>
+	wapi help
+
+Frequency Flags:
+	[0] WAPI_FREQ_AUTO
+	[1] WAPI_FREQ_FIXED
+
+ESSID Flags:
+	[0] WAPI_ESSID_OFF
+	[1] WAPI_ESSID_ON
+	[2] WAPI_ESSID_DELAY_ON
+
+Passphrase algorithm Flags:
+	[0] WPA_ALG_NONE
+	[1] WPA_ALG_WEP
+	[2] WPA_ALG_TKIP
+	[3] WPA_ALG_CCMP
+
+Passphrase WPA version:
+	[0] WPA_VER_NONE
+	[1] WPA_VER_1
+	[2] WPA_VER_2
+	[3] WPA_VER_3
+
+Operating Modes:
+	[0] WAPI_MODE_AUTO
+	[1] WAPI_MODE_ADHOC
+	[2] WAPI_MODE_MANAGED
+	[3] WAPI_MODE_MASTER
+	[4] WAPI_MODE_REPEAT
+	[5] WAPI_MODE_SECOND
+	[6] WAPI_MODE_MONITOR
+	[7] WAPI_MODE_MESH
+
+Bitrate Flags:
+	[0] WAPI_BITRATE_AUTO
+	[1] WAPI_BITRATE_FIXED
+
+TX power Flags:
+	[0] WAPI_TXPOWER_DBM
+	[1] WAPI_TXPOWER_MWATT
+	[2] WAPI_TXPOWER_RELATIVE
+
+pta prio Flags:
+	[0] WAPI_PTA_PRIORITY_COEX_MAXIMIZED
+	[1] WAPI_PTA_PRIORITY_COEX_HIGH
+	[2] WAPI_PTA_PRIORITY_BALANCED
+	[3] WAPI_PTA_PRIORITY_WLAN_HIGHD
+	[4] WAPI_PTA_PRIORITY_WLAN_MAXIMIZED
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76860     267192     113304     181608    160     10 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP help-3 used=76860 blocks=160 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=1449 replay=1449 ack=2091 drop=0 pending=0x0 sreplay=2
+MONIRQ: cpu=1 defer=6207 replay=6207 ack=8886 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=4 fail=0 destroyed=3 live=1 livemax=2 pages=453 pgt=12
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi help ---
+wapi help
+Usage:
+	wapi show         <ifname>
+	wapi scan         <ifname>
+	wapi pscan        <ifname>
+	wapi scan_results <ifname>
+	wapi ip           <ifname> <IP address>
+	wapi mask         <ifname> <mask>
+	wapi freq         <ifname> <frequency>  <index/flag>
+	wapi essid        <ifname> <essid>      <index/flag>
+	wapi psk          <ifname> <passphrase> <index/flag> [wpa]
+	wapi disconnect   <ifname>
+	wapi mode         <ifname>              <index/mode>
+	wapi ap           <ifname>              <MAC address>
+	wapi bitrate      <ifname> <bitrate>    <index/flag>
+	wapi txpower      <ifname> <txpower>    <index/flag>
+	wapi country      <ifname> <country code>
+	wapi sense        <ifname>
+	wapi pta_prio     <ifname>  <index/flag>
+	wapi power_save   <ifname>  <on|off>
+	wapi help
+
+Frequency Flags:
+	[0] WAPI_FREQ_AUTO
+	[1] WAPI_FREQ_FIXED
+
+ESSID Flags:
+	[0] WAPI_ESSID_OFF
+	[1] WAPI_ESSID_ON
+	[2] WAPI_ESSID_DELAY_ON
+
+Passphrase algorithm Flags:
+	[0] WPA_ALG_NONE
+	[1] WPA_ALG_WEP
+	[2] WPA_ALG_TKIP
+	[3] WPA_ALG_CCMP
+
+Passphrase WPA version:
+	[0] WPA_VER_NONE
+	[1] WPA_VER_1
+	[2] WPA_VER_2
+	[3] WPA_VER_3
+
+Operating Modes:
+	[0] WAPI_MODE_AUTO
+	[1] WAPI_MODE_ADHOC
+	[2] WAPI_MODE_MANAGED
+	[3] WAPI_MODE_MASTER
+	[4] WAPI_MODE_REPEAT
+	[5] WAPI_MODE_SECOND
+	[6] WAPI_MODE_MONITOR
+	[7] WAPI_MODE_MESH
+
+Bitrate Flags:
+	[0] WAPI_BITRATE_AUTO
+	[1] WAPI_BITRATE_FIXED
+
+TX power Flags:
+	[0] WAPI_TXPOWER_DBM
+	[1] WAPI_TXPOWER_MWATT
+	[2] WAPI_TXPOWER_RELATIVE
+
+pta prio Flags:
+	[0] WAPI_PTA_PRIORITY_COEX_MAXIMIZED
+	[1] WAPI_PTA_PRIORITY_COEX_HIGH
+	[2] WAPI_PTA_PRIORITY_BALANCED
+	[3] WAPI_PTA_PRIORITY_WLAN_HIGHD
+	[4] WAPI_PTA_PRIORITY_WLAN_MAXIMIZED
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76860     267192     113304     197992    160      8 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP help-4 used=76860 blocks=160 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=1931 replay=1931 ack=2637 drop=0 pending=0x0 sreplay=2
+MONIRQ: cpu=1 defer=8164 replay=8164 ack=10843 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=5 fail=0 destroyed=4 live=1 livemax=2 pages=604 pgt=16
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi help ---
+wapi help
+Usage:
+	wapi show         <ifname>
+	wapi scan         <ifname>
+	wapi pscan        <ifname>
+	wapi scan_results <ifname>
+	wapi ip           <ifname> <IP address>
+	wapi mask         <ifname> <mask>
+	wapi freq         <ifname> <frequency>  <index/flag>
+	wapi essid        <ifname> <essid>      <index/flag>
+	wapi psk          <ifname> <passphrase> <index/flag> [wpa]
+	wapi disconnect   <ifname>
+	wapi mode         <ifname>              <index/mode>
+	wapi ap           <ifname>              <MAC address>
+	wapi bitrate      <ifname> <bitrate>    <index/flag>
+	wapi txpower      <ifname> <txpower>    <index/flag>
+	wapi country      <ifname> <country code>
+	wapi sense        <ifname>
+	wapi pta_prio     <ifname>  <index/flag>
+	wapi power_save   <ifname>  <on|off>
+	wapi help
+
+Frequency Flags:
+	[0] WAPI_FREQ_AUTO
+	[1] WAPI_FREQ_FIXED
+
+ESSID Flags:
+	[0] WAPI_ESSID_OFF
+	[1] WAPI_ESSID_ON
+	[2] WAPI_ESSID_DELAY_ON
+
+Passphrase algorithm Flags:
+	[0] WPA_ALG_NONE
+	[1] WPA_ALG_WEP
+	[2] WPA_ALG_TKIP
+	[3] WPA_ALG_CCMP
+
+Passphrase WPA version:
+	[0] WPA_VER_NONE
+	[1] WPA_VER_1
+	[2] WPA_VER_2
+	[3] WPA_VER_3
+
+Operating Modes:
+	[0] WAPI_MODE_AUTO
+	[1] WAPI_MODE_ADHOC
+	[2] WAPI_MODE_MANAGED
+	[3] WAPI_MODE_MASTER
+	[4] WAPI_MODE_REPEAT
+	[5] WAPI_MODE_SECOND
+	[6] WAPI_MODE_MONITOR
+	[7] WAPI_MODE_MESH
+
+Bitrate Flags:
+	[0] WAPI_BITRATE_AUTO
+	[1] WAPI_BITRATE_FIXED
+
+TX power Flags:
+	[0] WAPI_TXPOWER_DBM
+	[1] WAPI_TXPOWER_MWATT
+	[2] WAPI_TXPOWER_RELATIVE
+
+pta prio Flags:
+	[0] WAPI_PTA_PRIORITY_COEX_MAXIMIZED
+	[1] WAPI_PTA_PRIORITY_COEX_HIGH
+	[2] WAPI_PTA_PRIORITY_BALANCED
+	[3] WAPI_PTA_PRIORITY_WLAN_HIGHD
+	[4] WAPI_PTA_PRIORITY_WLAN_MAXIMIZED
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76860     267192     113304     189800    160      9 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP help-5 used=76860 blocks=160 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=2414 replay=2414 ack=3183 drop=0 pending=0x0 sreplay=2
+MONIRQ: cpu=1 defer=10121 replay=10121 ack=12800 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=6 fail=0 destroyed=5 live=1 livemax=2 pages=755 pgt=20
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76860     267192     113304     189800    160      9 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP radio-up used=76860 blocks=160 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=2869 replay=2869 ack=3699 drop=0 pending=0x0 sreplay=2
+MONIRQ: cpu=1 defer=10761 replay=10761 ack=13440 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=6 fail=0 destroyed=5 live=1 livemax=2 pages=755 pgt=20
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi show wlan0 ---
+wapi show wlan0
+wlan0 Configuration:
+       IP: 10.0.0.2
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_AUTO
+[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35813
+[CPU0] wapi_get_country: ioctl(SIOCGIWSENS): Not a typewriter
+[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35815
+[CPU0] wapi_get_pta_prio: ioctl(SIOCGIWPTAPRIO): Not a typewriter
+  Channel: 1
+Frequency: 2412
+    ESSID: 
+     Flag: WAPI_ESSID_OFF
+     Mode: WAPI_MODE_MANAGED
+       AP: ff:ff:ff:ff:ff:ff
+  BitRate: 0
+     Flag: WAPI_BITRATE_AUTO
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -128
+nsh> [K
+nsh> [K
+SHOW_OPTIONAL_IOCTL_ERRORS=2
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76892     267160     113304     181608    161     11 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP show-1 used=76892 blocks=161 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=3341 replay=3341 ack=4242 drop=0 pending=0x0 sreplay=2
+MONIRQ: cpu=1 defer=12719 replay=12719 ack=15398 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=7 fail=0 destroyed=6 live=1 livemax=2 pages=906 pgt=24
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi show wlan0 ---
+wapi show wlan0
+wlan0 Configuration:
+       IP: 10.0.0.2
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_AUTO
+[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35813
+[CPU0] wapi_get_country: ioctl(SIOCGIWSENS): Not a typewriter
+[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35815
+[CPU0] wapi_get_pta_prio: ioctl(SIOCGIWPTAPRIO): Not a typewriter
+  Channel: 1
+Frequency: 2412
+    ESSID: 
+     Flag: WAPI_ESSID_OFF
+     Mode: WAPI_MODE_MANAGED
+       AP: ff:ff:ff:ff:ff:ff
+  BitRate: 0
+     Flag: WAPI_BITRATE_AUTO
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -128
+nsh> [K
+nsh> [K
+SHOW_OPTIONAL_IOCTL_ERRORS=2
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76892     267160     113304     197992    161     11 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP show-2 used=76892 blocks=161 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=4596 replay=4596 ack=5569 drop=0 pending=0x0 sreplay=3
+MONIRQ: cpu=1 defer=13892 replay=13892 ack=16571 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=8 fail=0 destroyed=7 live=1 livemax=2 pages=1057 pgt=28
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi show wlan0 ---
+wapi show wlan0
+wlan0 Configuration:
+       IP: 10.0.0.2
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_AUTO
+[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35813
+[CPU0] wapi_get_country: ioctl(SIOCGIWSENS): Not a typewriter
+[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35815
+[CPU0] wapi_get_pta_prio: ioctl(SIOCGIWPTAPRIO): Not a typewriter
+  Channel: 1
+Frequency: 2412
+    ESSID: 
+     Flag: WAPI_ESSID_OFF
+     Mode: WAPI_MODE_MANAGED
+       AP: ff:ff:ff:ff:ff:ff
+  BitRate: 0
+     Flag: WAPI_BITRATE_AUTO
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -128
+nsh> [K
+nsh> [K
+SHOW_OPTIONAL_IOCTL_ERRORS=2
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76892     267160     113336     189800    161     11 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP show-3 used=76892 blocks=161 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=5068 replay=5068 ack=6112 drop=0 pending=0x0 sreplay=3
+MONIRQ: cpu=1 defer=15850 replay=15850 ack=18529 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=9 fail=0 destroyed=8 live=1 livemax=2 pages=1208 pgt=32
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi show wlan0 ---
+wapi show wlan0
+wlan0 Configuration:
+       IP: 10.0.0.2
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_AUTO
+[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35813
+[CPU0] wapi_get_country: ioctl(SIOCGIWSENS): Not a typewriter
+[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35815
+[CPU0] wapi_get_pta_prio: ioctl(SIOCGIWPTAPRIO): Not a typewriter
+  Channel: 1
+Frequency: 2412
+    ESSID: 
+     Flag: WAPI_ESSID_OFF
+     Mode: WAPI_MODE_MANAGED
+       AP: ff:ff:ff:ff:ff:ff
+  BitRate: 0
+     Flag: WAPI_BITRATE_AUTO
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -128
+nsh> [K
+nsh> [K
+SHOW_OPTIONAL_IOCTL_ERRORS=2
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76892     267160     113336     181608    161     11 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP show-4 used=76892 blocks=161 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=5540 replay=5540 ack=6655 drop=0 pending=0x0 sreplay=3
+MONIRQ: cpu=1 defer=17808 replay=17808 ack=20487 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=10 fail=0 destroyed=9 live=1 livemax=2 pages=1359 pgt=36
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi show wlan0 ---
+wapi show wlan0
+wlan0 Configuration:
+       IP: 10.0.0.2
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_AUTO
+[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35813
+[CPU0] wapi_get_country: ioctl(SIOCGIWSENS): Not a typewriter
+[CPU0] wlan_ioctl: ERROR: Unrecognized IOCTL command: 35815
+[CPU0] wapi_get_pta_prio: ioctl(SIOCGIWPTAPRIO): Not a typewriter
+  Channel: 1
+Frequency: 2412
+    ESSID: 
+     Flag: WAPI_ESSID_OFF
+     Mode: WAPI_MODE_MANAGED
+       AP: ff:ff:ff:ff:ff:ff
+  BitRate: 0
+     Flag: WAPI_BITRATE_AUTO
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -128
+nsh> [K
+nsh> [K
+SHOW_OPTIONAL_IOCTL_ERRORS=2
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      76892     267160     113336     197992    161     11 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP show-5 used=76892 blocks=161 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=6013 replay=6013 ack=7199 drop=0 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=19766 replay=19766 ack=22445 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=11 fail=0 destroyed=10 live=1 livemax=2 pages=1510 pgt=40
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      79292     264760     113336     189800    171      9 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP scan-1 used=79292 blocks=171 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=6735 replay=6735 ack=7994 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=21725 replay=21725 ack=24404 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=12 fail=0 destroyed=11 live=1 livemax=2 pages=1661 pgt=44
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      81932     262120     115736     181608    182     14 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP scan-2 used=81932 blocks=182 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=7515 replay=7515 ack=8782 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=23684 replay=23684 ack=26364 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=13 fail=0 destroyed=12 live=1 livemax=2 pages=1812 pgt=48
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      84580     259472     118384     197992    193     14 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP scan-3 used=84580 blocks=193 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=8299 replay=8299 ack=9570 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=25644 replay=25644 ack=28324 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=14 fail=0 destroyed=13 live=1 livemax=2 pages=1963 pgt=52
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      84580     259472     121040     181608    193     17 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP scan-4 used=84580 blocks=193 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=9083 replay=9083 ack=10357 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=27603 replay=27603 ack=30283 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=15 fail=0 destroyed=14 live=1 livemax=2 pages=2114 pgt=56
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      84580     259472     121040     173416    193     15 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP scan-5 used=84580 blocks=193 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=9872 replay=9872 ack=11147 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=29562 replay=29562 ack=32242 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=16 fail=0 destroyed=15 live=1 livemax=2 pages=2265 pgt=60
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      84580     259472     121040     189800    193     16 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP pscan-1 used=84580 blocks=193 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=10946 replay=10946 ack=12222 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=31520 replay=31520 ack=34200 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=17 fail=0 destroyed=16 live=1 livemax=2 pages=2416 pgt=64
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      84580     259472     121040     181608    193     15 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP pscan-2 used=84580 blocks=193 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=12003 replay=12003 ack=13281 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=33479 replay=33479 ack=36159 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=18 fail=0 destroyed=17 live=1 livemax=2 pages=2567 pgt=68
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      84580     259472     121040     173416    193     16 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP pscan-3 used=84580 blocks=193 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=13078 replay=13078 ack=14357 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=35437 replay=35437 ack=38117 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=19 fail=0 destroyed=18 live=1 livemax=2 pages=2718 pgt=72
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      84580     259472     121040     189800    193     15 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP pscan-4 used=84580 blocks=193 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=14136 replay=14136 ack=15416 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=37397 replay=37397 ack=40077 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=20 fail=0 destroyed=19 live=1 livemax=2 pages=2869 pgt=76
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      84580     259472     121040     181608    193     16 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP pscan-5 used=84580 blocks=193 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=15209 replay=15209 ack=16491 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=39356 replay=39356 ack=42036 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=21 fail=0 destroyed=20 live=1 livemax=2 pages=3020 pgt=80
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: sleep 3 ---
+sleep 3
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     344052      74996     269056     121040     181608    155     13 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+HEAP radio-down used=74996 blocks=155 unnamed=0
+--- CMD: cat /dev/s31stat ---
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=16735 replay=16735 ack=18020 drop=1 pending=0x0 sreplay=4
+MONIRQ: cpu=1 defer=39999 replay=39999 ack=42679 drop=0 pending=0x0 sreplay=1
+ADDRENV: created=21 fail=0 destroyed=20 live=1 livemax=2 pages=3020 pgt=80
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f00f680 0x2f00f6cc
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+SCAN_HEAP_PROBE=COMPLETE; inspect trend, not a leak-free claim

@@ -1,0 +1,43 @@
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:xts-flat -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- Processing includes: /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat/defconfig → /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.defconfig.processed
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/bin_host
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat --target resetconfig
+[1/1] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.defconfig.processed /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config && /usr/bin/cmake -E env KCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config EXTERNALDIR=dummy APPSDIR=/home/regex/work/esp32s31-openvela/openvela-dev/apps DRIVERS_PLATFORM_DIR=dummy APPSBINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/apps BINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat olddefconfig && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config.orig && /usr/bin/cmake -E remove -f /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/include/nuttx/config.h && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/CMakeLists.txt
+Loaded configuration '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config'
+Configuration saved to '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config'
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:xts-flat -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- Processing includes: /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat/defconfig → /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.defconfig.processed
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/bin_host
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH
++ rg -q '^CONFIG_ARCH_CHIP_ESP32S31=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH
++ rg -q '^CONFIG_ESPRESSIF_ESP32S31=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH
++ rg -q '^CONFIG_BUILD_FLAT=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH
++ rg -q '^CONFIG_TESTING_MM=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH
++ rg -q '^CONFIG_TESTING_CMOCKA=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH
++ rg -q '^CONFIG_TESTING_DRIVER_TEST=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config
++ for task_option in ARCH_CHIP_ESP32S31 ESPRESSIF_ESP32S31 BUILD_FLAT TESTING_MM TESTING_CMOCKA TESTING_DRIVER_TEST BCH
++ rg -q '^CONFIG_BCH=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config
++ rg -q '^# CONFIG_BUILD_KERNEL is not set$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat/.config
++ restore_config
++ '[' -f /tmp/s31-flat-source-config.SGqT93/.config ']'
++ mv /tmp/s31-flat-source-config.SGqT93/.config .config
++ '[' -f /tmp/s31-flat-source-config.SGqT93/config.h ']'
++ mv /tmp/s31-flat-source-config.SGqT93/config.h include/nuttx/config.h
++ rmdir /tmp/s31-flat-source-config.SGqT93

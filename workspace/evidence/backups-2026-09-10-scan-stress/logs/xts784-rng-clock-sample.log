@@ -1,0 +1,40 @@
+--- CMD: uname -a ---
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 15 2026 11:36:39 risc-v esp32s31-core-function-board
+nsh> [K
+nsh> [K
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=64 data=0 fcs=4 abort=7 full=0 fifo=0 other=1
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=0 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls /tmp/xts784-rng-clock-sample.bin ---
+ls /tmp/xts784-rng-clock-sample.bin
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+Traceback (most recent call last):
+  File "<stdin>", line 11, in <module>
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_production_smoke.py", line 43, in command
+    output = transport.run_command(port, text, timeout=15.0)
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_nuttx_smoke.py", line 202, in run_command
+    check_command_length(command)
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_nuttx_smoke.py", line 180, in check_command_length
+    raise ValueError(
+ValueError: NSH command is 69 characters, the console truncates past 63: dd if=/dev/urandom of=/tmp/xts784-rng-clock-sample.bin bs=128 count=1

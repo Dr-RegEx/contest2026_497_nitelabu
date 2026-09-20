@@ -1,0 +1,45 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x5f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x1032c
+load:0x2f010380,len:0x36d8
+entry 0x2f00fec4
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x1032c  (66348)
+dram: lma 0x00012374 vma 0x2f010380 len 0x36d8   (14040)
+padd: lma 0x00015a78 vma 0x00000000 len 0xa5a0   (42400)
+imap: lma 0x00020020 vma 0x400c0020 len 0x199c4  (104900)
+padd: lma 0x000399ec vma 0x00000000 len 0x670c   (26380)
+imap: lma 0x00040100 vma 0x40000100 len 0xb2b28  (731944)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+DEMO_BOOT=PASS seconds=0.644
+--- CMD: ls /system/bin/s31demo ---
+ls /system/bin/s31demo
+ /system/bin/s31demo
+nsh> [K
+nsh> [K
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+Cleanup: 
+S31_DEMO_START=FAIL: wapi scan wlan0
+[CPU0] esp_wifi_start_scan: S31 scan request: type=0 channel=0 country_ret=0 first=1 count=11
+

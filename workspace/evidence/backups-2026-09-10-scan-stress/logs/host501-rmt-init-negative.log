@@ -1,0 +1,16 @@
+/tmp/esp-rmt-init-tt3gpv5l/test.c:38:6: error: return type defaults to ‘int’ [-Werror=implicit-int]
+   38 |     *esp_rmtinitialize(struct rmt_channel_config_s config)
+      |      ^~~~~~~~~~~~~~~~~
+/tmp/esp-rmt-init-tt3gpv5l/test.c: In function ‘esp_rmtinitialize’:
+/tmp/esp-rmt-init-tt3gpv5l/test.c:121:10: error: returning ‘struct rmt_dev_s *’ from a function with incompatible return type ‘int *’ [-Werror=incompatible-pointer-types]
+  121 |   return (struct rmt_dev_s *)priv;
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_rmt_initialize.py", line 96, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_rmt_initialize.py", line 89, in main
+    subprocess.run(['cc', '-std=c11', '-Wall', '-Wextra', '-Werror',
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '-fsanitize=undefined', '-fno-sanitize-recover=all', '/tmp/esp-rmt-init-tt3gpv5l/test.c', '-o', '/tmp/esp-rmt-init-tt3gpv5l/test']' returned non-zero exit status 1.

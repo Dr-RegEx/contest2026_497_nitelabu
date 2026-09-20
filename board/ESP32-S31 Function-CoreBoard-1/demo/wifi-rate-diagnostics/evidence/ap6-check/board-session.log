@@ -1,0 +1,309 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x58 (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x1c150
+entry 0x2f017f84
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x1c150  (115024)
+padd: lma 0x0001e1c8 vma 0x00000000 len 0x1e50   (7760)
+imap: lma 0x00020020 vma 0x40140020 len 0x25eac  (155308)
+padd: lma 0x00045ed4 vma 0x00000000 len 0xa224   (41508)
+imap: lma 0x00050100 vma 0x40000100 len 0x13a44c (1287244)
+total segments stored 6
+ABC[CPU0] S31 hardware crypto: SHA1/SHA256/SHA512 PIO
+[CPU0] S31 hardware crypto: HMAC-SHA1/256 via SHA PIO
+[CPU0] S31 hardware crypto: ECDSA P256 verify only
+[CPU0] S31 hardware crypto: AES-CBC 128/256-bit PIO
+[CPU0] S31 hardware crypto: AES-CTR/XTS full-block PIO
+[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [Kuname -a
+NuttX  0.0.0 428252a08db-dirty Sep 20 2026 02:48:13 risc-v esp32s31-core-function-board
+nsh> [Kifup wlan0
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+ifup wlan0...OK
+nsh> [Kwapi mode wlan0 2
+nsh> [Kwapi ap wlan0 7c:39:85:2a:50:04
+[CPU0] esp_wifi_sta_connect: Failed to connect ret=12298
+[CPU0] esp_wifi_to_errno: ERROR: UNKNOWN ERROR (code=0x300a errno=-1)
+[CPU0] wlan_ioctl: ERROR: Failed to connect
+[CPU0] wapi_set_ap: ioctl(SIOCSIWAP): Operation not permitted
+[CPU0] main: ERROR: Process command (ap) failed.
+nsh> [Kwapi psk wlan0 <REDACTED> 3
+nsh> [Kwapi essid wlan0 "[REDACTED]" 1
+[CPU0] esp_event_post_wrapper: S31 associated: channel=1 auth=3 bssid=7c:39:85:2a:50:04
+[CPU1] esp_evt_work_cb: S31 driver STA MAC: 30:ed:a0:f3:f7:b0
+[CPU1] esp_evt_work_cb: S31 driver power save: ret=0 mode=0
+[CPU0] esp_evt_work_cb: S31 driver protocol: ret=0 bitmap=7
+[CPU0] esp_evt_work_cb: S31 negotiated PHY: ret=0 mode=4
+[CPU0] esp_evt_work_cb: S31 HE SU beamformee disabled: ret=0 value=0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks connected: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters connected: ret=0 mpdu=1159 data=10 fcs=126 abort=238 full=0 fifo=0 other=136
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=11 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=2 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+nsh> [Krenew wlan0
+nsh> [Kwapi show wlan0
+wlan0 Configuration:
+       IP: 192.168.1.60
+  NetMask: 255.255.255.0
+Frequency: 2412
+     Flag: WAPI_FREQ_FIXED
+  Channel: 1
+Frequency: 2412
+    ESSID: [REDACTED]
+     Flag: WAPI_ESSID_ON
+     Mode: WAPI_MODE_MANAGED
+       AP: 7c:39:85:2a:50:04
+  BitRate: 72
+     Flag: WAPI_BITRATE_FIXED
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -64
+  Country: 01
+ PTA prio: not supported
+nsh> [Kwapi scan wlan0
+[CPU1] esp_wifi_start_scan: S31 scan request: type=0 channel=0 country_ret=0 first=1 count=11
+[CPU0] esp_event_post_wrapper: S31 scan event: status=0 aps=20 id=128
+[CPU0] esp_event_post_wrapper: S31 Wi-Fi ISR calls: cpu0=412 cpu1=0
+[CPU0] esp_wifi_scan_event_parse: S31 scan count: ret=0 aps=20
+bssid / frequency / signal level / encode / ssid
+08:f4:58:ab:c0:18	2437	-91	0800	HDMRC
+64:75:20:ad:ed:3e	2447	-90	0800	CU_6hQR
+02:92:b9:f1:d1:81	2437	-90	0800	JCXF-1095_Wi-Fi5
+02:92:b9:f1:d1:73	2437	-89	0800	JCXF-1095
+a0:99:21:11:18:67	2412	-88	0800	midea_e2_2051
+c2:b9:cc:e7:e8:dd	2412	-88	0800	Jackie_GU
+c2:b9:cc:e7:e8:db	2412	-88	0800	HomeStation
+b8:f8:83:2d:54:eb	2412	-87	0800	GS5.0
+60:10:9e:e0:a1:b0	2452	-86	0800	CU_1409
+a4:ba:70:be:df:fb	2412	-83	0800	20371506
+24:69:68:38:77:70	2412	-83	0800	wlj
+c2:a4:76:28:e1:eb	2437	-81	0800	@Ruijie-s9599_iot
+50:78:b3:a3:c4:f4	2412	-80	0800	CU-C4F4
+60:ce:41:ab:02:d0	2462	-79	0800	[REDACTED]
+94:bf:80:7e:6f:c9	2447	-79	0800	CU_rfNY
+a4:ba:70:3a:61:31	2412	-77	0800	CU-C4F4_plus
+60:ce:41:ab:02:d2	2462	-74	0800	STB_T4Zp
+60:ce:41:46:0e:ec	2437	-73	0800	[REDACTED]
+bc:54:fc:36:e1:c2	2462	-72	0800	MERCURY_E1C2
+7c:39:85:2a:50:04	2412	-65	0800	[REDACTED]
+nsh> [Kcat /dev/s31stat
+MONIRQ: cpu=0 defer=12897 replay=12896 ack=16808 drop=0 pending=0x4 sreplay=6
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=1214 max=270940958 samples=423 over32=37 over100=22 over1000=4 sum=296711598 direct=2 directmax=16392 deferred=421 deferredmax=270940958
+MONIRQ: cpu=1 defer=13901 replay=13901 ack=14218 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=8 fail=0 destroyed=7 live=1 livemax=2 pages=1064 pgt=28
+WIFIRX: callbacks=19
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=398 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=4 fail=0 invalid=0 nonarp=4
+TXSHAPE: snap=4 arphdr=0 arpfail=0 offset=34 len=328
+ARPREQ: seen=0 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+ARPDIAG: dir=1 frames=8 bad=0 req=8 reply=0 peer=0 peerreply=0 lastlen=60 srcdiff=0 ok=8 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=2 object=0x2f018bd4
+LPTRACE: 0x2f00c73e
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000013 00000000 00000000 89c             
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000002 00000004 00000000 00000000 26d              
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0002  0000  0002  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0002  0000  0002  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [Kiperf2 -s -u -p 5010 -i 1 &
+iperf2 [15:101]
+nsh> [K------------------------------------------------------------
+Server listening on UDP port 5010
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 5010 connected with 192.168.1.29 port 57737
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-1.00 sec   579 KBytes  4.74 Mbits/sec   4.524 ms 0/403 (0%)
+[  1] 0.00-1.00 sec  1 datagrams received out-of-order
+[  1] 1.00-2.00 sec   657 KBytes  5.39 Mbits/sec   1.006 ms 21/479 (4.4%)
+[  1] 1.00-2.00 sec  2 datagrams received out-of-order
+[  1] 2.00-3.00 sec   647 KBytes  5.30 Mbits/sec   1.458 ms 0/451 (0%)
+[  1] 3.00-4.00 sec   627 KBytes  5.14 Mbits/sec   2.663 ms 3/440 (0.68%)
+[  1] 4.00-5.00 sec   633 KBytes  5.19 Mbits/sec   1.836 ms 8/449 (1.8%)
+[  1] 4.00-5.00 sec  1 datagrams received out-of-order
+[  1] 5.00-6.00 sec   647 KBytes  5.30 Mbits/sec   1.011 ms 1/452 (0.22%)
+[  1] 5.00-6.00 sec  2 datagrams received out-of-order
+[  1] 6.00-7.00 sec   636 KBytes  5.21 Mbits/sec   1.543 ms 2/445 (0.45%)
+[  1] 7.00-8.00 sec   639 KBytes  5.23 Mbits/sec   1.383 ms 2/447 (0.45%)
+[  1] 8.00-9.00 sec   627 KBytes  5.14 Mbits/sec   1.747 ms 4/441 (0.91%)
+[  1] 9.00-10.00 sec   637 KBytes  5.22 Mbits/sec   2.038 ms 1/445 (0.22%)
+[  1] 10.00-11.00 sec   630 KBytes  5.16 Mbits/sec   1.131 ms 6/445 (1.3%)
+[  1] 11.00-12.00 sec   640 KBytes  5.24 Mbits/sec   2.168 ms 0/446 (0%)
+[  1] 11.00-12.00 sec  2 datagrams received out-of-order
+[  1] 12.00-13.00 sec   622 KBytes  5.09 Mbits/sec   2.145 ms 12/445 (2.7%)
+[  1] 12.00-13.00 sec  1 datagrams received out-of-order
+[  1] 13.00-14.00 sec   649 KBytes  5.32 Mbits/sec   2.050 ms 0/452 (0%)
+[  1] 13.00-14.00 sec  2 datagrams received out-of-order
+[  1] 14.00-15.00 sec   639 KBytes  5.23 Mbits/sec   2.301 ms 1/446 (0.22%)
+[  1] 14.00-15.00 sec  2 datagrams received out-of-order
+[  1] 15.00-16.00 sec   612 KBytes  5.01 Mbits/sec   1.750 ms 17/443 (3.8%)
+[  1] 15.00-16.00 sec  1 datagrams received out-of-order
+[  1] 16.00-17.00 sec   629 KBytes  5.15 Mbits/sec   1.926 ms 7/445 (1.6%)
+[  1] 16.00-17.00 sec  2 datagrams received out-of-order
+[  1] 17.00-18.00 sec   633 KBytes  5.19 Mbits/sec   1.404 ms 5/446 (1.1%)
+[  1] 17.00-18.00 sec  2 datagrams received out-of-order
+[  1] 18.00-19.00 sec   609 KBytes  4.99 Mbits/sec   1.902 ms 21/445 (4.7%)
+[  1] 18.00-19.00 sec  1 datagrams received out-of-order
+[  1] 19.00-20.00 sec   646 KBytes  5.29 Mbits/sec   1.517 ms 1/451 (0.22%)
+[  1] 20.00-21.00 sec   632 KBytes  5.17 Mbits/sec   2.439 ms 6/446 (1.3%)
+[  1] 20.00-21.00 sec  1 datagrams received out-of-order
+[  1] 21.00-22.00 sec   624 KBytes  5.12 Mbits/sec   1.521 ms 5/440 (1.1%)
+[  1] 21.00-22.00 sec  2 datagrams received out-of-order
+[  1] 22.00-23.00 sec   649 KBytes  5.32 Mbits/sec   1.526 ms 0/452 (0%)
+[  1] 22.00-23.00 sec  3 datagrams received out-of-order
+[  1] 23.00-24.00 sec   614 KBytes  5.03 Mbits/sec   2.276 ms 6/434 (1.4%)
+[  1] 24.00-25.00 sec   652 KBytes  5.34 Mbits/sec   1.048 ms 0/454 (0%)
+[  1] 24.00-25.00 sec  1 datagrams received out-of-order
+[  1] 25.00-26.00 sec   640 KBytes  5.24 Mbits/sec   1.431 ms 0/446 (0%)
+[  1] 25.00-26.00 sec  2 datagrams received out-of-order
+[  1] 26.00-27.00 sec   636 KBytes  5.21 Mbits/sec   2.052 ms 2/445 (0.45%)
+[  1] 26.00-27.00 sec  1 datagrams received out-of-order
+[  1] 27.00-28.00 sec   623 KBytes  5.10 Mbits/sec   3.023 ms 12/446 (2.7%)
+[  1] 27.00-28.00 sec  2 datagrams received out-of-order
+[  1] 28.00-29.00 sec   629 KBytes  5.15 Mbits/sec   1.977 ms 5/443 (1.1%)
+[  1] 28.00-29.00 sec  5 datagrams received out-of-order
+[  1] 29.00-30.00 sec   620 KBytes  5.08 Mbits/sec   2.367 ms 16/448 (3.6%)
+[  1] 29.00-30.00 sec  1 datagrams received out-of-order
+[  1] 0.00-30.00 sec  18.5 MBytes  5.18 Mbits/sec   2.512 ms 164/13372 (1.2%)
+[  1] 0.00-30.00 sec  37 datagrams received out-of-order
+kill -15 15
+nsh> [Krecvfrom failed: Interrupted system call
+cat /dev/s31stat
+MONIRQ: cpu=0 defer=57130 replay=57130 ack=61420 drop=0 pending=0x0 sreplay=10
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=1220 max=270940958 samples=10358 over32=5620 over100=4560 over1000=935 sum=1469293880 direct=108 directmax=30578 deferred=10250 deferredmax=270940958
+MONIRQ: cpu=1 defer=23625 replay=23625 ack=23944 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=9 fail=0 destroyed=8 live=1 livemax=2 pages=1252 pgt=32
+WIFIRX: callbacks=13461
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=9605 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=11 fail=0 invalid=0 nonarp=11
+TXSHAPE: snap=11 arphdr=4 arpfail=0 offset=34 len=180
+ARPREQ: seen=0 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=4 bad=0 req=0 reply=4 peer=1 peerreply=1 lastlen=60 srcdiff=0 ok=4 drop=0
+ARPDIAG: dir=1 frames=25 bad=0 req=25 reply=0 peer=1 peerreply=0 lastlen=44 srcdiff=0 ok=25 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=2 object=0x2f018bd4
+LPTRACE: 0x2f00c73e
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00003495 00000000 00000000 134c736         
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000009 0000000b 00000000 00000000 483              
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     3451  0000  344f  0002
+Dropped      0000  0000  0148  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0005  0000  0003  0002
+  Rexmit     ----  0000  ----  ----
+nsh> [Kifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=51337 data=3563 fcs=11782 abort=14104 full=0 fifo=0 other=8957
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=1023 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=352 bitmap=352 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=96 ht=13732 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=8 complete=8 succ=6 ack=1 ba=5 retry=2 nomem=0 timeout=0
+[CPU0] esp_event_post_wrapper: Station disconnected: reason=8 rssi=-61
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+[CPU0] esp_evt_work_cb: Failed to connect AP error=12290
+ifdown wlan0...OK
+nsh> [Kcat /dev/s31stat
+MONIRQ: cpu=0 defer=65058 replay=65058 ack=69350 drop=0 pending=0x0 sreplay=10
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=0 input=1 last=1207 max=270940958 samples=10510 over32=5627 over100=4566 over1000=937 sum=1487272658 direct=108 directmax=30578 deferred=10402 deferredmax=270940958
+MONIRQ: cpu=1 defer=24025 replay=24025 ack=24344 drop=0 pending=0x0 sreplay=1
+MONLAT: scope=monitor_to_wifi_cb units=cycles cpu=1 input=1 last=0 max=0 samples=0 over32=0 over100=0 over1000=0 sum=0 direct=0 directmax=0 deferred=0 deferredmax=0
+ADDRENV: created=9 fail=0 destroyed=8 live=1 livemax=2 pages=1252 pgt=32
+WIFIRX: callbacks=13471
+WIFIQ: lifetimes=1 untracked=0
+WIFIQ: slot=0 active=1 depth=200 size=8 try0=9754 fail0=0
+TCPSYNACK: seen=0 queued=0 nomem=0 error=0 badip=0 badtcp=0
+TXDONE: total=13 fail=0 invalid=0 nonarp=13
+TXSHAPE: snap=13 arphdr=4 arpfail=0 offset=34 len=108
+ARPREQ: seen=0 baddst=0 badsrc=0 badsha=0 badspa=0 badtha=0
+ARPDIAG: dir=0 frames=4 bad=0 req=0 reply=4 peer=1 peerreply=1 lastlen=60 srcdiff=0 ok=4 drop=0
+ARPDIAG: dir=1 frames=25 bad=0 req=25 reply=0 peer=1 peerreply=0 lastlen=44 srcdiff=0 ok=25 drop=0
+ARPDIAG: dir=2 frames=0 bad=0 req=0 reply=0 peer=0 peerreply=0 lastlen=0 srcdiff=0 ok=0 drop=0
+WAIT: pid=2 object=0x2f018bd4
+LPTRACE: 0x2f00c73e
+WAIT: pid=4 object=0x2f018c2c
+WAIT: pid=5 object=0x2f029194
+nsh> [Kifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at DOWN mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    0000349f 00000000 00000000 134cba2         
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    0000000b 0000000d 00000000 00000000 547              
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     3456  0000  3452  0004
+Dropped      0000  0000  0148  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0007  0000  0003  0004
+  Rexmit     ----  0000  ----  ----
+nsh> [K

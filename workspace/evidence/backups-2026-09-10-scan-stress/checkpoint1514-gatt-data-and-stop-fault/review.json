@@ -1,0 +1,11 @@
+{
+  "data_path": "PASS_DEVELOPMENT_ONLY",
+  "reads": [
+    "FF05=Hello VELA!",
+    "FF02=Hello VELA!"
+  ],
+  "write_bytes_hex": "5333312d474154542d31353130",
+  "automatic_result": "FAIL preserved: duplicate stop callback wait timed out; initial advertising stopped callback occurred upon connection",
+  "cleanup": "FAIL: gatts stop 3 caused mm_malloc_size.c:78 assertion",
+  "remaining": "Fix borrowed user_data free and retest cleanup; not full Bluetooth acceptance; sprint 70/88 unchanged"
+}

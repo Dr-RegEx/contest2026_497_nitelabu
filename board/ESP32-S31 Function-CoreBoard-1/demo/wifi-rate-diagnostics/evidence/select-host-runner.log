@@ -1,0 +1,93 @@
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 20 2026 00:20:45 risc-v esp32s31-core-function-board
+nsh> [K
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at DOWN mtu 1500
+	inet addr:0.0.0.0 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000000 00000000 00000000 0               
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000000 00000000 00000000 00000000 0                
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0000  0000  0000  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0000  0000  0000  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+iperf2 -v
+iperf version 2.1.8 (12 August 2022) pthreads
+nsh> [K
+renew wlan0
+nsh> [K
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000018 00000000 00000000 11e3            
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000002 00000004 00000000 00000000 26d              
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0009  0000  0007  0000
+Dropped      0002  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0002  0000  0002  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+ping -c 3 192.168.1.29
+PING 192.168.1.29 56 bytes of data
+[CPU1] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 0: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 1: 101
+No response from 192.168.1.29: icmp_seq=2 time=1000 ms
+3 packets transmitted, 0 received, 100% packet loss, time 3008 ms
+nsh> [K
+START 5.1.23-tx
+PROGRESS 5.1.23-tx 30s [  1] 21.00-22.00 sec   448 KBytes  3.67 Mbits/sec
+PROGRESS 5.1.23-tx 60s [  1] 48.00-49.00 sec   416 KBytes  3.41 Mbits/sec
+PROGRESS 5.1.23-tx 90s [  1] 76.00-77.00 sec   448 KBytes  3.67 Mbits/sec
+PROGRESS 5.1.23-tx 120s [  1] 103.00-104.00 sec   416 KBytes  3.41 Mbits/sec
+PROGRESS 5.1.23-tx 150s [  1] 130.00-131.00 sec   384 KBytes  3.15 Mbits/sec
+PROGRESS 5.1.23-tx 180s [  1] 158.00-159.00 sec   432 KBytes  3.54 Mbits/sec
+PROGRESS 5.1.23-tx 210s [  1] 185.00-186.00 sec   432 KBytes  3.54 Mbits/sec
+PROGRESS 5.1.23-tx 241s [  1] 213.00-214.00 sec   448 KBytes  3.67 Mbits/sec
+PROGRESS 5.1.23-tx 271s [  1] 240.00-241.00 sec   448 KBytes  3.67 Mbits/sec
+PROGRESS 5.1.23-tx 301s [  1] 267.00-268.00 sec   400 KBytes  3.28 Mbits/sec
+PROGRESS 5.1.23-tx 331s [  1] 294.00-295.00 sec   432 KBytes  3.54 Mbits/sec
+RESULT {"case": "5.1.23", "direction_from_board": "tx", "protocol": "TCP", "status": "MEASURED_REQUIRES_REVIEW", "start": "2026-09-20T02:37:41.096091+08:00", "requested_duration_seconds": 300, "board_summaries": ["[  1] 0.00-300.05 sec   121 MBytes  3.38 Mbits/sec"], "host_summaries": ["[  1] 0.00-300.05 sec   121 MBytes  3.38 Mbits/sec"], "both_duration_at_least_300": true, "end": "2026-09-20T02:42:51.618198+08:00", "log_sha256": {"5.1.23-tx-board.log": "4f01ae8c424162e8b90bb4c2ce1016369893fcfebf3f9b21f427a39eb31e1c70", "5.1.23-tx-host.log": "8d2411058a1fbe9230613e371fc98102a20a4d85a7d58b34e19e4897236ef86a"}}
+START 5.1.24-rx
+PROGRESS 5.1.24-rx 30s [  1] 26.00-27.00 sec  84.7 KBytes   694 Kbits/sec  18.930 ms 0/59 (0%)
+PROGRESS 5.1.24-rx 60s [  1] 53.00-54.00 sec   161 KBytes  1.32 Mbits/sec   8.452 ms 0/112 (0%)
+PROGRESS 5.1.24-rx 90s [  1] 80.00-81.00 sec  47.4 KBytes   388 Kbits/sec  29.361 ms 0/33 (0%)
+PROGRESS 5.1.24-rx 120s [  1] 108.00-109.00 sec  71.8 KBytes   588 Kbits/sec  22.271 ms 0/50 (0%)
+PROGRESS 5.1.24-rx 150s [  1] 135.00-136.00 sec  40.2 KBytes   329 Kbits/sec  33.946 ms 2204/2232 (99%)
+PROGRESS 5.1.24-rx 180s [  1] 162.00-163.00 sec  87.6 KBytes   717 Kbits/sec  18.578 ms 3343/3404 (98%)
+PROGRESS 5.1.24-rx 211s [  1] 190.00-191.00 sec   158 KBytes  1.29 Mbits/sec  13.876 ms 2540/2650 (96%)
+PROGRESS 5.1.24-rx 241s [  1] 217.00-218.00 sec   152 KBytes  1.25 Mbits/sec  17.080 ms 4312/4418 (98%)
+PROGRESS 5.1.24-rx 271s [  1] 245.00-246.00 sec  96.2 KBytes   788 Kbits/sec  15.240 ms 1990/2057 (97%)
+PROGRESS 5.1.24-rx 301s [  1] 272.00-273.00 sec  56.0 KBytes   459 Kbits/sec  25.977 ms 567/606 (94%)
+PROGRESS 5.1.24-rx 331s [  1] 299.00-300.00 sec   112 KBytes   917 Kbits/sec  19.135 ms 3029/3107 (97%)
+RESULT {"case": "5.1.24", "direction_from_board": "rx", "protocol": "UDP", "status": "MEASURED_REQUIRES_REVIEW", "start": "2026-09-20T02:42:51.619368+08:00", "requested_duration_seconds": 300, "host_exit": 0, "board_summaries": ["[  1] 0.00-307.01 sec  33.3 MBytes   910 Kbits/sec   8.382 ms 613255/637007 (96%)", "[  1] 0.00-307.01 sec  253 datagrams received out-of-order"], "host_summaries": ["[  1] 0.00-300.02 sec  1.37 GBytes  39.2 Mbits/sec"], "both_duration_at_least_300": true, "end": "2026-09-20T02:47:58.505743+08:00", "log_sha256": {"5.1.24-rx-board.log": "97fe8c8158f2d9e7b732e8bd0316b12e98dfb0c3d8262c8ca30a4df80174bca8", "5.1.24-rx-host.log": "321cb3d37e85cd6afd8b14d709326c1d0cfbf2e9be8888ecdbd75cb82bf80c9a"}}
+START 5.1.22-rx
+RESULT {"case": "5.1.22", "direction_from_board": "rx", "protocol": "TCP", "status": "INCOMPLETE", "start": "2026-09-20T02:47:58.506560+08:00", "requested_duration_seconds": 300, "host_exit": 0, "board_summaries": [], "host_summaries": [], "both_duration_at_least_300": false, "end": "2026-09-20T02:48:27.305330+08:00", "log_sha256": {"5.1.22-rx-board.log": "535b3dd091d2740378e6d761afd32ea6d5458b1f326e2f0fc75fd7322c92ad7a", "5.1.22-rx-host.log": "40441da5a87179719e437d3a643b4b190bebd9446cfac6b818f55f3a3355991c"}}

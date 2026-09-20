@@ -1,0 +1,21 @@
+XTS_COMMAND=rm /data/audio_file.aac
+--- CMD: rm /data/audio_file.aac ---
+rm /data/audio_file.aac
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls /data
+--- CMD: ls /data ---
+ls /data
+/data:
+ audio_file.opus
+ media/
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   16840896    1753856   15087040    3936288   13069312    228     27 Umem
+nsh> [K
+nsh> [K
+Removed only archived AAC tmpfs copy; original host attachment unchanged

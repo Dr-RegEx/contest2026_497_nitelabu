@@ -1,0 +1,114 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x79 (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2f000000,len:0xb998
+entry 0x2f008ab4
+*** Booting NuttX ***
+dram: lma 0x00002020 vma 0x2f000000 len 0xb998   (47512)
+padd: lma 0x0000d9e8 vma 0x00000000 len 0x2630   (9776)
+imap: lma 0x00010020 vma 0x40030020 len 0x86e4   (34532)
+padd: lma 0x0001870c vma 0x00000000 len 0x79ec   (31212)
+imap: lma 0x00020100 vma 0x40000100 len 0x2ac18  (175128)
+total segments stored 5
+ABCS31 LCD: NuttX framebuffer 800x480 RGB565 pclk=18000000, two DMA scan buffers, raw link-switch polling
+OPENVELA_FB_READY /dev/fb0 RGB565 800x480
+S31 DVP controller prepared: 640x480 RGB565, 614400 bytes
+S31 camera SCCB sensor ID: 0x3660
+
+NuttShell (NSH)
+nsh> [Kls /dev
+/dev:
+ console
+ fb0
+ i2c0
+ null
+ random
+ ttyS0
+ video0
+ zero
+nsh> [Ks31preview
+s31preview: video=/dev/video0 640x480 RGB565 stride=1280 bytes=6S31 DVP start: enter controller
+CAM_STAGE get-buffer
+CAM_STAGE cache
+CAM_STAGE reset
+CAM_STAGE dma-start
+CAM_IRQ enter
+CAM_IRQ size=11
+CAM_STAGE get-buffer
+CAM_STAGE cache
+CAM_STAGE reset
+CAM_STAGE dma-start
+CAM_STAGE started
+CAM_IRQ restarted
+CAM_STAGE started
+S31 DVP start: controller returned 0
+14400 buffers=2 fb=/dev/fb0 800x480 stride=1600 x=80 frames=60 timeout_ms=3000
+S31 LCD: UPDATE_STAGE=copy
+S31 LCD: UPDATE_STAGE=cache-writeback
+S31 LCD: UPDATE_STAGE=link-request channel=0
+S31 LCD: UPDATE_STAGE=link-wait
+S31 LCD: UPDATE_STAGE=complete raw=00000403
+s31preview: frame=1 buffer=0 capture_time=18.190000 elapsed_ms=300 bytesused=614400 fnv1a32=31cef4f6 update=OK
+s31preview: frame=2 buffer=1 capture_time=18.640000 elapsed_ms=750 bytesused=614400 fnv1a32=6200ed85 update=OK
+s31preview: frame=3 buffer=0 capture_time=19.090000 elapsed_ms=1200 bytesused=614400 fnv1a32=c556179a update=OK
+s31preview: frame=4 buffer=1 capture_time=19.540000 elapsed_ms=1650 bytesused=614400 fnv1a32=34c7be65 update=OK
+s31preview: frame=5 buffer=0 capture_time=19.990000 elapsed_ms=2120 bytesused=614400 fnv1a32=7bcc92d3 update=OK
+s31preview: frame=6 buffer=1 capture_time=20.440000 elapsed_ms=2570 bytesused=614400 fnv1a32=6841c548 update=OK
+s31preview: frame=7 buffer=0 capture_time=20.890000 elapsed_ms=3020 bytesused=614400 fnv1a32=0093a1bd update=OK
+s31preview: frame=8 buffer=1 capture_time=21.340000 elapsed_ms=3470 bytesused=614400 fnv1a32=f768f794 update=OK
+s31preview: frame=9 buffer=0 capture_time=21.790000 elapsed_ms=3920 bytesused=614400 fnv1a32=3f325468 update=OK
+s31preview: frame=10 buffer=1 capture_time=22.230000 elapsed_ms=4370 bytesused=614400 fnv1a32=94387aa5 update=OK
+s31preview: frame=11 buffer=0 capture_time=22.690000 elapsed_ms=4800 bytesused=614400 fnv1a32=ac20836c update=OK
+s31preview: frame=12 buffer=1 capture_time=23.140000 elapsed_ms=5250 bytesused=614400 fnv1a32=22b6e669 update=OK
+s31preview: frame=13 buffer=0 capture_time=23.590000 elapsed_ms=5700 bytesused=614400 fnv1a32=41c19b8d update=OK
+s31preview: frame=14 buffer=1 capture_time=24.040000 elapsed_ms=6150 bytesused=614400 fnv1a32=89863e7b update=OK
+s31preview: frame=15 buffer=0 capture_time=24.490000 elapsed_ms=6600 bytesused=614400 fnv1a32=ad9942fe update=OK
+s31preview: frame=16 buffer=1 capture_time=24.940000 elapsed_ms=7050 bytesused=614400 fnv1a32=2fb59fe3 update=OK
+s31preview: frame=17 buffer=0 capture_time=25.390000 elapsed_ms=7500 bytesused=614400 fnv1a32=fdc9058f update=OK
+s31preview: frame=18 buffer=1 capture_time=25.840000 elapsed_ms=7950 bytesused=614400 fnv1a32=c3606efa update=OK
+s31preview: frame=19 buffer=0 capture_time=26.300000 elapsed_ms=8410 bytesused=614400 fnv1a32=63ffde52 update=OK
+s31preview: frame=20 buffer=1 capture_time=26.750000 elapsed_ms=8860 bytesused=614400 fnv1a32=67232ffa update=OK
+s31preview: frame=21 buffer=0 capture_time=27.200000 elapsed_ms=9310 bytesused=614400 fnv1a32=35d40fd3 update=OK
+s31preview: frame=22 buffer=1 capture_time=27.650000 elapsed_ms=9760 bytesused=614400 fnv1a32=4faf8307 update=OK
+s31preview: frame=23 buffer=0 capture_time=28.100000 elapsed_ms=10210 bytesused=614400 fnv1a32=3e0a5cfb update=OK
+s31preview: frame=24 buffer=1 capture_time=28.550000 elapsed_ms=10680 bytesused=614400 fnv1a32=c86f88ee update=OK
+s31preview: frame=25 buffer=0 capture_time=29.000000 elapsed_ms=11130 bytesused=614400 fnv1a32=16ad5492 update=OK
+s31preview: frame=26 buffer=1 capture_time=29.450000 elapsed_ms=11580 bytesused=614400 fnv1a32=ed13d6d1 update=OK
+s31preview: frame=27 buffer=0 capture_time=29.900000 elapsed_ms=12030 bytesused=614400 fnv1a32=c31b8a7b update=OK
+s31preview: frame=28 buffer=1 capture_time=30.340000 elapsed_ms=12480 bytesused=614400 fnv1a32=2380953d update=OK
+s31preview: frame=29 buffer=0 capture_time=30.790000 elapsed_ms=12910 bytesused=614400 fnv1a32=564277ff update=OK
+s31preview: frame=30 buffer=1 capture_time=31.250000 elapsed_ms=13360 bytesused=614400 fnv1a32=43e6b14a update=OK
+s31preview: frame=31 buffer=0 capture_time=31.700000 elapsed_ms=13810 bytesused=614400 fnv1a32=aed5978a update=OK
+s31preview: frame=32 buffer=1 capture_time=32.150000 elapsed_ms=14260 bytesused=614400 fnv1a32=1c44e9bc update=OK
+s31preview: frame=33 buffer=0 capture_time=32.600000 elapsed_ms=14710 bytesused=614400 fnv1a32=53668e56 update=OK
+s31preview: frame=34 buffer=1 capture_time=33.050000 elapsed_ms=15160 bytesused=614400 fnv1a32=bbfdb1a4 update=OK
+s31preview: frame=35 buffer=0 capture_time=33.500000 elapsed_ms=15610 bytesused=614400 fnv1a32=42493855 update=OK
+s31preview: frame=36 buffer=1 capture_time=33.950000 elapsed_ms=16060 bytesused=614400 fnv1a32=821e87c3 update=OK
+s31preview: frame=37 buffer=0 capture_time=34.400000 elapsed_ms=16510 bytesused=614400 fnv1a32=af7c6458 update=OK
+s31preview: frame=38 buffer=1 capture_time=34.850000 elapsed_ms=16980 bytesused=614400 fnv1a32=34c114e5 update=OK
+s31preview: frame=39 buffer=0 capture_time=35.300000 elapsed_ms=17430 bytesused=614400 fnv1a32=c3055dfd update=OK
+s31preview: frame=40 buffer=1 capture_time=35.750000 elapsed_ms=17880 bytesused=614400 fnv1a32=6ce83bd0 update=OK
+s31preview: frame=41 buffer=0 capture_time=36.200000 elapsed_ms=18330 bytesused=614400 fnv1a32=dff24d0c update=OK
+s31preview: frame=42 buffer=1 capture_time=36.640000 elapsed_ms=18780 bytesused=614400 fnv1a32=22501d59 update=OK
+s31preview: frame=43 buffer=0 capture_time=37.090000 elapsed_ms=19210 bytesused=614400 fnv1a32=5df21e47 update=OK
+s31preview: frame=44 buffer=1 capture_time=37.550000 elapsed_ms=19660 bytesused=614400 fnv1a32=bbe0c4c4 update=OK
+s31preview: frame=45 buffer=0 capture_time=38.000000 elapsed_ms=20110 bytesused=614400 fnv1a32=25f81e51 update=OK
+s31preview: frame=46 buffer=1 capture_time=38.450000 elapsed_ms=20560 bytesused=614400 fnv1a32=13724a2a update=OK
+s31preview: frame=47 buffer=0 capture_time=38.900000 elapsed_ms=21010 bytesused=614400 fnv1a32=5379d33c update=OK
+s31preview: frame=48 buffer=1 capture_time=39.350000 elapsed_ms=21460 bytesused=614400 fnv1a32=c8aa46e5 update=OK
+s31preview: frame=49 buffer=0 capture_time=39.800000 elapsed_ms=21910 bytesused=614400 fnv1a32=55aa36fd update=OK
+s31preview: frame=50 buffer=1 capture_time=40.250000 elapsed_ms=22360 bytesused=614400 fnv1a32=4768e110 update=OK
+s31preview: frame=51 buffer=0 capture_time=40.700000 elapsed_ms=22810 bytesused=614400 fnv1a32=9d13544e update=OK
+s31preview: frame=52 buffer=1 capture_time=41.150000 elapsed_ms=23280 bytesused=614400 fnv1a32=80ceae34 update=OK
+s31preview: frame=53 buffer=0 capture_time=41.600000 elapsed_ms=23730 bytesused=614400 fnv1a32=9b4335ee update=OK
+s31preview: frame=54 buffer=1 capture_time=42.050000 elapsed_ms=24180 bytesused=614400 fnv1a32=4ebbdfbf update=OK
+s31preview: frame=55 buffer=0 capture_time=42.500000 elapsed_ms=24630 bytesused=614400 fnv1a32=a7e2ecef update=OK
+s31preview: frame=56 buffer=1 capture_time=42.940000 elapsed_ms=25080 bytesused=614400 fnv1a32=5d93c6ee update=OK
+s31preview: frame=57 buffer=0 capture_time=43.390000 elapsed_ms=25510 bytesused=614400 fnv1a32=1aa72c52 update=OK
+s31preview: frame=58 buffer=1 capture_time=43.850000 elapsed_ms=25960 bytesused=614400 fnv1a32=d3ec5be0 update=OK
+s31preview: frame=59 buffer=0 capture_time=44.300000 elapsed_ms=26410 bytesused=614400 fnv1a32=4f77b626 update=OK
+s31preview: frame=60 buffer=1 capture_time=44.750000 elapsed_ms=26860 bytesused=614400 fnv1a32=d7bdd83d update=OK
+s31preview: framebuffer munmap failed errno=22
+s31preview: completed=60/60 result=FAIL
+nsh> [K

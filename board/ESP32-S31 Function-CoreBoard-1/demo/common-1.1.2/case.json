@@ -1,0 +1,43 @@
+{
+  "name": "common-1.1.2",
+  "keys": [
+    "common:1.1.2"
+  ],
+  "profile": "demo-rmt-xts-core",
+  "sources": [
+    "apps/testing/testsuites/kernel/sched"
+  ],
+  "evidence_ids": [
+    688
+  ],
+  "note": "",
+  "original": "1.1.2",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts688-sched.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "系统调度测试",
+  "original_line": 60,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/sched",
+      "origin": "apps/testing/testsuites/kernel/sched"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-core/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts688-sched.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts688-sched.log"
+    }
+  ]
+}

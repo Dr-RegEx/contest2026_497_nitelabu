@@ -1,0 +1,35 @@
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+--- CMD: ls /tmp/rng784.bin ---
+ls /tmp/rng784.bin
+nsh: ls: stat failed: No such file or directory
+nsh> [K
+nsh> [K
+--- CMD: dd if=/dev/urandom of=/tmp/rng784.bin bs=128 count=1 ---
+dd if=/dev/urandom of=/tmp/rng784.bin bs=128 count=1
+nsh> [K
+nsh> [K
+--- CMD: ls -l /tmp/rng784.bin ---
+ls -l /tmp/rng784.bin
+ -rwxrwxrwx   0         128 /tmp/rng784.bin
+nsh> [K
+nsh> [K
+--- CMD: hexdump /tmp/rng784.bin ---
+hexdump /tmp/rng784.bin
+/tmp/rng784.bin at 00000000:
+0000: 78 b1 55 42 e1 33 2a c6 3f b0 69 84 dd 45 1e b4 x.UB.3*.?.i..E..
+0010: 56 76 64 ea c9 5c 9e 36 5e e1 28 36 ab 2c 0a 20 Vvd..\.6^.(6.,. 
+0020: 0b 93 48 83 73 77 ac ef 7d aa 9e 15 c6 75 08 21 ..H.sw..}....u.!
+0030: d4 98 cb 19 50 32 77 cc f0 82 83 3b 24 04 53 72 ....P2w....;$.Sr
+0040: b2 ec eb aa 9a 37 cf 35 94 71 ac 0e 63 35 a8 f3 .....7.5.q..c5..
+0050: 70 a6 0f b6 2b 63 ef d4 2a 2d cd a1 0d 00 d2 45 p...+c..*-.....E
+0060: 8d 5d 23 70 45 94 54 34 3f 5c 82 b2 21 45 1a 0b .]#pE.T4?\..!E..
+0070: 24 00 68 27 47 c2 9b b8 81 b8 75 4a 7f 77 78 ed $.h'G.....uJ.wx.
+nsh> [K
+nsh> [K

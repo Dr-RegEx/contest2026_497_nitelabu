@@ -1,0 +1,45 @@
+{
+  "tag": "xts864",
+  "audit_utc": "2026-09-15T18:43:56.102903+00:00",
+  "raw_script_labels": {
+    "standby": "RUNNING",
+    "time_consistency": "RUNNING"
+  },
+  "raw_script_error": null,
+  "resource_rows": 601,
+  "uart_log_age_seconds": 36.059486627578735,
+  "fault_markers_after_monitor_start": [],
+  "sample_count": 2,
+  "note": "Audit only. No raw PASS label is adopted automatically. Clock-source discrepancy and uninterrupted monitoring must be reviewed before formal acceptance.",
+  "resource_extrema": {
+    "minimum_free": 522728,
+    "maximum_used": 5652,
+    "maximum_reported_peak": 38784,
+    "maximum_cpu_percent": 7.9
+  },
+  "ongoing_standby_observation": {
+    "host_realtime_to_last_log_write_seconds": 36008.02385997772,
+    "complete_monitor_periods_seconds": 36000,
+    "12h_evidence_ready_for_review": false
+  },
+  "duration_at_last_date_sample": {
+    "host_realtime_interval_seconds": [
+      21071.261191129684,
+      21071.297393083572
+    ],
+    "board_date_interval_seconds": [
+      21069.0,
+      21071.0
+    ],
+    "host_monotonic_seconds": 21599.853614433003,
+    "monotonic_minus_realtime_midpoint_seconds": 528.5743223263744
+  },
+  "last_time_error_interval_seconds": [
+    -1.8733148574829102,
+    -0.8546781539916992
+  ],
+  "sampled_duration_at_least_12h_on_both_axes": false,
+  "sampled_duration_at_least_24h_on_both_axes": false,
+  "last_time_error_within_2s": true,
+  "timing_review": "REQUIRED"
+}

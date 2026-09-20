@@ -1,0 +1,239 @@
+{
+  "name": "common-1.3.6",
+  "title": "GPIO47/48 实物回环与上升沿中断",
+  "keys": [
+    "common:1.3.6"
+  ],
+  "profile": "demo-gpio-loopback",
+  "kind": "accepted",
+  "flat": false,
+  "sources": [
+    "apps/testing/drivers/drivertest",
+    "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_xts_gpio.c"
+  ],
+  "summary": "GPIO47↔48 杜邦线实测：低/高电平两组各 4/4 PASS，回环 0/1 一致，上升沿 IRQ count=1。两组在同一 Kernel/AppFS 配对镜像的分别启动中完成。连续第二次启动仅回显、20 秒超时的问题仍保留，不宣称重复启动稳定性已修复。",
+  "steps": "硬件为 Function-CoreBoard-1。断电后用一根杜邦线连接 GPIO47 与 GPIO48；GPIO48 为输出 `/dev/gpio1`，GPIO47 为输入 `/dev/gpio0`，不要接电源脚。\n\n第一次启动，在 NSH 执行：\n\n```text\ncmocka_driver_gpio -i /dev/gpio0 -o /dev/gpio1 -p 0 -l -r 1\n```\n\n记录 4/4 PASS，并确认实际 IRQ count=1。保存日志后复位，第二次启动执行：\n\n```text\ncmocka_driver_gpio -i /dev/gpio0 -o /dev/gpio1 -p 1 -l -r 1\n```\n\n同样要求 4/4 PASS、输入输出高电平一致且 IRQ count=1。原标准中的 `-a/-b` 与当前解析器不一致，这里使用有效的 `-i/-o`；不修改原断言。不要把超时或仅有命令回显当成通过。",
+  "local_sources": [
+    {
+      "origin": "apps/testing/drivers/drivertest",
+      "path": "src/apps/testing/drivers/drivertest"
+    },
+    {
+      "origin": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_xts_gpio.c",
+      "path": "src/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_xts_gpio.c"
+    }
+  ],
+  "local_config": "config/demo-gpio-loopback/defconfig",
+  "local_evidence": [
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/verify.log",
+      "path": "evidence/verify.log",
+      "sha256": "7a759c197910c2dbbe0753dc0191601b4c51f266364af75d080425903bbd6ddd",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/runner.log",
+      "path": "evidence/runner.log",
+      "sha256": "637c00043193f77c4448d54e9aea7a77b9f8a0a18aea4eacb77d98f423695469",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel-final-build.sha256",
+      "path": "evidence/kernel-final-build.sha256",
+      "sha256": "8291363c885c74706e29efef1bfce0e92d07b3d58c9829a133708be9ee77108d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/evidence.sha256",
+      "path": "evidence/evidence.sha256",
+      "sha256": "332401990b5a77626e5dcd4185c126adfb31e8bf417054416402b0e532d4b71b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel-fit-build.log",
+      "path": "evidence/kernel-fit-build.log",
+      "sha256": "2cf17f11e02eaf3248e8f0050b00c27ab2e165b8a7d9299f20eb3ffe6442812f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/board.log",
+      "path": "evidence/board.log",
+      "sha256": "c54f6a6218ab655e684eaf5efa1bb6c505cf4aa29f9f08844d567144c2f6cc8e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/verify-before.log",
+      "path": "evidence/verify-before.log",
+      "sha256": "ee6f773e8c0f0befda334e3fb3c5fe06bac21b4aeba64d50475d219902ed8ea3",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel-build.sha256",
+      "path": "evidence/kernel-build.sha256",
+      "sha256": "c664fb7938106e587a468d2f2f8dc00873f84b4e765ae368afbff71329630bf7",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/build.log",
+      "path": "evidence/build.log",
+      "sha256": "0ffd0b4473d744a3f5f58fc8f91d541d73d06fb2a24433eb42e58aea9f4fc412",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/flash.log",
+      "path": "evidence/flash.log",
+      "sha256": "4f0391966d2c573bbd2b8fe750e5c324c9773bfe8ba551cc4578286fd299b4a0",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel-build.log",
+      "path": "evidence/kernel-build.log",
+      "sha256": "817fc35068b3fdb2162dd6d963d7ce311378589e869bfb60aad309a55ba12414",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/flash-kernel.log",
+      "path": "evidence/flash-kernel.log",
+      "sha256": "64fb177b396ce156849a7191b32b2bd02ad710e78a6b49cfbf3b2c68cac91a52",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel-gpio-build.log",
+      "path": "evidence/kernel-gpio-build.log",
+      "sha256": "1e8dd044a087b816895bbbeb2c55bb67ecb417ffbf4152ca229c95b0a76746f7",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/receipt.json",
+      "path": "evidence/receipt.json",
+      "sha256": "be886fbd3f6a2cea9b58df83c43487f1d179b7c3538828a8a62c13df5e47fbf6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel-final-build.log",
+      "path": "evidence/kernel-final-build.log",
+      "sha256": "ee54bd438e038d7bffb2fcf4da3693abb04704e5837cbdd4d6b44727d7807e7b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/review.md",
+      "path": "evidence/review.md",
+      "sha256": "f2e90fd79f995b684283b67e49e13a5170460e0395e3608a03d33b5684ad8f3d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/.config",
+      "path": "evidence/.config",
+      "sha256": "de05ba2c4d800bf7e18f6f3abdf2e052244b0f9042098c8230f497b4a315ddff",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/current-build.sha256",
+      "path": "evidence/current-build.sha256",
+      "sha256": "a5c090a1e90db9b6cc77806e7fb9b6f42c23fc0e0b3dd4c54618b5241018693c",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/verify.log",
+      "path": "evidence/kernel/verify.log",
+      "sha256": "5edb2c333134cd9077ed741f978ba6e59ef8d5cb09cc87d8c44c6cbfed66baf5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/runner.log",
+      "path": "evidence/kernel/runner.log",
+      "sha256": "557f589081b8561d284e2c7f210970c827dc51c5212c2dbd45016109b2ec7e64",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/level0.log",
+      "path": "evidence/kernel/level0.log",
+      "sha256": "59ba072519d9c341be91fa9492e23feac081013b3c4925159a860c90f12e527b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/board.log",
+      "path": "evidence/kernel/board.log",
+      "sha256": "1e3281dfcf1bb5c2bd956b42ed7ed0e2d92c6f92159417e8fcb51b404d7b749c",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/flash.log",
+      "path": "evidence/kernel/flash.log",
+      "sha256": "27e363ad2942f75261cbc209375b9963568ceb22dd6406a307b2afc1d8f74b59",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/receipt.json",
+      "path": "evidence/kernel/receipt.json",
+      "sha256": "de8ba9310cf70c7bd51b69bef33d936e9e77e5d8b9d03e2fe99b6ac2db8b9f60",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/.config",
+      "path": "evidence/kernel/.config",
+      "sha256": "3fef00ca1e3f8e2f705e5df918a05cfe25eee4496092d15551f498c779c2ab87",
+      "redacted": true
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/high-retry/runner.log",
+      "path": "evidence/kernel/high-retry/runner.log",
+      "sha256": "4b4b9267d26c65f07cfa0d2ea855719a17e03f106160bed4d5db41cbf3bdbcff",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/high-retry/board.log",
+      "path": "evidence/kernel/high-retry/board.log",
+      "sha256": "50426e94bc1e766149e10f9224398593a1cce62121d66b3f40953511aedbe527",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/high-retry/level1.log",
+      "path": "evidence/kernel/high-retry/level1.log",
+      "sha256": "0dd1cad3ab4eea7b693980e078e641604a9260e1b698f32e2157bf45e57f184b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/kernel/high-retry/runs.json",
+      "path": "evidence/kernel/high-retry/runs.json",
+      "sha256": "2219137e28f12dbcd797752dd8a98a96955aa7c7b1438e8b051b9bb1054ce317",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/current/verify.log",
+      "path": "evidence/current/verify.log",
+      "sha256": "b1b3d24254039a330d0284713fc8bcd0f74f1224dfe469c79a89b216b6d558f5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/current/runner.log",
+      "path": "evidence/current/runner.log",
+      "sha256": "bf5a8643cce65611dbadaac8440c0b3f58da4020cac405ed68785b0dd89f8263",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/current/board.log",
+      "path": "evidence/current/board.log",
+      "sha256": "96bc3158149e5ee79b3fc337e2f04b76eb903189080c28fc1969ec90d465f6c4",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/current/flash.log",
+      "path": "evidence/current/flash.log",
+      "sha256": "190cb4435796f651e549fecb20e8baa1a3413a2d51489f88f5defeb993871218",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/current/receipt.json",
+      "path": "evidence/current/receipt.json",
+      "sha256": "3dffa61201eec4a837ca17c9fd0508dce277a7c66195144e334c55503d961993",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/gpio-20260920/current/.config",
+      "path": "evidence/current/.config",
+      "sha256": "7f09529c51c29587887029a56321d33a45624ebb16126a68ada7ced062cb97d1",
+      "redacted": false
+    }
+  ]
+}

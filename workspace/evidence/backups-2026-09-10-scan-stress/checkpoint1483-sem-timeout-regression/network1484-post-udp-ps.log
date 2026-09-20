@@ -1,0 +1,15 @@
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011140 0x2f01118c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   10    10 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008080 iperf2 -s -p 5003 -i 1 -u
+   11    10 ---(0x00000003) 101 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800db8
+   12    10 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x61800550
+   13    10 ---(0x00000003) 100 RR       pthread   - Waiting  Semaphore 0000000000000000 0008144 iperf2 0x6100d684 0x6180a298
+nsh> [K
+nsh> [K

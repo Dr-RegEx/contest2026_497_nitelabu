@@ -1,0 +1,11 @@
+# Isolated SDMMC bridge build candidate.  The normal production profiles keep
+# the experimental bridge disabled until a real card and locked HAL are wired.
+#include "../xts-flat-rtc/defconfig"
+
+CONFIG_MMCSD=y
+CONFIG_ARCH_HAVE_SDIO=y
+CONFIG_MMCSD_SDIO=y
+CONFIG_ESP32S31_SDMMC=y
+CONFIG_MMCSD_NSLOTS=1
+CONFIG_FS_FAT=y
+CONFIG_FS_FAT_LFN=y

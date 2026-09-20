@@ -1,0 +1,50 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1203-media.sha256
+XTS_COMMAND=mediatool
+mediatool
+mediatool> 
+XTS_COMMAND=open Music
+open Music
+[media][media_player_handler:1937] cmd: open, arg Music, target NULL.
+[media][media_player_handler:1970] ctx 0x2f0774d0 open Music success...
+[media][media_player_thread:1858] ctx 0x2f0774d0 create player thread.
+[media][media_proxy_once:441] player:local:0x2f0707f8 _ open Music _ ret:0 resp:0 response:_
+[media][media_proxy_once:441] player:local:0x2f0707f8 _ set_event _ _ ret:0 resp:0 response:_
+[media][media_proxy_once:441] session:local:0x50024520 _ register _ _ ret:0 resp:0 response:_
+player ID 0
+mediatool> 
+XTS_COMMAND=close 0
+close 0
+[media][media_player_process_cmd:1516] ctx 0x2f0774d0 cmd: stop, arg NULL, target NULL. ret 0
+[media][media_player_proc_cmd:1397] ctx 0x2f0774d0 name Music proc cmd STOP (ID:9)
+[media][media_proxy_once:441] player:local:0x2f0707f8 _ stop _ _ ret:0 resp:0 response:_
+[media][media_player_process_cmd:1516] ctx 0x2f0774d0 cmd: close, arg 0, target NULL. ret 0
+[media][media_player_proc_cmd:1397] ctx 0x2f0774d0 name Music proc cmd CLOSE (ID:11)
+[media][media_player_thread:1884] ctx 0x2f0774d0 Music player thread exit.
+[media][media_proxy_once:441] player:local:0x2f0707f8 _ close 0 _ ret:0 resp:0 response:_
+[media][media_proxy_once:441] session:local:0x50024520 _ unregister _ _ ret:0 resp:0 response:_
+mediatool> 
+XTS_COMMAND=q
+q
+Bye-Bye!
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009400 0x2f009448
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f009380 0x2f0093c8
+    4     0 240 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 s31_duplex
+    5     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004032 hr_timer
+    6     6 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+   13    13 245 RR       Task      - Waiting  Semaphore 0000000000000000 0081872 mediad
+nsh> [K
+nsh> [K
+XTS_COMMAND=free
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+   16840896     122744   16718152     224128   16695272    207      9 Umem
+nsh> [K
+nsh> [K
+MEDIA_OPEN_CLOSE_COMPLETE; original decode/listening pending

@@ -1,0 +1,408 @@
+{
+  "name": "camera-ov3660",
+  "title": "Korvo OV3660 摄像头实时采集上屏",
+  "keys": [
+    "extra:13",
+    "extra:7"
+  ],
+  "profile": "korvo-camera-preview",
+  "kind": "accepted",
+  "flat": true,
+  "sources": [
+    "apps/examples/s31preview",
+    "nuttx/arch/risc-v/src/esp32s31/esp32s31_camera_dvp.c",
+    "nuttx/arch/risc-v/src/esp32s31/esp32s31_lcd.c",
+    "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_camera_v4l2.c",
+    "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_ov3660.c",
+    "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_ov3660_defaults.h",
+    "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/ov3660.LICENSE",
+    "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/ov3660.NOTICE"
+  ],
+  "summary": "Korvo-1 + OV3660 + SUB3 实物采集显示通过。ID=0x3660，640×480 RGB565 居中显示于 800×480 framebuffer；颜色修复后 600/600 PASS，135.35 秒，复核 135.33 秒（约 4.43fps），用户确认景物变化、红绿蓝颜色及画面完整性“完全正常”。不重启重开 20→600 帧另有修复前颜色版本的记录，不冒称最终确认时未重启。不包含 OV2640/JPEG、动态帧率、SMP 或其它板型。",
+  "steps": "硬件必须匹配 Korvo-1 + OV3660 + SUB3。使用原配排线，断电检查方向；SCCB 为 I2C0 SDA=0、SCL=1、地址 0x3c，XCLK=16MHz。其余 DVP/LCD 引脚由本目录驱动和配置固定，不沿用 Function 板引脚。启动先读传感器 ID，必须为 0x3660，然后注册 `/dev/video0` 与 `/dev/fb0`。\n\nNSH 执行：\n\n```text\ns31preview --frames 20\ns31preview --frames 600\n```\n\n两条顺序执行，中间不复位，用于核验启停重开。正式保存完整 600 帧日志，应出现 `completed=600/600 result=PASS`，每帧 `bytesused=614400`、`update=OK`；历史耗时约 135 秒只是实测参考，不是 30fps 承诺。\n\n对着真实景物移动或遮挡镜头，确认画面相应变化，再观察红、绿、蓝物体与画面完整性。输出是摄像头原始 RGB565 经字节序转换后居中上屏，不是测试图、JPEG 或录像文件。命令退出后可再次运行。",
+  "local_sources": [
+    {
+      "origin": "apps/examples/s31preview",
+      "path": "src/apps/examples/s31preview"
+    },
+    {
+      "origin": "nuttx/arch/risc-v/src/esp32s31/esp32s31_camera_dvp.c",
+      "path": "src/nuttx/arch/risc-v/src/esp32s31/esp32s31_camera_dvp.c"
+    },
+    {
+      "origin": "nuttx/arch/risc-v/src/esp32s31/esp32s31_lcd.c",
+      "path": "src/nuttx/arch/risc-v/src/esp32s31/esp32s31_lcd.c"
+    },
+    {
+      "origin": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_camera_v4l2.c",
+      "path": "src/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_camera_v4l2.c"
+    },
+    {
+      "origin": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_ov3660.c",
+      "path": "src/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_ov3660.c"
+    },
+    {
+      "origin": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_ov3660_defaults.h",
+      "path": "src/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_ov3660_defaults.h"
+    },
+    {
+      "origin": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/ov3660.LICENSE",
+      "path": "src/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/ov3660.LICENSE"
+    },
+    {
+      "origin": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/ov3660.NOTICE",
+      "path": "src/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/ov3660.NOTICE"
+    }
+  ],
+  "local_config": "config/korvo-camera-preview/defconfig",
+  "local_evidence": [
+    {
+      "origin": "backups/2026-09-20-korvo/README.md",
+      "path": "evidence/README.md",
+      "sha256": "5ec0d7d875cd6922db4b5a270a19b1a939e4050a6ab5bd86119abe2a8d26efb5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/color-copy-test.log",
+      "path": "evidence/color-copy-test.log",
+      "sha256": "ac4e0ed71c61b67de5b1d77804769f4a375a13e3ac93545f0b8e50ed184069de",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/probe/verify.log",
+      "path": "evidence/probe/verify.log",
+      "sha256": "865bb8874ccd2679d02e0f38edbd0716255af213126b7c9a709d917b91ba684b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/probe/boot.log",
+      "path": "evidence/probe/boot.log",
+      "sha256": "6109f192f01984800f330d26af8a161440e6d7902510047d83741555b2e8ac62",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/probe/flash.log",
+      "path": "evidence/probe/flash.log",
+      "sha256": "4366a6834063f625c1ea7a61e7e4d7c3f50084f35e36a1ff7ad010a21cdb06cf",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/probe/receipt.json",
+      "path": "evidence/probe/receipt.json",
+      "sha256": "fda1d4e82e6fc1d54f5c803acd44981eb50938c45308efa68b4fd8f75729330e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/probe/.config",
+      "path": "evidence/probe/.config",
+      "sha256": "d9134b7c9cdb7b57ad60918c1a307b81cb458b296acb08aac369de7c362e4b4b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview/verify.log",
+      "path": "evidence/preview/verify.log",
+      "sha256": "650d2cd85192ed2e5f04d9e44ed1afb870dd89bb2d4cf956d0c10f838cf0458a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview/boot.log",
+      "path": "evidence/preview/boot.log",
+      "sha256": "8c659dcf6fae5ad24dca1007429daad51d7991bd7fc0dfa1392f393ca13bb0af",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview/flash.log",
+      "path": "evidence/preview/flash.log",
+      "sha256": "fb9f9ca89b4c1997a326a8e028d187d96ff426e90c6b6fb95d35c440be6c9abe",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview/receipt.json",
+      "path": "evidence/preview/receipt.json",
+      "sha256": "429440e356aa89382ea6a9f737a421f7a678180c0bc43e4cb41196794d748ab1",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview/.config",
+      "path": "evidence/preview/.config",
+      "sha256": "f1151cf6281a81a6e5698e6bac174ba806c52056e113c255476f10ca3ce69cc6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-stage/verify.log",
+      "path": "evidence/preview-stage/verify.log",
+      "sha256": "531c1a94d8cee08251d7d0414206f0fb9bbf94ad8db2a8e7ec6172565f82ce60",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-stage/boot.log",
+      "path": "evidence/preview-stage/boot.log",
+      "sha256": "353215faa2ff53af1103c2d9eb814131a7469aa0f10d58f4411be982bec994e7",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-stage/flash.log",
+      "path": "evidence/preview-stage/flash.log",
+      "sha256": "9d2b33a13e548b1522552b6529cf54bf0635c305ed3d2e44428a379299fe9438",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-stage/receipt.json",
+      "path": "evidence/preview-stage/receipt.json",
+      "sha256": "f927d11febddfcb01a4bc69d80de31ad31471b2a4580405bf0d6a793e86048be",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-stage/.config",
+      "path": "evidence/preview-stage/.config",
+      "sha256": "f1151cf6281a81a6e5698e6bac174ba806c52056e113c255476f10ca3ce69cc6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-dma-stage/verify.log",
+      "path": "evidence/preview-dma-stage/verify.log",
+      "sha256": "4cbb5db79f002e9de0a708a34c0a4a966087a6586e4c37e58822f41a436d8409",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-dma-stage/boot.log",
+      "path": "evidence/preview-dma-stage/boot.log",
+      "sha256": "4cb93609fc8ebf08ebb32317fe47367743a145c8ea3a875c89ab4bf7aead8ae8",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-dma-stage/flash.log",
+      "path": "evidence/preview-dma-stage/flash.log",
+      "sha256": "e6205e289b624d997e7d4a9863435c20d6a953d8152925681c10211ee6dc6a92",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-dma-stage/receipt.json",
+      "path": "evidence/preview-dma-stage/receipt.json",
+      "sha256": "7e3690736b381f576b9ad61a36d43ae6e83bb1659cb81c5eda9f3df991506535",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-dma-stage/.config",
+      "path": "evidence/preview-dma-stage/.config",
+      "sha256": "f1151cf6281a81a6e5698e6bac174ba806c52056e113c255476f10ca3ce69cc6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-irq-stage/verify.log",
+      "path": "evidence/preview-irq-stage/verify.log",
+      "sha256": "cf328a7981d463920de28cea6c082f6918463e9b3296e6427216ec7b9f026664",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-irq-stage/boot.log",
+      "path": "evidence/preview-irq-stage/boot.log",
+      "sha256": "cfc13ded9769aff7caf90b851364e41181f685f0d75df43f5fe170f7f6c34a82",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-irq-stage/flash.log",
+      "path": "evidence/preview-irq-stage/flash.log",
+      "sha256": "e1a3a763f34c4ed9cdcf3018eb857dba9324ae184de89c742eb0e4279770ce65",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-irq-stage/receipt.json",
+      "path": "evidence/preview-irq-stage/receipt.json",
+      "sha256": "f48142fe84762d74bbd5fc6ae9e1b7f094104bf82af5844d5eee81e930084717",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-irq-stage/.config",
+      "path": "evidence/preview-irq-stage/.config",
+      "sha256": "f1151cf6281a81a6e5698e6bac174ba806c52056e113c255476f10ca3ce69cc6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-native-irq/verify.log",
+      "path": "evidence/preview-native-irq/verify.log",
+      "sha256": "614192acf3eecca0dd5d9c06518a0e8d4edca5cea41f03c200d4d571d9958655",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-native-irq/boot.log",
+      "path": "evidence/preview-native-irq/boot.log",
+      "sha256": "909ed2a1fc1c9eea49eccf0e8e6faa91321fd4d1d5be13ff3e34be5fd5d76251",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-native-irq/flash.log",
+      "path": "evidence/preview-native-irq/flash.log",
+      "sha256": "8508bf5f0a6f5a12666a3584eb420e10e6fe79dbf96a0f03faa2495ceca08f2c",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-native-irq/receipt.json",
+      "path": "evidence/preview-native-irq/receipt.json",
+      "sha256": "e0410692b4847081b6c408a6241c73de4fa8d9b6621f68450b2ac29f5cfcf9a2",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-native-irq/.config",
+      "path": "evidence/preview-native-irq/.config",
+      "sha256": "f1151cf6281a81a6e5698e6bac174ba806c52056e113c255476f10ca3ce69cc6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-clean/verify.log",
+      "path": "evidence/preview-clean/verify.log",
+      "sha256": "73ba79a0f4e67d532efa737785807b347e8b9a7d2e22dd920dbc84b0c1b4459e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-clean/boot.log",
+      "path": "evidence/preview-clean/boot.log",
+      "sha256": "08e273d3f0415cc91a248b44df3e75e395c61e65bd1fc9d3e1c20e4c0943eb95",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-clean/flash.log",
+      "path": "evidence/preview-clean/flash.log",
+      "sha256": "03c7fdf12fde826fc569804005a7b64e51c2d87030463d371d64c7b3b02dbce5",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-clean/receipt.json",
+      "path": "evidence/preview-clean/receipt.json",
+      "sha256": "6ee3f9348671f3a61ee2993e786f40fa85f8d2f48b64e880b56f36698e8ad941",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-clean/.config",
+      "path": "evidence/preview-clean/.config",
+      "sha256": "f1151cf6281a81a6e5698e6bac174ba806c52056e113c255476f10ca3ce69cc6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-restart/verify.log",
+      "path": "evidence/preview-restart/verify.log",
+      "sha256": "61dfbb4707685755b24c1a808daf049cd0346da90e1e35e6b58ec6e494d085c3",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-restart/boot.log",
+      "path": "evidence/preview-restart/boot.log",
+      "sha256": "b3800cb038b71c9fe5c2d8ca84e39bd7dbea342f04b8be49b9a96771a96a55a6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-restart/flash.log",
+      "path": "evidence/preview-restart/flash.log",
+      "sha256": "13dc5432b348833c6d2c00d96cd85417a949e40738c80c9ad434eb2109cca3b4",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-restart/receipt.json",
+      "path": "evidence/preview-restart/receipt.json",
+      "sha256": "34d4aa6d9a206b76775e42f70d3c63a711798991ae956381c2595f360b45b763",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-restart/.config",
+      "path": "evidence/preview-restart/.config",
+      "sha256": "f1151cf6281a81a6e5698e6bac174ba806c52056e113c255476f10ca3ce69cc6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-restart-order/verify.log",
+      "path": "evidence/preview-restart-order/verify.log",
+      "sha256": "24b4472cbe149adf7e9079b4bf60bb7f1f5420c7223b5ff0d83d7f686e3be47b",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-restart-order/boot.log",
+      "path": "evidence/preview-restart-order/boot.log",
+      "sha256": "56c03b1d4fd009f146edc6b4ed8e6c6ff71bcd538ae317a5d4378fc5fb76b6b0",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-restart-order/flash.log",
+      "path": "evidence/preview-restart-order/flash.log",
+      "sha256": "d61c871438e7fd9eb078faf60cacdfd1f7026da3c3bc254b1cc1b6e72f30bb51",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-restart-order/receipt.json",
+      "path": "evidence/preview-restart-order/receipt.json",
+      "sha256": "19121e1a76fef5082030617730ab33f1c99ea3a47d00542ddc34f89f5d99909f",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-restart-order/.config",
+      "path": "evidence/preview-restart-order/.config",
+      "sha256": "f1151cf6281a81a6e5698e6bac174ba806c52056e113c255476f10ca3ce69cc6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-color/verify.log",
+      "path": "evidence/preview-color/verify.log",
+      "sha256": "b0b08108dcc92edd30766f0b8c49aec6156e18122a85832f58a7dd99ee2ccd9d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-color/boot.log",
+      "path": "evidence/preview-color/boot.log",
+      "sha256": "c3c71d6b7fc7cdab73b351da14f145d9bbec711758fce0572d922dc1f7df9e8e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-color/flash.log",
+      "path": "evidence/preview-color/flash.log",
+      "sha256": "639bfe0204253c261a3eca263e3226d55a21106d08d8c125b13cb4ee6e65c73a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-color/receipt.json",
+      "path": "evidence/preview-color/receipt.json",
+      "sha256": "d865b5d16e11008ff46a3936a929ee09a580a2a702898fad521bff7d9ccea838",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-color/result.json",
+      "path": "evidence/preview-color/result.json",
+      "sha256": "1dbdc749413db1231a665d33c840430bcd234630d5c5255b870a651c16e0add9",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-color/.config",
+      "path": "evidence/preview-color/.config",
+      "sha256": "f1151cf6281a81a6e5698e6bac174ba806c52056e113c255476f10ca3ce69cc6",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-color-confirm/uart.log",
+      "path": "evidence/preview-color-confirm/uart.log",
+      "sha256": "b546a5af973d15ef8a408879187a8dbb21d33081ad50b8bc1c098ff96f1cb816",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-color-confirm/firmware.json",
+      "path": "evidence/preview-color-confirm/firmware.json",
+      "sha256": "d865b5d16e11008ff46a3936a929ee09a580a2a702898fad521bff7d9ccea838",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/preview-color-confirm/result.json",
+      "path": "evidence/preview-color-confirm/result.json",
+      "sha256": "268a3f9703c8aa393f9435c13f24de7a62652c55e3811d913fabaab8b6ce979d",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/irq-test/result.log",
+      "path": "evidence/irq-test/result.log",
+      "sha256": "b0cb57a892871616f4ca1a3d2c3f7ce7f30dc699b6f92da46d13bf7b51092073",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-korvo/source-snapshot-color/manifest.json",
+      "path": "evidence/tested-source-manifest.json",
+      "sha256": "38d18cf7d6e6058ade838577019fc537275f2a01ab9fbdc586d51f3962d4ea83",
+      "redacted": false
+    }
+  ]
+}

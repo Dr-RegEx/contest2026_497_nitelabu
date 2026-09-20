@@ -1,0 +1,68 @@
+{
+  "name": "common-1.3.17",
+  "keys": [
+    "common:1.3.17"
+  ],
+  "profile": "demo-rmt-xts-ecc-offline-log",
+  "sources": [
+    "apps/testing/drivers/crypto"
+  ],
+  "evidence_ids": [
+    1010
+  ],
+  "note": "原始 8 个 Crypto 程序分别执行；软件回退与硬件加速范围见日志，不能把 API 通过等同于全部硬件加速。",
+  "original": "1.3.17",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/xts-current-status.md",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1010-original-crypto.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1010-original-crypto.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1009-flash1002-crypto.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "Crypto功能测试",
+  "original_line": 972,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/crypto",
+      "origin": "apps/testing/drivers/crypto"
+    }
+  ],
+  "local_config": "config/demo-rmt-xts-ecc-offline-log/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1009-flash1002-crypto.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1009-flash1002-crypto.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1010-original-crypto.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/logs/xts1010-original-crypto.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/xts-current-status.md",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1010-crypto-target/xts-current-status.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1010-original-crypto.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1010-original-crypto.log"
+    }
+  ]
+}

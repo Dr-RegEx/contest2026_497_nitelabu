@@ -1,0 +1,83 @@
+{
+  "name": "rgb565-display",
+  "title": "Korvo + SUB3 RGB565 实屏循环演示",
+  "keys": [
+    "extra:7"
+  ],
+  "profile": "korvo-rgb565",
+  "kind": "accepted",
+  "flat": true,
+  "sources": [
+    "apps/examples/s31rgb565",
+    "nuttx/arch/risc-v/src/esp32s31/esp32s31_lcd.c"
+  ],
+  "summary": "队友旧固件已通过 RGB565 自检、七种画面循环和至少 100 帧更新，用户确认“已正常循环，颜色和位置正常”。新公开源码另包含后续 LCD/CAM 共享资源修复；新构建结果须与旧实板固件区别记录。本例程是 Korvo-1 + SUB3 独立单核 FLAT 演示，不扩大到 Function 板接线或 SMP/MMU。",
+  "steps": "连接 Korvo-1 的匹配 SUB3 屏幕，使用原配连接方式。LCD 数据引脚为 8～19、33～36，DISP=38、PCLK=40、DE=43、HSYNC=44、VSYNC=45。不要按 Function 板的 GPIO 测试接线连接屏幕。\n\n该配置上电自动后台运行 `s31rgb565` 并进入 NSH。800×480、RGB565 LE、16bpp、stride 1600、PCLK 18MHz；每轮 30 秒：仪表板 16 秒，红/绿/蓝/白/黑各 2 秒，棋盘格 4 秒。\n\n保留至少 40 秒串口日志，检查 `RGB565_SELFTEST=PASS words=65536`、七种 PATTERN 和 `LCD_FRAMES=100 FRAMEBUFFER_UPDATE=PASS`。另行目视检查颜色、位置、画面完整性和持续循环。串口里的 `optical=unverified` 不能代替目视确认。不要在后台已有演示时再启动第二个绘图进程。",
+  "local_sources": [
+    {
+      "origin": "apps/examples/s31rgb565",
+      "path": "src/apps/examples/s31rgb565"
+    },
+    {
+      "origin": "nuttx/arch/risc-v/src/esp32s31/esp32s31_lcd.c",
+      "path": "src/nuttx/arch/risc-v/src/esp32s31/esp32s31_lcd.c"
+    }
+  ],
+  "local_config": "config/korvo-rgb565/defconfig",
+  "local_evidence": [
+    {
+      "origin": "backups/2026-09-20-rgb565-import/openvela-rgb565-handoff-20260920/evidence/user-observation.json",
+      "path": "evidence/user-observation.json",
+      "sha256": "a2360cbd4d3b2ebd878c0b22bf89530572f337a51a757080b2402618879c0012",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-rgb565-import/openvela-rgb565-handoff-20260920/evidence/runtime-result.json",
+      "path": "evidence/runtime-result.json",
+      "sha256": "f7730d5a99a1a8a1b3c630061309c961f929f11f56cc74791bfb6e3a618c234c",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-rgb565-import/openvela-rgb565-handoff-20260920/evidence/uart.log",
+      "path": "evidence/uart.log",
+      "sha256": "2c7226a76d3e3e22dd27eec04760946b080825597514821cf134b10caa80b371",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-rgb565-import/openvela-rgb565-handoff-20260920/evidence/flash-summary.json",
+      "path": "evidence/flash-summary.json",
+      "sha256": "1f7b38d5cdb35a638abe6984ac1a427511f86a00dd5212b94b6f186422e08cce",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-rgb565-import/openvela-rgb565-handoff-20260920/README_FIRST.md",
+      "path": "evidence/README_FIRST.md",
+      "sha256": "847b096cdb5ba3de607859e4fd09358f4e6755d58bd132b60afb771b9dcc91ea",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-rgb565-import/openvela-rgb565-handoff-20260920/BASELINE.json",
+      "path": "evidence/BASELINE.json",
+      "sha256": "2a45de9dfa2b200af8913cfd899399bfd0724fc5eb66bbca7fc25a2a32f5159e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-rgb565-import/openvela-rgb565-handoff-20260920/PATCH-CHECK.json",
+      "path": "evidence/PATCH-CHECK.json",
+      "sha256": "94c624f54ba503d31c601edf4d16321802d803f6ec1897fd90663e09919a7760",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-rgb565-import/openvela-rgb565-handoff-20260920/SHA256SUMS",
+      "path": "evidence/SHA256SUMS",
+      "sha256": "ee3f5a1e4904a2f3cb7fc36d221a941e9361157f148f2db267275ce5609a2eea",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-20-rgb565-import/openvela-rgb565-handoff-20260920/firmware/tested.config",
+      "path": "evidence/tested.config",
+      "sha256": "b81f3acdae613d367bc9a16ef5e7d849e3373ed561300974b4b6a5d6cbd6be81",
+      "redacted": false
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+/****************************************************************************
+ * apps/testing/drivers/drivertest/devicetree/api/board2/board2.overlay
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.  The
+ * ASF licenses this file to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the
+ * License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ *
+ ****************************************************************************/
+
+/ {
+	test {
+
+		test_nodelabel: TEST_NODELABEL_ALLCAPS: test_gpio_1: gpio@deadbeef {
+			compatible = "vnd,gpio-device";
+			gpio-controller;
+			reg = < 0xdeadbeef 0x1000 0xaabbccdd 0x2000 >;
+			#gpio-cells = < 0x2 >;
+			#foo-cells = < 0x1 >;
+			#baz-cells = < 0x1 >;
+			interrupts = <4 3>, <5 2>;
+			status = "disabled";
+			ngpios = <300>;
+
+			test_gpio_hog_1 {
+				gpio-hog;
+				gpios = <0x0 0x00>, <0x1 0x10>;
+				output-high;
+			};
+
+			test_gpio_hog_2 {
+				gpio-hog;
+				gpios = <0x3 0x20>;
+				output-low;
+			};
+		};
+
+		test_gpio_2: gpio@abcd1234 {
+			compatible = "vnd,gpio-device";
+			gpio-controller;
+			reg = < 0xaabb5678 0x600 0x11223344 0xaa >;
+			reg-names = "one", "two";
+			#gpio-cells = < 0x2 >;
+			#foo-cells = < 0x1 >;
+			#baz-cells = < 0x1 >;
+			interrupts = <5 2>;
+			status = "disabled";
+			ngpios = <600>;
+
+			test_gpio_hog_3 {
+				gpio-hog;
+				gpios = <0x4 0x30>;
+				input;
+				line-name = "TEST_GPIO_HOG_3";
+			};
+		};
+
+		/* there should only be one of these */
+		test_irq: interrupt-holder {
+			compatible = "vnd,interrupt-holder";
+			status = "okay";
+			interrupts = <40 3 50 5 70 7>;
+			interrupt-parent = <&test_intc>;
+			interrupt-names = "err", "stat", "done";
+		};
+
+		/* there should only be one of these */
+		test_irq_extended: interrupt-holder-extended {
+			compatible = "vnd,interrupt-holder-extended";
+			status = "okay";
+			interrupts-extended = <&test_intc 65 7>,
+					      <&test_gpio_4 30 3>,
+					      <&test_intc2 47 7>;
+			interrupt-names = "int1", "int2", "int3";
+		};
+
+		/* there should only be one of these */
+		test_children: test-children {
+			compatible = "vnd,child-bindings";
+
+			test_child_a: child-a {
+				val = <0>;
+				status = "okay";
+			};
+			test_child_b: child-b {
+				val = <1>;
+				status = "okay";
+			};
+			test_child_c: child-c {
+				val = <2>;
+				status = "disabled";
+			};
+			test_child_d: child-d {
+				val = <3>;
+				status = "okay";
+			};
+		};
+
+		test_foreach: test-foreach-1 {
+			compatible = "vnd,foreach-test";
+			status = "okay";
+			label_device_1: device_1 {
+				compatible = "vnd,foreach-test";
+				status = "okay";
+				device_id = <0>;
+				m_device_enable = <1>;
+				m_device_bits = <16>;
+				gpios = <&test_gpio_1 21 34>;
+				label_child_1_1: child_1_1 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <0>;
+					m_child_enable = <0>;
+					m_child_bits = <3>;
+					m_child_idx = <1>;
+				};
+				label_child_1_2: child_1_2 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <1>;
+					m_child_enable = <1>;
+					m_child_bits = <5>;
+					m_child_idx = <2>;
+				};
+			};
+			label_device_2: device_2 {
+				compatible = "vnd,foreach-test";
+				status = "okay";
+				device_id = <1>;
+				m_device_enable = <2>;
+				m_device_bits = <32>;
+				gpios = <&test_gpio_1 11 66>;
+				label_child_2_1: child_2_1 {
+					compatible = "vnd,foreach-child-test";
+					status = "okay";
+					child_id = <0>;
+					m_child_enable = <0>;
+					m_child_bits = <15>;
+					m_child_idx = <3>;
+				};
+			};
+			label_device_3: device_3 {
+				compatible = "vnd,foreach-test";
+				status = "okay";
+				device_id = <2>;
+				m_device_enable = <4>;
+				m_device_bits = <64>;
+				gpios = <&test_gpio_2 23 75>;
+			};
+		};
+	};
+};

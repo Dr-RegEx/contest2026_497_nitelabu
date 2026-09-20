@@ -1,0 +1,37 @@
+XTS_COMMAND=ps
+--- CMD: ps ---
+[Create] : /data/frag1164/Fragment_test_largefile
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+   10    10 255 RR       Task      - Waiting  Signal    0000000000000000 0032632 vela_fs_file_fragmentation_test -d /data/frag1164 -n 100 -s 1
+nsh> [K
+nsh> [K
+XTS_COMMAND=kill -9 10
+--- CMD: kill -9 10 ---
+kill -9 10
+TEST NO.4  The test large file was deleted successfully !
+[Create] : /data/frag1164/Fragment_test_largefile
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+   10    10 255 RR       Task      - Waiting  Signal    0000000000000000 0032632 vela_fs_file_fragmentation_test -d /data/frag1164 -n 100 -s 1
+nsh> [K
+nsh> [K
+Traceback (most recent call last):
+  File "<stdin>", line 10, in <module>
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: task remains

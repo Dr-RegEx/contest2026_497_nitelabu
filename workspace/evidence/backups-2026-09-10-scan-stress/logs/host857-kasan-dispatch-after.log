@@ -1,0 +1,100 @@
+
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-standby/nuttx:     file format elf32-littleriscv
+
+
+Disassembly of section .iram0.text:
+
+Disassembly of section .flash.text:
+
+4000358e <dispatch_syscall>:
+4000358e:	7179                	addi	sp,sp,-48
+40003590:	d226                	sw	s1,36(sp)
+40003592:	d04a                	sw	s2,32(sp)
+40003594:	cc52                	sw	s4,24(sp)
+40003596:	ca56                	sw	s5,20(sp)
+40003598:	c85a                	sw	s6,16(sp)
+4000359a:	c65e                	sw	s7,12(sp)
+4000359c:	c462                	sw	s8,8(sp)
+4000359e:	c266                	sw	s9,4(sp)
+400035a0:	c06a                	sw	s10,0(sp)
+400035a2:	d606                	sw	ra,44(sp)
+400035a4:	d422                	sw	s0,40(sp)
+400035a6:	ce4e                	sw	s3,28(sp)
+400035a8:	892a                	mv	s2,a0
+400035aa:	8a2e                	mv	s4,a1
+400035ac:	8ab2                	mv	s5,a2
+400035ae:	8b36                	mv	s6,a3
+400035b0:	8bba                	mv	s7,a4
+400035b2:	8c3e                	mv	s8,a5
+400035b4:	8cc2                	mv	s9,a6
+400035b6:	8d46                	mv	s10,a7
+400035b8:	4489                	li	s1,2
+400035ba:	1004b4f3          	csrrc	s1,sstatus,s1
+400035be:	ef011097          	auipc	ra,0xef011
+400035c2:	292080e7          	jalr	658(ra) # 2f014850 <up_cpu_index>
+400035c6:	2f01c7b7          	lui	a5,0x2f01c
+400035ca:	1f478793          	addi	a5,a5,500 # 2f01c1f4 <g_assignedtasks>
+400035ce:	00251413          	slli	s0,a0,0x2
+400035d2:	943e                	add	s0,s0,a5
+400035d4:	8522                	mv	a0,s0
+400035d6:	ef003097          	auipc	ra,0xef003
+400035da:	58e080e7          	jalr	1422(ra) # 2f006b64 <__asan_load4_noabort>
+400035de:	4000                	lw	s0,0(s0)
+400035e0:	10049073          	csrw	sstatus,s1
+400035e4:	8889                	andi	s1,s1,2
+400035e6:	c489                	beqz	s1,400035f0 <dispatch_syscall+0x62>
+400035e8:	eefff097          	auipc	ra,0xeefff
+400035ec:	a3a080e7          	jalr	-1478(ra) # 2f002022 <esp32s31_smode_irq_reenable>
+400035f0:	05440513          	addi	a0,s0,84
+400035f4:	ef003097          	auipc	ra,0xef003
+400035f8:	582080e7          	jalr	1410(ra) # 2f006b76 <__asan_store4_noabort>
+400035fc:	08000793          	li	a5,128
+40003600:	05440713          	addi	a4,s0,84
+40003604:	46f7202f          	amoor.w.aqrl	zero,a5,(a4)
+40003608:	09f00793          	li	a5,159
+4000360c:	fda00493          	li	s1,-38
+40003610:	0727e063          	bltu	a5,s2,40003670 <dispatch_syscall+0xe2>
+40003614:	0d040513          	addi	a0,s0,208
+40003618:	ef003097          	auipc	ra,0xef003
+4000361c:	55e080e7          	jalr	1374(ra) # 2f006b76 <__asan_store4_noabort>
+40003620:	1969                	addi	s2,s2,-6
+40003622:	4011a7b7          	lui	a5,0x4011a
+40003626:	a2478793          	addi	a5,a5,-1500 # 40119a24 <g_stublookup>
+4000362a:	00291493          	slli	s1,s2,0x2
+4000362e:	94be                	add	s1,s1,a5
+40003630:	8526                	mv	a0,s1
+40003632:	0da42823          	sw	s10,208(s0)
+40003636:	ef003097          	auipc	ra,0xef003
+4000363a:	52e080e7          	jalr	1326(ra) # 2f006b64 <__asan_load4_noabort>
+4000363e:	0004a883          	lw	a7,0(s1)
+40003642:	87e2                	mv	a5,s8
+40003644:	875e                	mv	a4,s7
+40003646:	8866                	mv	a6,s9
+40003648:	86da                	mv	a3,s6
+4000364a:	8656                	mv	a2,s5
+4000364c:	85d2                	mv	a1,s4
+4000364e:	854a                	mv	a0,s2
+40003650:	9882                	jalr	a7
+40003652:	84aa                	mv	s1,a0
+40003654:	05440513          	addi	a0,s0,84
+40003658:	ef003097          	auipc	ra,0xef003
+4000365c:	51e080e7          	jalr	1310(ra) # 2f006b76 <__asan_store4_noabort>
+40003660:	f7f00793          	li	a5,-129
+40003664:	05440713          	addi	a4,s0,84
+40003668:	66f7202f          	amoand.w.aqrl	zero,a5,(a4)
+4000366c:	6c83f0ef          	jal	40042d34 <nxsig_unmask_pendingsignal>
+40003670:	50b2                	lw	ra,44(sp)
+40003672:	5422                	lw	s0,40(sp)
+40003674:	5902                	lw	s2,32(sp)
+40003676:	49f2                	lw	s3,28(sp)
+40003678:	4a62                	lw	s4,24(sp)
+4000367a:	4ad2                	lw	s5,20(sp)
+4000367c:	4b42                	lw	s6,16(sp)
+4000367e:	4bb2                	lw	s7,12(sp)
+40003680:	4c22                	lw	s8,8(sp)
+40003682:	4c92                	lw	s9,4(sp)
+40003684:	4d02                	lw	s10,0(sp)
+40003686:	8526                	mv	a0,s1
+40003688:	5492                	lw	s1,36(sp)
+4000368a:	6145                	addi	sp,sp,48
+4000368c:	8082                	ret

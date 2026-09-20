@@ -1,0 +1,56 @@
+
+backups/2026-09-10-scan-stress/simd1465-preflight/pie-context.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <esp32s31_pie_save-0x2>:
+   0:	0001                	nop
+
+00000002 <esp32s31_pie_save>:
+   2:	8311009f          	esp.vst.128.ip	q0,a0,16
+   6:	8311049f          	esp.vst.128.ip	q1,a0,16
+   a:	8311089f          	esp.vst.128.ip	q2,a0,16
+   e:	83110c9f          	esp.vst.128.ip	q3,a0,16
+  12:	8311109f          	esp.vst.128.ip	q4,a0,16
+  16:	8311149f          	esp.vst.128.ip	q5,a0,16
+  1a:	8311189f          	esp.vst.128.ip	q6,a0,16
+  1e:	83111c9f          	esp.vst.128.ip	q7,a0,16
+  22:	1011021f          	esp.st.qacc.l.l.128.ip	a0,16
+  26:	1001021f          	esp.st.qacc.l.h.128.ip	a0,16
+  2a:	1811021f          	esp.st.qacc.h.l.128.ip	a0,16
+  2e:	1801021f          	esp.st.qacc.h.h.128.ip	a0,16
+  32:	1011051f          	esp.st.ua.state.ip	a0,16
+  36:	0011019f          	esp.st.u.xacc.ip	a0,0
+  3a:	88c0219b          	esp.movx.r.sar.bytes	a1
+  3e:	00459613          	slli	a2,a1,0x4
+  42:	8480219b          	esp.movx.r.fft.bit.width	a1
+  46:	8e4d                	or	a2,a2,a1
+  48:	00c502a3          	sb	a2,5(a0)
+  4c:	80c0219b          	esp.movx.r.sar	a1
+  50:	00b50323          	sb	a1,6(a0)
+  54:	8082                	ret
+  56:	0001                	nop
+
+00000058 <esp32s31_pie_restore>:
+  58:	0311009f          	esp.vld.128.ip	q0,a0,16
+  5c:	0311049f          	esp.vld.128.ip	q1,a0,16
+  60:	0311089f          	esp.vld.128.ip	q2,a0,16
+  64:	03110c9f          	esp.vld.128.ip	q3,a0,16
+  68:	0311109f          	esp.vld.128.ip	q4,a0,16
+  6c:	0311149f          	esp.vld.128.ip	q5,a0,16
+  70:	0311189f          	esp.vld.128.ip	q6,a0,16
+  74:	03111c9f          	esp.vld.128.ip	q7,a0,16
+  78:	0011021f          	esp.ld.qacc.l.l.128.ip	a0,16
+  7c:	0001021f          	esp.ld.qacc.l.h.128.ip	a0,16
+  80:	0811021f          	esp.ld.qacc.h.l.128.ip	a0,16
+  84:	0801021f          	esp.ld.qacc.h.h.128.ip	a0,16
+  88:	0011051f          	esp.ld.ua.state.ip	a0,16
+  8c:	0011031f          	esp.ld.xacc.ip	a0,0
+  90:	00554583          	lbu	a1,5(a0)
+  94:	9481a01b          	esp.movx.w.fft.bit.width	a1
+  98:	8191                	srli	a1,a1,0x4
+  9a:	98c1a01b          	esp.movx.w.sar.bytes	a1
+  9e:	00654583          	lbu	a1,6(a0)
+  a2:	90c1a01b          	esp.movx.w.sar	a1
+  a6:	8082                	ret

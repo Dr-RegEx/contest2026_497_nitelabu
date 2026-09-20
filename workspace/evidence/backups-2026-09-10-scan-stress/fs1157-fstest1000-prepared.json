@@ -1,0 +1,18 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "case": "5.1.15",
+  "command": "fstest -m /data/fstest -n 1000",
+  "receipt": "build1032-flat-category-fs-large.sha256",
+  "runner_sha256": "4929fe94db47132c2238a1fc6182da5404d2bb2bc24c7a66c2e3662e16a74a80",
+  "validation": [
+    "syntax/help passed without UART",
+    "1000-round parser accepts complete result, rejects hidden error and summary-only output",
+    "frozen1032 digest and resource config matched"
+  ],
+  "schedule": "After current1155 and one-hour5.1.17; preserve physical fixture session, do not automatically launch a potentially two-day run",
+  "prerequisites": [
+    "Preserve current storage evidence",
+    "Fresh1032 boot and existing-volume mount, no formatting",
+    "Idle UART and no concurrent storage writers"
+  ]
+}

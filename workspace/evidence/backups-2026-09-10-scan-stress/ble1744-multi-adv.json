@@ -1,0 +1,77 @@
+[
+  {
+    "status": "BOARD_MULTI_ADV_WINDOW_COMPLETE",
+    "scope": "PHONE_PEER_RECORD_REQUIRED_NOT_XTS_PASS",
+    "case": "same-public",
+    "records": [
+      {
+        "name": "yuy1",
+        "address_option": "public",
+        "handle": "0x61811060",
+        "adv_id": 1,
+        "start_status": 0,
+        "stop_callback": true
+      },
+      {
+        "name": "yuy2",
+        "address_option": "public",
+        "handle": "0x618055c8",
+        "adv_id": 2,
+        "start_status": 0,
+        "stop_callback": true
+      }
+    ],
+    "phone_observation": "pending user nRF record",
+    "uart_log": "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/ble1744-same-public/uart.log"
+  },
+  {
+    "status": "BOARD_MULTI_ADV_WINDOW_COMPLETE",
+    "scope": "PHONE_PEER_RECORD_REQUIRED_NOT_XTS_PASS",
+    "case": "same-random-id",
+    "records": [
+      {
+        "name": "yuy3",
+        "address_option": "-R random_id",
+        "handle": "0x61805870",
+        "adv_id": 1,
+        "start_status": 0,
+        "stop_callback": true
+      },
+      {
+        "name": "yuy4",
+        "address_option": "-R random_id",
+        "handle": "0x618053a8",
+        "adv_id": 2,
+        "start_status": 0,
+        "stop_callback": true
+      }
+    ],
+    "phone_observation": "pending user nRF record",
+    "uart_log": "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/ble1744-same-random-id/uart.log"
+  },
+  {
+    "status": "BOARD_MULTI_ADV_WINDOW_COMPLETE",
+    "scope": "PHONE_PEER_RECORD_REQUIRED_NOT_XTS_PASS",
+    "case": "public-random-id",
+    "records": [
+      {
+        "name": "yuy5",
+        "address_option": "public",
+        "handle": "0x618052b0",
+        "adv_id": 1,
+        "start_status": 0,
+        "stop_callback": true
+      },
+      {
+        "name": "yuy6",
+        "address_option": "-R random_id",
+        "handle": "0x61805320",
+        "adv_id": 2,
+        "start_status": 0,
+        "stop_callback": true
+      }
+    ],
+    "phone_observation": "pending user nRF record",
+    "uart_log": "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/ble1744-public-random-id/uart.log"
+  }
+]

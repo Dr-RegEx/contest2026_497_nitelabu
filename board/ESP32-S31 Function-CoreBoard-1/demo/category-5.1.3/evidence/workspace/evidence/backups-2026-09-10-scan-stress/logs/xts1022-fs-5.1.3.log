@@ -1,0 +1,997 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build974-flat-category-fs-internal.sha256
+XTS_MOUNT_EVIDENCE=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/checkpoint1021-fs-internal-mount/mount-evidence.log
+XTS_MOUNT_EVIDENCE_SHA256=c13ba71152daddcbf1a3e2df8f4f1830303985a1c706f967ceb78f41727613fc
+XTS_MEMORY_PROFILE=internal_sram_only no_psram_heap_claim
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls /dev/xtsflash
+--- CMD: ls /dev/xtsflash ---
+ls /dev/xtsflash
+ /dev/xtsflash
+nsh> [K
+nsh> [K
+XTS_COMMAND=ps
+--- CMD: ps ---
+ps
+  PID GROUP PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0   0 FIFO     Kthread   - Ready              0000000000000000 0002016 CPU0 IDLE
+    1     0 224 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 hpwork 0x2f009540 0x2f009588
+    2     0 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 lpwork 0x2f0094c0 0x2f009508
+    4     0 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004024 hr_timer
+    5     5 100 RR       Task      - Running            0000000000000000 0008128 nsh_main
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256         24         232 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_COMMAND=ls -l /data
+--- CMD: ls -l /data ---
+ls -l /data
+/data:
+ drwxrwxrwx           0 .
+ dr--r--r--           0 ..
+ -rw-r--r--       12288 persist.db
+ drwxrwxrwx           0 s04/
+ drwxrwxrwx           0 s05/
+ drwxrwxrwx           0 s06/
+ drwxrwxrwx           0 s08/
+ drwxrwxrwx           0 s09/
+ drwxrwxrwx           0 s10/
+ -rw-rw-rw-          27 test.prop
+nsh> [K
+nsh> [K
+XTS_COMMAND=mkdir /data/s03
+--- CMD: mkdir /data/s03 ---
+mkdir /data/s03
+nsh> [K
+nsh> [K
+XTS_COMMAND=vela_fs_stress_loop_create_delete_file_test /data/s03
+--- CMD: vela_fs_stress_loop_create_delete_file_test /data/s03 ---
+vela_fs_stress_loop_create_delete_file_test /data/s03
+test dir :/data/s03
+
+--------disk info (/data/s03/testDir)--------------------
+                         total : 1024 K
+          The number of blocks : 256
+The number of blocks available : 228
+                    Block size : 4096
+                     available : 912 K
+                          used : 112 K
+-------------------------------------------
+
+Test 1
+ret = 39717 file_len = 4
+The file name is randomly generated ! fileName:Fo0V
+creating no.1 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 2
+ret = 39717 file_len = 13
+The file name is randomly generated ! fileName:Fo0VNGEGiurZx
+creating no.2 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 3
+ret = 39717 file_len = 13
+The file name is randomly generated ! fileName:Z3FaQq5ZGvqNa
+creating no.3 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 4
+ret = 39717 file_len = 21
+The file name is randomly generated ! fileName:Z3FaQq5ZGvqNaq6jvJPIw
+creating no.4 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 5
+ret = 39717 file_len = 30
+The file name is randomly generated ! fileName:Z3FaQq5ZGvqNaq6jvJPIwdYJhk8sId
+creating no.5 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 6
+ret = 39717 file_len = 6
+The file name is randomly generated ! fileName:Z3FaQq
+creating no.6 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 7
+ret = 39717 file_len = 15
+The file name is randomly generated ! fileName:Z3FaQq5ZGvqNaq6
+creating no.7 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 8
+ret = 39717 file_len = 15
+The file name is randomly generated ! fileName:udOZkNEi9zRmqyX
+creating no.8 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 9
+ret = 39717 file_len = 23
+The file name is randomly generated ! fileName:udOZkNEi9zRmqyXMzBC91ug
+creating no.9 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 10
+ret = 39717 file_len = 32
+The file name is randomly generated ! fileName:udOZkNEi9zRmqyXMzBC91ugjFLq0Mlsj
+creating no.10 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 11
+ret = 39717 file_len = 8
+The file name is randomly generated ! fileName:udOZkNEi
+creating no.11 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 12
+ret = 39717 file_len = 17
+The file name is randomly generated ! fileName:udOZkNEi9zRmqyXMz
+creating no.12 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 13
+ret = 39717 file_len = 17
+The file name is randomly generated ! fileName:EtddnvkxviCNqbwCt
+creating no.13 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 14
+ret = 39717 file_len = 25
+The file name is randomly generated ! fileName:EtddnvkxviCNqbwCtrek3Eq9t
+creating no.14 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 15
+ret = 39717 file_len = 2
+The file name is randomly generated ! fileName:Et
+creating no.15 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 16
+ret = 39717 file_len = 11
+The file name is randomly generated ! fileName:EtddnvkxviC
+creating no.16 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 17
+ret = 39717 file_len = 19
+The file name is randomly generated ! fileName:EtddnvkxviCNqbwCtre
+creating no.17 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 18
+ret = 39717 file_len = 19
+The file name is randomly generated ! fileName:ZcduxCQXmmP3ChCgPZh
+creating no.18 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 19
+ret = 39717 file_len = 28
+The file name is randomly generated ! fileName:ZcduxCQXmmP3ChCgPZhyzWXeujUN
+creating no.19 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 20
+ret = 39717 file_len = 4
+The file name is randomly generated ! fileName:Zcdu
+creating no.20 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 21
+ret = 39717 file_len = 13
+The file name is randomly generated ! fileName:ZcduxCQXmmP3C
+creating no.21 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 22
+ret = 39717 file_len = 21
+The file name is randomly generated ! fileName:ZcduxCQXmmP3ChCgPZhyz
+creating no.22 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 23
+ret = 39717 file_len = 21
+The file name is randomly generated ! fileName:uD8HveVrWBeXzGAFqQhOC
+creating no.23 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 24
+ret = 39717 file_len = 30
+The file name is randomly generated ! fileName:uD8HveVrWBeXzGAFqQhOC0sd0uLsyE
+creating no.24 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 25
+ret = 39717 file_len = 6
+The file name is randomly generated ! fileName:uD8Hve
+creating no.25 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 26
+ret = 39717 file_len = 15
+The file name is randomly generated ! fileName:uD8HveVrWBeXzGA
+creating no.26 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 27
+ret = 39717 file_len = 23
+The file name is randomly generated ! fileName:uD8HveVrWBeXzGAFqQhOC0s
+creating no.27 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 28
+ret = 39717 file_len = 32
+The file name is randomly generated ! fileName:uD8HveVrWBeXzGAFqQhOC0sd0uLsyEDd
+creating no.28 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 29
+ret = 39717 file_len = 32
+The file name is randomly generated ! fileName:ERs6CJSFwuJzloaxqib4jkv3wsxFyw4v
+creating no.29 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 30
+ret = 39717 file_len = 8
+The file name is randomly generated ! fileName:ERs6CJSF
+creating no.30 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 31
+ret = 39717 file_len = 17
+The file name is randomly generated ! fileName:ERs6CJSFwuJzloaxq
+creating no.31 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 32
+ret = 39717 file_len = 25
+The file name is randomly generated ! fileName:ERs6CJSFwuJzloaxqib4jkv3w
+creating no.32 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 33
+ret = 39717 file_len = 2
+The file name is randomly generated ! fileName:ER
+creating no.33 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 34
+ret = 39717 file_len = 2
+The file name is randomly generated ! fileName:ZC
+creating no.34 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 35
+ret = 39717 file_len = 10
+The file name is randomly generated ! fileName:ZCEb9N5XyT
+creating no.35 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 36
+ret = 39717 file_len = 19
+The file name is randomly generated ! fileName:ZCEb9N5XyTMz4Cmt7p9
+creating no.36 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 37
+ret = 39717 file_len = 28
+The file name is randomly generated ! fileName:ZCEb9N5XyTMz4Cmt7p95GV3DdLEP
+creating no.37 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 38
+ret = 39717 file_len = 4
+The file name is randomly generated ! fileName:ZCEb
+creating no.38 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 39
+ret = 39717 file_len = 4
+The file name is randomly generated ! fileName:tQ9w
+creating no.39 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 40
+ret = 39717 file_len = 13
+The file name is randomly generated ! fileName:tQ9wX5V7QCnat
+creating no.40 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 41
+ret = 39717 file_len = 21
+The file name is randomly generated ! fileName:tQ9wX5V7QCnatGJGDLZu2
+creating no.41 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 42
+ret = 39717 file_len = 30
+The file name is randomly generated ! fileName:tQ9wX5V7QCnatGJGDLZu2tEexvxoQl
+creating no.42 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 43
+ret = 39717 file_len = 6
+The file name is randomly generated ! fileName:tQ9wX5
+creating no.43 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 44
+ret = 39717 file_len = 6
+The file name is randomly generated ! fileName:E1coO6
+creating no.44 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 45
+ret = 39717 file_len = 15
+The file name is randomly generated ! fileName:E1coO6qo3DY2FMg
+creating no.45 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 46
+ret = 39717 file_len = 23
+The file name is randomly generated ! fileName:E1coO6qo3DY2FMge4dzKmFo
+creating no.46 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 47
+ret = 39717 file_len = 32
+The file name is randomly generated ! fileName:E1coO6qo3DY2FMge4dzKmFopb5wOYuyL
+creating no.47 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 48
+ret = 39717 file_len = 8
+The file name is randomly generated ! fileName:E1coO6qo
+creating no.48 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 49
+ret = 39717 file_len = 8
+The file name is randomly generated ! fileName:YFXzspQe
+creating no.49 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 50
+ret = 39717 file_len = 17
+The file name is randomly generated ! fileName:YFXzspQe0X4LaVdMh
+creating no.50 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 51
+ret = 39717 file_len = 25
+The file name is randomly generated ! fileName:YFXzspQe0X4LaVdMh0Z5h4dMF
+creating no.51 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 52
+ret = 39717 file_len = 2
+The file name is randomly generated ! fileName:YF
+creating no.52 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 53
+ret = 39717 file_len = 10
+The file name is randomly generated ! fileName:YFXzspQe0X
+creating no.53 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 54
+ret = 39717 file_len = 10
+The file name is randomly generated ! fileName:tztVrEmH0d
+creating no.54 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 55
+ret = 39717 file_len = 19
+The file name is randomly generated ! fileName:tztVrEmH0dGKx94AAoI
+creating no.55 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 56
+ret = 39717 file_len = 27
+The file name is randomly generated ! fileName:tztVrEmH0dGKx94AAoIPHbfbzmP
+creating no.56 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 57
+ret = 39717 file_len = 4
+The file name is randomly generated ! fileName:tztV
+creating no.57 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 58
+ret = 39717 file_len = 13
+The file name is randomly generated ! fileName:tztVrEmH0dGKx
+creating no.58 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 59
+ret = 39717 file_len = 21
+The file name is randomly generated ! fileName:tztVrEmH0dGKx94AAoIPH
+creating no.59 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 60
+ret = 39717 file_len = 21
+The file name is randomly generated ! fileName:DEmLb8H9FhPBsozBn1INT
+creating no.60 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 61
+ret = 39717 file_len = 30
+The file name is randomly generated ! fileName:DEmLb8H9FhPBsozBn1INTnHSSbdjKd
+creating no.61 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 62
+ret = 39717 file_len = 6
+The file name is randomly generated ! fileName:DEmLb8
+creating no.62 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 63
+ret = 39717 file_len = 15
+The file name is randomly generated ! fileName:DEmLb8H9FhPBsoz
+creating no.63 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 64
+ret = 39717 file_len = 23
+The file name is randomly generated ! fileName:DEmLb8H9FhPBsozBn1INTnH
+creating no.64 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 65
+ret = 39717 file_len = 23
+The file name is randomly generated ! fileName:YpHZiwmJzMbF5VChPFoSejw
+creating no.65 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 66
+ret = 39717 file_len = 32
+The file name is randomly generated ! fileName:YpHZiwmJzMbF5VChPFoSejwOhVizbNlt
+creating no.66 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 67
+ret = 39717 file_len = 8
+The file name is randomly generated ! fileName:YpHZiwmJ
+creating no.67 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 68
+ret = 39717 file_len = 17
+The file name is randomly generated ! fileName:YpHZiwmJzMbF5VChP
+creating no.68 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 69
+ret = 39717 file_len = 25
+The file name is randomly generated ! fileName:YpHZiwmJzMbF5VChPFoSejwOh
+creating no.69 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 70
+ret = 39717 file_len = 25
+The file name is randomly generated ! fileName:s3APyDnVPl9Fe6TgqZ9bsmHVe
+creating no.70 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 71
+ret = 39717 file_len = 2
+The file name is randomly generated ! fileName:s3
+creating no.71 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 72
+ret = 39717 file_len = 10
+The file name is randomly generated ! fileName:s3APyDnVPl
+creating no.72 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 73
+ret = 39717 file_len = 18
+The file name is randomly generated ! fileName:s3APyDnVPl9Fe6TgqZ
+creating no.73 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 74
+ret = 39717 file_len = 26
+The file name is randomly generated ! fileName:s3APyDnVPl9Fe6TgqZ9bsmHVe2
+creating no.74 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 75
+ret = 39717 file_len = 26
+The file name is randomly generated ! fileName:DnWuwIZgw44Pj9iSYE1RAf9SrF
+creating no.75 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 76
+ret = 39717 file_len = 3
+The file name is randomly generated ! fileName:DnW
+creating no.76 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 77
+ret = 39717 file_len = 11
+The file name is randomly generated ! fileName:DnWuwIZgw44
+creating no.77 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 78
+ret = 39717 file_len = 20
+The file name is randomly generated ! fileName:DnWuwIZgw44Pj9iSYE1R
+creating no.78 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 79
+ret = 39717 file_len = 29
+The file name is randomly generated ! fileName:DnWuwIZgw44Pj9iSYE1RAf9SrFbsm
+creating no.79 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 80
+ret = 39717 file_len = 29
+The file name is randomly generated ! fileName:X2HDoGql8cbhOlKoEFjliM1GAur4I
+creating no.80 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 81
+ret = 39717 file_len = 5
+The file name is randomly generated ! fileName:X2HDo
+creating no.81 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 82
+ret = 39717 file_len = 14
+The file name is randomly generated ! fileName:X2HDoGql8cbhOl
+creating no.82 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 83
+ret = 39717 file_len = 22
+The file name is randomly generated ! fileName:X2HDoGql8cbhOlKoEFjliM
+creating no.83 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 84
+ret = 39717 file_len = 31
+The file name is randomly generated ! fileName:X2HDoGql8cbhOlKoEFjliM1GAur4I2Z
+creating no.84 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 85
+ret = 39717 file_len = 31
+The file name is randomly generated ! fileName:scP0kG34a9nKrVUVN5AntdKln8I14Ix
+creating no.85 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 86
+ret = 39717 file_len = 7
+The file name is randomly generated ! fileName:scP0kG3
+creating no.86 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 87
+ret = 39717 file_len = 16
+The file name is randomly generated ! fileName:scP0kG34a9nKrVUV
+creating no.87 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 88
+ret = 39717 file_len = 24
+The file name is randomly generated ! fileName:scP0kG34a9nKrVUVN5AntdKl
+creating no.88 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 89
+ret = 39717 file_len = 1
+The file name is randomly generated ! fileName:s
+creating no.89 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 90
+ret = 39717 file_len = 1
+The file name is randomly generated ! fileName:C
+creating no.90 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 91
+ret = 39717 file_len = 9
+The file name is randomly generated ! fileName:CrgRXkn8t
+creating no.91 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 92
+ret = 39717 file_len = 18
+The file name is randomly generated ! fileName:CrgRXkn8tgREh0S6Dp
+creating no.92 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 93
+ret = 39717 file_len = 26
+The file name is randomly generated ! fileName:CrgRXkn8tgREh0S6DpjpotcouX
+creating no.93 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 94
+ret = 39717 file_len = 3
+The file name is randomly generated ! fileName:Crg
+creating no.94 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 95
+ret = 39717 file_len = 11
+The file name is randomly generated ! fileName:CrgRXkn8tgR
+creating no.95 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 96
+ret = 39717 file_len = 11
+The file name is randomly generated ! fileName:Xb2wVfXoqMv
+creating no.96 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 97
+ret = 39717 file_len = 20
+The file name is randomly generated ! fileName:Xb2wVfXoqMv2YzA5o2du
+creating no.97 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 98
+ret = 39717 file_len = 28
+The file name is randomly generated ! fileName:Xb2wVfXoqMv2YzA5o2dum2osFmLi
+creating no.98 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 99
+ret = 39717 file_len = 5
+The file name is randomly generated ! fileName:Xb2wV
+creating no.99 file
+create file success !
+write file success !
+remove file success !
+
+
+Test 100
+ret = 39717 file_len = 14
+The file name is randomly generated ! fileName:Xb2wVfXoqMv2Yz
+creating no.100 file
+create file success !
+write file success !
+remove file success !
+
+test completed......
+TEST PASSED !
+nsh> [K
+nsh> [K
+XTS_CASE=5.1.3 PASS original_workload=1
+XTS_COMMAND=ls -l /data/s03
+--- CMD: ls -l /data/s03 ---
+ls -l /data/s03
+/data/s03:
+ drwxrwxrwx           0 .
+ drwxrwxrwx           0 ..
+nsh> [K
+nsh> [K
+XTS_COMMAND=df
+--- CMD: df ---
+df
+  Block    Number
+  Size     Blocks       Used   Available Mounted on
+  4096        256         26         230 /data
+     0          0          0           0 /proc
+   512          1          1           0 /tmp
+nsh> [K
+nsh> [K
+XTS_CASE_POSTCHECK=COMPLETE retained_directory=/data/s03

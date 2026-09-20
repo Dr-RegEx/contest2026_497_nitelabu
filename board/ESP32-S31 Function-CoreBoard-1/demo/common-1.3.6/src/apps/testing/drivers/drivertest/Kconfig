@@ -1,0 +1,57 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config TESTING_DRIVER_TEST
+	tristate "vela cmocka driver test"
+	default n
+	depends on TESTING_CMOCKA
+	---help---
+		Enable the cmocka driver test
+
+if TESTING_DRIVER_TEST
+
+config TESTING_DRIVER_TEST_PRIORITY
+	int "Task priority"
+	default 100
+
+config TESTING_DRIVER_TEST_STACKSIZE
+	int "Stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config TESTING_DRIVER_TEST_SIMPLE
+	bool "Enable cmocka driver simple test"
+	default y
+
+config TESTING_DRIVER_GPIO
+	bool "Enable cmocka driver gpio test"
+	default y
+
+if TESTING_DRIVER_GPIO
+
+config TESTING_DRIVER_GPIO_OUTPUT_PIN
+	string "The name of gpio out pin"
+	default "/dev/gpio1"
+
+config TESTING_DRIVER_GPIO_INPUT_PIN
+	string "The name of gpio int pin"
+	default "/dev/gpio2"
+
+config TESTING_DRIVER_GPIO_LOOP
+	int "The gpio pin2pin loop"
+	default 0
+	range 0 1
+
+config TESTING_DRIVER_GPIO_INTERRUPT_TYPE
+	int "The type of gpio interrupt pin"
+	default 0
+	range 0 3
+
+endif
+
+endif
+
+menu "devicetree"
+	source "$APPSDIR/testing/drivers/drivertest/devicetree/Kconfig"
+endmenu

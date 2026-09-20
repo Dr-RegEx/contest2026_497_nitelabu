@@ -1,0 +1,68 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x13fa8
+entry 0x2f01035c
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x13fa8  (81832)
+padd: lma 0x00016018 vma 0x00000000 len 0xa000   (40960)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1b108  (110856)
+padd: lma 0x0003b130 vma 0x00000000 len 0x4fc8   (20424)
+imap: lma 0x00040100 vma 0x40000100 len 0xc289c  (796828)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_BOOT=PASS seconds=0.696
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=79 data=0 fcs=5 abort=8 full=0 fifo=0 other=5
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=6 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/getprime ---
+ls /system/bin/getprime
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+ /system/bin/getprime
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+[CPU0] nxposix_spawn_exec: ERROR: exec failed: 2
+      total       used       free    maxused    maxfree  nused  nfree name
+     304828      73004     231824      88112     209256    190     10 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+XTS_COMMAND=getprime
+getprime
+Set thread priority to 10
+Set thread policy to SCHED_RR
+Start thread #0
+thread #0 started, looking for primes < 10000, doing 10 run(s)
+thread #0 finished, found 1230 primes, last one was 9973
+Done
+getprime took 1040 msec
+nsh> [K
+nsh> [KXTS_STANDARD=getprime PASS seconds=1.171

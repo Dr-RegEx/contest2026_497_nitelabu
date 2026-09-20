@@ -1,0 +1,8 @@
+#include "../xts-flat-category-fs-name/defconfig"
+
+# Original full-size FS workloads on separate 3 MiB scratch; no boot mount.
+CONFIG_ESP32S31_XTS_FLASH_LARGE=y
+CONFIG_TESTING_TESTCASES_STACKSIZE=32768
+CONFIG_BOARDCTL_RESET=y
+CONFIG_BOARD_RESET_ON_ASSERT=2
+CONFIG_NSH_LINELEN=128

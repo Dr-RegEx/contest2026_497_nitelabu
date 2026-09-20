@@ -1,0 +1,58 @@
+{
+  "name": "ble-controller-info",
+  "title": "BLE 控制器版本与 LE 特性实板读取",
+  "keys": [
+    "extra:8"
+  ],
+  "profile": "demo-rmt-bttool-kernel",
+  "kind": "capability-observation",
+  "flat": false,
+  "sources": [
+    "frameworks/connectivity/bluetooth/tools",
+    "nuttx/arch/risc-v/src/esp32s31/esp32s31_ble.c",
+    "external/zblue/zblue/subsys/bluetooth/host/hci_core.c"
+  ],
+  "summary": "1747 Kernel/AppFS 配对镜像实际读取控制器 HCI=6.0(0x0e)、rev=0x0000、mfr=0x02e5、LEfeat=ff79ffff901b0000，enable/disable 正常。数据来自 HCI 0x1001/0x2003 的控制器回包，纠正旧库名推断；不证明全部 BLE 5.4 能力、认证、LE Audio、Mesh 或全部 xTS 互通通过。",
+  "steps": "NSH 中确认 `/dev/ttyHCI0` 和可写的 `/data/misc/bt`。若 `/data` 尚未挂载，可为本次临时测试挂载 tmpfs；已有真实数据分区时不要覆盖挂载或格式化。\n\n```text\nmkdir -p /data\nmount -t tmpfs /data\nmkdir -p /data/misc/bt\nbttool\nenable\nstate\n```\n\n上面的 mount 仅适用于未挂载 `/data` 的情况。保存控制器版本/LE 特性日志及初始化结果；历史 state=2。然后执行：\n\n```text\ndisable\nstate\nquit\n```\n\n应回到 state=0 并退出 NSH。保存实际回包值，不把常量、库文件名或 Host 版本当作控制器实测，也不据此修改全部 BLE 用例状态。",
+  "local_sources": [
+    {
+      "origin": "frameworks/connectivity/bluetooth/tools",
+      "path": "src/frameworks/connectivity/bluetooth/tools"
+    },
+    {
+      "origin": "nuttx/arch/risc-v/src/esp32s31/esp32s31_ble.c",
+      "path": "src/nuttx/arch/risc-v/src/esp32s31/esp32s31_ble.c"
+    },
+    {
+      "origin": "external/zblue/zblue/subsys/bluetooth/host/hci_core.c",
+      "path": "src/external/zblue/zblue/subsys/bluetooth/host/hci_core.c"
+    }
+  ],
+  "local_config": "config/demo-rmt-bttool-kernel/defconfig",
+  "local_evidence": [
+    {
+      "origin": "backups/2026-09-10-scan-stress/ble-controller-live-result.md",
+      "path": "evidence/review.md",
+      "sha256": "af7b1323df226a9f0c4437e1dadb487c36cac578ff1d49b881a57a714f6de877",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/ble-controller-resume-live/uart.log",
+      "path": "evidence/uart.log",
+      "sha256": "145143137d349f73b264d41bdfc40a97db7bac120bd9bd4ab5f21516475e8c6a",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/ble-controller-resume-live/result.json",
+      "path": "evidence/result.json",
+      "sha256": "fa388c1a11bff5d479b681dd8eb9fc4be86065b7832432ec09c2b4038601f93e",
+      "redacted": false
+    },
+    {
+      "origin": "backups/2026-09-10-scan-stress/build1747-ble-controller-info.sha256",
+      "path": "evidence/historical-images.sha256",
+      "sha256": "5f221842db6490a0e9530134aed9ac085ba73c364f3a800bc692865fc7df315e",
+      "redacted": false
+    }
+  ]
+}

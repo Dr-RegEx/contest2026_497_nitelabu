@@ -1,0 +1,34 @@
+make  all-recursive
+make[1]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2'
+Making all in compat
+make[2]: Entering directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2/compat'
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include  -Wall -O2  -MT Thread.o -MD -MP -MF .deps/Thread.Tpo -c -o Thread.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/Thread.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include  -Wall -O2  -MT error.o -MD -MP -MF .deps/error.Tpo -c -o error.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/error.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include  -Wall -O2  -MT delay.o -MD -MP -MF .deps/delay.Tpo -c -o delay.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/delay.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include  -Wall -O2  -MT gettimeofday.o -MD -MP -MF .deps/gettimeofday.Tpo -c -o gettimeofday.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/gettimeofday.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include  -Wall -O2  -MT gettcpinfo.o -MD -MP -MF .deps/gettcpinfo.Tpo -c -o gettcpinfo.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/gettcpinfo.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include  -Wall -O2  -MT inet_ntop.o -MD -MP -MF .deps/inet_ntop.Tpo -c -o inet_ntop.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/inet_ntop.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include  -Wall -O2  -MT inet_pton.o -MD -MP -MF .deps/inet_pton.Tpo -c -o inet_pton.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/inet_pton.c
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include  -Wall -O2  -MT signal.o -MD -MP -MF .deps/signal.Tpo -c -o signal.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/signal.c
+mv -f .deps/gettimeofday.Tpo .deps/gettimeofday.Po
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include  -Wall -O2  -MT snprintf.o -MD -MP -MF .deps/snprintf.Tpo -c -o snprintf.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/snprintf.c
+mv -f .deps/snprintf.Tpo .deps/snprintf.Po
+gcc -DHAVE_CONFIG_H -I. -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat -I..  -I/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/include -I../include  -Wall -O2  -MT string.o -MD -MP -MF .deps/string.Tpo -c -o string.o /home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/string.c
+mv -f .deps/inet_pton.Tpo .deps/inet_pton.Po
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/Thread.c: In function ‘thread_start’:
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/Thread.c:242:42: error: ‘CONFIG_UTILS_IPERF2_STACKSIZE’ undeclared (first use in this function)
+  242 |         pthread_attr_setstacksize(&attr, CONFIG_UTILS_IPERF2_STACKSIZE);
+      |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/regex/work/esp32s31-openvela/openvela-dev/external/iperf2/iperf2/compat/Thread.c:242:42: note: each undeclared identifier is reported only once for each function it appears in
+make[2]: *** [Makefile:377: Thread.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+mv -f .deps/error.Tpo .deps/error.Po
+mv -f .deps/inet_ntop.Tpo .deps/inet_ntop.Po
+mv -f .deps/gettcpinfo.Tpo .deps/gettcpinfo.Po
+mv -f .deps/signal.Tpo .deps/signal.Po
+mv -f .deps/string.Tpo .deps/string.Po
+mv -f .deps/delay.Tpo .deps/delay.Po
+make[2]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2/compat'
+make[1]: *** [Makefile:596: all-recursive] Error 1
+make[1]: Leaving directory '/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/host-iperf2'
+make: *** [Makefile:536: all] Error 2

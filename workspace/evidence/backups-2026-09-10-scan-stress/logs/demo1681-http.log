@@ -1,0 +1,34 @@
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f018bc0 0x2f018c0c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 124 RR       Kthread   - Waiting  Semaphore 0000000000000000 0004016 ble_ctrl
+    6     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    7     7 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+nsh> [K
+nsh> [K
+--- CMD: prlimit -s 8192 s31demo --status ---
+prlimit -s 8192 s31demo --status
+S31_DEMO_INTERFACE=wlan0
+S31_DEMO_UPTIME_SECONDS=757
+S31_DEMO_INTERFACE_UP=1
+S31_DEMO_IPV4=192.168.1.60
+S31_DEMO_DEVICE=/dev/leds0 STATE=PRESENT
+S31_DEMO_DEVICE=/dev/buttons STATE=PRESENT
+S31_DEMO_DEVICE=/dev/i2c0 STATE=PRESENT
+S31_DEMO_DEVICE=/dev/audio/pcm0p STATE=ABSENT
+S31_DEMO_DEVICE=/dev/audio/pcm0c STATE=ABSENT
+S31_DEMO_DEVICE=/dev/ttyHCI0 STATE=PRESENT
+S31_DEMO_STATUS=OK
+nsh> [K
+nsh> [K
+--- CMD: prlimit -s 8192 s31demo wlan0 & ---
+prlimit -s 8192 s31demo wlan0 &
+s31demo [27:101]
+nsh> S31_DEMO_READY port=8080 interface=wlan0
+[K
+nsh> [K
+{"status": "PASS", "receipt": "build1676-tcp-sack.sha256", "scope": "existing HTTP demo on1676; audio integration not established; node presence is not test acceptance", "server_pid": 27, "http_status": {"board": "ESP32-S31", "ipv4": "192.168.1.60", "uptime_seconds": 758, "requests": 2}}

@@ -1,0 +1,394 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+new file mode 100644
+index 0000000..2d1fcf8
+--- /dev/null
++++ b/CMakeLists.txt
+@@ -0,0 +1,4 @@
++# SPDX-License-Identifier: Apache-2.0
++
++add_subdirectory(testcases)
++nuttx_generate_kconfig(MENUDESC "Vela Tests")
+diff --git a/Kconfig b/Kconfig
+index c45d2d6..331afe1 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -6,6 +6,6 @@
+ #
+ 
+ menu "Vela Tests"
+-source "$APPSDIR/tests/testcases/Kconfig"
+-source "$APPSDIR/tests/testsuites/Kconfig"
++source "/home/regex/work/esp32s31-openvela/openvela-dev/tests/testcases/Kconfig"
++source "/home/regex/work/esp32s31-openvela/openvela-dev/tests/testsuites/Kconfig"
+ endmenu # Vela Tests
+diff --git a/testcases/CMakeLists.txt b/testcases/CMakeLists.txt
+new file mode 100644
+index 0000000..9e7c0d5
+--- /dev/null
++++ b/testcases/CMakeLists.txt
+@@ -0,0 +1,27 @@
++# SPDX-License-Identifier: Apache-2.0
++
++# Register the existing filesystem cases without changing their test bodies.
++# Other testcase families still use their existing Make integration.
++if(CONFIG_TESTS_TESTCASES)
++  macro(testcase_incdirs)
++    list(APPEND TESTCASE_INCDIRS ${ARGN})
++  endmacro()
++
++  macro(testcase_srcs)
++    list(APPEND TESTCASE_SRCS ${ARGN})
++  endmacro()
++
++  function(testcase_app name source)
++    nuttx_add_application(
++      NAME ${name}
++      MODULE ${CONFIG_TESTS_TESTCASES}
++      PRIORITY ${CONFIG_TESTING_TESTCASES_PRIORITY}
++      STACKSIZE ${CONFIG_TESTING_TESTCASES_STACKSIZE}
++      SRCS ${source} ${TESTCASE_SRCS}
++      INCLUDE_DIRECTORIES ${TESTCASE_INCDIRS}
++      COMPILE_FLAGS -Werror -Wno-unused-function)
++  endfunction()
++
++  add_subdirectory(vela_fs_test)
++  add_subdirectory(kvtest)
++endif()
+diff --git a/testcases/vela_fs_test/fs/stability/test01.c b/testcases/vela_fs_test/fs/stability/test01.c
+index 8b82ac1..f418c62 100644
+--- a/testcases/vela_fs_test/fs/stability/test01.c
++++ b/testcases/vela_fs_test/fs/stability/test01.c
+@@ -311,7 +311,8 @@ static void do_test(void)
+     time_t start, finish;
+     test_flag = 0;
+     int status;
+-    pthread_t thread1, thread2, thread3;
++    pthread_t threads[3];
++    int created = 0;
+     pthread_attr_t attr;
+     pthread_mutex_init(&mutex, NULL);
+     status = pthread_attr_init(&attr);
+@@ -336,57 +337,75 @@ static void do_test(void)
+         return;
+     }
+ 
+-    status = pthread_create(&thread1, &attr, thread_funtion_1, NULL);
++    pthread1_exit = 0;
++    pthread2_exit = 0;
++    pthread3_exit = 0;
++    status = pthread_create(&threads[0], &attr, thread_funtion_1, NULL);
+     if (status != 0)
+     {
+         syslog(LOG_ERR, "[main_process] pthread_test  pthread_create failed, status=%d\n", status);
+         test_flag = 1;
+-        return;
++        goto stop_threads;
+     }
+     else
+     {
++        created++;
+         syslog(LOG_INFO, "[main_process] creat thread success !  name=%s\n", THREAD_1);
+     }
+-    status = pthread_create(&thread2, &attr, thread_funtion_2, NULL);
++    status = pthread_create(&threads[1], &attr, thread_funtion_2, NULL);
+     if (status != 0)
+     {
+         syslog(LOG_ERR, "[main_process] pthread_test, pthread_create failed, status=%d\n", status);
+         test_flag = 1;
+-        return;
++        goto stop_threads;
+     }
+     else
+     {
++        created++;
+         syslog(LOG_INFO, "[main_process] creat thread success !  name=%s\n", THREAD_2);
+     }
+-    status = pthread_create(&thread3, &attr, thread_funtion_3, NULL);
++    status = pthread_create(&threads[2], &attr, thread_funtion_3, NULL);
+     if (status != 0)
+     {
+         syslog(LOG_ERR, "[main_process] pthread_test, pthread_create failed, status=%d\n", status);
+         test_flag = 1;
+-        return;
++        goto stop_threads;
+     }
+     else
+     {
++        created++;
+         syslog(LOG_INFO, "[main_process] creat thread success !  name=%s\n", THREAD_3);
+     }
+-    pthread1_exit = 0;
+-    pthread2_exit = 0;
+-    pthread3_exit = 0;
+     time(&start);
+     while (1)
+     {
+         time(&finish);
+         if ((finish - start) > test_time * 60)
+         {
+-            pthread1_exit = 1;
+-            pthread2_exit = 1;
+-            pthread3_exit = 1;
+             syslog(LOG_INFO, "[main_process] Exiting the child thread ... ...\n");
+-            sleep(2);
+             break;
+         }
+         sleep(10);
+     }
++stop_threads:
++    pthread1_exit = 1;
++    pthread2_exit = 1;
++    pthread3_exit = 1;
++
++    /* Workers may still be sleeping or using test_fp. Join before reading
++     * their final results, closing the shared stream, or removing files.
++     * This also drains workers if a later pthread_create() failed.
++     */
++    for (int i = 0; i < created; i++)
++    {
++        status = pthread_join(threads[i], NULL);
++        if (status != 0)
++        {
++            syslog(LOG_ERR, "[main_process] pthread_join failed, status=%d\n", status);
++            test_flag |= 8;
++        }
++    }
++
+     switch (test_flag)
+     {
+     case 0:
+diff --git a/testcases/vela_fs_test/fs/stability/test04.c b/testcases/vela_fs_test/fs/stability/test04.c
+index 8c7642c..9ebc38d 100644
+--- a/testcases/vela_fs_test/fs/stability/test04.c
++++ b/testcases/vela_fs_test/fs/stability/test04.c
+@@ -100,13 +100,13 @@ static int get_file_size_test(const char *filename)
+         return -1;
+ }
+ 
+-static int checkBuffer(char *buf, int c)
++static int checkBuffer(const char *buf, size_t length, int c)
+ {
+-    for (int i = 0; i < strlen(buf); i++)
++    for (size_t i = 0; i < length; i++)
+     {
+-        if (*(buf++) != (c & 0xff))
++        if ((unsigned char)buf[i] != (c & 0xff))
+         {
+-            syslog(LOG_ERR, "Check error at position %d\n", i);
++            syslog(LOG_ERR, "Check error at position %zu\n", i);
+             return ERROR;
+         }
+     }
+@@ -198,7 +198,7 @@ static int file_check(char *filename)
+     int fd;
+     char *check_buf = NULL;
+     ssize_t r_size = 0;
+-    fd = open(TEST_FILE_NAME_1, O_RDONLY, 0777);
++    fd = open(filename, O_RDONLY);
+     if (fd < 0)
+     {
+         syslog(LOG_ERR, "open file for read Fail !\n ");
+@@ -206,18 +206,28 @@ static int file_check(char *filename)
+     }
+ 
+     check_buf = (char *)malloc(sizeof(char) * 512);
++    if (check_buf == NULL)
++    {
++        syslog(LOG_ERR, "Failed to allocate file check buffer\n");
++        close(fd);
++        return ERROR;
++    }
+ 
+     do
+     {
+-        memset(check_buf, '\0', 512);
+         r_size = read(fd, check_buf, 512);
+-        if (r_size <= 0)
++        if (r_size < 0)
++        {
++            syslog(LOG_ERR, "Failed to read file ! filename:%s errno:%d\n", filename, errno);
++            close(fd);
++            free(check_buf);
++            return ERROR;
++        }
++        if (r_size == 0)
+         {
+-            syslog(LOG_INFO, "Failed to read file or file is empty ! filename:%s\n", filename);
+             break;
+         }
+-        check_buf[r_size] = 0;
+-        if (checkBuffer(check_buf, 0x65) == ERROR)
++        if (checkBuffer(check_buf, (size_t)r_size, 0x65) == ERROR)
+         {
+             syslog(LOG_ERR, "Data consistency check failed ... \n");
+             close(fd);
+@@ -291,4 +301,4 @@ int main(int argc, FAR char *argv[])
+     }
+ 
+     return 0;
+-}
+\ No newline at end of file
++}
+diff --git a/testcases/vela_fs_test/fs/stress/performance_test.c b/testcases/vela_fs_test/fs/stress/performance_test.c
+index 973127b..5fdd471 100644
+--- a/testcases/vela_fs_test/fs/stress/performance_test.c
++++ b/testcases/vela_fs_test/fs/stress/performance_test.c
+@@ -10,10 +10,19 @@
+ #include <sched.h>
+ #include <sys/types.h>
+ 
++static double elapsed_seconds(const struct timespec *start,
++                              const struct timespec *finish)
++{
++    time_t seconds = finish->tv_sec - start->tv_sec;
++    long nanoseconds = finish->tv_nsec - start->tv_nsec;
++
++    return (double)seconds + (double)nanoseconds / 1000000000.0;
++}
++
+ static double write_speed(char *filepath, size_t block, int count)
+ {
+     double duration, speed;
+-    clock_t start, finish;
++    struct timespec start, finish;
+     int ret, i;
+     int out = open(filepath, O_WRONLY | O_CREAT | O_TRUNC, 0700);
+     if (out < 0)
+@@ -28,7 +37,7 @@ static double write_speed(char *filepath, size_t block, int count)
+         return 0;
+     }
+     memset(buf, 65, block);
+-    start = clock();
++    clock_gettime(CLOCK_MONOTONIC, &start);
+     for (i = 0; i < count; i++)
+     {
+         ret = write(out, buf, block);
+@@ -38,8 +47,14 @@ static double write_speed(char *filepath, size_t block, int count)
+             break;
+         }
+     }
+-    finish = clock();
+-    duration = (double)(finish - start) / CLOCKS_PER_SEC;
++    clock_gettime(CLOCK_MONOTONIC, &finish);
++    duration = elapsed_seconds(&start, &finish);
++    if (i != count || duration <= 0.0)
++    {
++        free(buf);
++        close(out);
++        return 0.0;
++    }
+     speed = block / 1024.0 * i / duration;
+     free(buf);
+     close(out);
+@@ -49,7 +64,7 @@ static double write_speed(char *filepath, size_t block, int count)
+ static double read_speed(char *filepath, size_t block, int count)
+ {
+     double duration, speed;
+-    clock_t start, finish;
++    struct timespec start, finish;
+     int ret, i;
+     int out = open(filepath, O_RDONLY, 0700);
+     if (out < 0)
+@@ -63,7 +78,7 @@ static double read_speed(char *filepath, size_t block, int count)
+         close(out);
+         return 0;
+     }
+-    start = clock();
++    clock_gettime(CLOCK_MONOTONIC, &start);
+     for (i = 0; i < count; i++)
+     {
+         ret = read(out, buf, block);
+@@ -73,8 +88,14 @@ static double read_speed(char *filepath, size_t block, int count)
+             break;
+         }
+     }
+-    finish = clock();
+-    duration = (double)(finish - start) / CLOCKS_PER_SEC;
++    clock_gettime(CLOCK_MONOTONIC, &finish);
++    duration = elapsed_seconds(&start, &finish);
++    if (i != count || duration <= 0.0)
++    {
++        free(buf);
++        close(out);
++        return 0.0;
++    }
+     speed = block / 1024.0 * i / duration;
+     free(buf);
+     close(out);
+@@ -85,7 +106,7 @@ static double rand_write_speed(char *filepath, size_t block, int count)
+ {
+     srand((unsigned int)time(NULL));
+     double duration, speed;
+-    clock_t start, finish;
++    struct timespec start, finish;
+     int ret, i;
+     int out = open(filepath, O_WRONLY, 0700);
+     if (out < 0)
+@@ -100,7 +121,7 @@ static double rand_write_speed(char *filepath, size_t block, int count)
+         return 0;
+     }
+     memset(buf, 65, block);
+-    start = clock();
++    clock_gettime(CLOCK_MONOTONIC, &start);
+     for (i = 0; i < count; i++)
+     {
+         ret = lseek(out, (rand() % count) * block, SEEK_SET);
+@@ -116,8 +137,14 @@ static double rand_write_speed(char *filepath, size_t block, int count)
+             break;
+         }
+     }
+-    finish = clock();
+-    duration = (double)(finish - start) / CLOCKS_PER_SEC;
++    clock_gettime(CLOCK_MONOTONIC, &finish);
++    duration = elapsed_seconds(&start, &finish);
++    if (i != count || duration <= 0.0)
++    {
++        free(buf);
++        close(out);
++        return 0.0;
++    }
+     speed = block / 1024.0 * i / duration;
+     free(buf);
+     close(out);
+@@ -128,7 +155,7 @@ static double rand_read_speed(char *filepath, size_t block, int count)
+ {
+     srand((unsigned int)time(NULL));
+     double duration, speed;
+-    clock_t start, finish;
++    struct timespec start, finish;
+     int ret, i;
+     int out = open(filepath, O_RDONLY, 0700);
+     if (out < 0)
+@@ -142,7 +169,7 @@ static double rand_read_speed(char *filepath, size_t block, int count)
+         close(out);
+         return 0;
+     }
+-    start = clock();
++    clock_gettime(CLOCK_MONOTONIC, &start);
+     for (i = 0; i < count; i++)
+     {
+         ret = lseek(out, (rand() % count) * block, SEEK_SET);
+@@ -158,8 +185,14 @@ static double rand_read_speed(char *filepath, size_t block, int count)
+             break;
+         }
+     }
+-    finish = clock();
+-    duration = (double)(finish - start) / CLOCKS_PER_SEC;
++    clock_gettime(CLOCK_MONOTONIC, &finish);
++    duration = elapsed_seconds(&start, &finish);
++    if (i != count || duration <= 0.0)
++    {
++        free(buf);
++        close(out);
++        return 0.0;
++    }
+     speed = block / 1024.0 * i / duration;
+     free(buf);
+     close(out);
+@@ -285,4 +318,4 @@ int main(int argc, FAR char *argv[])
+     }
+     // remove(filepath);
+     return 0;
+-}
+\ No newline at end of file
++}

@@ -1,0 +1,89 @@
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 20 2026 00:20:45 risc-v esp32s31-core-function-board
+nsh> [K
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at DOWN mtu 1500
+	inet addr:0.0.0.0 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000000 00000000 00000000 0               
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000000 00000000 00000000 00000000 0                
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0000  0000  0000  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0000  0000  0000  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+iperf2 -v
+iperf version 2.1.8 (12 August 2022) pthreads
+nsh> [K
+renew wlan0
+nsh> [K
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    0000000f 00000000 00000000 77c             
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000002 00000004 00000000 00000000 26d              
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0002  0000  0002  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0002  0000  0002  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+ping -c 3 192.168.1.29
+PING 192.168.1.29 56 bytes of data
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] arp_send: ERROR: arp_wait failed: -110, ipaddr: 192.168.1.29
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 0: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 1: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 2: 101
+3 packets transmitted, 0 received, 100% packet loss, time 3003 ms
+nsh> [K
+START 5.1.22-rx
+RESULT {"case": "5.1.22", "direction_from_board": "rx", "protocol": "TCP", "status": "ERROR", "start": "2026-09-20T01:23:58.748932+08:00", "requested_duration_seconds": 300, "error": "Board command timeout: iperf2 -s -p 5001 -i 1 &", "end": "2026-09-20T01:24:25.704985+08:00", "log_sha256": {"5.1.22-rx-board.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "5.1.22-rx-host.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}}
+START 5.1.23-tx
+RESULT {"case": "5.1.23", "direction_from_board": "tx", "protocol": "TCP", "status": "INCOMPLETE", "start": "2026-09-20T01:24:25.706184+08:00", "requested_duration_seconds": 300, "board_summaries": [], "host_summaries": [], "end": "2026-09-20T01:24:32.550092+08:00", "log_sha256": {"5.1.23-tx-board.log": "3b080228765e0032421d6ef69312fcbe61e345f501ec200d8d3df1f390c14d7b", "5.1.23-tx-host.log": "b188f6ac5846a2ab8f8111f32149542de783965cb0e47b6cf400bdb7058127b3"}}
+START 5.1.24-rx
+RESULT {"case": "5.1.24", "direction_from_board": "rx", "protocol": "UDP", "status": "ERROR", "start": "2026-09-20T01:24:32.550926+08:00", "requested_duration_seconds": 300, "error": "Board command timeout: iperf2 -s -p 5003 -i 1 -u &", "end": "2026-09-20T01:24:59.635125+08:00", "log_sha256": {"5.1.24-rx-board.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "5.1.24-rx-host.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}}
+START 5.1.25-tx
+PROGRESS 5.1.25-tx 30s [  1] 26.00-27.00 sec   461 KBytes  3.77 Mbits/sec
+PROGRESS 5.1.25-tx 60s [  1] 53.00-54.00 sec   452 KBytes  3.70 Mbits/sec
+PROGRESS 5.1.25-tx 90s [  1] 80.00-81.00 sec   446 KBytes  3.66 Mbits/sec
+PROGRESS 5.1.25-tx 120s [  1] 108.00-109.00 sec   482 KBytes  3.95 Mbits/sec
+PROGRESS 5.1.25-tx 150s [  1] 135.00-136.00 sec   455 KBytes  3.73 Mbits/sec
+PROGRESS 5.1.25-tx 181s [  1] 162.00-163.00 sec   461 KBytes  3.77 Mbits/sec
+PROGRESS 5.1.25-tx 211s [  1] 190.00-191.00 sec   469 KBytes  3.85 Mbits/sec
+PROGRESS 5.1.25-tx 241s [  1] 217.00-218.00 sec   461 KBytes  3.77 Mbits/sec
+PROGRESS 5.1.25-tx 271s [  1] 245.00-246.00 sec   457 KBytes  3.74 Mbits/sec
+PROGRESS 5.1.25-tx 301s [  1] 272.00-273.00 sec   462 KBytes  3.79 Mbits/sec
+RESULT {"case": "5.1.25", "direction_from_board": "tx", "protocol": "UDP", "status": "RECORDED", "start": "2026-09-20T01:24:59.635914+08:00", "requested_duration_seconds": 300, "board_summaries": ["[  1] 10.00-11.00 sec   469 KBytes  3.85 Mbits/sec", "[  1] 20.00-21.00 sec   467 KBytes  3.82 Mbits/sec", "[  1] 30.00-31.00 sec   455 KBytes  3.73 Mbits/sec", "[  1] 40.00-41.00 sec   478 KBytes  3.92 Mbits/sec", "[  1] 50.00-51.00 sec   454 KBytes  3.72 Mbits/sec", "[  1] 60.00-61.00 sec   461 KBytes  3.77 Mbits/sec", "[  1] 70.00-71.00 sec   465 KBytes  3.81 Mbits/sec", "[  1] 80.00-81.00 sec   446 KBytes  3.66 Mbits/sec", "[  1] 90.00-91.00 sec   468 KBytes  3.83 Mbits/sec", "[  1] 100.00-101.00 sec   467 KBytes  3.82 Mbits/sec", "[  1] 110.00-111.00 sec   468 KBytes  3.83 Mbits/sec", "[  1] 120.00-121.00 sec   455 KBytes  3.73 Mbits/sec", "[  1] 130.00-131.00 sec   472 KBytes  3.87 Mbits/sec", "[  1] 140.00-141.00 sec   449 KBytes  3.68 Mbits/sec", "[  1] 150.00-151.00 sec   464 KBytes  3.80 Mbits/sec", "[  1] 160.00-161.00 sec   458 KBytes  3.75 Mbits/sec", "[  1] 170.00-171.00 sec   454 KBytes  3.72 Mbits/sec", "[  1] 180.00-181.00 sec   459 KBytes  3.76 Mbits/sec", "[  1] 190.00-191.00 sec   469 KBytes  3.85 Mbits/sec", "[  1] 200.00-201.00 sec   474 KBytes  3.88 Mbits/sec", "[  1] 210.00-211.00 sec   468 KBytes  3.83 Mbits/sec", "[  1] 220.00-221.00 sec   468 KBytes  3.83 Mbits/sec", "[  1] 230.00-231.00 sec   449 KBytes  3.68 Mbits/sec", "[  1] 240.00-241.00 sec   455 KBytes  3.73 Mbits/sec", "[  1] 250.00-251.00 sec   461 KBytes  3.77 Mbits/sec", "[  1] 260.00-261.00 sec   441 KBytes  3.61 Mbits/sec", "[  1] 270.00-271.00 sec   451 KBytes  3.69 Mbits/sec", "[  1] 280.00-281.00 sec   446 KBytes  3.66 Mbits/sec", "[  1] 290.00-291.00 sec   465 KBytes  3.81 Mbits/sec", "[  1] 0.00-300.01 sec   135 MBytes  3.78 Mbits/sec", "[  1] 0.00-300.02 sec   135 MBytes  3.77 Mbits/sec   3.701 ms 130/96338 (0.13%)", "[  1] 0.00-300.02 sec  27 datagrams received out-of-order"], "host_summaries": ["[  1] 10.00-11.00 sec   467 KBytes  3.82 Mbits/sec   4.687 ms 0/325 (0%)", "[  1] 20.00-21.00 sec   471 KBytes  3.86 Mbits/sec   3.338 ms 0/328 (0%)", "[  1] 30.00-31.00 sec   471 KBytes  3.86 Mbits/sec   4.902 ms 0/328 (0%)", "[  1] 30.00-31.00 sec  4 datagrams received out-of-order", "[  1] 40.00-41.00 sec   475 KBytes  3.89 Mbits/sec   3.352 ms 0/331 (0%)", "[  1] 50.00-51.00 sec   434 KBytes  3.55 Mbits/sec   5.857 ms 0/302 (0%)", "[  1] 60.00-61.00 sec   457 KBytes  3.74 Mbits/sec   4.844 ms 0/318 (0%)", "[  1] 60.00-61.00 sec  2 datagrams received out-of-order", "[  1] 70.00-71.00 sec   471 KBytes  3.86 Mbits/sec   4.169 ms 0/328 (0%)", "[  1] 80.00-81.00 sec   442 KBytes  3.62 Mbits/sec   4.336 ms 0/308 (0%)", "[  1] 90.00-91.00 sec   461 KBytes  3.77 Mbits/sec   3.611 ms 0/321 (0%)", "[  1] 100.00-101.00 sec   478 KBytes  3.92 Mbits/sec   3.083 ms 0/333 (0%)", "[  1] 110.00-111.00 sec   462 KBytes  3.79 Mbits/sec   4.452 ms 0/322 (0%)", "[  1] 120.00-121.00 sec   469 KBytes  3.85 Mbits/sec   4.439 ms 0/327 (0%)", "[  1] 130.00-131.00 sec   475 KBytes  3.89 Mbits/sec   3.123 ms 0/331 (0%)", "[  1] 130.00-131.00 sec  2 datagrams received out-of-order", "[  1] 140.00-141.00 sec   449 KBytes  3.68 Mbits/sec   3.085 ms 0/313 (0%)", "[  1] 150.00-151.00 sec   458 KBytes  3.75 Mbits/sec   3.784 ms 0/319 (0%)", "[  1] 160.00-161.00 sec   461 KBytes  3.77 Mbits/sec   4.242 ms 0/321 (0%)", "[  1] 170.00-171.00 sec   455 KBytes  3.73 Mbits/sec   3.741 ms 0/317 (0%)", "[  1] 180.00-181.00 sec   471 KBytes  3.86 Mbits/sec   3.562 ms 0/328 (0%)", "[  1] 190.00-191.00 sec   477 KBytes  3.90 Mbits/sec   3.906 ms 0/332 (0%)", "[  1] 200.00-201.00 sec   517 KBytes  4.23 Mbits/sec   3.858 ms 0/360 (0%)", "[  1] 210.00-211.00 sec   464 KBytes  3.80 Mbits/sec   3.950 ms 0/323 (0%)", "[  1] 220.00-221.00 sec   471 KBytes  3.86 Mbits/sec   3.606 ms 0/328 (0%)", "[  1] 230.00-231.00 sec   451 KBytes  3.69 Mbits/sec   4.021 ms 0/314 (0%)", "[  1] 240.00-241.00 sec   415 KBytes  3.40 Mbits/sec   4.992 ms 0/289 (0%)", "[  1] 250.00-251.00 sec   485 KBytes  3.97 Mbits/sec   4.268 ms 0/338 (0%)", "[  1] 260.00-261.00 sec   446 KBytes  3.66 Mbits/sec   3.693 ms 0/311 (0%)", "[  1] 270.00-271.00 sec   449 KBytes  3.68 Mbits/sec   3.585 ms 0/313 (0%)", "[  1] 280.00-281.00 sec   446 KBytes  3.66 Mbits/sec   3.640 ms 0/311 (0%)", "[  1] 290.00-291.00 sec   446 KBytes  3.66 Mbits/sec   4.414 ms 0/311 (0%)", "[  1] 0.00-300.02 sec   135 MBytes  3.77 Mbits/sec   3.701 ms 130/96338 (0.13%)", "[  1] 0.00-300.02 sec  27 datagrams received out-of-order"], "end": "2026-09-20T01:30:05.048201+08:00", "log_sha256": {"5.1.25-tx-board.log": "867d29ad8fc8a9e59c84544a3998c22806133c66fa4014c256d2539912c51f89", "5.1.25-tx-host.log": "8c266162167ac3f59c8ca4c0669937995a30f159dba9bac91dfdd397875a999a"}}

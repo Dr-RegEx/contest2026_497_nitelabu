@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+
+ifneq ($(CONFIG_EXAMPLES_S31RGB565),)
+CONFIGURED_APPS += $(APPDIR)/examples/s31rgb565
+endif

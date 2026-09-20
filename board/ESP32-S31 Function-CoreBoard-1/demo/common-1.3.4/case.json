@@ -1,0 +1,43 @@
+{
+  "name": "common-1.3.4",
+  "keys": [
+    "common:1.3.4"
+  ],
+  "profile": "xts-flat-rtc",
+  "sources": [
+    "apps/testing/drivers/drivertest/drivertest_block.c"
+  ],
+  "evidence_ids": [
+    840
+  ],
+  "note": "历史准备：`mkrd -m 10 -s 1000 1024`，然后 `cmocka_driver_block -m /dev/ram10`。仅使用独立 RAM 块设备。",
+  "original": "1.3.4",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts840-ramblock.log",
+    "docs/acceptance/xts-current-status.md"
+  ],
+  "title": "RAM随机读写测试",
+  "original_line": 579,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/drivertest_block.c",
+      "origin": "apps/testing/drivers/drivertest/drivertest_block.c"
+    }
+  ],
+  "local_config": "config/xts-flat-rtc/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-current-status.md",
+      "origin": "docs/acceptance/xts-current-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts840-ramblock.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts840-ramblock.log"
+    }
+  ]
+}

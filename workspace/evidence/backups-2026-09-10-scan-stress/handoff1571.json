@@ -1,0 +1,19 @@
+{
+  "board_receipt": "build1565-simd-int8.sha256",
+  "board": "NSH WiFiassociated from1567; noactiveUARTtest",
+  "source_changes": [
+    "audio1569kmmopenerrorfix",
+    "audio1570APBheapfieldunderMM_TASK_HEAP andownerheapfree",
+    "audio1571ES8311reservedowneraddrenv retained/workerselect; I2Sperreqenv retained/copy/callbackselect"
+  ],
+  "validation": "1570 actualalloc/freehostbeforeFAILafterPASS; FLAT/kernelRV32objectsPASS;1571codec/I2SbothFLAT/kernelobjectPASS using1254options",
+  "guard": "KernelI2Sconfig remainsdisabled; neverclaimintegrationpass",
+  "next": [
+    "audio upperhalf status allocatedinuserheap must be accessed only inowner env; enforce sameowneropen orprovideproperperopenmapping",
+    "audio_close currently calls shutdown andfreesstatus under spinlock andignoresEBUSY; muststop/release/drain outside spin before unlink/free; ES8311kernelrelease handlesdrain butclosecleanup errorsemantics needcare",
+    "process exit/userheap teardown and lastAPBreferences must remainvalid untilworkersdone",
+    "onlythen createfullkernelduplex44kprofile, fullbuild andtargetrecord/stop/close/reopen; retainoldlistenPASS butnewaudioquality needscheck"
+  ],
+  "pending_user": "asyncRESET/10coldpoweravailability; script1568ready,notlaunched",
+  "count": "70/88"
+}

@@ -1,0 +1,231 @@
+{
+  "entry": "xts-current-status.md common table and historical handoff sections",
+  "logs": [
+    {
+      "path": "logs/xts688-sched.log",
+      "sha256": "1d58aa9246dc60ce62c17b7d2113992f3f7b9e5ea822f9c086d14e4b3bde4c0e",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=cmocka_sched_test PASS subcases=9 seconds=0.303"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts689-mm.log",
+      "sha256": "aa47c124a6d7f729828e85cd3cdf41c1c3e9d9047f18e1ebd24d7dcfde3cbfd2",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=cmocka_mm_test PASS subcases=8 seconds=3.630"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts709-syscall.log",
+      "sha256": "f472fa07c8fde6317ab9c3dd145f391db77209b5dd3100ea8b7b76bc450a0196",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=cmocka_syscall_test PASS subcases=83 seconds=15.656"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts775-ostest-sigpending.log",
+      "sha256": "9da765b6bfa9b9b337012efd01cb142b0a16b20b6924f7e8cc2563b6d19bff55",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=ostest PASS seconds=52.081"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts693-getprime.log",
+      "sha256": "dab7a27ca6e6c3bec9e1fe8e991df5a01cd31fbd55d526a2fbedc237be507264",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=getprime PASS seconds=1.171"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts839-flat-heap-clean.log",
+      "sha256": "00025c111682f204404f27d149ab178953c4e117f35a0d1670d256db2a9f9c1a",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=mm PASS seconds=6.758"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts694-scanftest.log",
+      "sha256": "d447ff8b1ee5e5d5ac3622f33c7817d90e7d63355f8fc47c20860323f00b7ed3",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=scanftest PASS seconds=0.406"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts695-hello.log",
+      "sha256": "89015d874eb3b42a804c6ed16ffa464adb7343964903214acf7b662161f237b9",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=hello PASS seconds=0.106"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts718-helloxx.log",
+      "sha256": "1a646a19ed9535b80609738f78d775e0e60deaadee2cb076e1afffd30fb19640",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=helloxx PASS seconds=0.203"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts733-popen.log",
+      "sha256": "557c357a54e97cc9637f1287ebfb9100b6962245e602b60aee9d404890dd997b",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=popen PASS seconds=0.314"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts732-pipe.log",
+      "sha256": "2f9d263f329677194f187fef1c75f8d93494349bb728fe09b6c4e65333b5ad65",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=pipe PASS seconds=33.542"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts734-md5.log",
+      "sha256": "160f88d17fb3aa47127fcf917b471112ad0f48868a8cf1052caf8aedb76ce055",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=md5_test -f /etc/1.txt -c 100 PASS seconds=2.339"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts797-cxx-sections.log",
+      "sha256": "00fea54b3cb7c5b67c707979c4ba9e0d9e68553ad6fc291a29bfcb079aa890a7",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=cxxtest PASS seconds=0.204"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts767-fstest.log",
+      "sha256": "b95e296e0b23c5d4c4354b4085aa3502b80a360613a7a310e9f5bc54259b0cb4",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=fstest -n 10 -m /tmp PASS seconds=64.948"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts840-ramblock.log",
+      "sha256": "08ea15a1ee283608ffd64f207ea0848b79f7fed9378631aee457508ed25b7ebb",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=cmocka_driver_block -m /dev/ram10 PASS seconds=2.364"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts744-uart.log",
+      "sha256": "d430ad7fe3503dfef260431f773f620d095d1a30155c7ae35ced55e67856cabf",
+      "terminal_markers": [
+        "XTS_STANDARD=1.3.10 PASS write/read/burst, published payload and10samples"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts805-ymodem.log",
+      "sha256": "f7d5128a71a2f9fc3876098949e95c41f00078f7c269f4259f6d4d84e498f7cf",
+      "terminal_markers": [
+        "XTS_FILE=small.bin bytes=129 sha256=5099c6a56203f9687f7d33f4bfdf576d31dc91f6b695ecea38b2770c87631135 PASS",
+        "XTS_FILE=binary.bin bytes=65573 sha256=a8147e8e1451821e630e6283b21197d7d4ccbf847c90bd5496ebb824c5c049b2 PASS",
+        "XTS_STANDARD=UART_FILE_SEND_RECEIVE PASS"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts841-rtc.log",
+      "sha256": "a6ced2f653a53068c949ca6ba51e560221d16a93d2cd1aeb22170bbd0f9d22f3",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=cmocka_driver_rtc PASS seconds=37.343"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts743-timer.log",
+      "sha256": "5ae5db321d4645018e00d08e6ec30db0ba16a4cc8288ce99333f917c056f49d0",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=cmocka_driver_timer -d /dev/timer0 PASS subcases=1 seconds=5.591"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts736-footprint.log",
+      "sha256": "74dce2028b740532418a999b5a50fb65d09ecffec898a4c6fa6a20b3b5ee4f60",
+      "terminal_markers": [
+        "XTS_COMMANDS=free,df-h PASS CPUs=0,1; shared SMP pools, do not double-count. Flash physical map still requires report."
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts726-reboot.log",
+      "sha256": "779758d0a7dfae84c0970781eb62c5ff3b72d59b40480d28698a067365ece487",
+      "terminal_markers": [
+        "XTS_STANDARD=1.2.1,2.1.4 PASS samples=10 average_seconds=0.548"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts705-ram-word.log",
+      "sha256": "d80c5da33bf45686c79936c6f4400a45aba8ff0190464de633c4fb1e7413a3f8",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=ramtest -w -s 209256 PASS seconds=0.637"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts706-ram-half.log",
+      "sha256": "fdcaf4b2fa9b293ea7bdf78754a810f1f92cd2986c586470d2778d709554a7ea",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=ramtest -h -s 209256 PASS seconds=0.407"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts707-ram-byte.log",
+      "sha256": "392d64bc940c3db12bb54ec2e4fea0e9d4142c36063c7506c0e3481929ab7c2f",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=ramtest -b -s 209256 PASS seconds=0.313"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts992-original-flash-block.log",
+      "sha256": "2f5483d3f41f0f4d91b496e866a7869fb1222da94dec0abd7f02ac1c158a5327",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_STANDARD=cmocka_driver_block -m /dev/xtsflash PASS seconds=5.337"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts1010-original-crypto.log",
+      "sha256": "c819fd42e90ca1c22190f5dc6aac08dd544655d0f5e4eaef06d11cb6a4576126",
+      "terminal_markers": [
+        "nsh> \u001b[KXTS_CRYPTO=cmocka_des3cbc PASS seconds=0.101 backend=software",
+        "nsh> \u001b[KXTS_CRYPTO=cmocka_aescbc PASS seconds=0.306 backend=hardware-supported-keys",
+        "nsh> \u001b[KXTS_CRYPTO=cmocka_aesctr PASS seconds=0.305 backend=hardware-supported-keys",
+        "nsh> \u001b[KXTS_CRYPTO=cmocka_aesxts PASS seconds=4.014 backend=hardware-supported-keys",
+        "nsh> \u001b[KXTS_CRYPTO=cmocka_hmac PASS seconds=0.205 backend=sha-accelerated-hmac-software-md5",
+        "nsh> \u001b[KXTS_CRYPTO=cmocka_hash PASS seconds=0.716 backend=hardware-sha-software-md5",
+        "nsh> \u001b[KXTS_CRYPTO=cmocka_crc32 PASS seconds=0.206 backend=software",
+        "nsh> \u001b[KXTS_CRYPTO=cmocka_ecdsa PASS seconds=0.102 backend=ecc-assisted-keygen-sign-hardware-verify"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    },
+    {
+      "path": "logs/xts1016-original-watchdog.log",
+      "sha256": "9ffadb8d331f173bbb1636301679f35e63cdf5efbc2f6e6585270c2b943c546b",
+      "terminal_markers": [
+        "XTS_STANDARD=1.3.15 PASS modes=0,1,2,3"
+      ],
+      "review_scope": "success/subcase/termination lines read; no board rerun"
+    }
+  ],
+  "not_claimed": "No blanket revalidation of all source/firmware manifests; does not establish all old images merged into current image."
+}

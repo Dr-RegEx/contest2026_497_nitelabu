@@ -1,0 +1,12 @@
+C6
+WIFI_MODEM_STATUS=PASS init/failures/busy/deinit/retry/reinit
+S31
+S31: /tmp/s31-modem-status-sw1qjnkc/test.c:27: esp_wifi_set_sleep_min_active_time: Assertion `!power_on && us == 50000' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_modem_status.py", line 157, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_modem_status.py", line 153, in main
+    subprocess.run([str(temp / target)], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/s31-modem-status-sw1qjnkc/S31']' died with <Signals.SIGABRT: 6>.

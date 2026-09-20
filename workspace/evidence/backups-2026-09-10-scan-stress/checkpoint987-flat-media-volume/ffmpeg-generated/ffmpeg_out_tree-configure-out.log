@@ -1,0 +1,119 @@
+make: Entering directory '/home/regex/work/esp32s31-openvela/openvela-dev/external/ffmpeg'
+echo "FFMPEG configure... risc-v"
+FFMPEG configure... risc-v
+cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg && APPDIR=/home/regex/work/esp32s31-openvela/openvela-dev/apps                                               \
+	CONFIG_LIB_FFMPEG_EXTERNAL_LIBRARIES="/external/ffmpeg/ffmpeg/proprietary:" \
+	/home/regex/work/esp32s31-openvela/openvela-dev/external/ffmpeg/configure --disable-all                                        \
+	--disable-everything    --disable-autodetect                                 \
+	--disable-amf           --disable-audiotoolbox                               \
+	--disable-cuda-llvm     --disable-cuvid                                      \
+	--disable-d3d11va       --disable-doc                                        \
+	--disable-dwt           --disable-dxva2                                      \
+	--disable-dxva2         --disable-error-resilience                           \
+	--disable-faan          --disable-ffnvcodec                                  \
+	--disable-htmlpages     --disable-iconv                                      \
+	--disable-lsp                                                                \
+	--disable-manpages      --disable-pic                                        \
+	--disable-pixelutils    --disable-podpages                                   \
+	--disable-nvdec         --disable-nvenc                                      \
+	--disable-txtpages      --disable-v4l2-m2m                                   \
+	--disable-vaapi         --disable-vdpau                                      \
+	--disable-videotoolbox  --disable-xop                                        \
+	--enable-version3       --enable-small                                       \
+	--extra-cflags="-fno-common -Wall -Wstrict-prototypes -Wshadow -Wundef -Wno-attributes -Wno-unknown-pragmas -Wno-psabi -fno-common -Wall -Wstrict-prototypes -Wshadow -Wundef -Wno-attributes -Wno-unknown-pragmas -Wno-psabi -Os -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -nostdlib -Os -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -nostdlib -march=rv32imafc_zicsr_zifencei -mabi=ilp32f -march=rv32imafc_zicsr_zifencei -mabi=ilp32f -isystem /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include -isystem /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include -D__NuttX__ -D__NuttX__ -I /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/audioutils/alsa-lib/include -Werror=return-type -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/audioutils/alsa-lib/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/frameworks/multimedia/media/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/frameworks/runtimes/feature/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/external/protobuf-c/protobuf-c -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/frameworks/security/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/frameworks/system/utils/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/testing/cmocka/cmocka/include -I "/home/regex/work/esp32s31-openvela/openvela-dev/apps/include" -isystem /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include -isystem /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include -D__NuttX__ -D__NuttX__ -I /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/audioutils/alsa-lib/include -I ffmpeg -I ffmpeg/libavcodec -I /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/vendor/bes/framework/services_hifi4/services/multimedia/audio/smf/core/inc -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/vendor/xiaomi/miwear/xiaomi_enc -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/vendor/xiaomi/miwear/bes_aec -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/vendor/allwinnertech/chips/r528/components/multimedia/src/libcedarx/external/include/libcedarc -Wno-error -Wno-shift-count-overflow -Wno-implicit-int-float-conversion -Wno-shadow -Wno-missing-braces -Wno-disabled-optimization -Wno-missing-prototypes  -DHAVE_AV_CONFIG_H -DZLIB_CONST" --extra-ldflags="-fno-common -Wall -Wstrict-prototypes -Wshadow -Wundef -Wno-attributes -Wno-unknown-pragmas -Wno-psabi -fno-common -Wall -Wstrict-prototypes -Wshadow -Wundef -Wno-attributes -Wno-unknown-pragmas -Wno-psabi -Os -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -nostdlib -Os -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -nostdlib -march=rv32imafc_zicsr_zifencei -mabi=ilp32f -march=rv32imafc_zicsr_zifencei -mabi=ilp32f -isystem /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include -isystem /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include -D__NuttX__ -D__NuttX__ -I /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/audioutils/alsa-lib/include -Werror=return-type -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/audioutils/alsa-lib/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/frameworks/multimedia/media/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/frameworks/runtimes/feature/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/external/protobuf-c/protobuf-c -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/frameworks/security/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/frameworks/system/utils/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/testing/cmocka/cmocka/include -I "/home/regex/work/esp32s31-openvela/openvela-dev/apps/include" -isystem /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include -isystem /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/include -D__NuttX__ -D__NuttX__ -I /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/include -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/audioutils/alsa-lib/include -I ffmpeg -I ffmpeg/libavcodec -I /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/vendor/bes/framework/services_hifi4/services/multimedia/audio/smf/core/inc -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/vendor/xiaomi/miwear/xiaomi_enc -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/vendor/xiaomi/miwear/bes_aec -I /home/regex/work/esp32s31-openvela/openvela-dev/apps/vendor/allwinnertech/chips/r528/components/multimedia/src/libcedarx/external/include/libcedarc -Wno-error -Wno-shift-count-overflow -Wno-implicit-int-float-conversion -Wno-shadow -Wno-missing-braces -Wno-disabled-optimization -Wno-missing-prototypes  -DHAVE_AV_CONFIG_H -DZLIB_CONST"                     \
+	--ld=echo --pkg-config=: assert_level=3 --arch=riscv --target-os=none --enable-cross-compile --cross-prefix=riscv32-esp-elf- --cc=riscv32-esp-elf-gcc --disable-neon                          \
+	""--disable-asm --disable-inline-asm --disable-rvv --disable-tx-double --disable-tx-int32 --enable-avcodec --enable-avdevice --enable-avfilter --enable-avformat --enable-swresample --enable-alsa --enable-decoder='aac,mp3float,opus,pcm_s16le' --enable-demuxer='aac,mov,mp3,ogg,wav' --enable-parser='aac,mpegaudio,opus' --enable-filter='abufsrc,asubgraph,abuffer,abuffersink,aresample,alsasink' --enable-protocol=file --enable-hardcoded-tables""
+install prefix            /usr/local
+source path               /home/regex/work/esp32s31-openvela/openvela-dev/external/ffmpeg/ffmpeg
+C compiler                riscv32-esp-elf-gcc
+C library                 newlib
+host C compiler           gcc
+host C library            glibc
+ARCH                      c (generic)
+big-endian                no
+runtime cpu detection     yes
+debug symbols             yes
+strip symbols             yes
+optimize for size         yes
+optimizations             yes
+static                    yes
+shared                    no
+postprocessing support    no
+network support           yes
+threading support         pthreads
+safe bitstream reader     yes
+texi2html enabled         no
+perl enabled              yes
+pod2man enabled           yes
+makeinfo enabled          yes
+makeinfo supports HTML    yes
+xmllint enabled           no
+
+External libraries:
+alsa
+
+External libraries providing hardware acceleration:
+
+Libraries:
+avcodec                 avfilter                avutil
+avdevice                avformat                swresample
+
+Programs:
+
+Enabled decoders:
+aac                     opus
+mp3float                pcm_s16le
+
+Enabled encoders:
+
+Enabled hwaccels:
+
+Enabled parsers:
+aac                     mpegaudio               opus
+
+Enabled demuxers:
+aac                     mp3                     wav
+mov                     ogg
+
+Enabled muxers:
+
+Enabled protocols:
+file
+
+Enabled filters:
+abufsrc                 aresample
+alsasink                asubgraph
+
+Enabled bsfs:
+
+Enabled indevs:
+
+Enabled outdevs:
+
+License: LGPL version 3 or later
+mkdir -p /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec
+mkdir -p /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec
+gcc -O2 -DCONFIG_SMALL=1 -I/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg -Iffmpeg ffmpeg/libavcodec/aacps_tablegen.c -lm -o /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/aacps_tablegen_host
+mkdir -p /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec
+gcc -O2 -DCONFIG_SMALL=1 -I/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg -Iffmpeg ffmpeg/libavcodec/cbrt_tablegen.c -lm -o /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/cbrt_tablegen_host
+mkdir -p /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec
+gcc -O2 -DCONFIG_SMALL=1 -I/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg -Iffmpeg ffmpeg/libavcodec/sinewin_tablegen.c -lm -o /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/sinewin_tablegen_host
+mkdir -p /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec
+gcc -O2 -DCONFIG_SMALL=1 -I/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg -Iffmpeg ffmpeg/libavcodec/mpegaudio_tablegen.c -lm -o /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/mpegaudio_tablegen_host
+mkdir -p /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec
+gcc -O2 -DCONFIG_SMALL=1 -I/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg -Iffmpeg ffmpeg/libavcodec/mpegaudiodec_common_tablegen.c -lm -o /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/mpegaudiodec_common_tablegen_host
+gcc -O2 -DCONFIG_SMALL=1 -I/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg -Iffmpeg ffmpeg/libavcodec/pcm_tablegen.c -lm -o /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/pcm_tablegen_host
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/aacps_tablegen_host > /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/aacps_tables.h.tmp
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/cbrt_tablegen_host > /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/cbrt_tables.h.tmp
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/sinewin_tablegen_host > /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/sinewin_tables.h.tmp
+mv /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/cbrt_tables.h.tmp /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/cbrt_tables.h
+mv /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/aacps_tables.h.tmp /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/aacps_tables.h
+mv /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/sinewin_tables.h.tmp /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/sinewin_tables.h
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/mpegaudio_tablegen_host > /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/mpegaudio_tables.h.tmp
+mv /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/mpegaudio_tables.h.tmp /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/mpegaudio_tables.h
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/mpegaudiodec_common_tablegen_host > /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/mpegaudiodec_common_tables.h.tmp
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/pcm_tablegen_host > /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/pcm_tables.h.tmp
+mv /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/pcm_tables.h.tmp /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/pcm_tables.h
+mv /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/mpegaudiodec_common_tables.h.tmp /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg/libavcodec/mpegaudiodec_common_tables.h
+cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-xts-flat-media-volume/apps/external/ffmpeg && /home/regex/work/esp32s31-openvela/openvela-dev/external/ffmpeg/ffmpeg/ffbuild/version.sh . libavutil/ffversion.h 
+make: Leaving directory '/home/regex/work/esp32s31-openvela/openvela-dev/external/ffmpeg'

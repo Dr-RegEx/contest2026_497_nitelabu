@@ -1,0 +1,5 @@
+# TCP socket缓冲对照依据
+
+Settings.cpp默认mTCPWin来自CONFIG_UTILS_IPERF2_RECV_BUFSIZE=16384，覆盖NET_SEND/RECV_BUFSIZE=65536。PerfSocket.cpp对client设置SO_SNDBUF，对server设置SO_RCVBUF。tcp_send_buffered.c按已排队及未确认数据之和达到s_sndbufs时阻塞。因此拟在固定BSSID和已核验Windows1656工具下，分别运行16k、64k、16k的30秒TCP发送，同样-l16384，仅变socket缓冲。
+
+这是性能诊断，不替代原始300秒验收。16KiB/3.38Mbps约对应38.8ms周转只是推算，不是测得RTT。IOB池128×400及节流24限制实际容量，不能承诺64KiB真正在途或4倍提升。先等待固定AP四向原始测试全部终止，保持单一串口所有者，再运行对照。

@@ -1,0 +1,31 @@
+test_existing_wifi_kernel_pair (__main__.HeapCallbackTests) ... ok
+test_other_profiles_unchanged (__main__.HeapCallbackTests) ... ok
+test_s31_kernel_coexistence_free (__main__.HeapCallbackTests) ... FAIL
+test_s31_kernel_spin_lock_delete (__main__.HeapCallbackTests) ... FAIL
+
+======================================================================
+FAIL: test_s31_kernel_coexistence_free (__main__.HeapCallbackTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_heap_callbacks.py", line 57, in test_s31_kernel_coexistence_free
+    self.assertEqual(callbacks["_free"], "kmm_free")
+AssertionError: 'free' != 'kmm_free'
+- free
++ kmm_free
+
+
+======================================================================
+FAIL: test_s31_kernel_spin_lock_delete (__main__.HeapCallbackTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp32s31_wifi_heap_callbacks.py", line 47, in test_s31_kernel_spin_lock_delete
+    self.assertEqual(callbacks["_spin_lock_delete"], "kmm_free")
+AssertionError: 'free' != 'kmm_free'
+- free
++ kmm_free
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.045s
+
+FAILED (failures=2)

@@ -1,0 +1,470 @@
+
+/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-wifi-rx-observe/apps/external/iperf2/CMakeFiles/iperf2.dir/iperf2/compat/delay.c.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text.delay_loop:
+
+00000000 <delay_loop>:
+   0:	000f47b7          	lui	a5,0xf4
+   4:	24078793          	addi	a5,a5,576 # f4240 <.L34+0xf404c>
+   8:	02f557b3          	divu	a5,a0,a5
+   c:	1101                	addi	sp,sp,-32
+   e:	0030                	addi	a2,sp,8
+  10:	4681                	li	a3,0
+  12:	4581                	li	a1,0
+  14:	ce06                	sw	ra,28(sp)
+  16:	c43e                	sw	a5,8(sp)
+  18:	3e800793          	li	a5,1000
+  1c:	02f50533          	mul	a0,a0,a5
+  20:	3b9ad7b7          	lui	a5,0x3b9ad
+  24:	a0078793          	addi	a5,a5,-1536 # 3b9aca00 <.L34+0x3b9ac80c>
+  28:	02f57533          	remu	a0,a0,a5
+  2c:	c62a                	sw	a0,12(sp)
+  2e:	4505                	li	a0,1
+  30:	00000097          	auipc	ra,0x0
+			30: R_RISCV_CALL_PLT	clock_nanosleep
+			30: R_RISCV_RELAX	*ABS*
+  34:	000080e7          	jalr	ra # 30 <delay_loop+0x30>
+  38:	40f2                	lw	ra,28(sp)
+  3a:	6105                	addi	sp,sp,32
+  3c:	8082                	ret
+
+Disassembly of section .text.clock_usleep:
+
+00000000 <clock_usleep>:
+   0:	1101                	addi	sp,sp,-32
+   2:	cc22                	sw	s0,24(sp)
+   4:	ce06                	sw	ra,28(sp)
+   6:	411c                	lw	a5,0(a0)
+   8:	3e800713          	li	a4,1000
+   c:	4681                	li	a3,0
+   e:	c43e                	sw	a5,8(sp)
+  10:	415c                	lw	a5,4(a0)
+  12:	0030                	addi	a2,sp,8
+  14:	4581                	li	a1,0
+  16:	02e787b3          	mul	a5,a5,a4
+  1a:	4505                	li	a0,1
+  1c:	c63e                	sw	a5,12(sp)
+  1e:	00000097          	auipc	ra,0x0
+			1e: R_RISCV_CALL_PLT	clock_nanosleep
+			1e: R_RISCV_RELAX	*ABS*
+  22:	000080e7          	jalr	ra # 1e <clock_usleep+0x1e>
+  26:	842a                	mv	s0,a0
+  28:	cd19                	beqz	a0,46 <.L3>
+			28: R_RISCV_RVC_BRANCH	.L3
+  2a:	4509                	li	a0,2
+  2c:	00000097          	auipc	ra,0x0
+			2c: R_RISCV_CALL_PLT	lib_get_stream
+			2c: R_RISCV_RELAX	*ABS*
+  30:	000080e7          	jalr	ra # 2c <clock_usleep+0x2c>
+  34:	000005b7          	lui	a1,0x0
+			34: R_RISCV_HI20	.LC0
+			34: R_RISCV_RELAX	*ABS*
+  38:	8622                	mv	a2,s0
+  3a:	00058593          	mv	a1,a1
+			3a: R_RISCV_LO12_I	.LC0
+			3a: R_RISCV_RELAX	*ABS*
+  3e:	00000097          	auipc	ra,0x0
+			3e: R_RISCV_CALL_PLT	fprintf
+			3e: R_RISCV_RELAX	*ABS*
+  42:	000080e7          	jalr	ra # 3e <clock_usleep+0x3e>
+
+00000046 <.L3>:
+  46:	40f2                	lw	ra,28(sp)
+  48:	8522                	mv	a0,s0
+  4a:	4462                	lw	s0,24(sp)
+  4c:	6105                	addi	sp,sp,32
+  4e:	8082                	ret
+
+Disassembly of section .text.clock_usleep_abstime:
+
+00000000 <clock_usleep_abstime>:
+   0:	1101                	addi	sp,sp,-32
+   2:	cc22                	sw	s0,24(sp)
+   4:	ce06                	sw	ra,28(sp)
+   6:	411c                	lw	a5,0(a0)
+   8:	3e800713          	li	a4,1000
+   c:	4681                	li	a3,0
+   e:	c43e                	sw	a5,8(sp)
+  10:	415c                	lw	a5,4(a0)
+  12:	0030                	addi	a2,sp,8
+  14:	4585                	li	a1,1
+  16:	02e787b3          	mul	a5,a5,a4
+  1a:	4501                	li	a0,0
+  1c:	c63e                	sw	a5,12(sp)
+  1e:	00000097          	auipc	ra,0x0
+			1e: R_RISCV_CALL_PLT	clock_nanosleep
+			1e: R_RISCV_RELAX	*ABS*
+  22:	000080e7          	jalr	ra # 1e <clock_usleep_abstime+0x1e>
+  26:	842a                	mv	s0,a0
+  28:	cd19                	beqz	a0,46 <.L9>
+			28: R_RISCV_RVC_BRANCH	.L9
+  2a:	4509                	li	a0,2
+  2c:	00000097          	auipc	ra,0x0
+			2c: R_RISCV_CALL_PLT	lib_get_stream
+			2c: R_RISCV_RELAX	*ABS*
+  30:	000080e7          	jalr	ra # 2c <clock_usleep_abstime+0x2c>
+  34:	000005b7          	lui	a1,0x0
+			34: R_RISCV_HI20	.LC0
+			34: R_RISCV_RELAX	*ABS*
+  38:	8622                	mv	a2,s0
+  3a:	00058593          	mv	a1,a1
+			3a: R_RISCV_LO12_I	.LC0
+			3a: R_RISCV_RELAX	*ABS*
+  3e:	00000097          	auipc	ra,0x0
+			3e: R_RISCV_CALL_PLT	fprintf
+			3e: R_RISCV_RELAX	*ABS*
+  42:	000080e7          	jalr	ra # 3e <clock_usleep_abstime+0x3e>
+
+00000046 <.L9>:
+  46:	40f2                	lw	ra,28(sp)
+  48:	8522                	mv	a0,s0
+  4a:	4462                	lw	s0,24(sp)
+  4c:	6105                	addi	sp,sp,32
+  4e:	8082                	ret
+
+Disassembly of section .text.delay_nanosleep:
+
+00000000 <delay_nanosleep>:
+   0:	3e800793          	li	a5,1000
+   4:	02f50533          	mul	a0,a0,a5
+   8:	1101                	addi	sp,sp,-32
+   a:	002c                	addi	a1,sp,8
+   c:	ce06                	sw	ra,28(sp)
+   e:	c002                	sw	zero,0(sp)
+  10:	c22a                	sw	a0,4(sp)
+  12:	850a                	mv	a0,sp
+  14:	00000097          	auipc	ra,0x0
+			14: R_RISCV_CALL_PLT	nanosleep
+			14: R_RISCV_RELAX	*ABS*
+  18:	000080e7          	jalr	ra # 14 <delay_nanosleep+0x14>
+  1c:	40f2                	lw	ra,28(sp)
+  1e:	6105                	addi	sp,sp,32
+  20:	8082                	ret
+
+Disassembly of section .text.delay_busyloop:
+
+00000000 <delay_busyloop>:
+   0:	1101                	addi	sp,sp,-32
+   2:	cc22                	sw	s0,24(sp)
+   4:	858a                	mv	a1,sp
+   6:	842a                	mv	s0,a0
+   8:	4501                	li	a0,0
+   a:	ce06                	sw	ra,28(sp)
+   c:	00000097          	auipc	ra,0x0
+			c: R_RISCV_CALL_PLT	clock_gettime
+			c: R_RISCV_RELAX	*ABS*
+  10:	000080e7          	jalr	ra # c <delay_busyloop+0xc>
+  14:	3e800793          	li	a5,1000
+  18:	02f40533          	mul	a0,s0,a5
+  1c:	3b9ad737          	lui	a4,0x3b9ad
+  20:	a0070713          	addi	a4,a4,-1536 # 3b9aca00 <.L34+0x3b9ac80c>
+  24:	4682                	lw	a3,0(sp)
+  26:	02e557b3          	divu	a5,a0,a4
+  2a:	02e57533          	remu	a0,a0,a4
+  2e:	97b6                	add	a5,a5,a3
+  30:	4692                	lw	a3,4(sp)
+  32:	c03e                	sw	a5,0(sp)
+  34:	9536                	add	a0,a0,a3
+  36:	3b9ad6b7          	lui	a3,0x3b9ad
+  3a:	c22a                	sw	a0,4(sp)
+  3c:	9ff68693          	addi	a3,a3,-1537 # 3b9ac9ff <.L34+0x3b9ac80b>
+  40:	00a6d663          	bge	a3,a0,4c <.L22>
+			40: R_RISCV_BRANCH	.L22
+  44:	0785                	addi	a5,a5,1
+  46:	8d19                	sub	a0,a0,a4
+  48:	c03e                	sw	a5,0(sp)
+  4a:	c22a                	sw	a0,4(sp)
+
+0000004c <.L22>:
+  4c:	002c                	addi	a1,sp,8
+  4e:	4501                	li	a0,0
+  50:	00000097          	auipc	ra,0x0
+			50: R_RISCV_CALL_PLT	clock_gettime
+			50: R_RISCV_RELAX	*ABS*
+  54:	000080e7          	jalr	ra # 50 <.L22+0x4>
+  58:	4722                	lw	a4,8(sp)
+  5a:	4782                	lw	a5,0(sp)
+  5c:	00e7c863          	blt	a5,a4,6c <.L17>
+			5c: R_RISCV_BRANCH	.L17
+  60:	4632                	lw	a2,12(sp)
+  62:	4692                	lw	a3,4(sp)
+  64:	fec6d4e3          	bge	a3,a2,4c <.L22>
+			64: R_RISCV_BRANCH	.L22
+  68:	fef712e3          	bne	a4,a5,4c <.L22>
+			68: R_RISCV_BRANCH	.L22
+
+0000006c <.L17>:
+  6c:	40f2                	lw	ra,28(sp)
+  6e:	4462                	lw	s0,24(sp)
+  70:	6105                	addi	sp,sp,32
+  72:	8082                	ret
+
+Disassembly of section .text.delay_kalman:
+
+00000000 <delay_kalman>:
+   0:	711d                	addi	sp,sp,-96
+   2:	da66                	sw	s9,52(sp)
+   4:	858a                	mv	a1,sp
+   6:	8caa                	mv	s9,a0
+   8:	4501                	li	a0,0
+   a:	ce86                	sw	ra,92(sp)
+   c:	caa6                	sw	s1,84(sp)
+   e:	c2d6                	sw	s5,68(sp)
+  10:	c0da                	sw	s6,64(sp)
+  12:	cca2                	sw	s0,88(sp)
+  14:	c8ca                	sw	s2,80(sp)
+  16:	c6ce                	sw	s3,76(sp)
+  18:	c4d2                	sw	s4,72(sp)
+  1a:	de5e                	sw	s7,60(sp)
+  1c:	dc62                	sw	s8,56(sp)
+  1e:	d86a                	sw	s10,48(sp)
+  20:	d66e                	sw	s11,44(sp)
+  22:	c802                	sw	zero,16(sp)
+  24:	ca02                	sw	zero,20(sp)
+  26:	00000097          	auipc	ra,0x0
+			26: R_RISCV_CALL_PLT	clock_gettime
+			26: R_RISCV_RELAX	*ABS*
+  2a:	000080e7          	jalr	ra # 26 <delay_kalman+0x26>
+  2e:	8566                	mv	a0,s9
+  30:	00000097          	auipc	ra,0x0
+			30: R_RISCV_CALL_PLT	__floatunsidf
+			30: R_RISCV_RELAX	*ABS*
+  34:	000080e7          	jalr	ra # 30 <delay_kalman+0x30>
+  38:	000007b7          	lui	a5,0x0
+			38: R_RISCV_HI20	.LC1
+			38: R_RISCV_RELAX	*ABS*
+  3c:	0007a603          	lw	a2,0(a5) # 0 <delay_kalman>
+			3c: R_RISCV_LO12_I	.LC1
+			3c: R_RISCV_RELAX	*ABS*
+  40:	0047a683          	lw	a3,4(a5)
+			40: R_RISCV_LO12_I	.LC1+0x4
+			40: R_RISCV_RELAX	*ABS*+0x4
+  44:	000004b7          	lui	s1,0x0
+			44: R_RISCV_HI20	kalmanerr.0
+			44: R_RISCV_RELAX	*ABS*
+  48:	00048493          	mv	s1,s1
+			48: R_RISCV_LO12_I	kalmanerr.0
+			48: R_RISCV_RELAX	*ABS*
+  4c:	00000097          	auipc	ra,0x0
+			4c: R_RISCV_CALL_PLT	__muldf3
+			4c: R_RISCV_RELAX	*ABS*
+  50:	000080e7          	jalr	ra # 4c <delay_kalman+0x4c>
+  54:	4890                	lw	a2,16(s1)
+  56:	48d4                	lw	a3,20(s1)
+  58:	00000097          	auipc	ra,0x0
+			58: R_RISCV_CALL_PLT	__subdf3
+			58: R_RISCV_RELAX	*ABS*
+  5c:	000080e7          	jalr	ra # 58 <delay_kalman+0x58>
+  60:	8aaa                	mv	s5,a0
+  62:	8b2e                	mv	s6,a1
+  64:	00000097          	auipc	ra,0x0
+			64: R_RISCV_CALL_PLT	__fixunsdfsi
+			64: R_RISCV_RELAX	*ABS*
+  68:	000080e7          	jalr	ra # 64 <delay_kalman+0x64>
+  6c:	47d2                	lw	a5,20(sp)
+  6e:	953e                	add	a0,a0,a5
+  70:	3b9ad7b7          	lui	a5,0x3b9ad
+  74:	ca2a                	sw	a0,20(sp)
+  76:	9ff78793          	addi	a5,a5,-1537 # 3b9ac9ff <.L34+0x3b9ac80b>
+  7a:	00a7db63          	bge	a5,a0,90 <.L29>
+			7a: R_RISCV_BRANCH	.L29
+  7e:	47c2                	lw	a5,16(sp)
+  80:	0785                	addi	a5,a5,1
+  82:	c83e                	sw	a5,16(sp)
+  84:	c46537b7          	lui	a5,0xc4653
+  88:	60078793          	addi	a5,a5,1536 # c4653600 <.L34+0xc465340c>
+  8c:	953e                	add	a0,a0,a5
+  8e:	ca2a                	sw	a0,20(sp)
+
+00000090 <.L29>:
+  90:	47c2                	lw	a5,16(sp)
+  92:	4a02                	lw	s4,0(sp)
+  94:	9a3e                	add	s4,s4,a5
+  96:	4792                	lw	a5,4(sp)
+  98:	00f50933          	add	s2,a0,a5
+  9c:	3b9ad7b7          	lui	a5,0x3b9ad
+  a0:	9ff78793          	addi	a5,a5,-1537 # 3b9ac9ff <.L34+0x3b9ac80b>
+  a4:	0127d863          	bge	a5,s2,b4 <.L30>
+			a4: R_RISCV_BRANCH	.L30
+  a8:	c46537b7          	lui	a5,0xc4653
+  ac:	60078793          	addi	a5,a5,1536 # c4653600 <.L34+0xc465340c>
+  b0:	993e                	add	s2,s2,a5
+  b2:	0a05                	addi	s4,s4,1
+
+000000b4 <.L30>:
+  b4:	000007b7          	lui	a5,0x0
+			b4: R_RISCV_HI20	.LC2
+			b4: R_RISCV_RELAX	*ABS*
+  b8:	0007a603          	lw	a2,0(a5) # 0 <delay_kalman>
+			b8: R_RISCV_LO12_I	.LC2
+			b8: R_RISCV_RELAX	*ABS*
+  bc:	0047a683          	lw	a3,4(a5)
+			bc: R_RISCV_LO12_I	.LC2+0x4
+			bc: R_RISCV_RELAX	*ABS*+0x4
+  c0:	8556                	mv	a0,s5
+  c2:	85da                	mv	a1,s6
+  c4:	00000097          	auipc	ra,0x0
+			c4: R_RISCV_CALL_PLT	__gtdf2
+			c4: R_RISCV_RELAX	*ABS*
+  c8:	000080e7          	jalr	ra # c4 <.L30+0x10>
+  cc:	00a05863          	blez	a0,dc <.L38>
+			cc: R_RISCV_BRANCH	.L38
+  d0:	082c                	addi	a1,sp,24
+  d2:	0808                	addi	a0,sp,16
+  d4:	00000097          	auipc	ra,0x0
+			d4: R_RISCV_CALL_PLT	nanosleep
+			d4: R_RISCV_RELAX	*ABS*
+  d8:	000080e7          	jalr	ra # d4 <.L30+0x20>
+
+000000dc <.L38>:
+  dc:	002c                	addi	a1,sp,8
+  de:	4501                	li	a0,0
+  e0:	00000097          	auipc	ra,0x0
+			e0: R_RISCV_CALL_PLT	clock_gettime
+			e0: R_RISCV_RELAX	*ABS*
+  e4:	000080e7          	jalr	ra # e0 <.L38+0x4>
+  e8:	4422                	lw	s0,8(sp)
+  ea:	49b2                	lw	s3,12(sp)
+  ec:	0e8a5f63          	bge	s4,s0,1ea <.L33>
+			ec: R_RISCV_BRANCH	.L33
+
+000000f0 <.L36>:
+  f0:	4912                	lw	s2,4(sp)
+  f2:	4a02                	lw	s4,0(sp)
+  f4:	1129c063          	blt	s3,s2,1f4 <.L34>
+			f4: R_RISCV_BRANCH	.L34
+
+000000f8 <.L35>:
+  f8:	4090                	lw	a2,0(s1)
+  fa:	40d4                	lw	a3,4(s1)
+  fc:	4c88                	lw	a0,24(s1)
+  fe:	4ccc                	lw	a1,28(s1)
+ 100:	41440433          	sub	s0,s0,s4
+ 104:	00000097          	auipc	ra,0x0
+			104: R_RISCV_CALL_PLT	__adddf3
+			104: R_RISCV_RELAX	*ABS*
+ 108:	000080e7          	jalr	ra # 104 <.L35+0xc>
+ 10c:	4490                	lw	a2,8(s1)
+ 10e:	44d4                	lw	a3,12(s1)
+ 110:	8d2a                	mv	s10,a0
+ 112:	8dae                	mv	s11,a1
+ 114:	00000097          	auipc	ra,0x0
+			114: R_RISCV_CALL_PLT	__adddf3
+			114: R_RISCV_RELAX	*ABS*
+ 118:	000080e7          	jalr	ra # 114 <.L35+0x1c>
+ 11c:	862a                	mv	a2,a0
+ 11e:	86ae                	mv	a3,a1
+ 120:	856a                	mv	a0,s10
+ 122:	85ee                	mv	a1,s11
+ 124:	00000097          	auipc	ra,0x0
+			124: R_RISCV_CALL_PLT	__divdf3
+			124: R_RISCV_RELAX	*ABS*
+ 128:	000080e7          	jalr	ra # 124 <.L35+0x2c>
+ 12c:	489c                	lw	a5,16(s1)
+ 12e:	0144a803          	lw	a6,20(s1) # 14 <delay_kalman+0x14>
+ 132:	8aaa                	mv	s5,a0
+ 134:	8bbe                	mv	s7,a5
+ 136:	3b9ad7b7          	lui	a5,0x3b9ad
+ 13a:	a0078793          	addi	a5,a5,-1536 # 3b9aca00 <.L34+0x3b9ac80c>
+ 13e:	02f40433          	mul	s0,s0,a5
+ 142:	d088                	sw	a0,32(s1)
+ 144:	41298533          	sub	a0,s3,s2
+ 148:	d0cc                	sw	a1,36(s1)
+ 14a:	8c42                	mv	s8,a6
+ 14c:	8b2e                	mv	s6,a1
+ 14e:	9522                	add	a0,a0,s0
+ 150:	00000097          	auipc	ra,0x0
+			150: R_RISCV_CALL_PLT	__floatsidf
+			150: R_RISCV_RELAX	*ABS*
+ 154:	000080e7          	jalr	ra # 150 <.L35+0x58>
+ 158:	892a                	mv	s2,a0
+ 15a:	3e800513          	li	a0,1000
+ 15e:	02ac8533          	mul	a0,s9,a0
+ 162:	89ae                	mv	s3,a1
+ 164:	00000097          	auipc	ra,0x0
+			164: R_RISCV_CALL_PLT	__floatunsidf
+			164: R_RISCV_RELAX	*ABS*
+ 168:	000080e7          	jalr	ra # 164 <.L35+0x6c>
+ 16c:	862a                	mv	a2,a0
+ 16e:	86ae                	mv	a3,a1
+ 170:	854a                	mv	a0,s2
+ 172:	85ce                	mv	a1,s3
+ 174:	00000097          	auipc	ra,0x0
+			174: R_RISCV_CALL_PLT	__subdf3
+			174: R_RISCV_RELAX	*ABS*
+ 178:	000080e7          	jalr	ra # 174 <.L35+0x7c>
+ 17c:	865e                	mv	a2,s7
+ 17e:	86e2                	mv	a3,s8
+ 180:	00000097          	auipc	ra,0x0
+			180: R_RISCV_CALL_PLT	__subdf3
+			180: R_RISCV_RELAX	*ABS*
+ 184:	000080e7          	jalr	ra # 180 <.L35+0x88>
+ 188:	8656                	mv	a2,s5
+ 18a:	86da                	mv	a3,s6
+ 18c:	00000097          	auipc	ra,0x0
+			18c: R_RISCV_CALL_PLT	__muldf3
+			18c: R_RISCV_RELAX	*ABS*
+ 190:	000080e7          	jalr	ra # 18c <.L35+0x94>
+ 194:	865e                	mv	a2,s7
+ 196:	86e2                	mv	a3,s8
+ 198:	00000097          	auipc	ra,0x0
+			198: R_RISCV_CALL_PLT	__adddf3
+			198: R_RISCV_RELAX	*ABS*
+ 19c:	000080e7          	jalr	ra # 198 <.L35+0xa0>
+ 1a0:	000007b7          	lui	a5,0x0
+			1a0: R_RISCV_HI20	.LC3
+			1a0: R_RISCV_RELAX	*ABS*
+ 1a4:	c888                	sw	a0,16(s1)
+ 1a6:	c8cc                	sw	a1,20(s1)
+ 1a8:	0007a503          	lw	a0,0(a5) # 0 <delay_kalman>
+			1a8: R_RISCV_LO12_I	.LC3
+			1a8: R_RISCV_RELAX	*ABS*
+ 1ac:	0047a583          	lw	a1,4(a5)
+			1ac: R_RISCV_LO12_I	.LC3+0x4
+			1ac: R_RISCV_RELAX	*ABS*+0x4
+ 1b0:	8656                	mv	a2,s5
+ 1b2:	86da                	mv	a3,s6
+ 1b4:	00000097          	auipc	ra,0x0
+			1b4: R_RISCV_CALL_PLT	__subdf3
+			1b4: R_RISCV_RELAX	*ABS*
+ 1b8:	000080e7          	jalr	ra # 1b4 <.L35+0xbc>
+ 1bc:	866a                	mv	a2,s10
+ 1be:	86ee                	mv	a3,s11
+ 1c0:	00000097          	auipc	ra,0x0
+			1c0: R_RISCV_CALL_PLT	__muldf3
+			1c0: R_RISCV_RELAX	*ABS*
+ 1c4:	000080e7          	jalr	ra # 1c0 <.L35+0xc8>
+ 1c8:	cc88                	sw	a0,24(s1)
+ 1ca:	cccc                	sw	a1,28(s1)
+ 1cc:	4466                	lw	s0,88(sp)
+ 1ce:	40f6                	lw	ra,92(sp)
+ 1d0:	44d6                	lw	s1,84(sp)
+ 1d2:	4946                	lw	s2,80(sp)
+ 1d4:	49b6                	lw	s3,76(sp)
+ 1d6:	4a26                	lw	s4,72(sp)
+ 1d8:	4a96                	lw	s5,68(sp)
+ 1da:	4b06                	lw	s6,64(sp)
+ 1dc:	5bf2                	lw	s7,60(sp)
+ 1de:	5c62                	lw	s8,56(sp)
+ 1e0:	5cd2                	lw	s9,52(sp)
+ 1e2:	5d42                	lw	s10,48(sp)
+ 1e4:	5db2                	lw	s11,44(sp)
+ 1e6:	6125                	addi	sp,sp,96
+ 1e8:	8082                	ret
+
+000001ea <.L33>:
+ 1ea:	ef4419e3          	bne	s0,s4,dc <.L38>
+			1ea: R_RISCV_BRANCH	.L38
+ 1ee:	ef3957e3          	bge	s2,s3,dc <.L38>
+			1ee: R_RISCV_BRANCH	.L38
+ 1f2:	bdfd                	j	f0 <.L36>
+			1f2: R_RISCV_RVC_JUMP	.L36
+
+000001f4 <.L34>:
+ 1f4:	3b9ad7b7          	lui	a5,0x3b9ad
+ 1f8:	a0078793          	addi	a5,a5,-1536 # 3b9aca00 <.L34+0x3b9ac80c>
+ 1fc:	99be                	add	s3,s3,a5
+ 1fe:	147d                	addi	s0,s0,-1
+ 200:	bde5                	j	f8 <.L35>
+			200: R_RISCV_RVC_JUMP	.L35

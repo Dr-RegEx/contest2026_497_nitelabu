@@ -1,0 +1,24 @@
+{
+  "status": "AWAITING_EXTERNAL_CONDITIONS",
+  "full_pass": 76,
+  "total": 88,
+  "active_board_test": false,
+  "owned_windows_receiver_running": false,
+  "current_pair_receipt": "build1631-spawn-parent-env.sha256",
+  "remaining_cases": "remaining1665-no-repeat.md",
+  "case_snapshot": "sprint1665-current-cases.json",
+  "firewall_proposal": "checkpoint1666-firewall-plan",
+  "updated_submission_draft": "submission1667",
+  "no_manual_requests_while_sleeping": true,
+  "blocking_conditions": [
+    "GPIO/BMI160 fixtures and external speaker/listening unavailable",
+    "Windows receiver explicit inboundBlock requires user environment decision; proposal prepared, not applied",
+    "RNG original sample uniformity validity and published performance acceptance unresolved; cannot alter statistical thresholds or shrink Flash workload"
+  ],
+  "do_not_repeat": [
+    "passed12h/24h/coldboot/poweroff cases",
+    "unchangedRNG10stream to cherry-pick values",
+    "UDP Tx while explicit block remains"
+  ],
+  "scope_note": "Original88case sprint and SIMD requirement preserved; no claim all project scope or integrateddemo complete."
+}

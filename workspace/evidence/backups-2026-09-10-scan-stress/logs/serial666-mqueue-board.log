@@ -1,0 +1,100 @@
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_mqueue_smoke.py", line 54, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_mqueue_smoke.py", line 43, in main
+    output = transport.collect_until_prompt(port, 30.0)
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_nuttx_smoke.py", line 117, in collect_until_prompt
+    raise TimeoutError(output.decode("utf-8", errors="replace"))
+TimeoutError: ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x13f58
+entry 0x2f01035c
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x13f58  (81752)
+padd: lma 0x00015fc8 vma 0x00000000 len 0xa050   (41040)
+imap: lma 0x00020020 vma 0x400c0020 len 0x1a03c  (106556)
+padd: lma 0x0003a064 vma 0x00000000 len 0x6094   (24724)
+imap: lma 0x00040100 vma 0x40000100 len 0xb7064  (749668)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] MQUEUE_CASE cpu=0 rounds=64 elapsed=0 ret=-110
+[CPU1] MQUEUE_TEST=FAIL cases=2 ret=-110
+[CPU1] ERROR: ESP32-S31 board bring-up failed: -110
+[CPU1] dump_assert_info: Current Version: NuttX  0.0.0 428252a08db-dirty Sep 14 2026 21:47:46 risc-v
+[CPU1] dump_assert_info: Assertion failed : at file: /sched/init/nx_bringup.c:395 task(CPU1): AppBringUp process: Kernel 0x40021a76
+[CPU1] up_dump_register: PC: 4002217e
+[CPU1] up_dump_register: A0: 2f01a90c A1: 0000018b A2: 00000000 A3: 2f033e94
+[CPU1] up_dump_register: A4: 00000000 A5: 2f0161b8 A6: 2f033fc4 A7: 00000001
+[CPU1] up_dump_register: T0: 2f016bc0 T1: 2f0163c0 T2: 10000000 T3: 00000000
+[CPU1] up_dump_register: T4: 00000000 T5: 00000000 T6: 00000000
+[CPU1] up_dump_register: S0: 0000010c S1: 2f01a800 S2: 00000001 S3: 2f02e260
+[CPU1] up_dump_register: S4: 00000000 S5: 400c1f9c S6: 2f016000 S7: 00000006
+[CPU1] up_dump_register: S8: 00000000 S9: 00000000 S10: 00000000 S11: 0000018b
+[CPU1] up_dump_register: SP: 2f016a60 FP: 0000010c TP: 00000000 RA: 4002217e
+[CPU1] dump_stackinfo: IRQ Stack:
+[CPU1] dump_stackinfo:   base: 0x2f0163c0
+[CPU1] dump_stackinfo:   size: 00002048
+[CPU1] dump_stackinfo:     sp: 0x2f016a60
+[CPU1] stack_dump:  2f016a40: 2f016000 400c1f9c 400c640c 2f02e260 00042020 2f01a800 2f01a90c 40022402
+[CPU1] stack_dump:  2f016a60: 400c2114 40021a76 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f016a80: 00000000 00000001 2f02e260 2f01a90c 00000000 400c1f9c 0000018b 7474754e
+[CPU1] stack_dump:  2f016aa0: 00000058 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f016ac0: 00000000 00000000 00000000 00000000 302e3000 0000302e 00000000 00000000
+[CPU1] stack_dump:  2f016ae0: 00000000 32340000 32353238 64383061 69642d62 20797472 20706553 32203431
+[CPU1] stack_dump:  2f016b00: 20363230 343a3132 36343a37 00000000 00000000 00000000 73697200 00762d63
+[CPU1] stack_dump:  2f016b20: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f016b40: 00000000 00000000 00000000 00000000 00000000 00000000 2f02e260 2f033e94
+[CPU1] stack_dump:  2f016b60: 00000003 400c1f9c 2f033e94 40002b16 00000000 00000000 00000000 0000018b
+[CPU1] stack_dump:  2f016b80: 00000000 00000000 00000000 2f033e94 2f016080 00000004 2f0161b4 40036f82
+[CPU1] stack_dump:  2f016ba0: 00000000 00000000 00000000 00000000 400c1f9c 00000100 2f033fa0 2f000f24
+[CPU1] stack_dump:  2f016bc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] dump_stackinfo: User Stack:
+[CPU1] dump_stackinfo:   base: 0x2f032050
+[CPU1] dump_stackinfo:   size: 00008112
+[CPU1] dump_stackinfo:     sp: 0x2f033fa0
+[CPU1] stack_dump:  2f033f80: 00000000 00000000 00000000 00000000 40021a76 00000064 2f033fc4 00000000
+[CPU1] stack_dump:  2f033fa0: 00000000 00000000 0000018b 00000000 40021a76 00000064 fffffffe 40021ada
+[CPU1] stack_dump:  2f033fc0: 00000000 00000000 00000064 00000001 00000000 00000000 00001000 00010000
+[CPU1] stack_dump:  2f033fe0: 00000000 2f02e260 00000002 40029bc0 00000000 00000000 00000000 00000000
+[CPU1] stack_dump:  2f034000: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[CPU1] sched_dumpstack: backtrace| 3: 0x40009b34
+[CPU1] dump_fatal_info: Dump CPU0: PAUSED
+[CPU1] up_dump_register: PC: 4002f3ce
+[CPU1] up_dump_register: A0: 00000000 A1: 2f0161d8 A2: 00000000 A3: 00010001
+[CPU1] up_dump_register: A4: 2f0161d8 A5: 00000000 A6: 2f07f168 A7: 2f02d91c
+[CPU1] up_dump_register: T0: 00042800 T1: 2f001b2a T2: 00000dff T3: 00001000
+[CPU1] up_dump_register: T4: 00000000 T5: 2050237c T6: 2f0103a0
+[CPU1] up_dump_register: S0: 00000002 S1: 00000001 S2: 00000001 S3: 00000002
+[CPU1] up_dump_register: S4: 2f0161c4 S5: 2f016000 S6: 2f016000 S7: 2f016000
+[CPU1] up_dump_register: S8: 00000003 S9: 40021b68 S10: 00000022 S11: 00000104
+[CPU1] up_dump_register: SP: 2f02cb1c FP: 00000002 TP: 00000000 RA: 4002f3ba
+[CPU1] dump_stackinfo: User Stack:
+[CPU1] dump_stackinfo:   base: 0x2f02c03c
+[CPU1] dump_stackinfo:   size: 00003024
+[CPU1] dump_stackinfo:     sp: 0x2f02cb1c
+[CPU1] stack_dump:  2f02cafc: 2f016000 2f016000 00010001 00000000 00000001 2f016000 2f0161c4 00000002
+[CPU1] stack_dump:  2f02cb1c: 00000001 00000001 00000002 40021a6c 2f018278 00000000 00010001 2f019e30
+[CPU1] stack_dump:  2f02cb3c: 2f0129c0 00000000 50000000 01000000 00000001 00000140 00000010 000f7164
+[CPU1] stack_dump:  2f02cb5c: 00000002 00000002 00000006 40000000 400c0000 400c0020 00020000 00040000
+[CPU1] stack_dump:  2f02cb7c: 2f018278 00000202 00000202 2f0107c4 cdce1de1 0924d0f5 0d1bb870 0001a018
+[CPU1] stack_dump:  2f02cb9c: 4195e638 c0b64b0f 021e48f5 00000001 43505519 000b7064 00000000 20801000
+[CPU1] stack_dump:  2f02cbbc: 000000ee 00000020 00ffff00 01000000 ddd171c8 5bf95075 f330be8f 2f849000
+[CPU1] stack_dump:  2f02cbdc: 2f849000 00013f58 2f000000 2f080000 2f07a000 2f080000 00000000 00015fa0
+[CPU1] stack_dump:  2f02cbfc: ffffffff 00000085 00000000 2f01039e 00000000 00000000 00000000 00000000
+[CPU1] sched_dumpstack: backtrace| 0: 0x4002f3ce
+[CPU1] dump_tasks:    PID GROUP   CPU PRI POLICY   TYPE    NPX STATE   EVENT      SIGMASK          STACKBASE  STACKSIZE   COMMAND
+[CPU1] dump_tasks:   ----   ---     0 --- -------- ------- --- ------- ---------- ---------------- 0x2f016bc0      2048   irq
+[CPU1] dump_tasks:   ----   ---     1 --- -------- ------- --- ------- ---------- ---------------- 0x2f0163c0      2048   irq
+[CPU1] dump_task:       0     0     0   0 FIFO     Kthread -   Running            0000000000000000 0x2f02c03c      3024   CPU0 IDLE
+[CPU1] dump_task:       1     0     1   0 FIFO     Kthread -   Assigned           0000000000000000 0x2f02cc3c      3024   CPU1 IDLE
+[CPU1] dump_task:       2     0     0 100 RR       Kthread -   Waiting Semaphore  0000000000000000 0x2f030060      1952   lpwork 0x2f010f80 0x2f010fcc
+[CPU1] dump_task:       3     0     1 240 RR       Kthread -   Running            0000000000000000 0x2f032050      8112   AppBringUp
+[CPU1] sched_dumpstack: backtrace| 0: 0x4002f3ce
+[CPU1] sched_dumpstack: backtrace| 1: 0x4002486c
+[CPU1] sched_dumpstack: backtrace| 2: 0x4002486c
+[CPU1] sched_dumpstack: backtrace| 3: 0x40009b34
+

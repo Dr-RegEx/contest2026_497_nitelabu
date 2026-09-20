@@ -1,0 +1,9 @@
+{
+  "status": "PARSER_STALL",
+  "image": 1190,
+  "case": "4.2.14",
+  "evidence": "TRACE1190 before sscanf: 2 16 48000 printed; after sscanf marker absent. No nxlooper_loopback entry log.",
+  "source_restored": true,
+  "pass_count_changed": false,
+  "next": "Investigate actual sscanf path; preserve workload. Board remains stalled on trace image, no collector owns UART."
+}

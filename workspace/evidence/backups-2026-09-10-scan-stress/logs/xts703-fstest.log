@@ -1,0 +1,1111 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7d (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x13fa8
+entry 0x2f010388
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x13fa8  (81832)
+padd: lma 0x00016018 vma 0x00000000 len 0xa000   (40960)
+imap: lma 0x00020020 vma 0x400d0020 len 0x1ae04  (110084)
+padd: lma 0x0003ae2c vma 0x00000000 len 0x52cc   (21196)
+imap: lma 0x00040100 vma 0x40000100 len 0xc2a60  (797280)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_BOOT=PASS seconds=0.675
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=103 data=0 fcs=2 abort=8 full=0 fifo=0 other=4
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=8 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /system/bin/fstest ---
+ls /system/bin/fstest
+ /system/bin/fstest
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     304828      74524     230304      89648     209256    194      9 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+--- CMD: mount ---
+mount
+  /apps type littlefs
+  /proc type procfs
+  /system/bin type romfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+XTS_COMMAND=fstest -n 10 -m /tmp
+fstest -n 10 -m /tmp
+
+=== FILLING 1 =============================
+ERROR: Failed to write file: 12
+  File name:    /tmp/h08HKweiJaUkEIwgSG4cAyl8J
+  File size:    5745
+  Write offset: 1540
+  Write size:   239
+Filled file system
+  Number of files: 45
+  Number deleted:  0
+Directory:
+ 1. Type[8]: File  Name: TgITrphFrk3nncD1
+ 2. Type[8]: File  Name: lQLGn8bTgI
+ 3. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+ 4. Type[8]: File  Name: k3nncD1UuCniHPtRCTY08
+ 5. Type[8]: File  Name: BKLVzBzL0
+ 6. Type[8]: File  Name: HPtRCTY0
+ 7. Type[8]: File  Name: CEZ1gCqZ
+ 8. Type[8]: File  Name: tEBKLVzBzL0pMQiV
+ 9. Type[8]: File  Name: FNLd0XaT
+10. Type[8]: File  Name: RCE0akD8BaHzTRK0Grd
+11. Type[8]: File  Name: Kahy9C
+12. Type[8]: File  Name: ZbgkiM
+13. Type[8]: File  Name: E7fgewG
+14. Type[8]: File  Name: eLw7F3Ojs6kUhWXN38DnI1J
+15. Type[8]: File  Name: GaX2WRnIjinxmn22B95ayOY92qu
+16. Type[8]: File  Name: AiYhGsOO
+17. Type[8]: File  Name: CTY08cP0df
+18. Type[8]: File  Name: kXNJj4E0S
+19. Type[8]: File  Name: 2qupu3uB
+20. Type[8]: File  Name: 6kUhWXN38DnI1JMaZbgkiMf0aPb
+21. Type[8]: File  Name: EDzRM44G
+22. Type[8]: File  Name: 1UuCniHPtRCTY08cP0df
+23. Type[8]: File  Name: zyDsbhZ0Va
+24. Type[8]: File  Name: eriB1tdTWBO4MLs6KeTGD43hjT
+25. Type[8]: File  Name: inxmn22B95ay
+26. Type[8]: File  Name: E0SSae6eriB1tdTWBO
+27. Type[8]: File  Name: 4bFXVCykg3
+28. Type[8]: File  Name: ykg3dpPWEy
+29. Type[8]: File  Name: bSioI2sW1k5kbaZD38gcndetdEk
+30. Type[8]: File  Name: PcGJyrfEpy
+31. Type[8]: File  Name: ywIiq8
+32. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+33. Type[8]: File  Name: IwgSG4
+34. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+35. Type[8]: File  Name: rfEpylQLGn8bTgITrphFr
+36. Type[8]: File  Name: ETeugEU7Sl
+37. Type[8]: File  Name: cndetd
+38. Type[8]: File  Name: rgqHhF8lHYF2k2si044bxtiI
+39. Type[8]: File  Name: z1O3ABs8yQKajkfsVyF
+40. Type[8]: File  Name: rk3nncD1UuCniHPtRCTY08
+41. Type[8]: File  Name: iesWNGJfbQ0bFaowO0
+42. Type[8]: File  Name: qeVVdKahy9CzyDsbhZ0VaK
+43. Type[8]: File  Name: aZbgk
+44. Type[8]: File  Name: RAtgf4VqAdH9cFYgc9JeUDH
+45. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 189703
+
+=== DELETING 1 ============================
+Deleted some files
+  Number of files: 45
+  Number deleted:  7
+Directory:
+ 1. Type[8]: File  Name: lQLGn8bTgI
+ 2. Type[8]: File  Name: FNLd0XaT
+ 3. Type[8]: File  Name: RCE0akD8BaHzTRK0Grd
+ 4. Type[8]: File  Name: Kahy9C
+ 5. Type[8]: File  Name: ZbgkiM
+ 6. Type[8]: File  Name: E7fgewG
+ 7. Type[8]: File  Name: eLw7F3Ojs6kUhWXN38DnI1J
+ 8. Type[8]: File  Name: GaX2WRnIjinxmn22B95ayOY92qu
+ 9. Type[8]: File  Name: AiYhGsOO
+10. Type[8]: File  Name: CTY08cP0df
+11. Type[8]: File  Name: kXNJj4E0S
+12. Type[8]: File  Name: 2qupu3uB
+13. Type[8]: File  Name: HPtRCTY0
+14. Type[8]: File  Name: EDzRM44G
+15. Type[8]: File  Name: CEZ1gCqZ
+16. Type[8]: File  Name: zyDsbhZ0Va
+17. Type[8]: File  Name: eriB1tdTWBO4MLs6KeTGD43hjT
+18. Type[8]: File  Name: inxmn22B95ay
+19. Type[8]: File  Name: E0SSae6eriB1tdTWBO
+20. Type[8]: File  Name: 4bFXVCykg3
+21. Type[8]: File  Name: ykg3dpPWEy
+22. Type[8]: File  Name: bSioI2sW1k5kbaZD38gcndetdEk
+23. Type[8]: File  Name: PcGJyrfEpy
+24. Type[8]: File  Name: ywIiq8
+25. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+26. Type[8]: File  Name: IwgSG4
+27. Type[8]: File  Name: BKLVzBzL0
+28. Type[8]: File  Name: rfEpylQLGn8bTgITrphFr
+29. Type[8]: File  Name: ETeugEU7Sl
+30. Type[8]: File  Name: cndetd
+31. Type[8]: File  Name: rgqHhF8lHYF2k2si044bxtiI
+32. Type[8]: File  Name: z1O3ABs8yQKajkfsVyF
+33. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+34. Type[8]: File  Name: iesWNGJfbQ0bFaowO0
+35. Type[8]: File  Name: qeVVdKahy9CzyDsbhZ0VaK
+36. Type[8]: File  Name: aZbgk
+37. Type[8]: File  Name: RAtgf4VqAdH9cFYgc9JeUDH
+38. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 160528
+File System:
+  Block Size:      512
+  No. Blocks:      343
+  Free Blocks:     22
+  Avail. Blocks:   22
+  No. File Nodes:  38
+  Free File Nodes: 16
+
+End of loop memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks         2        8        6
+mxordblk    7a7f0    7a7f0        0
+uordblks     4ebc     52bc      400
+fordblks    7c140    7bd40 fffffc00
+
+=== FILLING 2 =============================
+ERROR: Failed to write file: 12
+  File name:    /tmp/9jxKaE
+  File size:    7895
+  Write offset: 1669
+  Write size:   199
+Filled file system
+  Number of files: 44
+  Number deleted:  0
+Directory:
+ 1. Type[8]: File  Name: EJIpwlkY22VEiesWNGJ
+ 2. Type[8]: File  Name: cGEK0VCEZ1gCqZhEWSbB5s8jRRC
+ 3. Type[8]: File  Name: XVCykg3dpPWEytnz
+ 4. Type[8]: File  Name: Rac0EJIpwlkY22VEie
+ 5. Type[8]: File  Name: IAMt2s0jj2n1KSV
+ 6. Type[8]: File  Name: ikaP
+ 7. Type[8]: File  Name: lQLGn8bTgI
+ 8. Type[8]: File  Name: FNLd0XaT
+ 9. Type[8]: File  Name: RCE0akD8BaHzTRK0Grd
+10. Type[8]: File  Name: Kahy9C
+11. Type[8]: File  Name: ZbgkiM
+12. Type[8]: File  Name: E7fgewG
+13. Type[8]: File  Name: eLw7F3Ojs6kUhWXN38DnI1J
+14. Type[8]: File  Name: GaX2WRnIjinxmn22B95ayOY92qu
+15. Type[8]: File  Name: AiYhGsOO
+16. Type[8]: File  Name: CTY08cP0df
+17. Type[8]: File  Name: kXNJj4E0S
+18. Type[8]: File  Name: 2qupu3uB
+19. Type[8]: File  Name: HPtRCTY0
+20. Type[8]: File  Name: EDzRM44G
+21. Type[8]: File  Name: CEZ1gCqZ
+22. Type[8]: File  Name: zyDsbhZ0Va
+23. Type[8]: File  Name: eriB1tdTWBO4MLs6KeTGD43hjT
+24. Type[8]: File  Name: inxmn22B95ay
+25. Type[8]: File  Name: E0SSae6eriB1tdTWBO
+26. Type[8]: File  Name: 4bFXVCykg3
+27. Type[8]: File  Name: ykg3dpPWEy
+28. Type[8]: File  Name: bSioI2sW1k5kbaZD38gcndetdEk
+29. Type[8]: File  Name: PcGJyrfEpy
+30. Type[8]: File  Name: ywIiq8
+31. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+32. Type[8]: File  Name: IwgSG4
+33. Type[8]: File  Name: BKLVzBzL0
+34. Type[8]: File  Name: rfEpylQLGn8bTgITrphFr
+35. Type[8]: File  Name: ETeugEU7Sl
+36. Type[8]: File  Name: cndetd
+37. Type[8]: File  Name: rgqHhF8lHYF2k2si044bxtiI
+38. Type[8]: File  Name: z1O3ABs8yQKajkfsVyF
+39. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+40. Type[8]: File  Name: iesWNGJfbQ0bFaowO0
+41. Type[8]: File  Name: qeVVdKahy9CzyDsbhZ0VaK
+42. Type[8]: File  Name: aZbgk
+43. Type[8]: File  Name: RAtgf4VqAdH9cFYgc9JeUDH
+44. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 180947
+
+=== DELETING 2 ============================
+Deleted some files
+  Number of files: 44
+  Number deleted:  36
+Directory:
+ 1. Type[8]: File  Name: FNLd0XaT
+ 2. Type[8]: File  Name: CEZ1gCqZ
+ 3. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+ 4. Type[8]: File  Name: BKLVzBzL0
+ 5. Type[8]: File  Name: EJIpwlkY22VEiesWNGJ
+ 6. Type[8]: File  Name: Kahy9C
+ 7. Type[8]: File  Name: cGEK0VCEZ1gCqZhEWSbB5s8jRRC
+ 8. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 38028
+File System:
+  Block Size:      512
+  No. Blocks:      82
+  Free Blocks:     6
+  Avail. Blocks:   6
+  No. File Nodes:  8
+  Free File Nodes: 46
+
+End of loop memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks         8        9        1
+mxordblk    7a7f0    7a7f0        0
+uordblks     52bc     4f9c fffffce0
+fordblks    7bd40    7c060      320
+
+=== FILLING 3 =============================
+ERROR: Failed to write file: 12
+  File name:    /tmp/ywIiq8
+  File size:    3126
+  Write offset: 1081
+  Write size:   254
+Filled file system
+  Number of files: 47
+  Number deleted:  0
+Directory:
+ 1. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+ 2. Type[8]: File  Name: IwgSG4
+ 3. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+ 4. Type[8]: File  Name: rfEpylQLGn8bTgITrphFr
+ 5. Type[8]: File  Name: ETeugEU7Sl
+ 6. Type[8]: File  Name: cndetd
+ 7. Type[8]: File  Name: rgqHhF8lHYF2k2si044bxtiI
+ 8. Type[8]: File  Name: z1O3ABs8yQKajkfsVyF
+ 9. Type[8]: File  Name: rk3nncD1UuCniHPtRCTY08
+10. Type[8]: File  Name: iesWNGJfbQ0bFaowO0
+11. Type[8]: File  Name: qeVVdKahy9CzyDsbhZ0VaK
+12. Type[8]: File  Name: aZbgk
+13. Type[8]: File  Name: zyDsbh
+14. Type[8]: File  Name: ZbgkiM
+15. Type[8]: File  Name: E7fgewG
+16. Type[8]: File  Name: eLw7F3Ojs6kUhWXN38DnI1J
+17. Type[8]: File  Name: GaX2WRnIjinxmn22B95ayOY92qu
+18. Type[8]: File  Name: AiYhGsOO
+19. Type[8]: File  Name: CTY08cP0df
+20. Type[8]: File  Name: kXNJj4E0S
+21. Type[8]: File  Name: 2qupu3uB
+22. Type[8]: File  Name: 6kUhWXN38DnI1JMaZbgkiMf0aPb
+23. Type[8]: File  Name: EDzRM44G
+24. Type[8]: File  Name: 1UuCniHPtRCTY08cP0df
+25. Type[8]: File  Name: zyDsbhZ0Va
+26. Type[8]: File  Name: eriB1tdTWBO4MLs6KeTGD43hjT
+27. Type[8]: File  Name: inxmn22B95ay
+28. Type[8]: File  Name: E0SSae6eriB1tdTWBO
+29. Type[8]: File  Name: 9LH4Uf67RL4bFXVCykg3
+30. Type[8]: File  Name: KweiJaUkEIwgSG4cAyl8JDWsv8x
+31. Type[8]: File  Name: V0Lrtmig
+32. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+33. Type[8]: File  Name: 81cGEK0
+34. Type[8]: File  Name: 4tOjT9NEtR0kiuN2zXLbEsm49
+35. Type[8]: File  Name: aTSYF8TV3YtOT
+36. Type[8]: File  Name: F2k2si044bxtiIcoJ
+37. Type[8]: File  Name: CE0akD8BaH
+38. Type[8]: File  Name: fEpylQLGn8bTgITrphFrk3nncD
+39. Type[8]: File  Name: D43hjTMVvLDotZPVwsDqLGOa8h
+40. Type[8]: File  Name: FNLd0XaT
+41. Type[8]: File  Name: CEZ1gCqZ
+42. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+43. Type[8]: File  Name: BKLVzBzL0
+44. Type[8]: File  Name: EJIpwlkY22VEiesWNGJ
+45. Type[8]: File  Name: Kahy9C
+46. Type[8]: File  Name: cGEK0VCEZ1gCqZhEWSbB5s8jRRC
+47. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 185988
+
+=== DELETING 3 ============================
+Deleted some files
+  Number of files: 47
+  Number deleted:  35
+Directory:
+ 1. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+ 2. Type[8]: File  Name: IwgSG4
+ 3. Type[8]: File  Name: aTSYF8TV3YtOT
+ 4. Type[8]: File  Name: D43hjTMVvLDotZPVwsDqLGOa8h
+ 5. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+ 6. Type[8]: File  Name: 4tOjT9NEtR0kiuN2zXLbEsm49
+ 7. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+ 8. Type[8]: File  Name: BKLVzBzL0
+ 9. Type[8]: File  Name: EJIpwlkY22VEiesWNGJ
+10. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+11. Type[8]: File  Name: ETeugEU7Sl
+12. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 62714
+File System:
+  Block Size:      512
+  No. Blocks:      133
+  Free Blocks:     8
+  Avail. Blocks:   8
+  No. File Nodes:  12
+  Free File Nodes: 42
+
+End of loop memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks         9       10        1
+mxordblk    7a7f0    7a7f0        0
+uordblks     4f9c     503c       a0
+fordblks    7c060    7bfc0 ffffff60
+
+=== FILLING 4 =============================
+ERROR: Failed to write file: 12
+  File name:    /tmp/cGEK0VCEZ1gCqZhEWSbB5s8jRRC
+  File size:    3253
+  Write offset: 2403
+  Write size:   70
+Filled file system
+  Number of files: 45
+  Number deleted:  0
+Directory:
+ 1. Type[8]: File  Name: XVCykg3dpPWEytnz
+ 2. Type[8]: File  Name: Mf0aPbBRac0EJIpwlkY22VEie
+ 3. Type[8]: File  Name: 81cGEK0
+ 4. Type[8]: File  Name: R0kiuN2zXLbEsm49
+ 5. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+ 6. Type[8]: File  Name: 38DnI1
+ 7. Type[8]: File  Name: MfoTXOA
+ 8. Type[8]: File  Name: 3lLQNvW0FFPVj7sIAM
+ 9. Type[8]: File  Name: Wsv8xKNJW8E7fgewGMhS
+10. Type[8]: File  Name: uBrjbLTgttEBKLVzBzL0pMQ
+11. Type[8]: File  Name: JIpwlk
+12. Type[8]: File  Name: 4MLs
+13. Type[8]: File  Name: XQrgqHhF8lHY
+14. Type[8]: File  Name: RJeVTjNibtrhi
+15. Type[8]: File  Name: OJLfFRJeV
+16. Type[8]: File  Name: co0ozXz1O3ABs8yQKajkfsVy
+17. Type[8]: File  Name: DsbhZ0VaKf9aq2YQa4GaX2WRnIj
+18. Type[8]: File  Name: btrhikaP3YeUgw
+19. Type[8]: File  Name: xmn22B95ayOY92qupu3
+20. Type[8]: File  Name: sv8xKN
+21. Type[8]: File  Name: 2OETeugEU7SlqusA0kTQ
+22. Type[8]: File  Name: TRK0GrdFwzs0JKZ4U5KywI
+23. Type[8]: File  Name: H4Uf67R
+24. Type[8]: File  Name: WRnI
+25. Type[8]: File  Name: rdFwzs0JKZ4U5KywIiq8rxgoDR
+26. Type[8]: File  Name: vhBV4v8TlzHhq
+27. Type[8]: File  Name: 7RL4bFXVCykg3dpPWEytnzv
+28. Type[8]: File  Name: zmMUWLp0vuMv
+29. Type[8]: File  Name: VEiesWNGJfbQ0bFaowO0ep
+30. Type[8]: File  Name: PVwsDqLGOa8h08HKwe
+31. Type[8]: File  Name: jTMVvLD
+32. Type[8]: File  Name: bBRac0EJ
+33. Type[8]: File  Name: JHgTzm
+34. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+35. Type[8]: File  Name: IwgSG4
+36. Type[8]: File  Name: aTSYF8TV3YtOT
+37. Type[8]: File  Name: D43hjTMVvLDotZPVwsDqLGOa8h
+38. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+39. Type[8]: File  Name: 4tOjT9NEtR0kiuN2zXLbEsm49
+40. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+41. Type[8]: File  Name: BKLVzBzL0
+42. Type[8]: File  Name: EJIpwlkY22VEiesWNGJ
+43. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+44. Type[8]: File  Name: ETeugEU7Sl
+45. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 183955
+
+=== DELETING 4 ============================
+Deleted some files
+  Number of files: 45
+  Number deleted:  14
+Directory:
+ 1. Type[8]: File  Name: OJLfFRJeV
+ 2. Type[8]: File  Name: co0ozXz1O3ABs8yQKajkfsVy
+ 3. Type[8]: File  Name: DsbhZ0VaKf9aq2YQa4GaX2WRnIj
+ 4. Type[8]: File  Name: MfoTXOA
+ 5. Type[8]: File  Name: xmn22B95ayOY92qupu3
+ 6. Type[8]: File  Name: JIpwlk
+ 7. Type[8]: File  Name: XVCykg3dpPWEytnz
+ 8. Type[8]: File  Name: TRK0GrdFwzs0JKZ4U5KywI
+ 9. Type[8]: File  Name: R0kiuN2zXLbEsm49
+10. Type[8]: File  Name: 81cGEK0
+11. Type[8]: File  Name: rdFwzs0JKZ4U5KywIiq8rxgoDR
+12. Type[8]: File  Name: RJeVTjNibtrhi
+13. Type[8]: File  Name: 7RL4bFXVCykg3dpPWEytnzv
+14. Type[8]: File  Name: zmMUWLp0vuMv
+15. Type[8]: File  Name: VEiesWNGJfbQ0bFaowO0ep
+16. Type[8]: File  Name: PVwsDqLGOa8h08HKwe
+17. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+18. Type[8]: File  Name: Mf0aPbBRac0EJIpwlkY22VEie
+19. Type[8]: File  Name: Wsv8xKNJW8E7fgewGMhS
+20. Type[8]: File  Name: 38DnI1
+21. Type[8]: File  Name: IwgSG4
+22. Type[8]: File  Name: aTSYF8TV3YtOT
+23. Type[8]: File  Name: D43hjTMVvLDotZPVwsDqLGOa8h
+24. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+25. Type[8]: File  Name: 4tOjT9NEtR0kiuN2zXLbEsm49
+26. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+27. Type[8]: File  Name: BKLVzBzL0
+28. Type[8]: File  Name: EJIpwlkY22VEiesWNGJ
+29. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+30. Type[8]: File  Name: ETeugEU7Sl
+31. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 136006
+File System:
+  Block Size:      512
+  No. Blocks:      289
+  Free Blocks:     18
+  Avail. Blocks:   18
+  No. File Nodes:  31
+  Free File Nodes: 23
+
+End of loop memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks        10       15        5
+mxordblk    7a7f0    7a7f0        0
+uordblks     503c     527c      240
+fordblks    7bfc0    7bd80 fffffdc0
+
+=== FILLING 5 =============================
+ERROR: Failed to write file: 12
+  File name:    /tmp/eriB1tdTWBO4MLs6KeTGD43hjT
+  File size:    7516
+  Write offset: 6030
+  Write size:   315
+Filled file system
+  Number of files: 39
+  Number deleted:  0
+Directory:
+ 1. Type[8]: File  Name: inxmn22B95ay
+ 2. Type[8]: File  Name: E0SSae6eriB1tdTWBO
+ 3. Type[8]: File  Name: 9LH4Uf67RL4bFXVCykg3
+ 4. Type[8]: File  Name: KweiJaUkEIwgSG4cAyl8JDWsv8x
+ 5. Type[8]: File  Name: V0Lrtmig
+ 6. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+ 7. Type[8]: File  Name: R81cGEK0
+ 8. Type[8]: File  Name: QiV7zqtYqQuVh6n4e5fFNLd
+ 9. Type[8]: File  Name: OJLfFRJeV
+10. Type[8]: File  Name: co0ozXz1O3ABs8yQKajkfsVy
+11. Type[8]: File  Name: DsbhZ0VaKf9aq2YQa4GaX2WRnIj
+12. Type[8]: File  Name: MfoTXOA
+13. Type[8]: File  Name: xmn22B95ayOY92qupu3
+14. Type[8]: File  Name: JIpwlk
+15. Type[8]: File  Name: XVCykg3dpPWEytnz
+16. Type[8]: File  Name: TRK0GrdFwzs0JKZ4U5KywI
+17. Type[8]: File  Name: R0kiuN2zXLbEsm49
+18. Type[8]: File  Name: 81cGEK0
+19. Type[8]: File  Name: rdFwzs0JKZ4U5KywIiq8rxgoDR
+20. Type[8]: File  Name: RJeVTjNibtrhi
+21. Type[8]: File  Name: 7RL4bFXVCykg3dpPWEytnzv
+22. Type[8]: File  Name: zmMUWLp0vuMv
+23. Type[8]: File  Name: VEiesWNGJfbQ0bFaowO0ep
+24. Type[8]: File  Name: PVwsDqLGOa8h08HKwe
+25. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+26. Type[8]: File  Name: Mf0aPbBRac0EJIpwlkY22VEie
+27. Type[8]: File  Name: Wsv8xKNJW8E7fgewGMhS
+28. Type[8]: File  Name: 38DnI1
+29. Type[8]: File  Name: IwgSG4
+30. Type[8]: File  Name: aTSYF8TV3YtOT
+31. Type[8]: File  Name: D43hjTMVvLDotZPVwsDqLGOa8h
+32. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+33. Type[8]: File  Name: 4tOjT9NEtR0kiuN2zXLbEsm49
+34. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+35. Type[8]: File  Name: BKLVzBzL0
+36. Type[8]: File  Name: EJIpwlkY22VEiesWNGJ
+37. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+38. Type[8]: File  Name: ETeugEU7Sl
+39. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 167734
+
+=== DELETING 5 ============================
+Deleted some files
+  Number of files: 39
+  Number deleted:  34
+Directory:
+ 1. Type[8]: File  Name: IwgSG4
+ 2. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+ 3. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+ 4. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+ 5. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 26592
+File System:
+  Block Size:      512
+  No. Blocks:      57
+  Free Blocks:     4
+  Avail. Blocks:   4
+  No. File Nodes:  5
+  Free File Nodes: 49
+
+End of loop memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks        15        4      -11
+mxordblk    7a7f0    7a7f0        0
+uordblks     527c     4f4c fffffcd0
+fordblks    7bd80    7c0b0      330
+
+=== FILLING 6 =============================
+ERROR: Failed to write file: 12
+  File name:    /tmp/KweiJaUkEIwgSG4cAyl8JDWsv8x
+  File size:    2028
+  Write offset: 1181
+  Write size:   230
+Filled file system
+  Number of files: 46
+  Number deleted:  0
+Directory:
+ 1. Type[8]: File  Name: V0Lrtmig
+ 2. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+ 3. Type[8]: File  Name: 81cGEK0
+ 4. Type[8]: File  Name: R0kiuN2zXLbEsm49
+ 5. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+ 6. Type[8]: File  Name: 38DnI1
+ 7. Type[8]: File  Name: MfoTXOA
+ 8. Type[8]: File  Name: 3lLQNvW0FFPVj7sIAM
+ 9. Type[8]: File  Name: Wsv8xKNJW8E7fgewGMhS
+10. Type[8]: File  Name: uBrjbLTgttEBKLVzBzL0pMQ
+11. Type[8]: File  Name: JIpwlk
+12. Type[8]: File  Name: 4MLs
+13. Type[8]: File  Name: XQrgqHhF8lHY
+14. Type[8]: File  Name: RJeVTjNibtrhi
+15. Type[8]: File  Name: OJLfFRJeV
+16. Type[8]: File  Name: co0ozXz1O3ABs8yQKajkfsVy
+17. Type[8]: File  Name: DsbhZ0VaKf9aq2YQa4GaX2WRnIj
+18. Type[8]: File  Name: btrhikaP3YeUgw
+19. Type[8]: File  Name: xmn22B95ayOY92qupu3
+20. Type[8]: File  Name: sv8xKN
+21. Type[8]: File  Name: 2OETeugEU7SlqusA0kTQ
+22. Type[8]: File  Name: TRK0GrdFwzs0JKZ4U5KywI
+23. Type[8]: File  Name: H4Uf67R
+24. Type[8]: File  Name: WRnI
+25. Type[8]: File  Name: rdFwzs0JKZ4U5KywIiq8rxgoDR
+26. Type[8]: File  Name: vhBV4v8TlzHhq
+27. Type[8]: File  Name: 7RL4bFXVCykg3dpPWEytnzv
+28. Type[8]: File  Name: zmMUWLp0vuMv
+29. Type[8]: File  Name: VEiesWNGJfbQ0bFaowO0ep
+30. Type[8]: File  Name: PVwsDqLGOa8h08HKwe
+31. Type[8]: File  Name: mpdcVH6oekvHKOJLfFRJeVTjNi
+32. Type[8]: File  Name: LaJHgTzmMUWLp0vuMvXQrgqHhF8
+33. Type[8]: File  Name: V4v8TlzHhqeVVdKahy9CzyDsbhZ
+34. Type[8]: File  Name: c9JeUDH5yjJcpfJLUN9jx
+35. Type[8]: File  Name: p0vuMvXQrgqHhF8l
+36. Type[8]: File  Name: xKaEdEsne08D2OETeugEU7Slqus
+37. Type[8]: File  Name: SioI2sW
+38. Type[8]: File  Name: n22B95ayOY92qup
+39. Type[8]: File  Name: wUdtLLqiR81cGEK0VCEZ1g
+40. Type[8]: File  Name: iR9ckKjfmpd
+41. Type[8]: File  Name: sA0kTQ6K
+42. Type[8]: File  Name: IwgSG4
+43. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+44. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+45. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+46. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 184987
+
+=== DELETING 6 ============================
+Deleted some files
+  Number of files: 46
+  Number deleted:  8
+Directory:
+ 1. Type[8]: File  Name: Wsv8xKNJW8E7fgewGMhS
+ 2. Type[8]: File  Name: uBrjbLTgttEBKLVzBzL0pMQ
+ 3. Type[8]: File  Name: JIpwlk
+ 4. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+ 5. Type[8]: File  Name: XQrgqHhF8lHY
+ 6. Type[8]: File  Name: RJeVTjNibtrhi
+ 7. Type[8]: File  Name: OJLfFRJeV
+ 8. Type[8]: File  Name: co0ozXz1O3ABs8yQKajkfsVy
+ 9. Type[8]: File  Name: DsbhZ0VaKf9aq2YQa4GaX2WRnIj
+10. Type[8]: File  Name: btrhikaP3YeUgw
+11. Type[8]: File  Name: xmn22B95ayOY92qupu3
+12. Type[8]: File  Name: sv8xKN
+13. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+14. Type[8]: File  Name: TRK0GrdFwzs0JKZ4U5KywI
+15. Type[8]: File  Name: H4Uf67R
+16. Type[8]: File  Name: MfoTXOA
+17. Type[8]: File  Name: R0kiuN2zXLbEsm49
+18. Type[8]: File  Name: vhBV4v8TlzHhq
+19. Type[8]: File  Name: 7RL4bFXVCykg3dpPWEytnzv
+20. Type[8]: File  Name: zmMUWLp0vuMv
+21. Type[8]: File  Name: VEiesWNGJfbQ0bFaowO0ep
+22. Type[8]: File  Name: PVwsDqLGOa8h08HKwe
+23. Type[8]: File  Name: mpdcVH6oekvHKOJLfFRJeVTjNi
+24. Type[8]: File  Name: 38DnI1
+25. Type[8]: File  Name: 81cGEK0
+26. Type[8]: File  Name: 3lLQNvW0FFPVj7sIAM
+27. Type[8]: File  Name: p0vuMvXQrgqHhF8l
+28. Type[8]: File  Name: xKaEdEsne08D2OETeugEU7Slqus
+29. Type[8]: File  Name: SioI2sW
+30. Type[8]: File  Name: n22B95ayOY92qup
+31. Type[8]: File  Name: wUdtLLqiR81cGEK0VCEZ1g
+32. Type[8]: File  Name: iR9ckKjfmpd
+33. Type[8]: File  Name: sA0kTQ6K
+34. Type[8]: File  Name: V0Lrtmig
+35. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+36. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+37. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+38. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 140818
+File System:
+  Block Size:      512
+  No. Blocks:      307
+  Free Blocks:     25
+  Avail. Blocks:   25
+  No. File Nodes:  38
+  Free File Nodes: 16
+
+End of loop memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks         4        9        5
+mxordblk    7a7f0    7a7f0        0
+uordblks     4f4c     531c      3d0
+fordblks    7c0b0    7bce0 fffffc30
+
+=== FILLING 7 =============================
+ERROR: Failed to write file: 12
+  File name:    /tmp/VCEZ1gC
+  File size:    8160
+  Write offset: 6400
+  Write size:   283
+Filled file system
+  Number of files: 44
+  Number deleted:  0
+Directory:
+ 1. Type[8]: File  Name: kiuN2zXLbEsm49
+ 2. Type[8]: File  Name: FskMfoTXOANtdHa8Z
+ 3. Type[8]: File  Name: wO0epAVt
+ 4. Type[8]: File  Name: tOjT9NEtR0kiuN2
+ 5. Type[8]: File  Name: ZPVwsDqLGOa8h08HKweiJa
+ 6. Type[8]: File  Name: CwUdtLLq
+ 7. Type[8]: File  Name: Wsv8xKNJW8E7fgewGMhS
+ 8. Type[8]: File  Name: uBrjbLTgttEBKLVzBzL0pMQ
+ 9. Type[8]: File  Name: JIpwlk
+10. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+11. Type[8]: File  Name: XQrgqHhF8lHY
+12. Type[8]: File  Name: RJeVTjNibtrhi
+13. Type[8]: File  Name: OJLfFRJeV
+14. Type[8]: File  Name: co0ozXz1O3ABs8yQKajkfsVy
+15. Type[8]: File  Name: DsbhZ0VaKf9aq2YQa4GaX2WRnIj
+16. Type[8]: File  Name: btrhikaP3YeUgw
+17. Type[8]: File  Name: xmn22B95ayOY92qupu3
+18. Type[8]: File  Name: sv8xKN
+19. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+20. Type[8]: File  Name: TRK0GrdFwzs0JKZ4U5KywI
+21. Type[8]: File  Name: H4Uf67R
+22. Type[8]: File  Name: MfoTXOA
+23. Type[8]: File  Name: R0kiuN2zXLbEsm49
+24. Type[8]: File  Name: vhBV4v8TlzHhq
+25. Type[8]: File  Name: 7RL4bFXVCykg3dpPWEytnzv
+26. Type[8]: File  Name: zmMUWLp0vuMv
+27. Type[8]: File  Name: VEiesWNGJfbQ0bFaowO0ep
+28. Type[8]: File  Name: PVwsDqLGOa8h08HKwe
+29. Type[8]: File  Name: mpdcVH6oekvHKOJLfFRJeVTjNi
+30. Type[8]: File  Name: 38DnI1
+31. Type[8]: File  Name: 81cGEK0
+32. Type[8]: File  Name: 3lLQNvW0FFPVj7sIAM
+33. Type[8]: File  Name: p0vuMvXQrgqHhF8l
+34. Type[8]: File  Name: xKaEdEsne08D2OETeugEU7Slqus
+35. Type[8]: File  Name: SioI2sW
+36. Type[8]: File  Name: n22B95ayOY92qup
+37. Type[8]: File  Name: wUdtLLqiR81cGEK0VCEZ1g
+38. Type[8]: File  Name: iR9ckKjfmpd
+39. Type[8]: File  Name: sA0kTQ6K
+40. Type[8]: File  Name: V0Lrtmig
+41. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+42. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+43. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+44. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 173941
+
+=== DELETING 7 ============================
+Deleted some files
+  Number of files: 44
+  Number deleted:  36
+Directory:
+ 1. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+ 2. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+ 3. Type[8]: File  Name: 81cGEK0
+ 4. Type[8]: File  Name: V0Lrtmig
+ 5. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+ 6. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+ 7. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+ 8. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 31135
+File System:
+  Block Size:      512
+  No. Blocks:      69
+  Free Blocks:     6
+  Avail. Blocks:   6
+  No. File Nodes:  8
+  Free File Nodes: 46
+
+End of loop memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks         9        7       -2
+mxordblk    7a7f0    7a7f0        0
+uordblks     531c     4fb4 fffffc98
+fordblks    7bce0    7c048      368
+
+=== FILLING 8 =============================
+ERROR: Failed to write file: 12
+  File name:    /tmp/6kUhWXN38DnI1JMaZbgkiMf0aPb
+  File size:    5551
+  Write offset: 857
+  Write size:   315
+Filled file system
+  Number of files: 45
+  Number deleted:  0
+Directory:
+ 1. Type[8]: File  Name: EDzRM44G
+ 2. Type[8]: File  Name: CTY08cP0df
+ 3. Type[8]: File  Name: kXNJj4E0S
+ 4. Type[8]: File  Name: RnIjinxmn22B95ayOY92qupu3uB
+ 5. Type[8]: File  Name: igq9Yg4SauoD4fiR9ckKjfm
+ 6. Type[8]: File  Name: pdcVH6oek
+ 7. Type[8]: File  Name: gkiMf0a
+ 8. Type[8]: File  Name: YtOTB8fUg6W
+ 9. Type[8]: File  Name: 9jxKaE
+10. Type[8]: File  Name: EJIpwlkY22VEiesWNGJ
+11. Type[8]: File  Name: cGEK0VCEZ1gCqZhEWSbB5s8jRRC
+12. Type[8]: File  Name: XVCykg3dpPWEytnz
+13. Type[8]: File  Name: Mf0aPbBRac0EJIpwlkY22VEie
+14. Type[8]: File  Name: R81cGEK0
+15. Type[8]: File  Name: 0FFPVj7sIAMt2s0
+16. Type[8]: File  Name: W1k5kbaZD38gcndetdEkXNJj
+17. Type[8]: File  Name: oDayLa
+18. Type[8]: File  Name: JLUN9jxKaEdEsne08D2OET
+19. Type[8]: File  Name: 38DnI1
+20. Type[8]: File  Name: MfoTXOA
+21. Type[8]: File  Name: 3lLQNvW0FFPVj7sIAM
+22. Type[8]: File  Name: Wsv8xKNJW8E7fgewGMhS
+23. Type[8]: File  Name: uBrjbLTgttEBKLVzBzL0pMQ
+24. Type[8]: File  Name: JIpwlk
+25. Type[8]: File  Name: 4MLs
+26. Type[8]: File  Name: vuMvXQrgqHhF8lHY
+27. Type[8]: File  Name: qmYCJFs0YBuVEDzRM4
+28. Type[8]: File  Name: EdEsne08D2O
+29. Type[8]: File  Name: Qa4GaX2WRnIjinxmn22B95a
+30. Type[8]: File  Name: pfJLUN9jxKa
+31. Type[8]: File  Name: VCEZ1gC
+32. Type[8]: File  Name: 4tOjT9NEtR0kiuN2zXLbEsm49
+33. Type[8]: File  Name: aTSYF8TV3YtOT
+34. Type[8]: File  Name: F2k2si044bxtiIcoJ
+35. Type[8]: File  Name: j7sIAMt2s0jj2n1KSV0Lrtm
+36. Type[8]: File  Name: CkaTtBPXeON
+37. Type[8]: File  Name: ylQLGn8bTgITrphFrk3nn
+38. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+39. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+40. Type[8]: File  Name: 81cGEK0
+41. Type[8]: File  Name: V0Lrtmig
+42. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+43. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+44. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+45. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 183083
+
+=== DELETING 8 ============================
+Deleted some files
+  Number of files: 45
+  Number deleted:  29
+Directory:
+ 1. Type[8]: File  Name: RnIjinxmn22B95ayOY92qupu3uB
+ 2. Type[8]: File  Name: igq9Yg4SauoD4fiR9ckKjfm
+ 3. Type[8]: File  Name: kXNJj4E0S
+ 4. Type[8]: File  Name: YtOTB8fUg6W
+ 5. Type[8]: File  Name: CTY08cP0df
+ 6. Type[8]: File  Name: EDzRM44G
+ 7. Type[8]: File  Name: gkiMf0a
+ 8. Type[8]: File  Name: ylQLGn8bTgITrphFrk3nn
+ 9. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+10. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+11. Type[8]: File  Name: 81cGEK0
+12. Type[8]: File  Name: V0Lrtmig
+13. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+14. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+15. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+16. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 61003
+File System:
+  Block Size:      512
+  No. Blocks:      132
+  Free Blocks:     10
+  Avail. Blocks:   10
+  No. File Nodes:  16
+  Free File Nodes: 38
+
+End of loop memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks         7        8        1
+mxordblk    7a7f0    7a7f0        0
+uordblks     4fb4     509c       e8
+fordblks    7c048    7bf60 ffffff18
+
+=== FILLING 9 =============================
+ERROR: Failed to write file: 12
+  File name:    /tmp/EJIpwlkY22VEiesWNGJ
+  File size:    5777
+  Write offset: 1035
+  Write size:   180
+Filled file system
+  Number of files: 49
+  Number deleted:  0
+Directory:
+ 1. Type[8]: File  Name: cGEK0VCEZ1gCqZhEWSbB5s8jRRC
+ 2. Type[8]: File  Name: XVCykg3dpPWEytnz
+ 3. Type[8]: File  Name: Mf0aPbBRac0EJIpwlkY22VEie
+ 4. Type[8]: File  Name: R81cGEK0
+ 5. Type[8]: File  Name: 0FFPVj7sIAMt2s0
+ 6. Type[8]: File  Name: W1k5kbaZD38gcndetdEkXNJj
+ 7. Type[8]: File  Name: oDayLa
+ 8. Type[8]: File  Name: JLUN9jxKaEdEsne08D2OET
+ 9. Type[8]: File  Name: 38DnI1
+10. Type[8]: File  Name: MfoTXOA
+11. Type[8]: File  Name: 3lLQNvW0FFPVj7sIAM
+12. Type[8]: File  Name: Wsv8xKNJW8E7fgewGMhS
+13. Type[8]: File  Name: uBrjbLTgttEBKLVzBzL0pMQ
+14. Type[8]: File  Name: JIpwlk
+15. Type[8]: File  Name: 4MLs
+16. Type[8]: File  Name: XQrgqHhF8lHY
+17. Type[8]: File  Name: TjNibtrhi
+18. Type[8]: File  Name: co0ozXz1O3ABs8yQKajkfsVy
+19. Type[8]: File  Name: DsbhZ0VaKf9aq2YQa4GaX2WRnIj
+20. Type[8]: File  Name: btrhikaP3YeUgw
+21. Type[8]: File  Name: xmn22B95ayOY92qupu3
+22. Type[8]: File  Name: sv8xKN
+23. Type[8]: File  Name: 2OETeugEU7SlqusA0kTQ
+24. Type[8]: File  Name: TRK0GrdFwzs0JKZ4U5KywI
+25. Type[8]: File  Name: H4Uf67R
+26. Type[8]: File  Name: WRnI
+27. Type[8]: File  Name: rdFwzs0JKZ4U5KywIiq8rxgoDR
+28. Type[8]: File  Name: vhBV4v8TlzHhq
+29. Type[8]: File  Name: 7RL4bFXVCykg3dpPWEytnzv
+30. Type[8]: File  Name: zmMUWLp0vuMv
+31. Type[8]: File  Name: RJeVTjNibtrhi
+32. Type[8]: File  Name: OJLfFRJeV
+33. Type[8]: File  Name: zXz1O3ABs8yQKajkfsVy
+34. Type[8]: File  Name: RnIjinxmn22B95ayOY92qupu3uB
+35. Type[8]: File  Name: igq9Yg4SauoD4fiR9ckKjfm
+36. Type[8]: File  Name: kXNJj4E0S
+37. Type[8]: File  Name: YtOTB8fUg6W
+38. Type[8]: File  Name: CTY08cP0df
+39. Type[8]: File  Name: EDzRM44G
+40. Type[8]: File  Name: gkiMf0a
+41. Type[8]: File  Name: ylQLGn8bTgITrphFrk3nn
+42. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+43. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+44. Type[8]: File  Name: 81cGEK0
+45. Type[8]: File  Name: V0Lrtmig
+46. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+47. Type[8]: File  Name: GD43hjTMVvLDotZPVw
+48. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+49. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 183462
+
+=== DELETING 9 ============================
+Deleted some files
+  Number of files: 49
+  Number deleted:  4
+Directory:
+ 1. Type[8]: File  Name: 0FFPVj7sIAMt2s0
+ 2. Type[8]: File  Name: Mf0aPbBRac0EJIpwlkY22VEie
+ 3. Type[8]: File  Name: oDayLa
+ 4. Type[8]: File  Name: JLUN9jxKaEdEsne08D2OET
+ 5. Type[8]: File  Name: R81cGEK0
+ 6. Type[8]: File  Name: MfoTXOA
+ 7. Type[8]: File  Name: 3lLQNvW0FFPVj7sIAM
+ 8. Type[8]: File  Name: Wsv8xKNJW8E7fgewGMhS
+ 9. Type[8]: File  Name: uBrjbLTgttEBKLVzBzL0pMQ
+10. Type[8]: File  Name: cGEK0VCEZ1gCqZhEWSbB5s8jRRC
+11. Type[8]: File  Name: 4MLs
+12. Type[8]: File  Name: XQrgqHhF8lHY
+13. Type[8]: File  Name: TjNibtrhi
+14. Type[8]: File  Name: co0ozXz1O3ABs8yQKajkfsVy
+15. Type[8]: File  Name: DsbhZ0VaKf9aq2YQa4GaX2WRnIj
+16. Type[8]: File  Name: btrhikaP3YeUgw
+17. Type[8]: File  Name: xmn22B95ayOY92qupu3
+18. Type[8]: File  Name: sv8xKN
+19. Type[8]: File  Name: 2OETeugEU7SlqusA0kTQ
+20. Type[8]: File  Name: TRK0GrdFwzs0JKZ4U5KywI
+21. Type[8]: File  Name: H4Uf67R
+22. Type[8]: File  Name: WRnI
+23. Type[8]: File  Name: rdFwzs0JKZ4U5KywIiq8rxgoDR
+24. Type[8]: File  Name: vhBV4v8TlzHhq
+25. Type[8]: File  Name: 7RL4bFXVCykg3dpPWEytnzv
+26. Type[8]: File  Name: zmMUWLp0vuMv
+27. Type[8]: File  Name: RJeVTjNibtrhi
+28. Type[8]: File  Name: OJLfFRJeV
+29. Type[8]: File  Name: zXz1O3ABs8yQKajkfsVy
+30. Type[8]: File  Name: RnIjinxmn22B95ayOY92qupu3uB
+31. Type[8]: File  Name: igq9Yg4SauoD4fiR9ckKjfm
+32. Type[8]: File  Name: kXNJj4E0S
+33. Type[8]: File  Name: YtOTB8fUg6W
+34. Type[8]: File  Name: CTY08cP0df
+35. Type[8]: File  Name: EDzRM44G
+36. Type[8]: File  Name: gkiMf0a
+37. Type[8]: File  Name: ylQLGn8bTgITrphFrk3nn
+38. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+39. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+40. Type[8]: File  Name: 81cGEK0
+41. Type[8]: File  Name: V0Lrtmig
+42. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+43. Type[8]: File  Name: XVCykg3dpPWEytnz
+44. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+45. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 169974
+File System:
+  Block Size:      512
+  No. Blocks:      369
+  Free Blocks:     29
+  Avail. Blocks:   29
+  No. File Nodes:  45
+  Free File Nodes: 9
+
+End of loop memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks         8        6       -2
+mxordblk    7a7f0    7a7f0        0
+uordblks     509c     53ec      350
+fordblks    7bf60    7bc10 fffffcb0
+
+=== FILLING 10 =============================
+ERROR: Failed to write file: 12
+  File name:    /tmp/ykg3dpPWEy
+  File size:    7164
+  Write offset: 3773
+  Write size:   252
+Filled file system
+  Number of files: 47
+  Number deleted:  0
+Directory:
+ 1. Type[8]: File  Name: bSioI2sW1k5kbaZD38gcndetdEk
+ 2. Type[8]: File  Name: yrfEpylQLGn
+ 3. Type[8]: File  Name: 0FFPVj7sIAMt2s0
+ 4. Type[8]: File  Name: Mf0aPbBRac0EJIpwlkY22VEie
+ 5. Type[8]: File  Name: oDayLa
+ 6. Type[8]: File  Name: JLUN9jxKaEdEsne08D2OET
+ 7. Type[8]: File  Name: R81cGEK0
+ 8. Type[8]: File  Name: MfoTXOA
+ 9. Type[8]: File  Name: 3lLQNvW0FFPVj7sIAM
+10. Type[8]: File  Name: Wsv8xKNJW8E7fgewGMhS
+11. Type[8]: File  Name: uBrjbLTgttEBKLVzBzL0pMQ
+12. Type[8]: File  Name: cGEK0VCEZ1gCqZhEWSbB5s8jRRC
+13. Type[8]: File  Name: 4MLs
+14. Type[8]: File  Name: XQrgqHhF8lHY
+15. Type[8]: File  Name: TjNibtrhi
+16. Type[8]: File  Name: co0ozXz1O3ABs8yQKajkfsVy
+17. Type[8]: File  Name: DsbhZ0VaKf9aq2YQa4GaX2WRnIj
+18. Type[8]: File  Name: btrhikaP3YeUgw
+19. Type[8]: File  Name: xmn22B95ayOY92qupu3
+20. Type[8]: File  Name: sv8xKN
+21. Type[8]: File  Name: 2OETeugEU7SlqusA0kTQ
+22. Type[8]: File  Name: TRK0GrdFwzs0JKZ4U5KywI
+23. Type[8]: File  Name: H4Uf67R
+24. Type[8]: File  Name: WRnI
+25. Type[8]: File  Name: rdFwzs0JKZ4U5KywIiq8rxgoDR
+26. Type[8]: File  Name: vhBV4v8TlzHhq
+27. Type[8]: File  Name: 7RL4bFXVCykg3dpPWEytnzv
+28. Type[8]: File  Name: zmMUWLp0vuMv
+29. Type[8]: File  Name: RJeVTjNibtrhi
+30. Type[8]: File  Name: OJLfFRJeV
+31. Type[8]: File  Name: zXz1O3ABs8yQKajkfsVy
+32. Type[8]: File  Name: RnIjinxmn22B95ayOY92qupu3uB
+33. Type[8]: File  Name: igq9Yg4SauoD4fiR9ckKjfm
+34. Type[8]: File  Name: kXNJj4E0S
+35. Type[8]: File  Name: YtOTB8fUg6W
+36. Type[8]: File  Name: CTY08cP0df
+37. Type[8]: File  Name: EDzRM44G
+38. Type[8]: File  Name: gkiMf0a
+39. Type[8]: File  Name: ylQLGn8bTgITrphFrk3nn
+40. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+41. Type[8]: File  Name: AdH9cFYgc9JeUDH5yjJcpf
+42. Type[8]: File  Name: 81cGEK0
+43. Type[8]: File  Name: V0Lrtmig
+44. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+45. Type[8]: File  Name: XVCykg3dpPWEytnz
+46. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+47. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 176389
+
+=== DELETING 10 ============================
+Deleted some files
+  Number of files: 47
+  Number deleted:  19
+Directory:
+ 1. Type[8]: File  Name: sv8xKN
+ 2. Type[8]: File  Name: 2OETeugEU7SlqusA0kTQ
+ 3. Type[8]: File  Name: TRK0GrdFwzs0JKZ4U5KywI
+ 4. Type[8]: File  Name: DsbhZ0VaKf9aq2YQa4GaX2WRnIj
+ 5. Type[8]: File  Name: 0FFPVj7sIAMt2s0
+ 6. Type[8]: File  Name: 3lLQNvW0FFPVj7sIAM
+ 7. Type[8]: File  Name: vhBV4v8TlzHhq
+ 8. Type[8]: File  Name: 7RL4bFXVCykg3dpPWEytnzv
+ 9. Type[8]: File  Name: zmMUWLp0vuMv
+10. Type[8]: File  Name: btrhikaP3YeUgw
+11. Type[8]: File  Name: cGEK0VCEZ1gCqZhEWSbB5s8jRRC
+12. Type[8]: File  Name: Mf0aPbBRac0EJIpwlkY22VEie
+13. Type[8]: File  Name: RnIjinxmn22B95ayOY92qupu3uB
+14. Type[8]: File  Name: igq9Yg4SauoD4fiR9ckKjfm
+15. Type[8]: File  Name: kXNJj4E0S
+16. Type[8]: File  Name: XQrgqHhF8lHY
+17. Type[8]: File  Name: CTY08cP0df
+18. Type[8]: File  Name: yrfEpylQLGn
+19. Type[8]: File  Name: gkiMf0a
+20. Type[8]: File  Name: TjNibtrhi
+21. Type[8]: File  Name: 3Ojs6kUhWXN38DnI1JMaZbgki
+22. Type[8]: File  Name: R81cGEK0
+23. Type[8]: File  Name: 81cGEK0
+24. Type[8]: File  Name: V0Lrtmig
+25. Type[8]: File  Name: 4BDQ70c1znKEEWzPcGJ
+26. Type[8]: File  Name: XVCykg3dpPWEytnz
+27. Type[8]: File  Name: LfFRJeVTjNibtrhikaP3YeU
+28. Type[8]: File  Name: PRMIRHz9ZwgHga
+Total file size: 102108
+File System:
+  Block Size:      512
+  No. Blocks:      223
+  Free Blocks:     18
+  Avail. Blocks:   18
+  No. File Nodes:  28
+  Free File Nodes: 26
+
+End of loop memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks         6       13        7
+mxordblk    7a7f0    7a7f0        0
+uordblks     53ec     520c fffffe20
+fordblks    7bc10    7bdf0      1e0
+
+Final memory usage:
+VARIABLE  BEFORE   AFTER    DELTA
+======== ======== ======== ========
+arena       80ffc    80ffc        0
+ordblks         2        2        0
+mxordblk    7a7f0    7a7f0        0
+uordblks     4ebc     4ebc        0
+fordblks    7c140    7c140        0
+File system tests done... OK: 20, FAILED: 0
+nsh> [K
+nsh> [KTraceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-run-standard.py", line 96, in <module>
+    production.require(summary is not None and int(summary[1]) == 20 and
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/espressif/esp32s31_production_smoke.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: ten filesystem loops not fully passed

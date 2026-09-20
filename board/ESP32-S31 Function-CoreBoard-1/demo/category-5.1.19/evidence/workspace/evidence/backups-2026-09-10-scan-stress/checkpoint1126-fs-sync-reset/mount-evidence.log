@@ -1,0 +1,32 @@
+XTS_RECEIPT=/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/build1102-flat-category-fs-sync.sha256
+IMAGE_SHA256=54d06bdefc5837541d08fbf3e66500d918d7ea4ce1f9d9efd5de80b8ff4c5ded
+xTS Flash scratch: /dev/xtsflash offset=0xd00000 size=0x300000
+
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mkdir -p /data
+--- CMD: mkdir -p /data ---
+mkdir -p /data
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mount -t littlefs -o sync /dev/xtsflash /data
+--- CMD: mount -t littlefs -o sync /dev/xtsflash /data ---
+mount -t littlefs -o sync /dev/xtsflash /data
+nsh> [K
+nsh> [K
+
+XTS_COMMAND=mount
+--- CMD: mount ---
+mount
+  /data type littlefs
+  /proc type procfs
+  /tmp type tmpfs
+nsh> [K
+nsh> [K

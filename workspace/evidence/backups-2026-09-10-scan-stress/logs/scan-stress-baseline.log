@@ -1,0 +1,57 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7d (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0xee90
+load:0x2f00ef00,len:0x368c
+entry 0x2f00ea58
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0xee90   (61072)
+dram: lma 0x00010ed8 vma 0x2f00ef00 len 0x368c   (13964)
+padd: lma 0x00014598 vma 0x00000000 len 0xba80   (47744)
+imap: lma 0x00020020 vma 0x400c0020 len 0x18ffc  (102396)
+padd: lma 0x00039024 vma 0x00000000 len 0x70d4   (28884)
+imap: lma 0x00040100 vma 0x40000100 len 0xb127c  (725628)
+total segments stored 7
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU0] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+
+NuttShell (NSH)
+nsh> [K
+STRESS_BOOT=PASS seconds=0.587
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     528380       6732     521648      22176     516088      9      2 (null)
+     344052      73324     270728      95368     238952    159     11 Kmem
+   16777216     692224   16084992   16084992 Page
+nsh> [K
+nsh> [K
+ELAPSED=0.157
+--- CMD: ifup wlan0 ---
+ifup wlan0
+ifup wlan0...OK
+nsh> [K
+nsh> [K
+ELAPSED=0.202
+--- CMD: wapi scan wlan0 ---
+wapi scan wlan0
+bssid / frequency / signal level / encode / ssid
+nsh> [K
+nsh> [K
+ELAPSED=2.727
+STRESS_1_scan=PASS AP_COUNT=0
+--- CMD: wapi pscan wlan0 ---
+wapi pscan wlan0
+[CPU0] wapi_scan_stat: ioctl(SIOCGIWSCAN): Invalid argument
+[CPU0] wapi_scan_results_cmd: ERROR: wapi_scan_stat() failed: -22, sleeptries: 25
+[CPU0] main: ERROR: Process command (pscan) failed.
+nsh> [K
+nsh> [K
+SCAN_STRESS=FAIL: command failed: wapi pscan wlan0

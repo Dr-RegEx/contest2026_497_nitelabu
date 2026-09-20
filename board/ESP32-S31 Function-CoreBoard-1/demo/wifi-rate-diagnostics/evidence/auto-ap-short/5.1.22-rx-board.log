@@ -1,0 +1,70 @@
+iperf2 -s -p 5001 -i 1 &
+iperf2 [15:101]
+nsh> [K------------------------------------------------------------
+Server listening on TCP port 5001
+TCP window size: 16.0 KByte
+------------------------------------------------------------
+[CPU1] tcp_setsockopt: ERROR: TCP_NODELAY not supported
+tcpnodelay failed: Invalid system call number
+[  1] local 192.168.1.60 port 5001 connected with 192.168.1.29 port 9770
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.00-1.00 sec   492 KBytes  4.03 Mbits/sec
+[  1] 1.00-2.00 sec   522 KBytes  4.27 Mbits/sec
+[  1] 2.00-3.00 sec   543 KBytes  4.45 Mbits/sec
+[  1] 3.00-4.00 sec   549 KBytes  4.50 Mbits/sec
+[  1] 4.00-5.00 sec   250 KBytes  2.04 Mbits/sec
+[  1] 5.00-6.00 sec   509 KBytes  4.17 Mbits/sec
+[  1] 6.00-7.00 sec   471 KBytes  3.85 Mbits/sec
+[  1] 7.00-8.00 sec   442 KBytes  3.62 Mbits/sec
+[  1] 8.00-9.00 sec   550 KBytes  4.51 Mbits/sec
+[  1] 9.00-10.00 sec   476 KBytes  3.90 Mbits/sec
+[  1] 10.00-11.00 sec   535 KBytes  4.38 Mbits/sec
+[  1] 11.00-12.00 sec   523 KBytes  4.29 Mbits/sec
+[  1] 12.00-13.00 sec   510 KBytes  4.18 Mbits/sec
+[  1] 13.00-14.00 sec   538 KBytes  4.40 Mbits/sec
+[  1] 14.00-15.00 sec   567 KBytes  4.65 Mbits/sec
+[  1] 15.00-16.00 sec   533 KBytes  4.37 Mbits/sec
+[  1] 16.00-17.00 sec   509 KBytes  4.17 Mbits/sec
+[  1] 17.00-18.00 sec   346 KBytes  2.84 Mbits/sec
+[  1] 18.00-19.00 sec   302 KBytes  2.48 Mbits/sec
+[  1] 19.00-20.00 sec   576 KBytes  4.72 Mbits/sec
+[  1] 20.00-21.00 sec   572 KBytes  4.68 Mbits/sec
+[  1] 21.00-22.00 sec   480 KBytes  3.94 Mbits/sec
+[  1] 22.00-23.00 sec   565 KBytes  4.63 Mbits/sec
+[  1] 23.00-24.00 sec   490 KBytes  4.02 Mbits/sec
+[  1] 24.00-25.00 sec   522 KBytes  4.27 Mbits/sec
+[  1] 25.00-26.00 sec   565 KBytes  4.63 Mbits/sec
+[  1] 26.00-27.00 sec   480 KBytes  3.94 Mbits/sec
+[  1] 27.00-28.00 sec   540 KBytes  4.43 Mbits/sec
+[  1] 28.00-29.00 sec   607 KBytes  4.98 Mbits/sec
+[  1] 29.00-30.00 sec   489 KBytes  4.01 Mbits/sec
+[  1] 30.00-31.00 sec   157 KBytes  1.29 Mbits/sec
+[  1] 31.00-31.50 sec   147 KBytes  2.42 Mbits/sec
+[  1] 0.00-31.50 sec  15.0 MBytes  3.99 Mbits/sec
+kill -15 15
+nsh> [K[CPU0] inet_accept: ERROR: psock_tcp_accept failed: -4
+[CPU0] psock_accept: ERROR: si_accept failed: -4
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00002a6c 00000000 00000000 f9090e          
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    000018b6 000018b8 00000000 00000000 538e5            
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     2a2a  2a1f  0007  0004
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         18b2  18ab  0002  0005
+  Rexmit     ----  0001  ----  ----
+nsh> [K

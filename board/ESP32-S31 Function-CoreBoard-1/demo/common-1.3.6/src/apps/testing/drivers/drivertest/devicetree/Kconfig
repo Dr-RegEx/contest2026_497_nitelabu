@@ -1,0 +1,29 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config TESTING_DEVICETREE
+	tristate "cmocka devicetree test"
+	default n
+	depends on TESTING_CMOCKA  && DEVICETREE_HEADER_GENERATION
+	---help---
+		Enable the cmocka devicetree test
+
+if TESTING_DEVICETREE
+
+config TESTING_DEVICETREE_PRIORITY
+	int "Task priority"
+	default 100
+
+config TESTING_DEVICETREE_STACKSIZE
+	int "Stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config TESTING_DEVICETREE_DYNAMIC_API
+	bool "Dynamic device tree API test"
+	default n
+	---help---
+		This option enables test for testing
+		dynamic device tree API macros.
+endif

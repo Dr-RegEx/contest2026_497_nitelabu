@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+config EXAMPLES_S31SIMD
+	tristate "ESP32-S31 CPU1 SIMD arithmetic and context validation"
+	default n
+	depends on ESP32S31_PIE && !DISABLE_PTHREAD

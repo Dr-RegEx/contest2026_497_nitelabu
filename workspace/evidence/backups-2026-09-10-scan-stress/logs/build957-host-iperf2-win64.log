@@ -1,0 +1,89 @@
+make  all-recursive
+make[1]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+Making all in compat
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/compat”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/compat”
+Making all in doc
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/doc”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/doc”
+Making all in include
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/include”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/include”
+Making all in src
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/src”
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -DHAVE_STDBOOL_H=1 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT Client.o -MD -MP -MF .deps/Client.Tpo -c -o Client.o ../../iperf2-2.1.8/src/Client.cpp
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -DHAVE_STDBOOL_H=1 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT isochronous.o -MD -MP -MF .deps/isochronous.Tpo -c -o isochronous.o ../../iperf2-2.1.8/src/isochronous.cpp
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -DHAVE_STDBOOL_H=1 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT Launch.o -MD -MP -MF .deps/Launch.Tpo -c -o Launch.o ../../iperf2-2.1.8/src/Launch.cpp
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -DHAVE_STDBOOL_H=1 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT active_hosts.o -MD -MP -MF .deps/active_hosts.Tpo -c -o active_hosts.o ../../iperf2-2.1.8/src/active_hosts.cpp
+mv -f .deps/isochronous.Tpo .deps/isochronous.Po
+mv -f .deps/active_hosts.Tpo .deps/active_hosts.Po
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -DHAVE_STDBOOL_H=1 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT Listener.o -MD -MP -MF .deps/Listener.Tpo -c -o Listener.o ../../iperf2-2.1.8/src/Listener.cpp
+mv -f .deps/Launch.Tpo .deps/Launch.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -DHAVE_STDBOOL_H=1 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT Locale.o -MD -MP -MF .deps/Locale.Tpo -c -o Locale.o ../../iperf2-2.1.8/src/Locale.c
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -DHAVE_STDBOOL_H=1 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT PerfSocket.o -MD -MP -MF .deps/PerfSocket.Tpo -c -o PerfSocket.o ../../iperf2-2.1.8/src/PerfSocket.cpp
+mv -f .deps/Client.Tpo .deps/Client.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -DHAVE_STDBOOL_H=1 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT Reporter.o -MD -MP -MF .deps/Reporter.Tpo -c -o Reporter.o ../../iperf2-2.1.8/src/Reporter.c
+mv -f .deps/Locale.Tpo .deps/Locale.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -DHAVE_STDBOOL_H=1 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT Reports.o -MD -MP -MF .deps/Reports.Tpo -c -o Reports.o ../../iperf2-2.1.8/src/Reports.c
+../../iperf2-2.1.8/src/Listener.cpp: In member function 'void Listener::my_multicast_join()':
+../../iperf2-2.1.8/src/Listener.cpp:601:20: error: 'inet_pton' was not declared in this scope; did you mean 'inet_ntoa'?
+  601 |                 rc=inet_pton(AF_INET6, mSettings->mSSMMulticastStr,&source->sin6_addr);
+      |                    ^~~~~~~~~
+      |                    inet_ntoa
+../../iperf2-2.1.8/src/Listener.cpp:609:84: error: cannot convert 'group_source_req*' to 'const char*'
+  609 |                 rc = setsockopt(ListenSocket,IPPROTO_IPV6,MCAST_JOIN_SOURCE_GROUP, &group_source_req,
+      |                                                                                    ^~~~~~~~~~~~~~~~~
+      |                                                                                    |
+      |                                                                                    group_source_req*
+In file included from ../../iperf2-2.1.8/include/headers.h:178,
+                 from ../../iperf2-2.1.8/src/Listener.cpp:75:
+C:/msys64/ucrt64/include/winsock2.h:1035:88: note: initializing argument 4 of 'int setsockopt(SOCKET, int, int, const char*, int)'
+ 1035 |   WINSOCK_API_LINKAGE int WSAAPI setsockopt(SOCKET s,int level,int optname,const char *optval,int optlen);
+      |                                                                            ~~~~~~~~~~~~^~~~~~
+../../iperf2-2.1.8/src/Listener.cpp:628:77: error: cannot convert 'group_req*' to 'const char*'
+  628 |                 rc = setsockopt(ListenSocket,IPPROTO_IPV6,MCAST_JOIN_GROUP, &group_req,
+      |                                                                             ^~~~~~~~~~
+      |                                                                             |
+      |                                                                             group_req*
+C:/msys64/ucrt64/include/winsock2.h:1035:88: note: initializing argument 4 of 'int setsockopt(SOCKET, int, int, const char*, int)'
+ 1035 |   WINSOCK_API_LINKAGE int WSAAPI setsockopt(SOCKET s,int level,int optname,const char *optval,int optlen);
+      |                                                                            ~~~~~~~~~~~~^~~~~~
+../../iperf2-2.1.8/src/Listener.cpp:667:20: error: 'inet_pton' was not declared in this scope; did you mean 'inet_ntoa'?
+  667 |                 rc=inet_pton(AF_INET,mSettings->mSSMMulticastStr,&source->sin_addr);
+      |                    ^~~~~~~~~
+      |                    inet_ntoa
+../../iperf2-2.1.8/src/Listener.cpp:676:82: error: cannot convert 'group_source_req*' to 'const char*'
+  676 |                 rc = setsockopt(ListenSocket,IPPROTO_IP,MCAST_JOIN_SOURCE_GROUP, &group_source_req,
+      |                                                                                  ^~~~~~~~~~~~~~~~~
+      |                                                                                  |
+      |                                                                                  group_source_req*
+C:/msys64/ucrt64/include/winsock2.h:1035:88: note: initializing argument 4 of 'int setsockopt(SOCKET, int, int, const char*, int)'
+ 1035 |   WINSOCK_API_LINKAGE int WSAAPI setsockopt(SOCKET s,int level,int optname,const char *optval,int optlen);
+      |                                                                            ~~~~~~~~~~~~^~~~~~
+../../iperf2-2.1.8/src/Listener.cpp:713:75: error: cannot convert 'group_req*' to 'const char*'
+  713 |                 rc = setsockopt(ListenSocket,IPPROTO_IP,MCAST_JOIN_GROUP, &group_req,
+      |                                                                           ^~~~~~~~~~
+      |                                                                           |
+      |                                                                           group_req*
+C:/msys64/ucrt64/include/winsock2.h:1035:88: note: initializing argument 4 of 'int setsockopt(SOCKET, int, int, const char*, int)'
+ 1035 |   WINSOCK_API_LINKAGE int WSAAPI setsockopt(SOCKET s,int level,int optname,const char *optval,int optlen);
+      |                                                                            ~~~~~~~~~~~~^~~~~~
+make[2]: *** [Makefile:538：Listener.o] 错误 1
+make[2]: *** 正在等待未完成的任务....
+mv -f .deps/PerfSocket.Tpo .deps/PerfSocket.Po
+../../iperf2-2.1.8/src/Reports.c: In function 'InitIndividualReport':
+../../iperf2-2.1.8/src/Reports.c:519:30: warning: format '%d' expects argument of type 'int', but argument 3 has type 'SOCKET' {aka 'long long unsigned int'} [-Wformat=]
+  519 |         fprintf (stdout, "[%3d] NUM_REPORT_STRUCTS override from %d to %d\n", inSettings->mSock, NUM_REPORT_STRUCTS, inSettings->numreportstructs);
+      |                            ~~^                                                ~~~~~~~~~~~~~~~~~
+      |                              |                                                          |
+      |                              int                                                        SOCKET {aka long long unsigned int}
+      |                            %3lld
+mv -f .deps/Reporter.Tpo .deps/Reporter.Po
+mv -f .deps/Reports.Tpo .deps/Reports.Po
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/src”
+make[1]: *** [Makefile:596：all-recursive] 错误 1
+make[1]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+make: *** [Makefile:536：all] 错误 2

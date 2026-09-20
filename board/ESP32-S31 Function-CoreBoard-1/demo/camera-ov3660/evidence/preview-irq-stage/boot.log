@@ -1,0 +1,40 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x79 (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2f000000,len:0x8e30
+load:0x2f008e80,len:0x2b18
+entry 0x2f008a74
+*** Booting NuttX ***
+dram: lma 0x00002020 vma 0x2f000000 len 0x8e30   (36400)
+dram: lma 0x0000ae58 vma 0x2f008e80 len 0x2b18   (11032)
+padd: lma 0x0000d9a8 vma 0x00000000 len 0x2670   (9840)
+imap: lma 0x00010020 vma 0x40030020 len 0x86f4   (34548)
+padd: lma 0x0001871c vma 0x00000000 len 0x79dc   (31196)
+imap: lma 0x00020100 vma 0x40000100 len 0x2ab6c  (174956)
+total segments stored 6
+ABCS31 LCD: NuttX framebuffer 800x480 RGB565 pclk=18000000, two DMA scan buffers, raw link-switch polling
+OPENVELA_FB_READY /dev/fb0 RGB565 800x480
+S31 DVP controller prepared: 640x480 RGB565, 614400 bytes
+S31 camera SCCB sensor ID: 0x3660
+
+NuttShell (NSH)
+nsh> [Kls /dev
+/dev:
+ console
+ fb0
+ i2c0
+ null
+ random
+ ttyS0
+ video0
+ zero
+nsh> [Ks31preview
+s31preview: video=/dev/video0 640x480 RGB565 stride=1280 bytes=6S31 DVP start: enter controller
+CAM_STAGE get-buffer
+CAM_STAGE cache
+CAM_STAGE reset
+CAM_STAGE dma-start
+CAM_STAGE started
+S31 DVP start: controller returned 0
+14400 buffers=2 fb=/dev/fb0 800x480 stride=1600 x=80 frames=60 timeout_ms=3000

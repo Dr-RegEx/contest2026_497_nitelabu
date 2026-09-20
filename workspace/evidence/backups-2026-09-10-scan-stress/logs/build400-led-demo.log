@@ -1,0 +1,31 @@
++ cmake -S . -B /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo -G Ninja -DBOARD_CONFIG=esp32s31-core-function-board:demo-rmt -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+-- Processing includes: /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt/defconfig → /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.defconfig.processed
+-- NuttX Host Tools
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/bin_host
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo --target resetconfig
+[1/1] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.defconfig.processed /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config && /usr/bin/cmake -E env KCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config EXTERNALDIR=dummy APPSDIR=/home/regex/work/esp32s31-openvela/openvela-dev/apps DRIVERS_PLATFORM_DIR=dummy APPSBINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/apps BINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo olddefconfig && /usr/bin/cmake -E copy /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config.orig && /usr/bin/cmake -E remove -f /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/include/nuttx/config.h && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/CMakeLists.txt
+Loaded configuration '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config'
+Configuration saved to '/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config'
++ [[ demo-rmt = *cpu1-init ]]
++ [[ demo-rmt = demo-rmt ]]
++ for task_option in RMT ESP_RMT WS2812 WS2812_NON_SPI_DRIVER EXAMPLES_S31LED
++ rg -q '^CONFIG_RMT=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config
++ for task_option in RMT ESP_RMT WS2812 WS2812_NON_SPI_DRIVER EXAMPLES_S31LED
++ rg -q '^CONFIG_ESP_RMT=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config
++ for task_option in RMT ESP_RMT WS2812 WS2812_NON_SPI_DRIVER EXAMPLES_S31LED
++ rg -q '^CONFIG_WS2812=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config
++ for task_option in RMT ESP_RMT WS2812 WS2812_NON_SPI_DRIVER EXAMPLES_S31LED
++ rg -q '^CONFIG_WS2812_NON_SPI_DRIVER=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config
++ for task_option in RMT ESP_RMT WS2812 WS2812_NON_SPI_DRIVER EXAMPLES_S31LED
++ rg -q '^CONFIG_EXAMPLES_S31LED=y$' /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-demo/.config
++ restore_config
++ '[' -f /tmp/s31-demo-source-config.VL4edk/.config ']'
++ mv /tmp/s31-demo-source-config.VL4edk/.config .config
++ '[' -f /tmp/s31-demo-source-config.VL4edk/config.h ']'
++ mv /tmp/s31-demo-source-config.VL4edk/config.h include/nuttx/config.h
++ rmdir /tmp/s31-demo-source-config.VL4edk

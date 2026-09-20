@@ -1,0 +1,40 @@
+--- CMD: ifconfig ---
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+nsh> [K
+nsh> [K
+--- CMD: ls -l /data/x ---
+ls -l /data/x
+ -rwxrwxrwx       65536 /data/x
+nsh> [K
+nsh> [K
+--- CMD: ftpd_start -4 & ---
+ftpd_start -4 &
+Initializing the network
+FTP daemon [12] started
+ftpd_start [12:101]
+nsh> [K
+nsh> Adding accounts:
+[K1. Root account: USER=root PASSWORD=abc123 HOME=(none)
+2. User account: USER=ftp PASSWORD=(none) HOME=(none)
+3. User account: USER=anonymous PASSWORD=(none) HOME=(none)
+220 NuttX FTP Server
+230 Login successful.
+250 CWD command successful
+-rwxrwxrwx   1     1001      512    65536 Jan  1 00:00 x
+226 Transfer complete
+226 Transfer complete
+226 Transfer complete
+221 Good-bye
+--- CMD: ls -l /data ---
+FTP daemon [12] ftpd_session returned 0
+[CPU1] ftpd_worker: ERROR: Disconnected by the command handler: -1
+ls -l /data
+/data:
+ -rwxrwxrwx       65536 upload1336.bin
+ -rwxrwxrwx       65536 x
+nsh> [K
+nsh> [K
+{"case": "4.1.117", "status": "FAIL", "receipt": "build1332-network-dns.sha256", "error": "command failed: ls -l /data"}

@@ -1,0 +1,137 @@
+uname -a
+NuttX  0.0.0 428252a08db-dirty Sep 20 2026 02:48:13 risc-v esp32s31-core-function-board
+nsh> [K
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at DOWN mtu 1500
+	inet addr:0.0.0.0 DRaddr:10.0.0.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00000000 00000000 00000000 0               
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000000 00000000 00000000 00000000 0                
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0000  0000  0000  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0000  0000  0000  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+iperf2 -v
+iperf version 2.1.8 (12 August 2022) pthreads
+nsh> [K
+renew wlan0
+nsh> [K
+wapi show wlan0
+wlan0 Configuration:
+       IP: 192.168.1.60
+  NetMask: 255.255.255.0
+Frequency: 2462
+     Flag: WAPI_FREQ_FIXED
+  Channel: 11
+Frequency: 2462
+    ESSID: [REDACTED]
+     Flag: WAPI_ESSID_ON
+     Mode: WAPI_MODE_MANAGED
+       AP: 60:ce:41:ab:02:d0
+  BitRate: 72
+     Flag: WAPI_BITRATE_FIXED
+  TxPower: 20
+     Flag: WAPI_TXPOWER_DBM
+    Sense: -78
+  Country: 01
+ PTA prio: not supported
+nsh> [K
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    0000000e 00000000 00000000 6dc             
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 00000000
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    00000002 00000004 00000000 00000000 26d              
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     0002  0000  0002  0000
+Dropped      0000  0000  0000  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         0002  0000  0002  0000
+  Rexmit     ----  0000  ----  ----
+nsh> [K
+ping -c 3 192.168.1.29
+PING 192.168.1.29 56 bytes of data
+[CPU1] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 0: 101
+[CPU0] icmp_sendmsg: ERROR: Not reachable
+ERROR: sendto failed at seqno 1: 101
+No response from 192.168.1.29: icmp_seq=2 time=1000 ms
+3 packets transmitted, 0 received, 100% packet loss, time 3008 ms
+nsh> [K
+START 5.1.22-rx
+PROGRESS 5.1.22-rx 30s [  1] 26.00-27.00 sec   354 KBytes  2.90 Mbits/sec
+PROGRESS 5.1.22-rx 60s [  1] 53.00-54.00 sec   339 KBytes  2.78 Mbits/sec
+PROGRESS 5.1.22-rx 90s [  1] 80.00-81.00 sec   384 KBytes  3.14 Mbits/sec
+PROGRESS 5.1.22-rx 120s [  1] 108.00-109.00 sec   364 KBytes  2.98 Mbits/sec
+PROGRESS 5.1.22-rx 150s [  1] 135.00-136.00 sec   231 KBytes  1.89 Mbits/sec
+PROGRESS 5.1.22-rx 181s [  1] 163.00-164.00 sec   181 KBytes  1.49 Mbits/sec
+PROGRESS 5.1.22-rx 211s [  1] 190.00-191.00 sec   412 KBytes  3.38 Mbits/sec
+PROGRESS 5.1.22-rx 241s [  1] 217.00-218.00 sec   442 KBytes  3.62 Mbits/sec
+PROGRESS 5.1.22-rx 271s [  1] 245.00-246.00 sec   452 KBytes  3.71 Mbits/sec
+PROGRESS 5.1.22-rx 301s [  1] 272.00-273.00 sec   104 KBytes   853 Kbits/sec
+PROGRESS 5.1.22-rx 331s [  1] 299.00-300.00 sec   331 KBytes  2.71 Mbits/sec
+RESULT {"case": "5.1.22", "direction_from_board": "rx", "protocol": "TCP", "status": "MEASURED_REQUIRES_REVIEW", "start": "2026-09-20T03:17:16.087629+08:00", "requested_duration_seconds": 300, "host_exit": 0, "board_summaries": ["[  1] 0.00-300.87 sec   114 MBytes  3.17 Mbits/sec"], "host_summaries": ["[  1] 0.00-300.90 sec   114 MBytes  3.17 Mbits/sec"], "both_duration_at_least_300": true, "end": "2026-09-20T03:22:23.321769+08:00", "log_sha256": {"5.1.22-rx-board.log": "bf3b37e1742865f467e8dbc7a33bef300ee009024250c8c8a010786e9fdb8c34", "5.1.22-rx-host.log": "516ad883efc52fd6eb6b56c50cd65bff843cd1bdf200b6393b7230701f0037ee"}}
+START 5.1.24-rx
+PROGRESS 5.1.24-rx 30s [  1] 26.00-27.00 sec  1.01 MBytes  8.46 Mbits/sec   3.436 ms 107/826 (13%)
+PROGRESS 5.1.24-rx 60s [  1] 53.00-54.00 sec   884 KBytes  7.24 Mbits/sec   1.904 ms 121/737 (16%)
+PROGRESS 5.1.24-rx 90s [  1] 80.00-81.00 sec   935 KBytes  7.66 Mbits/sec   1.439 ms 131/782 (17%)
+PROGRESS 5.1.24-rx 120s [  1] 108.00-109.00 sec   357 KBytes  2.93 Mbits/sec   3.250 ms 16/265 (6%)
+PROGRESS 5.1.24-rx 150s [  1] 135.00-136.00 sec   830 KBytes  6.80 Mbits/sec   6.150 ms 33/611 (5.4%)
+PROGRESS 5.1.24-rx 180s [  1] 162.00-163.00 sec   910 KBytes  7.46 Mbits/sec   4.244 ms 208/842 (25%)
+PROGRESS 5.1.24-rx 210s [  1] 190.00-191.00 sec   824 KBytes  6.75 Mbits/sec   1.698 ms 23/597 (3.9%)
+PROGRESS 5.1.24-rx 241s [  1] 217.00-218.00 sec   673 KBytes  5.52 Mbits/sec   4.867 ms 33/502 (6.6%)
+PROGRESS 5.1.24-rx 271s [  1] 245.00-246.00 sec   982 KBytes  8.04 Mbits/sec   2.113 ms 118/802 (15%)
+PROGRESS 5.1.24-rx 301s [  1] 272.00-273.00 sec   844 KBytes  6.91 Mbits/sec   3.258 ms 242/830 (29%)
+PROGRESS 5.1.24-rx 331s [  1] 299.00-300.00 sec   800 KBytes  6.55 Mbits/sec  10.465 ms 5/562 (0.89%)
+RESULT {"case": "5.1.24", "direction_from_board": "rx", "protocol": "UDP", "status": "MEASURED_REQUIRES_REVIEW", "start": "2026-09-20T03:22:23.326117+08:00", "requested_duration_seconds": 300, "host_exit": 0, "board_summaries": ["[  1] 0.00-307.02 sec   233 MBytes  6.35 Mbits/sec   3.802 ms 22875/188783 (12%)", "[  1] 0.00-307.02 sec  4232 datagrams received out-of-order"], "host_summaries": ["[  1] 0.00-300.00 sec   271 MBytes  7.58 Mbits/sec"], "both_duration_at_least_300": true, "end": "2026-09-20T03:27:30.180637+08:00", "log_sha256": {"5.1.24-rx-board.log": "f8ff4d7f5bd36ca18176e017338287d0233061230ae5d9a6bfb9eb84dbbf5ea7", "5.1.24-rx-host.log": "a3669a8f5740c369a5a98d9b88c979092345efae31ccbe975208979ffaf02292"}}
+START 5.1.23-tx
+PROGRESS 5.1.23-tx 30s [  1] 15.00-16.00 sec  27.4 KBytes   225 Kbits/sec
+PROGRESS 5.1.23-tx 60s [  1] 42.00-43.00 sec  43.4 KBytes   356 Kbits/sec
+PROGRESS 5.1.23-tx 90s [  1] 69.00-70.00 sec  43.4 KBytes   356 Kbits/sec
+PROGRESS 5.1.23-tx 120s [  1] 97.00-98.00 sec  21.7 KBytes   178 Kbits/sec
+PROGRESS 5.1.23-tx 151s [  1] 124.00-125.00 sec  38.8 KBytes   318 Kbits/sec
+PROGRESS 5.1.23-tx 181s [  1] 151.00-152.00 sec  27.4 KBytes   225 Kbits/sec
+PROGRESS 5.1.23-tx 211s [  1] 179.00-180.00 sec  43.4 KBytes   356 Kbits/sec
+PROGRESS 5.1.23-tx 241s [  1] 206.00-207.00 sec  43.4 KBytes   356 Kbits/sec
+PROGRESS 5.1.23-tx 271s [  1] 233.00-234.00 sec  32.0 KBytes   262 Kbits/sec
+PROGRESS 5.1.23-tx 301s [  1] 261.00-262.00 sec  27.4 KBytes   225 Kbits/sec
+PROGRESS 5.1.23-tx 331s [  1] 288.00-289.00 sec  43.4 KBytes   356 Kbits/sec
+RESULT {"case": "5.1.23", "direction_from_board": "tx", "protocol": "TCP", "status": "MEASURED_REQUIRES_REVIEW", "start": "2026-09-20T03:27:30.181556+08:00", "requested_duration_seconds": 300, "board_summaries": ["[  1] 0.00-300.56 sec  9.89 MBytes   276 Kbits/sec"], "host_summaries": ["[  1] 0.00-300.55 sec  9.89 MBytes   276 Kbits/sec"], "both_duration_at_least_300": true, "end": "2026-09-20T03:32:44.883582+08:00", "log_sha256": {"5.1.23-tx-board.log": "68968e89f1f3ca716b5aabb59e1661b4ce8c9717bcb0bbc165761e6c26ab3b7f", "5.1.23-tx-host.log": "f45d596640c64293a583ae084bcd685d23918f95586c2c9d962236f9bc2df879"}}
+START 5.1.25-tx
+PROGRESS 5.1.25-tx 30s [  1] 25.00-26.00 sec  18.7 KBytes   153 Kbits/sec
+PROGRESS 5.1.25-tx 60s [  1] 53.00-54.00 sec  25.8 KBytes   212 Kbits/sec
+PROGRESS 5.1.25-tx 90s [  1] 80.00-81.00 sec  48.8 KBytes   400 Kbits/sec
+PROGRESS 5.1.25-tx 120s [  1] 107.00-108.00 sec  23.0 KBytes   188 Kbits/sec
+PROGRESS 5.1.25-tx 150s [  1] 135.00-136.00 sec  35.9 KBytes   294 Kbits/sec
+PROGRESS 5.1.25-tx 180s [  1] 162.00-163.00 sec  47.4 KBytes   388 Kbits/sec
+PROGRESS 5.1.25-tx 211s [  1] 190.00-191.00 sec  25.8 KBytes   212 Kbits/sec
+PROGRESS 5.1.25-tx 241s [  1] 217.00-218.00 sec  44.5 KBytes   365 Kbits/sec
+PROGRESS 5.1.25-tx 271s [  1] 244.00-245.00 sec  40.2 KBytes   329 Kbits/sec
+PROGRESS 5.1.25-tx 301s [  1] 272.00-273.00 sec  48.8 KBytes   400 Kbits/sec
+PROGRESS 5.1.25-tx 331s [  1] 0.00-300.06 sec  10.9 MBytes   306 Kbits/sec
+RESULT {"case": "5.1.25", "direction_from_board": "tx", "protocol": "UDP", "status": "MEASURED_REQUIRES_REVIEW", "start": "2026-09-20T03:32:44.883905+08:00", "requested_duration_seconds": 300, "board_summaries": ["[  1] 0.00-300.06 sec  10.9 MBytes   306 Kbits/sec", "[  1] 0.00-301.43 sec  10.9 MBytes   304 Kbits/sec  28.206 ms 2/7798 (0.026%)"], "host_summaries": ["[  1] 0.00-301.43 sec  10.9 MBytes   304 Kbits/sec  28.207 ms 2/7798 (0.026%)"], "both_duration_at_least_300": true, "end": "2026-09-20T03:37:51.794749+08:00", "log_sha256": {"5.1.25-tx-board.log": "6154ae8d340b852f6c301d06dd47297f6614beb2c137238a1f718b6ce1fecdbd", "5.1.25-tx-host.log": "a711816ac20b5c595e4507f8396c6c0dc38b4a7c293e476355188da48bb68f62"}}

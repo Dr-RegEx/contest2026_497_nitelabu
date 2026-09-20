@@ -1,0 +1,49 @@
++ '[' '' = resetconfig ']'
++ cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6 -j8
+[1/34] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/libs/libc/misc && /usr/bin/cmake -E touch /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/libs/libc/misc/lib_utsname.c
+[2/34] cd /home/regex/work/esp32s31-openvela/openvela-dev/nuttx && /usr/bin/cmake -DKCONFIG_CONFIG=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production/defconfig -DNUTTX_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/nuttx -DCMAKE_BINARY_DIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6 -P /home/regex/work/esp32s31-openvela/openvela-dev/nuttx/cmake/nuttx_generate_dts.cmake
+[3/34] Building C object libs/libc/CMakeFiles/c.dir/misc/lib_utsname.c.o
+[4/34] Building C object libs/libc/CMakeFiles/kc.dir/misc/lib_utsname.c.o
+[5/34] Building C object fs/CMakeFiles/fs.dir/procfs/fs_procfsversion.c.o
+[6/34] cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/syscall && cmake --build /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-cmake-production6/bin_host --target mksyscall
+[ 50%] Built target csvparser
+[100%] Built target mksyscall
+[7/34] Building C object libs/libc/CMakeFiles/kc.dir/elf/elf_symbols.c.o
+[8/34] Building C object libs/libc/CMakeFiles/c.dir/elf/elf_symbols.c.o
+[9/34] Linking C static library fs/libfs.a
+[10/34] Building C object apps/CMakeFiles/apps.dir/nshlib/nsh_parse.c.o
+[11/34] Building C object apps/CMakeFiles/apps.dir/netutils/webclient/webclient.c.o
+[12/34] Linking C static library apps/libapps.a
+[13/34] Linking C static library libs/libc/libc.a
+[14/34] Refreshing ELF relink sentinel:renew
+[15/34] Refreshing ELF relink sentinel:init
+[16/34] Refreshing ELF relink sentinel:sh
+[17/34] Refreshing ELF relink sentinel:ping
+[18/34] Refreshing ELF relink sentinel:wapi
+[19/34] Linking C static library libs/libc/libkc.a
+[20/34] Building C object apps/system/nsh/CMakeFiles/ELF_init.dir/ELF_init_relink.c.o
+[21/34] Building C object apps/system/nsh/CMakeFiles/ELF_sh.dir/ELF_sh_relink.c.o
+[22/34] Building C object apps/system/ping/CMakeFiles/ELF_ping.dir/ELF_ping_relink.c.o
+[23/34] Building C object apps/system/dhcpc/CMakeFiles/ELF_renew.dir/ELF_renew_relink.c.o
+[24/34] Building C object apps/wireless/wapi/CMakeFiles/ELF_wapi.dir/ELF_wapi_relink.c.o
+[25/34] Linking C static library apps/system/dhcpc/libELF_renew.a
+[26/34] Linking C static library apps/system/ping/libELF_ping.a
+[27/34] Linking C static library apps/wireless/wapi/libELF_wapi.a
+[28/34] Linking C static library apps/system/nsh/libELF_sh.a
+[29/34] Linking C static library apps/system/nsh/libELF_init.a
+[30/34] Generating external ESP32-S31 application ROMFS
+[31/34] Linking C executable nuttx
+[32/34] Generating nuttx.hex
+[33/34] Generating System.map
+[34/34] Generating ESP32-S31 simple-boot image for offset 0x2000
+esptool v5.4.0
+Creating ESP32-S31 image...
+Image has only RAM segments visible. ROM segments are hidden and SHA256 digest is not appended.
+Merged 1 ELF section.
+Successfully created ESP32-S31 image.
++ restore_cfg
++ '[' -f /tmp/esp32s31-source-config.B3H78D/.config ']'
++ mv /tmp/esp32s31-source-config.B3H78D/.config .config
++ '[' -f /tmp/esp32s31-source-config.B3H78D/config.h ']'
++ mv /tmp/esp32s31-source-config.B3H78D/config.h include/nuttx/config.h
++ rmdir /tmp/esp32s31-source-config.B3H78D

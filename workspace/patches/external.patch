@@ -1,0 +1,250 @@
+diff --git a/ffmpeg/Kconfig b/ffmpeg/Kconfig
+index a9ab598..b74fe80 100644
+--- a/ffmpeg/Kconfig
++++ b/ffmpeg/Kconfig
+@@ -28,6 +28,13 @@ config LIB_FFMPEG_CONFIGURATION
+ 	---help---
+ 		FFmpeg configuration which pass to configure
+ 
++config LIB_FFMPEG_AUDIO_TABLEGEN
++	bool "Generate hardcoded AAC, MP3 and PCM tables on the host"
++	default n
++	help
++		Run the existing FFmpeg host generators before compiling audio codecs.
++		Use with --enable-hardcoded-tables to reduce target static RAM usage.
++
+ config LIB_FFMPEG_TEST
+ 	bool "enable ffmpeg test"
+ 	default n
+diff --git a/ffmpeg/Makefile b/ffmpeg/Makefile
+index 04bceb3..a713234 100644
+--- a/ffmpeg/Makefile
++++ b/ffmpeg/Makefile
+@@ -44,6 +44,9 @@ NASRCS    :=
+ SRC_PATH  := ffmpeg
+ 
+ CFG_ARCH  := $(CONFIG_ARCH)
++ifeq ($(CONFIG_ARCH),risc-v)
++  CFG_ARCH = riscv
++endif
+ ifeq ($(CONFIG_ARCH),avr)
+   CFG_ARCH = avr32
+ endif
+@@ -295,6 +298,19 @@ $(DST_PATH)/ffbuild/config.mak:
+ 		--ld=echo --pkg-config=: assert_level=3 $(CFG_CMDS)                          \
+ 		"$(CONFIG_LIB_FFMPEG_CONFIGURATION)"
+ 
++ifeq ($(CONFIG_LIB_FFMPEG_AUDIO_TABLEGEN),y)
++AUDIO_TABLE_NAMES := aacps cbrt sinewin mpegaudio mpegaudiodec_common pcm
++AUDIO_TABLE_HEADERS := $(addprefix $(DST_PATH)/libavcodec/,$(addsuffix _tables.h,$(AUDIO_TABLE_NAMES)))
++
++$(DST_PATH)/libavcodec/%_tables.h: $(SRC_PATH)/libavcodec/%_tablegen.c $(wildcard $(SRC_PATH)/libavcodec/*tablegen*.h) $(DST_PATH)/ffbuild/config.mak
++	$(Q)mkdir -p $(DST_PATH)/libavcodec
++	$(Q)$(HOSTCC) -O2 -DCONFIG_SMALL=1 -I$(DST_PATH) -I$(SRC_PATH) $< -lm -o $(@:_tables.h=_tablegen_host)
++	$(Q)$(@:_tables.h=_tablegen_host) > $@.tmp
++	$(Q)mv $@.tmp $@
++
++context:: $(AUDIO_TABLE_HEADERS)
++endif
++
+ context:: $(DST_PATH)/ffbuild/config.mak $(DST_PATH)/libavutil/ffversion.h
+ ifneq ($(DST_PATH),)
+ 	@$(eval ALL_SRCS = $(ASRCS) $(CSRCS) $(MAINSRC) $(NASRCS))
+diff --git a/iperf2/config.h b/iperf2/config.h
+index 2d5ebd6..4f1a754 100644
+--- a/iperf2/config.h
++++ b/iperf2/config.h
+@@ -271,7 +271,10 @@
+ #define HAVE_MEMSET 1
+ 
+ /* Define to 1 if you have the `mlockall' function. */
++/* The NuttX implementation has no syscall export for kernel-mode apps. */
++#ifndef CONFIG_BUILD_KERNEL
+ #define HAVE_MLOCKALL 1
++#endif
+ 
+ /* Define to enable multicast support */
+ /* #undef HAVE_MULTICAST */
+@@ -592,4 +595,3 @@
+ 
+ /* Define udp check */
+ #define check udpchksum
+-
+diff --git a/libssh/CMakeLists.txt b/libssh/CMakeLists.txt
+index 12427a5..087bae7 100644
+--- a/libssh/CMakeLists.txt
++++ b/libssh/CMakeLists.txt
+@@ -88,27 +88,17 @@ if(CONFIG_LIB_SSH)
+   target_compile_options(libssh PRIVATE ${LIBSSH_FLAGS})
+ 
+   if(CONFIG_UTILS_SSH)
++    # Each kernel-mode utility is a separate ELF. Keep the shared example
++    # helpers in the library so all clients resolve the same dependencies.
++    target_sources(libssh PRIVATE libssh/examples/authentication.c
++                                  libssh/examples/connect_ssh.c
++                                  libssh/examples/knownhosts.c)
++
+     nuttx_add_application(
+       NAME
+       scp
+       SRCS
+       libssh/examples/libssh_scp.c
+-      libssh/examples/authentication.c
+-      INCLUDE_DIRECTORIES
+-      ${LIBSSH_INCDIR}
+-      COMPILE_FLAGS
+-      ${LIBSSH_FLAGS}
+-      STACKSIZE
+-      ${CONFIG_UTILS_SSH_STACKSIZE}
+-      PRIORITY
+-      ${CONFIG_UTILS_SSH_PRIORITY})
+-
+-    nuttx_add_application(
+-      NAME
+-      ssh
+-      SRCS
+-      libssh/examples/ssh_client.c
+-      libssh/examples/connect_ssh.c
+       INCLUDE_DIRECTORIES
+       ${LIBSSH_INCDIR}
+       COMPILE_FLAGS
+@@ -118,20 +108,35 @@ if(CONFIG_LIB_SSH)
+       PRIORITY
+       ${CONFIG_UTILS_SSH_PRIORITY})
+ 
+-    nuttx_add_application(
+-      NAME
+-      sshd
+-      SRCS
+-      libssh/examples/ssh_server.c
+-      libssh/examples/knownhosts.c
+-      INCLUDE_DIRECTORIES
+-      ${LIBSSH_INCDIR}
+-      COMPILE_FLAGS
+-      ${LIBSSH_FLAGS}
+-      STACKSIZE
+-      ${CONFIG_UTILS_SSH_STACKSIZE}
+-      PRIORITY
+-      ${CONFIG_UTILS_SSH_PRIORITY})
++    if(NOT CONFIG_UTILS_SSH_SCP_ONLY)
++      nuttx_add_application(
++        NAME
++        ssh
++        SRCS
++        libssh/examples/ssh_client.c
++        INCLUDE_DIRECTORIES
++        ${LIBSSH_INCDIR}
++        COMPILE_FLAGS
++        ${LIBSSH_FLAGS}
++        STACKSIZE
++        ${CONFIG_UTILS_SSH_STACKSIZE}
++        PRIORITY
++        ${CONFIG_UTILS_SSH_PRIORITY})
++
++      nuttx_add_application(
++        NAME
++        sshd
++        SRCS
++        libssh/examples/ssh_server.c
++        INCLUDE_DIRECTORIES
++        ${LIBSSH_INCDIR}
++        COMPILE_FLAGS
++        ${LIBSSH_FLAGS}
++        STACKSIZE
++        ${CONFIG_UTILS_SSH_STACKSIZE}
++        PRIORITY
++        ${CONFIG_UTILS_SSH_PRIORITY})
++    endif()
+ 
+   endif()
+ 
+diff --git a/libssh/Kconfig b/libssh/Kconfig
+index baa6c82..3fbd6a3 100644
+--- a/libssh/Kconfig
++++ b/libssh/Kconfig
+@@ -35,6 +35,14 @@ config TEST_SSH
+ 	depends on LIB_SSH
+ 	depends on TESTING_CMOCKA
+ 
++config UTILS_SSH_SCP_ONLY
++	bool "Build only the SCP utility"
++	depends on UTILS_SSH
++	default n
++	---help---
++		Omit the interactive SSH client and SSH server applications when
++		only file transfer is needed and application storage is limited.
++
+ if UTILS_SSH || TEST_SSH
+ config UTILS_SSH_PRIORITY
+ 	int "ssh utility priority"
+diff --git a/libssh/Makefile b/libssh/Makefile
+index a775205..b5ab5f5 100644
+--- a/libssh/Makefile
++++ b/libssh/Makefile
+@@ -42,8 +42,12 @@ endif
+ CSRCS = $(filter-out $(SKIP), $(wildcard libssh/src/*.c libssh/src/external/*.c libssh/src/threads/*.c))
+ 
+ ifneq ($(CONFIG_UTILS_SSH),)
+-PROGNAME = scp ssh sshd
+-MAINSRC = libssh/examples/libssh_scp.c libssh/examples/ssh_client.c libssh/examples/ssh_server.c
++PROGNAME = scp
++MAINSRC = libssh/examples/libssh_scp.c
++ifneq ($(CONFIG_UTILS_SSH_SCP_ONLY),y)
++PROGNAME += ssh sshd
++MAINSRC += libssh/examples/ssh_client.c libssh/examples/ssh_server.c
++endif
+ CSRCS += libssh/examples/authentication.c libssh/examples/connect_ssh.c libssh/examples/knownhosts.c
+ 
+ PRIORITY = $(CONFIG_UTILS_SSH_PRIORITY)
+diff --git a/zblue/CMakeLists.default.txt b/zblue/CMakeLists.default.txt
+index a216d95..a2908f4 100644
+--- a/zblue/CMakeLists.default.txt
++++ b/zblue/CMakeLists.default.txt
+@@ -795,7 +795,18 @@ if(CONFIG_BT)
+       COMPILE_FLAGS ${CFLAGS})
+ 
+     # Link zblue headers to zblue application
+-    target_link_libraries(zblue PRIVATE zblue_headers)
++    target_link_libraries(apps_zblue PRIVATE zblue_headers)
++  endif()
++
++  if(CONFIG_BT_MESH_SHELL)
++    nuttx_add_application(
++      NAME mesh
++      STACKSIZE ${ZBLUE_STACKSIZE}
++      SRCS ${ZBLUE_DIR}/tests/bluetooth/mesh_shell/src/main.c
++      INCLUDE_DIRECTORIES ${INCDIR}
++      COMPILE_FLAGS ${CFLAGS})
++
++    target_link_libraries(apps_mesh PRIVATE zblue_headers)
+   endif()
+ 
+   if(CONFIG_BT_SAMPLE)
+@@ -842,6 +853,12 @@ if(CONFIG_BT)
+   target_include_directories(zblue PRIVATE ${INCDIR})
+   target_compile_options(zblue PRIVATE ${CFLAGS})
+ 
++  if(CONFIG_LIB_LC3)
++    target_include_directories(zblue PRIVATE
++      ${CMAKE_CURRENT_LIST_DIR}/../liblc3/liblc3/include)
++    target_link_libraries(zblue PRIVATE liblc3)
++  endif()
++
+   set(SRC_INC_ROOT    ${ZBLUE_DIR}/include)
+   set(BIN_INC_ROOT    ${CMAKE_CURRENT_BINARY_DIR}/include)
+   set(ZEPHYR_SRC_DIR  ${SRC_INC_ROOT}/zephyr)
+diff --git a/zblue/Kconfig.default b/zblue/Kconfig.default
+index a19976f..4ecd1e2 100644
+--- a/zblue/Kconfig.default
++++ b/zblue/Kconfig.default
+@@ -20,4 +20,10 @@ osource "$APPSDIR/external/zblue/zblue/subsys/bluetooth/Kconfig"
+ osource "$APPSDIR/external/zblue/zblue/subsys/settings/Kconfig"
+ osource "$APPSDIR/external/zblue/zblue/port/Kconfig"
+ osource "$APPSDIR/external/zblue/zblue/lib/net_buf/Kconfig"
++# Zephyr shell uses LIBLC3; the NuttX codec package is named LIB_LC3.
++config LIBLC3
++	bool
++	default y if LIB_LC3
++	depends on LIB_LC3
++
+ endmenu # Bluetooth Stack: Zephyr Bluetooth Stack

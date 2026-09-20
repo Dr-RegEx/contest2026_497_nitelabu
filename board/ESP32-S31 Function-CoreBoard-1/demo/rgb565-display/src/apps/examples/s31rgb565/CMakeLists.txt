@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: Apache-2.0
+
+if(CONFIG_EXAMPLES_S31RGB565)
+  nuttx_add_application(
+    NAME
+    ${CONFIG_EXAMPLES_S31RGB565_PROGNAME}
+    PRIORITY
+    ${CONFIG_EXAMPLES_S31RGB565_PRIORITY}
+    STACKSIZE
+    ${CONFIG_EXAMPLES_S31RGB565_STACKSIZE}
+    MODULE
+    ${CONFIG_EXAMPLES_S31RGB565}
+    SRCS
+    s31rgb565_main.c
+    startup.c
+    patterns.c)
+endif()

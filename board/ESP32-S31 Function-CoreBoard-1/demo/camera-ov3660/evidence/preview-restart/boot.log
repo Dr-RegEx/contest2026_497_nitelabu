@@ -1,0 +1,40 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x79 (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2f000000,len:0x8d9c
+load:0x2f008e00,len:0x2ad8
+entry 0x2f0089de
+*** Booting NuttX ***
+dram: lma 0x00002020 vma 0x2f000000 len 0x8d9c   (36252)
+dram: lma 0x0000adc4 vma 0x2f008e00 len 0x2ad8   (10968)
+padd: lma 0x0000d8c8 vma 0x00000000 len 0x2750   (10064)
+imap: lma 0x00010020 vma 0x40030020 len 0x85c4   (34244)
+padd: lma 0x000185ec vma 0x00000000 len 0x7b0c   (31500)
+imap: lma 0x00020100 vma 0x40000100 len 0x2abd4  (175060)
+total segments stored 6
+ABCS31 LCD: NuttX framebuffer 800x480 RGB565 pclk=18000000, two DMA scan buffers, raw link-switch polling
+OPENVELA_FB_READY /dev/fb0 RGB565 800x480
+S31 DVP controller prepared: 640x480 RGB565, 614400 bytes
+S31 camera SCCB sensor ID: 0x3660
+
+NuttShell (NSH)
+nsh> [Kls /dev
+/dev:
+ console
+ fb0
+ i2c0
+ null
+ random
+ ttyS0
+ video0
+ zero
+nsh> [Ks31preview --frames 20
+s31preview: video=/dev/video0 640x480 RGB565 stride=1280 bytes=614400 buffers=2 fb=/dev/fb0 800x480 stride=1600 x=80 frames=20 timeout_ms=3000
+s31preview: capture failed frame=1 errno=110
+s31preview: completed=0/20 result=FAIL
+nsh> [Ks31preview --frames 600
+s31preview: video=/dev/video0 640x480 RGB565 stride=1280 bytes=614400 buffers=2 fb=/dev/fb0 800x480 stride=1600 x=80 frames=600 timeout_ms=3000
+s31preview: capture failed frame=1 errno=110
+s31preview: completed=0/600 result=FAIL
+nsh> [K

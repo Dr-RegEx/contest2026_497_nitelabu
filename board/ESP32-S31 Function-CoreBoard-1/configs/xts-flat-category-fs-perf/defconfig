@@ -1,0 +1,7 @@
+#include "../xts-flat-category-fs-flash/defconfig"
+
+# Published filesystem throughput prerequisites; keep the power-cut profile intact.
+CONFIG_NSH_CMDOPT_DD_STATS=y
+CONFIG_DEV_NULL=y
+CONFIG_DEV_ZERO=y
+CONFIG_TESTING_TESTCASES_PRIORITY=255

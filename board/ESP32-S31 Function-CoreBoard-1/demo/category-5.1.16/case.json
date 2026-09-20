@@ -1,0 +1,69 @@
+{
+  "name": "category-5.1.16",
+  "keys": [
+    "category:5.1.16"
+  ],
+  "profile": "xts-flat-category-fs-large",
+  "sources": [
+    "tests/testcases/vela_fs_test"
+  ],
+  "evidence_ids": [
+    1164,
+    1169
+  ],
+  "note": "专用 3MiB 测试卷，碎片用例保持原观察标准，多线程操作保持原始 1 小时工作量。",
+  "original": "5.1.16",
+  "evidence": [
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/result.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/SHA256SUMS",
+    "workspace/evidence/backups-2026-09-10-scan-stress/fs1164-fragment-running.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1164-fragment-observe.log",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/review1169.json",
+    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/xts1165-fragment-stop.log",
+    "docs/acceptance/xts-category-status.md"
+  ],
+  "title": "文件系统碎片读写测试",
+  "original_line": 2070,
+  "config_inheritance_verified": true,
+  "local_sources": [
+    {
+      "path": "src/vela_fs_test",
+      "origin": "tests/testcases/vela_fs_test"
+    }
+  ],
+  "local_config": "config/xts-flat-category-fs-large/defconfig",
+  "local_evidence": [
+    {
+      "path": "evidence/docs/acceptance/xts-category-status.md",
+      "origin": "docs/acceptance/xts-category-status.md"
+    },
+    {
+      "path": "evidence/docs/acceptance/比赛必须适配清单.md",
+      "origin": "docs/acceptance/比赛必须适配清单.md"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/SHA256SUMS",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/SHA256SUMS"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/result.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/result.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/review1169.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/review1169.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/xts1165-fragment-stop.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/xts1165-fragment-stop.log"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/fs1164-fragment-running.json",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/fs1164-fragment-running.json"
+    },
+    {
+      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1164-fragment-observe.log",
+      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1164-fragment-observe.log"
+    }
+  ]
+}

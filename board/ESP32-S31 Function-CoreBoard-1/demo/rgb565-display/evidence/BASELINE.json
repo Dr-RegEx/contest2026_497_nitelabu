@@ -1,0 +1,27 @@
+{
+  "heads": {
+    "nuttx": "6c3a1973a6190c7f4a98981618406d91ce36dec7",
+    "apps": "fe038f6e4125035825cf17e6e0384eefeefb1b16"
+  },
+  "hal_head": "290edc31b50decca660c1a11ce3506fd9b2e1e27",
+  "requires_existing_s31_port": true,
+  "dirty_base_note": "These are reference HEADs, not sufficient clean bases. Patches include only the RGB565 additions, against the existing S31 port before those additions. Existing-file before hashes are reconstructed by removing only the RGB565 blocks from the tested source.",
+  "modified_files": {
+    "arch/risc-v/src/esp32s31/CMakeLists.txt": {
+      "before_sha256": "afbaa61cccb73949c1ddaf8714984f5598e20a70dc66d07ed5cd134d8f167dcf",
+      "after_sha256": "4b3d233eb70f93884334d79f6fc1b30eef91f60f2570e291144debf432fa3ff3"
+    },
+    "arch/risc-v/src/esp32s31/Make.defs": {
+      "before_sha256": "2308bc537094cf74d56419aba6fc433045aacc9530dcaf35795c42b970806786",
+      "after_sha256": "a67a02673e23caf672af9282d53e0bb1c1e451326b3f729ac7d77362832bae22"
+    },
+    "boards/risc-v/esp32s31/esp32s31-core-function-board/Kconfig": {
+      "before_sha256": "bc6e973397819c1b32f51a344588ce1266cd26886e62a1bc65c09f070bed8f91",
+      "after_sha256": "8046d294f584c1262b69595670147829e20c794e15d64244771dcc9cc3f33828"
+    },
+    "boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_bringup.c": {
+      "before_sha256": "a905c383ab4879e215392214b8d97dd72a1eaae0996660bff71feb538ec9f187",
+      "after_sha256": "22aaa6f2eb9b3382beaec168d6b9f93473472e98aef310c25aa0f38d5fa7b3ff"
+    }
+  }
+}

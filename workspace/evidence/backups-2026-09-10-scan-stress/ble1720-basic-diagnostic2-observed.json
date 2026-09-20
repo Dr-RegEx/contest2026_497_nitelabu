@@ -1,0 +1,22 @@
+{
+  "status": "LOCAL_CALLBACKS_VERIFIED",
+  "scope": "DEVELOPMENT_DIAGNOSTIC_NOT_XTS_PASS",
+  "candidate": 1720,
+  "steps": [
+    "ttyHCI0 present",
+    "enable callback state 1 then 2",
+    "state reports 2",
+    "adv start interval 160 callback status 0",
+    "adv stop callback",
+    "scan start callback status 0",
+    "scan stop callback status 0",
+    "disable callback state 6 then 0",
+    "state reports 0",
+    "bttool exits to nsh prompt"
+  ],
+  "scan_observations": "Local scan received multiple ambient advertisements; no phone-controlled peer or interval measurement.",
+  "peer_observation": false,
+  "original_repetition_requirements": false,
+  "log": "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/logs/ble1720-basic-diagnostic2.log",
+  "note": "This is development evidence only. It does not increase the xTS pass count or close advertising, scan PHY/mode, discovery-rate, pairing, or coexistence cases."
+}

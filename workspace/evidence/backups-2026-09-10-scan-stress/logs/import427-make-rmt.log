@@ -1,0 +1,65 @@
++ shift
++ '[' '!' -z -z ']'
++ case $1 in
++ TGZ=y
++ shift
++ '[' '!' -z -x ']'
++ case $1 in
++ shift
+++ realpath ../nuttx/nuttx-export-0.0.0.tar.gz
++ EXPORT=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/nuttx-export-0.0.0.tar.gz
++ shift
++ '[' '!' -z '' ']'
++ '[' -z /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/nuttx-export-0.0.0.tar.gz ']'
++ '[' '!' -f /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/nuttx-export-0.0.0.tar.gz ']'
++ '[' '!' -d import ']'
++ WD=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps
++ IMPORTDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import
++ BUILTINDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/builtin
++ DARCHDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/arch
++ DINCDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/include
++ DLIBDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/libs
++ DSCRIPTSDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/scripts
++ DSTARTDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/startup
++ DTOOLSDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/tools
++ TMPDIR=/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/tmp
++ DALLDIRS='/home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/arch /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/include /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/libs /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/scripts /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/startup /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/tools /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/tmp'
++ rm -rf /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/arch /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/include /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/libs /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/scripts /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/startup /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/tools /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/tmp
++ mkdir /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/tmp
++ '[' Xy == Xy ']'
++ tar zxf /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/nuttx/nuttx-export-0.0.0.tar.gz -C /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/tmp
++ cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/tmp
+++ ls
++ EXPORTDIR=nuttx-export-0.0.0
++ '[' -z nuttx-export-0.0.0 ']'
++ '[' '!' -d nuttx-export-0.0.0 ']'
++ SARCHDIR=nuttx-export-0.0.0/arch
++ SINCDIR=nuttx-export-0.0.0/include
++ SLIBDIR=nuttx-export-0.0.0/libs
++ SSCRIPTSDIR=nuttx-export-0.0.0/scripts
++ SSTARTDIR=nuttx-export-0.0.0/startup
++ STOOLSDIR=nuttx-export-0.0.0/tools
++ REGISTERSDIR=nuttx-export-0.0.0/registry
++ unset SALLDIRS
++ '[' -d nuttx-export-0.0.0/arch ']'
++ '[' -d nuttx-export-0.0.0/include ']'
++ SALLDIRS=' nuttx-export-0.0.0/include'
++ '[' -d nuttx-export-0.0.0/libs ']'
++ SALLDIRS=' nuttx-export-0.0.0/include nuttx-export-0.0.0/libs'
++ '[' -d nuttx-export-0.0.0/scripts ']'
++ SALLDIRS=' nuttx-export-0.0.0/include nuttx-export-0.0.0/libs nuttx-export-0.0.0/scripts'
++ '[' -d nuttx-export-0.0.0/startup ']'
++ SALLDIRS=' nuttx-export-0.0.0/include nuttx-export-0.0.0/libs nuttx-export-0.0.0/scripts nuttx-export-0.0.0/startup'
++ '[' -d nuttx-export-0.0.0/tools ']'
++ SALLDIRS=' nuttx-export-0.0.0/include nuttx-export-0.0.0/libs nuttx-export-0.0.0/scripts nuttx-export-0.0.0/startup nuttx-export-0.0.0/tools'
++ mv nuttx-export-0.0.0/include nuttx-export-0.0.0/libs nuttx-export-0.0.0/scripts nuttx-export-0.0.0/startup nuttx-export-0.0.0/tools /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/.
++ cp -rf nuttx-export-0.0.0/registry /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/builtin/.
++ SFILES='.config System.map'
++ for file in ${SFILES}
++ '[' -f nuttx-export-0.0.0/.config ']'
++ cp -a nuttx-export-0.0.0/.config /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/.config
++ for file in ${SFILES}
++ '[' -f nuttx-export-0.0.0/System.map ']'
++ cp -a nuttx-export-0.0.0/System.map /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/System.map
++ cd /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps
++ rm -rf /home/regex/work/esp32s31-openvela/openvela-dev/out/esp32s31-make-rmt420/apps/import/tmp

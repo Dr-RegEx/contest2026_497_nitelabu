@@ -1,0 +1,66 @@
+make  all-recursive
+make[1]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+Making all in compat
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/compat”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/compat”
+Making all in doc
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/doc”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/doc”
+Making all in include
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/include”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/include”
+Making all in src
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/src”
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT ReportOutputs.o -MD -MP -MF .deps/ReportOutputs.Tpo -c -o ReportOutputs.o ../../iperf2-2.1.8/src/ReportOutputs.c
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT SocketAddr.o -MD -MP -MF .deps/SocketAddr.Tpo -c -o SocketAddr.o ../../iperf2-2.1.8/src/SocketAddr.c
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT gnu_getopt.o -MD -MP -MF .deps/gnu_getopt.Tpo -c -o gnu_getopt.o ../../iperf2-2.1.8/src/gnu_getopt.c
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT gnu_getopt_long.o -MD -MP -MF .deps/gnu_getopt_long.Tpo -c -o gnu_getopt_long.o ../../iperf2-2.1.8/src/gnu_getopt_long.c
+mv -f .deps/gnu_getopt_long.Tpo .deps/gnu_getopt_long.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT histogram.o -MD -MP -MF .deps/histogram.Tpo -c -o histogram.o ../../iperf2-2.1.8/src/histogram.c
+mv -f .deps/gnu_getopt.Tpo .deps/gnu_getopt.Po
+x86_64-w64-mingw32-g++ -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2  -MT main.o -MD -MP -MF .deps/main.Tpo -c -o main.o ../../iperf2-2.1.8/src/main.cpp
+../../iperf2-2.1.8/src/ReportOutputs.c: In function 'reporter_print_connection_report':
+../../iperf2-2.1.8/src/ReportOutputs.c:1514:54: warning: format '%d' expects argument of type 'int', but argument 4 has type 'SOCKET' {aka 'long long unsigned int'} [-Wformat=]
+ 1514 |         snprintf(b, SNBUFFERSIZE-strlen(b), " (sock=%d)", report->common->socket);;
+      |                                                     ~^    ~~~~~~~~~~~~~~~~~~~~~~
+      |                                                      |                  |
+      |                                                      int                SOCKET {aka long long unsigned int}
+      |                                                     %lld
+mv -f .deps/SocketAddr.Tpo .deps/SocketAddr.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT service.o -MD -MP -MF .deps/service.Tpo -c -o service.o ../../iperf2-2.1.8/src/service.c
+../../iperf2-2.1.8/src/ReportOutputs.c: In function 'udp_output_basic_csv':
+../../iperf2-2.1.8/src/ReportOutputs.c:1157:9: warning: 'strncpy' output may be truncated copying 171 bytes from a string of length 171 [-Wstringop-truncation]
+ 1157 |         strncpy(&stats->csv_peer[0], &__ips_ports_string[0], CSVPEERLIMIT);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../iperf2-2.1.8/src/ReportOutputs.c: In function 'tcp_output_basic_csv':
+../../iperf2-2.1.8/src/ReportOutputs.c:1179:9: warning: 'strncpy' output may be truncated copying 171 bytes from a string of length 171 [-Wstringop-truncation]
+ 1179 |         strncpy(&stats->csv_peer[0], &__ips_ports_string[0], CSVPEERLIMIT);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mv -f .deps/histogram.Tpo .deps/histogram.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT socket_io.o -MD -MP -MF .deps/socket_io.Tpo -c -o socket_io.o ../../iperf2-2.1.8/src/socket_io.c
+mv -f .deps/ReportOutputs.Tpo .deps/ReportOutputs.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT stdio.o -MD -MP -MF .deps/stdio.Tpo -c -o stdio.o ../../iperf2-2.1.8/src/stdio.c
+mv -f .deps/main.Tpo .deps/main.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT packet_ring.o -MD -MP -MF .deps/packet_ring.Tpo -c -o packet_ring.o ../../iperf2-2.1.8/src/packet_ring.c
+mv -f .deps/service.Tpo .deps/service.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT tcp_window_size.o -MD -MP -MF .deps/tcp_window_size.Tpo -c -o tcp_window_size.o ../../iperf2-2.1.8/src/tcp_window_size.c
+mv -f .deps/socket_io.Tpo .deps/socket_io.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT pdfs.o -MD -MP -MF .deps/pdfs.Tpo -c -o pdfs.o ../../iperf2-2.1.8/src/pdfs.c
+mv -f .deps/stdio.Tpo .deps/stdio.Po
+x86_64-w64-mingw32-gcc -DHAVE_CONFIG_H -I. -I../../iperf2-2.1.8/src -I..  -I../../iperf2-2.1.8/include -I../include -DCONFIG_UTILS_IPERF2_STACKSIZE=262144 -include /c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/host-compat.h -Wall  -O2 -O2 -std=gnu11  -MT dscp.o -MD -MP -MF .deps/dscp.Tpo -c -o dscp.o ../../iperf2-2.1.8/src/dscp.c
+mv -f .deps/packet_ring.Tpo .deps/packet_ring.Po
+mv -f .deps/dscp.Tpo .deps/dscp.Po
+mv -f .deps/tcp_window_size.Tpo .deps/tcp_window_size.Po
+mv -f .deps/pdfs.Tpo .deps/pdfs.Po
+x86_64-w64-mingw32-g++ -Wall  -O2 -O2  -O2 -std=gnu11  -pthread  -DHAVE_CONFIG_H  -o iperf.exe Client.o Extractor.o isochronous.o Launch.o active_hosts.o Listener.o Locale.o PerfSocket.o Reporter.o Reports.o ReportOutputs.o Server.o Settings.o SocketAddr.o gnu_getopt.o gnu_getopt_long.o histogram.o main.o service.o socket_io.o stdio.o packet_ring.o tcp_window_size.o pdfs.o dscp.o  ../compat/libcompat.a -lws2_32  -static-libstdc++ -static
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/src”
+Making all in man
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/man”
+make[2]: 对“all”无需做任何事。
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64/man”
+make[2]: 进入目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+make[2]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”
+make[1]: 离开目录“/c/Users/tttgu/Documents/Codex/s31-host-tools-2026-09-16/build-iperf2-win64”

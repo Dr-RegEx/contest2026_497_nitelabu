@@ -1,0 +1,17 @@
+#include "../xts-flat-ble-mesh-init/defconfig"
+
+# Reuse existing dedicated xTS flash partition; no automatic format/mount.
+CONFIG_ESP32S31_XTS_FLASH=y
+CONFIG_FS_LITTLEFS=y
+CONFIG_FILE_SYSTEM=y
+CONFIG_SETTINGS=y
+CONFIG_SETTINGS_FILE=y
+CONFIG_SETTINGS_FILE_PATH="/data/mesh/settings"
+# Each write compacts to a synced temporary file then atomically renames it.
+CONFIG_SETTINGS_FILE_MAX_LINES=1
+CONFIG_BT_SETTINGS=y
+CONFIG_BT_MESH_SETTINGS_WORKQ_STACK_SIZE=4096
+# GATT uses its existing disconnect save path; Mesh has its own work queue.
+CONFIG_BT_SETTINGS_CCC_STORE_ON_WRITE=n
+CONFIG_BT_SETTINGS_CF_STORE_ON_WRITE=n
+CONFIG_BT_SETTINGS_DELAYED_STORE=n

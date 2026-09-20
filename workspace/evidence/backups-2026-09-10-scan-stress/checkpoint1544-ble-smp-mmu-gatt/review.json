@@ -1,0 +1,18 @@
+{
+  "result": "PASS_GATT_DEVELOPMENT_INTEGRATION",
+  "architecture": "BUILD_KERNEL, SMP_NCPUS=2, default affinity0x3, ARCH_ADDRENV, TLS_ALIGNED; host log includes CPU1, controller pinned CPU0",
+  "reads": [
+    "FF05=Hello VELA!",
+    "FF02=Hello VELA!"
+  ],
+  "write": "S31-GATT-1510 exact13bytes received on board",
+  "cleanup": "service stop/unregister, adapterOFF, tool exit; only persistent ble_ctrl kernel dispatcher remains, affinity0x1; no controller/host test tasks remain",
+  "memory_after": "Kmem free271744; Page free16105472",
+  "not_proven": [
+    "Wi-Fi coexistence",
+    "full original Bluetooth peer/interval/performance suite",
+    "SIMD"
+  ],
+  "historical_failures": "1540 preallocated pthread stack alignment assertion; retained.1541 was built/flashed but not tested after minimum-stack preflight found1400<4096; superseded by1543.",
+  "counts": "70/88 unchanged"
+}

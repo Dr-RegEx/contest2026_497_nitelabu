@@ -1,0 +1,9 @@
+test: /tmp/esp-wifi-connect-bhk4irzf/test.c:94: main: Assertion `!locked' failed.
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_connect.py", line 79, in <module>
+    main()
+  File "/home/regex/work/esp32s31-openvela/openvela-dev/nuttx/tools/test_esp_wifi_connect.py", line 75, in main
+    subprocess.run([str(path / 'test')], check=True)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/esp-wifi-connect-bhk4irzf/test']' died with <Signals.SIGABRT: 6>.

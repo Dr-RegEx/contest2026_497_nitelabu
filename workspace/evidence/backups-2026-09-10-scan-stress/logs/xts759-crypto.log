@@ -1,0 +1,218 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x14438
+entry 0x2f010512
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x14438  (83000)
+padd: lma 0x000164a8 vma 0x00000000 len 0x9b70   (39792)
+imap: lma 0x00020020 vma 0x400e0020 len 0x220f0  (139504)
+padd: lma 0x00042118 vma 0x00000000 len 0xdfe0   (57312)
+imap: lma 0x00050100 vma 0x40000100 len 0xd52a4  (873124)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU1] AppFS header: 2d726f6d3166732d
+[CPU1] AppFS MTD boundary checks: PASS
+[CPU1] AppFS writable LittleFS: offset=0x500000 size=0x700000
+[CPU1] Initializing Wi-Fi station
+[CPU0] E1 Wi-Fi station netdev ready
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=122 vector=1 priority=1
+[CPU0] set_intr_wrapper: S31 IRQ route: cpu=0 source=120 vector=1 priority=1
+[CPU0] enable_intr_wrapper: S31 IRQ enable: mask=00000002 vector=1 irq=137
+[CPU0] esp_wifi_sta_start: S31 frame statistics enable: rx=0 tx=0
+
+NuttShell (NSH)
+nsh> [K
+XTS_CRYPTO_BOOT=PASS seconds=0.661
+--- CMD: ifdown wlan0 ---
+ifdown wlan0
+[CPU0] s31_wifi_rx_counters: S31 modem clocks stop: conf1=0038e7ff bb=1 bb80x1=1 bb44=1 mac=1 apb=1 fe160=1 sec=0
+[CPU0] s31_wifi_rx_counters: S31 RX counters stop: ret=0 mpdu=43 data=0 fcs=6 abort=12 full=0 fifo=0 other=8
+[CPU0] s31_wifi_rx_counters: S31 HE counters: power=0 sigb=0 format=0 unsupported=0 siga=0 bboff=0 wdg=0
+[CPU0] s31_wifi_rx_counters: S31 radio hangs: rx=0 tx=0 flags=00000000 panic=00000000 bf_timeout=0 bf_error=0
+[CPU0] s31_wifi_rx_counters: S31 RX errors: ret=0 total=0 bitmap=0 tkip=0
+[CPU0] s31_wifi_rx_counters: S31 RX types: ret=0 legacy=0 ht=0 su=0 ersu=0 mu=0 su_noeb=0 mu_noeb=0 stbc=0 retry=0
+[CPU0] s31_wifi_rx_counters: S31 TX stats: ret=0 enable=0 complete=0 succ=0 ack=0 ba=0 retry=0 nomem=0 timeout=0
+[CPU0] disable_intr_wrapper: S31 IRQ disable: mask=00000002 vector=1 irq=137
+ifdown wlan0...OK
+nsh> [K
+nsh> [K
+--- CMD: ls /dev/crypto ---
+ls /dev/crypto
+ /dev/crypto
+nsh> [K
+nsh> [K
+XTS_COMMAND=cmocka_des3cbc
+cmocka_des3cbc
+[CPU1] [==========] descbc_tests: Running 1 test(s).
+[CPU1] [ RUN      ] test_3descbc
+[CPU1] [       OK ] test_3descbc
+[CPU1] [==========] descbc_tests: 1 test(s) run.
+[CPU1] [  PASSED  ] 1 test(s).
+ok, encrypt with /dev/crypto, decrypt with /dev/crypto
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_des3cbc PASS seconds=0.101 backend=software
+XTS_COMMAND=cmocka_aescbc
+cmocka_aescbc
+[CPU1] [==========] aescbc_tests: Running 1 test(s).
+[CPU1] [ RUN      ] test_aescbc
+[CPU1] [       OK ] test_aescbc
+[CPU1] [==========] aescbc_tests: 1 test(s) run.
+[CPU1] [  PASSED  ] 1 test(s).
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_aescbc PASS seconds=0.101 backend=software
+XTS_COMMAND=cmocka_aesctr
+cmocka_aesctr
+[CPU1] [==========] aesctr_tests: Running 1 test(s).
+[CPU1] [ RUN      ] test_aesctr
+OK test vector 0
+OK test vector 0 stream mode
+OK test vector 1
+OK test vector 1 stream mode
+OK test vector 2
+OK test vector 2 stream mode
+OK test vector 3
+OK test vector 3 stream mode
+OK test vector 4
+OK test vector 4 stream mode[CPU0] [       OK ] test_aesctr
+[CPU0] [==========] aesctr_tests: 1 test(s) run.
+[CPU0] [  PASSED  ] 1 test(s).
+
+OK test vector 5
+OK test vector 5 stream mode
+OK test vector 6
+OK test vector 6 stream mode
+OK test vector 7
+OK test vector 7 stream mode
+OK test vector 8
+OK test vector 8 stream mode
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_aesctr PASS seconds=0.201 backend=software
+XTS_COMMAND=cmocka_aesxts
+cmocka_aesxts
+[CPU1] [==========] aesxts_tests: Running 1 test(s).
+[CPU1] [ RUN      ] test_aesxts
+OK encrypt test vector 0
+OK encrypt test vector 0 in stream mode
+OK decrypt test vector 0
+OK decrypt test vector 0 in stream mode
+OK encrypt test vector 1
+OK encrypt test vector 1 in stream mode
+OK decrypt test vector 1
+OK decrypt test vector 1 in stream mode
+OK encrypt test vector 2
+OK encrypt test vector 2 in stream mode
+OK decrypt test vector 2
+OK decrypt test vector 2 in stream mode
+OK encrypt test vector 3
+OK encrypt test vector 3 in stream mode
+OK decrypt test vector 3
+OK decrypt test vector 3 in stream mode
+OK encrypt test vector 4
+OK encrypt test vector 4 in stream mode
+OK decrypt test vector 4
+OK decrypt test vector 4 in stream mode
+OK encrypt test vector 5
+OK encrypt test vector 5 in stream mode
+OK decrypt test vector 5
+OK decrypt test vector 5 in stream mode
+OK encrypt test vector 6
+OK encrypt test vector 6 in stream mode
+OK decrypt test vector 6
+OK decrypt test vector 6 in stream mode
+OK encrypt test vector 7
+OK encrypt test vector 7 in stream mode
+OK decrypt test vector 7
+OK decrypt test vector 7 in stream mode
+OK encrypt test vector 8
+OK encrypt test vector 8 in stream mode
+OK decrypt test vector 8
+OK decrypt test vector 8 in stream mode
+OK encrypt test vector 9
+OK encrypt test vector 9 in stream mode
+OK decrypt test vector 9
+OK decrypt test vector 9 in stream mode
+OK encrypt test vector 10
+OK encrypt test vector 10 in stream mode
+OK decrypt test vector 10
+OK decrypt test vector 10 in stream mode
+OK encrypt test vector 11
+OK encrypt test vector 11 in stream mode
+OK decrypt test vector 11
+OK decrypt test vector 11 in stream mode
+OK encrypt test vector 12
+OK encrypt test vector 12 in stre[CPU0] [       OK ] test_aesxts
+[CPU0] [==========] aesxts_tests: 1 test(s) run.
+[CPU0] [  PASSED  ] 1 test(s).
+am mode
+OK decrypt test vector 12
+OK decrypt test vector 12 in stream mode
+OK encrypt test vector 13
+OK encrypt test vector 13 in stream mode
+OK decrypt test vector 13
+OK decrypt test vector 13 in stream mode
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_aesxts PASS seconds=0.302 backend=software
+XTS_COMMAND=cmocka_hmac
+cmocka_hmac
+[CPU1] [==========] hmac_tests: Running 3 test(s).
+[CPU1] [ RUN      ] test_hmac_md5
+[CPU1] [       OK ] test_hmac_md5
+[CPU1] [ RUN      ] test_hmac_sha1
+[CPU1] [       OK ] test_hmac_sha1
+[CPU1] [ RUN      ] test_hmac_sha256
+[CPU1] [       OK ] test_hmac_sha256
+[CPU1] [==========] hmac_tests: 3 test(s) run.
+[CPU1] [  PASSED  ] 3 test(s).
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_hmac PASS seconds=0.100 backend=software
+XTS_COMMAND=cmocka_hash
+cmocka_hash
+[CPU1] [==========] hash_tests: Running 4 test(s).
+[CPU1] [ RUN      ] test_hash_md5
+[CPU1] [       OK ] test_hash_md5
+[CPU1] [ RUN      ] test_hash_sha1
+[CPU1] [       OK ] test_hash_sha1
+[CPU1] [ RUN      ] test_hash_sha256
+[CPU1] [       OK ] test_hash_sha256
+[CPU1] [ RUN      ] test_hash_sha512
+[CPU1] [       OK ] test_hash_sha512
+[CPU1] [==========] hash_tests: 4 test(s) run.
+[CPU1] [  PASSED  ] 4 test(s).
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_hash PASS seconds=1.634 backend=software
+XTS_COMMAND=cmocka_crc32
+cmocka_crc32
+[CPU1] [==========] crc32_tests: Running 4 test(s).
+[CPU1] [ RUN      ] test_crc32_case1
+[CPU1] [       OK ] test_crc32_case1
+[CPU1] [ RUN      ] test_crc32_case2
+[CPU1] [       OK ] test_crc32_case2
+[CPU1] [ RUN      ] test_crc32_case3
+[CPU1] [       OK ] test_crc32_case3
+[CPU1] [ RUN      ] test_crc32_case4
+[CPU1] [       OK ] test_crc32_case4
+[CPU1] [==========] crc32_tests: 4 test(s) run.
+[CPU1] [  PASSED  ] 4 test(s).
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_crc32 PASS seconds=0.201 backend=software
+XTS_COMMAND=cmocka_ecdsa
+cmocka_ecdsa
+p256 generate key sync success
+p256 sign sync success
+p256 verify sync success
+Test SECP256R1 case success
+
+nsh> [K
+nsh> [KXTS_CRYPTO=cmocka_ecdsa PASS seconds=0.203 backend=software
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     304316      77980     226336     107984     205160    239     11 Kmem
+   16777216     696320   16080896   16080896 Page
+nsh> [K
+nsh> [K
+XTS_CRYPTO_FAILED=[]

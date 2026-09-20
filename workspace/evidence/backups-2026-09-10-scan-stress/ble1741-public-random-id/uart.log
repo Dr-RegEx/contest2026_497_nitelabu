@@ -1,0 +1,276 @@
+ESP-ROM:esp32s31-20251218
+Build:Dec 18 2025
+rst:0x1 (POWERON),boot:0x7f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x2e000000,len:0x18
+load:0x2f000000,len:0x16d58
+entry 0x2f0145f8
+*** Booting NuttX ***
+rtc: lma 0x00002020 vma 0x2e000000 len 0x18     (24)
+dram: lma 0x00002040 vma 0x2f000000 len 0x16d58  (93528)
+padd: lma 0x00018dc8 vma 0x00000000 len 0x7250   (29264)
+imap: lma 0x00020020 vma 0x400c0020 len 0xb108   (45320)
+padd: lma 0x0002b130 vma 0x00000000 len 0x4fc8   (20424)
+imap: lma 0x00030100 vma 0x40000100 len 0xbef24  (782116)
+total segments stored 6
+ABC[CPU0] CPU1 SMP online: ipi0=0 timer1=0
+[CPU0] AppFS header: 2d726f6d3166732d
+[CPU0] AppFS MTD boundary checks: PASS
+[CPU0] AppFS writable LittleFS: offset=0x500000 size=0x700000
+
+NuttShell (NSH)
+nsh> [K
+HOST_COMMAND ls /dev/ttyHCI0
+ls /dev/ttyHCI0
+ /dev/ttyHCI0
+nsh> [K
+nsh> [K
+HOST_COMMAND mkdir /data
+mkdir /data
+nsh> [K
+nsh> [K
+HOST_COMMAND mount -t tmpfs /data
+mount -t tmpfs /data
+nsh> [K
+nsh> [K
+HOST_COMMAND mkdir /data/misc
+mkdir /data/misc
+nsh> [K
+nsh> [K
+HOST_COMMAND mkdir /data/misc/bt
+mkdir /data/misc/bt
+nsh> [K
+nsh> [K
+BTTOOL bttool
+bttool
+[CPU0] /data/misc/bt folder create: 0
+[CPU1] [async_queue:91]uv_async_queue_init
+bttool> 
+bttool> 
+BTTOOL enable
+enable
+bttool> 
+[CPU0] S31 BLE: controller open
+[CPU0] S31 BLE: public MAC 30:ed:a0:f3:f7:b1
+[CPU0] S31 BLE: controller ready, VHCI registered
+[CPU0] dev:0: Sending HCI_RESET
+[CPU0] S31 BLE host: allocating opcode=0c03
+[CPU0] S31 BLE host: opcode=0c03 buffer=0x6140749c
+[CPU0] S31 BLE host: opcode=0c03 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=0c03 len=3
+[CPU0] S31 BLE: TX opcode=0c03 result=3
+[CPU0] S31 BLE: complete opcode=0c03 status=0 len=7
+[CPU1] S31 BLE host: opcode=0c03 wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=0c03 returned
+[CPU1] S31 BLE host: reset state complete
+[CPU1] S31 BLE host: allocating opcode=1003
+[CPU1] S31 BLE host: opcode=1003 buffer=0x6140749c
+[CPU1] S31 BLE host: opcode=1003 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=1003 len=3
+[CPU0] S31 BLE: TX opcode=1003 result=3
+[CPU0] S31 BLE: complete opcode=1003 status=0 len=15
+[CPU0] S31 BLE host: opcode=1003 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=1003 returned
+[CPU0] S31 BLE host: allocating opcode=1001
+[CPU0] S31 BLE host: opcode=1001 buffer=0x6140749c
+[CPU0] S31 BLE host: opcode=1001 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=1001 len=3
+[CPU0] S31 BLE: TX opcode=1001 result=3
+[CPU0] S31 BLE: complete opcode=1001 status=0 len=15
+[CPU1] S31 BLE host: opcode=1001 wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=1001 returned
+[CPU1] S31 BLE host: allocating opcode=1002
+[CPU1] S31 BLE host: opcode=1002 buffer=0x6140749c
+[CPU1] S31 BLE host: opcode=1002 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=1002 len=3
+[CPU0] S31 BLE: TX opcode=1002 result=3
+[CPU0] S31 BLE: complete opcode=1002 status=0 len=71
+[CPU0] S31 BLE host: opcode=1002 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=1002 returned
+[CPU0] S31 BLE host: initializing PSA PRNG
+[CPU0] S31 BLE host: PSA PRNG result=0
+[CPU0] S31 BLE host: buffers ACL=1021/12 SCO=255/0
+[CPU0] S31 BLE host: opcode=0c33 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=0c33 len=10
+[CPU0] S31 BLE: TX opcode=0c33 result=10
+[CPU0] S31 BLE: complete opcode=0c33 status=0 len=7
+[CPU1] S31 BLE host: opcode=0c33 wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=0c33 returned
+[CPU1] S31 BLE host: opcode=0c31 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=0c31 len=4
+[CPU0] S31 BLE: TX opcode=0c31 result=4
+[CPU0] S31 BLE: complete opcode=0c31 status=0 len=7
+[CPU0] S31 BLE host: opcode=0c31 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=0c31 returned
+[CPU0] S31 BLE host: allocating opcode=2003
+[CPU0] S31 BLE host: opcode=2003 buffer=0x6140749c
+[CPU0] S31 BLE host: opcode=2003 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=2003 len=3
+[CPU0] S31 BLE: TX opcode=2003 result=3
+[CPU0] S31 BLE: complete opcode=2003 status=0 len=15
+[CPU1] S31 BLE host: opcode=2003 wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=2003 returned
+[CPU1] S31 BLE host: allocating opcode=2002
+[CPU1] S31 BLE host: opcode=2002 buffer=0x6140749c
+[CPU1] S31 BLE host: opcode=2002 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=2002 len=3
+[CPU0] S31 BLE: TX opcode=2002 result=3
+[CPU0] S31 BLE: complete opcode=2002 status=0 len=10
+[CPU0] S31 BLE host: opcode=2002 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=2002 returned
+[CPU0] S31 BLE host: allocating opcode=203a
+[CPU0] S31 BLE host: opcode=203a buffer=0x6140749c
+[CPU0] S31 BLE host: opcode=203a queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=203a len=3
+[CPU0] S31 BLE: TX opcode=203a result=3
+[CPU0] S31 BLE: complete opcode=203a status=0 len=9
+[CPU1] S31 BLE host: opcode=203a wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=203a returned
+[CPU1] S31 BLE host: allocating opcode=201c
+[CPU1] S31 BLE host: opcode=201c buffer=0x6140749c
+[CPU1] S31 BLE host: opcode=201c queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=201c len=3
+[CPU0] S31 BLE: TX opcode=201c result=3
+[CPU0] S31 BLE: complete opcode=201c status=0 len=15
+[CPU0] S31 BLE host: opcode=201c wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=201c returned
+[CPU0] S31 BLE host: allocating opcode=202f
+[CPU0] S31 BLE host: opcode=202f buffer=0x6140749c
+[CPU0] S31 BLE host: opcode=202f queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=202f len=3
+[CPU0] S31 BLE: TX opcode=202f result=3
+[CPU0] S31 BLE: complete opcode=202f status=0 len=15
+[CPU1] S31 BLE host: opcode=202f wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=202f returned
+[CPU1] S31 BLE host: opcode=2024 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=2024 len=7
+[CPU0] S31 BLE: TX opcode=2024 result=7
+[CPU0] S31 BLE: complete opcode=2024 status=0 len=7
+[CPU0] S31 BLE host: opcode=2024 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=2024 returned
+[CPU0] S31 BLE host: opcode=202e queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=202e len=5
+[CPU0] S31 BLE: TX opcode=202e result=5
+[CPU0] S31 BLE: complete opcode=202e status=0 len=7
+[CPU0] S31 BLE host: opcode=202e wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=202e returned
+[CPU0] S31 BLE host: allocating opcode=202a
+[CPU0] S31 BLE host: opcode=202a buffer=0x6140749c
+[CPU0] S31 BLE host: opcode=202a queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=202a len=3
+[CPU0] S31 BLE: TX opcode=202a result=3
+[CPU0] S31 BLE: complete opcode=202a status=0 len=8
+[CPU1] S31 BLE host: opcode=202a wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=202a returned
+[CPU1] S31 BLE host: opcode=2001 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=2001 len=11
+[CPU0] S31 BLE: TX opcode=2001 result=11
+[CPU0] S31 BLE: complete opcode=2001 status=0 len=7
+[CPU0] S31 BLE host: opcode=2001 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=2001 returned
+[CPU0] S31 BLE host: opcode=0c01 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=0c01 len=11
+[CPU0] S31 BLE: TX opcode=0c01 result=11
+[CPU0] S31 BLE: complete opcode=0c01 status=0 len=7
+[CPU1] S31 BLE host: opcode=0c01 wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=0c01 returned
+[CPU1] S31 BLE host: allocating opcode=1009
+[CPU1] S31 BLE host: opcode=1009 buffer=0x6140749c
+[CPU1] S31 BLE host: opcode=1009 queued current=0x61408718 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=1009 len=3
+[CPU0] S31 BLE: TX opcode=1009 result=3
+[CPU0] S31 BLE: complete opcode=1009 status=0 len=13
+[CPU0] S31 BLE host: opcode=1009 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=1009 returned
+[CPU0] S31 BLE host: initialization result=0
+bttool> [bttool] Context:0x61801cc8, Adapter state changed: 1
+[bttool] Context:0x61801cc8, Adapter state changed: 2
+
+BTTOOL adv start -n yuy5 -m legacy
+adv start -n yuy5 -m legacy
+[CPU1] AdvType:(Flags)
+[CPU1] AdvData: (0x618112ca):
+[CPU1] 0000  0a                                               .               
+[CPU1] AdvType:(Complete List of 16­bit Service Class UUIDs)
+[CPU1] AdvData: (0x618112cd):
+[CPU1] 0000  01 11                                            ..              
+[CPU1] AdvType:(Complete List of 16­bit Service Class UUIDs)
+[CPU1] AdvData: (0x618112d1):
+[CPU1] 0000  1e 11                                            ..              
+[CPU1] AdvType:(Complete Local Name)
+[CPU1] AdvData: (0x61811322):
+[CPU1] 0000  79 75 79 35                                      yuy5            
+[CPU0] S31 BLE host: opcode=2036 queued current=0 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=2036 len=28
+[CPU0] S31 BLE: TX opcode=2036 result=28
+[CPU0] S31 BLE: complete opcode=2036 status=0 len=8
+[CPU0] S31 BLE host: opcode=2036 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=2036 returned
+[CPU1] [SC3PU1 BLE host: opc0o]d e=S31 BLE: TX o2p0c3ode=2037 len=18
+[CPU0] S31 BLE: TX opcode=2037 result=18
+[CPU0] S31 BLE:7 complete opcode=2037 status=0 len=7
+ queued current=0 syswq=0x61408718
+[CPU0] S31 BLE host: opcode=2037 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=2037 returned
+[CPU1] S31 BLE h[oCsPtU:0] S31 BLE: opco TXd eo=pcode=2038 len=13
+[CPU0] S31 BLE: TX opcode=2038 result=13
+[CPU0] S31 BLE: 2complete opcode=2038 status=0 len=7
+038 queued current=0 syswq=0x61408718
+[CPU0] S31 BLE host: opcode=2038 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=2038 returned
+[CPU1] S31 BLE h[oCPUst: opc0o]d e=S31 BLE: TX opc2o0d3e=9 queued curren2t039 len=9
+[CPU0] S31 BLE: TX opcode=2039 result=9
+=0 syswq=0x61408718
+[CPU0] S31 BLE: complete opcode=2039 status=0 len=7
+[CPU1] S31 BLE host: opcode=2039 wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=2039 returned
+[bttool] adv name: yuy5 
+[bttool] adv type: legacy
+[bttool] Advertising handle:0x618050b0
+bttool> 
+bttool> [bttool] on_advertising_start_cb, handle:0x618050b0, adv_id:1, status:0
+
+BTTOOL adv start -R random_id -n yuy6 -m legacy
+adv start -R random_id -n yuy6 -m legacy
+bttool> 
+[bttool] own address type: random_id
+[CPU1] AdvType:(Flags)
+[CPU1] AdvData: (0x618056a2):
+[CPU1] 0000  0a                                               .               
+[CPU1] AdvType:(Complete List of 16­bit Service Class UUIDs)
+[CPU1] AdvData: (0x618056a5):
+[CPU1] 0000  01 11                                            ..              
+[CPU1] AdvType:(Complete List of 16­bit Service Class UUIDs)
+[CPU1] AdvData: (0x618056a9):
+[CPU1] 0000  1e 11                                            ..              
+[CPU1] AdvType:(Complete Local Name)
+[CPU1] AdvData: (0x618056fa):
+[CPU1] 0000  79 75 79 36                                      yuy6            
+[CPU1] S31 BLE host: opcode=2036 queued current=0 [sCPU0] S31 BLE: TX opcode=2036 len=28
+[CPU0] S31 BLE: TX opcode=2036 result=28
+[CPU0] S31 BLEy:s wcqo=mplete op0cxode=61408718
+2036 status=0 len=8
+[CPU1] S31 BLE host: opcode=2036 wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=2036 returned
+[CPU0] S31 BLE host: opcode=2035 queued current=0 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=2035 len=10
+[CPU0] S31 BLE: TX opcode=2035 result=10
+[CPU0] S31 BLE: complete opcode=2035 status=0 len=7
+[CPU0] S31 BLE host: opcode=2035 wait=0 status=0 ref=1
+[CPU0] S31 BLE host: opcode=2035 returned
+[CPU1] S31 BLE h[oCPUst: opcod0e]= S31 B2LE: 0T3X7 op cqoudee=u2037 len=18
+ed current=[CPU00 sy]s [SC3P1U 0B]L ES:3 1T XB LoEp:c ocdoem=p2l0e3t7e  roepscuoldte==12803
+7w qstatus=0 len=7
+=0x61408718
+[CPU1] S31 BLE host: opcode=2037 wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=2037 returned
+[CPU0] S31 BLE host: opcode=2038 queued current=0 syswq=0x61408718
+[CPU0] S31 BLE: TX opcode=2038 len=13
+[CPU0] S31 BLE: TX opcode=2038 result=13
+[CPU0] S31 BLE: complete opcode=2038 status=0 len=7
+[CPU1] S31 BLE host: opcode=2038 wait=0 status=0 ref=1
+[CPU1] S31 BLE host: opcode=2038 returned
+bttool> [bttool] adv name: yuy6 
+[bttool] adv type: legacy
+[bttool] Advertising handle:0x61805708
+[bttool] on_advertising_start_cb, handle:0x61805708, adv_id:0, status:2

@@ -1,0 +1,7 @@
+XTS_COMMAND=close 0
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/stop1219-media.py", line 14, in <module>
+    k.require(prompt in out,'cleanup prompt missing; no reset')
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-kvdb-suite.py", line 22, in require
+    raise RuntimeError(message)
+RuntimeError: cleanup prompt missing; no reset

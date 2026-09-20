@@ -1,0 +1,9 @@
+{"index": 0, "board_utc": "2023-11-14T22:13:22", "host_before": 1700000002.4199998, "host_after": 1700000002.4199998, "error_seconds_interval": [-0.4199998378753662, 0.5800001621246338], "elapsed_seconds": 0.4409999999999883, "elapsed_host_seconds": 0.4199998378753662, "monitor_rows": 0}
+LONGRUN_STARTED 2026-09-16T02:52:48.427375+00:00
+{"index": 1, "board_utc": "2023-11-15T01:14:22", "host_before": 1700021662.72, "host_after": 1700021662.72, "error_seconds_interval": [-10800.72000002861, -10799.72000002861], "elapsed_seconds": 11403.756000000007, "elapsed_host_seconds": 21660.72000002861, "monitor_rows": 180}
+Traceback (most recent call last):
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-longrun.py", line 213, in <module>
+    require(host_duration >= index * 6 * 3600 and
+  File "/home/regex/work/esp32s31-openvela/backups/2026-09-10-scan-stress/xts-longrun.py", line 52, in require
+    raise RuntimeError(message)
+RuntimeError: scheduled duration not reached on host and board

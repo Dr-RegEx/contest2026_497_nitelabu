@@ -1,0 +1,85 @@
+iperf2 -s -p 5003 -i 1 -u &
+iperf2 [26:101]
+nsh> [K------------------------------------------------------------
+Server listening on UDP port 5003
+UDP buffer size: 16.0 KByte
+------------------------------------------------------------
+[  1] local 0.0.0.0 port 5003 connected with 192.168.1.29 port 51460
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.00-1.00 sec   636 KBytes  5.21 Mbits/sec   2.029 ms 0/443 (0%)
+[  1] 0.00-1.00 sec  1 datagrams received out-of-order
+[  1] 1.00-2.00 sec   609 KBytes  4.99 Mbits/sec   2.347 ms 21/445 (4.7%)
+[  1] 1.00-2.00 sec  1 datagrams received out-of-order
+[  1] 2.00-3.00 sec   643 KBytes  5.27 Mbits/sec   1.379 ms 0/448 (0%)
+[  1] 2.00-3.00 sec  1 datagrams received out-of-order
+[  1] 3.00-4.00 sec   632 KBytes  5.17 Mbits/sec   1.355 ms 5/445 (1.1%)
+[  1] 3.00-4.00 sec  2 datagrams received out-of-order
+[  1] 4.00-5.00 sec   630 KBytes  5.16 Mbits/sec   1.246 ms 5/444 (1.1%)
+[  1] 4.00-5.00 sec  2 datagrams received out-of-order
+[  1] 5.00-6.00 sec   630 KBytes  5.16 Mbits/sec   1.502 ms 9/448 (2%)
+[  1] 6.00-7.00 sec   256 KBytes  2.09 Mbits/sec   6.236 ms 12/190 (6.3%)
+[  1] 6.00-7.00 sec  1 datagrams received out-of-order
+[  1] 7.00-8.00 sec   583 KBytes  4.77 Mbits/sec   1.160 ms 19/425 (4.5%)
+[  1] 7.00-8.00 sec  2 datagrams received out-of-order
+[  1] 8.00-9.00 sec   662 KBytes  5.42 Mbits/sec   1.821 ms 13/474 (2.7%)
+[  1] 9.00-10.00 sec   609 KBytes  4.99 Mbits/sec   1.376 ms 22/446 (4.9%)
+[  1] 9.00-10.00 sec  1 datagrams received out-of-order
+[  1] 10.00-11.00 sec   597 KBytes  4.89 Mbits/sec   1.454 ms 31/447 (6.9%)
+[  1] 11.00-12.00 sec   627 KBytes  5.14 Mbits/sec   0.983 ms 8/445 (1.8%)
+[  1] 12.00-13.00 sec   642 KBytes  5.26 Mbits/sec   1.215 ms 0/447 (0%)
+[  1] 13.00-14.00 sec   627 KBytes  5.14 Mbits/sec   0.939 ms 2/439 (0.46%)
+[  1] 14.00-15.00 sec   647 KBytes  5.30 Mbits/sec   1.084 ms 1/452 (0.22%)
+[  1] 15.00-16.00 sec   636 KBytes  5.21 Mbits/sec   2.614 ms 0/443 (0%)
+[  1] 15.00-16.00 sec  1 datagrams received out-of-order
+[  1] 16.00-17.00 sec   606 KBytes  4.96 Mbits/sec   0.858 ms 23/445 (5.2%)
+[  1] 16.00-17.00 sec  1 datagrams received out-of-order
+[  1] 17.00-18.00 sec   643 KBytes  5.27 Mbits/sec   1.834 ms 0/448 (0%)
+[  1] 17.00-18.00 sec  1 datagrams received out-of-order
+[  1] 18.00-19.00 sec   626 KBytes  5.13 Mbits/sec   0.918 ms 11/447 (2.5%)
+[  1] 19.00-20.00 sec   637 KBytes  5.22 Mbits/sec   0.910 ms 6/450 (1.3%)
+[  1] 19.00-20.00 sec  1 datagrams received out-of-order
+[  1] 20.00-21.00 sec   632 KBytes  5.17 Mbits/sec   1.275 ms 2/442 (0.45%)
+[  1] 20.00-21.00 sec  1 datagrams received out-of-order
+[  1] 21.00-22.00 sec   624 KBytes  5.12 Mbits/sec   1.071 ms 0/435 (0%)
+[  1] 22.00-23.00 sec   647 KBytes  5.30 Mbits/sec   2.316 ms 10/461 (2.2%)
+[  1] 22.00-23.00 sec  2 datagrams received out-of-order
+[  1] 23.00-24.00 sec   635 KBytes  5.20 Mbits/sec   1.680 ms 1/443 (0.23%)
+[  1] 24.00-25.00 sec   604 KBytes  4.95 Mbits/sec   1.044 ms 24/445 (5.4%)
+[  1] 25.00-26.00 sec   636 KBytes  5.21 Mbits/sec   1.202 ms 1/444 (0.23%)
+[  1] 26.00-27.00 sec   626 KBytes  5.13 Mbits/sec   1.870 ms 10/446 (2.2%)
+[  1] 26.00-27.00 sec  5 datagrams received out-of-order
+[  1] 27.00-28.00 sec   639 KBytes  5.23 Mbits/sec   1.592 ms 0/445 (0%)
+[  1] 27.00-28.00 sec  1 datagrams received out-of-order
+[  1] 28.00-29.00 sec   639 KBytes  5.23 Mbits/sec   2.316 ms 1/446 (0.22%)
+[  1] 28.00-29.00 sec  4 datagrams received out-of-order
+[  1] 29.00-30.00 sec   438 KBytes  3.59 Mbits/sec   4.780 ms 2/307 (0.65%)
+[  1] 30.00-30.37 sec  68.9 KBytes  1.53 Mbits/sec   5.295 ms 3/51 (5.9%)
+[  1] 0.00-30.37 sec  17.9 MBytes  4.95 Mbits/sec   5.295 ms 242/13036 (1.9%)
+[  1] 0.00-30.37 sec  28 datagrams received out-of-order
+[  3] WARNING: ack of last datagram failed.
+kill -15 26
+nsh> [Krecvfrom failed: Interrupted system call
+ifconfig
+wlan0	Link encap:Ethernet HWaddr 30:ed:a0:f3:f7:b0 at RUNNING mtu 1500
+	inet addr:192.168.1.60 DRaddr:192.168.1.1 Mask:255.255.255.0
+
+	RX: Received Fragment Errors   Bytes   
+	    00005d7f 00000000 00000000 225dbd8         
+	    IPv4     ARP      Dropped 
+	    00000000 00000000 0000000b
+	TX: Queued   Sent     Errors   Timeouts Bytes   
+	    000018c7 000018c9 00000000 00000000 5410f            
+	Total Errors: 00000000
+
+             IPv4   TCP   UDP  ICMP
+Received     5d22  2a1f  32fa  0008
+Dropped      0001  0000  01ce  0000
+  IPv4        VHL: 0000   Frg: 0000
+  Checksum   0000  0000  0000  0000
+  TCP         ACK: 0000   SYN: 0000
+              RST: 0000  0000
+              HDR: 0000
+  Type       0000  ----  ----  0000
+Sent         18bf  18ab  000b  0009
+  Rexmit     ----  0001  ----  ----
+nsh> [K

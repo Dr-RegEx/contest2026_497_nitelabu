@@ -1,0 +1,38 @@
+[1/4] cd /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build && /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build/partition_table/partition-table.bin /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build/esp32c6_spi_slave.bin
+esp32c6_spi_slave.bin binary size 0x25df0 bytes. Smallest app partition is 0x100000 bytes. 0xda210 bytes (85%) free.
+[2/4] Performing build step for 'bootloader'
+[1/1] cd /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build/bootloader && /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build/bootloader/bootloader.bin
+Bootloader binary size 0x5640 bytes. 0x29c0 bytes (33%) free.
+Adding "flash"'s dependency "all" to list of commands with default set of options.
+Executing action: all (aliases: build)
+Running ninja in directory /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build
+Executing "ninja all"...
+Executing action: flash
+Running ninja in directory /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build
+Executing "ninja flash"...
+[1/5] cd /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build && /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build/partition_table/partition-table.bin /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build/esp32c6_spi_slave.bin
+esp32c6_spi_slave.bin binary size 0x25df0 bytes. Smallest app partition is 0x100000 bytes. 0xda210 bytes (85%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] cd /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build/bootloader && /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build/bootloader/bootloader.bin
+Bootloader binary size 0x5640 bytes. 0x29c0 bytes (33%) free.
+[2/3] Running utility command for flash
+esptool --chip esp32c6 -p /dev/ttyACM0 -b 460800 --before=default-reset --after=hard-reset write-flash --flash-mode dio --flash-freq 80m --flash-size 2MB 0x0 bootloader/bootloader.bin 0x8000 partition_table/partition-table.bin 0x10000 esp32c6_spi_slave.bin --skip-flashed
+esptool v5.4.0
+Serial port /dev/ttyACM0:
+
+ERROR: A fatal error occurred: Could not open /dev/ttyACM0, the port is busy or doesn't exist.
+([Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0')
+
+Hint: Check if the port is correct and ESP connected
+
+CMake Error at /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esptool_py/run_serial_tool.cmake:142 (message):
+  
+  /home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python;-m;esptool;--chip;esp32c6
+  failed.
+
+
+
+FAILED: CMakeFiles/flash.util 
+cd /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave && /usr/bin/cmake -D IDF_PATH=/home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean -D "SERIAL_TOOL=/home/regex/.espressif/python_env/idf6.1_py3.10_env/bin/python;-m;esptool;--chip;esp32c6" -D "SERIAL_TOOL_ARGS=--before=default-reset;--after=hard-reset;write-flash;@flash_args" -D SERIAL_TOOL_IS_WRITE_FLASH=1 -D SERIAL_TOOL_FLASH_ARGS_FILE=flash_args -D WORKING_DIRECTORY=/home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build -P /home/regex/work/esp32s31-openvela/s31-reference/tmp/esp-idf-clean/components/esptool_py/run_serial_tool.cmake
+ninja: build stopped: subcommand failed.
+ninja failed with exit code 1, output of the command is in the /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build/log/idf_py_stderr_output_108460 and /home/regex/work/esp32s31-openvela/tools/esp32c6-spi-slave/build/log/idf_py_stdout_output_108460

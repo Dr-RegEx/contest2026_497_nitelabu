@@ -1,0 +1,34 @@
+--- CMD: ls -l /system/bin/ping ---
+ls -l /system/bin/ping
+ -r--r--r--       50264 /system/bin/ping
+nsh> [K
+nsh> [K
+--- CMD: echo $PATH ---
+echo $PATH
+/apps:/system/bin
+nsh> [K
+nsh> [K
+--- CMD: free ---
+free
+      total       used       free    maxused    maxfree  nused  nfree name
+     310892     236692      74200     269632      12024    260     18 Kmem
+   16777216    1286144   15491072   15491072 Page
+nsh> [K
+nsh> [K
+--- CMD: ps ---
+ps
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK            STACK COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 0003024 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 0003024 CPU1 IDLE
+    2     0 ---(0x00000003) 100 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001952 lpwork 0x2f011100 0x2f01114c
+    4     0 ---(0x00000003) 223 RR       Kthread   - Waiting  Semaphore 0000000000000000 0001968 hr_timer
+    5     0 ---(0x00000001) 253 RR       Kthread   - Waiting  MQ empty  0000000000000000 0003520 wifi
+    6     6 000(0x00000003) 101 RR       Task      - Running            0000000000000000 0004016 /system/bin/init
+   12    12 ---(0x00000003) 100 RR       Task      - Waiting  Semaphore 0000000000000000 0008112 ftpd_start -4
+nsh> [K
+nsh> [K
+--- CMD: /system/bin/ping www.baidu.com ---
+/system/bin/ping www.baidu.com
+nsh: /system/bin/ping: command not found
+nsh> [K
+nsh> [K

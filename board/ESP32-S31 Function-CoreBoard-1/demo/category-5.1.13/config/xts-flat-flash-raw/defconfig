@@ -1,0 +1,7 @@
+#include "../xts-flat-flash/defconfig"
+
+# Original raw-device throughput case, without a mounted scratch filesystem.
+CONFIG_ESP32S31_XTS_FLASH_RAW=y
+CONFIG_NSH_CMDOPT_DD_STATS=y
+CONFIG_DEV_NULL=y
+CONFIG_DEV_ZERO=y

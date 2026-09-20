@@ -1,0 +1,5 @@
+#include "../demo-rmt-xts-drivers/defconfig"
+
+# Published NIST-STS RNG test, with the original default stack and cases.
+CONFIG_TESTING_NIST_STS=y
+CONFIG_LIBC_STREAM_MAX=64
