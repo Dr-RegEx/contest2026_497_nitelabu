@@ -1,15 +1,19 @@
-# ESP32-S31 Function-CoreBoard-1 openvela 适配
+# ESP32-S31 openvela 开发板适配
 
 ## 一、作品简介
 
-为 ESP32-S31 Function-CoreBoard-1 移植 openvela，包含 SMP/MMU、外部应用加载、Wi-Fi、存储、音频、BLE 及外设适配与测试配置。选题方向为**新硬件适配**。
+为 ESP32-S31 开发平台适配 openvela，包含 SMP/MMU、外部应用加载、Wi-Fi、存储、音频、BLE 及外设适配与测试配置。
 
-本仓为队伍 497（nitelabu）的新硬件适配作品。此次提交从官方初始模板重新建立，旧复刻仓的 Git 提交历史不纳入本次提交。源码快照日期：2026-09-20（新增 GPIO/Korvo RGB565/OV3660 实测例程）。
+选题方向：**新硬件适配**
+
+开发板：ESP32-S31 Function-CoreBoard-1、ESP32-S31 Korvo-1
+
+本仓为队伍 497（nitelabu）的新硬件适配作品。此次提交从官方初始模板重新建立，旧复刻仓的 Git 提交历史不纳入本次提交。源码快照日期：2026-09-20 实测例程。
 
 ## 二、目录结构
 
-- `board/ESP32-S31 Function-CoreBoard-1/`：真实板级源码、Kconfig 和各测试配置，替换空模板。
-- [已通过测试例程](board/ESP32-S31%20Function-CoreBoard-1/demo/README.md)：87 个例程（85 个已通过范围、2 个实测诊断），含逐项 README、源码、配置与原始证据。
+- `board/ESP32-S31 Function-CoreBoard-1 + ESP32-S31 Korvo-1/`：真实板级源码、Kconfig 和各测试配置，替换空模板。
+- [已通过测试例程](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/demo/README.md)：87 个例程（85 个已通过范围、2 个实测诊断），含逐项 README、源码、配置与原始证据。
 - `workspace/manifest-locked.xml`：232 个 openvela 公共源码项目的固定版本。
 - `workspace/patches/`、`workspace/openvela-untracked/`：公共基线之上的全部适配提交、工作区修改和新增源码。
 - `workspace/dependencies/`：HAL 修改、工具链下载地址与 SHA256、Python 依赖版本。
@@ -74,7 +78,7 @@ GIT_LFS_SKIP_SMUDGE=1 repo sync -c -j8
 
 ## 五、验收状态与审核边界
 
-以 [核验集](board/ESP32-S31%20Function-CoreBoard-1/demo/README.md) 为逐项入口。历史项目按原记录保留通过、用户确认、开发验证和待实物验收的区别。编译成功不等于 xTS 实板通过；Camera 已有 Korvo/OV3660 独立实物采集上屏记录；其它 Camera 模式及 USB、SDMMC、BLE 等能力的具体状态以对应记录为准。
+以 [核验集](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/demo/README.md) 为逐项入口。历史项目按原记录保留通过、用户确认、开发验证和待实物验收的区别。编译成功不等于 xTS 实板通过；Camera 已有 Korvo/OV3660 独立实物采集上屏记录；其它 Camera 模式及 USB、SDMMC、BLE 等能力的具体状态以对应记录为准。
 
 历史脚本和日志保留当时的绝对路径、配置与上下文，归档在 `workspace/evidence/`；它们不是新的构建入口。公开副本中移除了测试凭据，修改文件列表见 `workspace/evidence/REDACTIONS.json`；原始本地证据未改写。
 
