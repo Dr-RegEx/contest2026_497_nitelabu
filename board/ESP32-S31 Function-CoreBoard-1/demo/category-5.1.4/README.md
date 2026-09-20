@@ -121,7 +121,7 @@ vela_fs_stress_maximum_file_name_test /data/s04r
 - [checkpoint1028-fs-name-target/logs/xts1028-fs-5.1.4.log](evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1028-fs-name-target/logs/xts1028-fs-5.1.4.log)
 - [xts-category-status.md](evidence/docs/acceptance/xts-category-status.md)
 
-[当前验收清单](evidence/docs/acceptance/比赛必须适配清单.md) 是归类依据；旧失败、人工确认及观测缺口均保留。历史脚本可能带旧绝对路径，供审核，不作为一键运行入口。
+核验集（历史清单已移除） 是归类依据；旧失败、人工确认及观测缺口均保留。历史脚本可能带旧绝对路径，供审核，不作为一键运行入口。
 
 ## 原始用例全文（历史标准）
 

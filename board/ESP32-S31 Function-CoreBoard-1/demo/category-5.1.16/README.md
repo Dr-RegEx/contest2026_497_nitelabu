@@ -125,7 +125,7 @@ vela_fs_file_fragmentation_test -d /data/frag1164 -n 100 -s 1 &
 - [checkpoint1164-fragment-observation/xts1165-fragment-stop.log](evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1164-fragment-observation/xts1165-fragment-stop.log)
 - [xts-category-status.md](evidence/docs/acceptance/xts-category-status.md)
 
-[当前验收清单](evidence/docs/acceptance/比赛必须适配清单.md) 是归类依据；旧失败、人工确认及观测缺口均保留。历史脚本可能带旧绝对路径，供审核，不作为一键运行入口。
+核验集（历史清单已移除） 是归类依据；旧失败、人工确认及观测缺口均保留。历史脚本可能带旧绝对路径，供审核，不作为一键运行入口。
 
 ## 原始用例全文（历史标准）
 

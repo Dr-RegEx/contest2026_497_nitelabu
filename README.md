@@ -74,7 +74,7 @@ GIT_LFS_SKIP_SMUDGE=1 repo sync -c -j8
 
 ## 五、验收状态与审核边界
 
-以 [比赛必须适配清单](docs/acceptance/比赛必须适配清单.md) 为逐项入口。历史项目按原记录保留通过、用户确认、开发验证和待实物验收的区别。编译成功不等于 xTS 实板通过；Camera 已有 Korvo/OV3660 独立实物采集上屏记录；其它 Camera 模式及 USB、SDMMC、BLE 等能力的具体状态以对应记录为准。
+以 [核验集](board/ESP32-S31%20Function-CoreBoard-1/demo/README.md) 为逐项入口。历史项目按原记录保留通过、用户确认、开发验证和待实物验收的区别。编译成功不等于 xTS 实板通过；Camera 已有 Korvo/OV3660 独立实物采集上屏记录；其它 Camera 模式及 USB、SDMMC、BLE 等能力的具体状态以对应记录为准。
 
 历史脚本和日志保留当时的绝对路径、配置与上下文，归档在 `workspace/evidence/`；它们不是新的构建入口。公开副本中移除了测试凭据，修改文件列表见 `workspace/evidence/REDACTIONS.json`；原始本地证据未改写。
 

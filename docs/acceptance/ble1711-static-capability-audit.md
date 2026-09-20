@@ -2,7 +2,7 @@
 
 日期：2026-09-18  
 目标板：ESP32-S31 Function-CoreBoard-1  
-范围：比赛必须适配清单中 BLE xTS 18 项、BLE 5.4、LE Audio、BLE Mesh 1.1。
+范围：核验集中 BLE xTS 18 项、BLE 5.4、LE Audio、BLE Mesh 1.1。
 
 ## 结论
 

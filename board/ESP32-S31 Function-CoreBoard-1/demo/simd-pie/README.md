@@ -97,4 +97,4 @@ NSH 执行 s31simd；两线程各 100 轮向量加法/INT8 点积和 PIE 全寄�
 - [checkpoint1654-offline-isolation/network1654-offline-isolation.json](evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1654-offline-isolation/network1654-offline-isolation.json)
 - [xts-category-status.md](evidence/docs/acceptance/xts-category-status.md)
 
-[当前验收清单](evidence/docs/acceptance/比赛必须适配清单.md) 是归类依据；旧失败、人工确认及观测缺口均保留。历史脚本可能带旧绝对路径，供审核，不作为一键运行入口。
+核验集（历史清单已移除） 是归类依据；旧失败、人工确认及观测缺口均保留。历史脚本可能带旧绝对路径，供审核，不作为一键运行入口。
