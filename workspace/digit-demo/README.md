@@ -1,6 +1,6 @@
 # 原版双核数字识别源码构建
 
-此目录恢复原先的 VGA 摄像头、CPU0 显示、CPU1 本地数字识别演示，包含原页面、模型、预处理与 SIMD 推理代码。它与 Factory 是两个独立镜像；Factory 的新识别页面不作为此配置的来源。
+此目录恢复原先的 VGA 摄像头、CPU0 显示、CPU1 本地数字识别演示，包含原页面、模型、预处理与 SIMD 推理代码。`korvo-digit-rebuild` 生成独立识别镜像；需要从 Factory 主界面进入原版识别并返回时，使用 [korvo-factory-vision 组合配置](../FACTORY-VISION.md)。组合版复用原版模型、预处理、字体和 SIMD 内核，其设备生命周期与显示切换适配位于平台 BSP。
 
 先按根 README 拉取固定 openvela 源码、应用平台补丁并运行公开依赖安装，然后执行：
 

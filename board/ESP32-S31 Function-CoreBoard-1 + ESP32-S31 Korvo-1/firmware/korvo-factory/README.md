@@ -1,6 +1,6 @@
 # 独立 Factory 演示固件
 
-本目录保留原生 openvela Factory 演示的已验证镜像，包含摄像头主面板和移植的咖啡机界面。默认上台演示使用旁边的 `korvo-digit-stable`；两份镜像分别烧录，未实现按钮跳转。
+本目录保留原生 openvela Factory 演示的已验证独立镜像，包含摄像头主面板和移植的咖啡机界面。该历史镜像不含原版数字识别跳转。当前默认演示使用 [korvo-factory-vision 组合配置](../../../../workspace/FACTORY-VISION.md)，在同一固件中通过按钮进入原版识别并返回；需按组合配置重新构建和配对部署，不能使用本目录镜像替代。
 
 在本目录运行 `sha256sum -c SHA256SUMS` 核对本精简包；随后按仓库 `workspace/FLASH-MANUAL.md` 的 Korvo 16 MiB / `0x2000` 写入步骤操作。该页 `verify-artifacts.py` 用于包含 ELF 的完整构建包，不适用于这里的 bin/config 精简包。保留原 Flash 备份，首次切换配置按文档处理 HMI 数据区。
 

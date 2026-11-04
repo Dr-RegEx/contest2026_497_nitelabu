@@ -44,9 +44,9 @@
     "snapshot_sha256": "e415a54225676473bf2e3737c81e18b7c795c31c9086b5ea964c859cd15ad2d7"
   },
   "mapping": {
-    "locked_dependencies": "platform-root/s31-reference; .s31-deps is not equivalent",
+    "locked_dependencies": "Public checkout/.s31-deps (or explicit --deps); prepared by setup-dependencies.sh. Legacy offline products use platform-root/s31-reference only with the offline tools.",
     "snapshot_path": "relative to openvela-dev, e.g. nuttx -> openvela-dev/nuttx",
-    "support_tools": "workspace/tools -> platform-root/tools"
+    "support_tools": "Public build entrypoint and tools stay in contest2026_497_nitelabu/workspace; the legacy offline restore copies workspace/tools to platform-root/tools."
   },
   "public_thin": {
     "changed_projects": 36,

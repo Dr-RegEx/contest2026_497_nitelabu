@@ -63,16 +63,16 @@ bash "$CONTEST_REPO/workspace/build.sh" --list
 bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
   --profile nsh --output "$(dirname "$CHECKOUT")/build-nsh" --jobs 8
 
-# Korvo 原生 Factory：摄像头主面板、咖啡机界面及系统服务
+# Korvo 双核组合演示：Factory 主界面与原版数字识别互相切换
 bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
-  --profile korvo-openvela-factory --output "$(dirname "$CHECKOUT")/build-factory" --jobs 8
+  --profile korvo-factory-vision --output "$(dirname "$CHECKOUT")/build-factory-vision" --jobs 8
 ```
 
-Function 有线网使用 `--profile function-ethernet`；SMP/MMU、网络和外部应用配置为 `demo-rmt-netapps-competition`。每个配置指定新的输出目录，产物位于 `OUTPUT/build/`，构建记录保存在 `OUTPUT/receipt.json`。该入口使用独立输出目录并启用源码保护，不复用历史编译产物。完整离线产品包的旧入口单独保留为 `workspace/build-offline.py`。 五个公开构建配置均已在独立输出目录验证，镜像、AppFS 与新识别镜像实板结果见 [公开复现记录](docs/validation/public-reproduction.json)。
+Function 有线网使用 `--profile function-ethernet`；SMP/MMU、网络和外部应用配置为 `demo-rmt-netapps-competition`。每个配置指定新的输出目录，产物位于 `OUTPUT/build/`，构建记录保存在 `OUTPUT/receipt.json`。该入口使用独立输出目录并启用源码保护，不复用历史编译产物。完整离线产品包的旧入口单独保留为 `workspace/build-offline.py`。NSH、有线网、独立 Factory、独立数字识别、双核网络/AppFS 五个配置的全量构建及识别镜像实板结果见 [公开复现记录](docs/validation/public-reproduction.json)。
 
-Korvo 组合演示使用 `korvo-factory-vision`：上电进入 Factory 主界面，点击 **Digit recognition** 进入原版双核数字识别，点击 **Return** 恢复主界面预览。公开入口已完成全量构建验证；显示同步修正版已通过人工进入识别、无闪烁、正常识别、Return 返回和预览恢复验收，详见 [构建和配对部署](workspace/FACTORY-VISION.md)及[精确镜像记录](docs/validation/factory-vision.json)。[原版独立识别固件](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-digit-stable/README.md)与[独立 Factory](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-factory/README.md)继续保留；原版识别也可通过 `korvo-digit-rebuild` 独立构建，见 [源码说明](workspace/digit-demo/README.md)。
+Korvo 默认演示使用 `korvo-factory-vision`：上电进入 Factory 主界面，点击 **Digit recognition** 进入原版双核数字识别，点击 **Return** 恢复主界面预览，切换无需复位或重新烧录。组合配置已通过公开入口全量构建，随后显示同步修正版完成增量构建与人工进入识别、无闪烁、正常识别、Return 返回和预览恢复验收；最终修正版尚未重跑全量构建。详见 [构建和配对部署](workspace/FACTORY-VISION.md)及[精确镜像记录](docs/validation/factory-vision.json)。仓内预编译包仍为[原版独立识别固件](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-digit-stable/README.md)与[独立 Factory](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-factory/README.md)，组合固件按上述命令构建。独立配置分别使用 `korvo-digit-rebuild` 和 `korvo-openvela-factory`，见 [原版识别源码说明](workspace/digit-demo/README.md)。
 
-烧录前连接目标板 USB-UART，确认实际端口并保存本板原固件备份。按对应固件目录的校验与烧录说明操作；不要混用不同配置的 Flash 布局。通用 Factory 部署与回退步骤见 [固件部署](workspace/FLASH-MANUAL.md)。
+烧录前连接目标板 USB-UART，确认实际端口并保存本板原固件备份。组合配置须配对烧写内核与 AppFS，见 [组合固件部署](workspace/FACTORY-VISION.md)；独立 Factory、备份与回退步骤见 [固件部署](workspace/FLASH-MANUAL.md)。不要混用不同配置的 Flash 布局。
 
 最小 NSH 配置复位后应进入 `nsh>`，可执行 `uname -a`、`help`。Kernel/AppFS 配置必须烧写同一次构建的内核与 AppFS，不能拿历史镜像混配；原版数字识别固件不需要额外 AppFS。
 
@@ -80,7 +80,7 @@ Korvo 组合演示使用 `korvo-factory-vision`：上电进入 Factory 主界面
 
 以 [功能验证](docs/validation/README.md)和[测试例程](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/demo/README.md)为逐项入口。历史项目按原记录保留通过、用户确认、开发验证和待实物验收的区别。编译成功不等于 xTS 实板通过；各项结果只适用于对应配置和精确镜像。
 
-Korvo 原版数字识别已有真实画面及识别的人工确认，已再次确认固件身份、双核启动、SIMD 自检和摄像/显示/推理进度。Factory 的摄像头主面板、咖啡机界面、USB 键盘及原生服务已有专项记录；音频仍存在队列溢出和听感验收边界。Function 有线网的链路、ping、TCP/UDP 接收及接口恢复通过，1 Gbps 为链路协商速率，不代表已测得千兆吞吐量。
+Korvo 双核组合演示已通过 Factory → 原版数字识别 → Return 的实物触摸验收，画面无闪烁、识别正常、返回后预览恢复。原版模型、预处理、字体和 SIMD 内核保持一致。该组合配置未启用 SD、USB Host、ADC 按键及无线，也未完成听音、咖啡机页面和长时负载验收。独立 Factory 的摄像头主面板、咖啡机界面、USB 键盘及原生服务另有专项记录；音频仍存在队列溢出和听感验收边界。Function 有线网的链路、ping、TCP/UDP 接收及接口恢复通过，1 Gbps 为链路协商速率，不代表已测得千兆吞吐量。
 
 USB、SDMMC、BLE 等能力的具体状态以对应记录为准。QuickJS/Feature 等服务基础验证不等于完整 Quick App/RPK 运行验收。历史测试结果见 [历史记录](docs/validation/historical.json)；原始日志和完整本地备份保留在本地，不作为公共仓库构建输入。
 

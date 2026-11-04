@@ -7,10 +7,10 @@
 | BSP、引脚、配置继承、设备注册 | `openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/` |
 | S31 驱动、启动与内存 | `openvela-dev/nuttx/arch/risc-v/src/esp32s31/` |
 | Espressif 共用适配 | `openvela-dev/nuttx/arch/risc-v/src/common/espressif/` |
-| HAL / IDF 依赖 | `s31-reference/deps/esp-hal-3rdparty/`、`s31-reference/tmp/esp-idf-clean/` |
+| HAL / SDMMC 依赖 | `openvela-dev/.s31-deps/esp-hal-3rdparty/`；作品仓 `workspace/dependencies/idf-sdmmc/` |
 | Factory UI、assets 与生命周期 | `openvela-dev/frameworks/runtimes/services/xmsdemo/factory/` |
 | 原生服务 | `openvela-dev/frameworks/runtimes/services/`、`openvela-dev/frameworks/multimedia/media/` |
 
 详细入口见 [源码分层](../SOURCE-MAP.md)。更改板资源前核对 pinmux、ADC/RF 与外设共享约束。保留 LICENSE、NOTICE、UPSTREAM、模型及资源许可，不按测试名称删除源码依赖。
 
-当前公共薄快照尚待整体刷新和独立回放。按 [恢复与构建](../../workspace/REPRODUCE.md)使用对应源码包与依赖；[验证索引](../../docs/validation/README.md)记录精确镜像的结果，历史记录不自动适用于新编译输出。
+公共快照与固定依赖按 [恢复与构建](../../workspace/REPRODUCE.md)准备。五个独立配置已有全量构建记录；Factory 与原版识别组合配置已有公开全量构建及显示修正版的增量构建、实物触摸往返验收，最终修正版尚未重跑全量构建。[验证索引](../../docs/validation/README.md)记录对应镜像与范围，历史记录不自动适用于新编译输出。

@@ -1,6 +1,6 @@
 # Korvo 固件部署与恢复
 
-当前默认数字识别演示请使用[原版固件及专用烧录说明](../board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-digit-stable/README.md)。下文适用于独立 Factory 配置。
+当前默认 Korvo 演示使用 `korvo-factory-vision`，按[组合固件说明](FACTORY-VISION.md)配对烧写内核与 AppFS。原版独立数字识别仍可按[专用烧录说明](../board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-digit-stable/README.md)部署。下文的板卡确认、备份和恢复方法通用；Factory 写入与数据区命令仅适用于独立 `korvo-openvela-factory`，不要直接用于组合配置。
 
 本页用于 `korvo-openvela-factory` 的 16 MiB Korvo 板。该配置采用 simple boot：固件从 `0x2000` 开始，不需要外部 AppFS；应用数据位于 `0xe00000`，长度 `0x100000`。其他配置按各自镜像清单部署，Kernel 配置的内核与 AppFS 必须来自同一次构建。
 

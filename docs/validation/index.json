@@ -1,6 +1,14 @@
 {
   "current_records": [
     {
+      "profile": "korvo-factory-vision",
+      "path": "factory-vision.json",
+      "status": "physical_factory_original_digit_roundtrip_pass",
+      "kernel_sha256": "685b62b44ef9b48e100cad60f90d21c6d213d969c099ecbcd0116cef197bae78",
+      "appfs_sha256": "906d2097302d3d9da48818f0ad12559c7f015bf36594e435e9e2dd41f2e4ef7c",
+      "sha256": "769c78305ca69914fb9b10595b554842d8908b53af2a7feb55da41a2ee491070"
+    },
+    {
       "image_sha256": "fb23365cb347cf7106ac1943a7076483b6f33508f86439f5cf2e7d1da163d02b",
       "path": "ethernet.json",
       "profile": "function-ethernet",
@@ -20,8 +28,10 @@
   ],
   "factory": {
     "integrated_flow": {
-      "status": "not_included_in_release",
-      "legacy_dualcore_demo": "default independent original stable demo; separate flash deployment"
+      "profile": "korvo-factory-vision",
+      "path": "factory-vision.json",
+      "status": "physical_factory_original_digit_roundtrip_pass",
+      "legacy_dualcore_demo": "Original VGA renderer, model, preprocessing and CPU1 SIMD; entered from Factory HOME and returned by touch in the same paired firmware."
     },
     "previous_image_sha256": "9a5b80836ee9613590bec695b19aacbf7ec234f82f01517d209dee3337859a1b",
     "previous_limits": [
@@ -46,6 +56,6 @@
     "sha256": "f13ee307954a107b4435d1e4ffebcfba2a3137c82d74da30e007fd7ced5a8ebd"
   },
   "profiles": "../../workspace/profiles.json",
-  "release_state": "Five public build profiles independently rebuilt with pinned public dependencies; rebuilt original digit image passed a new boot/selftest/frame-progress check and the original stable firmware was restored.",
+  "release_state": "Default Korvo demo is Factory HOME -> original dual-core digit -> Return, physically accepted on the exact recorded kernel/AppFS pair. The combined profile passed a full public build before the bounded display fix; the final fix passed an incremental build and physical acceptance, without a fresh full rebuild. Five independent profiles retain their separate public-build records and original standalone firmware remains available.",
   "schema": 1
 }

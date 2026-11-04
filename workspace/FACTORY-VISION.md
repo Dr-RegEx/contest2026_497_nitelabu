@@ -4,6 +4,8 @@
 
 本组合已通过实板开机和用户触摸验收：识别画面不再闪烁、识别正常，Return 后实时预览恢复，精确镜像见 [验收记录](../docs/validation/factory-vision.json)。
 
+组合配置已完成公开入口全量构建；随后仅显示同步修正的版本完成增量构建与上述实板验收，最终修正版尚未重跑全量构建。仓内不附组合预编译镜像，按本页入口生成内核与 AppFS。
+
 识别仍使用原来的模型、预处理、字体和 SIMD 内核：CPU0 负责摄像与显示，CPU1 负责推理。Factory 通过 openvela Activity/Window 服务接收触摸，内核 `/dev/vision` 管理原版识别任务与摄像头、LCD 的所有权。咖啡机页面保留原图片和 libpng 解码，临时解码像素通过可回收的共享页分配。
 
 ## 构建
@@ -20,6 +22,13 @@ bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
 ## 部署
 
 适用板卡为 16 MiB Flash 的 ESP32-S31 Korvo-1。按 [部署说明](FLASH-MANUAL.md) 确认目标串口、安全状态并保存本板完整备份，再设置相同的 `ESPTOOL`、`PORT` 和本次 `FIRMWARE` 输出目录。
+
+```sh
+FIRMWARE=/path/to/new-factory-vision/build
+sha256sum "$FIRMWARE/nuttx.bin" "$FIRMWARE/appfs.img" "$FIRMWARE/.config"
+```
+
+将三个 SHA256 与本次输出根目录的 `receipt.json` 核对，并确认其中的 profile 为 `korvo-factory-vision`、status 为 `BUILD_PASS`。独立 Factory 的 `verify-artifacts.py` 仅支持单镜像包，不适用于本组合配置。
 
 | 区域 | 起始地址 | 范围 |
 | --- | --- | --- |
@@ -47,4 +56,4 @@ bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
 
 ## 配置范围
 
-本组合配置使用双核 KERNEL/MMU。SD、USB Host、ADC 按键受现有 SMP 配置限制而关闭；这些外设的历史专项结果不作为此镜像的通过记录。MEDIA 服务随系统启动，但本轮不包含听音验收。此配置也不作无线联网、长时负载或帧率提升的声明。
+本组合配置使用双核 KERNEL/MMU。SD、USB Host、ADC 按键受现有 SMP 配置限制而关闭；这些外设的历史专项结果不作为此镜像的通过记录。MEDIA 服务随系统启动，但本轮不包含听音验收；咖啡机页面在本组合镜像仍待实板验收。较早候选曾在启动 AM shell 客户端时停滞，尚未关闭该问题；本轮通过的是界面触摸进入与返回。此配置也不作无线联网、长时负载或帧率提升的声明。
