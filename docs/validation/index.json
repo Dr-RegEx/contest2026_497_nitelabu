@@ -11,6 +11,11 @@
       "path": "digit-stable.json",
       "image_sha256": "6c6d009b86df99ea4cc58a958d2fe202833ddf8c0aab1f3219059383add0e2b1",
       "status": "original_mature_demo_verified_running"
+    },
+    {
+      "path": "public-reproduction.json",
+      "status": "five_public_builds_pass_digit_board_pass",
+      "sha256": "8cf61bcb22f89ba3304ad73c4e08d4fbf9e5605e376abf9b5cce1fc5061c0d9f"
     }
   ],
   "factory": {
@@ -41,6 +46,6 @@
     "sha256": "f13ee307954a107b4435d1e4ffebcfba2a3137c82d74da30e007fd7ced5a8ebd"
   },
   "profiles": "../../workspace/profiles.json",
-  "release_state": "Source snapshot, dependencies and BSP mirror refreshed and checked; default original digit firmware and standalone Factory firmware retained. Complete fresh receiver build has not been rerun.",
+  "release_state": "Five public build profiles independently rebuilt with pinned public dependencies; rebuilt original digit image passed a new boot/selftest/frame-progress check and the original stable firmware was restored.",
   "schema": 1
 }

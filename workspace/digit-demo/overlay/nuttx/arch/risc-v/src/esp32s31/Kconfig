@@ -1,0 +1,366 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+if ARCH_CHIP_ESP32S31
+
+comment "ESP32-S31 Configuration Options"
+
+config ESP32S31_WIFI_RX_STATS
+	bool "Wi-Fi receive queue diagnostic statistics"
+	default n
+	depends on ESPRESSIF_WIFI
+	select NET_STATISTICS
+	select ARCH_HAVE_NETDEV_STATISTICS
+	select NETDEV_STATISTICS
+	---help---
+		Collect delivered receive packets and receive queue allocation drops
+		for throughput diagnostics, together with queued TX packets and TX
+		completion callbacks.
+		No periodic packet logging is enabled.
+
+config ESP32S31_PIE
+	bool "CPU1 PIE SIMD context support"
+	depends on ESP32S31_SMP && ARCH_USE_S_MODE && RISCV_PERCPU_SCRATCH
+	default n
+	help
+		Preserve the complete PIE register bank across exceptions and task
+		switches. Applications using PIE must pin their threads to CPU1;
+		CPU0 has no PIE hardware. Adds 228 bytes to every context frame
+		and uses an aligned 240-byte temporary stack area during transfers.
+
+source "arch/risc-v/src/common/espressif/Kconfig"
+
+config ESP32S31_SPIFLASH_PSRAM_STACK
+	bool "Run Flash MTD operations on an internal stack"
+	depends on BUILD_FLAT && ESPRESSIF_SPIRAM_USER_HEAP
+	depends on ESPRESSIF_MTD && SCHED_LPWORK
+	default y
+	help
+		Forward calls from external-memory stacks to LPWORK before disabling
+		the external cache. LPWORK must use its internal SRAM BSS stack.
+		Calls already using internal SRAM execute directly.
+
+config ESP32S31_FLASH_DIRECT_WORKER
+	bool "Wake the internal-stack Flash worker directly"
+	depends on ESP32S31_SPIFLASH_PSRAM_STACK
+	default n
+	help
+		Use a dedicated 4 KiB internal-SRAM stack and semaphore wakeup for
+		Flash requests from PSRAM stacks. Avoids the next-tick scheduling
+		delay of LPWORK for each small MTD operation. Existing SPI cache
+		guards and request cancellation protection remain in effect.
+
+config ESP32S31_USBDEV
+	bool "S31 UTMI USB device controller (full-speed PIO)"
+	depends on USBDEV && BUILD_FLAT && !SMP && !ESPRESSIF_SPIRAM_USER_HEAP
+	default n
+	help
+		Initial awake device-mode endpoint engine for the dedicated HS PHY.
+		Uses full-speed packets and PIO. The board Type-A connector sources
+		VBUS; a verified isolated device connection is required for testing.
+
+config ESP32S31_USBHOST
+	bool "S31 OTG host register initialization (experimental)"
+	depends on USBHOST && !ESP32S31_USBDEV && !SMP
+	default n
+	help
+		Prepare the S31 OTG core for host mode, select the integrated
+		HS UTMI PHY clock and request Type-A VBUS. This option is an
+		experimental hardware boundary; enabling it alone is not USB
+		enumeration or
+		xTS pass evidence. Keep it disabled in the normal image.
+
+config ESP32S31_USBHOST_HCD_SKELETON
+	bool "S31 USB Host synchronous PIO HCD candidate"
+	depends on ESP32S31_USBHOST
+	default n
+	help
+		Compile S31 endpoint management and synchronous control/bulk PIO
+		transfers using the DWC2 channel state engine. Periodic/asynchronous
+		scheduling remain ENOSYS. A polling root port and common enumeration
+		worker are available; actual device transfers are unverified. This
+		option must remain disabled for production or
+		xTS images.
+
+config ESP32S31_OTG_ENDPOINT_NUM
+	int "Additional USB device endpoints"
+	depends on ESP32S31_USBDEV
+	range 1 3
+	default 3
+
+config ESP32S31_SDMMC
+	bool "S31 SDMMC slot 0 to NuttX MMCSD bridge (experimental)"
+	depends on !SMP
+	select MMCSD
+	select MMCSD_SDIO
+	select SDIO_BLOCKSETUP
+	select ARCH_HAVE_SDIO
+	default n
+	help
+		Expose the Function-CoreBoard-1 external slot 0 (GPIO20-25) through
+		the NuttX sdio_dev_s/MMCSD upper half using the locked ESP-IDF SDMMC
+		command ABI. This is an isolated candidate: HAL dependencies, DMA/IRQ
+		completion and external-card read/write evidence remain outstanding.
+		Keep disabled in normal profiles.
+
+config ESP32S31_SDMMC_IDF_HOST
+	bool "Link the real locked SDMMC controller and transaction engine"
+	depends on ESP32S31_SDMMC
+	default n
+	help
+		Use strong SD host references and NuttX synchronization. Experimental:
+		external card, interrupt and DMA validation are still required.
+
+config ESP32S31_BLE
+	bool "S31 BLE controller with NuttX OSAL and VHCI"
+	depends on (BUILD_FLAT && !SMP && !ESPRESSIF_WIFI) || (BUILD_KERNEL && ESP32S31_SMP)
+	depends on !ESPRESSIF_SPIRAM_USER_HEAP && RTC_DRIVER
+	select DRIVERS_BLUETOOTH
+	select UART_BTH4
+	default n
+	help
+		Awake BLE-only controller, exposed through /dev/ttyHCI0.
+		Kernel builds dispatch controller operations on a CPU0 kernel task.
+		All controller memory and task stacks must remain in internal SRAM.
+		Kernel Wi-Fi builds use the pinned software coexistence adapter.
+
+config ESP32S31_I2S
+	bool "S31 I2S0 with dedicated AHB DMA channel 0"
+	depends on (BUILD_FLAT && !SMP && !ESPRESSIF_WIFI) || (BUILD_KERNEL && AUDIO_PROCESS_OWNERSHIP)
+	select I2S
+	default n
+	help
+		Initial half-duplex I2S0 driver for the board audio profile.
+		AHB DMA channel pair 0 is reserved exclusively for this driver.
+		Other AHB DMA users must not be enabled in this profile.
+
+config ESP32S31_I2S_DUPLEX
+	bool "S31 isolated 48 kHz full-duplex I2S stream engine"
+	depends on ESP32S31_I2S && !AUDIO_MULTI_SESSION && !AUDIO_EXCLUDE_STOP
+	default n
+	help
+		Use separate continuous RX/TX DMA rings for the board nxlooper
+		profile. RX owns the shared clocks and TX is a slave. Only 48 kHz,
+		16-bit, two-slot PCM is supported. This replaces the half-duplex
+		transport only when explicitly selected.
+
+config ESP32S31_I2S_DUPLEX_WORKER_PRIORITY
+	int "S31 continuous I2S DMA worker priority"
+	depends on ESP32S31_I2S_DUPLEX
+	range 1 255
+	default 240
+	help
+		The worker must replenish the DMA ring before it wraps. Media
+		profiles may raise this above their graph/codec task priorities.
+
+config ESP32S31_I2S_CAPTURE_16K_MONO
+	bool "Use continuous native 16 kHz mono capture"
+	depends on ESP32S31_I2S_DUPLEX && ES8311_SHARED_DUPLEX
+	depends on !ESP32S31_I2S_DUPLEX_44K
+	default n
+	help
+		Select the physical ES8311 left ADC slot in hardware for the
+		original 16 kHz mono capture case. No resampling or CPU slot
+		discarding is used. Playback is not exposed by this profile.
+
+config ESP32S31_I2S_DUPLEX_44K
+	bool "Use fixed 44.1 kHz continuous audio for original capture test"
+	depends on ESP32S31_I2S_DUPLEX && ES8311_SHARED_DUPLEX
+	default n
+	help
+		Use 11.2896 MHz MCLK, 44.1 kHz stereo slots and explicit Philips
+		left alignment for the original audio capture/playback case.
+		The default nxlooper profile remains fixed at 48 kHz.
+
+config ESP32S31_WDT_ROM_DELAY
+	bool "Use calibrated ROM busy delays for the watchdog candidate"
+	depends on ESP32S31_RWDT && !ALARM_ARCH && !TIMER_ARCH
+	default n
+	help
+		Replace the generic uncalibrated loop delays only in this opt-in
+		watchdog profile. Check one 500 ms delay during board startup.
+
+config ESP32S31_RWDT
+	bool "S31 RTC watchdog with fatal high-priority interrupt"
+	depends on BUILD_FLAT && !ARCH_USE_S_MODE
+	select WATCHDOG
+	select ARCH_RV_HAVE_CLIC
+	select ARCH_HAVE_IRQPRIO
+	select ARCH_HAVE_HIPRI_INTERRUPT
+	select ARCH_HIPRI_INTERRUPT
+	help
+		Use the LP RTC watchdog, with a priority-7 fatal interrupt followed
+		by a hardware RTC-system reset. Normal critical sections mask
+		priorities 1..6; capture callbacks use priority 1. This initial
+		integration is limited to the single-core M-mode FLAT profile.
+
+config ESP32S31_CRYPTO_AES_CBC
+	bool "Hardware AES-CBC cryptodev backend"
+	depends on CRYPTO_CRYPTODEV
+	select CRYPTO_CRYPTODEV_HARDWARE
+	help
+		Use the S31 AES engine in PIO mode for 128/256-bit CBC sessions.
+		AES-192, chained sessions and persistent key IDs are unsupported.
+		Other algorithms may continue to use the existing software backend.
+
+config ESP32S31_CRYPTO_AES_MODES
+	bool "Hardware AES-CTR and AES-XTS cryptodev modes"
+	depends on ESP32S31_CRYPTO_AES_CBC
+	help
+		Reuse the PIO AES engine for full-block CTR and XTS requests,
+		including streaming updates. AES-192 remains unsupported by the
+		hardware. XTS uses two volatile AES keys, not Flash encryption keys.
+
+config ESP32S31_CRYPTO_SHA
+	bool "Hardware SHA1/SHA256/SHA512 cryptodev backend"
+	depends on ESP32S31_CRYPTO_AES_CBC
+	help
+		Use aligned PIO blocks and saved per-session hardware digest state
+		for the original SHA streaming API. Share peripheral ownership with
+		AES. MD5 and keyed HMAC continue using their existing backends.
+
+config ESP32S31_CRYPTO_HMAC
+	bool "SHA-accelerated HMAC-SHA1/SHA256 cryptodev backend"
+	depends on ESP32S31_CRYPTO_SHA
+	help
+		Compute inner and outer HMAC digests with the SHA engine and
+		ordinary volatile keys up to 64 bytes. Longer keys and HMAC-MD5
+		remain with the software backend. This does not use the separate
+		eFuse-keyed HMAC peripheral or provision any permanent keys.
+
+config ESP32S31_CRYPTO_ECDSA_VERIFY
+	bool "Hardware ECDSA P256 verification"
+	depends on ESP32S31_CRYPTO_AES_CBC
+	help
+		Use the ECDSA/ECC peripheral to verify P256 signatures using normal
+		public coordinates and a caller-provided digest. Key generation and
+		signing stay in software. No eFuse keys are selected or programmed.
+
+config ESP32S31_CRYPTO_ECC_POINT_MULT
+	bool "Hardware ECC P256 point multiplication"
+	depends on ESP32S31_CRYPTO_AES_CBC
+	select CRYPTO_ECC_P256_POINT_MULT
+	help
+		Accelerate volatile-key generation and signing point multiplication
+		with the ECC engine. Scalar arithmetic stays in the existing ECC
+		library. Enable hardware constant-time mode and verify input points.
+
+config ESPRESSIF_DONT_USE_ROM_LIBC
+	bool "Don't use ROM libc functions"
+	default n
+	help
+		Use NuttX libc instead of ROM newlib functions.  This prevents
+		cross-heap allocation when external RAM is part of a NuttX heap.
+
+menuconfig ESPRESSIF_SPIRAM
+	bool "External SPI RAM (SPIRAM)"
+	default n
+	help
+		Enable ESP32-S31 external PSRAM support through the locked ESP HAL.
+
+if ESPRESSIF_SPIRAM
+
+config ESPRESSIF_SPIRAM_BOOT_INIT
+	bool "Initialize SPIRAM during early boot"
+	default y
+
+config ESPRESSIF_SPIRAM_IGNORE_NOTFOUND
+	bool "Ignore SPIRAM not found"
+	depends on !ESPRESSIF_SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY
+	default n
+
+config ESPRESSIF_SPIRAM_MEMTEST
+	bool "Run SPIRAM memory test at boot"
+	default n
+
+config ESPRESSIF_SPIRAM_USE_8LINE_MODE
+	bool "Use x8 line mode"
+	default n
+
+config ESPRESSIF_SPIRAM_ECC
+	bool "Enable SPIRAM ECC"
+	default n
+
+choice ESPRESSIF_SPIRAM_SPEED
+	prompt "SPIRAM speed"
+	default ESPRESSIF_SPIRAM_SPEED_80M
+
+config ESPRESSIF_SPIRAM_SPEED_20M
+	bool "20 MHz"
+
+config ESPRESSIF_SPIRAM_SPEED_80M
+	bool "80 MHz"
+
+config ESPRESSIF_SPIRAM_SPEED_200M
+	bool "200 MHz"
+
+config ESPRESSIF_SPIRAM_SPEED_250M
+	bool "250 MHz"
+
+endchoice
+
+config ESPRESSIF_SPIRAM_SPEED
+	int
+	default 20 if ESPRESSIF_SPIRAM_SPEED_20M
+	default 80 if ESPRESSIF_SPIRAM_SPEED_80M
+	default 200 if ESPRESSIF_SPIRAM_SPEED_200M
+	default 250 if ESPRESSIF_SPIRAM_SPEED_250M
+
+config ESPRESSIF_SPIRAM_USER_HEAP
+	bool "Add SPIRAM to user heap"
+	default y
+	select ESPRESSIF_DONT_USE_ROM_LIBC
+
+config ESPRESSIF_SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY
+	bool "Allow .bss segment placement in external memory"
+	default n
+
+endif # ESPRESSIF_SPIRAM
+
+config ESP32S31_SMP
+	bool "Enable the ESP32-S31 two-core NuttX SMP port"
+	depends on SMP
+	depends on SMP_NCPUS = 2
+	depends on ARCH_USE_S_MODE
+	depends on ESPRESSIF_SIMPLE_BOOT
+	depends on BUILD_KERNEL
+	help
+		Start CPU1 through the ESP32-S31 per-hart M-mode monitor, release it
+		from nx_smp_start(), and use the S31 cross-core interrupt sources for
+		NuttX reschedule and SMP-call delivery.  Production enables this with
+		CONFIG_SMP_DEFAULT_CPUSET covering both harts.
+
+config ESP32S31_SMP_TLB_SHOOTDOWN
+	bool "Cross-core TLB shootdown for address environments"
+	default y
+	depends on ESP32S31_SMP
+	depends on ARCH_ADDRENV
+	select ARCH_RV_TLB_SHOOTDOWN
+	help
+		After a mapping, unmapping, permission change, or address-environment
+		destroy, invalidate remote-hart TLB entries with a generation/ack
+		mailbox delivered over the existing SMP IPI.  Required so heap grow,
+		pthread stacks, and App exit stay coherent when the same Sv32 addrenv
+		is active on more than one CPU.
+
+config ESP32S31_SMP_TLB_SHOOTDOWN_TIMEOUT_US
+	int "TLB shootdown acknowledgement timeout (microseconds)"
+	depends on ESP32S31_SMP_TLB_SHOOTDOWN
+	range 1000 5000000
+	default 500000
+
+config ESP32S31_CPU1_BOOT_TIMEOUT_US
+	int "CPU1 bring-up handshake timeout (microseconds)"
+	depends on ESP32S31_SMP
+	range 1000 5000000
+	default 500000
+
+config ESP32S31_CPU1_BOOT_STACKSIZE
+	int "CPU1 bring-up stack size"
+	depends on ESP32S31_SMP
+	range 256 4096
+	default 1024
+
+endif # ARCH_CHIP_ESP32S31

@@ -1,0 +1,23 @@
+# Isolated ZBlue LE Audio and Bluetooth Mesh build candidate.
+# This profile is for compile/configuration evidence only; no peer or second
+# mesh node is available in the current board setup.
+# The ESP32-S31 controller's ISO feature support still needs HCI/air testing.
+#include "../xts-flat-bttool/defconfig"
+
+CONFIG_BT_AUDIO=y
+CONFIG_BT_ISO_PERIPHERAL=y
+CONFIG_BT_ISO_CENTRAL=y
+CONFIG_BT_ISO_BROADCASTER=y
+CONFIG_BT_ISO_SYNC_RECEIVER=y
+CONFIG_BT_BAP_UNICAST_SERVER=y
+CONFIG_BT_BAP_UNICAST_CLIENT=y
+CONFIG_BT_BAP_BROADCAST_SOURCE=y
+CONFIG_BT_BAP_BROADCAST_SINK=y
+
+CONFIG_BT_MESH=y
+CONFIG_BT_MESH_PB_ADV=y
+CONFIG_BT_MESH_PB_GATT=y
+CONFIG_BT_MESH_PROVISIONEE=y
+CONFIG_BT_MESH_RELAY=y
+CONFIG_BT_MESH_RELAY_ENABLED=y
+CONFIG_BT_MESH_GATT_PROXY=y

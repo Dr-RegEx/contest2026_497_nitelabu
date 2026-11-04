@@ -1,6 +1,17 @@
-# Reference versions captured 2026-09-19
-[s31-reference]
-0455a97d0b9630b98095458ce3a0e1c77dd1befc
- M deps/esp-hal-3rdparty
-[esp-idf-v6.1-upstream]
-fff9895c82d744c7237be8847347bdd1b07c6643
+# Public reproduction dependencies, 2026-11-05
+# openvela: exact project revisions in manifest-locked.xml
+[esp-hal-3rdparty]
+https://github.com/78/esp-hal-3rdparty.git
+290edc31b50decca660c1a11ce3506fd9b2e1e27
+# Apply dependencies/hal.patch and dependencies/hal-mbedtls.patch.
+# The independent original digit build uses digit-demo/hal.patch on a clean HAL copy.
+[esp-idf-sdmmc-headers-only]
+https://github.com/espressif/esp-idf.git
+14f663f003eb8fd9a688c301a412a9540d29dacf
+# Seven unchanged headers plus LICENSE are in dependencies/idf-sdmmc/.
+# No complete ESP-IDF installation is required for the public build.
+[riscv32-esp-elf]
+esp-15.2.0_20251204
+# Public URLs and SHA256: dependencies/toolchain.json
+[python]
+# Exact versions: dependencies/requirements.txt

@@ -4,7 +4,7 @@
 
 本页用于 `korvo-openvela-factory` 的 16 MiB Korvo 板。该配置采用 simple boot：固件从 `0x2000` 开始，不需要外部 AppFS；应用数据位于 `0xe00000`，长度 `0x100000`。其他配置按各自镜像清单部署，Kernel 配置的内核与 AppFS 必须来自同一次构建。
 
-先检查交付固件与清单：
+新构建使用 `FIRMWARE=/path/to/new-factory-output/build`。构建入口同时生成镜像清单，先检查固件与清单：
 
 ```sh
 python3 "$CONTEST_REPO/workspace/verify-artifacts.py" --directory "$FIRMWARE"
@@ -17,7 +17,8 @@ python3 "$CONTEST_REPO/workspace/verify-artifacts.py" --directory "$FIRMWARE"
 使用支持 ESP32-S31 的 esptool，连接板上的 USB-UART 接口。先关闭其他串口程序，将以下端口与目录改为本机实际值。
 
 ```sh
-ESPTOOL="$SDK/python_env/idf6.1_py3.10_env/bin/esptool"
+DEPS="$CHECKOUT/.s31-deps"  # 若安装时指定了 --deps，请改为同一个目录
+ESPTOOL="$DEPS/venv/bin/esptool"
 PORT=/dev/ttyUSB0
 BACKUP_DIR=/path/to/new-korvo-backup
 mkdir "$BACKUP_DIR"
@@ -69,3 +70,31 @@ sha256sum -c "$BACKUP_DIR/SHA256SUMS"
 ```
 
 保留本次固件哈希、部署记录和原始备份；完整 Flash 备份可能含设备设置与凭据，应留在自己的本地存储中。
+
+## Function 最小系统、有线网和双核网络配置
+
+同样先确认目标 UART、16 MiB Flash 并保存本板完整备份。`nsh` 与 `function-ethernet` 都只写该次构建的内核：
+
+```sh
+FIRMWARE=/path/to/new-build-output/build
+"$ESPTOOL" --chip esp32s31 --port "$PORT" write-flash \
+  --flash-mode keep --flash-freq keep --flash-size keep 0x2000 "$FIRMWARE/nuttx.bin"
+"$ESPTOOL" --chip esp32s31 --port "$PORT" verify-flash \
+  --flash-mode keep --flash-freq keep --flash-size keep 0x2000 "$FIRMWARE/nuttx.bin"
+```
+
+复位后用 115200 串口观察 `nsh>`，运行 `uname -a`、`help`。有线网配置连接 Function 板载 RJ45 后，可用 `ifconfig eth0` 查看接口；IP 地址应按自己的网络设置。
+
+`demo-rmt-netapps-competition` 必须同时写入同一输出目录中的内核和 AppFS。该配置将只读应用种子放在 `0x200000`，预留 `0x300000` 字节；可写应用存储从 `0x500000` 开始。先核对 `receipt.json` 中这两个文件的校验值与本次 `.config`，不要混用其他配置的分区布局。
+
+```sh
+FIRMWARE=/path/to/new-netapps-output/build
+"$ESPTOOL" --chip esp32s31 --port "$PORT" write-flash \
+  --flash-mode keep --flash-freq keep --flash-size keep \
+  0x2000 "$FIRMWARE/nuttx.bin" 0x200000 "$FIRMWARE/appfs.img"
+"$ESPTOOL" --chip esp32s31 --port "$PORT" verify-flash \
+  --flash-mode keep --flash-freq keep --flash-size keep \
+  0x2000 "$FIRMWARE/nuttx.bin" 0x200000 "$FIRMWARE/appfs.img"
+```
+
+复位后检查 NSH、`ls /system/bin` 和 `hello`。本次公开依赖重建验证包含 kernel/AppFS 配对生成；不把构建成功扩大为本轮无线连接或外设测试通过。

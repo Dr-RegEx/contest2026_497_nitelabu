@@ -1,0 +1,166 @@
+############################################################################
+# arch/risc-v/src/esp32s31/Make.defs
+#
+# SPDX-License-Identifier: Apache-2.0
+############################################################################
+
+ESP_HAL_3RDPARTY_VERSION = 290edc31b50decca660c1a11ce3506fd9b2e1e27
+ESP_HAL_3RDPARTY_URL = https://github.com/78/esp-hal-3rdparty.git
+
+include common/Make.defs
+include common/espressif/Make.defs
+
+CHIP_CSRCS += esp_chip_rev.c
+
+ifeq ($(CONFIG_ESP32S31_KORVO_RGB565),y)
+CHIP_CSRCS += esp32s31_lcd.c
+CHIP_CSRCS += chip$(DELIM)$(ESP_HAL_3RDPARTY_REPO)$(DELIM)components$(DELIM)esp_hal_lcd$(DELIM)lcd_hal.c
+CHIP_CSRCS += chip$(DELIM)$(ESP_HAL_3RDPARTY_REPO)$(DELIM)components$(DELIM)esp_hal_lcd$(DELIM)$(CHIP_SERIES)$(DELIM)lcd_periph.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_USBDEV),y)
+CHIP_CSRCS += esp32s31_usbdev.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_USBHOST),y)
+CHIP_CSRCS += esp32s31_usbhost.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_USBHOST_HCD_SKELETON),y)
+CHIP_CSRCS += esp32s31_usbhost_hcd_skeleton.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_CAMERA_DVP),y)
+ESP32S31_CAM_ROOT = chip$(DELIM)$(ESP_HAL_3RDPARTY_REPO)$(DELIM)components$(DELIM)upper_hal_cam
+CHIP_CSRCS += esp32s31_camera_dvp.c
+CHIP_CSRCS += $(ESP32S31_CAM_ROOT)$(DELIM)esp_cam_ctlr.c
+CHIP_CSRCS += $(ESP32S31_CAM_ROOT)$(DELIM)dvp_share_ctrl.c
+CHIP_CSRCS += $(ESP32S31_CAM_ROOT)$(DELIM)dvp$(DELIM)src$(DELIM)esp_cam_ctlr_dvp_cam.c
+CHIP_CSRCS += $(ESP32S31_CAM_ROOT)$(DELIM)dvp$(DELIM)src$(DELIM)esp_cam_ctlr_dvp_gdma.c
+CHIP_CSRCS += chip$(DELIM)$(ESP_HAL_3RDPARTY_REPO)$(DELIM)components$(DELIM)esp_hal_cam$(DELIM)cam_hal.c
+CHIP_CSRCS += chip$(DELIM)$(ESP_HAL_3RDPARTY_REPO)$(DELIM)components$(DELIM)esp_hal_cam$(DELIM)$(CHIP_SERIES)$(DELIM)cam_periph.c
+CHIP_CSRCS += chip$(DELIM)$(ESP_HAL_3RDPARTY_REPO)$(DELIM)components$(DELIM)hal$(DELIM)color_hal.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_SDMMC),y)
+CHIP_CSRCS += esp32s31_sdmmc.c esp32s31_sdmmc_os.c
+CFLAGS += -I$(TOPDIR)/arch/risc-v/src/esp32s31/esp-hal-3rdparty/components/upper_hal_sdmmc/legacy/include
+CFLAGS += -I$(TOPDIR)/arch/risc-v/src/esp32s31/esp-hal-3rdparty/components/upper_hal_sdmmc/include
+CFLAGS += -I$(TOPDIR)/arch/risc-v/src/esp32s31/esp-hal-3rdparty/components/esp_hal_sd/include
+CFLAGS += -I$(TOPDIR)/../../s31-reference/tmp/esp-idf-clean/components/sdmmc/include
+endif
+
+
+ifeq ($(CONFIG_ESP32S31_SDMMC_IDF_HOST),y)
+LDFLAGS += --wrap=esp_timer_get_time
+ESP32S31_SD_ROOT = chip$(DELIM)$(ESP_HAL_3RDPARTY_REPO)$(DELIM)components
+CHIP_CSRCS += $(ESP32S31_SD_ROOT)$(DELIM)upper_hal_sdmmc$(DELIM)src$(DELIM)sd_host_sdmmc.c
+CHIP_CSRCS += $(ESP32S31_SD_ROOT)$(DELIM)upper_hal_sdmmc$(DELIM)src$(DELIM)sd_trans_sdmmc.c
+CHIP_CSRCS += $(ESP32S31_SD_ROOT)$(DELIM)upper_hal_sdmmc$(DELIM)legacy$(DELIM)src$(DELIM)sdmmc_host.c
+CHIP_CSRCS += $(ESP32S31_SD_ROOT)$(DELIM)upper_hal_sdmmc$(DELIM)legacy$(DELIM)src$(DELIM)sdmmc_transaction.c
+CHIP_CSRCS += $(ESP32S31_SD_ROOT)$(DELIM)upper_hal_sd_intf$(DELIM)sd_host.c
+CHIP_CSRCS += $(ESP32S31_SD_ROOT)$(DELIM)esp_hal_sd$(DELIM)sdmmc_hal.c
+CHIP_CSRCS += $(ESP32S31_SD_ROOT)$(DELIM)esp_hal_sd$(DELIM)$(CHIP_SERIES)$(DELIM)sdmmc_periph.c
+CFLAGS += -I$(TOPDIR)/arch/risc-v/src/esp32s31/esp-hal-3rdparty/components/upper_hal_sd_intf/include
+CFLAGS += -I$(TOPDIR)/arch/risc-v/src/esp32s31/esp-hal-3rdparty/components/esp_hal_sd/$(CHIP_SERIES)/include
+CFLAGS += -include $(TOPDIR)/arch/risc-v/src/esp32s31/include/esp32s31_sdmmc_idf_compat.h
+endif
+
+ifeq ($(CONFIG_ESP32S31_I2S),y)
+ifeq ($(CONFIG_ESP32S31_I2S_DUPLEX),y)
+CHIP_CSRCS += esp32s31_i2s_duplex.c
+else
+CHIP_CSRCS += esp32s31_i2s.c
+endif
+CHIP_CSRCS += chip$(DELIM)$(ESP_HAL_3RDPARTY_REPO)$(DELIM)components$(DELIM)esp_hal_i2s$(DELIM)i2s_hal.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_XTS_PWM),y)
+CHIP_CSRCS += esp32s31_pwm.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_XTS_ADC),y)
+CHIP_CSRCS += esp32s31_adc.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_RWDT),y)
+CHIP_CSRCS += esp32s31_wdt.c
+endif
+
+ifeq ($(CONFIG_BUILD_FLAT)$(CONFIG_ESPRESSIF_SPIRAM_USER_HEAP),yy)
+ifneq ($(CONFIG_MM_REGIONS),1)
+CHIP_CSRCS += esp32s31_heap.c
+LDFLAGS += --wrap=heap_caps_add_region_with_caps
+endif
+endif
+
+ifeq ($(CONFIG_ESP32S31_CRYPTO_AES_CBC),y)
+CHIP_CSRCS += esp32s31_crypto.c
+CHIP_CSRCS += chip$(DELIM)$(ESP_HAL_3RDPARTY_REPO)$(DELIM)components$(DELIM)esp_security$(DELIM)src$(DELIM)esp_crypto_lock.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_CRYPTO_ECC_POINT_MULT),y)
+CHIP_CSRCS += esp32s31_ecc.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_CRYPTO_ECDSA_VERIFY),y)
+CHIP_CSRCS += esp32s31_ecdsa.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_CRYPTO_SHA),y)
+CHIP_CSRCS += esp32s31_sha.c
+endif
+
+ifeq ($(CONFIG_ESPRESSIF_WIFI),y)
+CHIP_CSRCS += esp32s31_phy_timer.c
+LDFLAGS += --wrap=esp_timer_get_time
+endif
+
+ifeq ($(CONFIG_RTC_DRIVER)$(CONFIG_RTC_PERIODIC),yy)
+CHIP_CSRCS += esp32s31_rtc_periodic.c
+endif
+
+ifeq ($(CONFIG_ESPRESSIF_WIFI)$(CONFIG_BUILD_KERNEL),yy)
+CHIP_CSRCS += esp32s31_wifi_task.c
+CHIP_CSRCS += esp32s31_wifi_event.c
+LDFLAGS += --wrap=up_release_stack
+endif
+
+ifeq ($(CONFIG_ARCH_RISCV_INTXCPT_EXTENSIONS),y)
+CHIP_CSRCS += esp32s31_intctx.c
+endif
+
+ifeq ($(CONFIG_ARCH_USE_S_MODE),y)
+CHIP_ASRCS += esp32s31_supervisor.S
+CHIP_CSRCS += esp32s31_monstat.c esp32s31_flash_guard.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_SMP),y)
+CHIP_ASRCS += esp32s31_cpu1_boot_asm.S
+CHIP_CSRCS += esp32s31_cpu1_boot.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_SMP),y)
+CHIP_CSRCS += esp32s31_smp.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_SMP_TLB_SHOOTDOWN),y)
+CHIP_CSRCS += esp32s31_tlb.c
+endif
+
+ifeq ($(CONFIG_BUILD_KERNEL),y)
+CHIP_CSRCS += esp32s31_mm_init.c esp32s31_pgalloc.c esp32s31_smode_libc.c
+LDFLAGS += -u esp32s31_smode_libc_keep
+endif
+
+# ESP32-S31 maps instruction and read-only flash through the same virtual
+# cache window.  The linker script deliberately overlays a NOLOAD rodata
+# cursor on .flash.text, matching the CMake link option in CMakeLists.txt.
+
+LDFLAGS += --no-check-sections
+
+CFLAGS += ${DEFINE_PREFIX}_RETARGETABLE_LOCKING
+
+ifeq ($(CONFIG_ESP32S31_WDT_ROM_DELAY),y)
+CHIP_CSRCS += esp32s31_wdt_delay.c
+endif

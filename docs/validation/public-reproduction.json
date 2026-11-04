@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "host": "Ubuntu 22.04 / Linux x86_64 / CPython 3.10",
+  "source_recovery": {
+    "manifest_projects": 232,
+    "changed_projects_replayed": 36,
+    "baseline_method": "Fresh checkouts of the public manifest revisions using local Git object caches; no existing build outputs reused.",
+    "manifest_sha256": "bae6b2ea3013a88f631abb6b8b8fd61762938606db4338df8b7fd358f4cff7b0",
+    "digit_overlay_sha256": "78969c609a103daa72d6ff06abc84d8c6b3ca2cb5b231f529c497878fca0c84d",
+    "payload_manifest_at_build_sha256": "baab408c02de1d5ea9e76b7711e27229bbfa946c7fa3bb5d475b79ff1b6a541c",
+    "payload_manifest_note": "This is the manifest used when builds started. Post-build qualification metadata changes source-closure.json and its checksum; compiled source payloads are unchanged."
+  },
+  "dependencies": {
+    "method": "Fresh public HAL and submodule fetches, fresh Python venv installed from pinned requirements, published toolchain archive verified by SHA256 and re-extracted. No private offline product or SDK required.",
+    "archive_cache_used": true,
+    "hal_copied_to_linux_filesystem_for_build_speed": true,
+    "dependency_receipt_sha256": "13638c357066520aac7d9882b942f4f83cf7fa087bc64be0e970029e4d360178",
+    "setup_log_sha256": "40c2daf58fee4103d3d334b3c578962746a3145877eb6dc83843ca8c68391bab"
+  },
+  "builds": {
+    "nsh": {
+      "status": "PASS",
+      "artifacts": {
+        "nuttx": {
+          "sha256": "808c01dc600b84751513e3c93e14393c2bc60290aefd386837802216e91fb3c4",
+          "bytes": 291792
+        },
+        "nuttx.bin": {
+          "sha256": "ace25345bee5400f3bb9ac74c9ec1f78d64efb06190c87164a6919057da95012",
+          "bytes": 220164
+        },
+        ".config": {
+          "sha256": "2aa90cd8a7660aa4f6e58c3a0f2b84933ee84dde24359b06f4f599de01a1f2dd",
+          "bytes": 52329
+        }
+      },
+      "build_log_sha256": "017e93df129fbecbf7b142f7696b0ab9da194952604e4b06f389f3bf3cc53971",
+      "configure_log_sha256": "dc0c2dd7e1ecd1fabe9f76f5f68308e68d8aff8471a7ddc18dc900e9b5117e1a",
+      "build_receipt_sha256": "2efd20713b500e71f058b0a904e228d438f4f53cc71156bbc19bb947f77fd0fe",
+      "hardware_tested_this_run": false
+    },
+    "function-ethernet": {
+      "status": "PASS",
+      "artifacts": {
+        "nuttx": {
+          "sha256": "8b6d34a03f46b408d28ec5a3e4975425a5105872a2ee9cd683f53391b2484106",
+          "bytes": 609976
+        },
+        "nuttx.bin": {
+          "sha256": "27bc31c444be15356decab2d010b02e2078cd0ab22226d4db7ccca1d2deb55ae",
+          "bytes": 338744
+        },
+        ".config": {
+          "sha256": "59868470363b735e5b861b9134f8d95cef334a2a5d6bf7e9786e7c65103b8c90",
+          "bytes": 61006
+        }
+      },
+      "build_log_sha256": "701d0fe2b015c86c07a6ecc4a1266d273211b92020e821dd6bbfbe36915a28a9",
+      "configure_log_sha256": "e794782d21a844fd714988e5aae20191080857543a705db4dd103403bc2091d4",
+      "build_receipt_sha256": "ab74c53edac88d62f42dece166e5fdefe64336bec99f32dc1f76d2afe28d546d",
+      "hardware_tested_this_run": false
+    },
+    "korvo-openvela-factory": {
+      "status": "PASS",
+      "artifacts": {
+        "nuttx": {
+          "sha256": "1e9fe0fe3d796674a8599a3e783db3193d36a1396d095fd1872a23b27f427b9e",
+          "bytes": 12829012
+        },
+        "nuttx.bin": {
+          "sha256": "7f92e4ab350d18d2e913343bf4d60df5b7a7feaff0ebb944d9c0b4c33e2e80ee",
+          "bytes": 5745724
+        },
+        ".config": {
+          "sha256": "3707bd381fb1b36ea169ad93ae9781f4e28befc724a003ad2847e60579d3d90c",
+          "bytes": 107137
+        }
+      },
+      "build_log_sha256": "dcd5d1d566fe7641af8bc49356ee765bd0cf11f6936e65f6e0c628d417f7624d",
+      "configure_log_sha256": "c8fc9f6abf7f9123f0b61a5cc7678f6acc233a386edf6a306aaffb930b736acb",
+      "build_receipt_sha256": "7b0288958fc66a8e565ed6cb7aaf0a9e49da6af2a977be116c0daec68b83ac07",
+      "hardware_tested_this_run": false
+    },
+    "korvo-digit-rebuild": {
+      "status": "PASS",
+      "artifacts": {
+        "nuttx": {
+          "sha256": "3b48822b621486061e47b0b89504fa193936346aa8e9afcfca7222100bcd1c4f",
+          "bytes": 803528
+        },
+        "nuttx.bin": {
+          "sha256": "b45b53ea1a10ee834e6b01774912879ddd06ed221c6740f63b5f1df5c1ad3211",
+          "bytes": 673116
+        },
+        ".config": {
+          "sha256": "d99ec66c44ffe4876a88beea855d273dd02a3cd577e257477d8cbae89d6db4df",
+          "bytes": 59032
+        }
+      },
+      "build_log_sha256": "4758948f2520376f4a7e86bc8dd80b99ef10fd68f5f2692434cf3b7b2baac32a",
+      "configure_log_sha256": "86fe4ff4707e566dd078d7d9cf2e90f855cb7427b42128467316b0ce769c23b2",
+      "build_receipt_sha256": "6c3995e70b51b76c470e81bd7c70296bfe6437ffe080dc8060bdbcd1d296f858",
+      "hardware_tested_this_run": true
+    },
+    "demo-rmt-netapps-competition": {
+      "status": "PASS",
+      "artifacts": {
+        "nuttx": {
+          "sha256": "0dd43f3b2a048bdf41d0b21a7c437ac1c9c44fddf5e1d25b7d3ef71a9cbd9a35",
+          "bytes": 1518400
+        },
+        "nuttx.bin": {
+          "sha256": "775f34958da96c07a7537869348c9aef4a9c5e0525a17d8f4731dd9a875d7d61",
+          "bytes": 1199080
+        },
+        "appfs.img": {
+          "sha256": "cab78d888e672e44849b8eb1d3c36b723f609a6ba8e3a51e8d80592d8198172f",
+          "bytes": 2368512
+        },
+        ".config": {
+          "sha256": "85eb833a08f50bd013912c68f223f3bd9d029407bf3d4c77c97b65e9bf7c0ae4",
+          "bytes": 86720
+        }
+      },
+      "build_log_sha256": "ad6141eaa77afee4594eaa7465ad1f21bffca1ce3931e78a6f784c887fdcbcd9",
+      "configure_log_sha256": "5c829e23515553fa30403e456a9ab4e52dcedf2a47c4a78d9b24c12b5f3eee7c",
+      "build_receipt_sha256": "574fb6f7da764dd59d80de5f7c1f6dfcebb7d03adc496cbdf83106365b80162c",
+      "hardware_tested_this_run": false
+    }
+  },
+  "digit_board": {
+    "image_sha256": "b45b53ea1a10ee834e6b01774912879ddd06ed221c6740f63b5f1df5c1ad3211",
+    "boot_markers": {
+      "CPU1 SMP online": true,
+      "SIMD parity_errors=0 heldout=100/100": true,
+      "VISION START cpu=0 VGA=640x480 ROI=200x200 recording=OFF": true
+    },
+    "metrics": [
+      "[CPU0] VISION METRIC cpu=0 captured=60 queued=60 displayed=60 elapsed_us=6118000 infer=59 result_frame=59 digit=-1",
+      "[CPU0] VISION METRIC cpu=0 captured=120 queued=120 displayed=120 elapsed_us=12107000 infer=119 result_frame=119 digit=-1",
+      "[CPU0] VISION METRIC cpu=0 captured=180 queued=180 displayed=180 elapsed_us=18124000 infer=179 result_frame=179 digit=-1",
+      "[CPU0] VISION METRIC cpu=0 captured=240 queued=240 displayed=240 elapsed_us=24114000 infer=239 result_frame=239 digit=-1",
+      "[CPU0] VISION METRIC cpu=0 captured=300 queued=300 displayed=300 elapsed_us=30132000 infer=299 result_frame=299 digit=-1"
+    ],
+    "observation_seconds": 35,
+    "original_config_option_differences": 0,
+    "human_visual_test": false,
+    "original_firmware_restored_and_full_flash_verified": true,
+    "original_firmware_running": true,
+    "board_receipt_sha256": "bc28cf34ab937718cf447ea9139c75dc1ad3bcc939420c5982280dda2922f8c9",
+    "raw_log_sha256": "d2928f42149ed895e0b39c0f68b521e1d3ff5c8ff577b999f3e976a40c501fce",
+    "exact_historical_binary_claimed": false
+  },
+  "limits": [
+    "Build verification covers the five listed configurations in the documented host environment; other historical configurations are not claimed here.",
+    "Only the rebuilt original digit image received a new board test; earlier peripheral/human observations retain their own image identity.",
+    "Public source revisions and archive hashes were checked; dependency/network availability and other host platforms are external to this verification."
+  ]
+}

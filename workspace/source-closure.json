@@ -94,13 +94,25 @@
   },
   "refresh": {
     "canonical_ethernet_files": 14,
-    "dependency_linkage": "HAL and mbedTLS patches refreshed from pinned canonical repositories. Legacy setup-dependencies.sh targets .s31-deps; current build tools require s31-reference, including the separately supplied IDF and SDK.",
+    "dependency_linkage": "Public setup-dependencies.sh and build.sh share .s31-deps; pinned SDMMC headers and host runtime packages are included. Private IDF/SDK products are not required.",
     "e416_export_is_final": false,
-    "full_receiver_build_verified": false,
+    "full_receiver_build_verified": true,
     "original_factory_reference_files_verified": 196,
     "patch_tree_reconstruction_verified": true,
     "rejected_e407_added": false,
     "reviewed_untracked_files": 619
   },
-  "replay_verified": false
+  "replay_verified": true,
+  "public_reproduction": {
+    "date": "2026-11-05",
+    "record": "../docs/validation/public-reproduction.json",
+    "sha256": "8cf61bcb22f89ba3304ad73c4e08d4fbf9e5605e376abf9b5cce1fc5061c0d9f",
+    "profiles": [
+      "nsh",
+      "function-ethernet",
+      "korvo-openvela-factory",
+      "korvo-digit-rebuild",
+      "demo-rmt-netapps-competition"
+    ]
+  }
 }

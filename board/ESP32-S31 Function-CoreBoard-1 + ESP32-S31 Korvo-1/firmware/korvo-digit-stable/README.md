@@ -12,15 +12,16 @@
 
 ```sh
 sha256sum -c SHA256SUMS
+DEPS="$CHECKOUT/.s31-deps"  # 或依赖安装时指定的 --deps 目录
 DIGIT_PORT=/dev/ttyUSB0
-python3 -m esptool --chip esp32s31 --port "$DIGIT_PORT" --baud 460800 write-flash --flash-size 16MB --flash-mode dio --flash-freq 80m 0x2000 nuttx.bin
-python3 -m esptool --chip esp32s31 --port "$DIGIT_PORT" --baud 460800 verify-flash 0x2000 nuttx.bin
+"$DEPS/venv/bin/python3" -m esptool --chip esp32s31 --port "$DIGIT_PORT" --baud 460800 write-flash --flash-size 16MB --flash-mode dio --flash-freq 80m 0x2000 nuttx.bin
+"$DEPS/venv/bin/python3" -m esptool --chip esp32s31 --port "$DIGIT_PORT" --baud 460800 verify-flash 0x2000 nuttx.bin
 ```
 
 每条命令成功后再执行下一条。此固件无额外 AppFS；串口为 115200。不要将完整 Flash 备份公开提交。
 
 ## 源码与结果范围
 
-`reference/` 是与稳定版一起保存的三份源文件快照，`.config` 与 `defconfig` 保留原配置。这不是可独立重建整份稳定固件的完整源码树；完整开发平台及其他配置的构建入口见仓库 `workspace/REPRODUCE.md`。原型之后的改动不继承这份固件的验收。
+`reference/` 是随稳定固件保存的三份源文件，`.config` 与 `defconfig` 保留原配置。完整源码恢复和构建入口位于 [workspace/digit-demo](../../../../workspace/digit-demo/README.md)，使用公开平台快照与原版覆盖层构建，不依赖开发者电脑上的私有源码。重建镜像已实测双核启动、100/100 自检及摄像/显示/推理持续运行，配置项与本目录原配置一致。历史固件继续保留；新构建含不同链接和构建元数据，不承诺逐字节一致，人工画面验收结果不自动迁移。
 
 原主机计时记录：50.136 秒内 480 次确认显示交接，约 9.574 次/秒；不是光学帧率或识别准确率。CPU1 固定自检 100/100、SIMD parity_errors=0。逐文件校验见 `SHA256SUMS`，许可证见 `NOTICE.md` 和 `licenses/`。
