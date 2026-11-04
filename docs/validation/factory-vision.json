@@ -2,28 +2,27 @@
   "schema": 1,
   "date": "2026-11-05",
   "profile": "korvo-factory-vision",
-  "status": "physical_acceptance_pending",
+  "status": "display_sync_fix_installed_waiting_for_physical_recheck",
   "build": {
     "status": "BUILD_PASS",
-    "fresh_output": true,
-    "public_entrypoint": true,
-    "snapshot_sha256": "5b6894da3ac16e430ce402e3a1c977e584757efad5527c0df37eab260d07b45b",
+    "fresh_output": false,
+    "kind": "incremental after bounded display-sync changes",
     "artifacts": {
       "nuttx": {
-        "sha256": "1b9ae75bb8b2359bab2d2605316e9378cd2c881ee9cbc4b7fc6586e49689d061",
-        "bytes": 1838656
+        "bytes": 1838656,
+        "sha256": "3daa8f63afb0178c0109c96ef9bed50efc6d71b5764d3d91565a2b0f2da81916"
       },
       "nuttx.bin": {
-        "sha256": "d7ac8d5feed7a4549f31fd674c293b1a0e35700ca50ffbc35ff7a52b39af1b9e",
-        "bytes": 1668908
-      },
-      "appfs.img": {
-        "sha256": "9f43022a1c4f27a74fefcd3829e7b1bc89eb3902ee25b4048d80783f575d0eb8",
-        "bytes": 7657472
+        "bytes": 1668908,
+        "sha256": "685b62b44ef9b48e100cad60f90d21c6d213d969c099ecbcd0116cef197bae78"
       },
       ".config": {
-        "sha256": "1cfdd19bec88207076f53180635a434421362390300ed57113eac2520d0bab14",
-        "bytes": 97868
+        "bytes": 97868,
+        "sha256": "1cfdd19bec88207076f53180635a434421362390300ed57113eac2520d0bab14"
+      },
+      "appfs.img": {
+        "bytes": 7657472,
+        "sha256": "906d2097302d3d9da48818f0ad12559c7f015bf36594e435e9e2dd41f2e4ef7c"
       }
     }
   },
@@ -145,18 +144,68 @@
     "Latest coffee pixel allocation change needs on-board acceptance.",
     "No USB Host, SD, ADC keys, wireless, acoustic quality or sustained-load acceptance for this SMP profile."
   ],
+  "physical_feedback": {
+    "entry": true,
+    "report": "Only the camera area flickers; right-side text/buttons stable.",
+    "serial_observed_return_to_preview": true,
+    "visual_acceptance": false,
+    "applies_to": "previous public-build image"
+  },
+  "public_full_build_before_display_fix": {
+    "status": "BUILD_PASS",
+    "fresh_output": true,
+    "public_entrypoint": true,
+    "snapshot_sha256": "5b6894da3ac16e430ce402e3a1c977e584757efad5527c0df37eab260d07b45b",
+    "artifacts": {
+      "nuttx": {
+        "sha256": "1b9ae75bb8b2359bab2d2605316e9378cd2c881ee9cbc4b7fc6586e49689d061",
+        "bytes": 1838656
+      },
+      "nuttx.bin": {
+        "sha256": "d7ac8d5feed7a4549f31fd674c293b1a0e35700ca50ffbc35ff7a52b39af1b9e",
+        "bytes": 1668908
+      },
+      "appfs.img": {
+        "sha256": "9f43022a1c4f27a74fefcd3829e7b1bc89eb3902ee25b4048d80783f575d0eb8",
+        "bytes": 7657472
+      },
+      ".config": {
+        "sha256": "1cfdd19bec88207076f53180635a434421362390300ed57113eac2520d0bab14",
+        "bytes": 97868
+      }
+    }
+  },
+  "board_history": [
+    {
+      "status": "HUMAN_ACCEPTANCE_READY",
+      "kernel_sha256": "d7ac8d5feed7a4549f31fd674c293b1a0e35700ca50ffbc35ff7a52b39af1b9e",
+      "appfs_sha256": "9f43022a1c4f27a74fefcd3829e7b1bc89eb3902ee25b4048d80783f575d0eb8",
+      "config_sha256": "1cfdd19bec88207076f53180635a434421362390300ed57113eac2520d0bab14",
+      "home_preview_first": [
+        212,
+        0,
+        0
+      ],
+      "home_preview_second": [
+        246,
+        0,
+        0
+      ],
+      "candidate_kept_for_human": true
+    }
+  ],
   "latest_board_prepare": {
     "status": "HUMAN_ACCEPTANCE_READY",
-    "kernel_sha256": "d7ac8d5feed7a4549f31fd674c293b1a0e35700ca50ffbc35ff7a52b39af1b9e",
-    "appfs_sha256": "9f43022a1c4f27a74fefcd3829e7b1bc89eb3902ee25b4048d80783f575d0eb8",
+    "kernel_sha256": "685b62b44ef9b48e100cad60f90d21c6d213d969c099ecbcd0116cef197bae78",
+    "appfs_sha256": "906d2097302d3d9da48818f0ad12559c7f015bf36594e435e9e2dd41f2e4ef7c",
     "config_sha256": "1cfdd19bec88207076f53180635a434421362390300ed57113eac2520d0bab14",
     "home_preview_first": [
-      212,
+      213,
       0,
       0
     ],
     "home_preview_second": [
-      246,
+      247,
       0,
       0
     ],

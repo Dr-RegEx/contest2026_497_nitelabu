@@ -273,18 +273,18 @@
       "cores": 2,
       "headline": false,
       "build_test": {
-        "status": "fresh_public_build_pass",
-        "current_front_door_full_build_tested": true,
-        "image_sha256": "d7ac8d5feed7a4549f31fd674c293b1a0e35700ca50ffbc35ff7a52b39af1b9e",
-        "appfs_sha256": "9f43022a1c4f27a74fefcd3829e7b1bc89eb3902ee25b4048d80783f575d0eb8",
+        "status": "incremental_build_pass_after_display_fix",
+        "current_front_door_full_build_tested": false,
+        "previous_full_public_build_pass": true,
+        "image_sha256": "685b62b44ef9b48e100cad60f90d21c6d213d969c099ecbcd0116cef197bae78",
+        "appfs_sha256": "906d2097302d3d9da48818f0ad12559c7f015bf36594e435e9e2dd41f2e4ef7c",
         "record": "docs/validation/factory-vision.json"
       },
       "board_test": {
-        "status": "home_boot_and_live_capture_pass_touch_pending",
-        "prior_candidate_automated_cycles": 3,
-        "record": "docs/validation/factory-vision.json",
-        "image_sha256": "d7ac8d5feed7a4549f31fd674c293b1a0e35700ca50ffbc35ff7a52b39af1b9e",
-        "appfs_sha256": "9f43022a1c4f27a74fefcd3829e7b1bc89eb3902ee25b4048d80783f575d0eb8"
+        "status": "home_boot_and_live_capture_pass_display_fix_recheck_pending",
+        "image_sha256": "685b62b44ef9b48e100cad60f90d21c6d213d969c099ecbcd0116cef197bae78",
+        "appfs_sha256": "906d2097302d3d9da48818f0ad12559c7f015bf36594e435e9e2dd41f2e4ef7c",
+        "record": "docs/validation/factory-vision.json"
       },
       "image_layout": {
         "kind": "kernel_and_appfs_pair",

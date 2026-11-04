@@ -500,7 +500,7 @@ void FactoryActivity::refresh()
     processIntent();
     if (!mResumed) return;
     if (mViewPending) { mViewPending = false; changeView(mWantCoffee); }
-    presentCamera();
+    if (!mDigitWanted && !mSnapshot.digitDisplayOwned) presentCamera();
     uint64_t now = monotonicNs();
     if (!mStatusNs || now - mStatusNs >= 100000000ULL) {
         if (mBackend) {
@@ -519,9 +519,13 @@ void FactoryActivity::refresh()
             mPlayAfterStop = false;
             if (mSnapshot.hasRecording) command(Command::PlayRecording);
         }
-        if (!mCoffeeVisible) refreshStatus();
+        if (!mCoffeeVisible && !mDigitWanted && !mSnapshot.digitDisplayOwned)
+            refreshStatus();
         mStatusNs = now;
     }
+    // Keep touch/events and the backend retirement polling alive, but do not
+    // redraw hidden dashboard widgets while the original renderer owns LCD.
+    if (mDigitWanted || mSnapshot.digitDisplayOwned) return;
     if (!mOverlayNs || now - mOverlayNs >= 1000000000ULL) {
         char draw[24], interval[24], camera[24];
         milliseconds(draw, sizeof(draw), mDrawNs, mDrawSamples);

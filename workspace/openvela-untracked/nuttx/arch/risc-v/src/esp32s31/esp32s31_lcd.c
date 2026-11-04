@@ -424,7 +424,7 @@ static int s31_lcd_present(FAR struct fb_vtable_s *vtable,
    * before FBIO_UPDATE and not modify the shared frame until it returns.
    */
 
-  esp32s31_dcache_writeback_all();
+  if (!direct) esp32s31_dcache_writeback_all();
 #endif
   if (!direct) memcpy(g_scan[next], g_frame, LCD_FBSIZE);
   if (g_first_update)
@@ -433,10 +433,22 @@ static int s31_lcd_present(FAR struct fb_vtable_s *vtable,
     }
 
 #ifdef CONFIG_BUILD_KERNEL
-  /* Keep the process-alias path free of address-range invalidations. */
+  /* Only the WM staging image has process aliases.  The original digit
+   * renderer writes the private physical scan buffer directly; retain its
+   * scoped writeback instead of flushing unrelated user heaps every frame.
+   * Neither path invalidates cache lines that the other CPU may be writing.
+   */
 
-  esp32s31_dcache_writeback_all();
-  ret = OK;
+  if (direct)
+    {
+      ret = s31_lcd_result(esp_cache_msync(g_scan[next], LCD_FBSIZE,
+                                         ESP_CACHE_MSYNC_FLAG_DIR_C2M));
+    }
+  else
+    {
+      esp32s31_dcache_writeback_all();
+      ret = OK;
+    }
 #else
   ret = s31_lcd_result(esp_cache_msync(g_scan[next], LCD_FBSIZE,
                                      ESP_CACHE_MSYNC_FLAG_DIR_C2M));
