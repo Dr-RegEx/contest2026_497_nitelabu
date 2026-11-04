@@ -1,0 +1,1229 @@
+diff --git a/Kconfig b/Kconfig
+index be367d2b3cad3ffb6be6b2f730962865e58cf83e..852c0be3682f5f50cb4f11691531706df7914cbe 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -20,9 +20,27 @@ config SYSTEM_PACKAGE_SERVICE
+ 	depends on ANDROID_BINDER
+ 	depends on SYSTEM_SERVER
+ 	depends on LIB_RAPIDJSON
++	depends on LIBUV_EXTENSION && LIB_ZLIB && CRYPTO_MBEDTLS
++	depends on !DISABLE_SIGNALS
++	select SCHED_HAVE_PARENT
++	select SCHED_CHILD_STATUS
++	select SCHED_WAITPID
++	select SIG_DEFAULT
++	select SIG_SIGKILL_ACTION
+ 
+ if SYSTEM_PACKAGE_SERVICE
+ 
++config SYSTEM_PACKAGE_SERVICE_TASK_TIMEOUT_MS
++	int "Installation/uninstallation worker deadline (milliseconds)"
++	default 60000
++	range 1000 3600000
++	---help---
++		Report success only after a success byte and a clean child exit.
++		On timeout or transport failure terminate and reap the worker before
++		releasing its staging directory and same-package operation guard.
++		This service enables retained child status and default termination
++		signals. Other child owners must also reap their children.
++
+ config SYSTEM_PACKAGE_SERVICE_COMMAND
+ 	tristate "Enable package manager command tool"
+ 	default n
+@@ -37,4 +55,15 @@ config SYSTEM_PACKAGE_SERVICE_DEBUG
+ 	bool "Enable PMS scan AppPresetPath on every startup"
+ 	default y
+ 
++config SYSTEM_PACKAGE_SERVICE_TMPFS_RESERVE
++	int "Free RAM retained when admitting a tmpfs package"
++	default 0
++	range 0 2147483647
++	depends on BUILD_FLAT && FS_TMPFS && FS_HEAPSIZE = 0 && !MM_KERNEL_HEAP
++	---help---
++		In a shared-heap FLAT build, NuttX tmpfs capacity comes from the
++		shared heap rather than statvfs's existing object slack. Subtract
++		this headroom before the package manager's three-times-size check.
++		This does not reserve RAM or limit decompressed package contents.
++
+ endif
+diff --git a/include/pm/PackageManagerService.h b/include/pm/PackageManagerService.h
+index a5ed77a5d4a5a550615f5c28d4d4c0aa8c82cdb5..fd8565f904259aef503badce8bbf81178e1ace52 100644
+--- a/include/pm/PackageManagerService.h
++++ b/include/pm/PackageManagerService.h
+@@ -19,6 +19,7 @@
+ #include <utils/String16.h>
+ 
+ #include "app/UvLoop.h"
++#include <memory>
+ #include "os/pm/BnPackageManager.h"
+ #include "os/pm/IPackageManager.h"
+ #include "os/pm/InstallParam.h"
+@@ -32,6 +33,7 @@ using android::binder::Status;
+ 
+ class PackageInstaller;
+ class PackageParser;
++class PackageStage;
+ 
+ class SlicedPackageInfo;
+ 
+@@ -146,7 +148,8 @@ public:
+     }
+ 
+     void handleAppInstallResult(const std::string &packageName,
+-                                const android::sp<IInstallObserver> &observer);
++                                const android::sp<IInstallObserver> &observer,
++                                const std::shared_ptr<PackageStage> &stage);
+ 
+     void handleAppUninstallResult(const std::string &packageName,
+                                   const android::sp<IUninstallObserver> &observer);
+diff --git a/src/InstallMain.cpp b/src/InstallMain.cpp
+index 1b76bbd88f85ece046c80aab8515dd3313d1813f..55a2390ca04c1a48c054571a8734574f389bc2ea 100644
+--- a/src/InstallMain.cpp
++++ b/src/InstallMain.cpp
+@@ -1,11 +1,15 @@
+ #include <unistd.h>
+ #include <utils/Errors.h>
+ #include <uv_ext.h>
++#include <sys/stat.h>
+ 
+ #include <array>
++#include <cerrno>
+ #include <string>
+ 
+ #include "PackageUtils.h"
++#include "PackageName.h"
++#include "PackagePublish.h"
+ #include "app/Logger.h"
+ 
+ #ifdef CONFIG_HAP_APP_PATH
+@@ -25,19 +29,19 @@
+ 
+ namespace {
+ 
+-void writeError(int fd, uint8_t errorCode) {
+-    write(fd, &errorCode, sizeof(errorCode));
+-}
+-void writeProgress(int fd, uint8_t progress) {
+-    write(fd, &progress, sizeof(progress));
++bool writeProgress(int fd, uint8_t progress) {
++    ssize_t written;
++    do { written = write(fd, &progress, sizeof(progress)); }
++    while (written < 0 && errno == EINTR);
++    return written == sizeof(progress);
+ }
++void writeError(int fd, uint8_t errorCode) { writeProgress(fd, errorCode); }
+ 
+ } // namespace
+ 
+ extern "C" int main(int argc, char **argv) {
+     using std::filesystem::current_path;
+     using std::filesystem::exists;
+-    using std::filesystem::rename;
+ 
+     if (argc < 5) {
+         return -1;
+@@ -48,13 +52,15 @@ extern "C" int main(int argc, char **argv) {
+     std::string packageName = argv[3];
+     int progressFd = atoi(argv[4]);
+ 
+-    if (command != "install" && command != "uninstall") {
++    if ((command != "install" && command != "stage" && command != "uninstall" &&
++         command != "prepare-uninstall") ||
++        !os::pm::isValidPackageName(packageName)) {
+         ALOGE("Unknown command: %s", command.c_str());
+         writeError(progressFd, PMS_PARAM_ERROR);
+         return -1;
+     }
+ 
+-    if (command == "install") {
++    if (command == "install" || command == "stage") {
+         if (argc < 6) {
+             return -1;
+         }
+@@ -85,26 +91,36 @@ extern "C" int main(int argc, char **argv) {
+         }
+         app_verify_close(token);
+ 
++        // Managed installs publish only in the parent, after a clean child
++        // completion. Missing terminal status must not change installed files.
++        if (command == "stage") return writeProgress(progressFd, 100) ? 0 : android::NO_INIT;
++
+         std::string dstPath =
+                 os::pm::joinPath(os::pm::PackageConfig::getInstance().getAppInstalledPath(),
+                                  packageName);
+-        if (exists(dstPath.c_str())) {
+-            os::pm::removeDirectory(dstPath.c_str());
+-        }
+-
+-        std::error_code ec;
+-        rename(tmp, dstPath.c_str(), ec);
+-        if (ec) {
+-            ALOGE("Copy from %s to %s Failed:%s", tmp, dstPath.c_str(), ec.message().c_str());
++        ret = os::pm::publishPackageDirectory(
++                tmp, os::pm::PackageConfig::getInstance().getAppInstalledPath(), packageName);
++        if (ret) {
++            ALOGE("Publish from %s to %s failed: %d", tmp, dstPath.c_str(), ret);
+             writeError(progressFd, PMS_RENAME_ERROR);
+             return android::NO_INIT;
+         }
+ 
+-        writeProgress(progressFd, 100);
+-        return 0;
++        return writeProgress(progressFd, 100) ? 0 : android::NO_INIT;
+     }
+ 
+-    // uninstall
++    // Managed removal commits directories and registry in the parent. Keep the
++    // direct CLI uninstall operation for existing maintenance/debug callers.
++    if (command == "prepare-uninstall") {
++        struct stat info;
++        if (lstat(path.c_str(), &info) < 0 || !S_ISDIR(info.st_mode)) {
++            writeError(progressFd, PMS_REMOVE_APP_DIRECT_ERROR);
++            return android::PERMISSION_DENIED;
++        }
++        return writeProgress(progressFd, 100) ? 0 : android::NO_INIT;
++    }
++
++    // direct CLI uninstall
+     if (!os::pm::removeDirectory(path.c_str())) {
+         ALOGE("removeDirectory failed: %s", path.c_str());
+         writeError(progressFd, PMS_REMOVE_APP_DIRECT_ERROR);
+@@ -129,6 +145,5 @@ extern "C" int main(int argc, char **argv) {
+         }
+     }
+ 
+-    writeProgress(progressFd, 100);
+-    return 0;
+-}
+\ No newline at end of file
++    return writeProgress(progressFd, 100) ? 0 : android::NO_INIT;
++}
+diff --git a/src/InstallTask.cpp b/src/InstallTask.cpp
+index 9e3f7006a2849989fd21e067888d1e22fd41a801..4a161aad8bc8c0402715f207f9e1c4874c33272f 100644
+--- a/src/InstallTask.cpp
++++ b/src/InstallTask.cpp
+@@ -1,147 +1,50 @@
+ #include "InstallTask.h"
+ 
+-#include <spawn.h>
+-#include <sys/types.h>
+-#include <unistd.h>
+-#include <utils/Errors.h>
+-#include <utils/Log.h>
+-#include <uv_ext.h>
+-
+ #include <filesystem>
++#include <utils/Errors.h>
+ 
++#include "PackageStage.h"
++#include "PackageTask.h"
+ #include "PackageUtils.h"
+-#include "app/Logger.h"
+ 
+ namespace os {
+ namespace pm {
+-
+-using std::filesystem::exists;
++InstallTask::~InstallTask() { if (mWorker) mWorker->cancel(); }
+ 
+ int InstallTask::start() {
+-    int pipefd[2]; // 0: read, 1: write
+-    if (pipe(pipefd) != 0) {
+-        ALOGE("create pipe failed: %s", strerror(errno));
+-        cleanup();
+-        return -1;
+-    }
+-    mPipeFdRead = pipefd[0];
+-    mPipeFdWrite = pipefd[1];
+-
+-    mPoll = std::make_unique<os::app::UvPoll>(mLooper, mPipeFdRead);
+-    int startResult = mPoll->start(
+-            UV_READABLE | UV_PRIORITIZED,
+-            [](int fd, int status, int events, void *data) {
+-                InstallTask *task = static_cast<InstallTask *>(data);
+-                task->handleProgressUpdate(fd, events);
+-            },
+-            this);
+-
+-    if (startResult != 0) {
+-        ALOGE("uv_poll_start failed: %s", uv_strerror(startResult));
+-        cleanup();
+-        return -1;
+-    }
+-
+-    size_t pos = mParam.path.find_last_of('/');
+-    std::string rpkFullName = mParam.path;
+-    if (pos != std::string::npos) {
+-        rpkFullName = mParam.path.substr(pos + 1);
+-    }
+-    pos = rpkFullName.rfind('.');
+-    std::string rpkName = rpkFullName.substr(0, pos);
+-
+-    if (!exists(mParam.path.c_str())) {
+-        ALOGE("%s is not exist", mParam.path.c_str());
+-        cleanup();
+-        return android::NAME_NOT_FOUND;
+-    }
+-
+-    mTmp = joinPath(PackageConfig::getInstance().getAppDataPath(), "tmp");
+-    mTmp = joinPath(mTmp, rpkName);
+-
+-    pid_t pid = -1;
+-    char *argv[7];
+-    argv[0] = const_cast<char *>("pmsInstaller");       // program name
+-    argv[1] = const_cast<char *>("install");            // Indicates install
+-    argv[2] = const_cast<char *>(mParam.path.c_str());  // rpk path
+-    argv[3] = const_cast<char *>(mPackageName.c_str()); // package name
+-    std::string str = std::to_string(mPipeFdWrite);
+-    argv[4] = const_cast<char *>(str.c_str());  // write fd
+-    argv[5] = const_cast<char *>(mTmp.c_str()); // tmp path
+-    argv[6] = nullptr;
+-
+-    posix_spawnattr_t attr;
+-    posix_spawnattr_init(&attr);
+-    posix_spawnattr_setstacksize(&attr, CONFIG_SYSTEM_SERVER_STACKSIZE);
+-
+-    posix_spawn_file_actions_t actions;
+-    posix_spawn_file_actions_init(&actions);
+-    posix_spawn_file_actions_addclose(&actions, mPipeFdRead); // 子进程关闭读端
+-
+-    const int ret = posix_spawn(&pid, argv[0], &actions, &attr, argv, NULL);
+-    posix_spawnattr_destroy(&attr);
+-    posix_spawn_file_actions_destroy(&actions);
+-    close(mPipeFdWrite); // 父进程关闭写端
+-    mPipeFdWrite = -1;
+-    if (ret != 0) {
+-        ALOGE("posix_spawn %s failed error:%d", argv[0], ret);
+-        cleanup();
+-        return ret > 0 ? -ret : ret;
+-    }
+-
+-    return pid;
+-}
+-
+-void InstallTask::handleProgressUpdate(int fd, int events) {
+-    if (!(events & UV_READABLE)) {
+-        return;
+-    }
+-
+-    uint8_t progress;
+-    ssize_t nread = read(fd, &progress, sizeof(progress));
+-    if (nread == sizeof(progress)) {
+-        ALOGI("Installation progress: %d%% on fd:%d", progress, fd);
+-        if (progress > 100) {
+-            ALOGE("decompress %s failed: 0x%X", mParam.path.c_str(), progress);
+-            mObserver->onInstallResult(mParam.path, -1, "Failed to deal with rpkpackage");
+-            cleanup(); // 关闭父进程读端->关闭管道
+-            return;
+-        }
+-        // 更新进度
+-        mObserver->onInstallProcess(mParam.path, progress);
+-        if (progress == 100) {
+-            ALOGI("Installation completed via progress pipe fd:%d", fd);
+-            if (mResultHandler) {
+-                mResultHandler(mPackageName, mObserver);
++    if (mWorker || !mStage || !std::filesystem::exists(mStage->path()))
++        return android::BAD_VALUE;
++    std::weak_ptr<InstallTask> weak = shared_from_this();
++    mWorker = std::make_shared<PackageTask>(mLooper);
++    return mWorker->start({"pmsInstaller", "stage", mStage->path(), mPackageName, "",
++                           joinPath(mStage->directory(), "unpacked")}, mStage,
++        [weak](uint8_t progress) {
++            if (auto task = weak.lock()) {
++                auto observer = task->mObserver;
++                const auto path = task->mParam.path;
++                if (observer) observer->onInstallProcess(path, progress);
+             }
+-            cleanup(); // 关闭父进程读端->关闭管道
+-        }
+-    } else if (nread == 0) {
+-        // 管道关闭（子进程关闭了写端）
+-        ALOGI("Pipe fd:%d closed by child process", fd);
+-        cleanup(); // 关闭父进程读端->关闭管道
+-    } else if (nread < 0) {
+-        // 读取错误
+-        ALOGE("Read error on pipe fd:%d: %s", fd, strerror(errno));
+-        cleanup(); // 关闭父进程读端->关闭管道
+-    }
++        },
++        [weak](int result) { if (auto task = weak.lock()) task->completed(result); });
+ }
+ 
+-void InstallTask::cleanup() {
+-    if (mPipeFdRead >= 0) {
+-        close(mPipeFdRead);
+-        mPipeFdRead = -1;
+-    }
+-
+-    if (mPipeFdWrite >= 0) {
+-        close(mPipeFdWrite);
+-        mPipeFdWrite = -1;
+-    }
+-
+-    if (mCompletedCallback) {
+-        mCompletedCallback(mPackageName);
+-    }
++void InstallTask::completed(int result) {
++    if (mFinished) return;
++    mFinished = true;
++    // Callbacks may erase the map entry or destroy their service. Keep copies
++    // and let the weak callback's local shared_ptr retain this task until return.
++    const auto name = mPackageName;
++    const auto path = mParam.path;
++    auto observer = mObserver;
++    auto handler = mResultHandler;
++    auto completed = mCompletedCallback;
++    if (result == 0) {
++        if (handler) handler(name, observer);
++    } else if (observer) {
++        observer->onInstallResult(path, result, "Package installer failed or exited unexpectedly");
++    }
++    // Retain the same-package guard during result delivery, including reentry.
++    if (completed) completed(name);
+ }
+-
+ } // namespace pm
+-} // namespace os
+\ No newline at end of file
++} // namespace os
+diff --git a/src/InstallTask.h b/src/InstallTask.h
+index cd58e3ee82ed33a396c10b0d7f10ab84a6f82568..37c24f5707225254194b088fa860a5a0f3e1489f 100644
+--- a/src/InstallTask.h
++++ b/src/InstallTask.h
+@@ -1,91 +1,45 @@
+ #pragma once
+ 
+-#include <sys/types.h>
+ #include <uv.h>
+-
+-#include <map>
++#include <functional>
++#include <memory>
+ #include <string>
+ 
+-#include "app/UvLoop.h"
+ #include "os/pm/IInstallObserver.h"
+ #include "os/pm/InstallParam.h"
+-#include "pm/PackageInfo.h"
+ 
+ namespace os {
+ namespace pm {
++class PackageStage;
++class PackageTask;
+ 
+-class InstallTask {
++class InstallTask : public std::enable_shared_from_this<InstallTask> {
+ public:
+     using TaskCompletedCallback = std::function<void(const std::string&)>;
+     using InstallResultHandler =
+             std::function<void(const std::string&, const android::sp<IInstallObserver>&)>;
+-
+     InstallTask(uv_loop_t* looper, const InstallParam& param,
+                 TaskCompletedCallback completedCallback, InstallResultHandler resultHandler,
+-                const std::string& packageName, const android::sp<IInstallObserver>& observer)
+-          : mLooper(looper),
+-            mParam(param),
+-            mPoll(nullptr),
+-            mCompletedCallback(completedCallback),
+-            mResultHandler(resultHandler),
+-            mPackageName(packageName),
+-            mObserver(observer),
+-            mPipeFdRead(-1),
+-            mPipeFdWrite(-1) {}
++                const std::string& packageName, const android::sp<IInstallObserver>& observer,
++                std::shared_ptr<PackageStage> stage)
++          : mLooper(looper), mParam(param), mCompletedCallback(std::move(completedCallback)),
++            mResultHandler(std::move(resultHandler)), mPackageName(packageName),
++            mObserver(observer), mStage(std::move(stage)) {}
++    ~InstallTask();
+     InstallTask(const InstallTask&) = delete;
+     InstallTask& operator=(const InstallTask&) = delete;
+-    InstallTask(InstallTask&& other)
+-          : mLooper(other.mLooper),
+-            mParam(std::move(other.mParam)),
+-            mPoll(std::move(other.mPoll)),
+-            mCompletedCallback(std::move(other.mCompletedCallback)),
+-            mResultHandler(std::move(other.mResultHandler)),
+-            mTmp(std::move(other.mTmp)),
+-            mPackageName(std::move(other.mPackageName)),
+-            mObserver(std::move(other.mObserver)),
+-            mPipeFdRead(other.mPipeFdRead),
+-            mPipeFdWrite(other.mPipeFdWrite) {
+-        other.mLooper = nullptr;
+-        other.mPipeFdRead = -1;
+-        other.mPipeFdWrite = -1;
+-    }
+-    InstallTask& operator=(InstallTask&& other) {
+-        if (this != &other) {
+-            mLooper = other.mLooper;
+-            mParam = std::move(other.mParam);
+-            mPoll = std::move(other.mPoll);
+-            mCompletedCallback = std::move(other.mCompletedCallback);
+-            mResultHandler = std::move(other.mResultHandler);
+-            mTmp = std::move(other.mTmp);
+-            mPackageName = std::move(other.mPackageName);
+-            mObserver = std::move(other.mObserver);
+-            mPipeFdRead = other.mPipeFdRead;
+-            mPipeFdWrite = other.mPipeFdWrite;
+-
+-            other.mLooper = nullptr;
+-            other.mPipeFdRead = -1;
+-            other.mPipeFdWrite = -1;
+-        }
+-        return *this;
+-    }
+-    ~InstallTask() = default;
+-
+     int start();
+-    void handleProgressUpdate(int fd, int events);
+-    void cleanup();
+-
+ private:
++    void completed(int result);
+     uv_loop_t* mLooper;
+     InstallParam mParam;
+-    std::unique_ptr<os::app::UvPoll> mPoll;
+     TaskCompletedCallback mCompletedCallback;
+     InstallResultHandler mResultHandler;
+-    std::string mTmp;
+     std::string mPackageName;
+     android::sp<IInstallObserver> mObserver;
+-    int mPipeFdRead;
+-    int mPipeFdWrite;
++    std::shared_ptr<PackageStage> mStage;
++    std::shared_ptr<PackageTask> mWorker;
++    bool mFinished = false;
+ };
+-
+ } // namespace pm
+-} // namespace os
+\ No newline at end of file
++} // namespace os
+diff --git a/src/PackageInstaller.cpp b/src/PackageInstaller.cpp
+index f57b622a92150e55f628609f35d609455fed1ef8..9f9d3019aac53bd56fc015d65b4e64975015f4e4 100644
+--- a/src/PackageInstaller.cpp
++++ b/src/PackageInstaller.cpp
+@@ -23,6 +23,8 @@
+ #include <filesystem>
+ 
+ #include "PackageUtils.h"
++#include "PackageName.h"
++#include "PackageList.h"
+ 
+ namespace os {
+ namespace pm {
+@@ -43,13 +45,14 @@ int32_t PackageInstaller::createUserId() {
+ int PackageInstaller::installApp(uv_loop_t *looper, const InstallParam &param,
+                                  const android::sp<IInstallObserver> &observer,
+                                  InstallTask::InstallResultHandler resultHandler,
+-                                 const std::string &packageName) {
++                                 const std::string &packageName,
++                                 const std::shared_ptr<PackageStage> &stage) {
+     size_t pos = param.path.find_last_of('.');
+     std::string suffix;
+     if (pos != std::string::npos) {
+         suffix = param.path.substr(pos + 1);
+         if (suffix == "rpk" || suffix == "apk") {
+-            return installQuickApp(looper, param, observer, resultHandler, packageName);
++            return installQuickApp(looper, param, observer, resultHandler, packageName, stage);
+         }
+     }
+     return installNativeApp(param);
+@@ -101,7 +104,8 @@ std::vector<std::string> PackageInstaller::findUninstallTask() {
+ int PackageInstaller::installQuickApp(uv_loop_t *looper, const InstallParam &param,
+                                       const android::sp<IInstallObserver> &observer,
+                                       InstallTask::InstallResultHandler resultHandler,
+-                                      const std::string &packageName) {
++                                      const std::string &packageName,
++                                      const std::shared_ptr<PackageStage> &stage) {
+     if (mInstallTasks.find(packageName) != mInstallTasks.end()) {
+         ALOGW("Package %s is already being installed, skipping duplicate request",
+               packageName.c_str());
+@@ -113,16 +117,17 @@ int PackageInstaller::installQuickApp(uv_loop_t *looper, const InstallParam &par
+         return -1;
+     }
+ 
+-    auto completedCallback = [this](const std::string &name) {
+-        this->onInstallTaskCompleted(name);
++    auto completedCallback = [this, alive = std::weak_ptr<void>(mLifetime)](const std::string &name) {
++        if (alive.lock()) this->onInstallTaskCompleted(name);
+     };
+ 
+-    auto task = std::make_unique<InstallTask>(looper, param, completedCallback, resultHandler,
+-                                              packageName, observer);
++    auto task = std::make_shared<InstallTask>(looper, param, completedCallback, resultHandler,
++                                              packageName, observer, stage);
++    mInstallTasks.emplace(packageName, task);
+     int ret = task->start();
+-
+-    if (ret >= 0) {
+-        mInstallTasks.emplace(packageName, std::move(task));
++    if (ret < 0) {
++        auto entry = mInstallTasks.find(packageName);
++        if (entry != mInstallTasks.end() && entry->second == task) mInstallTasks.erase(entry);
+     }
+ 
+     return ret;
+@@ -143,16 +148,17 @@ int PackageInstaller::uninstallApp(uv_loop_t *looper, const std::string &path,
+         return -1;
+     }
+ 
+-    auto completedCallback = [this](const std::string &pkg) {
+-        this->onUninstallTaskCompleted(pkg);
++    auto completedCallback = [this, alive = std::weak_ptr<void>(mLifetime)](const std::string &pkg) {
++        if (alive.lock()) this->onUninstallTaskCompleted(pkg);
+     };
+ 
+-    auto task = std::make_unique<UninstallTask>(looper, path, packageName, observer,
++    auto task = std::make_shared<UninstallTask>(looper, path, packageName, observer,
+                                                 completedCallback, resultHandler);
++    mUninstallTasks.emplace(packageName, task);
+     int ret = task->start();
+-
+-    if (ret >= 0) {
+-        mUninstallTasks.emplace(packageName, std::move(task));
++    if (ret < 0) {
++        auto entry = mUninstallTasks.find(packageName);
++        if (entry != mUninstallTasks.end() && entry->second == task) mUninstallTasks.erase(entry);
+     }
+ 
+     return ret;
+@@ -166,15 +172,18 @@ bool PackageInstaller::loadPackageList(std::map<std::string, PackageInfo> *pkgIn
+     rapidjson::Document document;
+     int ret = getDocument(mPackgeListPath.c_str(), document);
+     if (ret) return false;
++    if (!document.IsObject() || !document.HasMember("packages") ||
++        !document["packages"].IsArray()) return false;
+ 
+     bool isNormal = true;
+     const rapidjson::Value baseArray = rapidjson::Value(rapidjson::kArrayType);
+     const rapidjson::Value &packagesArray =
+             getValue<const rapidjson::Value &>(document, "packages", baseArray);
+     for (unsigned int i = 0; i < packagesArray.Size(); i++) {
++        if (!packagesArray[i].IsObject()) { isNormal = false; continue; }
+         PackageInfo info;
+         info.packageName = getValue<std::string>(packagesArray[i], "package", "");
+-        if (info.packageName.empty()) {
++        if (!isValidPackageName(info.packageName)) {
+             ALOGE("packages.list has package field is empty");
+             isNormal = false;
+             continue;
+@@ -201,7 +210,7 @@ int PackageInstaller::createPackageList() {
+     doc.AddMember("version", 1, allocator);
+     rapidjson::Value packages(rapidjson::kArrayType);
+     doc.AddMember("packages", packages, allocator);
+-    return writeFile(mPackgeListPath.c_str(), toPrettyString(doc));
++    return writePackageList(mPackgeListPath, toPrettyString(doc));
+ }
+ 
+ int PackageInstaller::addInfoToPackageList(const PackageInfo &installInfo) {
+@@ -213,12 +222,24 @@ int PackageInstaller::addInfoToPackageList(const std::vector<PackageInfo> &vecPa
+     rapidjson::Document document;
+     int ret = getDocument(mPackgeListPath.c_str(), document);
+     if (ret) return ret;
++    if (!document.IsObject() || !document.HasMember("packages") ||
++        !document["packages"].IsArray()) return android::BAD_VALUE;
+     const rapidjson::Value baseArray = rapidjson::Value(rapidjson::kArrayType);
+     const rapidjson::Value &cpackagesArray =
+             getValue<const rapidjson::Value &>(document, "packages", baseArray);
+     rapidjson::Value &packagesArray = const_cast<rapidjson::Value &>(cpackagesArray);
+     rapidjson::Document::AllocatorType &allocator = document.GetAllocator();
++    for (const auto &row : packagesArray.GetArray())
++        if (!row.IsObject()) return android::BAD_VALUE;
+     for (auto &packageInfo : vecPackageInfo) {
++        if (!isValidPackageName(packageInfo.packageName)) return android::BAD_VALUE;
++        // Replace all matching rows in the same write. Never delete the old
++        // row in a separate disk commit before adding its replacement.
++        for (auto it = packagesArray.Begin(); it != packagesArray.End();) {
++            if (getValue<std::string>(*it, "package", "") == packageInfo.packageName)
++                it = packagesArray.Erase(it);
++            else ++it;
++        }
+         rapidjson::Value info(rapidjson::kObjectType);
+         rapidjson::Value strval(rapidjson::kStringType);
+         info.AddMember("package",
+@@ -249,26 +270,30 @@ int PackageInstaller::addInfoToPackageList(const std::vector<PackageInfo> &vecPa
+                        allocator);
+         packagesArray.PushBack(info, allocator);
+     }
+-    return writeFile(mPackgeListPath.c_str(), toPrettyString(document));
++    return writePackageList(mPackgeListPath, toPrettyString(document));
+ }
+ 
+ int PackageInstaller::deleteInfoFromPackageList(const std::string &packageName) {
++    if (!isValidPackageName(packageName)) return android::BAD_VALUE;
+     rapidjson::Document document;
+     int ret = getDocument(mPackgeListPath.c_str(), document);
+     if (ret) return ret;
++    if (!document.IsObject() || !document.HasMember("packages") ||
++        !document["packages"].IsArray()) return android::BAD_VALUE;
+     const rapidjson::Value baseArray = rapidjson::Value(rapidjson::kArrayType);
+     const rapidjson::Value &cpackagesArray =
+             getValue<const rapidjson::Value &>(document, "packages", baseArray);
+     rapidjson::Value &packagesArray = const_cast<rapidjson::Value &>(cpackagesArray);
+-    for (auto it = packagesArray.Begin(); it != packagesArray.End(); ++it) {
++    for (const auto &row : packagesArray.GetArray())
++        if (!row.IsObject()) return android::BAD_VALUE;
++    for (auto it = packagesArray.Begin(); it != packagesArray.End();) {
+         std::string pkgName = getValue<std::string>(*it, "package", "");
+         if (packageName == pkgName) {
+             it = packagesArray.Erase(it);
+-            break;
+-        }
++        } else ++it;
+     }
+-    return writeFile(mPackgeListPath.c_str(), toPrettyString(document));
++    return writePackageList(mPackgeListPath, toPrettyString(document));
+ }
+ 
+ } // namespace pm
+-} // namespace os
+\ No newline at end of file
++} // namespace os
+diff --git a/src/PackageInstaller.h b/src/PackageInstaller.h
+index d2b765a0ebeaeec3f0a2d4f44c72bad90377b523..76bddedac7102323356049c2740a22fbb88b46bd 100644
+--- a/src/PackageInstaller.h
++++ b/src/PackageInstaller.h
+@@ -32,9 +32,12 @@ namespace pm {
+ class PackageInstaller {
+ public:
+     PackageInstaller();
++    PackageInstaller(const PackageInstaller&) = delete;
++    PackageInstaller& operator=(const PackageInstaller&) = delete;
+     int installApp(uv_loop_t* looper, const InstallParam& param,
+                    const android::sp<IInstallObserver>& observer,
+-                   InstallTask::InstallResultHandler resultHandler, const std::string& packageName);
++                   InstallTask::InstallResultHandler resultHandler, const std::string& packageName,
++                   const std::shared_ptr<PackageStage>& stage);
+     int uninstallApp(uv_loop_t* looper, const std::string& path, const std::string& packageName,
+                      const android::sp<IUninstallObserver>& observer,
+                      UninstallTask::UninstallResultHandler resultHandler);
+@@ -54,10 +57,12 @@ private:
+     int installQuickApp(uv_loop_t* looper, const InstallParam& param,
+                         const android::sp<IInstallObserver>& observer,
+                         InstallTask::InstallResultHandler resultHandler,
+-                        const std::string& packageName);
++                        const std::string& packageName, const std::shared_ptr<PackageStage>& stage);
+     std::string mPackgeListPath;
+-    std::map<std::string, std::unique_ptr<InstallTask>> mInstallTasks;
+-    std::map<std::string, std::unique_ptr<UninstallTask>> mUninstallTasks;
++    std::map<std::string, std::shared_ptr<InstallTask>> mInstallTasks;
++    std::map<std::string, std::shared_ptr<UninstallTask>> mUninstallTasks;
++    // Destroy this token before the maps, invalidating callbacks during teardown.
++    std::shared_ptr<void> mLifetime = std::make_shared<int>(0);
+ };
+ } // namespace pm
+ } // namespace os
+diff --git a/src/PackageManagerService.cpp b/src/PackageManagerService.cpp
+index c2757fbce8cab779b89ad00e27b4c91850187607..32f545140f0eaccdd277d8e6b94747b855dad739 100644
+--- a/src/PackageManagerService.cpp
++++ b/src/PackageManagerService.cpp
+@@ -28,8 +28,11 @@
+ 
+ #include "PackageInstaller.h"
+ #include "PackageParser.h"
++#include "PackageStage.h"
++#include "PackageStorage.h"
+ #include "PackageTrace.h"
+ #include "PackageUtils.h"
++#include "PackagePublish.h"
+ #include "app/Logger.h"
+ #include "os/pm/BnPackageInfoProvider.h"
+ #include "pm/SlicedPackageInfo.h"
+@@ -297,32 +300,44 @@ Status PackageManagerService::clearAppCache(const std::string &packageName, int3
+ }
+ 
+ void PackageManagerService::handleAppInstallResult(const std::string &packageName,
+-                                                   const android::sp<IInstallObserver> &observer) {
++                                                   const android::sp<IInstallObserver> &observer,
++                                                   const std::shared_ptr<PackageStage> &stage) {
++    if (!stage) {
++        if (observer) observer->onInstallResult(packageName, android::BAD_VALUE, "Missing package stage");
++        return;
++    }
+     std::string dstPath = joinPath(PackageConfig::getInstance().getAppInstalledPath(), packageName);
+ 
+-    PackageInfo packageInfo;
+-    packageInfo.manifest = joinPath(dstPath, MANIFEST);
++    const auto unpacked = joinPath(stage->directory(), "unpacked");
++    PackageInfo packageInfo{};
++    packageInfo.manifest = joinPath(unpacked, MANIFEST);
+     int ret = mParser->parseManifest(&packageInfo);
+-    if (ret) {
++    if (ret || packageInfo.packageName != packageName) {
+         ALOGE("parse manifest:%s failed\n", packageInfo.manifest.c_str());
+-        observer->onInstallResult(packageInfo.packageName, ret, "Failed to parse manifest");
++        if (observer) observer->onInstallResult(packageName, ret ? ret : android::BAD_VALUE,
++                                               "Failed to parse staged manifest");
+         return;
+     }
+ 
+     packageInfo.installedPath = dstPath;
+     packageInfo.manifest = joinPath(dstPath, MANIFEST);
+-    if (mPackageInfo.find(packageInfo.packageName) != mPackageInfo.end()) {
+-        PackageInfo oldPackageInfo = mPackageInfo[packageInfo.packageName];
+-        packageInfo.userId = oldPackageInfo.userId;
+-        mPackageInfo.erase(packageInfo.packageName);
+-        mInstaller->deleteInfoFromPackageList(packageInfo.packageName);
+-        if (oldPackageInfo.installedPath != packageInfo.installedPath) {
+-            removeDirectory(oldPackageInfo.installedPath.c_str());
+-        }
+-    }
+-    mPackageInfo.insert(std::make_pair(packageInfo.packageName, packageInfo));
+-    mInstaller->addInfoToPackageList(packageInfo);
+-    observer->onInstallResult(packageInfo.packageName, 0, "success");
++    auto old = mPackageInfo.find(packageName);
++    if (old != mPackageInfo.end()) {
++        packageInfo.userId = old->second.userId;
++    }
++    // Allocate the new map node before mutating files; insertion of the node
++    // after disk commit needs no new map allocation. Preset paths are retained.
++    std::map<std::string, PackageInfo> prepared;
++    prepared.emplace(packageName, packageInfo);
++    auto node = prepared.extract(packageName);
++    ret = publishPackageDirectory(unpacked, PackageConfig::getInstance().getAppInstalledPath(),
++                                  packageName, [&] { return mInstaller->addInfoToPackageList(packageInfo); });
++    if (!ret) {
++        mPackageInfo.erase(packageName);
++        mPackageInfo.insert(std::move(node));
++    }
++    if (observer) observer->onInstallResult(packageName, ret,
++                                           ret ? "Failed to commit package and registry" : "success");
+ }
+ 
+ static std::string generateUniqueTmpName(const std::string &rpkName) {
+@@ -392,26 +407,6 @@ static int unzipAndParseManifest(const InstallParam &param, PackageInfo &info,
+     return 0;
+ }
+ 
+-static bool hasEnoughDiskSpace(const char *diskPath, const char *packagePath) {
+-    struct statvfs diskStat;
+-    struct stat packageStat;
+-    if (statvfs(diskPath, &diskStat) != 0) {
+-        ALOGE("Failed to statvfs path: %s", diskPath);
+-        return false;
+-    }
+-
+-    uint64_t available = diskStat.f_bsize * diskStat.f_bavail;
+-    if (stat(packagePath, &packageStat) != 0) {
+-        ALOGE("Failed to get file size for: %s", packagePath);
+-        return false;
+-    }
+-
+-    uint64_t requiredSpace =
+-            static_cast<uint64_t>(packageStat.st_size) * 3; // 通常解压后的大小是压缩包的2-3倍
+-
+-    return available >= requiredSpace;
+-}
+-
+ Status PackageManagerService::installPackage(const InstallParam &param,
+                                              const android::sp<IInstallObserver> &observer) {
+     PM_PROFILER_BEGIN();
+@@ -435,8 +430,18 @@ Status PackageManagerService::installPackage(const InstallParam &param,
+         return Status::fromExceptionCode(Status::EX_SECURITY);
+     }
+ 
++    int stageError;
++    auto stage = PackageStage::create(
++            param.path, joinPath(PackageConfig::getInstance().getAppDataPath(), "tmp"), stageError);
++    if (!stage) {
++        observer->onInstallResult(param.path, stageError, "Failed to create package snapshot");
++        PM_PROFILER_END();
++        return Status::fromExceptionCode(Status::EX_ILLEGAL_STATE);
++    }
++    InstallParam stagedParam = param;
++    stagedParam.path = stage->path();
+     PackageInfo info;
+-    int pre_unzip_result = unzipAndParseManifest(param, info, mParser);
++    int pre_unzip_result = unzipAndParseManifest(stagedParam, info, mParser);
+     if (pre_unzip_result) {
+         observer->onInstallResult(param.path, pre_unzip_result,
+                                   "Failed to pre-unzip and parse manifest.json");
+@@ -448,24 +453,57 @@ Status PackageManagerService::installPackage(const InstallParam &param,
+     auto packageName = info.packageName;
+     auto it = mPackageInfo.find(packageName);
+     if (it != mPackageInfo.end()) {
+-        auto &oldQuickAppInfo = it->second.extra;
+-        auto &newQuickAppInfo = info.extra;
+-        if ((oldQuickAppInfo->versionCode > newQuickAppInfo->versionCode) &&
+-            (param.force == false)) {
+-            observer->onInstallResult(packageName, android::NOT_ENOUGH_DATA,
+-                                      "Failed to install package, version is too low");
+-            ALOGE("install package:%s failed, version is too low", packageName.c_str());
++        // packages.list contains only summary fields. Parse an isolated old
++        // manifest before comparing metadata, without partially changing the
++        // registered package if parsing or admission fails.
++        PackageInfo oldInfo{};
++        const PackageInfo *installed = &it->second;
++        if (!installed->bAllValid) {
++            oldInfo.manifest = installed->manifest;
++            int ret = mParser->parseManifest(&oldInfo);
++            if (ret || oldInfo.packageName != packageName) {
++                observer->onInstallResult(packageName, android::BAD_VALUE,
++                                          "Failed to install package, invalid installed manifest");
++                PM_PROFILER_END();
++                return Status::fromExceptionCode(Status::EX_ILLEGAL_ARGUMENT);
++            }
++            installed = &oldInfo;
++        }
++
++        auto oldType = getApplicationType(installed->appType);
++        auto newType = getApplicationType(info.appType);
++        if (oldType == ApplicationType::UNKNOWN || oldType != newType) {
++            observer->onInstallResult(packageName, android::BAD_TYPE,
++                                      "Failed to install package, application type cannot change");
+             PM_PROFILER_END();
+             return Status::fromExceptionCode(Status::EX_ILLEGAL_ARGUMENT);
+         }
++
++        // NATIVE manifests have no QuickAppInfo. Only QUICKAPP versionCode
++        // participates in the existing downgrade/force policy.
++        if (newType == ApplicationType::QUICKAPP) {
++            if (!installed->extra || !info.extra) {
++                observer->onInstallResult(packageName, android::BAD_VALUE,
++                                          "Failed to install package, missing quickapp version info");
++                PM_PROFILER_END();
++                return Status::fromExceptionCode(Status::EX_ILLEGAL_ARGUMENT);
++            }
++            if (installed->extra->versionCode > info.extra->versionCode && !param.force) {
++                observer->onInstallResult(packageName, android::NOT_ENOUGH_DATA,
++                                          "Failed to install package, version is too low");
++                ALOGE("install package:%s failed, version is too low", packageName.c_str());
++                PM_PROFILER_END();
++                return Status::fromExceptionCode(Status::EX_ILLEGAL_ARGUMENT);
++            }
++        }
+     }
+ 
+-    auto resultHandler = [this](const std::string &tmpPath,
++    auto resultHandler = [this, stage](const std::string &tmpPath,
+                                 const android::sp<IInstallObserver> &installObserver) {
+-        this->handleAppInstallResult(tmpPath, installObserver);
++        this->handleAppInstallResult(tmpPath, installObserver, stage);
+     };
+ 
+-    int ret = mInstaller->installApp(mLooper.get(), param, observer, resultHandler, packageName);
++    int ret = mInstaller->installApp(mLooper.get(), param, observer, resultHandler, packageName, stage);
+     if (ret < 0) {
+         std::string msg;
+         if (ret == android::NAME_NOT_FOUND) {
+@@ -486,11 +524,26 @@ Status PackageManagerService::installPackage(const InstallParam &param,
+ 
+ void PackageManagerService::handleAppUninstallResult(
+         const std::string &packageName, const android::sp<IUninstallObserver> &observer) {
+-    mPackageInfo.erase(packageName);
+-    mInstaller->deleteInfoFromPackageList(packageName);
++    auto installed = mPackageInfo.find(packageName);
++    if (installed == mPackageInfo.end()) {
++        if (observer) observer->onUninstallResult(packageName, android::NAME_NOT_FOUND, "Not found package");
++        return;
++    }
++    std::vector<std::string> paths{installed->second.installedPath};
++    for (const auto *type : {"cache", "files", "mass"}) {
++        std::string absolutePath;
++#ifndef __NuttX__
++        absolutePath = fs::current_path();
++#endif
++        paths.push_back(absolutePath + std::string(ABS_PATH_PREFIX) + "/" + type + "/" + packageName);
++    }
++    const int ret = removePackageDirectories(paths,
++            [&] { return mInstaller->deleteInfoFromPackageList(packageName); });
++    if (!ret) mPackageInfo.erase(packageName);
+ 
+     if (observer) {
+-        observer->onUninstallResult(packageName, 0, "success");
++        observer->onUninstallResult(packageName, ret,
++                                    ret ? "Failed to commit package removal" : "success");
+     }
+ }
+ 
+diff --git a/src/PackageParser.cpp b/src/PackageParser.cpp
+index 380d656496f64c06b2d3d36b82b4de2a22cd6cc6..d674b381ad0f3c22c818ba537b270b456ceb971d 100644
+--- a/src/PackageParser.cpp
++++ b/src/PackageParser.cpp
+@@ -17,6 +17,7 @@
+ #include "PackageParser.h"
+ 
+ #include "PackageUtils.h"
++#include "PackageName.h"
+ #include "os/pm/PageInfo.h"
+ #include "os/pm/QuickAppInfo.h"
+ #include "os/pm/Router.h"
+@@ -34,7 +35,7 @@ int PackageParser::parseManifest(PackageInfo *info) {
+ 
+     if (info->packageName.empty()) {
+         info->packageName = getValue<std::string>(document, "package", "");
+-        if (info->packageName.empty()) {
++        if (!isValidPackageName(info->packageName)) {
+             ALOGE("Failed parse manifest:%s package field", info->manifest.c_str());
+             return android::BAD_VALUE;
+         }
+@@ -207,4 +208,4 @@ int PackageParser::parseQuickAppManifest(const rapidjson::Document &document, Pa
+     return 0;
+ }
+ } // namespace pm
+-} // namespace os
+\ No newline at end of file
++} // namespace os
+diff --git a/src/UninstallTask.cpp b/src/UninstallTask.cpp
+index b50c29439d0d108e580f3bdb4de7049fd2d9b41f..4efdcaf34f0e0635cead419822680c5282330e1a 100644
+--- a/src/UninstallTask.cpp
++++ b/src/UninstallTask.cpp
+@@ -1,125 +1,30 @@
+ #include "UninstallTask.h"
+-
+-#include <spawn.h>
+-#include <sys/types.h>
+-#include <unistd.h>
+ #include <utils/Errors.h>
+-#include <utils/Log.h>
+-
+-#include <filesystem>
+-
+-#include "PackageUtils.h"
+-#include "app/Logger.h"
++#include "PackageTask.h"
+ 
+ namespace os {
+ namespace pm {
+-
++UninstallTask::~UninstallTask() { if (mWorker) mWorker->cancel(); }
+ int UninstallTask::start() {
+-    int pipefd[2]; // 0: read, 1: write
+-    if (pipe(pipefd) != 0) {
+-        ALOGE("create pipe failed: %s", strerror(errno));
+-        cleanup();
+-        return -1;
+-    }
+-    mPipeFdRead = pipefd[0];
+-    mPipeFdWrite = pipefd[1];
+-
+-    mPoll = std::make_unique<os::app::UvPoll>(mLooper, mPipeFdRead);
+-    int startResult = mPoll->start(
+-            UV_READABLE | UV_PRIORITIZED,
+-            [](int fd, int status, int events, void *data) {
+-                UninstallTask *task = static_cast<UninstallTask *>(data);
+-                task->handleProgressUpdate(fd, events);
+-            },
+-            this);
+-
+-    if (startResult != 0) {
+-        ALOGE("uv_poll_start failed: %s", uv_strerror(startResult));
+-        cleanup();
+-        return -1;
+-    }
+-
+-    pid_t pid = -1;
+-    char *argv[6];
+-    argv[0] = const_cast<char *>("pmsInstaller");       // program name
+-    argv[1] = const_cast<char *>("uninstall");          // Indicates install
+-    argv[2] = const_cast<char *>(mPath.c_str());        // package path
+-    argv[3] = const_cast<char *>(mPackageName.c_str()); // package name
+-    std::string str = std::to_string(mPipeFdWrite);
+-    argv[4] = const_cast<char *>(str.c_str()); // write fd
+-    argv[5] = nullptr;
+-
+-    posix_spawnattr_t attr;
+-    posix_spawnattr_init(&attr);
+-    posix_spawnattr_setstacksize(&attr, CONFIG_SYSTEM_SERVER_STACKSIZE);
+-
+-    posix_spawn_file_actions_t actions;
+-    posix_spawn_file_actions_init(&actions);
+-    posix_spawn_file_actions_addclose(&actions, mPipeFdRead); // 子进程关闭读端
+-
+-    const int ret = posix_spawn(&pid, argv[0], &actions, &attr, argv, NULL);
+-    posix_spawnattr_destroy(&attr);
+-    posix_spawn_file_actions_destroy(&actions);
+-    close(mPipeFdWrite); // 父进程关闭写端
+-    mPipeFdWrite = -1;
+-    if (ret != 0) {
+-        ALOGE("posix_spawn %s failed error:%d", argv[0], ret);
+-        cleanup();
+-        return ret > 0 ? -ret : ret;
+-    }
+-
+-    return pid;
++    if (mWorker) return android::BAD_VALUE;
++    std::weak_ptr<UninstallTask> weak = shared_from_this();
++    mWorker = std::make_shared<PackageTask>(mLooper);
++    return mWorker->start({"pmsInstaller", "prepare-uninstall", mPath, mPackageName, ""}, nullptr, nullptr,
++        [weak](int result) { if (auto task = weak.lock()) task->completed(result); });
+ }
+-
+-void UninstallTask::handleProgressUpdate(int fd, int events) {
+-    if (!(events & UV_READABLE)) {
+-        return;
+-    }
+-
+-    uint8_t progress;
+-    ssize_t nread = read(fd, &progress, sizeof(progress));
+-    if (nread == sizeof(progress)) {
+-        ALOGI("Uninstallation progress: %d%% on fd:%d", progress, fd);
+-        if (progress > 100) {
+-            ALOGE("remove %s failed: 0x%X", mPath.c_str(), progress);
+-            mObserver->onUninstallResult(mPackageName, -1, "Failed to remove package");
+-            cleanup(); // 关闭父进程读端->关闭管道
+-            return;
+-        }
+-
+-        if (progress == 100) {
+-            ALOGI("Uninstallation completed via progress pipe fd:%d", fd);
+-            if (mResultHandler) {
+-                mResultHandler(mPackageName, mObserver);
+-            }
+-            cleanup(); // 关闭父进程读端->关闭管道
+-        }
+-    } else if (nread == 0) {
+-        // 管道关闭（子进程关闭了写端）
+-        ALOGI("Pipe fd:%d closed by child process", fd);
+-        cleanup(); // 关闭父进程读端->关闭管道
+-    } else if (nread < 0) {
+-        // 读取错误
+-        ALOGE("Read error on pipe fd:%d: %s", fd, strerror(errno));
+-        cleanup(); // 关闭父进程读端->关闭管道
+-    }
++void UninstallTask::completed(int result) {
++    if (mFinished) return;
++    mFinished = true;
++    const auto name = mPackageName;
++    auto observer = mObserver;
++    auto handler = mResultHandler;
++    auto completed = mCompletedCallback;
++    if (result == 0) {
++        if (handler) handler(name, observer);
++    } else if (observer) {
++        observer->onUninstallResult(name, result, "Package uninstaller failed or exited unexpectedly");
++    }
++    if (completed) completed(name);
+ }
+-
+-void UninstallTask::cleanup() {
+-    if (mPipeFdRead >= 0) {
+-        close(mPipeFdRead);
+-        mPipeFdRead = -1;
+-    }
+-
+-    if (mPipeFdWrite >= 0) {
+-        close(mPipeFdWrite);
+-        mPipeFdWrite = -1;
+-    }
+-
+-    if (mCompletedCallback) {
+-        mCompletedCallback(mPackageName);
+-    }
+-}
+-
+ } // namespace pm
+-} // namespace os
+\ No newline at end of file
++} // namespace os
+diff --git a/src/UninstallTask.h b/src/UninstallTask.h
+index 9f979a5dbf45168b1856c5b5ee4afe23025ae228..f974bda6277fdf4c94035616d1498866ed719da0 100644
+--- a/src/UninstallTask.h
++++ b/src/UninstallTask.h
+@@ -1,92 +1,39 @@
+ #pragma once
+ 
+-#include <sys/types.h>
+ #include <uv.h>
+-
+-#include <map>
++#include <functional>
++#include <memory>
+ #include <string>
+-
+-#include "app/UvLoop.h"
+-#include "os/pm/IInstallObserver.h"
+ #include "os/pm/IUninstallObserver.h"
+-#include "pm/PackageInfo.h"
+ 
+ namespace os {
+ namespace pm {
+-
+-class UninstallTask {
++class PackageTask;
++class UninstallTask : public std::enable_shared_from_this<UninstallTask> {
+ public:
+     using TaskCompletedCallback = std::function<void(const std::string&)>;
+     using UninstallResultHandler =
+             std::function<void(const std::string&, const android::sp<IUninstallObserver>&)>;
+-
+     UninstallTask(uv_loop_t* looper, const std::string& path, const std::string& packageName,
+                   const android::sp<IUninstallObserver>& observer,
+                   TaskCompletedCallback completedCallback, UninstallResultHandler resultHandler)
+-          : mLooper(looper),
+-            mPath(path),
+-            mPackageName(packageName),
+-            mPoll(nullptr),
+-            mObserver(observer),
+-            mCompletedCallback(completedCallback),
+-            mResultHandler(resultHandler),
+-            mPipeFdRead(-1),
+-            mPipeFdWrite(-1) {}
+-
++          : mLooper(looper), mPath(path), mPackageName(packageName), mObserver(observer),
++            mCompletedCallback(std::move(completedCallback)),
++            mResultHandler(std::move(resultHandler)) {}
++    ~UninstallTask();
+     UninstallTask(const UninstallTask&) = delete;
+     UninstallTask& operator=(const UninstallTask&) = delete;
+-
+-    UninstallTask(UninstallTask&& other)
+-          : mLooper(other.mLooper),
+-            mPath(std::move(other.mPath)),
+-            mPackageName(std::move(other.mPackageName)),
+-            mPoll(std::move(other.mPoll)),
+-            mObserver(std::move(other.mObserver)),
+-            mCompletedCallback(std::move(other.mCompletedCallback)),
+-            mResultHandler(std::move(other.mResultHandler)),
+-            mPipeFdRead(other.mPipeFdRead),
+-            mPipeFdWrite(other.mPipeFdWrite) {
+-        other.mLooper = nullptr;
+-        other.mPipeFdRead = -1;
+-        other.mPipeFdWrite = -1;
+-    }
+-
+-    UninstallTask& operator=(UninstallTask&& other) noexcept {
+-        if (this != &other) {
+-            mLooper = other.mLooper;
+-            mPath = std::move(other.mPath);
+-            mPackageName = std::move(other.mPackageName);
+-            mPoll = std::move(other.mPoll);
+-            mObserver = std::move(other.mObserver);
+-            mCompletedCallback = std::move(other.mCompletedCallback);
+-            mResultHandler = std::move(other.mResultHandler);
+-            mPipeFdRead = other.mPipeFdRead;
+-            mPipeFdWrite = other.mPipeFdWrite;
+-
+-            other.mLooper = nullptr;
+-            other.mPipeFdRead = -1;
+-            other.mPipeFdWrite = -1;
+-        }
+-        return *this;
+-    }
+-
+-    ~UninstallTask() = default;
+-
+     int start();
+-    void handleProgressUpdate(int fd, int events);
+-    void cleanup();
+-
+ private:
++    void completed(int result);
+     uv_loop_t* mLooper;
+     std::string mPath;
+     std::string mPackageName;
+-    std::unique_ptr<os::app::UvPoll> mPoll;
+     android::sp<IUninstallObserver> mObserver;
+     TaskCompletedCallback mCompletedCallback;
+     UninstallResultHandler mResultHandler;
+-    int mPipeFdRead;
+-    int mPipeFdWrite;
++    std::shared_ptr<PackageTask> mWorker;
++    bool mFinished = false;
+ };
+-
+ } // namespace pm
+-} // namespace os
+\ No newline at end of file
++} // namespace os

@@ -1,0 +1,16 @@
+# Native product Demo candidate; qualification is tracked separately.
+# Keep the same underlying dependencies and diagnostic consumer as E154.
+#include "../korvo-openvela-quickapp-check/defconfig"
+CONFIG_XMSDEMO_PLATFORM=y
+
+# Standard removable-card paths, within this product's 64-byte name budget.
+CONFIG_FAT_LFN=y
+CONFIG_FAT_MAXFNAME=64
+CONFIG_FAT_LCNAMES=y
+
+# Keep Wi-Fi/DMA control allocations and task stacks in internal SRAM.
+# Framebuffers and Binder transaction arenas use the separate PSRAM heap.
+CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP=y
+CONFIG_BINDER_USER_HEAP=y
+# Binder, graphics, Feature/libuv and curl entropy share task-local keys.
+CONFIG_TLS_TASK_NELEM=8

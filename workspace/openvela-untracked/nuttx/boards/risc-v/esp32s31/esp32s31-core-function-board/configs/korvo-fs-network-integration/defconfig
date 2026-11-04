@@ -1,0 +1,21 @@
+# Named FS integration validation entrance; not a production default.
+# Network selection: E87 with the E94 runtime TCP32000 request/readback.
+# Apply the separately reviewed six-file iperf2 series before configuring.
+# Kconfig resolution and paired target build/validation remain pending.
+#include "../korvo-fs-read512/defconfig"
+#include "../korvo-fs-integration/fs-settings.config"
+#include "network-e87.config"
+
+# Diagnostics and original test programs remain validation-only choices.
+# Sampling/recursive-lock overhead is included when Flash diagnostics are on.
+CONFIG_ESP32S31_FLASH_DIAGNOSTICS=y
+CONFIG_TESTS_TESTCASES=y
+CONFIG_FS_TEST=y
+CONFIG_FS_TEST_STRESS=y
+CONFIG_TESTING_TESTCASES_STACKSIZE=32768
+CONFIG_TLS_LOG2_MAXSTACK=15
+CONFIG_EXAMPLES_S31FSBENCH=y
+CONFIG_EXAMPLES_S31FSBENCH_STACKSIZE=32768
+CONFIG_STACK_COLORATION=y
+CONFIG_NSH_CMDOPT_DD_STATS=y
+CONFIG_SYSTEM_NSH_STACKSIZE=8192

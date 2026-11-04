@@ -1,0 +1,21 @@
+# Korvo Bluetooth framework GATT client interoperability profile.
+# Mount temporary /data before starting bttool; no network auto-start.
+# This single-core FLAT profile does not qualify product coexistence.
+#include "../xts-flat-bttool/defconfig"
+
+CONFIG_ESP32S31_BOARD_KORVO=y
+CONFIG_BLUETOOTH_GATT_CLIENT=y
+CONFIG_BLUETOOTH_GATTC_MAX_CONNECTIONS=1
+CONFIG_BT_GATT_CLIENT=y
+CONFIG_GATT_CLIENT_SERVICE_MAX=8
+CONFIG_GATT_CLIENT_ELEMENT_MAX=64
+CONFIG_GATT_CLIENT_CHAR_PER_SERVICE_MAX=16
+CONFIG_FS_TMPFS=y
+CONFIG_FILE_SYSTEM=y
+CONFIG_NETUTILS_CODECS=y
+CONFIG_CODECS_HASH_MD5=y
+CONFIG_NSH_QUOTE=y
+CONFIG_NSH_BUILTIN_AS_COMMAND=y
+CONFIG_UART0_RXBUFSIZE=256
+# CONFIG_NSH_ARGCAT is not set
+# CONFIG_NSH_NETINIT is not set

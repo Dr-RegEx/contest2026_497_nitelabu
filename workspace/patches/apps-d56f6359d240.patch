@@ -1,0 +1,3437 @@
+diff --git a/audioutils/alsa-lib/CMakeLists.txt b/audioutils/alsa-lib/CMakeLists.txt
+index 988608f26ff1542a73cbacc015153105025d56cb..5725e6b72a8a11e09657c3c2a14e5fde9bdc7606 100644
+--- a/audioutils/alsa-lib/CMakeLists.txt
++++ b/audioutils/alsa-lib/CMakeLists.txt
+@@ -24,12 +24,15 @@ if(CONFIG_AUDIOUTILS_ALSA_LIB)
+     PRIVATE bits_convert.c
+             channels_map.c
+             error.c
+-            pcm_dmix.c
+             pcm_hw.c
+             pcm_params.c
+             pcm_softvol.c
+             pcm.c)
+ 
++  if(CONFIG_AUDIOUTILS_ALSA_LIB_DEVICE_DMIX)
++    target_sources(apps PRIVATE pcm_dmix.c)
++  endif()
++
+   set_source_files_properties(pcm_params.c TARGET_DIRECTORY apps
+                               PROPERTIES COMPILE_FLAGS "-Wno-array-bounds")
+   target_compile_definitions(apps PRIVATE OUTSIDE_SPEEX RANDOM_PREFIX=nuttx)
+diff --git a/audioutils/alsa-lib/Makefile b/audioutils/alsa-lib/Makefile
+index d3efd240f06e40870d33bdd2794881fd11f2ffe7..83153a02a80e643e50e1583699ba5e943cb03c79 100644
+--- a/audioutils/alsa-lib/Makefile
++++ b/audioutils/alsa-lib/Makefile
+@@ -20,7 +20,11 @@
+ 
+ include $(APPDIR)/Make.defs
+ 
+-CSRCS += $(filter-out aplay.c arecord.c, $(wildcard *.c))
++CSRCS += $(filter-out aplay.c arecord.c pcm_dmix.c, $(wildcard *.c))
++
++ifeq ($(CONFIG_AUDIOUTILS_ALSA_LIB_DEVICE_DMIX),y)
++CSRCS += pcm_dmix.c
++endif
+ 
+ CFLAGS += -DOUTSIDE_SPEEX -DRANDOM_PREFIX=nuttx
+ 
+diff --git a/audioutils/alsa-lib/pcm.c b/audioutils/alsa-lib/pcm.c
+index 191f75bed2652e6a68295e42d0386416b17258ce..3b29fcdb21178d2c035098a753df5b1a63f530dc 100644
+--- a/audioutils/alsa-lib/pcm.c
++++ b/audioutils/alsa-lib/pcm.c
+@@ -614,9 +614,6 @@ snd_pcm_sframes_t snd_pcm_mmap_writei(FAR snd_pcm_t *pcm,
+             snd_pcm_frames_to_bytes(pcm, offset);
+ 
+       memcpy(out, in, len);
+-      in += len;
+-      size -= frames;
+-      xfer += frames;
+ 
+       if (pcm->volume != 1.0)
+         {
+@@ -630,6 +627,14 @@ snd_pcm_sframes_t snd_pcm_mmap_writei(FAR snd_pcm_t *pcm,
+           break;
+         }
+ 
++      /* Report only committed frames. A rejected period remains available
++       * for the caller to retry; copying into the mapping is not a commit.
++       */
++
++      in += len;
++      size -= frames;
++      xfer += frames;
++
+       if (snd_pcm_state(pcm) == SND_PCM_STATE_PREPARED &&
+           pcm->period_size * pcm->appl >= pcm->start_threshold)
+         {
+@@ -641,7 +646,7 @@ snd_pcm_sframes_t snd_pcm_mmap_writei(FAR snd_pcm_t *pcm,
+         }
+     }
+ 
+-  return xfer > 0 ? xfer : ret;
++  return xfer > 0 ? (snd_pcm_sframes_t)xfer : ret;
+ }
+ 
+ snd_pcm_sframes_t snd_pcm_mmap_readi(FAR snd_pcm_t *pcm, FAR void *buffer,
+@@ -702,7 +707,6 @@ snd_pcm_sframes_t snd_pcm_mmap_readi(FAR snd_pcm_t *pcm, FAR void *buffer,
+            snd_pcm_frames_to_bytes(pcm, offset);
+ 
+       memcpy(out, in, len);
+-      out += len;
+       size -= frames;
+       xfer += frames;
+ 
+@@ -712,6 +716,8 @@ snd_pcm_sframes_t snd_pcm_mmap_readi(FAR snd_pcm_t *pcm, FAR void *buffer,
+                                 snd_pcm_bytes_to_samples(pcm, len));
+         }
+ 
++      out += len;
++
+       ret = snd_pcm_mmap_commit(pcm, offset, frames);
+       if (ret < 0)
+         {
+@@ -719,7 +725,7 @@ snd_pcm_sframes_t snd_pcm_mmap_readi(FAR snd_pcm_t *pcm, FAR void *buffer,
+         }
+     }
+ 
+-  return xfer > 0 ? xfer : ret;
++  return xfer > 0 ? (snd_pcm_sframes_t)xfer : ret;
+ }
+ 
+ int snd_pcm_new(FAR snd_pcm_t **pcmp, snd_pcm_type_t type,
+diff --git a/audioutils/alsa-lib/pcm_hw.c b/audioutils/alsa-lib/pcm_hw.c
+index 535f7c3a90897fe17d185156da408f82ddde7899..231b74875f301417787532a20ab4e98e58ec4050 100644
+--- a/audioutils/alsa-lib/pcm_hw.c
++++ b/audioutils/alsa-lib/pcm_hw.c
+@@ -23,9 +23,11 @@
+  ****************************************************************************/
+ 
+ #include <fcntl.h>
++#include <poll.h>
+ #include <string.h>
+ #include <sys/mman.h>
+ #include <sys/param.h>
++#include <time.h>
+ #include <unistd.h>
+ 
+ #include "pcm_local.h"
+@@ -39,6 +41,8 @@ typedef struct
+   int fd;
+   bool setup;
+   bool xrun;
++  bool draining;
++  uint64_t drain_deadline;
+   snd_pcm_uframes_t offset;
+   FAR struct audio_status_s *status;
+   FAR snd_pcm_channel_area_t **areas;
+@@ -48,16 +52,35 @@ typedef struct
+  * Private Functions
+  ****************************************************************************/
+ 
+-static void snd_pcm_hw_deinit(FAR snd_pcm_t *pcm)
++static int snd_pcm_hw_deinit(FAR snd_pcm_t *pcm)
+ {
+   FAR snd_pcm_hw_t *hw = pcm->private_data;
++  int ret = 0;
++  int tmp;
+ 
+-  munmap(hw->status, sizeof(struct audio_status_s));
+-  ioctl(hw->fd, AUDIOIOC_RELEASE, 0);
+-  close(hw->fd);
++  if (hw->status != MAP_FAILED)
++    {
++      if (munmap(hw->status, sizeof(struct audio_status_s)) < 0)
++        {
++          ret = -errno;
++        }
+ 
+-  hw->status = MAP_FAILED;
++      hw->status = MAP_FAILED;
++    }
++
++  tmp = ioctl(hw->fd, AUDIOIOC_RELEASE, 0) < 0 ? -errno : 0;
++  if (ret == 0)
++    {
++      ret = tmp;
++    }
++
++  /* VFS consumes the file even on a failed close. The upper half retains
++   * accepted APBs and retries orphan cleanup at the next open when needed.
++   */
++
++  tmp = close(hw->fd) < 0 ? -errno : 0;
+   hw->fd = -1;
++  return ret < 0 ? ret : tmp;
+ }
+ 
+ static int snd_pcm_hw_init(FAR snd_pcm_t *pcm)
+@@ -106,7 +129,20 @@ static snd_pcm_state_t snd_pcm_hw_state(FAR snd_pcm_t *pcm)
+ {
+   FAR snd_pcm_hw_t *hw = pcm->private_data;
+ 
+-  if (hw->xrun)
++  if (hw->draining)
++    {
++      return SND_PCM_STATE_DRAINING;
++    }
++  else if (hw->status->state == AUDIO_STATE_PAUSED)
++    {
++      /* Pause is authoritative even after a client XRUN. Keep the XRUN
++       * latch for cursor recovery on resume, but do not expose a permanent
++       * error-ready fd to a sink that has intentionally suspended output.
++       */
++
++      return SND_PCM_STATE_PAUSED;
++    }
++  else if (hw->xrun)
+     {
+       return SND_PCM_STATE_XRUN;
+     }
+@@ -115,7 +151,8 @@ static snd_pcm_state_t snd_pcm_hw_state(FAR snd_pcm_t *pcm)
+       return SND_PCM_STATE_SETUP;
+     }
+   else if (pcm->appl < hw->status->head ||
+-           (hw->status->state == AUDIO_STATE_RUNNING &&
++           (pcm->stream == SND_PCM_STREAM_PLAYBACK &&
++            hw->status->state == AUDIO_STATE_RUNNING &&
+             pcm->appl <= hw->status->tail))
+     {
+       hw->xrun = true;
+@@ -128,38 +165,23 @@ static snd_pcm_state_t snd_pcm_hw_state(FAR snd_pcm_t *pcm)
+ static int snd_pcm_hw_close(FAR snd_pcm_t *pcm)
+ {
+   FAR snd_pcm_hw_t *hw = pcm->private_data;
+-  struct audio_buf_desc_s buf_desc;
+-  unsigned int i;
+-
+-  switch (hw->status->state)
+-    {
+-    case SND_PCM_STATE_PAUSED:
+-    case SND_PCM_STATE_RUNNING:
+-      ioctl(hw->fd, AUDIOIOC_STOP, 0);
+-    default:
+-      break;
+-    }
+-
+-  buf_desc.u.buffer = NULL;
+-
+-  if (hw->status->state == AUDIO_STATE_DRAINING ||
+-      hw->status->state == AUDIO_STATE_OPEN)
+-    {
+-      while (pcm->appl > hw->status->tail)
+-        {
+-          snd_pcm_wait(pcm, -1);
+-        }
+-
+-      for (i = 0; i < pcm->periods; i++)
+-        {
+-          ioctl(hw->fd, AUDIOIOC_FREEBUFFER, &buf_desc);
+-        }
+-    }
+-
+-  snd_pcm_hw_deinit(pcm);
++  int ret;
++  int tmp;
++
++  /* STOP also drains accepted PREPARED buffers. It may discard periods
++   * committed by the application but not yet accepted by the lower half:
++   * waiting for appl == tail after STOP would then wait forever.
++   *
++   * Shared APBs belong to the upper half, which frees them only after the
++   * final VFS close has drained callbacks. Do not free DMA-owned buffers
++   * here, including when STOP/RELEASE fails. snd_pcm_close already unmaps
++   * sample areas before entering this method.
++   */
++
++  ret = ioctl(hw->fd, AUDIOIOC_STOP, 0) < 0 ? -errno : 0;
++  tmp = snd_pcm_hw_deinit(pcm);
+   free(hw);
+-
+-  return 0;
++  return ret < 0 ? ret : tmp;
+ }
+ 
+ static int snd_pcm_hw_query_format(int fd, FAR unsigned int *values,
+@@ -187,7 +209,7 @@ static int snd_pcm_hw_query_format(int fd, FAR unsigned int *values,
+       return -errno;
+     }
+ 
+-  for (i = 0; i < sizeof(caps.ac_controls.b); i++)
++  for (i = 0; i < num && i < sizeof(caps.ac_controls.b); i++)
+     {
+       if (caps.ac_controls.b[i] == AUDIO_SUBFMT_END)
+         {
+@@ -197,7 +219,7 @@ static int snd_pcm_hw_query_format(int fd, FAR unsigned int *values,
+       values[i] = caps.ac_controls.b[i];
+     }
+ 
+-  return i == 0 ? -EPERM : i;
++  return i == 0 ? -EPERM : (int)i;
+ }
+ 
+ static int snd_pcm_hw_query_channel(int fd, snd_pcm_stream_t stream,
+@@ -438,11 +460,30 @@ static int snd_pcm_hw_hw_refine(FAR snd_pcm_t *pcm,
+   return 0;
+ }
+ 
++static int snd_pcm_hw_configure(FAR snd_pcm_t *pcm, snd_pcm_format_t format,
++                                unsigned int channels, unsigned int rate)
++{
++  FAR snd_pcm_hw_t *hw = pcm->private_data;
++  struct audio_caps_desc_s caps_desc;
++
++  memset(&caps_desc, 0, sizeof(caps_desc));
++  caps_desc.caps.ac_len = sizeof(struct audio_caps_s);
++  caps_desc.caps.ac_type = pcm->stream == SND_PCM_STREAM_PLAYBACK ?
++                           AUDIO_TYPE_OUTPUT : AUDIO_TYPE_INPUT;
++  caps_desc.caps.ac_channels = channels;
++  caps_desc.caps.ac_controls.hw[0] = rate;
++  caps_desc.caps.ac_controls.b[3] = rate >> 16;
++  caps_desc.caps.ac_controls.b[2] = snd_pcm_format_physical_width(format);
++  caps_desc.caps.ac_format.b[0] = format;
++  caps_desc.caps.ac_subtype = AUDIO_FMT_PCM;
++
++  return ioctl(hw->fd, AUDIOIOC_CONFIGURE, &caps_desc) < 0 ? -errno : 0;
++}
++
+ static int snd_pcm_hw_hw_params(FAR snd_pcm_t *pcm,
+                                 FAR snd_pcm_hw_params_t *params)
+ {
+   FAR snd_pcm_hw_t *hw = pcm->private_data;
+-  struct audio_caps_desc_s caps_desc;
+   struct audio_buf_desc_s buf_desc;
+   struct ap_buffer_info_s buf_info;
+   snd_pcm_uframes_t period_size;
+@@ -462,21 +503,10 @@ static int snd_pcm_hw_hw_params(FAR snd_pcm_t *pcm,
+   snd_pcm_hw_params_get_periods(params, &periods, NULL);
+   snd_pcm_hw_params_get_period_size(params, &period_size, NULL);
+ 
+-  memset(&caps_desc, 0, sizeof(caps_desc));
+-  caps_desc.caps.ac_len = sizeof(struct audio_caps_s);
+-  caps_desc.caps.ac_type = pcm->stream == SND_PCM_STREAM_PLAYBACK ?
+-                           AUDIO_TYPE_OUTPUT : AUDIO_TYPE_INPUT;
+-  caps_desc.caps.ac_channels = channels;
+-  caps_desc.caps.ac_controls.hw[0] = rate;
+-  caps_desc.caps.ac_controls.b[3] = rate >> 16;
+-  caps_desc.caps.ac_controls.b[2] = snd_pcm_format_physical_width(format);
+-  caps_desc.caps.ac_format.b[0] = format;
+-  caps_desc.caps.ac_subtype = AUDIO_FMT_PCM;
+-
+-  ret = ioctl(hw->fd, AUDIOIOC_CONFIGURE, &caps_desc);
++  ret = snd_pcm_hw_configure(pcm, format, channels, rate);
+   if (ret < 0)
+     {
+-      return -errno;
++      return ret;
+     }
+ 
+   SNDINFO("configure. f:%u, ch:%u, rate:%u", format, channels, rate);
+@@ -499,7 +529,13 @@ static int snd_pcm_hw_hw_params(FAR snd_pcm_t *pcm,
+   ret = ioctl(hw->fd, AUDIOIOC_GETBUFFERINFO, &buf_info);
+   if (ret < 0)
+     {
+-      return ret;
++      return -errno;
++    }
++
++  if (buf_info.nbuffers == 0 || buf_info.buffer_size == 0 ||
++      info.channels == 0 || rate == 0)
++    {
++      return -EINVAL;
+     }
+ 
+   if (buf_info.nbuffers != periods || buf_info.buffer_size != period_bytes)
+@@ -526,12 +562,19 @@ static int snd_pcm_hw_hw_params(FAR snd_pcm_t *pcm,
+       buf_desc.u.pbuffer = NULL;
+ 
+       ret = ioctl(hw->fd, AUDIOIOC_ALLOCBUFFER, &buf_desc);
+-      if (ret < 0)
++      if (ret <= 0)
+         {
+-          return -errno;
++          return ret < 0 ? -errno : -ENOMEM;
+         }
++    }
+ 
+-      if (pcm->stream == SND_PCM_STREAM_CAPTURE)
++  /* The ring modulus must remain fixed once any period is committed.
++   * Allocate the entire ring before pre-enqueuing capture periods.
++   */
++
++  if (pcm->stream == SND_PCM_STREAM_CAPTURE)
++    {
++      for (i = 0; i < buf_info.nbuffers; i++)
+         {
+           ret = ioctl(hw->fd, AUDIOIOC_ENQUEUEBUFFER, &buf_desc);
+           if (ret < 0)
+@@ -644,15 +687,111 @@ static int snd_pcm_hw_mmap(FAR snd_pcm_t *pcm)
+   return 0;
+ }
+ 
++static int snd_pcm_hw_stop(FAR snd_pcm_t *pcm)
++{
++  FAR snd_pcm_hw_t *hw = pcm->private_data;
++
++  /* STOP success joins accepted callbacks. Keep the mapped ring for the
++   * next prepare; a failed STOP must retain the old state and buffers.
++   */
++
++  if (ioctl(hw->fd, AUDIOIOC_STOP, 0) < 0)
++    {
++      return -errno;
++    }
++
++  if (hw->status->state != AUDIO_STATE_OPEN)
++    {
++      /* Another open client may still own the shared device. Its live
++       * ring must not be presented as a stopped/reconfigurable stream.
++       */
++
++      return -EBUSY;
++    }
++
++  hw->setup = true;
++  hw->draining = false;
++  hw->xrun = false;
++  return 0;
++}
++
+ static int snd_pcm_hw_prepare(FAR snd_pcm_t *pcm)
+ {
+   FAR snd_pcm_hw_t *hw = pcm->private_data;
++  struct audio_buf_desc_s desc;
+   int ret = 0;
+ 
++  if (hw->draining)
++    {
++      return -EBADFD;
++    }
++
++  /* A lower-half START failure is published by the upper half as XRUN.
++   * Cursor reset alone cannot recover a partially started/stopping device.
++   * Stop it first, then reuse the existing STOP/configure path below.
++   * Client cursor underruns while the device is still RUNNING retain the
++   * existing lighter reset behavior.
++   */
++
++  if (hw->status->state == AUDIO_STATE_XRUN)
++    {
++      ret = snd_pcm_hw_stop(pcm);
++      if (ret < 0)
++        {
++          return ret;
++        }
++    }
++
++  /* Successful drain stops the lower half, but retains the mapped ring.
++   * Reconfigure only once STOP has completed. On failure leave SETUP and
++   * the existing buffers intact, so prepare can be retried safely.
++   */
++
++  if (hw->setup && hw->status->state == AUDIO_STATE_OPEN)
++    {
++      ret = snd_pcm_hw_configure(pcm, pcm->format, pcm->channels, pcm->rate);
++      if (ret < 0)
++        {
++          return ret;
++        }
++
++      pcm->appl = 0;
++      hw->offset = 0;
++    }
++
++  if (hw->setup && hw->status->state == AUDIO_STATE_PREPARED)
++    {
++      /* Capture needs a new set of commits, not new APBs or mappings.
++       * Keep setup set until every commit succeeds. A retry continues
++       * from appl after a partial refill, without duplicating periods.
++       */
++
++      if (pcm->stream == SND_PCM_STREAM_CAPTURE)
++        {
++          desc.numbytes = snd_pcm_frames_to_bytes(pcm, pcm->period_size);
++          desc.u.buffer = NULL;
++          while (pcm->appl < pcm->periods)
++            {
++              if (ioctl(hw->fd, AUDIOIOC_ENQUEUEBUFFER, &desc) < 0)
++                {
++                  return -errno;
++                }
++
++              pcm->appl++;
++            }
++        }
++
++      hw->setup = false;
++      hw->xrun = false;
++    }
++
+   if (hw->xrun)
+     {
+       ret = snd_pcm_reset(pcm);
+-      hw->xrun = false;
++      if (ret == 0)
++        {
++          hw->xrun = false;
++        }
+     }
+ 
+   return ret;
+@@ -661,18 +800,26 @@ static int snd_pcm_hw_prepare(FAR snd_pcm_t *pcm)
+ static int snd_pcm_hw_reset(FAR snd_pcm_t *pcm)
+ {
+   FAR snd_pcm_hw_t *hw = pcm->private_data;
++  unsigned long appl;
++
++  if (hw->status->state == AUDIO_STATE_XRUN)
++    {
++      return snd_pcm_hw_prepare(pcm);
++    }
+ 
+   SNDINFO("device:%s head:%ld tail:%ld\n", pcm->name, hw->status->head,
+           hw->status->tail);
+ 
+-  if (ioctl(hw->fd, AUDIOIOC_RESETSTATUS, 0) < 0)
++  if (ioctl(hw->fd, AUDIOIOC_RESETSTATUS, &appl) < 0)
+     {
+       SNDERR("reset error:%d\n", -errno);
+       return -errno;
+     }
+ 
+   hw->setup = false;
+-  pcm->appl = hw->status->head;
++  hw->draining = false;
++  hw->offset = 0;
++  pcm->appl = appl;
+   SNDINFO("reset appl:%ld", pcm->appl);
+ 
+   return 0;
+@@ -695,43 +842,185 @@ static int snd_pcm_hw_start(FAR snd_pcm_t *pcm)
+ 
+ static int snd_pcm_hw_drop(FAR snd_pcm_t *pcm)
+ {
+-  return -ENOTSUP;
++  return snd_pcm_hw_stop(pcm);
+ }
+ 
+-static int snd_pcm_hw_drain(FAR snd_pcm_t *pcm)
++static int snd_pcm_hw_pad(FAR snd_pcm_t *pcm)
+ {
+   FAR snd_pcm_hw_t *hw = pcm->private_data;
++  FAR uint8_t *tail;
++  snd_pcm_uframes_t frames;
++  unsigned int sample_bytes;
++  unsigned int i;
++  int silence_byte = -1;
++  ssize_t bytes;
+ 
+-  hw->setup = true;
+-
+-  switch (snd_pcm_hw_state(pcm))
++  if (hw->offset == 0)
+     {
+-    case SND_PCM_STATE_PREPARED:
+-      snd_pcm_hw_start(pcm);
+-      break;
+-    case SND_PCM_STATE_SETUP:
+       return 0;
+-    default:
+-      break;
+     }
+ 
+-  if (pcm->stream == SND_PCM_STREAM_PLAYBACK && hw->offset)
++  frames = pcm->period_size - hw->offset;
++  sample_bytes = pcm->sample_bits / 8;
++  bytes = snd_pcm_frames_to_bytes(pcm, frames);
++  if (bytes < 0 || sample_bytes == 0)
++    {
++      return -EINVAL;
++    }
++
++  tail = (FAR uint8_t *)hw->areas[pcm->appl % pcm->periods][0].addr +
++         snd_pcm_frames_to_bytes(pcm, hw->offset);
++  memset(tail, 0, bytes);
++  switch (pcm->format)
+     {
+-      snd_pcm_mmap_commit(pcm, hw->offset, pcm->period_size - hw->offset);
++      case SND_PCM_FORMAT_U8:
++        silence_byte = 0;
++        break;
++      case SND_PCM_FORMAT_U16_LE:
++      case SND_PCM_FORMAT_U24_LE:
++      case SND_PCM_FORMAT_U32_LE:
++        silence_byte = snd_pcm_format_width(pcm->format) / 8 - 1;
++        break;
++      case SND_PCM_FORMAT_U16_BE:
++      case SND_PCM_FORMAT_U24_BE:
++      case SND_PCM_FORMAT_U32_BE:
++        silence_byte = sample_bytes - snd_pcm_format_width(pcm->format) / 8;
++        break;
++      default:
++        break;
+     }
+ 
+-  ioctl(hw->fd, AUDIOIOC_STOP, 0);
++  if (silence_byte >= 0)
++    {
++      for (i = 0; i < frames * pcm->channels; i++)
++        {
++          tail[i * sample_bytes + silence_byte] = 0x80;
++        }
++    }
++
++  return snd_pcm_mmap_commit(pcm, hw->offset, frames);
++}
++
++static int snd_pcm_hw_now(FAR uint64_t *now)
++{
++  struct timespec ts;
++
++  if (clock_gettime(CLOCK_MONOTONIC, &ts) < 0)
++    {
++      return -errno;
++    }
++
++  *now = (uint64_t)ts.tv_sec * 1000 + ts.tv_nsec / 1000000;
++  return 0;
++}
++
++static int snd_pcm_hw_drain(FAR snd_pcm_t *pcm)
++{
++  FAR snd_pcm_hw_t *hw = pcm->private_data;
++  struct pollfd fd = { .fd = hw->fd, .events = POLLERR };
++  uint64_t now;
++  int ret;
++
++  if (!hw->draining)
++    {
++      if (hw->setup && hw->status->state == AUDIO_STATE_OPEN)
++        {
++          return 0;
++        }
++
++      if (pcm->stream == SND_PCM_STREAM_PLAYBACK)
++        {
++          if (hw->status->state == AUDIO_STATE_PAUSED)
++            {
++              ret = snd_pcm_pause(pcm, 0);
++              if (ret < 0)
++                {
++                  return ret;
++                }
++            }
++
++          ret = snd_pcm_hw_pad(pcm);
++          if (ret < 0)
++            {
++              return ret;
++            }
++
++          if (hw->status->state == AUDIO_STATE_PREPARED &&
++              pcm->appl != hw->status->tail)
++            {
++              ret = snd_pcm_hw_start(pcm);
++              if (ret < 0)
++                {
++                  return ret;
++                }
++            }
++        }
++
++      ret = snd_pcm_hw_now(&now);
++      if (ret < 0)
++        {
++          return ret;
++        }
++
++      /* Bound a lost completion while allowing two full ring durations
++       * plus scheduling slack. Keep accepted buffers pinned on failure.
++       */
++
++      hw->drain_deadline = now + 2000 +
++                          2 * (uint64_t)pcm->periods * pcm->period_size *
++                          1000 / pcm->rate;
++      hw->draining = true;
++    }
+ 
+-  while (snd_pcm_hw_state(pcm) == SND_PCM_STATE_DRAINING)
++  while (pcm->stream == SND_PCM_STREAM_PLAYBACK &&
++         hw->status->tail != pcm->appl)
+     {
++      if (hw->status->state == AUDIO_STATE_OPEN ||
++          hw->status->tail > pcm->appl)
++        {
++          return -EIO;
++        }
++
++      ret = snd_pcm_hw_now(&now);
++      if (ret < 0)
++        {
++          return ret;
++        }
++
++      if (now >= hw->drain_deadline)
++        {
++          return -ETIMEDOUT;
++        }
++
+       if (pcm->mode & SND_PCM_NONBLOCK)
+         {
+-          return snd_pcm_hw_state(pcm) == SND_PCM_STATE_SETUP ? 0 : -EAGAIN;
++          return -EAGAIN;
+         }
+ 
+-      snd_pcm_wait(pcm, -1);
++      ret = poll(&fd, 1, hw->drain_deadline - now);
++      if (ret < 0 && errno != EINTR)
++        {
++          return -errno;
++        }
++
++      if (ret > 0 && hw->status->tail != pcm->appl)
++        {
++          return -EIO;
++        }
+     }
+ 
++  /* STOP cancels pending work. Invoke it only after every committed
++   * playback period has actually been returned by the lower half.
++   */
++
++  if (ioctl(hw->fd, AUDIOIOC_STOP, 0) < 0)
++    {
++      return -errno;
++    }
++
++  hw->draining = false;
++  hw->xrun = false;
++  hw->setup = true;
+   return 0;
+ }
+ 
+@@ -772,8 +1061,7 @@ static int snd_pcm_hw_delay(FAR snd_pcm_t *pcm,
+ 
+ static int snd_pcm_hw_resume(FAR snd_pcm_t *pcm)
+ {
+-  snd_pcm_hw_prepare(pcm);
+-  return 0;
++  return snd_pcm_hw_prepare(pcm);
+ }
+ 
+ static snd_pcm_sframes_t snd_pcm_hw_writen(FAR snd_pcm_t *pcm,
+@@ -788,6 +1076,11 @@ static snd_pcm_sframes_t snd_pcm_hw_avail_update(FAR snd_pcm_t *pcm)
+   FAR snd_pcm_hw_t *hw = pcm->private_data;
+   unsigned long used;
+ 
++  if (hw->draining)
++    {
++      return -EBADFD;
++    }
++
+   if (snd_pcm_hw_state(pcm) == SND_PCM_STATE_XRUN)
+     {
+       return -EPIPE;
+@@ -814,7 +1107,7 @@ static int snd_pcm_hw_mmap_begin(FAR snd_pcm_t *pcm,
+ 
+   avail = MIN(avail, pcm->period_size);
+ 
+-  if (avail > hw->offset)
++  if ((snd_pcm_uframes_t)avail > hw->offset)
+     {
+       avail -= hw->offset;
+     }
+@@ -872,7 +1165,7 @@ static int snd_pcm_hw_poll_descriptors(FAR snd_pcm_t *pcm,
+   pfds->fd = hw->fd;
+   pfds->events = POLLIN | POLLOUT;
+ 
+-  if (hw->status->state == SND_PCM_STATE_DRAINING)
++  if (hw->draining || hw->status->state == SND_PCM_STATE_DRAINING)
+     {
+       pfds->events = POLLERR;
+     }
+diff --git a/builtin/CMakeLists.txt b/builtin/CMakeLists.txt
+index 3872991df8fa91afad7d27ae4930d18c07f17043..eaf7751b9d57f0843185f593c96110f2f591dfc3 100644
+--- a/builtin/CMakeLists.txt
++++ b/builtin/CMakeLists.txt
+@@ -65,9 +65,16 @@ if(CONFIG_BUILTIN)
+   configure_file(builtin_proto.h.in builtin_proto.h)
+   configure_file(builtin_list.h.in builtin_list.h)
+ 
++  # Compile next to the CMake-generated registry.  With a prior Make build,
++  # quoted includes in the source-tree .c file otherwise pick up stale
++  # source-tree headers before this build's include directories.
++  configure_file(builtin_list.c builtin_list.c COPYONLY)
++
+   set(CSRCS)
+ 
+-  list(APPEND CSRCS builtin_list.c builtin_list.h builtin_proto.h)
++  list(APPEND CSRCS ${CMAKE_CURRENT_BINARY_DIR}/builtin_list.c
++       ${CMAKE_CURRENT_BINARY_DIR}/builtin_list.h
++       ${CMAKE_CURRENT_BINARY_DIR}/builtin_proto.h)
+ 
+   # target_sources(apps PRIVATE ${CSRCS})
+   nuttx_add_library(apps_builtin ${CSRCS})
+diff --git a/crypto/mbedtls/CMakeLists.txt b/crypto/mbedtls/CMakeLists.txt
+index dd4c6ba3c75df9c06b0466f23c53383a746df1b7..5bbb683f13d54838b9e9e87cc839d97eda9a648a 100644
+--- a/crypto/mbedtls/CMakeLists.txt
++++ b/crypto/mbedtls/CMakeLists.txt
+@@ -26,6 +26,14 @@ if(CONFIG_CRYPTO_MBEDTLS)
+ 
+   set(MBEDTLS_DIR ${CMAKE_CURRENT_LIST_DIR}/mbedtls)
+ 
++  if(NUTTX_PRESERVE_SOURCE)
++    # The local module is an input.  Never fetch or patch the source checkout.
++    if(NOT EXISTS "${MBEDTLS_DIR}/include/mbedtls/version.h"
++       OR NOT EXISTS "${MBEDTLS_DIR}/library/ssl_tls.c")
++      message(FATAL_ERROR "Source-preserving build requires local MbedTLS: ${MBEDTLS_DIR}")
++    endif()
++  endif()
++
+   if(NOT EXISTS ${MBEDTLS_DIR})
+     set(MBEDTLS_URL https://github.com/ARMmbed/mbedtls/archive)
+     FetchContent_Declare(
+@@ -38,6 +46,8 @@ if(CONFIG_CRYPTO_MBEDTLS)
+         ${CMAKE_CURRENT_LIST_DIR}/0001-mbedtls-entropy_poll-use-getrandom-to-get-the-system.patch
+         && patch -p1 -d ${MBEDTLS_DIR} <
+         ${CMAKE_CURRENT_LIST_DIR}/0002-mbedtls-add-mbedtls-x509-crt-pool.patch
++        && patch -p1 -d ${MBEDTLS_DIR} <
++        ${CMAKE_CURRENT_LIST_DIR}/0003-mbedtls-initialize-complete-psa-mac-context.patch
+       DOWNLOAD_NO_PROGRESS true
+       TIMEOUT 30)
+ 
+diff --git a/crypto/mbedtls/Makefile b/crypto/mbedtls/Makefile
+index 483f82e232c4a8b15b215e58ffe5db36087d39a5..f5338f632eeb40efc52d18fc2c8fb5593223ee34 100644
+--- a/crypto/mbedtls/Makefile
++++ b/crypto/mbedtls/Makefile
+@@ -68,6 +68,7 @@ $(MBEDTLS_UNPACKNAME): $(MBEDTLS_ZIP)
+ 	$(Q) mv	mbedtls-$(MBEDTLS_VERSION) $(MBEDTLS_UNPACKNAME)
+ 	$(Q) patch -p1 -d $(MBEDTLS_UNPACKNAME) < 0001-mbedtls-entropy_poll-use-getrandom-to-get-the-system.patch
+ 	$(Q) patch -p1 -d $(MBEDTLS_UNPACKNAME) < 0002-mbedtls-add-mbedtls-x509-crt-pool.patch
++	$(Q) patch -p1 -d $(MBEDTLS_UNPACKNAME) < 0003-mbedtls-initialize-complete-psa-mac-context.patch
+ 	$(Q) touch $(MBEDTLS_UNPACKNAME)
+ 
+ # Download and unpack tarball if no git repo found
+diff --git a/examples/buttons/Kconfig b/examples/buttons/Kconfig
+index 23a4f9768b6667a2aa3d8b6e647be71126d1727a..96581b392b5238c098fb30ea80d5300b56eef9df 100644
+--- a/examples/buttons/Kconfig
++++ b/examples/buttons/Kconfig
+@@ -9,6 +9,8 @@ config EXAMPLES_BUTTONS
+ 	depends on INPUT_BUTTONS
+ 	---help---
+ 		Enable the Buttons drivers example
++		In a kernel build this runs in the calling user process. Use
++		"buttons &" from NSH to monitor buttons in the background.
+ 
+ if EXAMPLES_BUTTONS
+ 
+diff --git a/examples/buttons/buttons_main.c b/examples/buttons/buttons_main.c
+index 2632cc75fa4fb3e1eb505f8dd9670a182180eae0..87bb132a4dbffe7acc797a12656e862e51ea1e09 100644
+--- a/examples/buttons/buttons_main.c
++++ b/examples/buttons/buttons_main.c
+@@ -138,15 +138,57 @@ static bool g_button_daemon_started;
+  ****************************************************************************/
+ 
+ /****************************************************************************
+- * Name: button_daemon
++ * Name: button_poll_sample
+  ****************************************************************************/
+ 
+-static int button_daemon(int argc, char *argv[])
+-{
+ #ifdef CONFIG_EXAMPLES_BUTTONS_POLL
+-  struct pollfd fds[1];
++static int button_poll_sample(int fd, FAR btn_buttonset_t *sample)
++{
++  struct pollfd event;
++  ssize_t nbytes;
++  int ret;
++
++  event.fd      = fd;
++  event.events  = POLLIN;
++  event.revents = 0;
++
++  ret = poll(&event, 1, CONFIG_INPUT_BUTTONS_POLL_DELAY);
++  if (ret <= 0)
++    {
++      return ret == 0 ? 0 : -errno;
++    }
++
++  if ((event.revents & (POLLERR | POLLHUP | POLLNVAL)) != 0 ||
++      (event.revents & POLLIN) == 0)
++    {
++      return -EIO;
++    }
++
++  /* The button driver returns its current state on every read.  It is
++   * not a pipe to drain: one sample acknowledges this poll notification.
++   */
++
++  do
++    {
++      nbytes = read(fd, sample, sizeof(*sample));
++    }
++  while (nbytes < 0 && errno == EINTR);
++
++  if (nbytes < 0)
++    {
++      return -errno;
++    }
++
++  return nbytes == sizeof(*sample) ? 1 : -EIO;
++}
+ #endif
+ 
++/****************************************************************************
++ * Name: button_daemon
++ ****************************************************************************/
++
++static int button_daemon(int argc, char *argv[])
++{
+ #ifdef CONFIG_EXAMPLES_BUTTONS_SIGNAL
+   struct btn_notify_s btnevents;
+ #endif
+@@ -233,11 +275,6 @@ static int button_daemon(int argc, char *argv[])
+       sigset_t set;
+ #endif
+ 
+-#ifdef CONFIG_EXAMPLES_BUTTONS_POLL
+-      bool timeout;
+-      int nbytes;
+-#endif
+-
+ #ifdef CONFIG_EXAMPLES_BUTTONS_SIGNAL
+       /* Wait for a signal */
+ 
+@@ -256,73 +293,24 @@ static int button_daemon(int argc, char *argv[])
+ #endif
+ 
+ #ifdef CONFIG_EXAMPLES_BUTTONS_POLL
+-      /* Prepare the File Descriptor for poll */
+-
+-      memset(fds, 0, sizeof(fds));
++      ret = button_poll_sample(fd, &sample);
+ 
+-      fds[0].fd      = fd;
+-      fds[0].events  = POLLIN;
+-
+-      timeout        = false;
+-
+-      ret = poll(fds, 1, CONFIG_INPUT_BUTTONS_POLL_DELAY);
++      if (ret == -EINTR || ret == -EAGAIN)
++        {
++          continue;
++        }
+ 
+       printf("\nbutton_daemon: poll returned: %d\n", ret);
+       if (ret < 0)
+         {
+-          int errcode = errno;
+-          printf("button_daemon: ERROR poll failed: %d\n", errcode);
++          printf("button_daemon: ERROR button sample failed: %d\n", -ret);
++          goto errout_with_fd;
+         }
+       else if (ret == 0)
+         {
+           printf("button_daemon: Timeout\n");
+-          timeout = true;
+-        }
+-      else if (ret > CONFIG_INPUT_BUTTONS_NPOLLWAITERS)
+-        {
+-          printf("button_daemon: ERROR poll reported: %d\n", errno);
+-        }
+-
+-      /* In any event, read until the pipe is empty */
+-
+-      do
+-        {
+-          nbytes = read(fds[0].fd, (void *)&sample, sizeof(btn_buttonset_t));
+-
+-          if (nbytes <= 0)
+-            {
+-              if (nbytes == 0 || errno == EAGAIN)
+-                {
+-                  if ((fds[0].revents & POLLIN) != 0)
+-                    {
+-                      printf("button_daemon: ERROR no read data\n");
+-                    }
+-                }
+-              else if (errno != EINTR)
+-                {
+-                  printf("button_daemon: read failed: %d\n", errno);
+-                }
+-
+-              nbytes = 0;
+-            }
+-          else
+-            {
+-              if (timeout)
+-                {
+-                  printf("button_daemon: ERROR? Poll timeout, "
+-                         "but data read\n");
+-                  printf("               (might just be a race "
+-                         "condition)\n");
+-                }
+-            }
+-
+-          /* Suppress error report if no read data on the next time
+-           * through
+-           */
+-
+-          fds[0].revents = 0;
++          continue;
+         }
+-      while (nbytes > 0);
+ #endif
+ 
+ #ifdef CONFIG_EXAMPLES_BUTTONS_NAMES
+@@ -373,6 +361,13 @@ errout:
+ 
+ int main(int argc, FAR char *argv[])
+ {
++#ifdef CONFIG_BUILD_KERNEL
++  /* A user ELF cannot call task_create().  Run in this process and let
++   * the shell choose foreground or background execution with "buttons &".
++   */
++
++  return button_daemon(argc, argv);
++#else
+   int ret;
+ 
+   printf("buttons_main: Starting the button_daemon\n");
+@@ -395,4 +390,5 @@ int main(int argc, FAR char *argv[])
+ 
+   printf("buttons_main: button_daemon started\n");
+   return EXIT_SUCCESS;
++#endif
+ }
+diff --git a/examples/buttons/test_entry.py b/examples/buttons/test_entry.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..781ac6afe39f583073b6b022c927b8debe0ab8aa
+--- /dev/null
++++ b/examples/buttons/test_entry.py
+@@ -0,0 +1,66 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: Apache-2.0
++"""Check user-ELF foreground entry and the existing flat-build daemon entry."""
++
++from pathlib import Path
++import subprocess
++import tempfile
++
++
++def main():
++    source = Path(__file__).with_name("buttons_main.c").read_text()
++    entry = source[source.index("\nint main("):].replace(
++        "int main(", "int buttons_test_entry(", 1)
++    fixture = r'''
++#include <assert.h>
++#include <stdbool.h>
++#include <stddef.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <errno.h>
++#define FAR
++#define CONFIG_EXAMPLES_BUTTONS_PRIORITY 100
++#define CONFIG_EXAMPLES_BUTTONS_STACKSIZE 2048
++static bool g_button_daemon_started;
++static int runs;
++static int button_daemon(int argc, char **argv) {
++  assert(argc == 0 && argv == NULL); runs++; return 23;
++}
++#ifndef CONFIG_BUILD_KERNEL
++static int create_result = 12;
++static int task_create(const char *name, int priority, int stack,
++                       int (*entry)(int, char **), char **argv) {
++  assert(priority == 100 && stack == 2048 && entry == button_daemon);
++  assert(name && argv == NULL); runs++; errno = ENOMEM; return create_result;
++}
++#endif
++'''
++    fixture += entry
++    fixture += r'''
++int main(void) {
++#ifdef CONFIG_BUILD_KERNEL
++  assert(buttons_test_entry(0, NULL) == 23 && runs == 1);
++  g_button_daemon_started = true;
++  assert(buttons_test_entry(0, NULL) == 23 && runs == 2);
++#else
++  assert(buttons_test_entry(0, NULL) == EXIT_SUCCESS && runs == 1);
++  g_button_daemon_started = true;
++  assert(buttons_test_entry(0, NULL) == EXIT_SUCCESS && runs == 1);
++  g_button_daemon_started = false; create_result = -1;
++  assert(buttons_test_entry(0, NULL) == EXIT_FAILURE && runs == 2);
++#endif
++  puts("BUTTONS_ENTRY=PASS");
++}
++'''
++    with tempfile.TemporaryDirectory(prefix="buttons-entry-") as directory:
++        path = Path(directory)
++        (path / "test.c").write_text(fixture)
++        for flags in ([], ["-DCONFIG_BUILD_KERNEL=1"]):
++            subprocess.run(["cc", "-std=c11", "-Wall", "-Wextra", "-Werror",
++                            "-Wno-unused-parameter", *flags, str(path / "test.c"),
++                            "-o", str(path / "test")], check=True)
++            subprocess.run([str(path / "test")], check=True)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/examples/buttons/test_poll.py b/examples/buttons/test_poll.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..b2000098caddbe5698fceefc114e07d0b335cb72
+--- /dev/null
++++ b/examples/buttons/test_poll.py
+@@ -0,0 +1,73 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: Apache-2.0
++"""Test bounded reads against the button driver's current-state semantics."""
++
++from pathlib import Path
++import subprocess
++import tempfile
++
++
++def main():
++    source = Path(__file__).with_name("buttons_main.c").read_text()
++    start = source.index("\nstatic int button_poll_sample(")
++    end = source.index("\n}\n", start) + 3
++    fixture = r'''
++#include <assert.h>
++#include <errno.h>
++#include <poll.h>
++#include <stdint.h>
++#include <stdio.h>
++#include <sys/types.h>
++#define FAR
++#define CONFIG_INPUT_BUTTONS_POLL_DELAY 1000
++typedef uint32_t btn_buttonset_t;
++static int poll_result, poll_error, read_error, reads, interrupted;
++static short events;
++static ssize_t read_size;
++static int test_poll(struct pollfd *fd, nfds_t count, int timeout) {
++  assert(count == 1 && fd->fd == 7 && fd->events == POLLIN && timeout == 1000);
++  fd->revents = events; errno = poll_error; return poll_result;
++}
++static ssize_t test_read(int fd, void *buffer, size_t length) {
++  assert(fd == 7 && length == sizeof(btn_buttonset_t));
++  assert(++reads <= 2); /* A current-state device never becomes empty. */
++  if (interrupted) { interrupted = 0; errno = EINTR; return -1; }
++  *(btn_buttonset_t *)buffer = 1;
++  errno = read_error; return read_size;
++}
++#define poll test_poll
++#define read test_read
++'''
++    fixture += source[start:end]
++    fixture += r'''
++int main(void) {
++  btn_buttonset_t sample = 99;
++  assert(button_poll_sample(7, &sample) == 0 && reads == 0 && sample == 99);
++  poll_result = -1; poll_error = EINTR;
++  assert(button_poll_sample(7, &sample) == -EINTR && reads == 0);
++  poll_result = 1; events = POLLHUP | POLLIN;
++  assert(button_poll_sample(7, &sample) == -EIO && reads == 0);
++  events = 0;
++  assert(button_poll_sample(7, &sample) == -EIO && reads == 0);
++  events = POLLIN; read_size = sizeof(sample);
++  assert(button_poll_sample(7, &sample) == 1 && reads == 1 && sample == 1);
++  reads = 0; interrupted = 1;
++  assert(button_poll_sample(7, &sample) == 1 && reads == 2);
++  reads = 0; read_size = -1; read_error = EAGAIN;
++  assert(button_poll_sample(7, &sample) == -EAGAIN && reads == 1);
++  reads = 0; read_size = 1;
++  assert(button_poll_sample(7, &sample) == -EIO && reads == 1);
++  puts("BUTTONS_POLL=PASS bounded-current-state/timeout/events/EINTR/EAGAIN/short-read");
++}
++'''
++    with tempfile.TemporaryDirectory(prefix="buttons-poll-") as directory:
++        path = Path(directory)
++        (path / "test.c").write_text(fixture)
++        subprocess.run(["cc", "-std=c11", "-Wall", "-Wextra", "-Werror",
++                        "-fsanitize=undefined", "-fno-sanitize-recover=all",
++                        str(path / "test.c"), "-o", str(path / "test")], check=True)
++        subprocess.run([str(path / "test")], check=True)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/examples/ftpd/CMakeLists.txt b/examples/ftpd/CMakeLists.txt
+index e433f125beb695bbc493bf29cb3f95f9b1d397f3..cdffa6f0230f854264063d0b84a9105a4e07ea12 100644
+--- a/examples/ftpd/CMakeLists.txt
++++ b/examples/ftpd/CMakeLists.txt
+@@ -21,6 +21,8 @@
+ if(CONFIG_EXAMPLES_FTPD)
+   nuttx_add_application(NAME ftpd_start SRCS ftpd_main.c STACKSIZE
+                         ${CONFIG_EXAMPLES_FTPD_STACKSIZE})
+-  nuttx_add_application(NAME ftpd_stop STACKSIZE
+-                        ${CONFIG_EXAMPLES_FTPD_STACKSIZE})
++  if(NOT CONFIG_BUILD_KERNEL)
++    nuttx_add_application(NAME ftpd_stop STACKSIZE
++                          ${CONFIG_EXAMPLES_FTPD_STACKSIZE})
++  endif()
+ endif()
+diff --git a/examples/ftpd/ftpd_main.c b/examples/ftpd/ftpd_main.c
+index d1052b50c3c6606b4139f3a6e6dcb3f50b0bacc0..a5b53d7f175ef7829354a59fdc9db776b6df0e04 100644
+--- a/examples/ftpd/ftpd_main.c
++++ b/examples/ftpd/ftpd_main.c
+@@ -179,7 +179,11 @@ int ftpd_daemon(int s_argc, char **s_argv)
+   g_ftpdglob.running = true;
+   printf("FTP daemon [%d] started\n", g_ftpdglob.pid);
+ 
++#ifdef CONFIG_BUILD_KERNEL
++  while ((option = getopt(s_argc, s_argv, "46")) != ERROR)
++#else
+   while ((option = getopt(s_argc, &s_argv[1], "46")) != ERROR)
++#endif
+     {
+       switch (option)
+       {
+@@ -200,7 +204,11 @@ int ftpd_daemon(int s_argc, char **s_argv)
+       goto out;
+     }
+ 
++#ifdef CONFIG_BUILD_KERNEL
++  if (optind < s_argc)
++#else
+   if ((optind + 1) < s_argc)
++#endif
+     {
+       fprintf(stderr, "%s: Too many arguments\n", s_argv[1]);
+       hint();
+@@ -283,6 +291,16 @@ int main(int argc, FAR char *argv[])
+       g_ftpdglob.running     = false;
+     }
+ 
++#ifdef CONFIG_BUILD_KERNEL
++  /* NSH starts this process with "ftpd_start -4 &".  Kernel builds cannot
++   * task_create a user entry point, and separate commands do not share the
++   * daemon's globals.  Run the existing server in this process and stop it
++   * through its reported PID.
++   */
++
++  g_ftpdglob.pid = getpid();
++  return ftpd_daemon(argc, argv);
++#else
+   /* Then start the new daemon (if it is not already running) */
+ 
+   if (g_ftpdglob.stop && g_ftpdglob.running)
+@@ -309,6 +327,7 @@ int main(int argc, FAR char *argv[])
+     }
+ 
+   return EXIT_SUCCESS;
++#endif /* CONFIG_BUILD_KERNEL */
+ }
+ 
+ /****************************************************************************
+diff --git a/examples/nettest/Makefile b/examples/nettest/Makefile
+index 9cd52eacf4fe39500cd50d1dbc3c21ccf49a9b98..04b63831237c9cc73464699d8c3bc3e372e24d16 100644
+--- a/examples/nettest/Makefile
++++ b/examples/nettest/Makefile
+@@ -76,7 +76,7 @@ ifneq ($(CONFIG_EXAMPLES_NETTEST_LOOPBACK),y)
+   HOSTCFLAGS += -DCONFIG_EXAMPLES_NETTEST_PERFORMANCE=1
+   endif
+ 
+-  HOST_SRCS = nettest_host.c
++  HOST_SRCS = nettest_host.c nettest_cmdline.c
+   ifeq ($(CONFIG_EXAMPLES_NETTEST_SERVER),y)
+     HOST_SRCS += nettest_client.c
+     HOST_BIN = tcpclient$(HOSTEXEEXT)
+diff --git a/examples/nettest/host/CMakeLists.txt b/examples/nettest/host/CMakeLists.txt
+index b0f87c8de10019be4eb09a66710537e8cc7990e7..f0f60f8a1634cf1a559040890c323096ca31bfa2 100644
+--- a/examples/nettest/host/CMakeLists.txt
++++ b/examples/nettest/host/CMakeLists.txt
+@@ -24,7 +24,7 @@ project(nuttx_tools LANGUAGES C)
+ include(${NUTTX_DIR}/cmake/nuttx_kconfig.cmake)
+ nuttx_export_kconfig(${NUTTX_BINARY_DIR}/.config)
+ 
+-set(HOST_SRCS ../nettest_host.c)
++set(HOST_SRCS ../nettest_host.c ../nettest_cmdline.c)
+ if(CONFIG_EXAMPLES_NETTEST_SERVER)
+   set(HOST_TARGET tcpclient)
+   add_executable(tcpclient ../nettest_client.c ${HOST_SRCS})
+@@ -36,17 +36,5 @@ else()
+ endif()
+ 
+ target_compile_definitions(${HOST_TARGET} PRIVATE NETTEST_HOST=1)
+-if(CONFIG_EXAMPLES_NETTEST_SERVER)
+-  target_compile_definitions(
+-    ${HOST_TARGET}
+-    PRIVATE
+-      CONFIG_EXAMPLES_NETTEST_SERVER=1
+-      CONFIG_EXAMPLES_NETTEST_SERVERIP="${CONFIG_EXAMPLES_NETTEST_SERVERIP}")
+-endif()
+-if(CONFIG_EXAMPLES_NETTEST_PERFORMANCE)
+-  target_compile_definitions(${HOST_TARGET}
+-                             PRIVATE CONFIG_EXAMPLES_NETTEST_PERFORMANCE=1)
+-endif()
+-
+ target_include_directories(${HOST_TARGET}
+                            PRIVATE ${NUTTX_BINARY_DIR}/include/nuttx)
+diff --git a/examples/nettest/nettest_cmdline.c b/examples/nettest/nettest_cmdline.c
+index af8ed5e690d06204c8f5d951680c4371bead7cd8..ce9d2314034892dfb5f112aafc0836d0078a10c5 100644
+--- a/examples/nettest/nettest_cmdline.c
++++ b/examples/nettest/nettest_cmdline.c
+@@ -36,36 +36,27 @@
+ 
+ #ifdef CONFIG_EXAMPLES_NETTEST_IPv6
+ 
+-uint16_t g_nettestserver_ipv6[8] =
++uint16_t g_nettestserver_ipv6[8];
++
++static const uint16_t g_default_ipv6[8] =
+ {
+-#if defined(CONFIG_EXAMPLES_NETTEST_LOOPBACK) && defined(NET_LOOPBACK)
+-  0        /* Use the loopback address */
+-  0
+-  0
+-  0
+-  0
+-  0
+-  0
+-  HTONS(1);
++#if defined(CONFIG_EXAMPLES_NETTEST_LOOPBACK) && defined(CONFIG_NET_LOOPBACK)
++  0, 0, 0, 0, 0, 0, 0, 1  /* Use the loopback address */
+ #else
+-  HTONS(CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_1),
+-  HTONS(CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_2),
+-  HTONS(CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_3),
+-  HTONS(CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_4),
+-  HTONS(CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_5),
+-  HTONS(CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_6),
+-  HTONS(CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_7),
+-  HTONS(CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_8)
++  CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_1,
++  CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_2,
++  CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_3,
++  CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_4,
++  CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_5,
++  CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_6,
++  CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_7,
++  CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_8
+ #endif
+ };
+ 
+ #else
+ 
+-#if defined(CONFIG_EXAMPLES_NETTEST_LOOPBACK) && defined(CONFIG_NET_LOOPBACK)
+-uint32_t g_nettestserver_ipv4 = HTONL(0x7f000001);
+-#else
+-uint32_t g_nettestserver_ipv4 = HTONL(CONFIG_EXAMPLES_NETTEST_SERVERIP);
+-#endif
++uint32_t g_nettestserver_ipv4;
+ 
+ #endif
+ 
+@@ -77,7 +68,7 @@ uint32_t g_nettestserver_ipv4 = HTONL(CONFIG_EXAMPLES_NETTEST_SERVERIP);
+  * show_usage
+  ****************************************************************************/
+ 
+-static void show_usage(FAR const char *progname)
++static void show_usage(const char *progname)
+ {
+   fprintf(stderr, "USAGE: %s [<server-addr>]\n", progname);
+   exit(1);
+@@ -93,6 +84,25 @@ static void show_usage(FAR const char *progname)
+ 
+ void nettest_cmdline(int argc, char **argv)
+ {
++  /* Host byte-order conversions need not be constant expressions.  Set
++   * defaults here before accepting an optional command-line override.
++   */
++
++#ifdef CONFIG_EXAMPLES_NETTEST_IPv6
++  int i;
++
++  for (i = 0; i < 8; i++)
++    {
++      g_nettestserver_ipv6[i] = HTONS(g_default_ipv6[i]);
++    }
++#else
++#if defined(CONFIG_EXAMPLES_NETTEST_LOOPBACK) && defined(CONFIG_NET_LOOPBACK)
++  g_nettestserver_ipv4 = HTONL(0x7f000001);
++#else
++  g_nettestserver_ipv4 = HTONL(CONFIG_EXAMPLES_NETTEST_SERVERIP);
++#endif
++#endif
++
+   /* Currently only a single command line option is supported:  The server
+    * IP address.
+    */
+@@ -108,7 +118,7 @@ void nettest_cmdline(int argc, char **argv)
+ #else
+       ret = inet_pton(AF_INET, argv[1], &g_nettestserver_ipv4);
+ #endif
+-      if (ret < 0)
++      if (ret != 1)
+         {
+           fprintf(stderr, "ERROR: <server-addr> is invalid\n");
+           show_usage(argv[0]);
+diff --git a/examples/nettest/nettest_host.c b/examples/nettest/nettest_host.c
+index 6e6ce25bd1e3a18c9ccb0da003eb47dcebef48a8..02db8dd528494008ca7bc59ca6ec146ea6ec3abd 100644
+--- a/examples/nettest/nettest_host.c
++++ b/examples/nettest/nettest_host.c
+@@ -39,6 +39,8 @@
+ 
+ int main(int argc, char **argv, char **envp)
+ {
++  nettest_cmdline(argc, argv);
++
+ #ifdef CONFIG_EXAMPLES_NETTEST_SERVER
+   nettest_client();
+ #else
+diff --git a/examples/nettest/test_cmdline.py b/examples/nettest/test_cmdline.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..ebbda9aad98c3686314c5ef355aaa535edfbcb49
+--- /dev/null
++++ b/examples/nettest/test_cmdline.py
+@@ -0,0 +1,82 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: Apache-2.0
++"""Check actual nettest host startup/address parsing without opening sockets."""
++import argparse
++from pathlib import Path
++import subprocess
++import tempfile
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--revision')
++    args = parser.parse_args()
++    source = Path(__file__).resolve().parent
++    root = source.parents[1]
++    with tempfile.TemporaryDirectory(prefix='nettest-cmdline-') as directory:
++        path = Path(directory)
++        for name in ('nettest_host.c', 'nettest_cmdline.c', 'nettest.h'):
++            contents = (subprocess.check_output(
++                ['git', 'show', f'{args.revision}:examples/nettest/{name}'],
++                cwd=root, text=True) if args.revision else (source / name).read_text())
++            (path / name).write_text(contents)
++        (path / 'endpoint.c').write_text(r'''
++#include "config.h"
++#include "nettest.h"
++#include <assert.h>
++#include <stdio.h>
++static void endpoint(void)
++{
++  char buffer[INET6_ADDRSTRLEN];
++#ifdef CONFIG_EXAMPLES_NETTEST_IPv6
++  const void *address = g_nettestserver_ipv6;
++#else
++  const void *address = &g_nettestserver_ipv4;
++#endif
++  assert(inet_ntop(AF_INETX, address, buffer, sizeof(buffer)));
++  puts(buffer);
++}
++void nettest_client(void) { endpoint(); }
++void nettest_server(void) { endpoint(); }
++''')
++        for ipv6 in (False, True):
++            for loopback in (False, True):
++                for server in (False, True):
++                    config = ''
++                    if ipv6:
++                        config += '#define CONFIG_EXAMPLES_NETTEST_IPv6 1\n'
++                        parts = (0x2001, 0xdb8, 0, 0, 0, 0, 0, 1)
++                        for index, value in enumerate(parts, 1):
++                            config += (f'#define CONFIG_EXAMPLES_NETTEST_SERVERIPv6ADDR_'
++                                       f'{index} {value}\n')
++                        expected = '::1' if loopback else '2001:db8::1'
++                        override = '2001:db8::7'
++                    else:
++                        config += '#define CONFIG_EXAMPLES_NETTEST_SERVERIP 0xc0000201\n'
++                        expected = '127.0.0.1' if loopback else '192.0.2.1'
++                        override = '198.51.100.7'
++                    if loopback:
++                        config += ('#define CONFIG_EXAMPLES_NETTEST_LOOPBACK 1\n'
++                                   '#define CONFIG_NET_LOOPBACK 1\n')
++                    if server:
++                        config += '#define CONFIG_EXAMPLES_NETTEST_SERVER 1\n'
++                    (path / 'config.h').write_text(config)
++                    executable = str(path / 'test')
++                    subprocess.run(['cc', '-std=c11', '-Wall', '-Wextra', '-Werror',
++                                    '-Wno-unused-parameter', '-DNETTEST_HOST=1',
++                                    '-I', directory, str(path / 'nettest_host.c'),
++                                    str(path / 'nettest_cmdline.c'), str(path / 'endpoint.c'),
++                                    '-o', executable], check=True)
++                    for extra, wanted in (([], expected), ([override], override)):
++                        result = subprocess.run([executable, *extra], check=True,
++                                                capture_output=True, text=True)
++                        assert result.stdout.strip() == wanted, result.stdout
++                    for extra in (['invalid-address'], [override, override]):
++                        result = subprocess.run([executable, *extra],
++                                                capture_output=True, text=True)
++                        assert result.returncode != 0 and 'USAGE:' in result.stderr
++    print('NETTEST_CMDLINE=PASS IPv4/IPv6, client/server, defaults/loopback/override/errors')
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/examples/s31demo/CMakeLists.txt b/examples/s31demo/CMakeLists.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..2fe95d0cf89d4baf47bc9d1927f866a6bd3805bc
+--- /dev/null
++++ b/examples/s31demo/CMakeLists.txt
+@@ -0,0 +1,11 @@
++# SPDX-License-Identifier: Apache-2.0
++
++if(CONFIG_EXAMPLES_S31DEMO)
++  nuttx_add_application(
++    MODULE ${CONFIG_EXAMPLES_S31DEMO}
++    NAME ${CONFIG_EXAMPLES_S31DEMO_PROGNAME}
++    SRCS s31demo_main.c
++    STACKSIZE ${CONFIG_EXAMPLES_S31DEMO_STACKSIZE}
++    HEAPSIZE ${CONFIG_EXAMPLES_S31DEMO_HEAPSIZE}
++    PRIORITY ${CONFIG_EXAMPLES_S31DEMO_PRIORITY})
++endif()
+diff --git a/examples/s31demo/Kconfig b/examples/s31demo/Kconfig
+new file mode 100644
+index 0000000000000000000000000000000000000000..8409cbb087818e1f05059bc0f147b1ff694f4abc
+--- /dev/null
++++ b/examples/s31demo/Kconfig
+@@ -0,0 +1,36 @@
++# SPDX-License-Identifier: Apache-2.0
++
++config EXAMPLES_S31DEMO
++	tristate "ESP32-S31 read-only LAN status demo"
++	default n
++	depends on NET_TCP && NET_IPv4 && NET_SOCKOPTS
++	---help---
++		Serve a small status page and JSON endpoint after Wi-Fi/DHCP setup.
++		No credentials, file writes, remote commands or external assets.
++		This unauthenticated demo is intended only for a trusted test LAN.
++
++if EXAMPLES_S31DEMO
++
++config EXAMPLES_S31DEMO_PROGNAME
++	string "Program name"
++	default "s31demo"
++
++config EXAMPLES_S31DEMO_PRIORITY
++	int "Task priority"
++	default 100
++
++config EXAMPLES_S31DEMO_STACKSIZE
++	int "Stack size"
++	default 8192
++
++config EXAMPLES_S31DEMO_HEAPSIZE
++	int "Heap size"
++	depends on MM_TASK_HEAP
++	default MM_TASK_HEAP_DEFAULT_SIZE
++
++config EXAMPLES_S31DEMO_PORT
++	int "HTTP port"
++	range 1024 65535
++	default 8080
++
++endif
+diff --git a/examples/s31demo/Make.defs b/examples/s31demo/Make.defs
+new file mode 100644
+index 0000000000000000000000000000000000000000..9b2c1d8c43a966598f1dc09613126f27c16747c7
+--- /dev/null
++++ b/examples/s31demo/Make.defs
+@@ -0,0 +1,5 @@
++# SPDX-License-Identifier: Apache-2.0
++
++ifneq ($(CONFIG_EXAMPLES_S31DEMO),)
++CONFIGURED_APPS += $(APPDIR)/examples/s31demo
++endif
+diff --git a/examples/s31demo/Makefile b/examples/s31demo/Makefile
+new file mode 100644
+index 0000000000000000000000000000000000000000..2890b1ca9ad49da139a68d5de5ed7ed71ae2842a
+--- /dev/null
++++ b/examples/s31demo/Makefile
+@@ -0,0 +1,12 @@
++# SPDX-License-Identifier: Apache-2.0
++
++include $(APPDIR)/Make.defs
++
++PROGNAME  = $(CONFIG_EXAMPLES_S31DEMO_PROGNAME)
++PRIORITY  = $(CONFIG_EXAMPLES_S31DEMO_PRIORITY)
++STACKSIZE = $(CONFIG_EXAMPLES_S31DEMO_STACKSIZE)
++HEAPSIZE  = $(CONFIG_EXAMPLES_S31DEMO_HEAPSIZE)
++MODULE    = $(CONFIG_EXAMPLES_S31DEMO)
++MAINSRC   = s31demo_main.c
++
++include $(APPDIR)/Application.mk
+diff --git a/examples/s31demo/README.md b/examples/s31demo/README.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..35bfd41231140913db36d1e63b1693465487e697
+--- /dev/null
++++ b/examples/s31demo/README.md
+@@ -0,0 +1,57 @@
++# S31 basic LAN demo
++
++A small, read-only HTTP application for the ESP32-S31 bring-up demo.
++It serves `/` and `/status.json` on TCP port 8080, showing the board's IPv4
++address, monotonic uptime and request count. The page refreshes every five
++seconds and loads no external resources. No credentials or files are served.
++
++For an offline console snapshot, without provisioning or starting HTTP:
++
++```text
++prlimit -s 8192 s31demo --status
++```
++
++An optional interface argument selects the queried interface; the default is
++`wlan0`. This mode reports monotonic uptime, interface UP state, IPv4 address,
++and the presence of the RGB, button, I2C, PCM and HCI device nodes. It uses a
++datagram socket only for read-only interface ioctls, sends no traffic, opens no
++devices and exits immediately. `STATE=PRESENT` means the device node exists,
++not that playback, capture, Bluetooth or any xTS case passed. Absent nodes are
++reported as `STATE=ABSENT`. Successful queries end with `S31_DEMO_STATUS=OK`;
++query errors are reported explicitly with a nonzero exit status. This mode
++does not start DHCP, associate Wi-Fi or change the interface state.
++
++Build the NuttX board's `demo` configuration and flash its matching kernel
++and AppFS together. This configuration uses the validated b/g/n station path;
++it is not an HE, Bluetooth, Zigbee, performance or long-duration certification.
++
++After associating with Wi-Fi and obtaining DHCP, start it from NSH:
++
++```text
++prlimit -s 8192 s31demo &
++```
++
++Open `http://<board-ip>:8080/` from a device on the same trusted LAN.
++The explicit stack limit is required when AppFS stripping removes the ELF's
++`nx_stacksize` symbol; otherwise the loader falls back to a 2 KiB stack.
++Stop the reported process with `kill <pid>` or reset the board. The application
++does not configure Wi-Fi or save credentials. The host-side
++`nuttx/tools/espressif/esp32s31_demo.py` can perform interactive, redacted setup
++and leave the demo running.
++
++This is an unauthenticated, single-client demonstration, not an Internet-facing
++web server. Only GET is accepted; headers are capped at 2047 bytes and socket
++reads/writes have five-second timeouts. Oversized or malformed requests close
++the connection. There are no upload, shell-command or storage-write endpoints.
++
++Host regression: `python3 examples/s31demo/test_host.py` from the Apps tree.
++It compiles the actual C source and tests HTML/JSON, repeated requests, method
++and path rejection, and the header bound. Real board validation is separate.
++
++LAN validation: `python3 examples/s31demo/test_http.py <board-ip>`.
++This checks the HTML and ten successive JSON responses using a direct HTTP
++client, without reading HTTP proxy environment settings.
++Add `--samples 100 --boundaries` to also check a longer sequence, rejected
++methods/paths, browser-sized headers, oversized headers and recovery after an
++idle partial request. The timeout check occupies this single-client server
++for approximately five seconds; use it only on an authorized test board.
+diff --git a/examples/s31demo/s31demo_main.c b/examples/s31demo/s31demo_main.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..c0c02b33e9c8c92b18cba186c0dfaba39e97204f
+--- /dev/null
++++ b/examples/s31demo/s31demo_main.c
+@@ -0,0 +1,353 @@
++/****************************************************************************
++ * apps/examples/s31demo/s31demo_main.c
++ *
++ * SPDX-License-Identifier: Apache-2.0
++ ****************************************************************************/
++
++/****************************************************************************
++ * Included Files
++ ****************************************************************************/
++
++#include <nuttx/config.h>
++
++#include <sys/ioctl.h>
++#include <sys/socket.h>
++#include <sys/stat.h>
++#include <sys/time.h>
++#include <arpa/inet.h>
++#include <net/if.h>
++#include <errno.h>
++#include <inttypes.h>
++#include <signal.h>
++#include <stdbool.h>
++#include <stdio.h>
++#include <string.h>
++#include <time.h>
++#include <unistd.h>
++
++/****************************************************************************
++ * Private Functions
++ ****************************************************************************/
++
++static int print_status(const char *interface)
++{
++  static const char *const devices[] =
++  {
++    "/dev/leds0", "/dev/buttons", "/dev/i2c0",
++    "/dev/audio/pcm0p", "/dev/audio/pcm0c", "/dev/ttyHCI0"
++  };
++  struct timespec uptime;
++  struct ifreq req;
++  struct sockaddr_in *address;
++  struct stat st;
++  char ip[INET_ADDRSTRLEN];
++  int fd;
++  int result = 0;
++  int flags;
++  size_t i;
++
++  if (clock_gettime(CLOCK_MONOTONIC, &uptime) < 0)
++    {
++      perror("s31demo status clock_gettime");
++      printf("S31_DEMO_STATUS=ERROR\n");
++      return 1;
++    }
++
++  /* This socket is only an ioctl handle. No network traffic or listener
++   * is created, and no interface settings are changed.
++   */
++
++  fd = socket(AF_INET, SOCK_DGRAM, 0);
++  if (fd < 0)
++    {
++      perror("s31demo status socket");
++      printf("S31_DEMO_STATUS=ERROR\n");
++      return 1;
++    }
++
++  memset(&req, 0, sizeof(req));
++  snprintf(req.ifr_name, sizeof(req.ifr_name), "%s", interface);
++  if (ioctl(fd, SIOCGIFFLAGS, (unsigned long)&req) < 0)
++    {
++      perror("s31demo status SIOCGIFFLAGS");
++      close(fd);
++      printf("S31_DEMO_STATUS=ERROR\n");
++      return 1;
++    }
++
++  flags = req.ifr_flags;
++  memset(&req, 0, sizeof(req));
++  snprintf(req.ifr_name, sizeof(req.ifr_name), "%s", interface);
++  if (ioctl(fd, SIOCGIFADDR, (unsigned long)&req) < 0)
++    {
++      perror("s31demo status SIOCGIFADDR");
++      close(fd);
++      printf("S31_DEMO_STATUS=ERROR\n");
++      return 1;
++    }
++
++  address = (struct sockaddr_in *)&req.ifr_addr;
++  if (inet_ntop(AF_INET, &address->sin_addr, ip, sizeof(ip)) == NULL)
++    {
++      perror("s31demo status inet_ntop");
++      close(fd);
++      printf("S31_DEMO_STATUS=ERROR\n");
++      return 1;
++    }
++
++  close(fd);
++  printf("S31_DEMO_INTERFACE=%s\n", interface);
++  printf("S31_DEMO_UPTIME_SECONDS=%lu\n", (unsigned long)uptime.tv_sec);
++  printf("S31_DEMO_INTERFACE_UP=%d\n", (flags & IFF_UP) != 0);
++  printf("S31_DEMO_IPV4=%s\n", ip);
++
++  /* Presence is not a functional test. Do not open devices here: opening
++   * a device may initialize hardware or alter an ongoing operation.
++   */
++
++  for (i = 0; i < sizeof(devices) / sizeof(devices[0]); i++)
++    {
++      if (stat(devices[i], &st) == 0)
++        {
++          printf("S31_DEMO_DEVICE=%s STATE=PRESENT\n", devices[i]);
++        }
++      else if (errno == ENOENT)
++        {
++          printf("S31_DEMO_DEVICE=%s STATE=ABSENT\n", devices[i]);
++        }
++      else
++        {
++          fprintf(stderr, "s31demo status stat %s: %s\n",
++                  devices[i], strerror(errno));
++          printf("S31_DEMO_DEVICE=%s STATE=ERROR\n", devices[i]);
++          result = 1;
++        }
++    }
++
++  printf("S31_DEMO_STATUS=%s\n", result == 0 ? "OK" : "ERROR");
++  return result;
++}
++
++static int send_all(int fd, const char *buffer, size_t length)
++{
++  while (length > 0)
++    {
++      ssize_t sent = send(fd, buffer, length, 0);
++      if (sent < 0 && errno == EINTR)
++        {
++          continue;
++        }
++
++      if (sent <= 0)
++        {
++          return -1;
++        }
++
++      buffer += sent;
++      length -= sent;
++    }
++
++  return 0;
++}
++
++static void serve_client(int fd, const char *interface, uint32_t requests)
++{
++  struct timeval timeout;
++  struct timespec uptime;
++  struct ifreq req;
++  struct sockaddr_in *address;
++  char input[2048];
++  char body[1536];
++  char header[192];
++  char method[8];
++  char path[64];
++  char version[16];
++  char ip[INET_ADDRSTRLEN] = "0.0.0.0";
++  const char *status = "200 OK";
++  const char *type = "text/html; charset=utf-8";
++  size_t used = 0;
++  int length;
++  int headlen;
++
++  timeout.tv_sec = 5;
++  timeout.tv_usec = 0;
++
++  if (setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &timeout,
++                 sizeof(timeout)) < 0 ||
++      setsockopt(fd, SOL_SOCKET, SO_SNDTIMEO, &timeout,
++                 sizeof(timeout)) < 0)
++    {
++      return;
++    }
++
++  /* Bounded headers, no body processing, and no reflected request data. */
++
++  input[0] = '\0';
++  while (strstr(input, "\r\n\r\n") == NULL)
++    {
++      ssize_t received = recv(fd, input + used, sizeof(input) - used - 1, 0);
++      if (received < 0 && errno == EINTR)
++        {
++          continue;
++        }
++
++      if (received <= 0)
++        {
++          return;
++        }
++
++      used += received;
++      input[used] = '\0';
++      if (used == sizeof(input) - 1)
++        {
++          return;
++        }
++    }
++
++  if (sscanf(input, "%7s %63s %15s", method, path, version) != 3 ||
++      (strcmp(version, "HTTP/1.0") != 0 &&
++       strcmp(version, "HTTP/1.1") != 0))
++    {
++      return;
++    }
++
++  memset(&req, 0, sizeof(req));
++  snprintf(req.ifr_name, sizeof(req.ifr_name), "%s", interface);
++  if (ioctl(fd, SIOCGIFADDR, (unsigned long)&req) == 0)
++    {
++      address = (struct sockaddr_in *)&req.ifr_addr;
++      inet_ntop(AF_INET, &address->sin_addr, ip, sizeof(ip));
++    }
++
++  memset(&uptime, 0, sizeof(uptime));
++  clock_gettime(CLOCK_MONOTONIC, &uptime);
++
++  if (strcmp(method, "GET") != 0)
++    {
++      status = "405 Method Not Allowed";
++      type = "text/plain";
++      length = snprintf(body, sizeof(body), "GET only\n");
++    }
++  else if (strcmp(path, "/status.json") == 0)
++    {
++      type = "application/json";
++      length = snprintf(body, sizeof(body),
++                        "{\"board\":\"ESP32-S31\",\"ipv4\":\"%s\","
++                        "\"uptime_seconds\":%lu,\"requests\":%"
++                        PRIu32 "}\n",
++                        ip, (unsigned long)uptime.tv_sec, requests);
++    }
++  else if (strcmp(path, "/") == 0)
++    {
++      length = snprintf(body, sizeof(body),
++                        "<!doctype html><html lang=en><meta charset=utf-8>"
++                        "<meta name=viewport content='width=device-width'>"
++                        "<meta http-equiv=refresh content=5>"
++                        "<title>openvela S31 demo</title>"
++                        "<style>body{font:18px system-ui;background:#102024;"
++                        "color:#edf8f0;max-width:640px;margin:10vh auto;"
++                        "padding:24px}h1{color:#7de6ad}dt{margin-top:20px;"
++                        "color:#aac2be}dd{margin:6px 0}"
++                        "a{color:#7de6ad}</style>"
++                        "<h1>Board is running</h1>"
++                        "<p>openvela / NuttX &middot; ESP32-S31</p>"
++                        "<p>Function-CoreBoard-1 &middot; basic LAN demo</p>"
++                        "<dl><dt>Wi-Fi IPv4</dt><dd>%s</dd>"
++                        "<dt>Uptime</dt><dd>%lu seconds</dd>"
++                        "<dt>HTTP requests</dt><dd>%" PRIu32 "</dd></dl>"
++                        "<p>Read-only status. Refreshes every 5 seconds.</p>"
++                        "<p><a href=/status.json>JSON status</a></p></html>",
++                        ip, (unsigned long)uptime.tv_sec, requests);
++    }
++  else
++    {
++      status = "404 Not Found";
++      type = "text/plain";
++      length = snprintf(body, sizeof(body), "Not found\n");
++    }
++
++  if (length < 0 || (size_t)length >= sizeof(body))
++    {
++      return;
++    }
++
++  headlen = snprintf(header, sizeof(header),
++                     "HTTP/1.1 %s\r\nContent-Type: %s\r\n"
++                     "Content-Length: %d\r\nCache-Control: no-store\r\n"
++                     "Connection: close\r\n\r\n", status, type, length);
++  if (headlen > 0 && (size_t)headlen < sizeof(header) &&
++      send_all(fd, header, headlen) == 0)
++    {
++      send_all(fd, body, length);
++    }
++}
++
++/****************************************************************************
++ * Public Functions
++ ****************************************************************************/
++
++int main(int argc, char **argv)
++{
++  struct sockaddr_in address;
++  bool status_only = argc > 1 && strcmp(argv[1], "--status") == 0;
++  const char *interface = status_only ? (argc > 2 ? argv[2] : "wlan0") :
++                                      (argc > 1 ? argv[1] : "wlan0");
++  uint32_t requests = 0;
++  int reuse = 1;
++  int server;
++
++  if (argc > (status_only ? 3 : 2) || interface[0] == '\0' ||
++      strlen(interface) >= IFNAMSIZ)
++    {
++      fprintf(stderr, "Usage: s31demo [--status] [interface]\n");
++      return 1;
++    }
++
++  if (status_only)
++    {
++      return print_status(interface);
++    }
++
++  signal(SIGPIPE, SIG_IGN);
++  server = socket(AF_INET, SOCK_STREAM, 0);
++  if (server < 0)
++    {
++      perror("s31demo socket");
++      return 1;
++    }
++
++  setsockopt(server, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
++  memset(&address, 0, sizeof(address));
++  address.sin_family = AF_INET;
++  address.sin_addr.s_addr = htonl(INADDR_ANY);
++  address.sin_port = htons(CONFIG_EXAMPLES_S31DEMO_PORT);
++  if (bind(server, (struct sockaddr *)&address, sizeof(address)) < 0 ||
++      listen(server, 2) < 0)
++    {
++      perror("s31demo listen");
++      close(server);
++      return 1;
++    }
++
++  printf("S31_DEMO_READY port=%d interface=%s\n",
++         CONFIG_EXAMPLES_S31DEMO_PORT, interface);
++  fflush(stdout);
++  for (; ; )
++    {
++      int client = accept(server, NULL, NULL);
++      if (client < 0)
++        {
++          if (errno == EINTR)
++            {
++              continue;
++            }
++
++          perror("s31demo accept");
++          close(server);
++          return 1;
++        }
++
++      serve_client(client, interface, ++requests);
++      close(client);
++    }
++}
+diff --git a/examples/s31demo/test_host.py b/examples/s31demo/test_host.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..2f1863bf4ead01e590f27e09f2bc43c15f95e0a7
+--- /dev/null
++++ b/examples/s31demo/test_host.py
+@@ -0,0 +1,92 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: Apache-2.0
++"""Build the actual demo with host libc and check its bounded HTTP surface."""
++
++import http.client
++import json
++from pathlib import Path
++import socket
++import subprocess
++import tempfile
++import time
++
++
++def main():
++    source = Path(__file__).with_name("s31demo_main.c")
++    with tempfile.TemporaryDirectory(prefix="s31demo-host-") as directory:
++        base = Path(directory)
++        (base / "nuttx").mkdir()
++        with socket.socket() as listener:
++            listener.bind(("127.0.0.1", 0))
++            port = listener.getsockname()[1]
++        (base / "nuttx/config.h").write_text(
++            f"#define CONFIG_EXAMPLES_S31DEMO_PORT {port}\n")
++        subprocess.run(["cc", "-std=c11", "-D_DEFAULT_SOURCE", "-Wall",
++                        "-Wextra", "-Werror", "-I", str(base), str(source),
++                        "-o", str(base / "demo")], check=True)
++        process = subprocess.Popen([str(base / "demo"), "lo"],
++                                   stdout=subprocess.PIPE,
++                                   stderr=subprocess.STDOUT, text=True)
++        try:
++            deadline = time.monotonic() + 5
++            while True:
++                try:
++                    with socket.create_connection(("127.0.0.1", port), 1):
++                        break
++                except OSError:
++                    assert process.poll() is None, "demo exited at startup"
++                    assert time.monotonic() < deadline, "demo startup timed out"
++                    time.sleep(0.05)
++
++            def request(method, path):
++                client = http.client.HTTPConnection("127.0.0.1", port, timeout=8)
++                try:
++                    client.request(method, path)
++                    response = client.getresponse()
++                    body = response.read()
++                    assert int(response.getheader("Content-Length")) == len(body)
++                    assert response.getheader("Cache-Control") == "no-store"
++                    return response.status, body
++                finally:
++                    client.close()
++
++            status, body = request("GET", "/")
++            assert status == 200 and b"Board is running" in body
++            first = None
++            for _ in range(20):
++                status, body = request("GET", "/status.json")
++                item = json.loads(body)
++                assert status == 200 and item["board"] == "ESP32-S31"
++                assert item["ipv4"] == "127.0.0.1" and item["uptime_seconds"] > 0
++                if first is not None:
++                    assert item["requests"] == first["requests"] + 1
++                first = item
++            assert request("POST", "/")[0] == 405
++            assert request("GET", "/../../etc/passwd")[0] == 404
++            client = http.client.HTTPConnection("127.0.0.1", port, timeout=8)
++            try:
++                client.request("GET", "/", headers={"User-Agent": "Browser " + "x" * 1024})
++                response = client.getresponse()
++                assert response.status == 200 and b"Board is running" in response.read()
++            finally:
++                client.close()
++            with socket.create_connection(("127.0.0.1", port), 2) as client:
++                client.sendall(b"GET / HTTP/1.1\r\nX: " + b"x" * 2500)
++                try:
++                    assert client.recv(1) == b""
++                except ConnectionResetError:
++                    pass
++            assert request("GET", "/")[0] == 200
++            print("S31_DEMO_HOST=PASS html/json/repeat/method/path/browser-headers/header-limit")
++        finally:
++            process.terminate()
++            try:
++                output = process.communicate(timeout=3)[0]
++            except subprocess.TimeoutExpired:
++                process.kill()
++                output = process.communicate()[0]
++            print(output, end="")
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/examples/s31demo/test_http.py b/examples/s31demo/test_http.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..8267650a34962a2a0aa5a581cd79c8e455524100
+--- /dev/null
++++ b/examples/s31demo/test_http.py
+@@ -0,0 +1,91 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: Apache-2.0
++"""Check an authorized board's read-only LAN demo without HTTP proxy settings."""
++
++import argparse
++import http.client
++import ipaddress
++import json
++import socket
++import time
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("address", type=ipaddress.IPv4Address)
++    parser.add_argument("--port", type=int, default=8080)
++    parser.add_argument("--samples", type=int, default=10)
++    parser.add_argument("--boundaries", action="store_true",
++                        help="also check rejection, browser headers and idle timeout")
++    args = parser.parse_args()
++    if not 1 <= args.port <= 65535 or not 2 <= args.samples <= 100:
++        parser.error("invalid port or sample count")
++
++    def get(path):
++        client = http.client.HTTPConnection(str(args.address), args.port, timeout=8)
++        try:
++            client.request("GET", path, headers={"User-Agent": "S31 demo check"})
++            response = client.getresponse()
++            body = response.read()
++            assert response.status == 200, f"HTTP {response.status}"
++            assert int(response.getheader("Content-Length")) == len(body)
++            return body
++        finally:
++            client.close()
++
++    assert b"Board is running" in get("/")
++    first = previous = None
++    for index in range(args.samples):
++        item = json.loads(get("/status.json"))
++        assert item["board"] == "ESP32-S31"
++        assert item["ipv4"] == str(args.address)
++        assert isinstance(item["uptime_seconds"], int)
++        assert isinstance(item["requests"], int)
++        if previous is not None:
++            assert item["uptime_seconds"] >= previous["uptime_seconds"]
++            assert item["requests"] > previous["requests"]
++        else:
++            first = item
++        previous = item
++        print(f"HTTP_SAMPLE={index + 1} uptime={item['uptime_seconds']} "
++              f"requests={item['requests']}", flush=True)
++        if index + 1 < args.samples:
++            time.sleep(1.1)
++    assert previous["uptime_seconds"] > first["uptime_seconds"]
++    if args.boundaries:
++        for method, path, expected in (("POST", "/", 405),
++                                       ("GET", "/../../etc/passwd", 404)):
++            client = http.client.HTTPConnection(str(args.address), args.port, timeout=8)
++            try:
++                client.request(method, path)
++                response = client.getresponse()
++                body = response.read()
++                assert response.status == expected
++                assert int(response.getheader("Content-Length")) == len(body)
++            finally:
++                client.close()
++        client = http.client.HTTPConnection(str(args.address), args.port, timeout=8)
++        try:
++            client.request("GET", "/", headers={"User-Agent": "Browser " + "x" * 1024})
++            response = client.getresponse()
++            assert response.status == 200 and b"Board is running" in response.read()
++        finally:
++            client.close()
++        for payload in (b"GET / HTTP/1.1\r\nX: " + b"x" * 2500,
++                        b"GET / HTTP/1.1\r\n"):
++            with socket.create_connection((str(args.address), args.port), 8) as client:
++                client.sendall(payload)
++                started = time.monotonic()
++                try:
++                    assert client.recv(1) == b""
++                except ConnectionResetError:
++                    pass
++                assert time.monotonic() - started < 8
++            assert b"Board is running" in get("/")
++        print("S31_DEMO_BOUNDARIES=PASS method/path/browser-headers/header-limit/idle-recovery",
++              flush=True)
++    print(f"S31_DEMO_HTTP=PASS samples={args.samples} direct_http_client=1", flush=True)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/examples/s31led/CMakeLists.txt b/examples/s31led/CMakeLists.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..374dbd6159cec9a9a242eb4007e29eae2cbc1061
+--- /dev/null
++++ b/examples/s31led/CMakeLists.txt
+@@ -0,0 +1,11 @@
++# SPDX-License-Identifier: Apache-2.0
++
++if(CONFIG_EXAMPLES_S31LED)
++  nuttx_add_application(
++    MODULE ${CONFIG_EXAMPLES_S31LED}
++    NAME ${CONFIG_EXAMPLES_S31LED_PROGNAME}
++    SRCS s31led_main.c
++    STACKSIZE ${CONFIG_EXAMPLES_S31LED_STACKSIZE}
++    HEAPSIZE ${CONFIG_EXAMPLES_S31LED_HEAPSIZE}
++    PRIORITY ${CONFIG_EXAMPLES_S31LED_PRIORITY})
++endif()
+diff --git a/examples/s31led/Kconfig b/examples/s31led/Kconfig
+new file mode 100644
+index 0000000000000000000000000000000000000000..7227f8de702b888385c3ce1737e25c77b520306e
+--- /dev/null
++++ b/examples/s31led/Kconfig
+@@ -0,0 +1,31 @@
++# SPDX-License-Identifier: Apache-2.0
++
++config EXAMPLES_S31LED
++	tristate "ESP32-S31 bounded onboard RGB LED demo"
++	default n
++	depends on ARCH_BOARD_ESP32S31_CORE_FUNCTION_BOARD
++	depends on WS2812_NON_SPI_DRIVER && ESP_RMT
++	---help---
++		Show low-brightness red, green, blue and off on the single onboard
++		GPIO60 LED. Runs a bounded number of cycles; no network commands.
++
++if EXAMPLES_S31LED
++
++config EXAMPLES_S31LED_PROGNAME
++	string "Program name"
++	default "s31led"
++
++config EXAMPLES_S31LED_PRIORITY
++	int "Task priority"
++	default 100
++
++config EXAMPLES_S31LED_STACKSIZE
++	int "Stack size"
++	default 4096
++
++config EXAMPLES_S31LED_HEAPSIZE
++	int "Heap size"
++	depends on MM_TASK_HEAP
++	default MM_TASK_HEAP_DEFAULT_SIZE
++
++endif
+diff --git a/examples/s31led/Make.defs b/examples/s31led/Make.defs
+new file mode 100644
+index 0000000000000000000000000000000000000000..9857dcb3d0bc37ba316e7b49a3987c8520d94da7
+--- /dev/null
++++ b/examples/s31led/Make.defs
+@@ -0,0 +1,5 @@
++# SPDX-License-Identifier: Apache-2.0
++
++ifneq ($(CONFIG_EXAMPLES_S31LED),)
++CONFIGURED_APPS += $(APPDIR)/examples/s31led
++endif
+diff --git a/examples/s31led/Makefile b/examples/s31led/Makefile
+new file mode 100644
+index 0000000000000000000000000000000000000000..884fcd2d42d24b0747c1f01f68a5b5b13b969341
+--- /dev/null
++++ b/examples/s31led/Makefile
+@@ -0,0 +1,12 @@
++# SPDX-License-Identifier: Apache-2.0
++
++include $(APPDIR)/Make.defs
++
++PROGNAME  = $(CONFIG_EXAMPLES_S31LED_PROGNAME)
++PRIORITY  = $(CONFIG_EXAMPLES_S31LED_PRIORITY)
++STACKSIZE = $(CONFIG_EXAMPLES_S31LED_STACKSIZE)
++HEAPSIZE  = $(CONFIG_EXAMPLES_S31LED_HEAPSIZE)
++MODULE    = $(CONFIG_EXAMPLES_S31LED)
++MAINSRC   = s31led_main.c
++
++include $(APPDIR)/Application.mk
+diff --git a/examples/s31led/s31led_main.c b/examples/s31led/s31led_main.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..32a128ac1b79699cbb850234d979378f6b940d2d
+--- /dev/null
++++ b/examples/s31led/s31led_main.c
+@@ -0,0 +1,96 @@
++/****************************************************************************
++ * apps/examples/s31led/s31led_main.c
++ *
++ * SPDX-License-Identifier: Apache-2.0
++ ****************************************************************************/
++
++/****************************************************************************
++ * Included Files
++ ****************************************************************************/
++
++#include <nuttx/config.h>
++
++#include <fcntl.h>
++#include <stdint.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <unistd.h>
++
++/****************************************************************************
++ * Public Functions
++ ****************************************************************************/
++
++int main(int argc, char **argv)
++{
++  static const uint32_t pixels[] =
++    {
++      0x00080000, 0x00000800, 0x00000008, 0
++    };
++
++  char *end;
++  long cycles = 1;
++  int first;
++  int second;
++  int ret = EXIT_FAILURE;
++
++  if (argc > 2)
++    {
++      fprintf(stderr, "Usage: s31led [cycles:1..10]\n");
++      return EXIT_FAILURE;
++    }
++
++  if (argc == 2)
++    {
++      cycles = strtol(argv[1], &end, 10);
++      if (*argv[1] == '\0' || *end != '\0' || cycles < 1 || cycles > 10)
++        {
++          fprintf(stderr, "s31led: cycles must be 1..10\n");
++          return EXIT_FAILURE;
++        }
++    }
++
++  first = open("/dev/leds0", O_WRONLY);
++  if (first < 0)
++    {
++      perror("s31led open");
++      return EXIT_FAILURE;
++    }
++
++  /* Exercise the driver's shared-buffer reference count as well as TX.
++   * Closing one descriptor must not invalidate the remaining descriptor.
++   */
++
++  second = open("/dev/leds0", O_WRONLY);
++  if (second < 0)
++    {
++      perror("s31led second open");
++      close(first);
++      return EXIT_FAILURE;
++    }
++
++  close(first);
++
++  for (long cycle = 0; cycle < cycles; cycle++)
++    {
++      for (unsigned int color = 0; color < 4; color++)
++        {
++          if (lseek(second, 0, SEEK_SET) != 0 ||
++              write(second, &pixels[color], sizeof(pixels[color])) !=
++              sizeof(pixels[color]))
++            {
++              perror("s31led write");
++              goto out;
++            }
++
++          usleep(250000);
++        }
++    }
++
++  printf("S31_LED=PASS frames=%ld brightness=8 final=off "
++         "optical=unverified\n",
++         cycles * 4);
++  ret = EXIT_SUCCESS;
++out:
++  close(second);
++  return ret;
++}
+diff --git a/examples/s31led/test_app.py b/examples/s31led/test_app.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..7eb6ff45c5ad2d2834727fd2837b31be4b891052
+--- /dev/null
++++ b/examples/s31led/test_app.py
+@@ -0,0 +1,124 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: Apache-2.0
++"""Run the actual bounded LED application's control flow with fake file I/O."""
++
++from pathlib import Path
++import subprocess
++import tempfile
++
++
++def main():
++    source = Path(__file__).with_name("s31led_main.c")
++    root = source.parents[2]
++    for enabled in ("", "y", "m"):
++        makefile = (f"APPDIR := {root}\nCONFIG_EXAMPLES_S31LED := {enabled}\n"
++                    f"include {source.with_name('Make.defs')}\n"
++                    "$(info REGISTERED=$(CONFIGURED_APPS))\n"
++                    ".PHONY: check\ncheck:;@:\n")
++        result = subprocess.run(["make", "-sf", "-", "--no-print-directory"],
++                                input=makefile, capture_output=True, text=True,
++                                check=True)
++        expected = str(source.parent) if enabled else ""
++        assert result.stdout.strip() == "REGISTERED=" + expected, result.stdout
++    print("S31_LED_MAKE_REGISTRATION=PASS disabled/builtin/module")
++    fixture = r'''
++#define _DEFAULT_SOURCE
++#include <assert.h>
++#include <fcntl.h>
++#include <stdint.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <unistd.h>
++static unsigned opens, closes, writes, delays, fail_open, fail_write;
++static int alive[2];
++static int fake_open(const char *path, int flags, ...)
++{
++  assert(strcmp(path, "/dev/leds0") == 0 && flags == O_WRONLY);
++  opens++;
++  if (opens == fail_open) { return -1; }
++  assert(opens <= 2);
++  alive[opens - 1] = 1;
++  return 9 + opens;
++}
++static int fake_close(int fd)
++{
++  assert(fd >= 10 && fd <= 11 && alive[fd - 10]);
++  alive[fd - 10] = 0;
++  closes++;
++  return 0;
++}
++static off_t fake_lseek(int fd, off_t offset, int whence)
++{
++  assert(fd == 11 && alive[1] && !alive[0] && offset == 0 && whence == SEEK_SET);
++  return 0;
++}
++static ssize_t fake_write(int fd, const void *data, size_t size)
++{
++  const uint32_t colors[] = {0x80000, 0x800, 8, 0};
++  assert(fd == 11 && alive[1] && size == 4);
++  assert(*(const uint32_t *)data == colors[writes % 4]);
++  writes++;
++  return writes == fail_write ? -1 : (ssize_t)size;
++}
++static int fake_usleep(useconds_t usec)
++{
++  assert(usec == 250000);
++  delays++;
++  return 0;
++}
++static void fake_perror(const char *text) { (void)text; }
++#define main led_main
++#define open fake_open
++#define close fake_close
++#define write fake_write
++#define lseek fake_lseek
++#define usleep fake_usleep
++#define perror fake_perror
++'''
++    fixture += f'#include "{source}"\n#undef main\n'
++    fixture += r'''
++static void reset(void)
++{
++  assert(!alive[0] && !alive[1]);
++  opens = closes = writes = delays = fail_open = fail_write = 0;
++}
++int main(void)
++{
++  char *args[] = {"s31led", "2", "extra", NULL};
++  const char *bad[] = {"0", "11", "bad", "", "999999999999999999999"};
++  for (unsigned i = 0; i < sizeof(bad) / sizeof(bad[0]); i++) {
++    args[1] = (char *)bad[i];
++    assert(led_main(2, args) != 0 && opens == 0);
++  }
++  assert(led_main(3, args) != 0 && opens == 0);
++  args[1] = "2";
++  assert(led_main(2, args) == 0);
++  assert(opens == 2 && closes == 2 && writes == 8 && delays == 8);
++  reset();
++  fail_open = 1;
++  assert(led_main(1, args) != 0 && closes == 0 && writes == 0);
++  reset();
++  fail_open = 2;
++  assert(led_main(1, args) != 0 && closes == 1 && writes == 0);
++  reset();
++  fail_write = 3;
++  assert(led_main(1, args) != 0 && closes == 2 && writes == 3 && delays == 2);
++  reset();
++  puts("S31_LED_APP=PASS bounded low brightness/multi-open/failure cleanup");
++}
++'''
++    with tempfile.TemporaryDirectory(prefix="s31-led-app-") as directory:
++        path = Path(directory)
++        (path / "nuttx").mkdir()
++        (path / "nuttx/config.h").write_text("")
++        (path / "test.c").write_text(fixture)
++        subprocess.run(["cc", "-std=c11", "-Wall", "-Wextra", "-Werror",
++                        "-fsanitize=undefined", "-fno-sanitize-recover=all",
++                        "-I", str(path), str(path / "test.c"),
++                        "-o", str(path / "test")], check=True)
++        subprocess.run([str(path / "test")], check=True)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/include/netutils/ntpclient.h b/include/netutils/ntpclient.h
+index b330dfec71426c1e9253d1cd18acf79a181bcf5c..e64e406eacc3b3609219d5f9b2201e667631e1b7 100644
+--- a/include/netutils/ntpclient.h
++++ b/include/netutils/ntpclient.h
+@@ -159,6 +159,15 @@ struct ntpc_status_s
+ 
+ int ntpc_status(struct ntpc_status_s *statusp);
+ 
++#ifdef CONFIG_BUILD_KERNEL
++/* Blocking one-shot synchronization in this process, then ntpc_status().
++ * Requires NTPCLIENT_STAY_ON=n. Returns 0 on clock update, negative errno
++ * on failure. Async daemon start/stop return -ENOSYS in the kernel build.
++ */
++
++int ntpc_sync_with_list(FAR const char *ntp_server_list);
++#endif
++
+ #undef EXTERN
+ #ifdef __cplusplus
+ }
+diff --git a/netutils/dhcpc/dhcpc.c b/netutils/dhcpc/dhcpc.c
+index bc9f09270cfda1979b62138fb32788c04c17a291..acc3edf97773916935be845fc61506f9132d7876 100644
+--- a/netutils/dhcpc/dhcpc.c
++++ b/netutils/dhcpc/dhcpc.c
+@@ -558,7 +558,7 @@ FAR void *dhcpc_open(FAR const char *interface, FAR const void *macaddr,
+       pdhcpc->sockfd = socket(PF_INET, SOCK_DGRAM | SOCK_CLOEXEC, 0);
+       if (pdhcpc->sockfd < 0)
+         {
+-          ninfo("socket handle %d\n", pdhcpc->sockfd);
++          nerr("ERROR: DHCP socket failed: %d\n", errno);
+           free(pdhcpc);
+           return NULL;
+         }
+@@ -573,7 +573,7 @@ FAR void *dhcpc_open(FAR const char *interface, FAR const void *macaddr,
+                  sizeof(struct sockaddr_in));
+       if (ret < 0)
+         {
+-          ninfo("bind status %d\n", ret);
++          nerr("ERROR: DHCP bind failed: %d\n", errno);
+           close(pdhcpc->sockfd);
+           free(pdhcpc);
+           return NULL;
+@@ -588,7 +588,7 @@ FAR void *dhcpc_open(FAR const char *interface, FAR const void *macaddr,
+                        sizeof(struct timeval));
+       if (ret < 0)
+         {
+-          ninfo("setsockopt(RCVTIMEO) status %d\n", ret);
++          nerr("ERROR: DHCP SO_RCVTIMEO failed: %d\n", errno);
+           close(pdhcpc->sockfd);
+           free(pdhcpc);
+           return NULL;
+@@ -605,7 +605,7 @@ FAR void *dhcpc_open(FAR const char *interface, FAR const void *macaddr,
+                        pdhcpc->interface, strlen(pdhcpc->interface));
+       if (ret < 0)
+         {
+-          ninfo("setsockopt(BINDTODEVICE) status %d\n", ret);
++          nerr("ERROR: DHCP SO_BINDTODEVICE failed: %d\n", errno);
+           close(pdhcpc->sockfd);
+           free(pdhcpc);
+           return NULL;
+@@ -744,6 +744,7 @@ int dhcpc_request(FAR void *handle, FAR struct dhcpc_state *presult)
+       ninfo("Broadcast DISCOVER\n");
+       if (dhcpc_sendmsg(pdhcpc, presult, DHCPDISCOVER) < 0)
+         {
++          nerr("ERROR: DHCP DISCOVER send failed: %d\n", errno);
+           return ERROR;
+         }
+ 
+@@ -783,6 +784,7 @@ int dhcpc_request(FAR void *handle, FAR struct dhcpc_state *presult)
+             {
+               /* An error other than a timeout was received -- error out */
+ 
++              nerr("ERROR: DHCP OFFER receive failed: %d\n", errno);
+               return ERROR;
+             }
+         }
+@@ -819,6 +821,7 @@ int dhcpc_request(FAR void *handle, FAR struct dhcpc_state *presult)
+       ninfo("Send REQUEST\n");
+       if (dhcpc_sendmsg(pdhcpc, presult, DHCPREQUEST) < 0)
+         {
++          nerr("ERROR: DHCP REQUEST send failed: %d\n", errno);
+           return ERROR;
+         }
+ 
+diff --git a/netutils/netlib/netlib_obtainipv4addr.c b/netutils/netlib/netlib_obtainipv4addr.c
+index 53e8ea7251d936e93937423f278b4f75965c3e5b..da5dbf44e4f9c127084b74814856a46eb95f9ffc 100644
+--- a/netutils/netlib/netlib_obtainipv4addr.c
++++ b/netutils/netlib/netlib_obtainipv4addr.c
+@@ -119,7 +119,8 @@ static int dhcp_obtain_statefuladdr(FAR const char *ifname)
+   ret = netlib_getmacaddr(ifname, mac);
+   if (ret < 0)
+     {
+-      nerr("ERROR: get MAC address failed for '%s' : %d\n", ifname, ret);
++      nerr("ERROR: get MAC address failed for '%s': %d, errno=%d\n",
++           ifname, ret, errno);
+       return ret;
+     }
+ #else
+@@ -131,7 +132,7 @@ static int dhcp_obtain_statefuladdr(FAR const char *ifname)
+   handle = dhcpc_open(ifname, &mac, IFHWADDRLEN);
+   if (handle == NULL)
+     {
+-      nerr("ERROR: dhcpc open failed for '%s'\n", ifname);
++      nerr("ERROR: dhcpc open failed for '%s', errno=%d\n", ifname, errno);
+       return -EINVAL;
+     }
+ 
+@@ -147,7 +148,7 @@ static int dhcp_obtain_statefuladdr(FAR const char *ifname)
+     }
+   else
+     {
+-      nerr("ERROR: dhcpc request failed: %d\n", ret);
++      nerr("ERROR: dhcpc request failed: %d, errno=%d\n", ret, errno);
+     }
+ 
+   dhcpc_close(handle);
+diff --git a/netutils/ntpclient/ntpclient.c b/netutils/ntpclient/ntpclient.c
+index 65e31f9f92ccaa60a40d2cfc8804398770d8f0bd..307ac367fa173d3a1870c0faf21bf6f2f25a50f3 100644
+--- a/netutils/ntpclient/ntpclient.c
++++ b/netutils/ntpclient/ntpclient.c
+@@ -563,7 +563,7 @@ static void ntpc_apply_offset(FAR struct timespec *tp,
+  *
+  ****************************************************************************/
+ 
+-static void ntpc_settime(int64_t offset, FAR struct timespec *start_realtime,
++static int ntpc_settime(int64_t offset, FAR struct timespec *start_realtime,
+                          FAR struct timespec *start_monotonic)
+ {
+   struct timespec tp;
+@@ -575,8 +575,11 @@ static void ntpc_settime(int64_t offset, FAR struct timespec *start_realtime,
+ 
+   /* Get the system times */
+ 
+-  clock_gettime(CLOCK_REALTIME, &curr_realtime);
+-  clock_gettime(CLOCK_MONOTONIC, &curr_monotonic);
++  if (clock_gettime(CLOCK_REALTIME, &curr_realtime) < 0 ||
++      clock_gettime(CLOCK_MONOTONIC, &curr_monotonic) < 0)
++    {
++      return -errno;
++    }
+ 
+   /* Check differences between monotonic and realtime. */
+ 
+@@ -603,7 +606,7 @@ static void ntpc_settime(int64_t offset, FAR struct timespec *start_realtime,
+       nwarn("System time altered by other task by %ju msecs, "
+             "do not apply offset.\n", (intmax_t)diff_diff_ms);
+ 
+-      return;
++      return -EAGAIN;
+     }
+ 
+   /* Apply offset */
+@@ -612,13 +615,17 @@ static void ntpc_settime(int64_t offset, FAR struct timespec *start_realtime,
+ 
+   /* Set the system time */
+ 
+-  clock_settime(CLOCK_REALTIME, &tp);
++  if (clock_settime(CLOCK_REALTIME, &tp) < 0)
++    {
++      return -errno;
++    }
+ 
+   ninfo("Set time to %ju.%03ld seconds (offset: %s%lu.%03lu).\n",
+         (intmax_t)tp.tv_sec, tp.tv_nsec / NSEC_PER_MSEC,
+         offset < 0 ? "-" : "",
+         (unsigned long)ntp_secpart(int64abs(offset)),
+         ntp_nsecpart(int64abs(offset)) / NSEC_PER_MSEC);
++  return OK;
+ }
+ 
+ /****************************************************************************
+@@ -1260,7 +1267,9 @@ static int ntpc_daemon(int argc, FAR char **argv)
+   /* Indicate that we have started */
+ 
+   g_ntpc_daemon.state = NTP_RUNNING;
++#ifndef CONFIG_BUILD_KERNEL
+   sem_post(&g_ntpc_daemon.sync);
++#endif
+ 
+   /* Here we do the communication with the NTP server. We collect set of
+    * NTP samples (hopefully from different servers when using DNS) and
+@@ -1383,7 +1392,13 @@ static int ntpc_daemon(int argc, FAR char **argv)
+ 
+           /* Adjust system time. */
+ 
+-          ntpc_settime(offset, &start_realtime, &start_monotonic);
++          ret = ntpc_settime(offset, &start_realtime, &start_monotonic);
++          if (ret < 0)
++            {
++              nerr("ERROR: NTP clock update failed: %d\n", ret);
++              exitcode = EXIT_FAILURE;
++              break;
++            }
+ 
+           /* Save samples for ntpc_status() */
+ 
+@@ -1449,7 +1464,9 @@ static int ntpc_daemon(int argc, FAR char **argv)
+   sched_unlock();
+ 
+   g_ntpc_daemon.state = NTP_STOPPED;
++#ifndef CONFIG_BUILD_KERNEL
+   sem_post(&g_ntpc_daemon.sync);
++#endif
+   free(srvs->hostlist_str);
+   free(srvs);
+   free(samples);
+@@ -1489,6 +1506,10 @@ void ntpc_dualstack_family(int family)
+ 
+ int ntpc_start_with_list(FAR const char *ntp_server_list)
+ {
++#ifdef CONFIG_BUILD_KERNEL
++  /* Process-local globals cannot control another executable. */
++  return -ENOSYS;
++#else
+   FAR char *task_argv[] =
+     {
+       (FAR char *)ntp_server_list,
+@@ -1533,6 +1554,7 @@ int ntpc_start_with_list(FAR const char *ntp_server_list)
+ 
+   sem_post(&g_ntpc_daemon.lock);
+   return g_ntpc_daemon.pid;
++#endif
+ }
+ 
+ /****************************************************************************
+@@ -1566,6 +1588,10 @@ int ntpc_start(void)
+ 
+ int ntpc_stop(void)
+ {
++#ifdef CONFIG_BUILD_KERNEL
++  /* Process-local globals cannot control another executable. */
++  return -ENOSYS;
++#else
+   int ret;
+ 
+   /* Is the NTP in a running state? */
+@@ -1603,6 +1629,7 @@ int ntpc_stop(void)
+ 
+   sem_post(&g_ntpc_daemon.lock);
+   return OK;
++#endif
+ }
+ 
+ int ntpc_status(struct ntpc_status_s *statusp)
+@@ -1623,3 +1650,49 @@ int ntpc_status(struct ntpc_status_s *statusp)
+   sem_post(&g_ntpc_daemon.lock);
+   return OK;
+ }
++
++#ifdef CONFIG_BUILD_KERNEL
++/* Keep the complete sample/update/status lifetime in the calling process.
++ * Unlike the FLAT daemon API this does not create a task or share globals
++ * with another executable. Cancellation is normal process termination.
++ */
++
++int ntpc_sync_with_list(FAR const char *ntp_server_list)
++{
++#ifdef CONFIG_NETUTILS_NTPCLIENT_STAY_ON
++  return -ENOTSUP;
++#else
++  static sem_t sync_lock = SEM_INITIALIZER(1);
++  FAR char *argv[] = {"ntpcsync", (FAR char *)ntp_server_list, NULL};
++  int ret;
++
++  if (ntp_server_list == NULL || *ntp_server_list == '\0')
++    {
++      return -EINVAL;
++    }
++
++  if (sem_trywait(&sync_lock) < 0)
++    {
++      return errno == EAGAIN ? -EBUSY : -errno;
++    }
++
++  while (sem_wait(&g_ntpc_daemon.lock) < 0)
++    {
++      if (errno != EINTR)
++        {
++          ret = -errno;
++          sem_post(&sync_lock);
++          return ret;
++        }
++    }
++
++  g_last_nsamples = 0;
++  g_ntpc_daemon.state = NTP_STARTED;
++  sem_post(&g_ntpc_daemon.lock);
++  ret = ntpc_daemon(2, argv);
++  g_ntpc_daemon.state = NTP_STOPPED;
++  sem_post(&sync_lock);
++  return ret == EXIT_SUCCESS ? OK : -EIO;
++#endif
++}
++#endif
+diff --git a/nshlib/nsh_fscmds.c b/nshlib/nsh_fscmds.c
+index 74015afdc022dbaf4cbbd36250dfe881a97f9846..bacc407f0d5909e31c17211ad13bc1759cc376e3 100644
+--- a/nshlib/nsh_fscmds.c
++++ b/nshlib/nsh_fscmds.c
+@@ -1754,7 +1754,24 @@ int cmd_mkdir(FAR struct nsh_vtbl_s *vtbl, int argc, FAR char **argv)
+ 
+           ret = mkdir(fullpath, 0777);
+ 
+-          if (ret < 0 && (errno != EEXIST || !parent))
++          if (ret < 0 && errno == EEXIST && parent)
++            {
++              struct stat st;
++
++              /* An existing directory satisfies -p.  Return success so
++               * scripts using set -e can be run again.  An existing file
++               * with the same name must still be rejected.
++               */
++
++              ret = stat(fullpath, &st);
++              if (ret == OK && !S_ISDIR(st.st_mode))
++                {
++                  errno = ENOTDIR;
++                  ret = ERROR;
++                }
++            }
++
++          if (ret < 0)
+             {
+               nsh_error(vtbl, g_fmtcmdfailed,
+                         fullpath, "mkdir", NSH_ERRNO);
+diff --git a/nshlib/nsh_parse.c b/nshlib/nsh_parse.c
+index acf30e037a1295f17188b25a4f2c6a6237ceb94a..ab69ec8b94312303167053828fd128f8827f0f39 100644
+--- a/nshlib/nsh_parse.c
++++ b/nshlib/nsh_parse.c
+@@ -585,6 +585,17 @@ static int nsh_execute(FAR struct nsh_vtbl_s *vtbl,
+       FAR char *sh_cmd = "sh";
+       FAR char *sh_arg2;
+ 
++      /* If the fallback shell itself could not be spawned (for example,
++       * because a redirection could not be opened), report the failure.
++       * Retrying through another shell would recurse indefinitely.
++       */
++
++      if (strcmp(argv[0], sh_cmd) == 0)
++        {
++          nsh_error(vtbl, g_fmtcmdfailed, sh_cmd, "spawn", NSH_ERRNO);
++          return nsh_saveresult(vtbl, true);
++        }
++
+       sh_arg2 = lib_get_tempbuffer(CONFIG_NSH_LINELEN);
+       if (sh_arg2 == NULL)
+         {
+@@ -592,8 +603,6 @@ static int nsh_execute(FAR struct nsh_vtbl_s *vtbl,
+           return nsh_saveresult(vtbl, false);
+         }
+ 
+-      DEBUGASSERT(strncmp(argv[0], sh_cmd, 3) != 0);
+-
+       sh_arg2[0] = '\0';
+ 
+       for (ret = 0; ret < argc; ret++)
+diff --git a/nshlib/nsh_wait.c b/nshlib/nsh_wait.c
+index 08106736b23e4f09b4f4c7269d48df36200871b7..1354c5ab3647fc400ef90e1c9e8595768e1a6a85 100644
+--- a/nshlib/nsh_wait.c
++++ b/nshlib/nsh_wait.c
+@@ -92,6 +92,22 @@ int cmd_wait(FAR struct nsh_vtbl_s *vtbl, int argc, FAR char **argv)
+       fd = open(path, O_RDONLY);
+       if (fd < 0)
+         {
++          ret = ERROR;
++          if (errno == ENOENT)
++            {
++              /* An exited child no longer has a procfs entry, but its
++               * parent may still retain the exit status.  Reap it instead
++               * of leaving that status allocated after a background job.
++               */
++
++              ret = waitpid(tid, &status, 0);
++              if (ret >= 0)
++                {
++                  ret = OK;
++                  continue;
++                }
++            }
++
+           nsh_error(vtbl, g_fmtcmdfailed, argv[0], "wait", NSH_ERRNO);
+           continue;
+         }
+@@ -105,6 +121,7 @@ int cmd_wait(FAR struct nsh_vtbl_s *vtbl, int argc, FAR char **argv)
+         }
+ 
+       close(fd);
++      buf[ret] = '\0';
+       nextline = buf;
+       do
+         {
+diff --git a/system/i2c/i2c_devif.c b/system/i2c/i2c_devif.c
+index 2f72a42adbf91805ff1f65f7ee4d5532805360cf..1f8aec29d9a2fae620de65599b44e6aec28b3f59 100644
+--- a/system/i2c/i2c_devif.c
++++ b/system/i2c/i2c_devif.c
+@@ -117,6 +117,7 @@ int i2cdev_open(int bus)
+ int i2cdev_transfer(int fd, FAR struct i2c_msg_s *msgv, int msgc)
+ {
+   struct i2c_transfer_s xfer;
++  int ret;
+ 
+   /* Set up the IOCTL argument */
+ 
+@@ -125,7 +126,8 @@ int i2cdev_transfer(int fd, FAR struct i2c_msg_s *msgv, int msgc)
+ 
+   /* Perform the IOCTL */
+ 
+-  return ioctl(fd, I2CIOC_TRANSFER, (unsigned long)((uintptr_t)&xfer));
++  ret = ioctl(fd, I2CIOC_TRANSFER, (unsigned long)((uintptr_t)&xfer));
++  return ret < 0 ? -errno : ret;
+ }
+ 
+ /****************************************************************************
+@@ -135,9 +137,11 @@ int i2cdev_transfer(int fd, FAR struct i2c_msg_s *msgv, int msgc)
+ #ifdef CONFIG_I2C_RESET
+ int i2cdev_reset(int fd)
+ {
++  int ret;
++
+   /* Perform the IOCTL */
+ 
+-  return ioctl(fd, I2CIOC_RESET, 0);
++  ret = ioctl(fd, I2CIOC_RESET, 0);
++  return ret < 0 ? -errno : ret;
+ }
+ #endif
+-
+diff --git a/system/i2c/test_errno.py b/system/i2c/test_errno.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e828bfaea4c63016bfdecf8f8beb805594745a19
+--- /dev/null
++++ b/system/i2c/test_errno.py
+@@ -0,0 +1,74 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: Apache-2.0
++"""Verify that I2C tool wrappers return the negative errno callers report."""
++
++from pathlib import Path
++import re
++import subprocess
++import tempfile
++
++
++def function(source, name):
++    match = re.search(r"\nint " + name + r"\([^;]*?\n\{", source)
++    assert match
++    start = match.start() + 1
++    position = match.end()
++    depth = 1
++    while depth:
++        depth += (source[position] == "{") - (source[position] == "}")
++        position += 1
++    return source[start:position] + "\n"
++
++
++def main():
++    source = Path(__file__).with_name("i2c_devif.c").read_text()
++    fixture = r'''
++#include <assert.h>
++#include <stdint.h>
++#include <errno.h>
++#include <stdio.h>
++#define FAR
++#define I2CIOC_TRANSFER 1
++#define I2CIOC_RESET 2
++struct i2c_msg_s { int unused; };
++struct i2c_transfer_s { struct i2c_msg_s *msgv; int msgc; };
++static struct i2c_msg_s messages[2];
++static int ioctl_result, ioctl_errno;
++static int ioctl(int fd, int request, unsigned long argument)
++{
++  assert(fd == 12);
++  if (request == I2CIOC_TRANSFER) {
++    struct i2c_transfer_s *transfer = (void *)(uintptr_t)argument;
++    assert(transfer->msgv == messages && transfer->msgc == 2);
++  } else { assert(request == I2CIOC_RESET && argument == 0); }
++  errno = ioctl_errno;
++  return ioctl_result;
++}
++'''
++    for name in ("i2cdev_transfer", "i2cdev_reset"):
++        fixture += function(source, name)
++    fixture += r'''
++int main(void)
++{
++  ioctl_result = 0;
++  ioctl_errno = EINVAL; /* Ignore stale errno after success. */
++  assert(i2cdev_transfer(12, messages, 2) == 0 && i2cdev_reset(12) == 0);
++  ioctl_result = -1;
++  ioctl_errno = ETIMEDOUT;
++  assert(i2cdev_transfer(12, messages, 2) == -ETIMEDOUT);
++  assert(i2cdev_reset(12) == -ETIMEDOUT);
++  ioctl_errno = EIO;
++  assert(i2cdev_transfer(12, messages, 2) == -EIO && i2cdev_reset(12) == -EIO);
++  puts("I2CTOOL_ERRNO=PASS success/stale errno/timeout/bus error");
++}
++'''
++    with tempfile.TemporaryDirectory(prefix="i2ctool-errno-") as directory:
++        path = Path(directory)
++        (path / "test.c").write_text(fixture)
++        subprocess.run(["cc", "-std=c11", "-Wall", "-Wextra", "-Werror",
++                        str(path / "test.c"), "-o", str(path / "test")], check=True)
++        subprocess.run([str(path / "test")], check=True)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/system/ntpc/CMakeLists.txt b/system/ntpc/CMakeLists.txt
+index aaacd50bcd98571fb080e98647a9032175e7c0e2..f6effa9a1d6dc4f6e3235f2845bca53c4fc1ccee 100644
+--- a/system/ntpc/CMakeLists.txt
++++ b/system/ntpc/CMakeLists.txt
+@@ -19,6 +19,11 @@
+ # ##############################################################################
+ 
+ if(CONFIG_SYSTEM_NTPC)
++  if(CONFIG_BUILD_KERNEL)
++    # Sample, update the clock and print status in the same address space.
++    nuttx_add_application(NAME ntpcsync SRCS ntpcsync_main.c STACKSIZE 8192
++      PRIORITY ${CONFIG_SYSTEM_NTPC_PRIORITY})
++  else()
+   nuttx_add_application(
+     NAME
+     ntpcstart
+@@ -46,4 +51,5 @@ if(CONFIG_SYSTEM_NTPC)
+     ${CONFIG_SYSTEM_NTPC_STACKSIZE}
+     PRIORITY
+     ${CONFIG_SYSTEM_NTPC_PRIORITY})
++  endif()
+ endif()
+diff --git a/system/ntpc/Makefile b/system/ntpc/Makefile
+index 4f25e35886598de7f64d94454dc0dd36d961b9fb..b552d30d1eff7388ac1c57bd01410ee7e262bab2 100644
+--- a/system/ntpc/Makefile
++++ b/system/ntpc/Makefile
+@@ -22,13 +22,17 @@ include $(APPDIR)/Make.defs
+ 
+ # NTPC address renewal built-in application info
+ 
++ifeq ($(CONFIG_BUILD_KERNEL),y)
++PROGNAME = ntpcsync
++STACKSIZE = 8192
++MAINSRC = ntpcsync_main.c
++else
+ PROGNAME = ntpcstart ntpcstop ntpcstatus
+-PRIORITY = $(CONFIG_SYSTEM_NTPC_PRIORITY)
+ STACKSIZE = $(CONFIG_SYSTEM_NTPC_STACKSIZE)
++MAINSRC = ntpcstart_main.c ntpcstop_main.c ntpcstatus_main.c
++endif
++PRIORITY = $(CONFIG_SYSTEM_NTPC_PRIORITY)
+ MODULE = $(CONFIG_SYSTEM_NTPC)
+ 
+-# NTPC address renewal
+-
+-MAINSRC = ntpcstart_main.c ntpcstop_main.c ntpcstatus_main.c
+ 
+ include $(APPDIR)/Application.mk
+diff --git a/system/system/Kconfig b/system/system/Kconfig
+index 955a4c6ea8d85fef1750581b1786e0fd36e21803..fb22c426db1e2c9fded727985c95f3bfc3cfe660 100644
+--- a/system/system/Kconfig
++++ b/system/system/Kconfig
+@@ -17,7 +17,7 @@ if SYSTEM_SYSTEM
+ config SYSTEM_SYSTEM_SHPATH
+ 	string "Path to shell command"
+ 	default "/bin/sh"
+-	depends on SYSTEM_NSH=m
++	depends on SYSTEM_NSH=m || BUILD_KERNEL
+ 	---help---
+ 		This is the full path to the program in a mounted file system that
+ 		implements the system() command.  That is, a program that starts the
+diff --git a/system/ymodem/sbrb.py b/system/ymodem/sbrb.py
+index 2a187c5188a72bb27ccb982e023274e62b3b5dd8..379fc6cfd043fee504b67b4d244ef53be80dd05a 100755
+--- a/system/ymodem/sbrb.py
++++ b/system/ymodem/sbrb.py
+@@ -713,6 +713,7 @@ class ymodem:
+             filename = bytes.decode(self.data.split(b"\x00")[0], "utf-8")
+             if not filename:
+                 self.debug("recv a none file\n")
++                self.write(ACK)
+                 break
+ 
+             self.progress("name:" + filename + " ")
+@@ -733,12 +734,7 @@ class ymodem:
+                     self.retries += 1
+                     continue
+ 
+-                size = 0
+-                if self.packetsize > filesize - writensize:
+-                    self.debug("last data packet\n")
+-                    size = self.packetsize - (filesize - writensize)
+-                else:
+-                    size = self.packetsize
++                size = min(self.packetsize, filesize - writensize)
+ 
+                 data = self.data[0:size]
+                 fd.write(data)
+diff --git a/system/ymodem/test_sbrb.py b/system/ymodem/test_sbrb.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e01f6e982066a8c7e2d7816ab0d93895341d4125
+--- /dev/null
++++ b/system/ymodem/test_sbrb.py
+@@ -0,0 +1,70 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: Apache-2.0
++"""Host receiver regressions for partial YMODEM packets and batch completion."""
++
++import io
++import os
++from pathlib import Path
++import tempfile
++import time
++import unittest
++
++import sbrb
++
++
++def packet(data, sequence, size):
++    data = data.ljust(size, b"\0")
++    head = sbrb.SOH if size == 128 else sbrb.STX
++    crc = sbrb.calc_crc16(data)
++    return (head + bytes((sequence & 255, 255 - (sequence & 255)))
++            + data + crc.to_bytes(2, "big"))
++
++
++class ReceiveTests(unittest.TestCase):
++    def receive(self, size):
++        payload = bytes(n & 255 for n in range(size))
++        wire = packet(b"payload.bin\0" + str(size).encode(), 0, 128)
++        position = 0
++        sequence = 1
++        while position < size:
++            blocksize = 128 if size - position <= 128 else 1024
++            wire += packet(payload[position:position + blocksize],
++                           sequence, blocksize)
++            position += blocksize
++            sequence += 1
++        wire += sbrb.EOT + packet(b"", 0, 128)
++        source = io.BytesIO(wire)
++        replies = []
++
++        def read(count):
++            # Keep the unmodified progress calculation's elapsed time nonzero.
++            time.sleep(0.001)
++            return source.read(count)
++
++        receiver = sbrb.ymodem(read=read, write=replies.append,
++                              progress=lambda message: None,
++                              clear=lambda: None, maxretry=2)
++        previous = os.getcwd()
++        with tempfile.TemporaryDirectory(prefix="ymodem-recv-") as directory:
++            try:
++                os.chdir(directory)
++                result = receiver.recv()
++                actual = Path("payload.bin").read_bytes()
++            finally:
++                os.chdir(previous)
++        self.assertIsNone(result)
++        return payload, actual, replies
++
++    def test_final_packet_keeps_only_remaining_file_bytes(self):
++        for size in (128, 129, 1024, 1025):
++            with self.subTest(size=size):
++                expected, actual, _ = self.receive(size)
++                self.assertEqual(actual, expected)
++
++    def test_empty_batch_header_is_acknowledged(self):
++        _, _, replies = self.receive(128)
++        self.assertEqual(replies[-1], sbrb.ACK)
++
++
++if __name__ == "__main__":
++    unittest.main(verbosity=2)
+diff --git a/testing/drivers/drivertest/CMakeLists.txt b/testing/drivers/drivertest/CMakeLists.txt
+index 1b21666ba501df635bfff55d748a2f6151b96c93..fddaa03594fd6cf0eb39846b49013ffe3f38573e 100644
+--- a/testing/drivers/drivertest/CMakeLists.txt
++++ b/testing/drivers/drivertest/CMakeLists.txt
+@@ -35,7 +35,8 @@ if(CONFIG_TESTING_DRIVER_TEST)
+       drivertest_simple.c)
+   endif()
+ 
+-  if(CONFIG_BCH)
++  # Match Makefile: these cases call private inode/driver operations.
++  if(CONFIG_BCH AND CONFIG_BUILD_FLAT)
+     nuttx_add_application(
+       NAME
+       cmocka_driver_block
+diff --git a/testing/drivers/drivertest/drivertest_touchpanel.c b/testing/drivers/drivertest/drivertest_touchpanel.c
+index 617a6e873e12ce9d808bdb157d0c1acb82c6fd1b..4758bc13e5adad489444a8dac581e3787f6fbe3c 100644
+--- a/testing/drivers/drivertest/drivertest_touchpanel.c
++++ b/testing/drivers/drivertest/drivertest_touchpanel.c
+@@ -71,6 +71,10 @@ typedef struct
+   int fd;
+   lv_indev_t *indev;
+   bool is_square;
++  unsigned int move_samples;
++  unsigned int max_step;
++  lv_point_t last_sample;
++  bool sample_active;
+ 
+   union
+   {
+@@ -139,11 +143,12 @@ void darw_canvas_frame(touchpad_s *touchpad)
+   for (i_hor = 0; i_hor < sum_x; i_hor++)
+     {
+       rect_area.x1 = i_hor * SQUARE_X;
+-      rect_area.x2 = SQUARE_X;
++      rect_area.x2 = rect_area.x1 + SQUARE_X - 1;
+       rect_area.y1 = 0;
+-      rect_area.y2 = SQUARE_Y;
++      rect_area.y2 = rect_area.y1 + SQUARE_Y - 1;
+       lv_draw_rect(&touchpad->layer, &rect_dsc, &rect_area);
+       rect_area.y1 = LV_VER_RES - SQUARE_Y;
++      rect_area.y2 = LV_VER_RES - 1;
+       lv_draw_rect(&touchpad->layer, &rect_dsc, &rect_area);
+     }
+ 
+@@ -153,8 +158,11 @@ void darw_canvas_frame(touchpad_s *touchpad)
+     {
+       rect_area.x1 = 0;
+       rect_area.y1 = j_ver * SQUARE_Y;
++      rect_area.x2 = SQUARE_X - 1;
++      rect_area.y2 = rect_area.y1 + SQUARE_Y - 1;
+       lv_draw_rect(&touchpad->layer, &rect_dsc, &rect_area);
+       rect_area.x1 = LV_HOR_RES - SQUARE_X;
++      rect_area.x2 = LV_HOR_RES - 1;
+       lv_draw_rect(&touchpad->layer, &rect_dsc, &rect_area);
+     }
+ 
+@@ -238,11 +246,13 @@ void draw_touch_fill(touchpad_s *touchpad, lv_point_t pos)
+   lv_draw_line_dsc_t line_dsc;
+   lv_area_t rect_area;
+ 
+-  if (pos.x < 1 || pos.x > LV_HOR_RES || pos.y < 1 || pos.y > LV_VER_RES)
++  if (pos.x < 1 || pos.x >= LV_HOR_RES || pos.y < 1 || pos.y >= LV_VER_RES)
+     {
+       return;
+     }
+ 
++  lv_canvas_init_layer(touchpad->canvas, &touchpad->layer);
++
+   /* Calculate square index */
+ 
+   int x_index = pos.x / SQUARE_X;
+@@ -257,9 +267,9 @@ void draw_touch_fill(touchpad_s *touchpad, lv_point_t pos)
+     || y_index == 0 || y_index == LV_VER_RES / SQUARE_Y - 1)
+     {
+       rect_area.x1 = x_index * SQUARE_X;
+-      rect_area.x2 = y_index * SQUARE_Y;
+-      rect_area.y1 = SQUARE_X;
+-      rect_area.y2 = SQUARE_Y;
++      rect_area.x2 = rect_area.x1 + SQUARE_X - 1;
++      rect_area.y1 = y_index * SQUARE_Y;
++      rect_area.y2 = rect_area.y1 + SQUARE_Y - 1;
+       lv_draw_rect(&touchpad->layer, &rect_dsc, &rect_area);
+       draw_track_line(touchpad->canvas, pos);
+     }
+@@ -353,6 +363,7 @@ void draw_touch_fill(touchpad_s *touchpad, lv_point_t pos)
+       line_dsc.p2.y = LV_VER_RES;
+       lv_draw_line(&touchpad->layer, &line_dsc);
+     }
++  lv_canvas_finish_layer(touchpad->canvas, &touchpad->layer);
+ }
+ 
+ /****************************************************************************
+@@ -426,8 +437,10 @@ void touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
+   int nbytes;
+   uint8_t touch_flags;
+ 
+-  /* Read one sample */
++  /* Drain pending samples in this LVGL cycle instead of consuming only
++   * one every refresh period and displaying an ever older position. */
+ 
++  data->continue_reading = false;
+   nbytes = read(touchpad->fd, &sample,
+       sizeof(struct touch_sample_s));
+ 
+@@ -438,7 +451,37 @@ void touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
+       return;
+     }
+ 
++  data->continue_reading = true;
++  data->point.x = sample.point[0].x;
++  data->point.y = sample.point[0].y;
+   touch_flags = sample.point[0].flags;
++  if (touch_flags & TOUCH_DOWN)
++    {
++      touchpad->move_samples = 0;
++      touchpad->max_step = 0;
++      touchpad->sample_active = true;
++      touchpad->last_sample = data->point;
++      printf("touch stroke: DOWN id=%u x=%d y=%d\n",
++             sample.point[0].id, data->point.x, data->point.y);
++    }
++  if ((touch_flags & TOUCH_MOVE) && touchpad->sample_active)
++    {
++      unsigned int dx = abs(data->point.x - touchpad->last_sample.x);
++      unsigned int dy = abs(data->point.y - touchpad->last_sample.y);
++      unsigned int step = dx > dy ? dx : dy;
++      if (step > touchpad->max_step) touchpad->max_step = step;
++      touchpad->move_samples++;
++      touchpad->last_sample = data->point;
++    }
++  if (touch_flags & TOUCH_UP)
++    {
++      printf("touch stroke: UP id=%u moves=%u max_step=%u x=%d y=%d\n",
++             sample.point[0].id, touchpad->move_samples, touchpad->max_step,
++             data->point.x, data->point.y);
++      touchpad->sample_active = false;
++    }
++  data->state = (touch_flags & TOUCH_UP) ? LV_INDEV_STATE_RELEASED :
++                                         LV_INDEV_STATE_PRESSED;
+   if (touch_flags & TOUCH_DOWN || touch_flags & TOUCH_MOVE)
+     {
+       pos.x = sample.point[0].x;
+@@ -552,7 +595,7 @@ bool touchpad_init(touchpad_s **touchpad,
+       return false;
+     }
+ 
+-  tmp_touchpad = malloc(sizeof(touchpad_s));
++  tmp_touchpad = calloc(1, sizeof(touchpad_s));
+   if (tmp_touchpad == NULL)
+     {
+       LV_LOG_ERROR("touchpad_s malloc failed");
+@@ -610,6 +653,7 @@ bool touchpad_init(touchpad_s **touchpad,
+         LV_OPA_COVER);
+       lv_obj_center(tmp_touchpad->canvas);
+       darw_canvas_frame(tmp_touchpad);
++      lv_canvas_finish_layer(tmp_touchpad->canvas, &tmp_touchpad->layer);
+     }
+   else
+     {
+diff --git a/testing/drivers/nist-sts/CMakeLists.txt b/testing/drivers/nist-sts/CMakeLists.txt
+index 96f735f0e87ed8ed479d9ffede51cc7bc65551a7..00eee1643e4138abd4ff896706f927c8377a3420 100644
+--- a/testing/drivers/nist-sts/CMakeLists.txt
++++ b/testing/drivers/nist-sts/CMakeLists.txt
+@@ -22,6 +22,12 @@ if(CONFIG_TESTING_NIST_STS)
+ 
+   set(NIST_DIR ${CMAKE_CURRENT_LIST_DIR}/nist-sts)
+ 
++  # Also accept a source checkout already present beside this integration.
++  # Do not fetch or reapply archive patches over an existing checkout.
++  if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/sts/src/assess.c)
++    set(NIST_DIR ${CMAKE_CURRENT_LIST_DIR})
++  endif()
++
+   if(NOT EXISTS ${NIST_DIR})
+     set(CONFIG_NIST_URL
+         https://csrc.nist.gov/CSRC/media/Projects/Random-Bit-Generation/documents/sts-2_1_2.zip
+diff --git a/testing/ostest/CMakeLists.txt b/testing/ostest/CMakeLists.txt
+index 01e40cd16704ec52ea82a52c57e6df247f5d47fb..0f755914421005dc1bab6c9545f711f55a0e2180 100644
+--- a/testing/ostest/CMakeLists.txt
++++ b/testing/ostest/CMakeLists.txt
+@@ -27,8 +27,11 @@ if(CONFIG_TESTING_OSTEST)
+       sigprocmask.c
+       sighand.c
+       signest.c
+-      sighelper.c
+-      spinlock.c)
++      sighelper.c)
++
++  if(CONFIG_BUILD_FLAT)
++    list(APPEND SRCS spinlock.c)
++  endif()
+ 
+   if(CONFIG_DEV_NULL)
+     list(APPEND SRCS dev_null.c)
+diff --git a/testing/ostest/Makefile b/testing/ostest/Makefile
+index bb0107257498f94642c2b97e4be46023ce3bea36..0e940bb1a58d29ad59cf4a3b285974a363f3569c 100644
+--- a/testing/ostest/Makefile
++++ b/testing/ostest/Makefile
+@@ -30,10 +30,14 @@ MODULE = $(CONFIG_TESTING_OSTEST)
+ # NuttX OS Test
+ 
+ CSRCS   = getopt.c libc_memmem.c restart.c sigprocmask.c sighand.c \
+-          signest.c sighelper.c spinlock.c
++          signest.c sighelper.c
+ 
+ MAINSRC = ostest_main.c
+ 
++ifeq ($(CONFIG_BUILD_FLAT),y)
++CSRCS += spinlock.c
++endif
++
+ ifeq ($(CONFIG_DEV_NULL),y)
+ CSRCS += dev_null.c
+ endif
+diff --git a/testing/testsuites/CMakeLists.txt b/testing/testsuites/CMakeLists.txt
+index 73df536585c755928396615c29a6517d2a1aa0f2..f098cef63c968a89140fcc402f44b514b52055e9 100644
+--- a/testing/testsuites/CMakeLists.txt
++++ b/testing/testsuites/CMakeLists.txt
+@@ -112,6 +112,7 @@ if(CONFIG_CM_MM_TEST)
+     ${CONFIG_TESTS_TESTSUITES_PRIORITY}
+     SRCS
+     kernel/mm/tool/mem_batch_opt_perf_test.c
++    kernel/mm/common/test_mm_common.c
+     INCLUDE_DIRECTORIES
+     ${INCDIR}
+     DEPENDS
+@@ -125,6 +126,7 @@ if(CONFIG_CM_MM_TEST)
+     ${CONFIG_TESTS_TESTSUITES_PRIORITY}
+     SRCS
+     kernel/mm/tool/mem_cycle_opt_perf_test.c
++    kernel/mm/common/test_mm_common.c
+     INCLUDE_DIRECTORIES
+     ${INCDIR}
+     DEPENDS
+diff --git a/wireless/wapi/src/wapi.c b/wireless/wapi/src/wapi.c
+index 053d5069826176bf85f746add7139812d803f248..d0633a8e348b5c3586f3fb45d86110a6d9b8ed64 100644
+--- a/wireless/wapi/src/wapi.c
++++ b/wireless/wapi/src/wapi.c
+@@ -40,6 +40,7 @@
+  ****************************************************************************/
+ 
+ #include <ctype.h>
++#include <errno.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <unistd.h>
+@@ -430,6 +431,10 @@ static int wapi_show_cmd(int sock, int argc, FAR char **argv)
+     {
+       printf(" PTA prio: %d\n", pta_prio);
+     }
++  else if (ret == -EOPNOTSUPP)
++    {
++      printf(" PTA prio: not supported\n");
++    }
+ 
+   return 0;
+ }
+diff --git a/wireless/wapi/src/wireless.c b/wireless/wapi/src/wireless.c
+index 56f67fc813fd67f3c5ed6305872cfabe54aaeb6a..dba80046967c492b5166f7cac3f4321a51450f2f 100644
+--- a/wireless/wapi/src/wireless.c
++++ b/wireless/wapi/src/wireless.c
+@@ -1621,7 +1621,10 @@ int wapi_get_pta_prio(int sock, FAR const char *ifname,
+   else
+     {
+       int errcode = errno;
+-      WAPI_IOCTL_STRERROR(SIOCGIWPTAPRIO, errcode);
++      if (errcode != EOPNOTSUPP)
++        {
++          WAPI_IOCTL_STRERROR(SIOCGIWPTAPRIO, errcode);
++        }
+       ret = -errcode;
+     }
+ 
+@@ -1777,4 +1780,3 @@ int wapi_get_power_save(int sock, FAR const char *ifname, bool *on)
+ 
+   return ret;
+ }
+-

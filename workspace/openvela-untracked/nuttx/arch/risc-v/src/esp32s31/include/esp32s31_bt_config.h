@@ -15,6 +15,13 @@
 #define CONFIG_BT_CTRL_PINNED_TO_CORE 0
 #define CONFIG_BT_CTRL_HCI_CMD_NUM 5
 #define CONFIG_BT_CTRL_LP_CLK_SRC_MAIN_XTAL 1
+
+/* Extended scanning exposes LE Coded as well as LE 1M. Reserve the
+ * controller scan state for both PHYs, matching its IDF default.
+ */
+#ifdef CONFIG_BT_EXT_ADV
+#  define CONFIG_BT_LE_LL_CFG_FEAT_LE_CODED_PHY 1
+#endif
 /* Match the host advertising capacity for the original two-advertiser cases. */
 #ifdef CONFIG_BT_EXT_ADV_MAX_ADV_SET
 #  define CONFIG_BT_LE_MAX_EXT_ADV_INSTANCES CONFIG_BT_EXT_ADV_MAX_ADV_SET

@@ -1,0 +1,7 @@
+# Same small-cache comparison, changing only the modem power-saving mode.
+# This remains a diagnostic configuration until data and resource tests pass.
+
+#include "../korvo-idf-small-cache-bgn/defconfig"
+
+# CONFIG_ESP_POWER_SAVE_MIN_MODEM is not set
+CONFIG_ESP_POWER_SAVE_NONE=y

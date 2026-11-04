@@ -1,89 +1,18 @@
-# ESP32-S31 openvela 开发板适配
+# ESP32-S31 openvela 开发平台
 
-## 一、作品简介
+本仓提供 Function-CoreBoard-1 与 Korvo-1 的 openvela 适配、板级源码映射和开发入口。驱动与应用沿用 NuttX、apps、frameworks 的标准目录。
 
-为 ESP32-S31 开发平台适配 openvela，包含 SMP/MMU、外部应用加载、Wi-Fi、存储、音频、BLE 及外设适配与测试配置。
+从 [恢复与构建](workspace/REPRODUCE.md)开始；修改入口见 [源码分层](board/SOURCE-MAP.md)，配置与镜像范围见 [配置登记表](workspace/profiles.json)和 [功能验证](docs/validation/README.md)。
 
-选题方向：**新硬件适配**
+| 配置 | 用途与已知范围 |
+| --- | --- |
+| `korvo-digit-stable` | 默认演示：原版双核摄像头数字识别，CPU1 PIE/SIMD；已再次核验固件与运行状态。独立镜像，和 Factory 分别烧录。 |
+| `korvo-openvela-factory` | Korvo 单核 FLAT，原生 AM/PM/WM/MEDIA，Wi-Fi/BLE 关闭。原 Factory 镜像有摄像头、显示、基本媒体、服务与 USB 键盘记录；作为独立原生服务演示配置保留。 |
+| `function-ethernet` | Function 单核 FLAT，原生 EMAC/YT8531。canonical ELF、bin 和配置与已验收版本逐字节一致，基础链路、ping、有限 TCP/UDP 接收及接口恢复通过；不是吞吐量验收。 |
+| `nsh` / `demo-rmt-netapps-competition` | 基础控制台与历史网络配置。历史构建记录独立保存；Kernel 配置需要同次构建的 Kernel/AppFS。 |
 
-开发板：ESP32-S31 Function-CoreBoard-1、ESP32-S31 Korvo-1
+[板型说明](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/README.md)介绍 BSP 与资源选择；[历史源码例程](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/demo/README.md)保留源码、配置、fixture 和许可。默认演示使用[原版双核数字识别固件](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-digit-stable/README.md)，模型与第三方资源许可继续适用。
 
-本仓为队伍 497（nitelabu）的新硬件适配作品。此次提交从官方初始模板重新建立，旧复刻仓的 Git 提交历史不纳入本次提交。源码快照日期：2026-09-20 实测例程。
+当前薄快照已更新 36 个改动项目、247 个 BSP 文件及依赖补丁，补丁重建与文件校验通过；完整接收端构建尚未重新验证。项目、文件及版本清单以 `workspace/snapshot.json`、锁定 manifest 和对应收据为准；入口脚本本身不构成完整公共发行包。
 
-## 二、目录结构
-
-- `board/ESP32-S31 Function-CoreBoard-1 + ESP32-S31 Korvo-1/`：真实板级源码、Kconfig 和各测试配置，替换空模板。
-- [已通过测试例程](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/demo/README.md)：87 个例程（85 个已通过范围、2 个实测诊断），含逐项 README、源码、配置与原始证据。
-- `workspace/manifest-locked.xml`：232 个 openvela 公共源码项目的固定版本。
-- `workspace/patches/`、`workspace/openvela-untracked/`：公共基线之上的全部适配提交、工作区修改和新增源码。
-- `workspace/dependencies/`：HAL 修改、工具链下载地址与 SHA256、Python 依赖版本。
-- `workspace/tools/`：S31 主机检查及 C6 I2C/SPI 辅助板工程。
-- `docs/acceptance/`、`workspace/evidence/`：当前验收清单和历史测试证据。
-- `docs/reproduction/`：此次独立源码目录构建的结果、日志和产物哈希。
-- `logs/`：选定真实 AI 会话的导出记录及来源说明。
-
-## 三、拉取完整工程
-
-环境：Ubuntu 22.04 / Linux x86_64（本次验证环境）；Linux aarch64 工具链下载也已配置，尚未验证。需要访问 GitHub、Gitee 和 PyPI。
-
-```bash
-sudo apt-get update
-sudo apt-get install -y git git-lfs repo python3 python3-venv python3-pip \
-  cmake ninja-build build-essential bison flex gperf gettext texinfo \
-  libncurses-dev libssl-dev genromfs xz-utils unzip patch curl
-mkdir s31-review && cd s31-review
-repo init -u https://github.com/open-vela/contest2026_497_nitelabu.git \
-  -b dev-ai-contest-2026 -m contest2026_497_nitelabu.xml
-GIT_LFS_SKIP_SMUDGE=1 repo sync -c -j8
-./contest2026_497_nitelabu/workspace/apply-openvela-snapshot.sh "$PWD"
-./contest2026_497_nitelabu/workspace/setup-dependencies.sh "$PWD"
-```
-
-源码基线来自 **Gitee 官方 open-vela 镜像**：本项目使用的提交与 GitHub 镜像并不相同，不能直接替换域名。跳过 LFS 下载的是其他厂商板型的预编译库，S31 不使用它们；S31 HAL 的 Wi-Fi/PHY/BLE 子模块由准备脚本单独拉取。
-
-补丁脚本先校验所有基线、补丁和新增文件，再写入。它只接受干净的固定版本工程；同一工作区只运行一次。失败时会明确报错，不会把已有源码静默跳过。不要使用旧的 `netlab` manifest 或旧板级补丁。
-
-## 四、编译、烧录与运行
-
-在 `s31-review/` 工作区根目录执行：
-
-```bash
-# 最小 NSH：约 214 KiB，单镜像，首次复现建议从此开始
-./contest2026_497_nitelabu/workspace/build.sh "$PWD" nsh 8
-
-# SMP/MMU、网络和外部应用：生成同目录配套的 nuttx.bin + appfs.img
-./contest2026_497_nitelabu/workspace/build.sh "$PWD" demo-rmt-netapps-competition 8
-
-# Function 板 Camera/V4L2：此配置仍仅构建验证
-./contest2026_497_nitelabu/workspace/build.sh "$PWD" xts-flat-camera 8
-
-# Korvo-1 + OV3660 + SUB3：真实采集上屏的独立 FLAT 配置
-./contest2026_497_nitelabu/workspace/build.sh "$PWD" korvo-camera-preview 8
-```
-
-产物位于 `out/esp32s31-<配置>/`。这些配置本次均在独立目录从公共基线加补丁构建成功，详见 [复现验证记录](docs/reproduction/VALIDATION.md)。使用 CMake/Ninja 专用入口；不要在同一源码树混入 Make 生成的 `.config` 或 `include/nuttx/config.h`。
-
-首次运行 NSH，连接目标板 USB 串口，确认实际端口并让板进入下载模式；以下命令由操作板卡的队员执行。本次上传工作没有刷写开发板。
-
-```bash
-# 把 /dev/ttyACM0 替换成实际 S31 端口，勿选 C6 辅助板
-.s31-deps/venv/bin/esptool --chip esp32s31 --port /dev/ttyACM0 \
-  read-flash 0 0x1000000 original-flash.bin
-.s31-deps/venv/bin/esptool --chip esp32s31 --port /dev/ttyACM0 \
-  write-flash 0x2000 out/esp32s31-nsh/nuttx.bin
-.s31-deps/venv/bin/python -m serial.tools.miniterm /dev/ttyACM0 115200
-```
-
-复位后应进入 `nsh>`，可执行 `uname -a`、`help`。Kernel 模式必须烧写同一次构建的内核与 AppFS，不能拿历史镜像混配；详细步骤见 [复现与审核说明](workspace/REPRODUCE.md)。
-
-## 五、验收状态与审核边界
-
-以 [核验集](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/demo/README.md) 为逐项入口。历史项目按原记录保留通过、用户确认、开发验证和待实物验收的区别。编译成功不等于 xTS 实板通过；Camera 已有 Korvo/OV3660 独立实物采集上屏记录；其它 Camera 模式及 USB、SDMMC、BLE 等能力的具体状态以对应记录为准。
-
-历史脚本和日志保留当时的绝对路径、配置与上下文，归档在 `workspace/evidence/`；它们不是新的构建入口。公开副本中移除了测试凭据，修改文件列表见 `workspace/evidence/REDACTIONS.json`；原始本地证据未改写。
-
-## 六、AI Coding 使用说明
-
-AI 用于移植方案分析、编码、错误定位、脚本整理和复现审查；最终验收按构建输出、真实串口记录及人工确认分别记录。本次重建发现并修复了未发布提交作为 manifest 基线、公共仓路径推导错误、HAL 缺失和不支持 S31 的 esptool 版本等问题。
-
-`logs/` 已导出本次复现修复会话的真实用户/助手可见对话，使用官方采集器写入器并通过官方校验；它是选定会话的阶段性导出，**不代表全部历史 AI 会话已归集**。工具输出、系统指令及内部推理不在选定导出范围内，详见 [日志说明](logs/README.md)。其余历史会话尚未全部归集。公共仓改动目前保存为可复现补丁，正式公共仓 PR 尚待提交和组委会审核；不能将作品仓 PR 视为公共仓改动已获合入。详见 [提交状态](docs/SUBMISSION.md)。
+安装前按 [固件部署](workspace/FLASH-MANUAL.md)核对镜像与布局。验收固件可留在板上使用；原固件备份用于需要时回退。具体能力按精确镜像记录使用，音频队列溢出与长期稳定性等限制见验证索引。提交材料入口见 [SUBMISSION](docs/SUBMISSION.md)。

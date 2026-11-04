@@ -1,0 +1,113 @@
+diff --git a/Kconfig b/Kconfig
+index d5448bc6826099ff172e58728fd9dde9aa766aff..81636ba4edb2801735f45f40ede4f1e85e044822 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -16,6 +16,7 @@
+ 
+ config LIBASH
+     bool "Enable ash library."
++    depends on LIBUV_EXTENSION && KVDB && LIB_ZLIB
+     default n
+ 
+ 
+@@ -25,4 +26,4 @@ config ASH_UNIT_TEST
+ 	default n
+     help
+ 	  Enables unit tests for ASH components.
+-	  Requires GoogleTest and ASH core library.
+\ No newline at end of file
++	  Requires GoogleTest and ASH core library.
+diff --git a/include/ash/macros/compiler_macros.h b/include/ash/macros/compiler_macros.h
+index 57042441aeba2153a8448ad21c63252e4eb26755..41d678350c2d36dffab7e9e25bd4f646cdb79387 100644
+--- a/include/ash/macros/compiler_macros.h
++++ b/include/ash/macros/compiler_macros.h
+@@ -51,6 +51,8 @@ static_assert(false, "OS is not supported.")
+  * ASH_ARCH_X64: x86_64
+  * ASH_ARCH_ARM: arm
+  * ASH_ARCH_ARM64: arm64
++ * ASH_ARCH_RISCV32: RISC-V 32
++ * ASH_ARCH_RISCV64: RISC-V 64
+  *
+  * ASH_ARCH_32: 32-bit architecture
+  * ASH_ARCH_64: 64-bit architecture
+@@ -67,6 +69,12 @@ static_assert(false, "OS is not supported.")
+ #elif defined(__aarch64__) || defined(_M_ARM64)
+ #define ASH_ARCH_ARM64
+ #define ASH_ARCH_64
++#elif defined(__riscv) && (__riscv_xlen == 32)
++#define ASH_ARCH_RISCV32
++#define ASH_ARCH_32
++#elif defined(__riscv) && (__riscv_xlen == 64)
++#define ASH_ARCH_RISCV64
++#define ASH_ARCH_64
+ #else
+     static_assert(false, "Architecture is not supported.")
+ #endif
+diff --git a/src/memory/variable_segment.cpp b/src/memory/variable_segment.cpp
+index a1c05971c0e5d5d571b627385872d32535fb702e..d447e2ec4e2559abd319620b14290041db1d1f05 100644
+--- a/src/memory/variable_segment.cpp
++++ b/src/memory/variable_segment.cpp
+@@ -29,9 +29,10 @@ inline size_t GetAlignFromSize(size_t size) {
+     return 1;
+   if (size <= 2)
+     return 2;
+-#if defined(ASH_ARCH_32)
++#if defined(ASH_ARCH_32) && !defined(ASH_ARCH_RISCV32)
+   return 4;
+-#elif defined(ASH_ARCH_64)
++#elif defined(ASH_ARCH_64) || defined(ASH_ARCH_RISCV32)
++  // The RISC-V ILP32 ABI also requires 8-byte alignment for 64-bit values.
+   if (size <= 4)
+     return 4;
+   return 8;
+diff --git a/tests/macros/compiler_macros_test.cpp b/tests/macros/compiler_macros_test.cpp
+index 2f39569b5b86a0f7522f94fc8ce71d5a255850d3..69f96d9c54c7b8be377e7861cae3c96718241656 100644
+--- a/tests/macros/compiler_macros_test.cpp
++++ b/tests/macros/compiler_macros_test.cpp
+@@ -171,6 +171,12 @@ TEST(CompilerMacrosTest, ArchMacrosMutuallyExclusive) {
+ #if defined(ASH_ARCH_ARM64)
+   archCount++;
+ #endif
++#if defined(ASH_ARCH_RISCV32)
++  archCount++;
++#endif
++#if defined(ASH_ARCH_RISCV64)
++  archCount++;
++#endif
+ 
+   EXPECT_EQ(archCount, 1) << "Only one ARCH macro should be defined";
+ }
+@@ -239,14 +245,16 @@ TEST(CompilerMacrosTest, OsArchCombination) {
+ #endif
+ #elif defined(ASH_OS_ANDROID) || defined(ASH_OS_LINUX)
+ #if defined(ASH_ARCH_ARM64) || defined(ASH_ARCH_ARM) || \
+-    defined(ASH_ARCH_X64) || defined(ASH_ARCH_X86)
++    defined(ASH_ARCH_X64) || defined(ASH_ARCH_X86) || \
++    defined(ASH_ARCH_RISCV32) || defined(ASH_ARCH_RISCV64)
+   EXPECT_TRUE(true);
+ #else
+   FAIL() << "Linux/Android only supports ARM64/ARM/x86/x86 architectures";
+ #endif
+ #elif defined(ASH_OS_NUTTX)
+ #if defined(ASH_ARCH_ARM) || defined(ASH_ARCH_ARM64) || \
+-    defined(ASH_ARCH_X64) || defined(ASH_ARCH_X86)
++    defined(ASH_ARCH_X64) || defined(ASH_ARCH_X86) || \
++    defined(ASH_ARCH_RISCV32) || defined(ASH_ARCH_RISCV64)
+   EXPECT_TRUE(true);
+ #else
+   FAIL() << "NuttX only supports ARM/ARM64 architectures";
+diff --git a/tests/memory/variable_segment_test.cpp b/tests/memory/variable_segment_test.cpp
+index e90bfd35506c5bbe95467a2a2701070ea4756bd0..124c079fb584c2318b817d4cbc1ed49d28596d62 100644
+--- a/tests/memory/variable_segment_test.cpp
++++ b/tests/memory/variable_segment_test.cpp
+@@ -99,8 +99,8 @@ TEST_F(VariableSegmentTest, AlignmentFor4ByteVariable) {
+   EXPECT_EQ(offset, 4);
+ }
+ 
+-// 7. Test 8-byte variable alignment (64-bit only)
+-#if defined(ASH_ARCH_64)
++// 7. RISC-V ILP32 also requires 8-byte alignment for 64-bit variables.
++#if defined(ASH_ARCH_64) || defined(ASH_ARCH_RISCV32)
+ TEST_F(VariableSegmentTest, AlignmentFor8ByteVariable) {
+   def.RegisterVariable(
+       1, [](void*) {}, [](void*) {});

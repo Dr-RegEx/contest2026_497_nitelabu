@@ -1,0 +1,34 @@
+diff --git a/cmds/servicemanager/ServiceManager.cpp b/cmds/servicemanager/ServiceManager.cpp
+index 58ad52d43a03e02d8fb6c570fa428149d23a8524..a91d1c6ea7ad6635ac865d58205774e6500f1815 100644
+--- a/cmds/servicemanager/ServiceManager.cpp
++++ b/cmds/servicemanager/ServiceManager.cpp
+@@ -253,7 +253,11 @@ Status ServiceManager::getService2(const std::string& name, os::Service* out) {
+ }
+ 
+ Status ServiceManager::checkService(const std::string& name, os::Service* out) {
+-    return getService2(name, out);
++    // A lookup must not request lazy startup when the service is absent.
++    os::ServiceWithMetadata serviceWithMetadata = os::ServiceWithMetadata();
++    serviceWithMetadata.service = tryGetService(name, false);
++    *out = os::Service::make<os::Service::Tag::serviceWithMetadata>(serviceWithMetadata);
++    return Status::ok();
+ }
+ #endif
+ 
+diff --git a/libs/binder/ProcessState.cpp b/libs/binder/ProcessState.cpp
+index fb2c3cb5568e4ac43a5bcf632b84c3cd6c26b612..d3227ddfe8b51404396c06833c71b33939947110 100644
+--- a/libs/binder/ProcessState.cpp
++++ b/libs/binder/ProcessState.cpp
+@@ -45,7 +45,12 @@
+ #include <sys/stat.h>
+ #include <sys/types.h>
+ 
++#if defined(__NuttX__) && defined(CONFIG_BUILD_KERNEL)
++// The NuttX driver owns a fixed arena; mmap and munmap must name that arena.
++#define BINDER_VM_SIZE CONFIG_BINDER_HEAP_SIZE
++#else
+ #define BINDER_VM_SIZE ((1 * 1024 * 1024) - sysconf(_SC_PAGE_SIZE) * 2)
++#endif
+ #define DEFAULT_MAX_BINDER_THREADS 15
+ #define DEFAULT_ENABLE_ONEWAY_SPAM_DETECTION 1
+ 

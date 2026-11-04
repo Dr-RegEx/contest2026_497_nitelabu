@@ -1,0 +1,8 @@
+# IDF LittleFS geometry and memory budget, with a compatible Wi-Fi PHY.
+# Keep the regular-file stdio window: stock IDF also uses st_blksize (4096).
+# This profile is a measurement candidate, not product acceptance.
+
+#include "../korvo-idf-settings/defconfig"
+
+# CONFIG_STDIO_DISABLE_AUTO_READ_WINDOW is not set
+# CONFIG_ESPRESSIF_WIFI_STA_11AX is not set

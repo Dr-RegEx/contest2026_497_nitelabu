@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/param.h>
+#include <syslog.h>
 #include "btdm_osal.h"
 #include "esp_attr.h"
 #include "esp_irq.h"
@@ -28,7 +29,9 @@
 #include "esp_random.h"
 #include "esp_rom_sys.h"
 
-#if defined(CONFIG_ESPRESSIF_SPIRAM_USER_HEAP) || \
+#if (defined(CONFIG_ESPRESSIF_SPIRAM_USER_HEAP) && \
+     (!defined(CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP) || \
+      !defined(CONFIG_BUILD_FLAT) || !defined(CONFIG_MM_KERNEL_HEAP))) || \
     (!defined(CONFIG_BUILD_FLAT) && !defined(CONFIG_BUILD_KERNEL))
 #  error "S31 BLE OSAL requires internal kernel/controller memory"
 #endif
@@ -84,6 +87,8 @@ static struct s31_pool_s g_pools[NPOOLS];
 static struct btdm_osal_eventq g_timerq;
 static rmutex_t g_timer_gate = NXRMUTEX_INITIALIZER;
 static pid_t g_timer_pid = -1;
+static sem_t g_timer_stopped = SEM_INITIALIZER(0);
+static bool g_timer_stop;
 static unsigned int g_critical_nest;
 static irqstate_t g_critical_state[32];
 
@@ -762,6 +767,8 @@ int wr_btdm_osal_task_create(btdm_osal_task_fn *fn, const char *name,
    * The FLAT HCI device is opened and closed by application threads.
    * Controller tasks must therefore be ordinary tasks: nxtask_delete()
    * correctly rejects application attempts to delete kernel threads.
+   * With separate heaps, up_create_stack() and up_release_stack() use
+   * the internal kernel allocator for ordinary tasks as well.
    */
 
 #ifdef CONFIG_BUILD_KERNEL
@@ -924,6 +931,19 @@ static int s31_timer_main(int argc, char **argv)
       struct btdm_osal_event *ev;
       nxsem_wait_uninterruptible(&q->ready);
       nxrmutex_lock(&g_timer_gate);
+      if (g_timer_stop)
+        {
+          nxrmutex_unlock(&g_timer_gate);
+
+          /* No queue or pool accesses follow this acknowledgement.  Return
+           * normally so an application HCI caller need not delete a kernel
+           * thread, and deferred cancellation cannot outlive the pools.
+           */
+
+          nxsem_post(&g_timer_stopped);
+          return 0;
+        }
+
       while ((ev = wr_btdm_osal_eventq_get(&g_timerq, 0)) != NULL)
         {
           wr_btdm_osal_event_run(ev);
@@ -971,6 +991,7 @@ int btdm_osal_elem_mempool_init(btdm_osal_elem_num_t *num)
     }
 
   wr_btdm_osal_eventq_init(&g_timerq);
+  g_timer_stop = false;
   g_timer_pid = kthread_create("btdm_timer", 124, 3072,
                                s31_timer_main, NULL);
   if (g_timer_pid < 0)
@@ -999,11 +1020,34 @@ void btdm_osal_elem_mempool_deinit(void)
 
   if (g_timer_pid > 0)
     {
+      struct s31_queue_s *q = g_timerq.eventq;
+      int ret;
+
+      /* Finish an in-flight callback before requesting shutdown.  Release
+       * the gate while waiting so a worker already waiting for it can exit.
+       */
+
       nxrmutex_lock(&g_timer_gate);
-      nxtask_delete(g_timer_pid);
+      g_timer_stop = true;
+      nxrmutex_unlock(&g_timer_gate);
+      ret = nxsem_post(&q->ready);
+      if (ret >= 0)
+        {
+          ret = nxsem_wait_uninterruptible(&g_timer_stopped);
+        }
+
+      if (ret < 0)
+        {
+          /* Retain ownership and reject reinitialization until shutdown
+           * can be completed.  Never free a possibly live worker's queue.
+           */
+
+          syslog(LOG_ERR, "S31 BLE: timer shutdown failed: %d\n", ret);
+          return;
+        }
+
       g_timer_pid = -1;
       wr_btdm_osal_eventq_deinit(&g_timerq);
-      nxrmutex_unlock(&g_timer_gate);
     }
 
   for (i = 0; i < NPOOLS; i++)

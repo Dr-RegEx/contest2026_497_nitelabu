@@ -9,6 +9,7 @@
 #include <errno.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <syslog.h>
 
 #include <nuttx/arch.h>
 
@@ -29,6 +30,12 @@ _Static_assert(offsetof(usb_dwc_dev_t, grstctl_reg) ==
                ESP32S31_OTG_GRSTCTL_OFFSET, "S31 reset register offset");
 _Static_assert(offsetof(usb_dwc_dev_t, hcfg_reg) ==
                ESP32S31_OTG_HCFG_OFFSET, "S31 host config offset");
+_Static_assert(offsetof(usb_dwc_dev_t, hptxfsiz_reg) ==
+               ESP32S31_OTG_HPTXFSIZ_OFFSET, "S31 periodic FIFO offset");
+_Static_assert(offsetof(usb_dwc_dev_t, hptxsts_reg) ==
+               ESP32S31_OTG_HPTXSTS_OFFSET, "S31 periodic FIFO status offset");
+_Static_assert(offsetof(usb_dwc_dev_t, hfnum_reg) ==
+               ESP32S31_OTG_HFNUM_OFFSET, "S31 frame counter offset");
 _Static_assert(offsetof(usb_dwc_dev_t, hprt_reg) ==
                ESP32S31_OTG_HPRT_OFFSET, "S31 host port offset");
 _Static_assert(offsetof(usb_dwc_dev_t, host_chans[0].hcchar_reg) ==
@@ -62,6 +69,16 @@ int esp32s31_usbhost_initialize(void)
 {
   uint32_t regval;
   unsigned int retry;
+  unsigned int fifo_words;
+#ifdef CONFIG_USBHOST_INT_DISABLE
+  const unsigned int rx_words = 512;
+  const unsigned int np_words = 256;
+  const unsigned int p_words = 0;
+#else
+  const unsigned int rx_words = 384;
+  const unsigned int np_words = 128;
+  const unsigned int p_words = 256;
+#endif
 
   /* The S31 HS block is clocked through the UTMI companion.  These are the
    * same pinned Espressif LL steps used by the existing device path, with
@@ -143,18 +160,24 @@ int esp32s31_usbhost_initialize(void)
   regval |= OTG_GUSBCFG_FHMOD;
   putreg32(regval, ESP32S31_OTG_GUSBCFG);
 
-  for (retry = 0; retry < 100; retry++)
+  /* Role switching includes the core debounce interval. Poll for up to
+   * 200 ms instead of treating the old 1 ms window as a hardware fault. */
+
+  for (retry = 0; retry < 200; retry++)
     {
       if ((getreg32(ESP32S31_OTG_GINTSTS) & OTG_GINTSTS_CMOD) != 0)
         {
           break;
         }
 
-      up_udelay(10);
+      up_mdelay(1);
     }
 
-  if (retry == 100)
+  if (retry == 200)
     {
+      syslog(LOG_ERR, "USB role timeout: GUSBCFG=%08lx GINTSTS=%08lx\n",
+             (unsigned long)getreg32(ESP32S31_OTG_GUSBCFG),
+             (unsigned long)getreg32(ESP32S31_OTG_GINTSTS));
       return -EIO;
     }
 
@@ -167,13 +190,19 @@ int esp32s31_usbhost_initialize(void)
   regval &= ~(1u << 23); /* PIO, not descriptor DMA. */
   putreg32(regval, ESP32S31_OTG_HCFG);
 
-  /* Serialized PIO partition: enough RX space for a 512-byte HS packet
-   * plus status, and a 256-word non-periodic transmit FIFO. Fail explicitly
-   * if the actual core cannot provide this memory.
+  /* The HCD serializes single-packet PIO transactions. With interrupts,
+   * reserve 384 RX words (including the two status words required by the
+   * pinned HAL), 128 non-periodic TX words for a 512-byte HS bulk packet,
+   * and 256 periodic TX words for a 1024-byte HS interrupt packet. Both
+   * partitions fit a 768-word core; requiring 1024 words here prevented
+   * the real board from starting. Keep the original bulk-only partition.
    */
 
-  if (usb_dwc_ll_ghwcfg_get_fifo_depth(&USB_OTGHS) < 768)
+  fifo_words = usb_dwc_ll_ghwcfg_get_fifo_depth(&USB_OTGHS);
+  if (fifo_words < rx_words + np_words + p_words)
     {
+      syslog(LOG_ERR, "USB host FIFO too small: %u words, need %u\n",
+             fifo_words, rx_words + np_words + p_words);
       return -ENOSPC;
     }
 
@@ -188,8 +217,14 @@ int esp32s31_usbhost_initialize(void)
     {
       return -ENOTSUP;
     }
-  usb_dwc_ll_grxfsiz_set_fifo_size(&USB_OTGHS, 512);
-  usb_dwc_ll_gnptxfsiz_set_fifo_size(&USB_OTGHS, 512, 256);
+  usb_dwc_ll_grxfsiz_set_fifo_size(&USB_OTGHS, rx_words);
+  usb_dwc_ll_gnptxfsiz_set_fifo_size(&USB_OTGHS, rx_words, np_words);
+#ifndef CONFIG_USBHOST_INT_DISABLE
+  usb_dwc_ll_hptxfsiz_set_ptx_fifo_size(&USB_OTGHS,
+                                    rx_words + np_words, p_words);
+#endif
+  syslog(LOG_INFO, "USB host FIFO words: available=%u rx=%u np=%u p=%u\n",
+         fifo_words, rx_words, np_words, p_words);
 
   /* Root-port polling worker is started separately by board bringup. */
 

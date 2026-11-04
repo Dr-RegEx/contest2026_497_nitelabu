@@ -1,0 +1,9 @@
+# Keep TCP at the stock IDF 5760-byte window.  Allow an independent UDP
+# socket limit independent of TCP (9000 B maximum; not preallocated).
+# The runner uses 8192 B: NuttX admits one final datagram above the limit,
+# giving six queued 1470-byte datagrams including their receive metadata.
+# The shared IOB pool remains 128 nodes; no buffers are preallocated here.
+
+#include "../korvo-idf-small-cache-psnone/defconfig"
+
+CONFIG_NET_MAX_RECV_BUFSIZE=9000

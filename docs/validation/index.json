@@ -1,0 +1,46 @@
+{
+  "current_records": [
+    {
+      "image_sha256": "fb23365cb347cf7106ac1943a7076483b6f33508f86439f5cf2e7d1da163d02b",
+      "path": "ethernet.json",
+      "profile": "function-ethernet",
+      "status": "basic_communication_verified_canonical_bytes_identical"
+    },
+    {
+      "profile": "korvo-digit-stable",
+      "path": "digit-stable.json",
+      "image_sha256": "6c6d009b86df99ea4cc58a958d2fe202833ddf8c0aab1f3219059383add0e2b1",
+      "status": "original_mature_demo_verified_running"
+    }
+  ],
+  "factory": {
+    "integrated_flow": {
+      "status": "not_included_in_release",
+      "legacy_dualcore_demo": "default independent original stable demo; separate flash deployment"
+    },
+    "previous_image_sha256": "9a5b80836ee9613590bec695b19aacbf7ec234f82f01517d209dee3337859a1b",
+    "previous_limits": [
+      "Not full peripheral acceptance on this exact image: physical touch, SD and ADC key acceptance must use their own exact-image records",
+      "Audio queue overflows remain; no acoustic quality acceptance",
+      "No USB device/ADB acceptance transferred from dedicated profiles",
+      "No sustained-load qualification"
+    ],
+    "previous_scope": [
+      "human display confirmation",
+      "real camera capture",
+      "close/return HOME and reset restart",
+      "native service lifecycle",
+      "basic record/stop/play",
+      "physical USB keyboard basic input"
+    ]
+  },
+  "historical": {
+    "current_firmware_acceptance": false,
+    "path": "historical.json",
+    "scope": "historical-only",
+    "sha256": "f13ee307954a107b4435d1e4ffebcfba2a3137c82d74da30e007fd7ced5a8ebd"
+  },
+  "profiles": "../../workspace/profiles.json",
+  "release_state": "Source snapshot, dependencies and BSP mirror refreshed and checked; default original digit firmware and standalone Factory firmware retained. Complete fresh receiver build has not been rerun.",
+  "schema": 1
+}

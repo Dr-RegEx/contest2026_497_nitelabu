@@ -56,6 +56,6 @@ it does not impose a separate deadline on driver ioctl/close operations or
 on the framebuffer driver's own update synchronization.
 
 Implementation was checked against the board's `esp32s31_camera_v4l2.c`, the
-DVP copy/ownership implementation, `v4l2_cap.c`, and `s31rgb565`. Korvo + OV3660 board bring-up evidence is recorded in
-`backups/2026-09-20-korvo/README.md` at the workspace root; optical confirmation
-is recorded separately from successful framebuffer updates.
+DVP copy/ownership implementation, `v4l2_cap.c`, and `s31rgb565`. Korvo + OV3660 image-qualified results are indexed by `docs/validation/README.md`
+in the companion contest delivery repository. Optical confirmation is recorded
+separately from successful framebuffer updates.

@@ -1,0 +1,52 @@
+# S-mode SMP MEDIA playback through local sockets and the standard Player API.
+# Application ELFs and /etc/media are embedded in the kernel ROMFS.
+# Playback is started explicitly; generated samples use the volatile /tmp.
+#include "../korvo-smp-audio/defconfig"
+
+CONFIG_ARCH_TEXT_NPAGES=512
+CONFIG_ELF_APP_MAX_FILESIZE=2097152
+CONFIG_FS_TMPFS=y
+CONFIG_FS_HEAPSIZE=524288
+CONFIG_FS_HEAPBUF_SECTION=".s31.fsheap"
+CONFIG_ETC_ROMFS=y
+CONFIG_ETC_ROMFSDEVNO=1
+CONFIG_ESP32S31_KORVO_MEDIA=y
+CONFIG_EXAMPLES_S31MEDIACHECK=y
+CONFIG_PTHREAD_MUTEX_TYPES=y
+CONFIG_EVENT_FD=y
+CONFIG_NET=y
+CONFIG_NETDEV_LATEINIT=y
+# CONFIG_NET_IPv4 is not set
+# CONFIG_NET_IPv6 is not set
+# CONFIG_NSH_NETINIT is not set
+CONFIG_NET_LOCAL=y
+CONFIG_NET_LOCAL_STREAM=y
+CONFIG_NET_LOCAL_NONBLOCKING=y
+CONFIG_NET_SOCKOPTS=y
+CONFIG_NET_NSOCKET_DESCRIPTORS=32
+# FFmpeg's Unix transport also links the standard address helpers.
+CONFIG_LIBC_NETDB=y
+CONFIG_MEDIA=y
+CONFIG_MEDIA_SERVER=y
+CONFIG_MEDIA_GRAPH=y
+CONFIG_MEDIA_TOOL=y
+CONFIG_MEDIA_POLICY=y
+CONFIG_MEDIA_SERVER_CPUNAME="local"
+CONFIG_MEDIA_SERVER_CONFIG_PATH="/etc/media/"
+CONFIG_MEDIA_SERVER_STACKSIZE=16384
+CONFIG_MEDIA_PLAYER_STACKSIZE=16384
+CONFIG_MEDIA_TOOL_STACKSIZE=16384
+CONFIG_MEDIA_PLAYER_MAX_CNT=1
+CONFIG_MEDIA_RECORDER_MAX_CNT=1
+CONFIG_MEDIA_LOG_WARN=y
+CONFIG_LIB_PFW=y
+# CONFIG_LIB_PFW_DEBUG is not set
+CONFIG_KVDB=y
+CONFIG_KVDB_DIRECT=y
+CONFIG_KVDB_FILE=y
+CONFIG_KVDB_PERSIST_PATH="/tmp/media-kv"
+# CONFIG_KVDB_TEMPORARY_STORAGE is not set
+CONFIG_LIB_FFMPEG=y
+CONFIG_LIB_FFMPEG_AUDIO_TABLEGEN=y
+CONFIG_LIB_FFMPEG_CONFIGURATION="--disable-asm --disable-inline-asm --disable-rvv --disable-tx-double --disable-tx-int32 --enable-avcodec --enable-avdevice --enable-avfilter --enable-avformat --enable-swresample --enable-alsa --enable-decoder='aac,mp3float,opus,pcm_s16le' --enable-demuxer='aac,mov,mp3,ogg,wav' --enable-parser='aac,mpegaudio,opus' --enable-filter='abufsrc,asubgraph,abuffer,abuffersink,aresample,alsasink' --enable-protocol=file,unix --enable-hardcoded-tables"
+CONFIG_AUDIOUTILS_ALSA_LIB_LOG_WARN=y

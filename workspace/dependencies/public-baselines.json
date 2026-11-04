@@ -1,22 +1,182 @@
 [
   {
-    "path": "nuttx",
-    "local_head": "6c3a1973a6190c7f4a98981618406d91ce36dec7",
-    "public_base": "f7183ab93a36c3e937940103480afe98991efae8"
-  },
-  {
-    "path": "apps",
     "local_head": "fe038f6e4125035825cf17e6e0384eefeefb1b16",
+    "path": "apps",
     "public_base": "3847d5dda4e2896aefffb72db1dee2fd5ec378d4"
   },
   {
-    "path": "nuttx/libs/libxx/libcxx/libcxx",
+    "local_head": "9fdfb2e5a49c5c650ec7ce0b87c4d1b6aed3ad4c",
+    "path": "apps/crypto/mbedtls/mbedtls",
+    "public_base": "9fdfb2e5a49c5c650ec7ce0b87c4d1b6aed3ad4c"
+  },
+  {
+    "local_head": "eb64dd8270a2220be8aa9108caa00373f5053610",
+    "path": "apps/graphics/lvgl/lvgl",
+    "public_base": "eb64dd8270a2220be8aa9108caa00373f5053610"
+  },
+  {
+    "local_head": "e5eb43d2f5dc6bb8bdbbd49993b4220493e3c5f2",
+    "path": "apps/mlearning/cmsis/CMSIS_5",
+    "public_base": "e5eb43d2f5dc6bb8bdbbd49993b4220493e3c5f2"
+  },
+  {
+    "local_head": "4736bf4ba2853825ebfc9f501eba2ca64e57e343",
+    "path": "apps/netutils/connectedhomeip/connectedhomeip",
+    "public_base": "4736bf4ba2853825ebfc9f501eba2ca64e57e343"
+  },
+  {
+    "local_head": "91603798e7cd3c2d21a45bf6134f46fc539aaf4a",
+    "path": "apps/netutils/connectedhomeip/pigweed",
+    "public_base": "91603798e7cd3c2d21a45bf6134f46fc539aaf4a"
+  },
+  {
+    "local_head": "d364de88c2d6f66bdbacc450e414a7e37fbb55f9",
+    "path": "apps/netutils/jsoncpp/jsoncpp",
+    "public_base": "d364de88c2d6f66bdbacc450e414a7e37fbb55f9"
+  },
+  {
+    "local_head": "ac15b55ed6b6dd9bae820af51901cbb1e3ff0434",
+    "path": "external",
+    "public_base": "ac15b55ed6b6dd9bae820af51901cbb1e3ff0434"
+  },
+  {
+    "local_head": "f615f5ae396d0c94c5c67d6e68aa9b0788359066",
+    "path": "external/android/frameworks/native",
+    "public_base": "f615f5ae396d0c94c5c67d6e68aa9b0788359066"
+  },
+  {
+    "local_head": "31ae865360bdb4a6d3eb115b05b0248830c536b2",
+    "path": "external/cpuid/cpuid",
+    "public_base": "31ae865360bdb4a6d3eb115b05b0248830c536b2"
+  },
+  {
+    "local_head": "16f74fc47b1e1317f2fd277d64604c7cc916600c",
+    "path": "external/curl/curl",
+    "public_base": "16f74fc47b1e1317f2fd277d64604c7cc916600c"
+  },
+  {
+    "local_head": "a839e48267b977b30c2383ff7de7aa4281ec267c",
+    "path": "external/ffmpeg/ffmpeg",
+    "public_base": "a839e48267b977b30c2383ff7de7aa4281ec267c"
+  },
+  {
+    "local_head": "45668c24cc90b8b73cd25098f2de8c884dc3f63c",
+    "path": "external/iperf2/iperf2",
+    "public_base": "45668c24cc90b8b73cd25098f2de8c884dc3f63c"
+  },
+  {
+    "local_head": "b0231722b95ca29458f58bacb1a1bc769a571c9f",
+    "path": "external/liblc3/liblc3",
+    "public_base": "b0231722b95ca29458f58bacb1a1bc769a571c9f"
+  },
+  {
+    "local_head": "464244b7351d40da8fed03e9ffd8bc9dc11ad585",
+    "path": "external/libssh/libssh",
+    "public_base": "464244b7351d40da8fed03e9ffd8bc9dc11ad585"
+  },
+  {
+    "local_head": "8490978d303c3111f01494a982388c15442e3a97",
+    "path": "external/libwebp/libwebp",
+    "public_base": "8490978d303c3111f01494a982388c15442e3a97"
+  },
+  {
+    "local_head": "4cdd96562742ee3d816f3846c4d5984a6d9f2024",
+    "path": "external/lz4/lz4",
+    "public_base": "4cdd96562742ee3d816f3846c4d5984a6d9f2024"
+  },
+  {
+    "local_head": "f4976f4025d55df3223fa81fd6d05323159a712e",
+    "path": "external/opus/opus",
+    "public_base": "f4976f4025d55df3223fa81fd6d05323159a712e"
+  },
+  {
+    "local_head": "bd930cc60b04babf65bd6d7a1ce0b8204f849fce",
+    "path": "external/unqlite/unqlite",
+    "public_base": "bd930cc60b04babf65bd6d7a1ce0b8204f849fce"
+  },
+  {
+    "local_head": "b46711a0e0709a88fd070580c41c87b5c23dfc08",
+    "path": "external/zblue/zblue",
+    "public_base": "b46711a0e0709a88fd070580c41c87b5c23dfc08"
+  },
+  {
+    "local_head": "b0ad23406dbccf3d08345bd39920bf94be31bc8c",
+    "path": "frameworks/connectivity/bluetooth",
+    "public_base": "b0ad23406dbccf3d08345bd39920bf94be31bc8c"
+  },
+  {
+    "local_head": "ad614c8503b8c904a6be652fd16102b8e47cec4b",
+    "path": "frameworks/multimedia/media",
+    "public_base": "ad614c8503b8c904a6be652fd16102b8e47cec4b"
+  },
+  {
+    "local_head": "b441eda2ad27004315166df57c74ac04a979368f",
+    "path": "frameworks/runtimes/ash",
+    "public_base": "b441eda2ad27004315166df57c74ac04a979368f"
+  },
+  {
+    "local_head": "e436fbddb7563fd76e9986a7c3f2cf17b6c757a2",
+    "path": "frameworks/runtimes/feature",
+    "public_base": "e436fbddb7563fd76e9986a7c3f2cf17b6c757a2"
+  },
+  {
+    "local_head": "d0469cd49a9bb16ee58d8716cf695551d7f8f5e3",
+    "path": "frameworks/runtimes/services/am",
+    "public_base": "d0469cd49a9bb16ee58d8716cf695551d7f8f5e3"
+  },
+  {
+    "local_head": "407b8170c296b7ad14434900d1fa1be5e7256e41",
+    "path": "frameworks/runtimes/services/pm",
+    "public_base": "407b8170c296b7ad14434900d1fa1be5e7256e41"
+  },
+  {
+    "local_head": "647149abb6598efc70b09e007f63f00077dda600",
+    "path": "frameworks/runtimes/services/wm",
+    "public_base": "647149abb6598efc70b09e007f63f00077dda600"
+  },
+  {
+    "local_head": "c0887aba34ea27d55ae074e9e812cd6ca91c6597",
+    "path": "frameworks/runtimes/services/xmsdemo",
+    "public_base": "c0887aba34ea27d55ae074e9e812cd6ca91c6597"
+  },
+  {
+    "local_head": "a2f628d04b5630dfb4ca73bdb64512109c0ae045",
+    "path": "frameworks/system/utils",
+    "public_base": "a2f628d04b5630dfb4ca73bdb64512109c0ae045"
+  },
+  {
+    "local_head": "806936e1b525043247863c17313875e2fbe7b6d3",
+    "path": "frameworks/system/utils/uv",
+    "public_base": "806936e1b525043247863c17313875e2fbe7b6d3"
+  },
+  {
+    "local_head": "6c3a1973a6190c7f4a98981618406d91ce36dec7",
+    "path": "nuttx",
+    "public_base": "f7183ab93a36c3e937940103480afe98991efae8"
+  },
+  {
+    "local_head": "9d31e6df950d7140ed17502022be91186164c160",
+    "path": "nuttx/fs/littlefs/littlefs",
+    "public_base": "9d31e6df950d7140ed17502022be91186164c160"
+  },
+  {
+    "local_head": "29bae2a461498dde087cb42ff0c9a8e8f545faf5",
+    "path": "nuttx/libs/libc/audio/libsrc/libsamplerate",
+    "public_base": "29bae2a461498dde087cb42ff0c9a8e8f545faf5"
+  },
+  {
     "local_head": "27cf67588d4dae7c39d57f9e0302f87618c5729a",
+    "path": "nuttx/libs/libxx/libcxx/libcxx",
     "public_base": "e8da2c2756a014d3c30757cee3ccf1fcdd87c390"
   },
   {
-    "path": "tests",
     "local_head": "7bdeb9ebc3e0e087605479e44add2539cd7cf049",
+    "path": "tests",
     "public_base": "4cd233d7f98efe6356cb43dc3e9910ce354f4fe9"
+  },
+  {
+    "local_head": "738394d746ed699f7bae53058fe3f331dfd205ed",
+    "path": "vendor",
+    "public_base": "738394d746ed699f7bae53058fe3f331dfd205ed"
   }
 ]

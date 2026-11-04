@@ -1,0 +1,5 @@
+/* The board mounts /tmp. rcS checks /data before it starts services. */
+mount -t binfs /system/bin
+/* shm_open uses pseudo inodes; shmfs is not a mountable filesystem. */
+mkdir -p /var/shm
+mkdir /tmp/db

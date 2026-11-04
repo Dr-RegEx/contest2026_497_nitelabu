@@ -1,64 +1,33 @@
 {
-  "name": "category-4.1.127",
+  "canonical_profile": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-audio-duplex/defconfig",
+  "canonical_source_root": "platform-root/openvela-dev",
+  "current_build": "Use the canonical BSP profile in a restored platform tree; local copies are historical source references.",
+  "historical_record": {
+    "demo": "category-4.1.127",
+    "path": "../../../../docs/validation/historical.json"
+  },
   "keys": [
     "category:4.1.127"
   ],
+  "license_rule": "Retain source headers and all original LICENSE/NOTICE/UPSTREAM attributions.",
+  "licenses": [
+    "licenses/apps/LICENSE",
+    "licenses/apps/NOTICE"
+  ],
+  "local_config": "config/xts-flat-audio-duplex/defconfig",
+  "local_sources": [
+    {
+      "origin": "apps/system/nxlooper",
+      "path": "src/nxlooper"
+    }
+  ],
+  "name": "category-4.1.127",
   "profile": "xts-flat-audio-duplex",
+  "schema": 2,
+  "scope": "historical-source-reference",
   "sources": [
     "apps/system/nxlooper"
   ],
-  "evidence_ids": [
-    1198
-  ],
-  "note": "**通过范围仅为原始命令执行无报错**。日志明确 AUDIBLE_LOOPBACK=PENDING；未完成外接扬声器听验，不等同于声音质量通过。",
-  "original": "4.1.127",
-  "evidence": [
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/result.json",
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/SHA256SUMS",
-    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-duplex-flash.log",
-    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-nxlooper-dma.log",
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-duplex-flash.log",
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-nxlooper-dma.log",
-    "docs/acceptance/xts-category-status.md"
-  ],
   "title": "Audio--nxlooper回环功能测试",
-  "original_line": 4548,
-  "config_inheritance_verified": true,
-  "local_sources": [
-    {
-      "path": "src/nxlooper",
-      "origin": "apps/system/nxlooper"
-    }
-  ],
-  "local_config": "config/xts-flat-audio-duplex/defconfig",
-  "local_evidence": [
-    {
-      "path": "evidence/docs/acceptance/xts-category-status.md",
-      "origin": "docs/acceptance/xts-category-status.md"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/SHA256SUMS",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/SHA256SUMS"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/result.json",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/result.json"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-duplex-flash.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-duplex-flash.log"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-nxlooper-dma.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1198-nxlooper-commands/xts1198-nxlooper-dma.log"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-duplex-flash.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-duplex-flash.log"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-nxlooper-dma.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts1198-nxlooper-dma.log"
-    }
-  ]
+  "validation_index": "../../../../docs/validation/index.json"
 }

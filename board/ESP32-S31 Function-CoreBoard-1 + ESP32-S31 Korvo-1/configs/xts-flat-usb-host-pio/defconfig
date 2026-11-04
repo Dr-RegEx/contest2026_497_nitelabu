@@ -5,3 +5,7 @@ CONFIG_USBHOST=y
 CONFIG_ESP32S31_USBHOST=y
 CONFIG_ESP32S31_USBHOST_HCD_SKELETON=y
 CONFIG_USBHOST_MSC=y
+
+# USB mass-storage filesystem inspection and file-level verification.
+CONFIG_FS_FAT=y
+CONFIG_FAT_LFN=y

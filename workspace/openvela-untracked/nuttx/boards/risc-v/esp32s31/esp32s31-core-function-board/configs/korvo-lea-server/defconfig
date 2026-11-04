@@ -1,0 +1,46 @@
+# Korvo unicast LE Audio and local MEDIA service configuration.
+# Controller roles remain available; no scan, announcement or media auto-start.
+#include "../korvo-media/defconfig"
+#include "../korvo-ble-audio-local/defconfig"
+CONFIG_BLUETOOTH_BLE_AUDIO=y
+CONFIG_BLUETOOTH_LE_AUDIO_SUPPORT=y
+CONFIG_BLUETOOTH_LEAUDIO_SERVER=y
+CONFIG_BT_ISO_MAX_CHAN=2
+CONFIG_BT_ASCS_MAX_ASE_SNK_COUNT=1
+CONFIG_BT_ASCS_MAX_ASE_SRC_COUNT=1
+CONFIG_BT_ASCS_MAX_ACTIVE_ASES=2
+CONFIG_BT_ISO_RX_BUF_COUNT=4
+CONFIG_NET_LOCAL=y
+CONFIG_NET_LOCAL_STREAM=y
+CONFIG_NET_LOCAL_NONBLOCKING=y
+CONFIG_MEDIA=y
+CONFIG_MEDIA_SERVER=y
+CONFIG_MEDIA_POLICY=y
+CONFIG_ESP32S31_KORVO_MEDIA=y
+CONFIG_NSH_BUILTIN_AS_COMMAND=y
+# CONFIG_NSH_NETINIT is not set
+
+# Bluetooth log/property subscriptions require the real KVDB IPC service.
+CONFIG_KVDB_SERVER=y
+CONFIG_KVDB_TEMPORARY_STORAGE=y
+CONFIG_KVDB_TEMPORARY_PATH="/tmp/db"
+# CONFIG_KVDB_DIRECT is not set
+
+# Use the maintained FLAT mapping for task-context codec tables.
+CONFIG_ESP32S31_FFMPEG_PSRAM_BSS=y
+
+# The local Bluetooth base disables the application PSRAM heap. Restore the
+# maintained two-heap MEDIA allocation policy for the combined service.
+CONFIG_ESPRESSIF_SPIRAM_USER_HEAP=y
+CONFIG_MM_REGIONS=2
+CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP=y
+
+# Actual LC3 codec and Bluetooth device/filter chain.
+CONFIG_LIB_FFMPEG_CONFIGURATION="--disable-asm --disable-inline-asm --disable-rvv --disable-tx-double --disable-tx-int32 --enable-avcodec --enable-avdevice --enable-avfilter --enable-avformat --enable-swresample --enable-alsa --enable-decoder='aac,mp3float,opus,pcm_s16le,liblc3' --enable-demuxer='aac,mov,mp3,ogg,wav' --enable-parser='aac,mpegaudio,opus' --enable-filter='abufsrc,asubgraph,abuffer,abuffersink,aresample,alsasink,adevsrc,adevsink' --enable-protocol=file,unix --enable-hardcoded-tables --enable-liblc3 --enable-encoder=liblc3 --enable-indev=bluelet --enable-outdev=bluelet"
+
+# Route music to the configured LE source, retaining the local speaker path.
+CONFIG_MEDIA_SERVER_CONFIG_PATH="/etc/media-lea/"
+
+# Wake MEDIA for capture recovery even when neither socket is readable.
+CONFIG_TIMER_FD=y
+CONFIG_TIMER_FD_POLL=y

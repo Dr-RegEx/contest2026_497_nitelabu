@@ -8,8 +8,44 @@ include $(TOPDIR)/Make.defs
 
 CSRCS = esp32s31_boot.c esp32s31_bringup.c
 
+ifeq ($(CONFIG_ESP32S31_LPI2C_CODEC_TEST),y)
+CSRCS += esp32s31_lpi2c_test.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_LPUART_LOOPBACK_TEST),y)
+CSRCS += esp32s31_lpuart_test.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_CANFD_LOOPBACK_TEST),y)
+CSRCS += esp32s31_canfd_test.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_COMP_LOOPBACK_TEST),y)
+CSRCS += esp32s31_comp_test.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_MCPWM_LOOPBACK_TEST),y)
+CSRCS += esp32s31_mcpwm_test.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_PCNT_MATRIX_TEST),y)
+CSRCS += esp32s31_pcnt_test.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_KORVO_HMI_DATA),y)
+CSRCS += esp32s31_hmi_storage.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_KORVO_ADC_BUTTONS),y)
+CSRCS += esp32s31_adc_buttons.c
+endif
+
 ifeq ($(CONFIG_ESP32S31_AUDIO),y)
 CSRCS += esp32s31_audio.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_KORVO_AUDIO),y)
+CSRCS += esp32s31_korvo_audio.c esp32s31_pcm.c esp32s31_es8389.c
 endif
 
 ifneq ($(filter y,$(CONFIG_ESP32S31_CAMERA_OV2640) $(CONFIG_ESP32S31_CAMERA_OV3660)),)
@@ -60,7 +96,7 @@ ifeq ($(CONFIG_ARCH_BUTTONS),y)
 CSRCS += esp32s31_buttons.c
 endif
 
-ifneq ($(filter y,$(CONFIG_ARCH_BUTTONS) $(CONFIG_ESP32S31_XTS_GPIO) $(CONFIG_ESP32S31_AUDIO)),)
+ifneq ($(filter y,$(CONFIG_ARCH_BUTTONS) $(CONFIG_ESP32S31_XTS_GPIO) $(CONFIG_ESP32S31_AUDIO) $(CONFIG_ESP32S31_KORVO_AUDIO) $(CONFIG_ESP32S31_PCNT_MATRIX_TEST) $(CONFIG_ESP32S31_MCPWM_LOOPBACK_TEST) $(CONFIG_ESP32S31_COMP_LOOPBACK_TEST)),)
 
 # esp_gpio.h uses the locked S31 HAL's GPIO validation definitions.
 # Board.mk does not inherit the architecture library's private include paths.
@@ -75,6 +111,12 @@ endif
 ifeq ($(CONFIG_BUILD_KERNEL),y)
 ifneq ($(CONFIG_ESP32S31_FLASH_APPFS),y)
 CSRCS += $(if $(wildcard romfs_boot.c),romfs_boot.c,romfs_stub.c)
+
+# apps/tools/mkromfsimg.sh uses generic symbols also used by /etc ROMFS.
+# Scope the aliases to the application object; /etc keeps its own symbols.
+
+romfs_boot$(OBJEXT): CFLAGS += -Dromfs_img=g_s31_appromfs \
+                             -Dromfs_img_len=g_s31_appromfs_len
 endif
 endif
 
@@ -84,4 +126,18 @@ CFLAGS += ${INCDIR_PREFIX}$(TOPDIR)$(DELIM)arch$(DELIM)$(CONFIG_ARCH)$(DELIM)src
 
 ifeq ($(CONFIG_ESP32S31_XTS_MEDIA_VOLUME),y)
 CSRCS += esp32s31_xts_media_volume.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_KORVO_TOUCH),y)
+CSRCS += esp32s31_touch.c
+endif
+
+ifeq ($(CONFIG_ESP32S31_KORVO_MEDIA),y)
+ifneq ($(CONFIG_ESP32S31_KORVO_HMI),y)
+RCRAWS += etc/init.d/rc.sysinit etc/init.d/rcS
+endif
+RCRAWS += etc/media/graph.conf etc/media/criteria.txt etc/media/settings.pfw
+ifeq ($(CONFIG_BLUETOOTH_LEAUDIO_SERVER),y)
+RCRAWS += etc/media-lea/graph.conf etc/media-lea/criteria.txt etc/media-lea/settings.pfw
+endif
 endif

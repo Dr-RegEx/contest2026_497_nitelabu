@@ -1,0 +1,14 @@
+# Korvo native USB device qualification, using the existing FS PIO driver.
+# The Type-A port requires an independently verified VBUS-isolated fixture.
+# The Type-C UART and power connectors are not native USB device ports.
+#include "../xts-flat-usb-adb/defconfig"
+
+CONFIG_ESP32S31_BOARD_KORVO=y
+CONFIG_ADBD_PRODUCT_NAME="ESP32-S31 Korvo-1"
+CONFIG_DEV_URANDOM=y
+CONFIG_NETUTILS_CODECS=y
+CONFIG_CODECS_HASH_MD5=y
+CONFIG_NSH_QUOTE=y
+CONFIG_UART0_RXBUFSIZE=256
+# CONFIG_NSH_ARGCAT is not set
+# CONFIG_NSH_NETINIT is not set

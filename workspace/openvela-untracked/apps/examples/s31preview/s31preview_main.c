@@ -5,6 +5,9 @@
  ****************************************************************************/
 
 #include <nuttx/config.h>
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+#include <nuttx/input/touchscreen.h>
+#endif
 
 #include <sys/ioctl.h>
 #include <sys/mman.h>
@@ -32,10 +35,12 @@
 #define CAPTURE_BUFFERS 2
 #define ROW_BYTES       (CAPTURE_WIDTH * 2)
 
+#include "s31record.h"
+
 static void usage(const char *name)
 {
   printf("Usage: %s [--video /dev/video0] [--fb /dev/fb0]\n"
-         "       [--frames N] [--timeout-ms N]\n"
+         "       [--frames N] [--timeout-ms N] [--touch] [--ui] [--record /mnt/sdcard/NAME.y4m]\n"
          "Default: 60 real camera frames, 3000 ms timeout per frame.\n",
          name);
 }
@@ -174,6 +179,21 @@ static int dequeue_frame(int fd, uint32_t timeout_ms,
     }
 }
 
+static uint32_t copy_frame_pixels(uint8_t *display, size_t display_stride,
+                                   const uint8_t *capture, size_t capture_stride)
+{
+  for(unsigned row=0;row<CAPTURE_HEIGHT;row++) {
+    uint8_t *d=display+row*display_stride+(DISPLAY_WIDTH-CAPTURE_WIDTH);
+    const uint8_t *s=capture+row*capture_stride;
+    if((((uintptr_t)d|(uintptr_t)s)&3)==0) {
+      volatile uint32_t *dw=(volatile uint32_t *)d;
+      const uint32_t *sw=(const uint32_t *)s;
+      for(unsigned i=0;i<ROW_BYTES/4;i++)dw[i]=sw[i];
+    } else memcpy(d,s,ROW_BYTES);
+  }
+  return 0;
+}
+
 static uint32_t copy_frame(uint8_t *display, size_t display_stride,
                            const uint8_t *capture, size_t capture_stride)
 {
@@ -197,8 +217,62 @@ static uint32_t copy_frame(uint8_t *display, size_t display_stride,
   return hash;
 }
 
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+#include "s31ui.h"
+
+/* Synthetic image benchmark: never starts the camera; deletes only its
+ * own successfully created test file after exact readback verification. */
+static int photo_benchmark(void)
+{
+  struct s31ui_s u={.fd=-1};bool mounted=false;int result=1;
+  uint8_t *rgb=malloc(614400);uint64_t begin=0,end=0;
+  char created[64]={0};
+  u.pixels=malloc(614400);u.scratch=malloc(460800);
+  if(!rgb||!u.pixels||!u.scratch)goto finish;
+  if(!ui_sd()){if(mount("/dev/mmcsd0","/mnt/sdcard","vfat",0,NULL)<0)goto finish;mounted=true;}
+  for(int y=0;y<480;y++)for(int x=0;x<640;x++)
+    ((uint16_t *)rgb)[y*640+x]=y<240?(x<320?0xf800:0x07e0):(x<320?0x001f:0xffff);
+  monotonic_ms(&begin);
+  if(ui_photo(&u,rgb,1280)<0)goto finish;
+  monotonic_ms(&end);strcpy(created,u.path);
+  printf("photo-benchmark: synthetic save+fsync+close=%llu ms bytes=921654\n",(unsigned long long)(end-begin));
+  strcpy(u.names[0],strrchr(created,'/')+1);ui_view(&u,0,0);
+  if(u.mode==2 && memcmp(rgb,u.pixels,614400)==0)result=0;
+finish:
+  if(u.fd>=0)close(u.fd);
+  if(created[0] && unlink(created)<0)result=1;
+  if(mounted && umount("/mnt/sdcard")<0)result=1;
+  free(rgb);free(u.pixels);free(u.scratch);
+  printf("photo-benchmark: exact readback and test-file cleanup %s\n",result?"FAIL":"PASS");
+  return result;
+}
+
+struct photo_display_s { int fd; uint8_t *fb; size_t stride; uint64_t start; };
+static void photo_progress(void *arg, unsigned percent)
+{
+  struct photo_display_s *d=arg;
+  struct fb_area_s area={.x=0,.y=0,.w=800,.h=480};
+  char message[64];
+  if(percent==0)monotonic_ms(&d->start);
+  if(percent==99 || percent==100) {
+    uint64_t now=0;monotonic_ms(&now);
+    printf("camera-ui: photo %s elapsed_ms=%llu bytes=921654\n",percent==99?"write-done":"synced",(unsigned long long)(now-d->start));
+    if(percent==100)return;
+  }
+  snprintf(message,sizeof(message),percent==99 ? "SYNCING PHOTO - PLEASE WAIT" : "SAVING PHOTO %u%% - PLEASE WAIT",percent);
+  ui_rect(d->fb,d->stride,0,0,800,42,0x0320);
+  ui_text(d->fb,d->stride,12,8,message);
+  ui_rect(d->fb,d->stride,0,420,800,60,0x1082);
+  ui_text(d->fb,d->stride,20,436,"SAVING - DO NOT REMOVE SD CARD");
+  ioctl(d->fd,FBIO_UPDATE,(unsigned long)&area);
+}
+#endif
+
 int main(int argc, char *argv[])
 {
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+  if(argc==2 && strcmp(argv[1],"--photo-bench")==0)return photo_benchmark();
+#endif
   struct fb_videoinfo_s video = {0};
   struct fb_planeinfo_s plane = {0};
   struct fb_area_s area =
@@ -210,7 +284,20 @@ int main(int argc, char *argv[])
   const char *fb_path = "/dev/fb0";
   uint8_t *capture[CAPTURE_BUFFERS] = {NULL};
   uint8_t *display = MAP_FAILED;
+  struct s31record_s recording = {.fd = -1};
+  const char *record_path = NULL;
   uint32_t max_frames = 60;
+  bool touch = false;
+  bool profile = false;
+  uint64_t stages[5]={0}, mark=0, stamp=0;
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+  bool ui_mode = false;
+  bool return_home = false;
+  bool standby_test = false;
+  struct s31ui_s ui = {.fd = -1};
+  struct photo_display_s photo_display={0};
+#endif
+  int touch_fd = -1;
   uint32_t timeout_ms = 3000;
   uint32_t frames = 0;
   uint64_t start = 0;
@@ -233,6 +320,24 @@ int main(int argc, char *argv[])
         {
           usage(argv[0]);
           return EXIT_SUCCESS;
+        }
+      else if (strcmp(argv[i], "--profile") == 0)
+        { profile = true; }
+      else if (strcmp(argv[i], "--record") == 0 && i + 1 < argc)
+        {
+          record_path = argv[++i];
+        }
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+      else if (strcmp(argv[i], "--standby-test") == 0)
+        { standby_test = true; ui_mode = true; touch = true; max_frames = 40; }
+      else if (strcmp(argv[i], "--return-home") == 0)
+        { return_home = true; }
+      else if (strcmp(argv[i], "--ui") == 0)
+        { ui_mode = true; touch = true; max_frames = UINT32_MAX; }
+#endif
+      else if (strcmp(argv[i], "--touch") == 0)
+        {
+          touch = true;
         }
       else if (strcmp(argv[i], "--video") == 0 && i + 1 < argc)
         {
@@ -265,6 +370,18 @@ int main(int argc, char *argv[])
         }
     }
 
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+  if (ui_mode)
+    {
+      if (record_path) { fprintf(stderr, "--ui cannot auto-record\n"); goto out; }
+      ui.pixels = malloc(640 * 480 * 2);
+      ui.scratch = malloc(460800);
+      if (!ui.pixels || !ui.scratch) goto out;
+      if (!ui_sd() && mount("/dev/mmcsd0", "/mnt/sdcard", "vfat", 0, NULL) == 0)
+        ui.mounted = true;
+      snprintf(ui.status,sizeof(ui.status), ui_sd() ? "LIVE - READY" : "LIVE - NO SD CARD");
+    }
+#endif
   fb_fd = open(fb_path, O_RDWR);
   if (fb_fd < 0)
     {
@@ -312,11 +429,26 @@ int main(int argc, char *argv[])
       goto out;
     }
 
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+  if(ui_mode) {
+    photo_display.fd=fb_fd;photo_display.fb=display;photo_display.stride=plane.stride;
+    ui.photo_progress=photo_progress;ui.photo_progress_arg=&photo_display;
+  }
+#endif
+
   /* The margins stay black; no framebuffer update occurs until a real
    * captured frame has been validated and copied into the center.
    */
 
+  if (record_path && record_open(&recording, record_path) < 0)
+    { perror("s31preview record open"); goto out; }
+
   memset(display, 0, display_size);
+  if (touch)
+    {
+      touch_fd = open("/dev/input0", O_RDONLY | O_NONBLOCK);
+      if (touch_fd < 0) { perror("s31preview touch"); goto out; }
+    }
   video_fd = open(video_path, O_RDWR | O_NONBLOCK);
   if (video_fd < 0)
     {
@@ -421,6 +553,7 @@ int main(int argc, char *argv[])
       uint64_t now;
       uint32_t hash;
 
+      if(profile)monotonic_ms(&mark);
       if (dequeue_frame(video_fd, timeout_ms, &buffer) < 0)
         {
           fprintf(stderr, "s31preview: capture failed frame=%" PRIu32
@@ -443,9 +576,94 @@ int main(int argc, char *argv[])
           goto out;
         }
 
+      if(profile){monotonic_ms(&stamp);stages[0]+=stamp-mark;mark=stamp;}
+      if (recording.fd >= 0 &&
+          record_frame(&recording, capture[buffer.index], capture_stride, &buffer.timestamp) < 0)
+        { perror("s31preview record frame"); goto out; }
+
+      if(profile){monotonic_ms(&stamp);stages[1]+=stamp-mark;mark=stamp;}
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+      if(ui_mode)hash=copy_frame_pixels(display,plane.stride,capture[buffer.index],capture_stride);
+      else
+#endif
       hash = copy_frame(display, plane.stride, capture[buffer.index],
                          capture_stride);
 
+      if(profile){monotonic_ms(&stamp);stages[2]+=stamp-mark;mark=stamp;}
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+      if (ui_mode)
+        {
+          monotonic_ms(&now);
+          if (!standby_test)
+            ui_step(&ui, &recording, display, plane.stride,
+                  capture[buffer.index], capture_stride, touch_fd, now);
+          if (standby_test && frames > 0 && frames % 10 == 0)
+            ui.quit = true;
+          if (ui.quit && return_home)
+            break;
+          if (ui.quit)
+            {
+              /* This capture backend retains its queue on STREAMOFF and
+               * REQBUFS(0) is a no-op. Return only the dequeued frame; the
+               * other buffer is still owned by the queue. */
+              if (checked_ioctl(video_fd, VIDIOC_STREAMOFF, &type,
+                                "standby STREAMOFF") < 0) goto out;
+              streaming = false;
+              if (queue_buffer(video_fd, buffer.index, capture[buffer.index],
+                               capture_size) < 0) goto out;
+              ui_rect(display, plane.stride, 0, 0, 800, 480, 0x1082);
+              ui_text(display, plane.stride, 280, 145, "STANDBY");
+              ui_rect(display, plane.stride, 240, 240, 320, 90, 0x0320);
+              ui_text(display, plane.stride, 312, 272, "OPEN CAMERA");
+              if (checked_ioctl(fb_fd, FBIO_UPDATE, &area,
+                                "standby display") < 0) goto out;
+              printf("camera-ui: STANDBY capture stopped; no recording\n");
+              bool reopen = standby_test;
+              if (standby_test) usleep(200000);
+              while (!reopen)
+                {
+                  struct touch_sample_s sample;
+                  while (read(touch_fd, &sample, sizeof(sample)) == sizeof(sample))
+                    if (sample.npoints && (sample.point[0].flags & TOUCH_DOWN) &&
+                        sample.point[0].x >= 240 && sample.point[0].x < 560 &&
+                        sample.point[0].y >= 240 && sample.point[0].y < 330)
+                      reopen = true;
+                  if (!reopen) usleep(20000);
+                }
+              streaming = true;
+              if (checked_ioctl(video_fd, VIDIOC_STREAMON, &type,
+                                "resume STREAMON") < 0) goto out;
+              ui.quit = false;
+              ui.confirm = 0;
+              snprintf(ui.status, sizeof(ui.status), "LIVE - READY");
+              printf("camera-ui: RESUMED preview only\n");
+              frames++;
+              continue;
+            }
+        }
+      else if (touch_fd >= 0)
+        {
+          struct touch_sample_s sample;
+          int events = 0;
+          while (events++ < 64 && read(touch_fd, &sample, sizeof(sample)) == sizeof(sample))
+            {
+              int x = sample.point[0].x;
+              int y = sample.point[0].y;
+              printf("touch: id=%u flags=%02x x=%d y=%d\n",
+                     sample.point[0].id, sample.point[0].flags, x, y);
+              if (sample.npoints && x >= 0 && x < 800 && y >= 0 && y < 480)
+                {
+                  int dx, dy;
+                  for (dy = -5; dy <= 5; dy++)
+                    for (dx = -5; dx <= 5; dx++)
+                      if (x+dx >= 0 && x+dx < 800 && y+dy >= 0 && y+dy < 480)
+                        ((uint16_t *)(display+(y+dy)*plane.stride))[x+dx] = 0xf800;
+                }
+            }
+        }
+#endif
+
+      if(profile){monotonic_ms(&stamp);stages[3]+=stamp-mark;mark=stamp;}
       /* S31 FBIO_UPDATE copies to a spare scanout buffer and waits for the
        * DMA switch. Only after it returns may the mapped drawing be reused.
        */
@@ -456,7 +674,12 @@ int main(int argc, char *argv[])
           goto out;
         }
 
+      if(profile){monotonic_ms(&stamp);stages[4]+=stamp-mark;}
       frames++;
+      if(profile && frames%30==0)printf("preview-profile: frames=%lu elapsed_ms=%llu dq=%llu record=%llu copy=%llu ui=%llu lcd=%llu (totals ms)\n",(unsigned long)frames,(unsigned long long)(now-start),(unsigned long long)stages[0],(unsigned long long)stages[1],(unsigned long long)stages[2],(unsigned long long)stages[3],(unsigned long long)stages[4]);
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+      if (!ui_mode)
+#endif
       printf("s31preview: frame=%" PRIu32 " buffer=%" PRIu32
              " capture_time=%" PRIdMAX ".%06" PRIdMAX
              " elapsed_ms=%" PRIu64 " bytesused=%" PRIu32
@@ -511,6 +734,20 @@ out:
       free(capture[index]);
     }
 
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+  /* The LCD keeps scanning after this application exits. Replace the
+   * last live frame so a normal return does not look like a frozen UI. */
+  if (ui_mode && display != MAP_FAILED && fb_fd >= 0)
+    {
+      ui_rect(display, plane.stride, 0, 0, 800, 480, 0x1082);
+      ui_text(display, plane.stride, 200, 200,
+              result == EXIT_SUCCESS ? "CAMERA CLOSED" : "CAMERA ERROR");
+      ui_text(display, plane.stride, 104, 248, return_home ? "RETURNING TO HOME" : "RESTART FROM SERIAL CONSOLE");
+      if (checked_ioctl(fb_fd, FBIO_UPDATE, &area, "exit FBIO_UPDATE") < 0)
+        result = EXIT_FAILURE;
+    }
+#endif
+
 #ifndef CONFIG_BUILD_FLAT
   if (display != MAP_FAILED && munmap(display, display_size) < 0)
     {
@@ -520,6 +757,17 @@ out:
     }
 
 #endif
+
+  if (record_close(&recording) < 0)
+    { perror("s31preview record close"); result = EXIT_FAILURE; }
+  if (record_path) printf("record: path=%s frames=%" PRIu32 " format=YUV4MPEG2\n", record_path, recording.frames);
+
+#ifdef CONFIG_INPUT_TOUCHSCREEN
+  if (ui.fd >= 0) close(ui.fd);
+  free(ui.pixels); free(ui.scratch);
+  if (ui.mounted && umount("/mnt/sdcard") < 0) result = EXIT_FAILURE;
+#endif
+  if (touch_fd >= 0) close(touch_fd);
 
   if (fb_fd >= 0 && close(fb_fd) < 0)
     {

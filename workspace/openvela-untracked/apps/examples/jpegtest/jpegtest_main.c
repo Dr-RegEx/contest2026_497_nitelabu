@@ -1,13 +1,14 @@
 /****************************************************************************
  * apps/examples/jpegtest/jpegtest_main.c
  *
- * Board-side software smoke test for JPEG encode/decode and RGB formats.
- * The command deliberately uses a fixed image so it remains useful before a
- * camera is connected; it does not claim camera capture capability.
+ * Software JPEG/RGB888 checks using synthetic scanlines only.  This command
+ * does not capture camera frames or establish camera/DMA/display acceptance.
  ****************************************************************************/
 
 #include <nuttx/config.h>
 
+#include <errno.h>
+#include <setjmp.h>
 #include <stdint.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -15,16 +16,98 @@
 #include <string.h>
 
 #include <jpeglib.h>
+#include <jerror.h>
 
-#define TEST_WIDTH  2
-#define TEST_HEIGHT 2
+#define MAX_WIDTH     1920
+#define MAX_HEIGHT    1080
+#define ROW_GUARD     7
+#define MAX_ERROR     32
+#define MEAN_ERROR    4
+
+struct test_error_s
+{
+  struct jpeg_error_mgr pub;
+  jmp_buf jump;
+  char message[JMSG_LENGTH_MAX];
+};
+
+/* Mutable ownership lives on the heap so that it remains defined after
+ * longjmp.  A failed jpeg_create_* can also leave a partially created codec.
+ */
+
+struct test_codec_s
+{
+  struct jpeg_compress_struct enc;
+  struct jpeg_decompress_struct dec;
+  struct test_error_s error;
+  unsigned char *data;
+  unsigned long size;
+  uint8_t *row;
+  uint64_t error_sum;
+  unsigned int error_max;
+};
+
+static void codec_error(j_common_ptr info)
+{
+  struct test_error_s *error = (struct test_error_s *)info->err;
+  (*info->err->format_message)(info, error->message);
+  longjmp(error->jump, 1);
+}
+
+static void codec_message(j_common_ptr info, int level)
+{
+  /* The memory source inserts EOI on premature EOF.  Treat warnings as
+   * rejection instead of reporting a truncated image as a successful decode.
+   */
+
+  if (level < 0)
+    {
+      codec_error(info);
+    }
+}
+
+static boolean output_full(j_compress_ptr info)
+{
+  /* jpeg_mem_dest publishes a grown buffer only at finish_compress.  Bound
+   * this test's output to caller-owned memory so an error cannot strand an
+   * unpublished replacement buffer in the bundled destination manager.
+   */
+
+  ERREXIT(info, JERR_BUFFER_SIZE);
+  return FALSE;
+}
+
+static struct test_codec_s *codec_new(void)
+{
+  struct test_codec_s *ctx = calloc(1, sizeof(*ctx));
+  if (ctx != NULL)
+    {
+      jpeg_std_error(&ctx->error.pub);
+      ctx->error.pub.error_exit = codec_error;
+      ctx->error.pub.emit_message = codec_message;
+      ctx->enc.err = &ctx->error.pub;
+      ctx->dec.err = &ctx->error.pub;
+    }
+
+  return ctx;
+}
+
+static void codec_free(struct test_codec_s *ctx)
+{
+  if (ctx != NULL)
+    {
+      jpeg_destroy_compress(&ctx->enc);
+      jpeg_destroy_decompress(&ctx->dec);
+      free(ctx->row);
+      free(ctx->data);
+      free(ctx);
+    }
+}
 
 static uint16_t rgb888_to_rgb565(const uint8_t *p)
 {
-  uint16_t r = (uint16_t)(p[0] >> 3);
-  uint16_t g = (uint16_t)(p[1] >> 2);
-  uint16_t b = (uint16_t)(p[2] >> 3);
-  return (uint16_t)((r << 11) | (g << 5) | b);
+  return (uint16_t)(((uint16_t)(p[0] >> 3) << 11) |
+                    ((uint16_t)(p[1] >> 2) << 5) | (p[2] >> 3));
 }
 
 static void rgb565_to_rgb888(uint16_t pixel, uint8_t *p)
@@ -32,164 +115,338 @@ static void rgb565_to_rgb888(uint16_t pixel, uint8_t *p)
   uint8_t r = (uint8_t)((pixel >> 11) & 0x1f);
   uint8_t g = (uint8_t)((pixel >> 5) & 0x3f);
   uint8_t b = (uint8_t)(pixel & 0x1f);
-
-  /* Expand the quantized channels back to the full 8-bit range. */
   p[0] = (uint8_t)((r << 3) | (r >> 2));
   p[1] = (uint8_t)((g << 2) | (g >> 4));
   p[2] = (uint8_t)((b << 3) | (b >> 2));
 }
 
-static int check_rgb565(void)
+static int valid_size(unsigned int width, unsigned int height)
 {
-  static const uint8_t image[TEST_WIDTH * TEST_HEIGHT * 3] =
-    {
-      0xff, 0x00, 0x00,  /* red */
-      0x00, 0xff, 0x00,  /* green */
-      0x00, 0x00, 0xff,  /* blue */
-      0xff, 0xff, 0xff   /* white */
-    };
-  int i;
+  return width > 0 && width <= MAX_WIDTH &&
+         height > 0 && height <= MAX_HEIGHT;
+}
 
-  for (i = 0; i < TEST_WIDTH * TEST_HEIGHT; i++)
-    {
-      uint16_t packed = rgb888_to_rgb565(&image[i * 3]);
-      uint8_t expanded[3];
-      rgb565_to_rgb888(packed, expanded);
+static void test_pixel(unsigned int x, unsigned int y, unsigned int width,
+                       unsigned int height, uint8_t *p)
+{
+  /* Unequal horizontal/vertical RGB ramps expose channel, row and stride
+   * mistakes.  Each row is interleaved R,G,B bytes, with no native-endian
+   * 24-bit loads.  RGB565 above is a numeric word, not a wire byte order.
+   */
 
-      if (abs((int)expanded[0] - image[i * 3]) > 7 ||
-          abs((int)expanded[1] - image[i * 3 + 1]) > 7 ||
-          abs((int)expanded[2] - image[i * 3 + 2]) > 7)
+  unsigned int sx = width > 1 ? x * 255 / (width - 1) : 0;
+  unsigned int sy = height > 1 ? y * 255 / (height - 1) : 0;
+  p[0] = (uint8_t)((sx * 199 + sy * 37) / 255);
+  p[1] = (uint8_t)((sx * 31 + sy * 211) / 255);
+  p[2] = (uint8_t)(255 - (sx * 181 + sy * 53) / 255);
+}
+
+static int guard_ok(const uint8_t *row, size_t bytes)
+{
+  size_t i;
+  for (i = 0; i < ROW_GUARD; i++)
+    {
+      if (row[bytes + i] != 0xa5)
         {
-          printf("jpegtest: RGB565 quantization mismatch at pixel %d\n", i);
-          return -1;
+          return 0;
         }
     }
 
-  return 0;
+  return 1;
 }
 
-static int run_jpeg_roundtrip(void)
+static int encode_image(unsigned int width, unsigned int height,
+                        unsigned long capacity, unsigned char **data,
+                        unsigned long *size)
 {
-  static const uint8_t image[TEST_WIDTH * TEST_HEIGHT * 3] =
-    {
-      0xff, 0x00, 0x00,
-      0x00, 0xff, 0x00,
-      0x00, 0x00, 0xff,
-      0xff, 0xff, 0xff
-    };
-  struct jpeg_compress_struct cinfo;
-  struct jpeg_decompress_struct dinfo;
-  struct jpeg_error_mgr jcerr;
-  struct jpeg_error_mgr jderr;
-  unsigned char *jpeg_data = NULL;
-  unsigned long jpeg_size = 0;
-  uint8_t *decoded = NULL;
+  struct test_codec_s *ctx;
+  size_t bytes = (size_t)width * 3;
+  unsigned int x;
   JSAMPROW row;
+
+  *data = NULL;
+  *size = 0;
+  if (!valid_size(width, height) || capacity == 0)
+    {
+      return -1;
+    }
+
+  ctx = codec_new();
+  if (ctx == NULL)
+    {
+      return -1;
+    }
+
+  if (setjmp(ctx->error.jump))
+    {
+      printf("jpegtest: encode rejected: %s\n", ctx->error.message);
+      goto fail;
+    }
+
+  ctx->row = malloc(bytes + ROW_GUARD);
+  ctx->data = malloc(capacity);
+  ctx->size = capacity;
+  if (ctx->row == NULL || ctx->data == NULL)
+    {
+      goto fail;
+    }
+
+  jpeg_create_compress(&ctx->enc);
+  jpeg_mem_dest(&ctx->enc, &ctx->data, &ctx->size);
+  ctx->enc.dest->empty_output_buffer = output_full;
+  ctx->enc.image_width = width;
+  ctx->enc.image_height = height;
+  ctx->enc.input_components = 3;
+  ctx->enc.in_color_space = JCS_RGB;
+  jpeg_set_defaults(&ctx->enc);
+  jpeg_set_quality(&ctx->enc, 95, TRUE);
+
+  /* 4:4:4 makes the RGB fidelity check independent of chroma subsampling. */
+
+  for (x = 0; x < 3; x++)
+    {
+      ctx->enc.comp_info[x].h_samp_factor = 1;
+      ctx->enc.comp_info[x].v_samp_factor = 1;
+    }
+
+  jpeg_start_compress(&ctx->enc, TRUE);
+  while (ctx->enc.next_scanline < height)
+    {
+      memset(ctx->row, 0xa5, bytes + ROW_GUARD);
+      for (x = 0; x < width; x++)
+        {
+          test_pixel(x, ctx->enc.next_scanline, width, height,
+                     ctx->row + (size_t)x * 3);
+        }
+
+      row = ctx->row;
+      if (jpeg_write_scanlines(&ctx->enc, &row, 1) != 1 ||
+          !guard_ok(ctx->row, bytes))
+        {
+          goto fail;
+        }
+    }
+
+  jpeg_finish_compress(&ctx->enc);
+  if (ctx->size < 4 || ctx->data[0] != 0xff || ctx->data[1] != 0xd8 ||
+      ctx->data[ctx->size - 2] != 0xff || ctx->data[ctx->size - 1] != 0xd9)
+    {
+      goto fail;
+    }
+
+  *data = ctx->data;
+  *size = ctx->size;
+  ctx->data = NULL;
+  codec_free(ctx);
+  return 0;
+
+fail:
+  codec_free(ctx);
+  return -1;
+}
+
+static int decode_image(const unsigned char *data, unsigned long size,
+                        unsigned int width, unsigned int height,
+                        int report)
+{
+  struct test_codec_s *ctx;
+  size_t bytes = (size_t)width * 3;
+  unsigned int x;
+  unsigned int c;
+  unsigned int error;
+  uint8_t expected[3];
+  uint8_t expanded[3];
+  JSAMPROW row;
+
+  if (data == NULL || size == 0 || !valid_size(width, height))
+    {
+      return -1;
+    }
+
+  ctx = codec_new();
+  if (ctx == NULL)
+    {
+      return -1;
+    }
+
+  if (setjmp(ctx->error.jump))
+    {
+      if (report)
+        {
+          printf("jpegtest: decode rejected: %s\n", ctx->error.message);
+        }
+
+      goto fail;
+    }
+
+  jpeg_create_decompress(&ctx->dec);
+  jpeg_mem_src(&ctx->dec, data, size);
+  if (jpeg_read_header(&ctx->dec, TRUE) != JPEG_HEADER_OK ||
+      ctx->dec.image_width != width || ctx->dec.image_height != height)
+    {
+      goto fail;
+    }
+
+  ctx->dec.out_color_space = JCS_RGB;
+  if (!jpeg_start_decompress(&ctx->dec) ||
+      ctx->dec.output_width != width || ctx->dec.output_height != height ||
+      ctx->dec.output_components != 3)
+    {
+      goto fail;
+    }
+
+  ctx->row = malloc(bytes + ROW_GUARD);
+  if (ctx->row == NULL)
+    {
+      goto fail;
+    }
+
+  while (ctx->dec.output_scanline < height)
+    {
+      unsigned int y = ctx->dec.output_scanline;
+      memset(ctx->row, 0xa5, bytes + ROW_GUARD);
+      row = ctx->row;
+      if (jpeg_read_scanlines(&ctx->dec, &row, 1) != 1 ||
+          !guard_ok(ctx->row, bytes))
+        {
+          goto fail;
+        }
+
+      for (x = 0; x < width; x++)
+        {
+          const uint8_t *pixel = ctx->row + (size_t)x * 3;
+          test_pixel(x, y, width, height, expected);
+          rgb565_to_rgb888(rgb888_to_rgb565(pixel), expanded);
+          for (c = 0; c < 3; c++)
+            {
+              error = (unsigned int)abs((int)pixel[c] - expected[c]);
+              ctx->error_sum += error;
+              if (error > ctx->error_max)
+                {
+                  ctx->error_max = error;
+                }
+
+              if (error > MAX_ERROR ||
+                  abs((int)expanded[c] - pixel[c]) > (c == 1 ? 3 : 7))
+                {
+                  goto fail;
+                }
+            }
+        }
+    }
+
+  if (!jpeg_finish_decompress(&ctx->dec) ||
+      ctx->error_sum > (uint64_t)width * height * 3 * MEAN_ERROR)
+    {
+      goto fail;
+    }
+
+  if (report)
+    {
+      printf("jpegtest: pixels=%lu max_error=%u mean_error_milli=%lu "
+             "RGB888_row_bytes=%lu guard=7:PASS\n",
+             (unsigned long)width * height, ctx->error_max,
+             (unsigned long)(ctx->error_sum * 1000 / ((uint64_t)width * height * 3)),
+             (unsigned long)bytes);
+    }
+
+  codec_free(ctx);
+  return 0;
+
+fail:
+  codec_free(ctx);
+  return -1;
+}
+
+static int run_jpeg_roundtrip(unsigned int width, unsigned int height)
+{
+  unsigned char *data = NULL;
+  unsigned char *small = NULL;
+  unsigned long size = 0;
+  unsigned long small_size = 0;
+  unsigned long capacity = (unsigned long)width * height * 3 + 4096;
+  static const unsigned char invalid[] = {0x00, 0x11, 0x22, 0x33};
   int ret = -1;
 
-  memset(&cinfo, 0, sizeof(cinfo));
-  cinfo.err = jpeg_std_error(&jcerr);
-  jpeg_create_compress(&cinfo);
-  jpeg_mem_dest(&cinfo, &jpeg_data, &jpeg_size);
-  cinfo.image_width = TEST_WIDTH;
-  cinfo.image_height = TEST_HEIGHT;
-  cinfo.input_components = 3;
-  cinfo.in_color_space = JCS_RGB;
-  jpeg_set_defaults(&cinfo);
-  jpeg_set_quality(&cinfo, 95, TRUE);
-  jpeg_start_compress(&cinfo, TRUE);
-
-  while (cinfo.next_scanline < cinfo.image_height)
+  if (encode_image(width, height, capacity, &data, &size) < 0 ||
+      decode_image(data, size, width, height, 1) < 0)
     {
-      row = (JSAMPROW)&image[cinfo.next_scanline * TEST_WIDTH * 3];
-      (void)jpeg_write_scanlines(&cinfo, &row, 1);
-    }
-
-  jpeg_finish_compress(&cinfo);
-  jpeg_destroy_compress(&cinfo);
-
-  if (jpeg_size < 4 || jpeg_data[0] != 0xff || jpeg_data[1] != 0xd8)
-    {
-      printf("jpegtest: invalid JPEG output (%lu bytes)\n", jpeg_size);
       goto out;
     }
 
-  memset(&dinfo, 0, sizeof(dinfo));
-  dinfo.err = jpeg_std_error(&jderr);
-  jpeg_create_decompress(&dinfo);
-  jpeg_mem_src(&dinfo, jpeg_data, jpeg_size);
-
-  if (jpeg_read_header(&dinfo, TRUE) != JPEG_HEADER_OK)
+  if (decode_image(invalid, sizeof(invalid), width, height, 0) == 0 ||
+      decode_image(data, 1, width, height, 0) == 0 ||
+      decode_image(data, 20, width, height, 0) == 0 ||
+      decode_image(data, size / 2, width, height, 0) == 0 ||
+      decode_image(data, size - 2, width, height, 0) == 0 ||
+      decode_image(data, size, width == 1 ? 2 : width - 1, height, 0) == 0 ||
+      encode_image(width, height, 16, &small, &small_size) == 0 ||
+      small != NULL || small_size != 0 ||
+      decode_image(data, size, width, height, 0) < 0)
     {
-      printf("jpegtest: JPEG header rejected\n");
-      jpeg_destroy_decompress(&dinfo);
       goto out;
     }
 
-  /* The bundled libjpeg-turbo decoder exposes RGB888 scanlines.  Convert
-   * those scanlines to RGB565 explicitly instead of assuming a private
-   * JCS_RGB565 output mode is available on every target. */
-  dinfo.out_color_space = JCS_RGB;
-  jpeg_start_decompress(&dinfo);
-  if (dinfo.output_width != TEST_WIDTH || dinfo.output_height != TEST_HEIGHT ||
-      dinfo.output_components != 3)
-    {
-      printf("jpegtest: unexpected decode geometry %u x %u x %d\n",
-             (unsigned)dinfo.output_width, (unsigned)dinfo.output_height,
-             dinfo.output_components);
-      jpeg_destroy_decompress(&dinfo);
-      goto out;
-    }
-
-  decoded = malloc(TEST_WIDTH * TEST_HEIGHT * 3);
-  if (!decoded)
-    {
-      jpeg_destroy_decompress(&dinfo);
-      goto out;
-    }
-
-  while (dinfo.output_scanline < dinfo.output_height)
-    {
-      row = decoded + dinfo.output_scanline * TEST_WIDTH * 3;
-      (void)jpeg_read_scanlines(&dinfo, &row, 1);
-    }
-
-  if (!jpeg_finish_decompress(&dinfo) ||
-      (decoded[0] == 0 && decoded[1] == 0 && decoded[2] == 0))
-    {
-      printf("jpegtest: decoded RGB565 frame is invalid\n");
-      jpeg_destroy_decompress(&dinfo);
-      goto out;
-    }
-
-  jpeg_destroy_decompress(&dinfo);
-  /* Exercise the RGB888 -> RGB565 packing on the decoded frame. */
-  if (rgb888_to_rgb565(decoded) == 0)
-    {
-      printf("jpegtest: decoded RGB888 frame cannot pack to RGB565\n");
-      goto out;
-    }
-  printf("jpegtest: PASS JPEG bytes=%lu decode=%ux%u RGB888=%u bytes RGB565=%u bytes\n",
-         jpeg_size, (unsigned)TEST_WIDTH, (unsigned)TEST_HEIGHT,
-         (unsigned)(TEST_WIDTH * TEST_HEIGHT * 3),
-         (unsigned)(TEST_WIDTH * TEST_HEIGHT * 2));
+  printf("jpegtest: PASS JPEG bytes=%lu decode=%ux%u RGB888=%lu bytes "
+         "RGB565=%lu bytes negative=7 recovery=PASS\n",
+         size, width, height, (unsigned long)width * height * 3,
+         (unsigned long)width * height * 2);
   ret = 0;
 
 out:
-  free(decoded);
-  free(jpeg_data);
+  free(small);
+  free(data);
   return ret;
+}
+
+static int parse_number(const char *arg, unsigned int max, unsigned int *value)
+{
+  char *end;
+  unsigned long parsed;
+  if (*arg < '0' || *arg > '9')
+    {
+      return -1;
+    }
+
+  errno = 0;
+  parsed = strtoul(arg, &end, 10);
+  if (errno != 0 || *end != '\0' || parsed == 0 || parsed > max)
+    {
+      return -1;
+    }
+
+  *value = (unsigned int)parsed;
+  return 0;
 }
 
 int main(int argc, FAR char *argv[])
 {
-  (void)argc;
-  (void)argv;
+  static const unsigned int sizes[][2] =
+    {{2, 2}, {320, 240}, {640, 480}, {800, 480}, {641, 479}};
+  unsigned int width = 0;
+  unsigned int height = 0;
+  unsigned int repeats = 1;
+  unsigned int i;
 
-  if (check_rgb565() < 0 || run_jpeg_roundtrip() < 0)
+  if (argc != 1 &&
+      ((argc != 3 && argc != 4) ||
+       parse_number(argv[1], MAX_WIDTH, &width) < 0 ||
+       parse_number(argv[2], MAX_HEIGHT, &height) < 0 ||
+       (argc == 4 && parse_number(argv[3], 100, &repeats) < 0)))
     {
-      printf("jpegtest: FAIL\n");
+      printf("Usage: jpegtest [width height [repeats]] "
+             "(1..%u x 1..%u, repeats 1..100)\n", MAX_WIDTH, MAX_HEIGHT);
       return 1;
+    }
+
+  for (i = 0; i < (argc == 1 ? sizeof(sizes) / sizeof(sizes[0]) : repeats); i++)
+    {
+      if (run_jpeg_roundtrip(argc == 1 ? sizes[i][0] : width,
+                             argc == 1 ? sizes[i][1] : height) < 0)
+        {
+          printf("jpegtest: FAIL\n");
+          return 1;
+        }
     }
 
   return 0;

@@ -1,0 +1,15 @@
+domain: KorvoMusicRoute
+    conf: Bluetooth
+        AvailableDevices Includes ble
+        FFmpegCommand = abufsrc@Music0,map,0 1;
+    conf: Speaker
+        ALL
+        FFmpegCommand = abufsrc@Music0,map,1 0;
+
+domain: KorvoLeReceive
+    conf: Receiving
+        LeAudioReceive Is on
+        FFmpegCommand = adevsrc@lea,link;
+    conf: Idle
+        ALL
+        FFmpegCommand = adevsrc@lea,unlink;

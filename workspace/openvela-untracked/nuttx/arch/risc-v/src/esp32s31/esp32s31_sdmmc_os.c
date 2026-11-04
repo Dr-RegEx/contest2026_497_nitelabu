@@ -150,14 +150,28 @@ BaseType_t xSemaphoreGive(SemaphoreHandle_t sem)
       return nxmutex_unlock(&sem->u.mutex) == 0 ? pdTRUE : pdFALSE;
     }
 
+  /* Posting may immediately run a higher-priority waiter. Keep this task
+   * non-preemptible until the private lock has been released; otherwise a
+   * resumed waiter giving the same binary semaphore can spin on its
+   * suspended signaller. Interrupt callers are already non-preemptible.
+   */
+
+#ifdef CONFIG_SPINLOCK
+  flags = spin_lock_irqsave_nopreempt(&sem->lock);
+#else
   flags = spin_lock_irqsave(&sem->lock);
+#endif
   ret = nxsem_get_value(&sem->u.event, &count);
   if (ret == 0)
     {
       ret = count < 1 ? nxsem_post(&sem->u.event) : -EAGAIN;
     }
 
+#ifdef CONFIG_SPINLOCK
+  spin_unlock_irqrestore_nopreempt(&sem->lock, flags);
+#else
   spin_unlock_irqrestore(&sem->lock, flags);
+#endif
   return ret == 0 ? pdTRUE : pdFALSE;
 }
 
@@ -307,3 +321,44 @@ void vTaskDelay(TickType_t ticks)
     {
     }
 }
+
+#if !defined(CONFIG_ESPRESSIF_WIFI) && !defined(CONFIG_ESP32S31_BLUETOOTH)
+#  if defined(CONFIG_RTC_DRIVER) && defined(CONFIG_ESPRESSIF_HR_TIMER)
+#    include "esp_hr_timer.h"
+#  elif defined(CONFIG_SMP)
+#    error "Standalone SMP SDMMC requires the RTC-initialized HR timer"
+#  endif
+
+/* The board initializes the NuttX HR timer through the RTC driver before
+ * probing SD.  Use that shared clock when available: per-CPU counters are
+ * unsuitable for deadlines across task migration.  Do not initialize a
+ * second SYSTIMER owner here.  Legacy single-core profiles without RTC keep
+ * the counter fallback at their fixed CPU frequency.
+ */
+uint64_t __wrap_esp_timer_get_time(void)
+{
+#if defined(CONFIG_RTC_DRIVER) && defined(CONFIG_ESPRESSIF_HR_TIMER)
+  return esp_hr_timer_time_us();
+#else
+  uint32_t hi, lo, check;
+  do
+    {
+#ifdef CONFIG_ARCH_USE_S_MODE
+      /* The monitor permits the read-only cycle aliases in S-mode, not
+       * the machine-only mcycle CSR addresses.
+       */
+
+      __asm__ volatile("csrr %0, cycleh" : "=r"(hi));
+      __asm__ volatile("csrr %0, cycle" : "=r"(lo));
+      __asm__ volatile("csrr %0, cycleh" : "=r"(check));
+#else
+      __asm__ volatile("csrr %0, mcycleh" : "=r"(hi));
+      __asm__ volatile("csrr %0, mcycle" : "=r"(lo));
+      __asm__ volatile("csrr %0, mcycleh" : "=r"(check));
+#endif
+    }
+  while (hi != check);
+  return (((uint64_t)hi << 32) | lo) / CONFIG_ESPRESSIF_CPU_FREQ_MHZ;
+#endif
+}
+#endif

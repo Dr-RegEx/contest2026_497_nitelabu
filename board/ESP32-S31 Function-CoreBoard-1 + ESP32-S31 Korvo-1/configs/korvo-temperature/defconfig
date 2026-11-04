@@ -1,0 +1,11 @@
+# Internal die temperature through the standard sensor fetch interface.
+#include "../xts-flat-rtc/defconfig"
+
+CONFIG_ESP32S31_BOARD_KORVO=y
+CONFIG_ESPRESSIF_TEMP=y
+CONFIG_SYSTEM_SENSORTEST=y
+CONFIG_LIBC_FLOATINGPOINT=y
+CONFIG_NSH_QUOTE=y
+CONFIG_UART0_RXBUFSIZE=256
+# CONFIG_NSH_ARGCAT is not set
+# CONFIG_NSH_NETINIT is not set

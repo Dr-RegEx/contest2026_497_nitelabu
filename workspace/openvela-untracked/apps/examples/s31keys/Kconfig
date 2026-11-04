@@ -1,0 +1,13 @@
+config EXAMPLES_S31KEYS
+	tristate "S31 standard button device qualification"
+	depends on INPUT_BUTTONS
+	default n
+	help
+		Monitor /dev/buttons for a bounded number of seconds, then close it.
+		Uses only standard button read/poll/ioctl APIs; no private ADC access.
+
+if EXAMPLES_S31KEYS
+config EXAMPLES_S31KEYS_STACKSIZE
+	int "Task stack size"
+	default 4096
+endif

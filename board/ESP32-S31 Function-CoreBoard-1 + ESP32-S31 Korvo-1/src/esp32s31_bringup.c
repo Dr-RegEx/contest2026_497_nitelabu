@@ -5,6 +5,8 @@
  ****************************************************************************/
 
 #include <nuttx/config.h>
+#include <nuttx/signal.h>
+#include "esp_gpio.h"
 
 #include <sys/mount.h>
 #include <syslog.h>
@@ -95,6 +97,10 @@ int esp32s31_mqueue_test(void);
 #endif
 
 #include "esp32s31-core-function-board.h"
+#include "esp32s31_board_resources.h"
+#ifdef CONFIG_ESP32S31_EMAC
+#  include "esp32s31_emac.h"
+#endif
 
 #ifdef CONFIG_RTC_DRIVER
 #  include "espressif/esp_rtc.h"
@@ -106,6 +112,89 @@ int esp32s31_mqueue_test(void);
 
 #ifdef CONFIG_ESP32S31_RWDT
 #  include "esp32s31_wdt.h"
+#endif
+
+#ifdef CONFIG_ESPRESSIF_TEMP
+#  include "esp32s31_temperature.h"
+#endif
+
+#ifdef CONFIG_ESP32S31_PCNT_QE
+#  include "esp32s31_qencoder.h"
+#endif
+
+#ifdef CONFIG_ESP32S31_LPI2C
+#  include "esp32s31_lpi2c.h"
+#  if defined(CONFIG_ESPRESSIF_I2C0) && \
+      (CONFIG_ESPRESSIF_I2C0_SCLPIN == CONFIG_ESP32S31_LPI2C_SCL_PIN || \
+       CONFIG_ESPRESSIF_I2C0_SCLPIN == CONFIG_ESP32S31_LPI2C_SDA_PIN || \
+       CONFIG_ESPRESSIF_I2C0_SDAPIN == CONFIG_ESP32S31_LPI2C_SCL_PIN || \
+       CONFIG_ESPRESSIF_I2C0_SDAPIN == CONFIG_ESP32S31_LPI2C_SDA_PIN)
+#    error "LP I2C and HP I2C0 must not share pins"
+#  endif
+#  if defined(CONFIG_ESPRESSIF_I2C1) && \
+      (CONFIG_ESPRESSIF_I2C1_SCLPIN == CONFIG_ESP32S31_LPI2C_SCL_PIN || \
+       CONFIG_ESPRESSIF_I2C1_SCLPIN == CONFIG_ESP32S31_LPI2C_SDA_PIN || \
+       CONFIG_ESPRESSIF_I2C1_SDAPIN == CONFIG_ESP32S31_LPI2C_SCL_PIN || \
+       CONFIG_ESPRESSIF_I2C1_SDAPIN == CONFIG_ESP32S31_LPI2C_SDA_PIN)
+#    error "LP I2C and HP I2C1 must not share pins"
+#  endif
+#endif
+#ifdef CONFIG_ESP32S31_LPI2C_CODEC_TEST
+int esp32s31_lpi2c_test(void);
+#endif
+
+#ifdef CONFIG_ESP32S31_LPUART
+#  include "esp32s31_lpuart.h"
+#endif
+#ifdef CONFIG_ESP32S31_LPUART_LOOPBACK_TEST
+int esp32s31_lpuart_test(void);
+#endif
+
+#ifdef CONFIG_ESP32S31_CANFD
+#  include "esp32s31_canfd.h"
+#  if defined(CONFIG_ESP_RMT) && defined(CONFIG_WS2812_NON_SPI_DRIVER) && \
+      (CONFIG_ESP32S31_CANFD_TX_PIN == BOARD_RGBLED_PIN || \
+       CONFIG_ESP32S31_CANFD_RX_PIN == BOARD_RGBLED_PIN)
+#    error "CAN and WS2812 must not share a pin"
+#  endif
+#endif
+
+#ifdef CONFIG_ESP32S31_CANFD_LOOPBACK_TEST
+int esp32s31_canfd_test(void);
+#endif
+
+#ifdef CONFIG_ESP32S31_COMP
+#  include "esp32s31_comp.h"
+#  if defined(CONFIG_ESP_RMT) && defined(CONFIG_WS2812_NON_SPI_DRIVER) && \
+      CONFIG_ESP32S31_COMP_PIN == BOARD_RGBLED_PIN
+#    error "Comparator and WS2812 must not share a pin"
+#  endif
+#  if defined(CONFIG_ESP32S31_MCPWM) && \
+      (CONFIG_ESP32S31_COMP_PIN == CONFIG_ESP32S31_MCPWM_PWM_PIN || \
+       CONFIG_ESP32S31_COMP_PIN == CONFIG_ESP32S31_MCPWM_CAPTURE_PIN)
+#    error "Comparator and MCPWM must not share a pin"
+#  endif
+#endif
+
+#ifdef CONFIG_ESP32S31_COMP_LOOPBACK_TEST
+int esp32s31_comp_test(void);
+#endif
+
+#ifdef CONFIG_ESP32S31_MCPWM
+#  include "esp32s31_mcpwm.h"
+#  if defined(CONFIG_ESP_RMT) && defined(CONFIG_WS2812_NON_SPI_DRIVER) && \
+      (CONFIG_ESP32S31_MCPWM_PWM_PIN == BOARD_RGBLED_PIN || \
+       CONFIG_ESP32S31_MCPWM_CAPTURE_PIN == BOARD_RGBLED_PIN)
+#    error "MCPWM and WS2812 must not share a pin"
+#  endif
+#endif
+
+#ifdef CONFIG_ESP32S31_MCPWM_LOOPBACK_TEST
+int esp32s31_mcpwm_test(void);
+#endif
+
+#ifdef CONFIG_ESP32S31_PCNT_MATRIX_TEST
+int esp32s31_pcnt_test(void);
 #endif
 
 #ifdef CONFIG_ESPRESSIF_WIFI
@@ -565,6 +654,64 @@ int esp_bringup(void)
 {
   int ret = OK;
 
+#ifdef CONFIG_ESP32S31_EMAC
+  ret = esp32s31_emac_initialize();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "Ethernet initialization failed: %d\n", ret);
+      return ret;
+    }
+#endif
+
+
+  syslog(LOG_INFO, "Board: %s\n", BOARD_NAME);
+
+#ifdef CONFIG_ESP32S31_PCNT_QE
+  ret = esp32s31_qencoder_initialize("/dev/qe0",
+                                     CONFIG_ESP32S31_PCNT_PIN_A,
+                                     CONFIG_ESP32S31_PCNT_PIN_B);
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: S31 qencoder registration failed: %d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_PCNT_MATRIX_TEST
+  ret = esp32s31_pcnt_test();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "S31PCNT FAIL ret=%d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESPRESSIF_TEMP
+  ret = esp32s31_temperature_initialize();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: S31 temperature registration failed: %d\n",
+             ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_RTC_DRIVER
+  /* Initialize the shared high-resolution timer before peripheral probes.
+   * With wireless enabled, SDMMC's esp_timer_get_time wrapper also reads
+   * this timer.  The RTC driver owns its initialization; do not start a
+   * second IDF SYSTIMER instance.
+   */
+
+  ret = esp_rtc_driverinit();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: RTC/high-resolution timer init failed: %d\n",
+             ret);
+      return ret;
+    }
+#endif
+
 #ifdef CONFIG_ESP32S31_KORVO_RGB565
   ret = fb_register(0, 0);
   if (ret < 0)
@@ -601,6 +748,19 @@ int esp_bringup(void)
 
 #if defined(CONFIG_ESP32S31_SDMMC) && defined(CONFIG_MMCSD) && \
     defined(CONFIG_MMCSD_SDIO)
+#if BOARD_IS_KORVO
+  /* Korvo Q1 is a P-channel high-side switch: SD_CTRL low enables 3.3V. */
+
+  esp_gpiowrite(BOARD_SD_POWER_PIN, false);
+  ret = esp_configgpio(BOARD_SD_POWER_PIN, OUTPUT);
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: Korvo SD power pin setup failed: %d\n", ret);
+      return ret;
+    }
+
+  nxsig_usleep(10000);
+#endif
   ret = esp32s31_sdmmc_register(0);
   if (ret < 0)
     {
@@ -621,7 +781,7 @@ int esp_bringup(void)
 
 
 #if defined(CONFIG_ESP_RMT) && defined(CONFIG_WS2812_NON_SPI_DRIVER)
-  struct rmt_dev_s *rmt = esp_rmt_tx_init(0, 60);
+  struct rmt_dev_s *rmt = esp_rmt_tx_init(0, BOARD_RGBLED_PIN);
 
   if (rmt == NULL || esp_ws2812_setup("/dev/leds0", rmt, 1, false) == NULL)
     {
@@ -664,11 +824,26 @@ int esp_bringup(void)
     }
 #endif
 
+#ifdef CONFIG_ESP32S31_KORVO_TOUCH
+  extern int esp32s31_touch_initialize(void);
+  ret = esp32s31_touch_initialize();
+  syslog(LOG_INFO, "Korvo touch registration: %d\n", ret);
+#endif
+
 #ifdef CONFIG_ESP32S31_AUDIO
   ret = esp32s31_audio_initialize();
   if (ret < 0)
     {
       syslog(LOG_ERR, "ERROR: Board audio initialization failed: %d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_KORVO_AUDIO
+  ret = esp32s31_korvo_audio_initialize();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: Korvo PCM registration failed: %d\n", ret);
       return ret;
     }
 #endif
@@ -724,6 +899,15 @@ int esp_bringup(void)
   if (ret < 0)
     {
       syslog(LOG_ERR, "ERROR: GPIO xTS registration failed: %d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_KORVO_ADC_BUTTONS
+  ret = esp32s31_korvo_buttons_initialize();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: Korvo ADC key registration failed: %d\n", ret);
       return ret;
     }
 #endif
@@ -798,18 +982,6 @@ int esp_bringup(void)
     }
 #endif
 
-#ifdef CONFIG_RTC_DRIVER
-  /* Wi-Fi and PHY callbacks use the ESP high-resolution timer adapter. */
-
-  ret = esp_rtc_driverinit();
-  if (ret < 0)
-    {
-      syslog(LOG_ERR, "ERROR: RTC/high-resolution timer init failed: %d\n",
-             ret);
-      return ret;
-    }
-#endif
-
 #ifdef CONFIG_ESP32S31_BLE
   ret = esp32s31_ble_initialize();
   if (ret < 0)
@@ -833,6 +1005,15 @@ int esp_bringup(void)
   if (ret < 0)
     {
       syslog(LOG_ERR, "ERROR: xTS Flash registration failed: %d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_KORVO_HMI_DATA
+  ret = esp32s31_hmi_storage_initialize();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: HMI data preparation failed: %d\n", ret);
       return ret;
     }
 #endif
@@ -975,20 +1156,140 @@ int esp_bringup(void)
 
   return ret;
 #elif defined(CONFIG_BUILD_KERNEL)
-  extern const unsigned char romfs_img[];
-  extern const unsigned int romfs_img_len;
+  extern const unsigned char g_s31_appromfs[];
+  extern const unsigned int g_s31_appromfs_len;
+
+#  if defined(CONFIG_ETC_ROMFS) && CONFIG_ETC_ROMFSDEVNO == 0
+#    error "Embedded applications reserve ram0; select another ETC_ROMFSDEVNO"
+#  endif
 
 #  define SECTORSIZE  512
 #  define NSECTORS(n) (((n) + SECTORSIZE - 1) / SECTORSIZE)
 
-  if (NSECTORS(romfs_img_len) > 1)
+  if (NSECTORS(g_s31_appromfs_len) > 1)
     {
-      ret = romdisk_register(0, romfs_img, NSECTORS(romfs_img_len),
+      ret = romdisk_register(0, g_s31_appromfs,
+                             NSECTORS(g_s31_appromfs_len),
                              SECTORSIZE);
       if (ret < 0)
         {
           return ret;
         }
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_LPI2C
+  {
+    struct i2c_master_s *lpi2c;
+    lpi2c = esp32s31_lpi2cbus_initialize(CONFIG_ESP32S31_LPI2C_SCL_PIN,
+                                        CONFIG_ESP32S31_LPI2C_SDA_PIN);
+    if (lpi2c == NULL)
+      {
+        return -errno;
+      }
+
+    ret = i2c_register(lpi2c, 2);
+#ifndef CONFIG_DISABLE_PSEUDOFS_OPERATIONS
+    esp32s31_lpi2cbus_uninitialize(lpi2c);
+#endif
+    if (ret < 0)
+      {
+#ifdef CONFIG_DISABLE_PSEUDOFS_OPERATIONS
+        esp32s31_lpi2cbus_uninitialize(lpi2c);
+#endif
+        syslog(LOG_ERR, "ERROR: LP I2C registration failed: %d\n", ret);
+        return ret;
+      }
+  }
+#endif
+
+#ifdef CONFIG_ESP32S31_LPI2C_CODEC_TEST
+  ret = esp32s31_lpi2c_test();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "S31LPI2C FAIL ret=%d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_LPUART
+  ret = esp32s31_lpuart_initialize(CONFIG_ESP32S31_LPUART_TX_PIN,
+                                   CONFIG_ESP32S31_LPUART_RX_PIN,
+#ifdef CONFIG_ESP32S31_LPUART_LOOPBACK
+                                   true);
+#else
+                                   false);
+#endif
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: LP UART registration failed: %d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_LPUART_LOOPBACK_TEST
+  ret = esp32s31_lpuart_test();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "S31LPUART FAIL ret=%d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_CANFD
+  ret = esp32s31_canfd_initialize(CONFIG_ESP32S31_CANFD_TX_PIN,
+                                  CONFIG_ESP32S31_CANFD_RX_PIN);
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: S31 CAN FD registration failed: %d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_CANFD_LOOPBACK_TEST
+  ret = esp32s31_canfd_test();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "S31CAN FAIL ret=%d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_COMP
+  ret = esp32s31_comp_initialize(CONFIG_ESP32S31_COMP_PIN,
+                                 CONFIG_ESP32S31_COMP_REFERENCE);
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: S31 comparator registration failed: %d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_COMP_LOOPBACK_TEST
+  ret = esp32s31_comp_test();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "S31COMP FAIL ret=%d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_MCPWM
+  ret = esp32s31_mcpwm_initialize(CONFIG_ESP32S31_MCPWM_PWM_PIN,
+                                  CONFIG_ESP32S31_MCPWM_CAPTURE_PIN);
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: S31 MCPWM registration failed: %d\n", ret);
+      return ret;
+    }
+#endif
+
+#ifdef CONFIG_ESP32S31_MCPWM_LOOPBACK_TEST
+  ret = esp32s31_mcpwm_test();
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "S31MCPWM FAIL ret=%d\n", ret);
+      return ret;
     }
 #endif
 

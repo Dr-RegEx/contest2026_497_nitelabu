@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
+ifneq ($(CONFIG_XMSDEMO_PLATFORM),)
+CONFIGURED_APPS += $(APPDIR)/frameworks/runtimes/services/xmsdemo/platform
+endif

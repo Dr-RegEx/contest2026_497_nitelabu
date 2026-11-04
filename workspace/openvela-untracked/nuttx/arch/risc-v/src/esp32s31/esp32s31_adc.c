@@ -19,14 +19,23 @@
 #include "esp_private/regi2c_ctrl.h"
 #include "hal/adc_ll.h"
 #include "soc/adc_channel.h"
+#include "esp32s31_adc.h"
 
-/* Isolated board fixture: ADC1 channel5, GPIO47, J2 pin13. The pinned
+/* Exclusive ADC client: Function fixture GPIO47/channel5, or Korvo's
+ * onboard key ladder GPIO42/channel0. The latter is not also exposed as a
+ * raw /dev/adc0 device. ADC/RF/temperature shared power is not yet arbitrated.
+ * The pinned
  * S31 LL exposes a 17-bit result field. Preserve it as raw ADC data;
  * the reference port does not yet supply a calibrated voltage scheme.
  */
 
-#define S31_ADC_CHANNEL ADC1_GPIO47_CHANNEL
-#define S31_ADC_PIN     47
+#ifdef CONFIG_ESP32S31_KORVO_ADC_BUTTONS
+#  define S31_ADC_CHANNEL ADC1_GPIO42_CHANNEL
+#  define S31_ADC_PIN     42
+#else
+#  define S31_ADC_CHANNEL ADC1_GPIO47_CHANNEL
+#  define S31_ADC_PIN     47
+#endif
 #define S31_ADC_TIMEOUT_US 10000
 
 struct s31_adc_s
@@ -214,7 +223,14 @@ static struct adc_dev_s g_adc_dev =
   .ad_priv = &g_adc
 };
 
+struct adc_dev_s *esp32s31_adc_initialize(void)
+{
+  return &g_adc_dev;
+}
+
+#ifdef CONFIG_ESP32S31_XTS_ADC
 int esp32s31_adc_setup(void)
 {
   return adc_register("/dev/adc0", &g_adc_dev);
 }
+#endif

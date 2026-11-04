@@ -1,39 +1,33 @@
 {
-  "name": "common-1.3.12",
+  "canonical_profile": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-rtc/defconfig",
+  "canonical_source_root": "platform-root/openvela-dev",
+  "current_build": "Use the canonical BSP profile in a restored platform tree; local copies are historical source references.",
+  "historical_record": {
+    "demo": "common-1.3.12",
+    "path": "../../../../docs/validation/historical.json"
+  },
   "keys": [
     "common:1.3.12"
   ],
+  "license_rule": "Retain source headers and all original LICENSE/NOTICE/UPSTREAM attributions.",
+  "licenses": [
+    "licenses/apps/LICENSE",
+    "licenses/apps/NOTICE"
+  ],
+  "local_config": "config/xts-flat-rtc/defconfig",
+  "local_sources": [
+    {
+      "origin": "apps/testing/drivers/drivertest/drivertest_rtc.c",
+      "path": "src/drivertest_rtc.c"
+    }
+  ],
+  "name": "common-1.3.12",
   "profile": "xts-flat-rtc",
+  "schema": 2,
+  "scope": "historical-source-reference",
   "sources": [
     "apps/testing/drivers/drivertest/drivertest_rtc.c"
   ],
-  "evidence_ids": [
-    841
-  ],
-  "note": "使用 `/dev/rtc0`；该 FLAT 配置覆盖原始 API/闹钟/周期 3 项，不能替换成缺少完整 RTC 回调的 Kernel 驱动配置。",
-  "original": "1.3.12",
-  "evidence": [
-    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts841-rtc.log",
-    "docs/acceptance/xts-current-status.md"
-  ],
   "title": "RTC时钟功能测试",
-  "original_line": 781,
-  "config_inheritance_verified": true,
-  "local_sources": [
-    {
-      "path": "src/drivertest_rtc.c",
-      "origin": "apps/testing/drivers/drivertest/drivertest_rtc.c"
-    }
-  ],
-  "local_config": "config/xts-flat-rtc/defconfig",
-  "local_evidence": [
-    {
-      "path": "evidence/docs/acceptance/xts-current-status.md",
-      "origin": "docs/acceptance/xts-current-status.md"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts841-rtc.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts841-rtc.log"
-    }
-  ]
+  "validation_index": "../../../../docs/validation/index.json"
 }

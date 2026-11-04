@@ -334,7 +334,7 @@
 /*                                                 Bits 11-31: Reserved,
  *                                                must be kept at reset value
  */
-#define OTG_GRSTCTL_AHBIDL            (1 << 31) /* Bit 31: AHB master idle */
+#define OTG_GRSTCTL_AHBIDL            (1u << 31) /* Bit 31: AHB master idle */
 
 /* Core interrupt and Interrupt mask registers */
 
@@ -373,7 +373,7 @@
 #define OTG_GINT_CIDSCHG              (1 << 28) /* Bit 28: Connector ID status change */
 #define OTG_GINT_DISC                 (1 << 29) /* Bit 29: Disconnect detected interrupt */
 #define OTG_GINT_SRQ                  (1 << 30) /* Bit 30: Session request/new session detected interrupt */
-#define OTG_GINT_WKUP                 (1 << 31) /* Bit 31: Resume/remote wakeup detected interrupt */
+#define OTG_GINT_WKUP                 (1u << 31) /* Bit 31: Resume/remote wakeup detected interrupt */
 
 /* Receive status debug read/OTG status read and pop registers (host mode) */
 
@@ -607,7 +607,7 @@
 #define OTG_HCCHAR_DAD_MASK           (0x7f << OTG_HCCHAR_DAD_SHIFT)
 #define OTG_HCCHAR_ODDFRM             (1 << 29) /* Bit 29: Odd frame */
 #define OTG_HCCHAR_CHDIS              (1 << 30) /* Bit 30: Channel disable */
-#define OTG_HCCHAR_CHENA              (1 << 31) /* Bit 31: Channel enable */
+#define OTG_HCCHAR_CHENA              (1u << 31) /* Bit 31: Channel enable */
 
 /* Host channel-n interrupt and Host channel-0 interrupt mask registers */
 
@@ -790,7 +790,7 @@
 #define OTG_DIEPCTL0_SNAK             (1 << 27) /* Bit 27: Set NAK */
                                                 /* Bits 28-29: Reserved, must be kept at reset value */
 #define OTG_DIEPCTL0_EPDIS            (1 << 30) /* Bit 30: Endpoint disable */
-#define OTG_DIEPCTL0_EPENA            (1 << 31) /* Bit 31: Endpoint enable */
+#define OTG_DIEPCTL0_EPENA            (1u << 31) /* Bit 31: Endpoint enable */
 
 /* Device control IN endpoint n control register */
 
@@ -823,7 +823,7 @@
 #define OTG_DIEPCTL_SEVNFRM           (1 << 28) /* Bit 28: Set even frame (isochronous)) */
 #define OTG_DIEPCTL_SODDFRM           (1 << 29) /* Bit 29: Set odd frame (isochronous) */
 #define OTG_DIEPCTL_EPDIS             (1 << 30) /* Bit 30: Endpoint disable */
-#define OTG_DIEPCTL_EPENA             (1 << 31) /* Bit 31: Endpoint enable */
+#define OTG_DIEPCTL_EPENA             (1u << 31) /* Bit 31: Endpoint enable */
 
 /* Device endpoint-n interrupt register */
 
@@ -886,7 +886,7 @@
 #define OTG_DOEPCTL0_SNAK             (1 << 27) /* Bit 27: Set NAK */
                                                 /* Bits 28-29: Reserved, must be kept at reset value */
 #define OTG_DOEPCTL0_EPDIS            (1 << 30) /* Bit 30: Endpoint disable */
-#define OTG_DOEPCTL0_EPENA            (1 << 31) /* Bit 31: Endpoint enable */
+#define OTG_DOEPCTL0_EPENA            (1u << 31) /* Bit 31: Endpoint enable */
 
 /* Device OUT endpoint n control register */
 
@@ -918,7 +918,7 @@
 #define OTG_DOEPCTL_SD1PID            (1 << 29) /* Bit 29: Set DATA1 PID (interrupt/bulk) */
 #define OTG_DOEPCTL_SODDFRM           (1 << 29) /* Bit 29: Set odd frame (isochronous */
 #define OTG_DOEPCTL_EPDIS             (1 << 30) /* Bit 30: Endpoint disable */
-#define OTG_DOEPCTL_EPENA             (1 << 31) /* Bit 31: Endpoint enable */
+#define OTG_DOEPCTL_EPENA             (1u << 31) /* Bit 31: Endpoint enable */
 
 /* Device endpoint-n interrupt register */
 

@@ -1,0 +1,10 @@
+config EXAMPLES_S31FOUNDATION
+	bool "S31 openvela foundation integration check"
+	depends on FEATURE_FRAMEWORK && INTERPRETERS_QUICKJS && LIBUV
+	depends on PROTOBUF_C && LIB_YOGA && LIB_PNG && LIB_FREETYPE
+	depends on ESP32S31_KORVO_HMI_DATA || ESP32S31_KORVO_SMP_HMI_QUALIFICATION
+	default n
+	help
+		Exercise actual JS/Feature/libuv, layout, serialization/storage,
+		PNG and font APIs in the Korvo native HMI image. Synthetic data only;
+		this does not run a quickapp or measure network/filesystem throughput.

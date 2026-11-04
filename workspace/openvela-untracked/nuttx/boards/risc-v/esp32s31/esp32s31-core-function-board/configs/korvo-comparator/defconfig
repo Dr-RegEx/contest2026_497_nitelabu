@@ -1,0 +1,13 @@
+# Basic analog comparator using the onboard LED input as a driven source.
+#include "../xts-flat-rtc/defconfig"
+
+CONFIG_ESP32S31_BOARD_KORVO=y
+CONFIG_ESP32S31_COMP=y
+CONFIG_ESP32S31_COMP_PIN=37
+CONFIG_ESP32S31_COMP_REFERENCE=5
+CONFIG_ESP32S31_COMP_LOOPBACK_TEST=y
+CONFIG_NSH_QUOTE=y
+CONFIG_UART0_RXBUFSIZE=256
+# CONFIG_NSH_ARGCAT is not set
+# CONFIG_NSH_NETINIT is not set
+# CONFIG_ESP_RMT is not set

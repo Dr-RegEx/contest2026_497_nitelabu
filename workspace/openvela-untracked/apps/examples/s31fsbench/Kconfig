@@ -1,0 +1,14 @@
+config EXAMPLES_S31FSBENCH
+	tristate "S31 committed filesystem numeric qualification"
+	default n
+	help
+		Use standard stdio/POSIX calls for an 800000-byte file, separate
+		setup/read/write/final-sync timing and complete data verification.
+		Creates only safe-random.bin in an explicitly supplied directory;
+		refuses to overwrite an existing file. This supplements original xTS.
+
+if EXAMPLES_S31FSBENCH
+config EXAMPLES_S31FSBENCH_STACKSIZE
+	int "Task stack size"
+	default 32768
+endif

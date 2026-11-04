@@ -1,0 +1,90 @@
+diff --git a/launcher/CMakeLists.txt b/launcher/CMakeLists.txt
+index d79265fe4b8e4d62ddc179f7552ac4256247d5e5..93117eb2f84a343c17a69b401f1bbbc33fa32ff2 100644
+--- a/launcher/CMakeLists.txt
++++ b/launcher/CMakeLists.txt
+@@ -19,9 +19,12 @@ if(CONFIG_XMSDEMO_LAUNCHER)
+   set(CURRENT_DIR ${CMAKE_CURRENT_LIST_DIR})
+   set(PROGNAME xmslauncher)
+   set(CUR_TARGET xmsdemolauncher)
+-  set(STACKSIZE 16384)
++  set(STACKSIZE ${CONFIG_SYSTEM_SERVER_APP_STACKSIZE})
+ 
+-  nuttx_add_prebuilt(BIN_TARGETS ${CUR_TARGET} APP_TARGETS ${PROGNAME})
++  # Identify application sources explicitly, including source trees reached
++  # through directory symlinks, before selecting prebuilt fallback mode.
++  nuttx_add_prebuilt(BIN_TARGETS ${CUR_TARGET} APP_TARGETS ${PROGNAME}
++    GLOB_REGEX ${CURRENT_DIR}/src/*.cpp)
+ 
+   nuttx_library_ifndef(SKIP_PREBUILT ${CUR_TARGET})
+   nuttx_add_dependencies(TARGET ${CUR_TARGET} DEPENDS android_binder
+@@ -35,7 +38,7 @@ if(CONFIG_XMSDEMO_LAUNCHER)
+   nuttx_include_directories(${INCDIR})
+ 
+   set(DSTPATH
+-      ${NUTTX_APPS_DIR}/vendor/sim/boards/common/resource/app/${PROGNAME})
++      ${CMAKE_CURRENT_BINARY_DIR}/sim-resource/app/${PROGNAME})
+   execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${DSTPATH})
+ 
+   execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${CURRENT_DIR}/manifest.json
+diff --git a/lvgldemo/CMakeLists.txt b/lvgldemo/CMakeLists.txt
+index f94196f61399472c593304e1cd8aee400cb3d3c2..18aa629ba23f74aeff5363f8598dcbfb5dfe7aad 100644
+--- a/lvgldemo/CMakeLists.txt
++++ b/lvgldemo/CMakeLists.txt
+@@ -19,9 +19,12 @@ if(CONFIG_XMSDEMO_LVGLDEMO)
+   set(CURRENT_DIR ${CMAKE_CURRENT_LIST_DIR})
+   set(PROGNAME xmslvgl)
+   set(CUR_TARGET xmslvgldemo)
+-  set(STACKSIZE 16384)
++  set(STACKSIZE ${CONFIG_SYSTEM_SERVER_APP_STACKSIZE})
+ 
+-  nuttx_add_prebuilt(BIN_TARGETS ${CUR_TARGET} APP_TARGETS ${PROGNAME})
++  # Identify application sources explicitly, including source trees reached
++  # through directory symlinks, before selecting prebuilt fallback mode.
++  nuttx_add_prebuilt(BIN_TARGETS ${CUR_TARGET} APP_TARGETS ${PROGNAME}
++    GLOB_REGEX ${CURRENT_DIR}/src/*.cpp)
+ 
+   nuttx_library_ifndef(SKIP_PREBUILT ${CUR_TARGET})
+   nuttx_add_dependencies(TARGET ${CUR_TARGET} DEPENDS android_binder
+@@ -36,7 +39,7 @@ if(CONFIG_XMSDEMO_LVGLDEMO)
+   nuttx_include_directories(${INCDIR})
+ 
+   set(DSTPATH
+-      ${NUTTX_APPS_DIR}/vendor/sim/boards/common/resource/app/${PROGNAME})
++      ${CMAKE_CURRENT_BINARY_DIR}/sim-resource/app/${PROGNAME})
+   execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${DSTPATH})
+ 
+   execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${CURRENT_DIR}/manifest.json
+diff --git a/lvgldemo/manifest.json b/lvgldemo/manifest.json
+index 65e8c86e5e97f50579c6fa65bf02ca8e9c76690c..d8c2d496cd69377b4ed67848d6968253b22a1b5c 100644
+--- a/lvgldemo/manifest.json
++++ b/lvgldemo/manifest.json
+@@ -18,7 +18,8 @@
+             "taskAffinity":"musictask"
+         },
+         {
+-            "name":"WidgetsActivity"
++            "name":"WidgetsActivity",
++            "launchMode":"singleTask"
+         }
+     ]
+ }
+diff --git a/lvgldemo/src/WidgetsActivity.cpp b/lvgldemo/src/WidgetsActivity.cpp
+index 7fb1ccc4d9b658988f6baa68ae40720e2b0b563a..14a6a50053e0ee0a2f1d52a9173b11f7a043956a 100644
+--- a/lvgldemo/src/WidgetsActivity.cpp
++++ b/lvgldemo/src/WidgetsActivity.cpp
+@@ -30,8 +30,13 @@ void WidgetsActivity::onCreate() {
+     ALOGI("WidgetsActivity onCreate");
+     lvObj root((lv_obj_t *)getWindow()->getRoot());
+ 
+-    // lvgl demo widgets
+-    lv_demo_widgets();
++    // The window owns all demo objects, including the hidden keyboard.
++    // XMS Lite shares a display, so the global active screen is not our root.
++    if (!lv_demo_widgets_create(root.obj_)) {
++        ALOGE("Widgets demo already active or window unavailable");
++        finish();
++        return;
++    }
+ 
+     mBtns.push_back(lvUtils::createLabelButton(&root, "back", {LV_ALIGN_BOTTOM_LEFT, 20, -20},
+                                                [this](lv_event_t *) { finish(); }));

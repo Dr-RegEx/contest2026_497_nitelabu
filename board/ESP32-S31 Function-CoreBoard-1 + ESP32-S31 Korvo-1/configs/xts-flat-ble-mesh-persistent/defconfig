@@ -7,6 +7,9 @@ CONFIG_FILE_SYSTEM=y
 CONFIG_SETTINGS=y
 CONFIG_SETTINGS_FILE=y
 CONFIG_SETTINGS_FILE_PATH="/data/mesh/settings"
+# Store persistent PSA keys beside settings on the mounted volume. The
+# settings backend creates this directory before Mesh provisioning starts.
+CONFIG_PSA_ITS_STORAGE_PREFIX="/data/mesh/"
 # Each write compacts to a synced temporary file then atomically renames it.
 CONFIG_SETTINGS_FILE_MAX_LINES=1
 CONFIG_BT_SETTINGS=y

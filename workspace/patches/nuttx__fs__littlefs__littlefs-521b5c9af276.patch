@@ -1,0 +1,534 @@
+diff --git a/lfs.c b/lfs.c
+index 40bc63c86aad238683ff627ac7433cacbc4ccbbf..dd1e129244f120a1bf5b8b04fa0ffe163c06c562 100644
+--- a/lfs.c
++++ b/lfs.c
+@@ -13,6 +13,9 @@
+ #define LFS_BLOCK_NULL ((lfs_block_t)-1)
+ #define LFS_BLOCK_INLINE ((lfs_block_t)-2)
+ 
++// Private in-memory state, never written to disk; not a public open flag.
++#define LFS_F_CACHESEEK 0x200000
++
+ enum {
+     LFS_OK_RELOCATED = 1,
+     LFS_OK_DROPPED   = 2,
+@@ -2299,14 +2302,41 @@ fixmlist:;
+     // our mdir.
+     lfs_block_t oldpair[2] = {pair[0], pair[1]};
+     for (struct lfs_mlist *d = lfs->mlist; d; d = d->next) {
+-        if (lfs_pair_cmp(d->m.pair, oldpair) == 0) {
+-            d->m = *dir;
+-            if (d->m.pair != pair) {
+-                for (int i = 0; i < attrcount; i++) {
++        // A move transfers the directory entry, including every open file
++        // handle referring to it. Apply only the splices after FROM_MOVE:
++        // earlier creates/deletes precede the new entry's assigned id.
++        bool moved = false;
++        int firstattr = 0;
++        if (d->type == LFS_TYPE_REG) {
++            for (int i = 0; i < attrcount; i++) {
++                if (lfs_tag_type3(attrs[i].tag) == LFS_FROM_MOVE &&
++                        d->id == lfs_tag_size(attrs[i].tag) &&
++                        lfs_pair_cmp(d->m.pair,
++                            ((const lfs_mdir_t*)attrs[i].buffer)->pair) == 0) {
++                    d->m = *dir;
++                    d->id = lfs_tag_id(attrs[i].tag);
++                    moved = true;
++                    firstattr = i + 1;
++                    break;
++                }
++            }
++        }
++
++        if (moved || lfs_pair_cmp(d->m.pair, oldpair) == 0) {
++            if (!moved) {
++                d->m = *dir;
++            }
++            if (moved || d->m.pair != pair) {
++                for (int i = firstattr; i < attrcount; i++) {
+                     if (lfs_tag_type3(attrs[i].tag) == LFS_TYPE_DELETE &&
+                             d->id == lfs_tag_id(attrs[i].tag)) {
+                         d->m.pair[0] = LFS_BLOCK_NULL;
+                         d->m.pair[1] = LFS_BLOCK_NULL;
++                        // An open unlinked file still owns its CTZ. Include
++                        // it in allocator traversal until the final close.
++                        if (d->type == LFS_TYPE_REG) {
++                            ((lfs_file_t *)d)->flags |= LFS_F_DIRTY;
++                        }
+                     } else if (lfs_tag_type3(attrs[i].tag) == LFS_TYPE_DELETE &&
+                             d->id > lfs_tag_id(attrs[i].tag)) {
+                         d->id -= 1;
+@@ -2323,6 +2353,12 @@ fixmlist:;
+                 }
+             }
+ 
++            // A deleted entry no longer belongs to a directory. Following
++            // its former tail would reattach the detached file handle.
++            if (lfs_pair_isnull(d->m.pair)) {
++                continue;
++            }
++
+             while (d->id >= d->m.count && d->m.split) {
+                 // we split and id is on tail now
+                 d->id -= d->m.count;
+@@ -2885,24 +2921,28 @@ static int lfs_ctz_extend(lfs_t *lfs,
+ 
+             // just copy out the last block if it is incomplete
+             if (noff != lfs->cfg->block_size) {
+-                for (lfs_off_t i = 0; i < noff; i++) {
+-                    uint8_t data;
++                // Keep the copy-on-write block and commit ordering, but
++                // avoid dispatching the cache helpers once per byte.
++                for (lfs_off_t i = 0; i < noff;) {
++                    uint8_t data[256];
++                    lfs_size_t count = lfs_min(sizeof(data), noff-i);
+                     err = lfs_bd_read(lfs,
+                             NULL, rcache, noff-i,
+-                            head, i, &data, 1);
++                            head, i, data, count);
+                     if (err) {
+                         return err;
+                     }
+ 
+                     err = lfs_bd_prog(lfs,
+                             pcache, rcache, true,
+-                            nblock, i, &data, 1);
++                            nblock, i, data, count);
+                     if (err) {
+                         if (err == LFS_ERR_CORRUPT) {
+                             goto relocate;
+                         }
+                         return err;
+                     }
++                    i += count;
+                 }
+ 
+                 *block = nblock;
+@@ -2995,6 +3035,20 @@ static int lfs_ctz_traverse(lfs_t *lfs,
+ }
+ 
+ 
++#ifndef LFS_READONLY
++// A cached overwrite can move the logical cursor without moving the current
++// copy-on-write branch end. The cursor remains in that same CTZ block.
++static lfs_off_t lfs_file_writepos(lfs_t *lfs, lfs_file_t *file) {
++    if (file->flags & LFS_F_CACHESEEK) {
++        lfs_off_t noff = file->pos;
++        lfs_ctz_index(lfs, &noff);
++        return file->pos + (file->off - noff);
++    }
++    return file->pos;
++}
++#endif
++
++
+ /// Top level file operations ///
+ static int lfs_file_rawopencfg(lfs_t *lfs, lfs_file_t *file,
+         const char *path, int flags,
+@@ -3286,6 +3340,8 @@ static int lfs_file_flush(lfs_t *lfs, lfs_file_t *file) {
+ #ifndef LFS_READONLY
+     if (file->flags & LFS_F_WRITING) {
+         lfs_off_t pos = file->pos;
++        file->pos = lfs_file_writepos(lfs, file);
++        file->flags &= ~LFS_F_CACHESEEK;
+ 
+         if (!(file->flags & LFS_F_INLINE)) {
+             // copy over anything after current branch
+@@ -3299,15 +3355,26 @@ static int lfs_file_flush(lfs_t *lfs, lfs_file_t *file) {
+             lfs_cache_drop(lfs, &lfs->rcache);
+ 
+             while (file->pos < file->ctz.size) {
+-                // copy over a byte at a time, leave it up to caching
+-                // to make this efficient
+-                uint8_t data;
+-                lfs_ssize_t res = lfs_file_flushedread(lfs, &orig, &data, 1);
++                // Batch the suffix copy without crossing the source read
++                // cache boundary. Resolve the initial position with one byte
++                // before using orig.off to bound subsequent chunks.
++                /* Keep the copy in reasonably large chunks.  A random
++                 * overwrite starts a new copy-on-write branch; copying the
++                 * unchanged suffix one byte at a time makes the benchmark
++                 * spend most of its time in VFS/flash dispatch.  The cache
++                 * boundary below still prevents reading across an lfs cache
++                 * window, so this does not change the on-disk semantics. */
++                uint8_t data[256];
++                lfs_size_t count = lfs_min(sizeof(data),
++                        file->ctz.size - file->pos);
++                count = lfs_min(count, lfs->cfg->cache_size -
++                        (orig.off % lfs->cfg->cache_size));
++                lfs_ssize_t res = lfs_file_flushedread(lfs, &orig, data, count);
+                 if (res < 0) {
+                     return res;
+                 }
+ 
+-                res = lfs_file_flushedwrite(lfs, file, &data, 1);
++                res = lfs_file_flushedwrite(lfs, file, data, count);
+                 if (res < 0) {
+                     return res;
+                 }
+@@ -3580,6 +3647,59 @@ static lfs_ssize_t lfs_file_rawwrite(lfs_t *lfs, lfs_file_t *file,
+         const void *buffer, lfs_size_t size) {
+     LFS_ASSERT((file->flags & LFS_O_WRONLY) == LFS_O_WRONLY);
+ 
++    if (file->flags & LFS_F_CACHESEEK) {
++        lfs_off_t noff = file->pos;
++        lfs_ctz_index(lfs, &noff);
++        if (!(file->flags & LFS_O_APPEND)
++                && file->cache.block == file->block
++                && noff >= file->cache.off
++                && file->off <= file->cache.off + file->cache.size
++                && noff < file->cache.off + lfs->cfg->cache_size
++                && size < file->cache.off + lfs->cfg->cache_size - noff
++                && file->pos <= file->ctz.size
++                && size <= file->ctz.size - file->pos) {
++            // Extend only the current unprogrammed RAM window. The unchanged
++            // gap belongs to the original CTZ branch, which remains live until
++            // flush publishes the complete replacement. Do not publish an
++            // extended initialized range unless the entire gap read succeeds.
++            // Leave a full cache to the ordinary write/flush path, whose eager
++            // flush invariant is required before advancing to the next window.
++            if (size) {
++                if (noff > file->off) {
++                    lfs_block_t block;
++                    lfs_off_t off;
++                    int err = lfs_ctz_find(lfs, NULL, &lfs->rcache,
++                            file->ctz.head, file->ctz.size,
++                            lfs_file_writepos(lfs, file), &block, &off);
++                    if (!err) {
++                        err = lfs_bd_read(lfs, NULL, &lfs->rcache,
++                                noff-file->off, block, off,
++                                &file->cache.buffer[file->off-file->cache.off],
++                                noff-file->off);
++                    }
++                    if (err) {
++                        // A failed read may have partially filled rcache after
++                        // assigning its tag. Never reuse that buffer on retry.
++                        lfs_cache_drop(lfs, &lfs->rcache);
++                        file->flags |= LFS_F_ERRED;
++                        return err;
++                    }
++                }
++                memcpy(&file->cache.buffer[noff-file->cache.off], buffer, size);
++                file->off = lfs_max(file->off, noff+size);
++                file->cache.size = lfs_max(file->cache.size,
++                        file->off-file->cache.off);
++            }
++            file->pos += size;
++            file->flags &= ~LFS_F_ERRED;
++            return size;
++        }
++        int err = lfs_file_flush(lfs, file);
++        if (err) {
++            return err;
++        }
++    }
++
+     if (file->flags & LFS_F_READING) {
+         // drop any reads
+         int err = lfs_file_flush(lfs, file);
+@@ -3597,6 +3717,7 @@ static lfs_ssize_t lfs_file_rawwrite(lfs_t *lfs, lfs_file_t *file,
+         return LFS_ERR_FBIG;
+     }
+ 
++
+     if (!(file->flags & LFS_F_WRITING) && file->pos > file->ctz.size) {
+         // fill with zeros
+         lfs_off_t pos = file->pos;
+@@ -3651,6 +3772,25 @@ static lfs_soff_t lfs_file_rawseek(lfs_t *lfs, lfs_file_t *file,
+         return npos;
+     }
+ 
++#ifndef LFS_READONLY
++    if ((file->flags & LFS_F_WRITING)
++            && !(file->flags & (LFS_F_INLINE | LFS_F_ERRED | LFS_O_APPEND))
++            && file->cache.block == file->block) {
++        lfs_off_t noff = npos;
++        int nindex = lfs_ctz_index(lfs, &noff);
++        int oindex = lfs_ctz_index(lfs, &(lfs_off_t){file->pos});
++        if (oindex == nindex
++                && lfs_file_writepos(lfs, file) <= file->ctz.size
++                && npos <= file->ctz.size
++                && noff >= file->cache.off
++                && noff < file->cache.off + lfs->cfg->cache_size) {
++            file->pos = npos;
++            file->flags |= LFS_F_CACHESEEK;
++            return npos;
++        }
++    }
++#endif
++
+     // if we're only reading and our new offset is still in the file's cache
+     // we can avoid flushing and needing to reread the data
+     if (
+@@ -3691,6 +3831,15 @@ static int lfs_file_rawtruncate(lfs_t *lfs, lfs_file_t *file, lfs_off_t size) {
+         return LFS_ERR_INVAL;
+     }
+ 
++    // Truncate may call the internal flushed reader directly; resolve a
++    // cached seek even when its internal seek would be a position no-op.
++    if (file->flags & LFS_F_CACHESEEK) {
++        int err = lfs_file_flush(lfs, file);
++        if (err) {
++            return err;
++        }
++    }
++
+     lfs_off_t pos = file->pos;
+     lfs_off_t oldsize = lfs_file_rawsize(lfs, file);
+     if (size < oldsize) {
+@@ -3788,7 +3937,7 @@ static lfs_soff_t lfs_file_rawsize(lfs_t *lfs, lfs_file_t *file) {
+ 
+ #ifndef LFS_READONLY
+     if (file->flags & LFS_F_WRITING) {
+-        return lfs_max(file->pos, file->ctz.size);
++        return lfs_max(lfs_file_writepos(lfs, file), file->ctz.size);
+     }
+ #endif
+ 
+@@ -3804,8 +3953,35 @@ static lfs_ssize_t lfs_dir_rawpath(lfs_t *lfs,
+     lfs_stag_t tag;
+     int err;
+ 
++    // A split directory's entry lives in a tail pair, while its parent's
++    // DIRSTRUCT points to the first pair. Resolve that head before looking
++    // up the parent; keep dir/id unchanged for the entry's own name.
++    lfs_block_t head[2] = {lfs->root[0], lfs->root[1]};
+     if (lfs_pair_cmp(lfs->root, dir->pair) != 0) {
+-        tag = lfs_fs_parent(lfs, dir->pair, &parent);
++        lfs_mdir_t part = {.tail = {lfs->root[0], lfs->root[1]}};
++        for (lfs_size_t steps = 0;; steps++) {
++            if (lfs_pair_isnull(part.tail)) {
++                return LFS_ERR_NOENT;
++            }
++            if (steps >= lfs->cfg->block_count) {
++                return LFS_ERR_CORRUPT;
++            }
++            err = lfs_dir_fetch(lfs, &part, part.tail);
++            if (err) {
++                return err;
++            }
++            if (lfs_pair_cmp(part.pair, dir->pair) == 0) {
++                break;
++            }
++            if (!part.split) {
++                head[0] = part.tail[0];
++                head[1] = part.tail[1];
++            }
++        }
++    }
++
++    if (lfs_pair_cmp(lfs->root, head) != 0) {
++        tag = lfs_fs_parent(lfs, head, &parent);
+         if (tag < 0) {
+             return tag;
+         }
+@@ -4149,6 +4325,12 @@ static int lfs_init(lfs_t *lfs, const struct lfs_config *cfg) {
+     lfs->cfg = cfg;
+     int err = 0;
+ 
++    // Cleanup must not free uninitialized or previously released buffers if
++    // any allocation below fails, including mount after format on this object.
++    lfs->rcache.buffer = NULL;
++    lfs->pcache.buffer = NULL;
++    lfs->free.buffer = NULL;
++
+ #ifdef LFS_MULTIVERSION
+     // this driver only supports minor version < current minor version
+     LFS_ASSERT(!lfs->cfg->disk_version || (
+@@ -4660,7 +4842,7 @@ int lfs_fs_rawtraverse(lfs_t *lfs,
+ 
+         if ((f->flags & LFS_F_WRITING) && !(f->flags & LFS_F_INLINE)) {
+             int err = lfs_ctz_traverse(lfs, &f->cache, &lfs->rcache,
+-                    f->block, f->pos, cb, data);
++                    f->block, lfs_file_writepos(lfs, f), cb, data);
+             if (err) {
+                 return err;
+             }
+@@ -6013,6 +6195,143 @@ lfs_ssize_t lfs_file_write(lfs_t *lfs, lfs_file_t *file,
+ }
+ #endif
+ 
++
++#ifndef LFS_READONLY
++static int lfs_file_rawcommit_updates(lfs_t *lfs, lfs_file_t *file,
++        const struct lfs_update_range *ranges, lfs_size_t count) {
++    // Validation precedes all mutation. A clean committed CTZ is the source
++    // for every unchanged byte; accepting another handle's stale CTZ here
++    // would be incorrect, so VFS must provide a single shared file identity.
++    if (file->flags & LFS_F_ERRED) {
++        return LFS_ERR_IO;
++    }
++    if ((file->flags & LFS_O_WRONLY) != LFS_O_WRONLY) {
++        return LFS_ERR_BADF;
++    }
++    if (!count) {
++        return 0;
++    }
++    if (!ranges || (file->flags & (LFS_F_DIRTY | LFS_F_WRITING |
++            LFS_F_INLINE | LFS_O_APPEND))) {
++        return LFS_ERR_INVAL;
++    }
++    lfs_off_t last = 0;
++    for (lfs_size_t i = 0; i < count; i++) {
++        if (!ranges[i].buffer || !ranges[i].size || ranges[i].off < last ||
++                ranges[i].off > file->ctz.size ||
++                ranges[i].size > file->ctz.size-ranges[i].off) {
++            return LFS_ERR_INVAL;
++        }
++        last = ranges[i].off + ranges[i].size;
++    }
++
++    // A no-op seek does not clear LFS_F_READING. Clear it explicitly before
++    // handing the same cache to the flushed writer.
++    int err = lfs_file_flush(lfs, file);
++    if (err) {
++        return err;
++    }
++    lfs_off_t saved = file->pos;
++    lfs_soff_t res = lfs_file_rawseek(lfs, file, ranges[0].off, LFS_SEEK_SET);
++    if (res < 0) {
++        return res;
++    }
++
++    // Exactly the same read-cache borrowing rule as lfs_file_flush's suffix
++    // copy. The old CTZ remains reachable through file->ctz until that flush
++    // completes, and through committed directory metadata until commit.
++    lfs_file_t orig = {
++        .ctz = file->ctz,
++        .flags = LFS_O_RDONLY,
++        .pos = file->pos,
++        .cache = lfs->rcache,
++    };
++    lfs_cache_drop(lfs, &lfs->rcache);
++    for (lfs_size_t i = 0; i < count; i++) {
++        while (file->pos < ranges[i].off) {
++            uint8_t data[256];
++            lfs_size_t n = lfs_min(sizeof(data), ranges[i].off-file->pos);
++            res = lfs_file_flushedread(lfs, &orig, data, n);
++            if (res < 0) {
++                err = res;
++                goto fail;
++            }
++            res = lfs_file_flushedwrite(lfs, file, data, n);
++            if (res < 0) {
++                err = res;
++                goto fail;
++            }
++            if (lfs->rcache.block != LFS_BLOCK_NULL) {
++                lfs_cache_drop(lfs, &orig.cache);
++                lfs_cache_drop(lfs, &lfs->rcache);
++            }
++        }
++        res = lfs_file_flushedwrite(lfs, file,
++                ranges[i].buffer, ranges[i].size);
++        if (res < 0) {
++            err = res;
++            goto fail;
++        }
++        if (lfs->rcache.block != LFS_BLOCK_NULL) {
++            lfs_cache_drop(lfs, &orig.cache);
++            lfs_cache_drop(lfs, &lfs->rcache);
++        }
++        res = lfs_file_rawseek(lfs, &orig, file->pos, LFS_SEEK_SET);
++        if (res < 0) {
++            err = res;
++            goto fail;
++        }
++    }
++
++    // Existing checked flush copies the remaining suffix exactly once;
++    // existing directory commit is the sole visibility/durability boundary.
++    err = lfs_file_rawsync(lfs, file);
++    if (err) {
++        goto fail;
++    }
++    res = lfs_file_rawseek(lfs, file, saved, LFS_SEEK_SET);
++    return res < 0 ? (int)res : 0;
++
++fail:
++    lfs_cache_drop(lfs, &lfs->rcache);
++    file->flags |= LFS_F_ERRED;
++    return err;
++}
++
++int lfs_file_identity(lfs_t *lfs, const char *path,
++        lfs_block_t pair[2], uint16_t *id) {
++    int err = LFS_LOCK(lfs->cfg);
++    if (err) {
++        return err;
++    }
++    lfs_mdir_t dir;
++    lfs_stag_t tag = lfs_dir_find(lfs, &dir, &path, id);
++    if (tag < 0) {
++        err = tag;
++    } else if (lfs_tag_type3(tag) != LFS_TYPE_REG) {
++        err = LFS_ERR_ISDIR;
++    } else {
++        pair[0] = dir.pair[0];
++        pair[1] = dir.pair[1];
++        err = 0;
++    }
++    LFS_UNLOCK(lfs->cfg);
++    return err;
++}
++
++int lfs_file_commit_updates(lfs_t *lfs, lfs_file_t *file,
++        const struct lfs_update_range *ranges, lfs_size_t count) {
++    int err = LFS_LOCK(lfs->cfg);
++    if (err) {
++        return err;
++    }
++    LFS_ASSERT(lfs_mlist_isopen(lfs->mlist, (struct lfs_mlist*)file));
++    err = lfs_file_rawcommit_updates(lfs, file, ranges, count);
++    LFS_UNLOCK(lfs->cfg);
++    return err;
++}
++#endif
++
+ lfs_soff_t lfs_file_seek(lfs_t *lfs, lfs_file_t *file,
+         lfs_soff_t off, int whence) {
+     int err = LFS_LOCK(lfs->cfg);
+@@ -6349,4 +6668,3 @@ int lfs_migrate(lfs_t *lfs, const struct lfs_config *cfg) {
+     return err;
+ }
+ #endif
+-
+diff --git a/lfs.h b/lfs.h
+index 5cbd4a6902a3f1b9344075415b5faf13a81d3c53..860b780f983421124c910692fbf6c1365ba33afb 100644
+--- a/lfs.h
++++ b/lfs.h
+@@ -273,6 +273,15 @@ struct lfs_config {
+ #endif
+ };
+ 
++// Experimental bounded-cache materialization input. Buffer ownership remains
++// with the caller until the synchronous call returns. Ranges must be sorted,
++// non-overlapping, non-empty and within the existing committed file size.
++struct lfs_update_range {
++    lfs_off_t off;
++    lfs_size_t size;
++    const void *buffer;
++};
++
+ // File info structure
+ struct lfs_info {
+     // Type of the file, either LFS_TYPE_REG or LFS_TYPE_DIR
+@@ -579,6 +588,18 @@ int lfs_file_close(lfs_t *lfs, lfs_file_t *file);
+ // Returns a negative error code on failure.
+ int lfs_file_sync(lfs_t *lfs, lfs_file_t *file);
+ 
++// Experimental one-pass COW materialization; no on-disk format change.
++// Requires an open, clean, non-inline writable file without O_APPEND.
++// On failure the handle is errored and must not be reused; the caller must
++// retain/report the first failure even if native close later returns zero.
++int lfs_file_commit_updates(lfs_t *lfs, lfs_file_t *file,
++        const struct lfs_update_range *ranges, lfs_size_t count);
++
++// Resolve a regular file identity without creating another data handle.
++int lfs_file_identity(lfs_t *lfs, const char *path,
++        lfs_block_t pair[2], uint16_t *id);
++
++
+ // Read data from file
+ //
+ // Takes a buffer and size indicating where to store the read data.

@@ -1,5 +1,65 @@
+diff --git a/components/esp_rom/esp32s31/ld/esp32s31.rom.libc.ld b/components/esp_rom/esp32s31/ld/esp32s31.rom.libc.ld
+index f1ba206b92a1b4cf5550c54599d7890d7d166f3f..63bc77b1957c2e10e98784b12e57fe41e04f0f65 100644
+--- a/components/esp_rom/esp32s31/ld/esp32s31.rom.libc.ld
++++ b/components/esp_rom/esp32s31/ld/esp32s31.rom.libc.ld
+@@ -66,8 +66,14 @@ strsep = 0x2f80056c;
+ strspn = 0x2f800570;
+ strtok_r = 0x2f800574;
+ strupr = 0x2f800578;
++/* NuttX's jmp_buf and arch_setjmp.S use the configured FPU register width.
++ * The newlib ROM context layout is different; binding these names to ROM
++ * can overwrite a caller's jump buffer and saved return address.
++ */
++#ifndef __NuttX__
+ longjmp = 0x2f80057c;
+ setjmp = 0x2f800580;
++#endif
+ abs = 0x2f800584;
+ div = 0x2f800588;
+ labs = 0x2f80058c;
+diff --git a/components/spi_flash/cache_utils.c b/components/spi_flash/cache_utils.c
+index 1f2d7053b01209903b4e43d94a51dcfe43759271..c17f64ea23bf87d75eb7fbf23124b88c9b9091b6 100644
+--- a/components/spi_flash/cache_utils.c
++++ b/components/spi_flash/cache_utils.c
+@@ -37,6 +37,16 @@
+ 
+ ESP_LOG_ATTR_TAG(TAG, "cache");
+ 
++#ifdef CONFIG_ESP32S31_SMP_TLB_SHOOTDOWN
++/* S31 forwards ordinary IPIs through S-mode. A hart waiting with SIE clear
++ * must acknowledge local TLB mailboxes while the peer waits to enter the
++ * Flash rendezvous. This hook only performs hart-local translation fences;
++ * it must not dispatch scheduler work or arbitrary SMP callbacks.
++ */
++extern void esp32s31_tlb_shootdown_process(void);
++#endif
++
++
+ // Used only on ROM impl. in idf, this param unused, cache status hold by hal
+ static uint32_t s_flash_op_cache_state[2];
+ #ifndef CONFIG_FREERTOS_UNICORE
+@@ -82,6 +92,9 @@ void IRAM_ATTR spi_flash_op_block_func(void *arg)
+     s_flash_op_complete = false;
+     s_flash_op_can_start = true;
+     while (!s_flash_op_complete) {
++#ifdef CONFIG_ESP32S31_SMP_TLB_SHOOTDOWN
++        esp32s31_tlb_shootdown_process();
++#endif
+         // busy loop here and wait for the other CPU to finish flash operation
+     }
+     // Flash operation is complete, re-enable cache
+@@ -135,6 +148,9 @@ void IRAM_ATTR spi_flash_disable_interrupts_caches_and_other_cpu(void)
+         } while (!ipc_call_was_send_to_other_cpu);
+ 
+         while (!s_flash_op_can_start) {
++#ifdef CONFIG_ESP32S31_SMP_TLB_SHOOTDOWN
++        esp32s31_tlb_shootdown_process();
++#endif
+             // Busy loop and wait for spi_flash_op_block_func to disable cache
+             // on the other CPU
+         }
 diff --git a/components/upper_hal_cam/dvp/src/esp_cam_ctlr_dvp_cam.c b/components/upper_hal_cam/dvp/src/esp_cam_ctlr_dvp_cam.c
-index 23adf3d3f4b..9e08fe4d5da 100644
+index 23adf3d3f4bd18322345f1aaebf94d185c275e1c..9e08fe4d5da0d1fe90480597550ff1cfe71d6a86 100644
 --- a/components/upper_hal_cam/dvp/src/esp_cam_ctlr_dvp_cam.c
 +++ b/components/upper_hal_cam/dvp/src/esp_cam_ctlr_dvp_cam.c
 @@ -182,9 +182,14 @@ static IRAM_ATTR esp_err_t esp_cam_ctlr_dvp_start_trans(esp_cam_ctlr_dvp_cam_t *
@@ -46,7 +106,7 @@ index 23adf3d3f4b..9e08fe4d5da 100644
  
      return ret;
 diff --git a/components/upper_hal_dma/src/gdma.c b/components/upper_hal_dma/src/gdma.c
-index 798069abffa..614bd22f203 100644
+index 798069abffadf735c22a786a88788c19ab94ac3a..614bd22f203272b87ca19c918b4cde6dca794c19 100644
 --- a/components/upper_hal_dma/src/gdma.c
 +++ b/components/upper_hal_dma/src/gdma.c
 @@ -39,6 +39,13 @@ typedef struct gdma_platform_t {
@@ -63,9 +123,470 @@ index 798069abffa..614bd22f203 100644
  static gdma_group_t *gdma_try_alloc_group_handle(int group_id, void (*hal_init)(gdma_hal_context_t *hal, const gdma_hal_config_t *config));
  static gdma_pair_t *gdma_try_alloc_pair_handle(gdma_group_t *group, int pair_id);
  static void gdma_try_free_group_handle(gdma_group_t *group);
+diff --git a/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h b/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
+index 63e763ca97b500d5f2af666ed1e28afe5ab81b86..200714764b310dbab6fc562ca89968298077e7cd 100644
+--- a/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
++++ b/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
+@@ -110,6 +110,7 @@ struct sd_host_sdmmc_slot_t {
+ 
+     struct {
+         int                        width;
++        int                        active_width;
+         sd_host_sdmmc_slot_state_t width_state;
+     } width;
+     struct {
+diff --git a/components/upper_hal_sdmmc/src/sd_host_sdmmc.c b/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
+index 8429f300be9d9712ef29db209e1ef57f8f5010c4..3894f5e16119387832d8624c03243bcc2de2b843 100644
+--- a/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
++++ b/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
+@@ -10,6 +10,11 @@
+ #include <sys/param.h>
+ #include "esp_log.h"
+ #include "esp_intr_alloc.h"
++#if defined(__NuttX__) && defined(CONFIG_ARCH_CHIP_ESP32S31)
++#include "esp32s31_sd_irq.h"
++#define esp_intr_alloc s31_sd_alloc
++#define esp_intr_free s31_sd_intr_free
++#endif
+ #include "esp_check.h"
+ #include "esp_clk_tree.h"
+ #include "esp_timer.h"
+@@ -256,12 +261,19 @@ static esp_err_t sd_host_slot_sdmmc_configure(sd_host_slot_handle_t slot, const
+ #endif
+ 
+     sd_host_sdmmc_slot_t *slot_ctx = __containerof(slot, sd_host_sdmmc_slot_t, drv);
++    ESP_RETURN_ON_FALSE(config->width == 0 ||
++                       ((config->width == SD_BUS_WIDTH_1_BIT ||
++                         config->width == SD_BUS_WIDTH_4_BIT ||
++                         config->width == SD_BUS_WIDTH_8_BIT) &&
++                        config->width <= slot_ctx->width.width),
++                       ESP_ERR_INVALID_ARG, TAG, "unsupported bus width");
+     portENTER_CRITICAL(&slot_ctx->ctlr->spinlock);
+     if (config->freq_hz != 0) {
+         slot_ctx->freq.freq_hz = config->freq_hz;
+         slot_ctx->freq.freq_state = SD_HOST_SLOT_STATE_READY;
+     }
+     if (config->width != 0) {
++        slot_ctx->width.active_width = config->width;
+         slot_ctx->width.width_state = SD_HOST_SLOT_STATE_READY;
+     }
+     if (config->sampling_mode != 0) {
+@@ -668,7 +680,7 @@ esp_err_t sd_host_slot_set_bus_width(sd_host_sdmmc_slot_t *slot)
+ {
+     ESP_RETURN_ON_FALSE(slot, ESP_ERR_INVALID_ARG, TAG, "invalid argument: null pointer");
+ 
+-    int width = slot->width.width_state == SD_HOST_SLOT_STATE_READY ? slot->width.width : 1;
++    int width = slot->width.width_state == SD_HOST_SLOT_STATE_READY ? slot->width.active_width : 1;
+     ESP_LOGD(TAG, "width: %d, state: %d", width, slot->width.width_state);
+     sd_host_sdmmc_slot_io_cfg_t *slot_gpio = &slot->io_config;
+ 
+@@ -694,7 +706,7 @@ esp_err_t sd_host_slot_set_bus_sampling_mode(sd_host_sdmmc_slot_t *slot)
+ {
+     ESP_RETURN_ON_FALSE(slot, ESP_ERR_INVALID_ARG, TAG, "invalid argument: null pointer");
+     if (slot->sampling_mode.sampling_mode_state == SD_HOST_SLOT_STATE_READY) {
+-        ESP_RETURN_ON_FALSE((slot->width.width != 8), ESP_ERR_NOT_SUPPORTED, TAG, "DDR mode with 8-bit bus width is not supported yet");
++        ESP_RETURN_ON_FALSE((slot->width.active_width != 8), ESP_ERR_NOT_SUPPORTED, TAG, "DDR mode with 8-bit bus width is not supported yet");
+     }
+ 
+     bool ddr = false;
+@@ -1301,6 +1313,7 @@ static esp_err_t sdmmc_slot_io_config(sd_host_sdmmc_slot_t *slot, const sd_host_
+     slot->io_config.d6_io = GPIO_NUM_NC;
+     slot->io_config.d7_io = GPIO_NUM_NC;
+     slot->width.width = slot_width;
++    slot->width.active_width = SD_BUS_WIDTH_1_BIT;
+     slot->width.width_state = SD_HOST_SLOT_STATE_INIT;
+     slot_gpio->cd_io = io_config->cd_io;
+     slot_gpio->wp_io = io_config->wp_io;
+diff --git a/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c b/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
+index b26e7e43c8035e95d182568b13402692ff540145..9ddf0b013f74aa74e4dfa472017a364cae2925d8 100644
+--- a/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
++++ b/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
+@@ -183,12 +183,20 @@ void sd_host_dma_prepare(sd_host_sdmmc_slot_t *slot, void *data_ptr, size_t data
+ ---------------------------------------------------------------*/
+ static bool cmd_needs_auto_stop(const sdmmc_command_t *cmd)
+ {
++#if defined(__NuttX__) && defined(CONFIG_ARCH_CHIP_ESP32S31)
++    /* NuttX owns termination: CMD23 sets the block count, or its upper
++     * half sends CMD12. An additional automatic CMD12 after a counted
++     * transfer leaves ILLEGAL_COMMAND latched in the card status. */
++    (void)cmd;
++    return false;
++#else
+     /* SDMMC host needs an "auto stop" flag for the following commands: */
+     return cmd->datalen > 0 &&
+            (cmd->opcode == MMC_WRITE_BLOCK_MULTIPLE ||
+             cmd->opcode == MMC_READ_BLOCK_MULTIPLE ||
+             cmd->opcode == MMC_WRITE_DAT_UNTIL_STOP ||
+             cmd->opcode == MMC_READ_DAT_UNTIL_STOP);
++#endif
+ }
+ 
+ static sdmmc_hw_cmd_t make_hw_cmd(sdmmc_command_t *cmd)
+@@ -496,7 +504,8 @@ esp_err_t sd_host_slot_sdmmc_do_transaction(sd_host_slot_handle_t slot, sdmmc_co
+     slot_ctx->ctlr->cur_slot_id = slot_ctx->slot_id;
+ 
+     // By default, set probing frequency (400kHz) and 1-bit bus
+-    if (slot_ctx->freq.freq_state != SD_HOST_SLOT_STATE_READY) {
++    /* A configured frequency is not yet a programmed clock on a new slot. */
++    if (slot_ctx->clk_src == 0 || slot_ctx->freq.freq_state != SD_HOST_SLOT_STATE_READY) {
+         ESP_GOTO_ON_ERROR(sd_host_slot_set_card_clk(slot_ctx), out, TAG, "failed to set clk");
+     } else {
+         int real_freq_khz = 0;
+@@ -578,9 +587,13 @@ esp_err_t sd_host_slot_sdmmc_do_transaction(sd_host_slot_handle_t slot, sdmmc_co
+     if (cmdinfo->data) {
+         bool needs_sync = esp_cache_get_line_size_by_addr(cmdinfo->data) > 0;
+         if (needs_sync) {
+-            ret = esp_cache_msync((void *)cmdinfo->data, cache_sync_len, ESP_CACHE_MSYNC_FLAG_DIR_M2C);
+-            if (ret != ESP_OK) {
+-                goto out;
++            esp_err_t sync_ret = esp_cache_msync((void *)cmdinfo->data, cache_sync_len, ESP_CACHE_MSYNC_FLAG_DIR_M2C);
++            /* Cache maintenance must not turn a failed transfer or busy
++             * timeout into success.  Report its error only if no earlier
++             * transaction error is being returned.
++             */
++            if (ret == ESP_OK) {
++                ret = sync_ret;
+             }
+         }
+     }
+diff --git a/nuttx/src/heap_caps.c b/nuttx/src/heap_caps.c
+index e34abe30237f0bea462771a04ed768b8c69126e1..064307804439a3d19a0123e1f237f02f3eb0ac06 100644
+--- a/nuttx/src/heap_caps.c
++++ b/nuttx/src/heap_caps.c
+@@ -16,6 +16,8 @@
+ 
+ #include <nuttx/config.h>
+ #include <string.h>
++#include <stdarg.h>
++#include <stdint.h>
+ #include <malloc.h>
+ #include <syslog.h>
+ 
+@@ -89,6 +91,44 @@ static bool esp_heap_caps_retention_caps_exact(uint32_t caps)
+ #  define esp_retentionheap_malloc_size(mem)          0
+ #endif
+ 
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++/* S31 FLAT uses non-overlapping SRAM kernel and PSRAM user heaps. Explicit
++ * internal requests must never fall back to PSRAM. The caller still owns
++ * cache synchronization for external DMA buffers.
++ */
++
++static bool esp_heap_caps_conflict(uint32_t caps)
++{
++  return (caps & (MALLOC_CAP_INTERNAL | MALLOC_CAP_SPIRAM)) ==
++         (MALLOC_CAP_INTERNAL | MALLOC_CAP_SPIRAM);
++}
++
++static void *esp_heap_caps_s31_alloc(size_t alignment, size_t size,
++                                    uint32_t caps)
++{
++  if (esp_heap_caps_conflict(caps))
++    {
++      return NULL;
++    }
++
++  alignment = esp_heap_caps_effective_alignment(alignment, caps);
++  return (caps & MALLOC_CAP_SPIRAM) ? kumm_memalign(alignment, size) :
++                                    kmm_memalign(alignment, size);
++}
++
++static struct mallinfo esp_heap_caps_s31_info(uint32_t caps)
++{
++  struct mallinfo empty = {0};
++
++  if (esp_heap_caps_conflict(caps))
++    {
++      return empty;
++    }
++
++  return (caps & MALLOC_CAP_SPIRAM) ? kumm_mallinfo() : kmm_mallinfo();
++}
++#endif
++
+ /****************************************************************************
+  * Public Functions
+  ****************************************************************************/
+@@ -128,7 +168,11 @@ void *heap_caps_malloc(size_t size, uint32_t caps)
+     }
+   else
+     {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++      ptr = esp_heap_caps_s31_alloc(sizeof(void *), size, caps);
++#else
+       ptr = kmm_malloc(size);
++#endif
+     }
+ 
+   if (ptr == NULL && alloc_failed_callback)
+@@ -173,10 +217,12 @@ void heap_caps_free(void *ptr)
+ #ifdef CONFIG_MM_KERNEL_HEAP
+   if (!kmm_heapmember(ptr))
+     {
++#ifndef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
+       syslog(LOG_ERR,
+              "heap_caps_free: ptr %p not in kernel heap "
+              "(cross-heap free, caller=%p); routing to free()\n",
+              ptr, __builtin_return_address(0));
++#endif
+       free(ptr);
+       return;
+     }
+@@ -215,7 +261,39 @@ void *heap_caps_realloc(void *ptr, size_t size, uint32_t caps)
+     }
+   else
+     {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++      bool external = !kmm_heapmember(ptr);
++      bool want_external = (caps & MALLOC_CAP_SPIRAM) != 0;
++
++      if (size == 0)
++        {
++          heap_caps_free(ptr);
++          return NULL;
++        }
++
++      if (esp_heap_caps_conflict(caps))
++        {
++          new_ptr = NULL;
++        }
++      else if (external != want_external || (caps & MALLOC_CAP_DMA) != 0)
++        {
++          size_t old_size = external ? kumm_malloc_size(ptr) :
++                                      kmm_malloc_size(ptr);
++          new_ptr = esp_heap_caps_s31_alloc(sizeof(void *), size, caps);
++          if (new_ptr != NULL)
++            {
++              memcpy(new_ptr, ptr, old_size < size ? old_size : size);
++              heap_caps_free(ptr);
++            }
++        }
++      else
++        {
++          new_ptr = external ? kumm_realloc(ptr, size) :
++                               kmm_realloc(ptr, size);
++        }
++#else
+       new_ptr = kmm_realloc(ptr, size);
++#endif
+     }
+ 
+   if (new_ptr == NULL && size > 0 && alloc_failed_callback)
+@@ -245,7 +323,16 @@ void *heap_caps_calloc(size_t n, size_t size, uint32_t caps)
+     }
+   else
+     {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++      ptr = (size != 0 && n > SIZE_MAX / size) ? NULL :
++            esp_heap_caps_s31_alloc(sizeof(void *), total, caps);
++      if (ptr != NULL)
++        {
++          memset(ptr, 0, total);
++        }
++#else
+       ptr = kmm_calloc(n, size);
++#endif
+     }
+ 
+   if (ptr == NULL && alloc_failed_callback)
+@@ -276,7 +363,11 @@ void *heap_caps_aligned_alloc(size_t alignment, size_t size, uint32_t caps)
+     }
+   else
+     {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++      ptr = esp_heap_caps_s31_alloc(alignment, size, caps);
++#else
+       ptr = kmm_memalign(alignment, size);
++#endif
+     }
+ 
+   if (ptr == NULL && alloc_failed_callback)
+@@ -314,6 +405,13 @@ void *heap_caps_aligned_calloc(size_t alignment, size_t n, size_t size,
+   size_t total = n * size;
+   FAR void *ptr;
+ 
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++  if (size != 0 && n > SIZE_MAX / size)
++    {
++      return NULL;
++    }
++#endif
++
+   alignment = esp_heap_caps_effective_alignment(alignment, caps);
+ 
+   if (esp_heap_caps_retention_caps_exact(caps))
+@@ -322,7 +420,11 @@ void *heap_caps_aligned_calloc(size_t alignment, size_t n, size_t size,
+     }
+   else
+     {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++      ptr = esp_heap_caps_s31_alloc(alignment, total, caps);
++#else
+       ptr = kmm_memalign(alignment, total);
++#endif
+     }
+ 
+   if (ptr != NULL)
+@@ -347,7 +449,11 @@ void *heap_caps_aligned_calloc(size_t alignment, size_t n, size_t size,
+ 
+ size_t heap_caps_get_total_size(uint32_t caps)
+ {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++  struct mallinfo info = esp_heap_caps_s31_info(caps);
++#else
+   struct mallinfo info = kmm_mallinfo();
++#endif
+ 
+   return info.arena;
+ }
+@@ -363,7 +469,11 @@ size_t heap_caps_get_total_size(uint32_t caps)
+ 
+ size_t heap_caps_get_free_size(uint32_t caps)
+ {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++  struct mallinfo info = esp_heap_caps_s31_info(caps);
++#else
+   struct mallinfo info = kmm_mallinfo();
++#endif
+ 
+   return info.fordblks;
+ }
+@@ -395,7 +505,11 @@ size_t heap_caps_get_minimum_free_size(uint32_t caps)
+ 
+ size_t heap_caps_get_largest_free_block(uint32_t caps)
+ {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++  struct mallinfo info = esp_heap_caps_s31_info(caps);
++#else
+   struct mallinfo info = kmm_mallinfo();
++#endif
+ 
+   return info.mxordblk;
+ }
+@@ -410,7 +524,11 @@ size_t heap_caps_get_largest_free_block(uint32_t caps)
+ 
+ void heap_caps_get_info(multi_heap_info_t *info, uint32_t caps)
+ {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++  struct mallinfo minfo = esp_heap_caps_s31_info(caps);
++#else
+   struct mallinfo minfo = kmm_mallinfo();
++#endif
+ 
+   memset(info, 0, sizeof(multi_heap_info_t));
+   info->total_free_bytes = minfo.fordblks;
+@@ -428,7 +546,26 @@ void heap_caps_get_info(multi_heap_info_t *info, uint32_t caps)
+ 
+ void *heap_caps_malloc_prefer(size_t size, size_t num, ...)
+ {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++  va_list ap;
++  void *result = NULL;
++
++  va_start(ap, num);
++  for (size_t i = 0; i < num; i++)
++    {
++      uint32_t caps = va_arg(ap, uint32_t);
++      result = heap_caps_malloc(size, caps);
++      if (result != NULL)
++        {
++          break;
++        }
++    }
++
++  va_end(ap);
++  return result;
++#else
+   return kmm_malloc(size);
++#endif
+ }
+ 
+ /****************************************************************************
+@@ -441,7 +578,26 @@ void *heap_caps_malloc_prefer(size_t size, size_t num, ...)
+ 
+ void *heap_caps_realloc_prefer(void *ptr, size_t size, size_t num, ...)
+ {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++  va_list ap;
++  void *result = NULL;
++
++  va_start(ap, num);
++  for (size_t i = 0; i < num; i++)
++    {
++      uint32_t caps = va_arg(ap, uint32_t);
++      result = heap_caps_realloc(ptr, size, caps);
++      if (result != NULL || size == 0)
++        {
++          break;
++        }
++    }
++
++  va_end(ap);
++  return result;
++#else
+   return kmm_realloc(ptr, size);
++#endif
+ }
+ 
+ /****************************************************************************
+@@ -454,7 +610,26 @@ void *heap_caps_realloc_prefer(void *ptr, size_t size, size_t num, ...)
+ 
+ void *heap_caps_calloc_prefer(size_t n, size_t size, size_t num, ...)
+ {
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++  va_list ap;
++  void *result = NULL;
++
++  va_start(ap, num);
++  for (size_t i = 0; i < num; i++)
++    {
++      uint32_t caps = va_arg(ap, uint32_t);
++      result = heap_caps_calloc(n, size, caps);
++      if (result != NULL)
++        {
++          break;
++        }
++    }
++
++  va_end(ap);
++  return result;
++#else
+   return kmm_calloc(n, size);
++#endif
+ }
+ 
+ /****************************************************************************
+@@ -509,6 +684,13 @@ size_t heap_caps_get_allocated_size(void *ptr)
+       return esp_retentionheap_malloc_size(ptr);
+     }
+ 
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++  if (ptr != NULL && !kmm_heapmember(ptr))
++    {
++      return kumm_malloc_size(ptr);
++    }
++#endif
++
+   return kmm_malloc_size(ptr);
+ }
+ 
+@@ -519,6 +701,13 @@ size_t heap_caps_get_containing_block_size(void *ptr)
+       return esp_retentionheap_malloc_size(ptr);
+     }
+ 
++#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
++  if (ptr != NULL && !kmm_heapmember(ptr))
++    {
++      return kumm_malloc_size(ptr);
++    }
++#endif
++
+   return kmm_malloc_size(ptr);
+ }
+ 
 diff --git a/components/upper_hal_dma/src/gdma_nuttx_irq.h b/components/upper_hal_dma/src/gdma_nuttx_irq.h
 new file mode 100644
-index 00000000000..9646ed97c3f
+index 0000000000000000000000000000000000000000..9646ed97c3f4a04bffaa1fe16fb5dc0817b25d18
 --- /dev/null
 +++ b/components/upper_hal_dma/src/gdma_nuttx_irq.h
 @@ -0,0 +1,147 @@
@@ -216,86 +737,3 @@ index 00000000000..9646ed97c3f
 +    kmm_free(entry);
 +    return ESP_OK;
 +}
-diff --git a/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h b/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
-index 63e763ca97b..200714764b3 100644
---- a/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
-+++ b/components/upper_hal_sdmmc/include/esp_private/sd_host_private.h
-@@ -110,6 +110,7 @@ struct sd_host_sdmmc_slot_t {
- 
-     struct {
-         int                        width;
-+        int                        active_width;
-         sd_host_sdmmc_slot_state_t width_state;
-     } width;
-     struct {
-diff --git a/components/upper_hal_sdmmc/src/sd_host_sdmmc.c b/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
-index 8429f300be9..c22dfe3473d 100644
---- a/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
-+++ b/components/upper_hal_sdmmc/src/sd_host_sdmmc.c
-@@ -256,12 +256,19 @@ static esp_err_t sd_host_slot_sdmmc_configure(sd_host_slot_handle_t slot, const
- #endif
- 
-     sd_host_sdmmc_slot_t *slot_ctx = __containerof(slot, sd_host_sdmmc_slot_t, drv);
-+    ESP_RETURN_ON_FALSE(config->width == 0 ||
-+                       ((config->width == SD_BUS_WIDTH_1_BIT ||
-+                         config->width == SD_BUS_WIDTH_4_BIT ||
-+                         config->width == SD_BUS_WIDTH_8_BIT) &&
-+                        config->width <= slot_ctx->width.width),
-+                       ESP_ERR_INVALID_ARG, TAG, "unsupported bus width");
-     portENTER_CRITICAL(&slot_ctx->ctlr->spinlock);
-     if (config->freq_hz != 0) {
-         slot_ctx->freq.freq_hz = config->freq_hz;
-         slot_ctx->freq.freq_state = SD_HOST_SLOT_STATE_READY;
-     }
-     if (config->width != 0) {
-+        slot_ctx->width.active_width = config->width;
-         slot_ctx->width.width_state = SD_HOST_SLOT_STATE_READY;
-     }
-     if (config->sampling_mode != 0) {
-@@ -668,7 +675,7 @@ esp_err_t sd_host_slot_set_bus_width(sd_host_sdmmc_slot_t *slot)
- {
-     ESP_RETURN_ON_FALSE(slot, ESP_ERR_INVALID_ARG, TAG, "invalid argument: null pointer");
- 
--    int width = slot->width.width_state == SD_HOST_SLOT_STATE_READY ? slot->width.width : 1;
-+    int width = slot->width.width_state == SD_HOST_SLOT_STATE_READY ? slot->width.active_width : 1;
-     ESP_LOGD(TAG, "width: %d, state: %d", width, slot->width.width_state);
-     sd_host_sdmmc_slot_io_cfg_t *slot_gpio = &slot->io_config;
- 
-@@ -694,7 +701,7 @@ esp_err_t sd_host_slot_set_bus_sampling_mode(sd_host_sdmmc_slot_t *slot)
- {
-     ESP_RETURN_ON_FALSE(slot, ESP_ERR_INVALID_ARG, TAG, "invalid argument: null pointer");
-     if (slot->sampling_mode.sampling_mode_state == SD_HOST_SLOT_STATE_READY) {
--        ESP_RETURN_ON_FALSE((slot->width.width != 8), ESP_ERR_NOT_SUPPORTED, TAG, "DDR mode with 8-bit bus width is not supported yet");
-+        ESP_RETURN_ON_FALSE((slot->width.active_width != 8), ESP_ERR_NOT_SUPPORTED, TAG, "DDR mode with 8-bit bus width is not supported yet");
-     }
- 
-     bool ddr = false;
-@@ -1301,6 +1308,7 @@ static esp_err_t sdmmc_slot_io_config(sd_host_sdmmc_slot_t *slot, const sd_host_
-     slot->io_config.d6_io = GPIO_NUM_NC;
-     slot->io_config.d7_io = GPIO_NUM_NC;
-     slot->width.width = slot_width;
-+    slot->width.active_width = SD_BUS_WIDTH_1_BIT;
-     slot->width.width_state = SD_HOST_SLOT_STATE_INIT;
-     slot_gpio->cd_io = io_config->cd_io;
-     slot_gpio->wp_io = io_config->wp_io;
-diff --git a/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c b/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
-index b26e7e43c80..be61f8a3873 100644
---- a/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
-+++ b/components/upper_hal_sdmmc/src/sd_trans_sdmmc.c
-@@ -578,9 +578,13 @@ esp_err_t sd_host_slot_sdmmc_do_transaction(sd_host_slot_handle_t slot, sdmmc_co
-     if (cmdinfo->data) {
-         bool needs_sync = esp_cache_get_line_size_by_addr(cmdinfo->data) > 0;
-         if (needs_sync) {
--            ret = esp_cache_msync((void *)cmdinfo->data, cache_sync_len, ESP_CACHE_MSYNC_FLAG_DIR_M2C);
--            if (ret != ESP_OK) {
--                goto out;
-+            esp_err_t sync_ret = esp_cache_msync((void *)cmdinfo->data, cache_sync_len, ESP_CACHE_MSYNC_FLAG_DIR_M2C);
-+            /* Cache maintenance must not turn a failed transfer or busy
-+             * timeout into success.  Report its error only if no earlier
-+             * transaction error is being returned.
-+             */
-+            if (ret == ESP_OK) {
-+                ret = sync_ret;
-             }
-         }
-     }

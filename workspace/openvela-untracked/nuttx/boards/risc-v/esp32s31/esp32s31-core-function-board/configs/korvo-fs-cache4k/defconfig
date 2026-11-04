@@ -1,0 +1,6 @@
+#include "../korvo-fs/defconfig"
+
+# Isolated safe-cache candidate: same2048B read/program granularity and
+# 4096B erase blocks, with a4096B cache. Retain COW and all recovery checks.
+# Each mount uses4KiB more cache memory; each open file uses2KiB more.
+CONFIG_FS_LITTLEFS_CACHE_SIZE_FACTOR=8

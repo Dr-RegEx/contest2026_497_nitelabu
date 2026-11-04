@@ -1,0 +1,14 @@
+Factory hardware backend for openvela (private review candidate).
+
+The native backend is Apache-2.0. The factory dashboard capability selection,
+button order, and RGB values follow the official Espressif ESP32-S31 Korvo
+factory_demo main/main.c at commit 5c06bf1835329d6525f316475f7218aab6acfe79:
+
+SPDX-FileCopyrightText: 2026 Espressif Systems (Shanghai) CO LTD
+SPDX-License-Identifier: Apache-2.0
+
+https://github.com/espressif/esp-dev-kits/tree/5c06bf1835329d6525f316475f7218aab6acfe79/examples/esp32-s31-korvo/examples/factory_demo
+
+Upstream source remains preserved in ../upstream in the factory-demo-port-e403
+handoff. This candidate does not compile the ESP-IDF hardware implementation.
+Public native API definitions remain subject to their original source licenses.

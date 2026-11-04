@@ -2,6 +2,7 @@
 # Reuse the SoC boot/UART implementation, with explicitly separate LCD pins.
 #include "../nsh/defconfig"
 
+CONFIG_ESP32S31_BOARD_KORVO=y
 CONFIG_BUILD_FLAT=y
 CONFIG_RAM_START=0x2f000000
 CONFIG_RAM_SIZE=524288

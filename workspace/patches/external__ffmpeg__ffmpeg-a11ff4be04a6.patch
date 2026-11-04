@@ -1,0 +1,2316 @@
+diff --git a/libavcodec/dct32.h b/libavcodec/dct32.h
+index 61bf223a8d61f5e06d8953512a365ba5e7c0b854..c0c504e0db4a86a143e08423973c5bbd3568e46b 100644
+--- a/libavcodec/dct32.h
++++ b/libavcodec/dct32.h
+@@ -19,7 +19,9 @@
+ #ifndef AVCODEC_DCT32_H
+ #define AVCODEC_DCT32_H
+ 
++#include <stdint.h>
++
+ void ff_dct32_float(float *dst, const float *src);
+-void ff_dct32_fixed(int *dst, const int *src);
++void ff_dct32_fixed(int32_t *dst, const int32_t *src);
+ 
+ #endif /* AVCODEC_DCT32_H */
+diff --git a/libavcodec/dct32_template.c b/libavcodec/dct32_template.c
+index 51cebc053fd57d8fb785908df9d77d3c8a02c143..5becc1cf8d567fac8c38e57ba85c70213dca87c0 100644
+--- a/libavcodec/dct32_template.c
++++ b/libavcodec/dct32_template.c
+@@ -41,8 +41,8 @@
+ #   define dct32 ff_dct32_fixed
+ #   define FIXHR(a)       ((int)((a) * (1LL<<32) + 0.5))
+ #   define MULH3(x, y, s) MULH((s)*(x), y)
+-#   define INTFLOAT int
+-#   define SUINTFLOAT SUINT
++#   define INTFLOAT int32_t
++#   define SUINTFLOAT SUINT32
+ #endif
+ 
+ 
+diff --git a/libavcodec/liblc3dec.c b/libavcodec/liblc3dec.c
+index e9ac71c8dff8f8626110e69900f5e508b80ab690..dd9a0dc1665cde669c5fd142df73c073a8c54180 100644
+--- a/libavcodec/liblc3dec.c
++++ b/libavcodec/liblc3dec.c
+@@ -91,6 +91,9 @@ static av_cold int liblc3_decode_init(AVCodecContext *avctx)
+     if (!decoder_size)
+         return AVERROR_INVALIDDATA;
+ 
++    /* Each channel must retain the library's pointer alignment. */
++    decoder_size = FFALIGN(decoder_size, sizeof(void *));
++
+     liblc3->decoder_mem = av_malloc_array(channels, decoder_size);
+     if (!liblc3->decoder_mem)
+         return AVERROR(ENOMEM);
+diff --git a/libavcodec/liblc3enc.c b/libavcodec/liblc3enc.c
+index 6997aa566aa0ebb9282a1bb6b360f1f7bb33d154..a58c30f4b63041cc59d8f33d2eb9965c63a59fcb 100644
+--- a/libavcodec/liblc3enc.c
++++ b/libavcodec/liblc3enc.c
+@@ -114,6 +114,9 @@ static av_cold int liblc3_encode_init(AVCodecContext *avctx)
+     if (!encoder_size)
+         return AVERROR(EINVAL);
+ 
++    /* Each channel must retain the library's pointer alignment. */
++    encoder_size = FFALIGN(encoder_size, sizeof(void *));
++
+     liblc3->encoder_mem = av_malloc_array(channels, encoder_size);
+     if (!liblc3->encoder_mem)
+         return AVERROR(ENOMEM);
+diff --git a/libavcodec/mpegaudiodec_common_tablegen.c b/libavcodec/mpegaudiodec_common_tablegen.c
+index a319df65abe6c6966c00a4b6cf1fdc1bd4b42077..659e0d6a9a1cabce8f3d63a8cebf5e20adc6c087 100644
+--- a/libavcodec/mpegaudiodec_common_tablegen.c
++++ b/libavcodec/mpegaudiodec_common_tablegen.c
+@@ -23,6 +23,7 @@
+ 
+ #include <stdlib.h>
+ #define CONFIG_HARDCODED_TABLES 0
++#define BUILD_TABLES
+ #include "libavutil/tablegen.h"
+ #include "mpegaudiodec_common_tablegen.h"
+ #include "tableprint.h"
+diff --git a/libavcodec/mpegaudiodec_common_tablegen.h b/libavcodec/mpegaudiodec_common_tablegen.h
+index 66e93df27f489cbfea5584476483f94d1049aec4..162b6258266a17625c604bc6fa27ca5b38cbc917 100644
+--- a/libavcodec/mpegaudiodec_common_tablegen.h
++++ b/libavcodec/mpegaudiodec_common_tablegen.h
+@@ -36,8 +36,13 @@
+ #include "libavutil/attributes.h"
+ #include "libavutil/mem.h"
+ 
++#ifdef BUILD_TABLES
++int8_t   ff_table_4_3_exp[TABLE_4_3_SIZE];
++uint32_t ff_table_4_3_value[TABLE_4_3_SIZE];
++#else
+ int8_t   *ff_table_4_3_exp;
+ uint32_t *ff_table_4_3_value;
++#endif
+ 
+ #define FRAC_BITS 23
+ #define IMDCT_SCALAR 1.759
+@@ -52,7 +57,7 @@ static av_cold void mpegaudiodec_common_tableinit(void)
+     };
+     double pow43_val = 0;
+ 
+-#if !CONFIG_HARDCODED_TABLES
++#if !CONFIG_HARDCODED_TABLES && !defined(BUILD_TABLES)
+     ff_table_4_3_exp = (int8_t *)av_calloc(TABLE_4_3_SIZE, sizeof(int8_t));
+     ff_table_4_3_value = (uint32_t *)av_calloc(TABLE_4_3_SIZE, sizeof(uint32_t));
+ #endif
+diff --git a/libavcodec/mpegaudiodsp.h b/libavcodec/mpegaudiodsp.h
+index 5e47a263bb04b554098207321ccaa329b6f61b8c..701ec90a843e20c47710653f95f3217c792cbbfa 100644
+--- a/libavcodec/mpegaudiodsp.h
++++ b/libavcodec/mpegaudiodsp.h
+@@ -33,7 +33,7 @@ typedef struct MPADSPContext {
+                                int *dither_state, int16_t *samples,
+                                ptrdiff_t incr);
+     void (*dct32_float)(float *dst, const float *src);
+-    void (*dct32_fixed)(int *dst, const int *src);
++    void (*dct32_fixed)(int32_t *dst, const int32_t *src);
+ 
+     void (*imdct36_blocks_float)(float *out, float *buf, float *in,
+                                  int count, int switch_point, int block_type);
+diff --git a/libavcodec/pcm_tablegen.c b/libavcodec/pcm_tablegen.c
+index 473a47f6d96f8f9061a82caf7a0bb22cb0d51b86..7db6f5e58c657152f340a90242132c890fc72074 100644
+--- a/libavcodec/pcm_tablegen.c
++++ b/libavcodec/pcm_tablegen.c
+@@ -21,21 +21,34 @@
+  */
+ 
+ #include <stdlib.h>
++#include "config_components.h"
+ #define CONFIG_HARDCODED_TABLES 0
+ #include "pcm_tablegen.h"
+ #include "tableprint.h"
+ 
+ int main(void)
+ {
++#if CONFIG_PCM_ALAW_DECODER || CONFIG_PCM_ALAW_ENCODER
+     pcm_alaw_tableinit();
++#endif
++#if CONFIG_PCM_MULAW_DECODER || CONFIG_PCM_MULAW_ENCODER
+     pcm_ulaw_tableinit();
++#endif
++#if CONFIG_PCM_VIDC_DECODER || CONFIG_PCM_VIDC_ENCODER
+     pcm_vidc_tableinit();
++#endif
+ 
+     write_fileheader();
+ 
++#if CONFIG_PCM_ALAW_DECODER || CONFIG_PCM_ALAW_ENCODER
+     WRITE_ARRAY("static const", uint8_t, linear_to_alaw);
++#endif
++#if CONFIG_PCM_MULAW_DECODER || CONFIG_PCM_MULAW_ENCODER
+     WRITE_ARRAY("static const", uint8_t, linear_to_ulaw);
++#endif
++#if CONFIG_PCM_VIDC_DECODER || CONFIG_PCM_VIDC_ENCODER
+     WRITE_ARRAY("static const", uint8_t, linear_to_vidc);
++#endif
+ 
+     return 0;
+ }
+diff --git a/libavdevice/Makefile b/libavdevice/Makefile
+index 1162871791fc8a2a065b67aee5ca304b7e3f6569..5c91d7ec0c9f124fb440ff8d4f2794b0f1e32682 100644
+--- a/libavdevice/Makefile
++++ b/libavdevice/Makefile
+@@ -21,6 +21,7 @@ OBJS-$(CONFIG_AVFOUNDATION_INDEV)        += avfoundation.o
+ OBJS-$(CONFIG_BKTR_INDEV)                += bktr.o
+ OBJS-$(CONFIG_CACA_OUTDEV)               += caca.o
+ OBJS-$(CONFIG_BLUELET_OUTDEV)            += bluelet_enc.o bluelet.o
++OBJS-$(CONFIG_BLUELET_INDEV)             += bluelet_dec.o bluelet.o
+ OBJS-$(CONFIG_DECKLINK_OUTDEV)           += decklink_enc.o decklink_enc_c.o decklink_common.o
+ OBJS-$(CONFIG_DECKLINK_INDEV)            += decklink_dec.o decklink_dec_c.o decklink_common.o
+ OBJS-$(CONFIG_DSHOW_INDEV)               += dshow_crossbar.o dshow.o dshow_enummediatypes.o \
+diff --git a/libavdevice/alldevices.c b/libavdevice/alldevices.c
+index 738ec1e936e1bb4aff18b62c70ddbdf0609d1bce..00228ad29e13ad2f290c28897b70f54a804f1d66 100644
+--- a/libavdevice/alldevices.c
++++ b/libavdevice/alldevices.c
+@@ -28,6 +28,7 @@
+ FF_VISIBILITY_PUSH_HIDDEN
+ /* devices */
+ extern const FFOutputFormat ff_bluelet_muxer;
++extern const FFInputFormat ff_bluelet_demuxer;
+ extern const FFInputFormat  ff_alsa_demuxer;
+ extern const FFOutputFormat ff_alsa_muxer;
+ extern const FFInputFormat  ff_android_camera_demuxer;
+diff --git a/libavdevice/avdevice.h b/libavdevice/avdevice.h
+index 170ffbfb4d8b5bf8a1a0581e5dd7c6e452881f0d..302b474245a0a1aef4075cd79d7148dce4492725 100644
+--- a/libavdevice/avdevice.h
++++ b/libavdevice/avdevice.h
+@@ -267,6 +267,15 @@ enum AVAppToDevMessageType {
+      * Application requests drain.
+      */
+     AV_APP_TO_DEV_DRAIN = MKBETAG('D', 'R', 'A', 'N'),
++    /**
++     * End the current capture stream, releasing its packet/codec state while
++     * retaining device notifications for the next stream. This does not close
++     * the device; read_close() still performs final resource cleanup.
++     * Unsupported devices return AVERROR(ENOSYS).
++     *
++     * data: NULL
++     */
++    AV_APP_TO_DEV_END_STREAM = MKBETAG('E', 'S', 'T', 'R'),
+     // End define new message types for NuttX
+ };
+ 
+diff --git a/libavdevice/bluelet.c b/libavdevice/bluelet.c
+index ec00ef43ac21217a95e4a627c06add2ae28ebfee..3e40a7f4431fd0cbe4f620e29f910d3e22556dae 100644
+--- a/libavdevice/bluelet.c
++++ b/libavdevice/bluelet.c
+@@ -24,6 +24,7 @@
+  */
+ 
+ #include <errno.h>
++#include <assert.h>
+ #include <fcntl.h>
+ #include <stdint.h>
+ #include <sys/ioctl.h>
+@@ -44,6 +45,8 @@
+ #include "libavutil/time.h"
+ #include "libavutil/mem.h"
+ #include "libavcodec/avcodec.h"
++#include "libavutil/opt.h"
++#include "libavutil/intreadwrite.h"
+ 
+ /****************************************************************************
+  * Pre-processor Definitions
+@@ -77,7 +80,9 @@ enum {
+ enum {
+     BLUELET_CTRL_CMD_START,
+     BLUELET_CTRL_CMD_STOP,
+-    BLUELET_CTRL_CMD_CONFIG_DONE
++    BLUELET_CTRL_CMD_CONFIG_DONE,
++    BLUELET_CTRL_CMD_DRAIN,
++    BLUELET_CTRL_CMD_DISCARD
+ };
+ 
+ enum {
+@@ -85,6 +90,11 @@ enum {
+     BLUELET_CTRL_EVT_START_FAIL,
+     BLUELET_CTRL_EVT_STOPPED,
+     BLUELET_CTRL_EVT_UPDATE_CONFIG,
++    BLUELET_CTRL_EVT_DRAINED,
++    BLUELET_CTRL_EVT_DRAIN_FAIL,
++    BLUELET_CTRL_EVT_DISCARDED,
++    BLUELET_CTRL_EVT_DISCARD_FAIL,
++    BLUELET_CTRL_EVT_CAPTURE_END,
+ };
+ 
+ enum {
+@@ -193,21 +203,51 @@ static int ff_bluelet_socket_connect(const char *server_name, const char *path,
+ 
+ static int ff_bluelet_recv_ctrl(BlueletPriv *priv, void *buffer, size_t length)
+ {
+-    assert(priv->ctrl_fd > 0);
++    if (length > priv->ctrl_used - priv->ctrl_offset)
++        return AVERROR_INVALIDDATA;
++    memcpy(buffer, priv->ctrl_buffer + priv->ctrl_offset, length);
++    priv->ctrl_offset += length;
++    return 0;
++}
+ 
+-    while(length > 0) {
+-        ssize_t ret = recv(priv->ctrl_fd, buffer, length, MSG_NOSIGNAL);
+-        if (ret < 0)
++static int ff_bluelet_collect_ctrl(BlueletPriv *priv)
++{
++    unsigned needed = 1;
++    for (;;) {
++        if (priv->ctrl_used && priv->ctrl_buffer[0] == BLUELET_CTRL_EVT_UPDATE_CONFIG) {
++            needed = 2;
++            if (priv->ctrl_used >= 2 && priv->ctrl_buffer[1]) {
++                needed = 2 + sizeof(bluelet_config_t);
++                if (priv->ctrl_used >= needed) {
++                    uint32_t codec = AV_RL32(priv->ctrl_buffer + 2);
++                    if (codec == BLUELET_CODEC_TYPE_SBC)
++                        needed += sizeof(bluelet_sbc_param_t);
++                    else if (codec == BLUELET_CODEC_TYPE_MPEG2_4_AAC)
++                        needed += sizeof(bluelet_aac_param_t);
++                }
++            }
++        }
++        if (priv->ctrl_used && (priv->ctrl_buffer[0] == BLUELET_CTRL_EVT_DRAINED ||
++                               priv->ctrl_buffer[0] == BLUELET_CTRL_EVT_DISCARDED ||
++                               priv->ctrl_buffer[0] == BLUELET_CTRL_EVT_CAPTURE_END))
++            needed = 9;
++        if (priv->ctrl_used >= needed)
++            return 0;
++        int ret = recv(priv->ctrl_fd, priv->ctrl_buffer + priv->ctrl_used,
++                       needed - priv->ctrl_used, MSG_NOSIGNAL);
++        if (ret < 0) {
++            if (errno == EINTR)
++                continue;
++            if (errno != EAGAIN && errno != EWOULDBLOCK)
++                priv->ctrl_used = 0;
+             return AVERROR(errno);
+-
+-        if (ret == 0)
++        }
++        if (!ret) {
++            priv->ctrl_used = 0;
+             return AVERROR(ENOTCONN);
+-
+-        buffer = (char*)buffer + ret;
+-        length -= ret;
++        }
++        priv->ctrl_used += ret;
+     }
+-
+-    return 0;
+ }
+ 
+ static int ff_bluelet_send_ctrl(BlueletPriv *priv, const void *buffer, size_t length)
+@@ -226,7 +266,7 @@ static int ff_bluelet_send_ctrl(BlueletPriv *priv, const void *buffer, size_t le
+     return 0;
+ }
+ 
+-static int ff_bluelet_connect(BlueletPriv *priv, bool nonblock)
++int ff_bluelet_connect(BlueletPriv *priv, bool nonblock)
+ {
+     uint8_t type;
+ 
+@@ -256,6 +296,7 @@ static int ff_bluelet_connect(BlueletPriv *priv, bool nonblock)
+ 
+ int ff_bluelet_disconnect(BlueletPriv *priv)
+ {
++    priv->ctrl_used = priv->ctrl_offset = 0;
+     ff_bluelet_socket_disconnect(priv->ctrl_fd);
+     ff_bluelet_socket_disconnect(priv->data_fd);
+ 
+@@ -263,7 +304,13 @@ int ff_bluelet_disconnect(BlueletPriv *priv)
+     priv->data_fd = 0;
+     priv->ctrl_connected = false;
+     priv->data_connected = false;
++    priv->drain_error = AVERROR(ENOTCONN);
++    priv->discard_error = AVERROR(ENOTCONN);
+     priv->state = BLUELET_STATE_IDLE;
++    priv->received_bytes = 0;
++    priv->capture_end_pending = false;
++    priv->capture_end_deadline_us = 0;
++    priv->capture_discarded_bytes = 0;
+ 
+     return 0;
+ }
+@@ -315,9 +362,44 @@ int ff_bluelet_read_buffer(BlueletPriv *priv, void *buffer, size_t bytes)
+     else if (ret == 0)
+         return AVERROR_EOF;
+ 
++    priv->received_bytes += ret;
+     return ret;
+ }
+ 
++/* Control and data travel independently. Consume only the previous stream's
++ * byte prefix, including writes that arrive after its control end event.
++ */
++int ff_bluelet_discard_input(BlueletPriv *priv)
++{
++    uint8_t buffer[512];
++
++    if (!priv->capture_end_pending)
++        return 0;
++
++    priv->available = false;
++    while (priv->received_bytes < priv->capture_end_target) {
++        size_t count = FFMIN(sizeof(buffer),
++                             priv->capture_end_target - priv->received_bytes);
++        int ret = recv(priv->data_fd, buffer, count, MSG_NOSIGNAL);
++        if (ret < 0) {
++            if (errno == EINTR)
++                continue;
++            return AVERROR(errno);
++        }
++        if (!ret)
++            return AVERROR_EOF;
++        priv->received_bytes += ret;
++        priv->capture_discarded_bytes += ret;
++    }
++    if (priv->capture_discarded_bytes)
++        av_log(priv, AV_LOG_INFO, "Discarded capture tail: %" PRIu64 " bytes\n",
++               priv->capture_discarded_bytes);
++    priv->capture_end_pending = false;
++    priv->capture_end_deadline_us = 0;
++    priv->capture_discarded_bytes = 0;
++    return 0;
++}
++
+ int ff_bluelet_write_buffer(BlueletPriv *priv, void *buffer, size_t bytes)
+ {
+     int ret;
+@@ -336,6 +418,7 @@ int ff_bluelet_write_buffer(BlueletPriv *priv, void *buffer, size_t bytes)
+             return AVERROR(errno);
+     }
+ 
++    priv->written_bytes += ret;
+     return ret;
+ }
+ 
+@@ -396,7 +479,29 @@ static int ff_bluelet_update_config(BlueletPriv *priv)
+     priv->bit_rate = config.bit_rate;
+     priv->frame_size = config.frame_size;
+     priv->packet_size = config.packet_size;
+-    if (config.codec_type == BLUELET_CODEC_TYPE_SBC) {
++    if (config.codec_type == BLUELET_CODEC_TYPE_LC3) {
++        int64_t frame_us;
++
++        /* LE Audio carries one standard LC3 frame per channel in each SDU.
++         * Derive its duration from negotiated PCM samples, not a codec default.
++         */
++        if (priv->sample_fmt != AV_SAMPLE_FMT_S16 ||
++            (config.sample_rate != 8000 && config.sample_rate != 16000 &&
++             config.sample_rate != 24000 && config.sample_rate != 32000 &&
++             config.sample_rate != 48000) ||
++            !config.frame_size || !config.bit_rate ||
++            !config.packet_size || config.packet_size > UINT16_MAX ||
++            config.packet_size % priv->channels)
++            goto error;
++
++        frame_us = (int64_t)config.frame_size * 1000000;
++        if (frame_us % config.sample_rate)
++            goto error;
++        frame_us /= config.sample_rate;
++        if (frame_us != 7500 && frame_us != 10000)
++            goto error;
++        priv->lc3.frame_us = frame_us;
++    } else if (config.codec_type == BLUELET_CODEC_TYPE_SBC) {
+         bluelet_sbc_param_t param;
+ 
+         ret = ff_bluelet_recv_ctrl(priv, &param, sizeof(param));
+@@ -431,8 +536,9 @@ static int ff_bluelet_update_config(BlueletPriv *priv)
+         }
+     }
+ 
++    if (ff_bluelet_send_ctrl(priv, &cmd, 1) < 0)
++        goto error;
+     priv->state = BLUELET_STATE_CONFIGED;
+-    ff_bluelet_send_ctrl(priv, &cmd, 1);
+ 
+     return BLUELET_ACTION_CONFIG;
+ 
+@@ -448,8 +554,18 @@ int ff_bluelet_capbility_query_ranges(struct AVOptionRanges **ranges_, void *obj
+     struct AVDeviceCapabilitiesQuery *devcap = obj;
+     BlueletPriv *priv = devcap->device_context->priv_data;
+     struct AVOptionRanges *ranges;
++    static const enum AVSampleFormat lc3_formats[] = {
++        AV_SAMPLE_FMT_S16, AV_SAMPLE_FMT_S16P,
++        AV_SAMPLE_FMT_FLT, AV_SAMPLE_FMT_FLTP, AV_SAMPLE_FMT_NONE
++    };
++    const enum AVSampleFormat *sample_fmts = codec->sample_fmts;
+     int i, nb = 0, ret = AVERROR(ENOMEM);
+ 
++    if (!sample_fmts && codec->id == AV_CODEC_ID_LC3)
++        sample_fmts = lc3_formats;
++    if (!sample_fmts)
++        return AVERROR(ENOSYS);
++
+     ranges = av_mallocz(sizeof(struct AVOptionRanges));
+     if (!ranges)
+         goto err;
+@@ -457,7 +573,7 @@ int ff_bluelet_capbility_query_ranges(struct AVOptionRanges **ranges_, void *obj
+     ranges->nb_components = 1;
+ 
+     if (!strcmp(key, "sample_fmts")) {
+-        while (codec->sample_fmts[nb] != AV_SAMPLE_FMT_NONE) nb++;
++        while (sample_fmts[nb] != AV_SAMPLE_FMT_NONE) nb++;
+ 
+         ranges->range = av_mallocz(sizeof(AVOptionRange*) * nb);
+         if (!ranges->range)
+@@ -468,7 +584,7 @@ int ff_bluelet_capbility_query_ranges(struct AVOptionRanges **ranges_, void *obj
+             ranges->range[i] = av_mallocz(sizeof(AVOptionRange));
+             if (!ranges->range[i])
+                 goto err;
+-            ranges->range[i]->value_min = codec->sample_fmts[i];
++            ranges->range[i]->value_min = sample_fmts[i];
+             ranges->range[i]->value_max = ranges->range[i]->value_min;
+         }
+ 
+@@ -497,7 +613,7 @@ int ff_bluelet_capbility_query_ranges(struct AVOptionRanges **ranges_, void *obj
+         ranges->range[0]->value_max = priv->sample_rate;
+ 
+     } else if (!strcmp(key, "codecs")) {
+-        while (codec->sample_fmts[nb] != AV_SAMPLE_FMT_NONE) nb++;
++        while (sample_fmts[nb] != AV_SAMPLE_FMT_NONE) nb++;
+ 
+         ranges->range = av_mallocz(sizeof(AVOptionRange*) * nb);
+         if (!ranges->range)
+@@ -508,7 +624,7 @@ int ff_bluelet_capbility_query_ranges(struct AVOptionRanges **ranges_, void *obj
+             ranges->range[i] = av_mallocz(sizeof(AVOptionRange));
+             if (!ranges->range[i])
+                 goto err;
+-            ranges->range[i]->value_min = av_get_pcm_codec(codec->sample_fmts[i], -1);
++            ranges->range[i]->value_min = av_get_pcm_codec(sample_fmts[i], -1);
+             ranges->range[i]->value_max = ranges->range[i]->value_min;
+         }
+ 
+@@ -535,6 +651,7 @@ int ff_bluelet_handle_uorb_event(BlueletPriv *priv)
+     if (ret < 0)
+         return ret;
+ 
++    priv->capture_reconnect_allowed = state.state == BT_STACK_STATE_ON;
+     if (state.state == BT_STACK_STATE_ON)
+         ret = ff_bluelet_connect(priv, priv->nonblock);
+     else
+@@ -550,6 +667,10 @@ int ff_bluelet_handle_event(BlueletPriv *priv)
+     uint8_t event;
+     int action = BLUELET_ACTION_NONE;
+ 
++    ret = ff_bluelet_collect_ctrl(priv);
++    if (ret < 0)
++        return !priv->playback && ret != AVERROR(EAGAIN) ? ret : action;
++    priv->ctrl_offset = 0;
+     ret = ff_bluelet_recv_ctrl(priv, &event, 1);
+     if (ret < 0)
+         return action;
+@@ -566,8 +687,38 @@ int ff_bluelet_handle_event(BlueletPriv *priv)
+     case BLUELET_CTRL_EVT_STOPPED:
+         /* The A2DP codec configurations remain unchanged when audio stream is suspended */
+         if (strcmp(priv->mode, "lea") == 0) {
+-            action = BLUELET_ACTION_CONFIG;
+-            priv->state = BLUELET_STATE_IDLE;
++            action = BLUELET_ACTION_AVAILABLE;
++            priv->state = priv->codec_id != AV_CODEC_ID_NONE ?
++                          BLUELET_STATE_CONFIGED : BLUELET_STATE_IDLE;
++        }
++        break;
++    case BLUELET_CTRL_EVT_DRAINED:
++        if (priv->drain_requested && AV_RL64(priv->ctrl_buffer + 1) == priv->drain_target) {
++            priv->drain_complete = true;
++            action = BLUELET_ACTION_AVAILABLE;
++        }
++        break;
++    case BLUELET_CTRL_EVT_DRAIN_FAIL:
++        priv->drain_error = AVERROR(EIO);
++        action = BLUELET_ACTION_AVAILABLE;
++        break;
++    case BLUELET_CTRL_EVT_DISCARDED:
++        if (priv->discard_requested && AV_RL64(priv->ctrl_buffer + 1) == priv->discard_target) {
++            priv->discard_complete = true;
++            action = BLUELET_ACTION_AVAILABLE;
++        }
++        break;
++    case BLUELET_CTRL_EVT_DISCARD_FAIL:
++        priv->discard_error = AVERROR(EIO);
++        action = BLUELET_ACTION_AVAILABLE;
++        break;
++    case BLUELET_CTRL_EVT_CAPTURE_END:
++        if (!priv->playback && !strcmp(priv->mode, "lea")) {
++            if (!priv->capture_end_pending)
++                priv->capture_end_deadline_us = av_gettime_relative() + 500000;
++            priv->capture_end_target = AV_RL64(priv->ctrl_buffer + 1);
++            priv->capture_end_pending = true;
++            action = BLUELET_ACTION_AVAILABLE;
+         }
+         break;
+     case BLUELET_CTRL_EVT_UPDATE_CONFIG:
+@@ -577,6 +728,7 @@ int ff_bluelet_handle_event(BlueletPriv *priv)
+         break;
+     }
+ 
++    priv->ctrl_used = priv->ctrl_offset = 0;
+     return action;
+ }
+ 
+@@ -601,6 +753,7 @@ int ff_bluelet_stop(BlueletPriv *priv)
+ {
+     uint8_t cmd = BLUELET_CTRL_CMD_STOP;
+ 
++    priv->drain_pending = false;
+     if (priv->state == BLUELET_STATE_STARTING || priv->state == BLUELET_STATE_STARTED) {
+         priv->state = BLUELET_STATE_CONFIGED;
+         return ff_bluelet_send_ctrl(priv, &cmd, 1);
+@@ -608,3 +761,107 @@ int ff_bluelet_stop(BlueletPriv *priv)
+ 
+     return 0;
+ }
++
++/* The acknowledgement covers bytes passed to the source SDU callback. It does
++ * not claim reception or presentation by a wireless peer. */
++int ff_bluelet_drain(BlueletPriv *priv)
++{
++    int ret;
++
++    if (strcmp(priv->mode, "lea"))
++        return AVERROR(ENOSYS);
++    if (priv->drain_error)
++        return priv->drain_error;
++    if (priv->drain_complete)
++        return 0;
++    if (priv->state != BLUELET_STATE_STARTED)
++        return AVERROR(EPIPE);
++    /* Retain write interest even if the first send accepted zero bytes. */
++    priv->drain_pending = true;
++    if (!priv->drain_requested) {
++        if (!priv->drain_offset) {
++            priv->drain_target = priv->written_bytes;
++            priv->drain_request[0] = BLUELET_CTRL_CMD_DRAIN;
++            AV_WL64(priv->drain_request + 1, priv->drain_target);
++        }
++        while (priv->drain_offset < sizeof(priv->drain_request)) {
++            ret = send(priv->ctrl_fd, priv->drain_request + priv->drain_offset,
++                       sizeof(priv->drain_request) - priv->drain_offset, MSG_NOSIGNAL);
++            if (ret < 0) {
++                if (errno == EINTR)
++                    continue;
++                return AVERROR(errno);
++            }
++            if (!ret)
++                return AVERROR(EPIPE);
++            priv->drain_offset += ret;
++        }
++        priv->drain_requested = true;
++    }
++    return AVERROR(EAGAIN);
++}
++
++/* Control and audio use separate streams. A stop must discard every accepted
++ * audio byte before the next playback can reuse the data connection. */
++int ff_bluelet_discard(BlueletPriv *priv)
++{
++    int ret;
++
++    if (strcmp(priv->mode, "lea"))
++        return AVERROR(ENOSYS);
++    if (priv->discard_error)
++        return priv->discard_error;
++    if (priv->discard_complete)
++        return 0;
++    if (priv->discard_pending &&
++        av_gettime_relative() - priv->discard_started_us >= 500000) {
++        /* A lost acknowledgement must not leave shutdown waiting forever or
++         * allow another playback to reuse an uncertain byte boundary. */
++        ff_bluelet_disconnect(priv);
++        priv->discard_error = AVERROR(ETIMEDOUT);
++        return priv->discard_error;
++    }
++    if (priv->state != BLUELET_STATE_STARTED &&
++        priv->state != BLUELET_STATE_STARTING && !priv->discard_pending)
++        return AVERROR(EPIPE);
++
++    if (!priv->discard_pending)
++        priv->discard_started_us = av_gettime_relative();
++    priv->discard_pending = true;
++    /* Complete any partially transmitted drain command before emitting a
++     * different command; otherwise its remaining bytes become a false target. */
++    while (priv->drain_offset && priv->drain_offset < sizeof(priv->drain_request)) {
++        ret = send(priv->ctrl_fd, priv->drain_request + priv->drain_offset,
++                   sizeof(priv->drain_request) - priv->drain_offset, MSG_NOSIGNAL);
++        if (ret < 0) {
++            if (errno == EINTR)
++                continue;
++            return AVERROR(errno);
++        }
++        if (!ret)
++            return AVERROR(EPIPE);
++        priv->drain_offset += ret;
++    }
++    priv->drain_pending = false;
++    if (!priv->discard_requested) {
++        if (!priv->discard_offset) {
++            priv->discard_target = priv->written_bytes;
++            priv->discard_request[0] = BLUELET_CTRL_CMD_DISCARD;
++            AV_WL64(priv->discard_request + 1, priv->discard_target);
++        }
++        while (priv->discard_offset < sizeof(priv->discard_request)) {
++            ret = send(priv->ctrl_fd, priv->discard_request + priv->discard_offset,
++                       sizeof(priv->discard_request) - priv->discard_offset, MSG_NOSIGNAL);
++            if (ret < 0) {
++                if (errno == EINTR)
++                    continue;
++                return AVERROR(errno);
++            }
++            if (!ret)
++                return AVERROR(EPIPE);
++            priv->discard_offset += ret;
++        }
++        priv->discard_requested = true;
++    }
++    return AVERROR(EAGAIN);
++}
+diff --git a/libavdevice/bluelet.h b/libavdevice/bluelet.h
+index c4cba7f727649b51627a604735d089d178c544d8..a39c2af38599305a8c2d47a8c1a7c35b6e80903c 100644
+--- a/libavdevice/bluelet.h
++++ b/libavdevice/bluelet.h
+@@ -27,7 +27,7 @@
+ #define AVDEVICE_BLUELET_H
+ 
+ #include "avdevice.h"
+-#include "avcodec.h"
++#include "libavcodec/avcodec.h"
+ #include <stdbool.h>
+ 
+ /****************************************************************************
+@@ -75,6 +75,10 @@ typedef struct BlueletPriv {
+     enum AVCodecID  codec_id;
+     bluelet_state_t state;
+     bool            nonblock;
++    bool            initialized;
++    uint8_t         ctrl_buffer[50];
++    unsigned        ctrl_used;
++    unsigned        ctrl_offset;
+ #ifdef CONFIG_UORB
+     int             uorb_fd;
+ #endif
+@@ -87,11 +91,40 @@ typedef struct BlueletPriv {
+     union {
+         bluelet_aac_t aac;
+         bluelet_sbc_t sbc;
++        struct {
++            int frame_us;
++        } lc3;
+     };
++    AVPacket*       partial_pkt;
++    int             partial_size;
+     AVChannelLayout ch_layout;
+ 
+     int64_t recv_ts;
+     int64_t send_ts;
++    uint64_t written_bytes;
++    uint64_t drain_target;
++    uint8_t drain_request[9];
++    unsigned drain_offset;
++    bool drain_pending;
++    bool drain_requested;
++    bool drain_complete;
++    int drain_error;
++    uint64_t discard_target;
++    uint8_t discard_request[9];
++    unsigned discard_offset;
++    bool discard_pending;
++    bool discard_requested;
++    bool discard_complete;
++    int discard_error;
++    int64_t discard_started_us;
++    uint64_t received_bytes;
++    uint64_t capture_end_target;
++    uint64_t capture_discarded_bytes;
++    bool capture_end_pending;
++    int64_t capture_end_deadline_us;
++    int64_t capture_retry_us;
++    int capture_timer_fd;
++    bool capture_reconnect_allowed;
+ } BlueletPriv;
+ 
+ /*****************************************************************************
+@@ -100,10 +133,14 @@ typedef struct BlueletPriv {
+ 
+ int ff_bluelet_start(BlueletPriv* priv);
+ int ff_bluelet_stop(BlueletPriv* priv);
++int ff_bluelet_drain(BlueletPriv* priv);
++int ff_bluelet_discard(BlueletPriv* priv);
+ int ff_bluelet_init(BlueletPriv* priv, bool nonblock);
+ int ff_bluelet_disconnect(BlueletPriv *priv);
++int ff_bluelet_connect(BlueletPriv *priv, bool nonblock);
+ void ff_bluelet_deinit(BlueletPriv* priv);
+ int ff_bluelet_read_buffer(BlueletPriv* priv, void* buffer, size_t bytes);
++int ff_bluelet_discard_input(BlueletPriv* priv);
+ int ff_bluelet_write_buffer(BlueletPriv* priv, void* buffer, size_t bytes);
+ #ifdef CONFIG_UORB
+ int ff_bluelet_handle_uorb_event(BlueletPriv *priv);
+diff --git a/libavdevice/bluelet_dec.c b/libavdevice/bluelet_dec.c
+index aad147e641b44a2e885cad035e90e03e30d20727..ab6dfdc69f507a8fd594c91f70619a311db5d39c 100644
+--- a/libavdevice/bluelet_dec.c
++++ b/libavdevice/bluelet_dec.c
+@@ -28,25 +28,118 @@
+  * which gives a low latency suitable for real-time capture.
+  */
+ 
++#include <stdbool.h>
+ #include "libavformat/internal.h"
++#include "libavformat/demux.h"
++#include "libavutil/intreadwrite.h"
++#include "libavutil/mem.h"
++#include "libavutil/opt.h"
+ #include "libavfilter/filters.h"
+ #include "libavutil/time.h"
+ #include "bluelet.h"
+ 
+ #include <poll.h>
++#include <sys/socket.h>
++#include <sys/timerfd.h>
++#include <unistd.h>
+ 
+ static const AVClass bluelet_dec_cap_class;
++static int bluelet_dec_init(struct AVFormatContext *ctx);
++#define AVFMT_FLAG_CODEC_READY 0x20000
+ 
+-static int bluelet_read_close(AVFormatContext *ctx)
++/* One timer belongs to the input device, not to an individual capture. It
++ * wakes the MEDIA poll loop even when no socket can produce another event. */
++static int bluelet_arm_timer(BlueletPriv *priv)
++{
++    struct itimerspec timer = { 0 };
++    int64_t deadline = priv->capture_retry_us;
++    int64_t remaining;
++
++    if (priv->capture_timer_fd < 0)
++        return 0;
++    if (priv->capture_end_pending &&
++        (!deadline || priv->capture_end_deadline_us < deadline))
++        deadline = priv->capture_end_deadline_us;
++    if (deadline) {
++        remaining = FFMAX(deadline - av_gettime_relative(), 1);
++        timer.it_value.tv_sec = remaining / 1000000;
++        timer.it_value.tv_nsec = (remaining % 1000000) * 1000;
++    }
++    return timerfd_settime(priv->capture_timer_fd, 0, &timer, NULL) < 0 ?
++           AVERROR(errno) : 0;
++}
++
++static int bluelet_capture_failed(AVFormatContext *ctx, int error)
++{
++    BlueletPriv *priv = ctx->priv_data;
++
++    av_log(ctx, AV_LOG_ERROR, "Capture connection ended: %d\n", error);
++    ff_bluelet_disconnect(priv);
++    priv->start = 0;
++    priv->available = false;
++    priv->codec_id = AV_CODEC_ID_NONE;
++    priv->capture_retry_us = priv->capture_reconnect_allowed ?
++                             av_gettime_relative() + 200000 : 0;
++    avdevice_dev_to_app_control_message(ctx, AV_DEV_TO_APP_STATE_CHANGED, NULL, 0);
++    return bluelet_arm_timer(priv);
++}
++
++static int bluelet_capture_timer(AVFormatContext *ctx)
++{
++    BlueletPriv *priv = ctx->priv_data;
++    uint64_t expirations;
++    int64_t now = av_gettime_relative();
++    int ret;
++
++    do {
++        ret = read(priv->capture_timer_fd, &expirations, sizeof(expirations));
++    } while (ret < 0 && errno == EINTR);
++    if (ret < 0 && errno != EAGAIN)
++        return AVERROR(errno);
++    if (priv->capture_end_pending && now >= priv->capture_end_deadline_us)
++        return bluelet_capture_failed(ctx, AVERROR(ETIMEDOUT));
++    if (priv->capture_retry_us && now >= priv->capture_retry_us) {
++        /* Incomplete connects also have a deadline. Discard both endpoints
++         * together; their byte counters are valid only for the same session. */
++        ff_bluelet_disconnect(priv);
++        ret = ff_bluelet_connect(priv, true);
++        if (ret < 0) {
++            ff_bluelet_disconnect(priv);
++            priv->capture_retry_us = now + 200000;
++        } else {
++            priv->capture_retry_us = now + 2000000;
++        }
++    }
++    return bluelet_arm_timer(priv);
++}
++
++static void bluelet_end_stream(AVFormatContext *ctx)
+ {
+     BlueletPriv *priv = ctx->priv_data;
+ 
++    av_packet_free(&priv->partial_pkt);
++    priv->partial_size = 0;
+     if (priv->st) {
+         ff_remove_stream(ctx, priv->st);
+         priv->st = NULL;
+     }
++    priv->available = false;
++    priv->start = 0;
++}
++
++static int bluelet_read_close(AVFormatContext *ctx)
++{
++    BlueletPriv *priv = ctx->priv_data;
+ 
+-    return ff_bluelet_stop(priv);
++    bluelet_end_stream(ctx);
++    ff_bluelet_stop(priv);
++    ff_bluelet_deinit(priv);
++    if (priv->initialized && priv->capture_timer_fd >= 0)
++        close(priv->capture_timer_fd);
++    priv->capture_timer_fd = -1;
++    priv->capture_retry_us = 0;
++    priv->initialized = false;
++    return 0;
+ }
+ 
+ static av_cold int bluelet_read_header(AVFormatContext *ctx)
+@@ -54,9 +147,26 @@ static av_cold int bluelet_read_header(AVFormatContext *ctx)
+     BlueletPriv *priv = ctx->priv_data;
+     int ret;
+ 
++    if (!priv->initialized) {
++        ret = bluelet_dec_init(ctx);
++        if (ret < 0)
++            return ret;
++        priv->initialized = true;
++    }
++    if (!(ctx->flags & AVFMT_FLAG_CODEC_READY))
++        return 0;
++
+     if (!priv->start)
+         return AVERROR_EOF;
+ 
++    ret = ff_bluelet_discard_input(priv);
++    if (ret < 0) {
++        if (ret == AVERROR(EAGAIN))
++            return ret;
++        bluelet_capture_failed(ctx, ret);
++        return AVERROR_EOF;
++    }
++
+     priv->st = avformat_new_stream(ctx, NULL);
+     if (!priv->st)
+         return AVERROR(ENOMEM);
+@@ -74,10 +184,20 @@ static av_cold int bluelet_read_header(AVFormatContext *ctx)
+     priv->st->codecpar->frame_size  = priv->frame_size;
+     priv->st->codecpar->bit_rate    = priv->bit_rate;
+     priv->st->codecpar->ch_layout   = priv->ch_layout;
+-    priv->st->codecpar->channels    = priv->channels;
+     priv->st->codecpar->format      = priv->sample_fmt;
+     av_channel_layout_copy(&priv->st->codecpar->ch_layout, &priv->ch_layout);
+-    avpriv_set_pts_info(priv->st, 64, 1, 1000000);  /* 64 bits pts in us */
++    if (priv->codec_id == AV_CODEC_ID_LC3) {
++        /* liblc3 expects duration (10 us), EP mode and HR mode in LE16. */
++        priv->st->codecpar->extradata = av_mallocz(6 + AV_INPUT_BUFFER_PADDING_SIZE);
++        if (!priv->st->codecpar->extradata) {
++            bluelet_read_close(ctx);
++            return AVERROR(ENOMEM);
++        }
++        priv->st->codecpar->extradata_size = 6;
++        AV_WL16(priv->st->codecpar->extradata, priv->lc3.frame_us / 10);
++    }
++    avpriv_set_pts_info(priv->st, 64, 1,
++                       priv->codec_id == AV_CODEC_ID_LC3 ? priv->sample_rate : 1000000);
+ 
+     return 0;
+ }
+@@ -87,9 +207,49 @@ static int bluelet_read_packet(AVFormatContext *ctx, AVPacket *pkt)
+     BlueletPriv *priv = ctx->priv_data;
+     int ret;
+ 
++    /* A readiness notification does not guarantee a complete SDU. Re-arm
++     * data polling even when the next read returns EAGAIN. */
++    priv->available = false;
+     if (!priv->start)
+         return AVERROR_EOF;
+ 
++    if (priv->codec_id == AV_CODEC_ID_LC3) {
++        /* A stream socket may split an SDU at any byte. Keep incomplete
++         * frames across EAGAIN instead of giving the decoder truncated data.
++         */
++        if (!priv->partial_pkt) {
++            priv->partial_pkt = av_packet_alloc();
++            if (!priv->partial_pkt)
++                return AVERROR(ENOMEM);
++        }
++        if (!priv->partial_pkt->data) {
++            ret = av_new_packet(priv->partial_pkt, priv->packet_size);
++            if (ret < 0)
++                return ret;
++        }
++        ret = ff_bluelet_read_buffer(priv,
++                                    priv->partial_pkt->data + priv->partial_size,
++                                    priv->packet_size - priv->partial_size);
++        if (ret < 0) {
++            if (ret != AVERROR(EAGAIN)) {
++                av_packet_unref(priv->partial_pkt);
++                priv->partial_size = 0;
++                bluelet_capture_failed(ctx, ret);
++                return AVERROR_EOF;
++            }
++            return ret;
++        }
++        priv->partial_size += ret;
++        priv->available = false;
++        if (priv->partial_size < priv->packet_size)
++            return AVERROR(EAGAIN);
++        av_packet_move_ref(pkt, priv->partial_pkt);
++        priv->partial_size = 0;
++        pkt->pts = AV_NOPTS_VALUE;
++        pkt->duration = priv->frame_size;
++        return 0;
++    }
++
+     ret = av_new_packet(pkt, priv->packet_size);
+     if (ret < 0)
+         return AVERROR(EIO);
+@@ -110,21 +270,46 @@ static int bluelet_read_packet(AVFormatContext *ctx, AVPacket *pkt)
+ static int bluelet_dec_init(struct AVFormatContext *ctx)
+ {
+     BlueletPriv *priv = ctx->priv_data;
++    int ret;
+ 
+     priv->playback  = false;
+     priv->available = false;
+     priv->ctrl_connected = false;
+     priv->data_connected = false;
+     priv->codec_id  = AV_CODEC_ID_NONE;
+-
+-    return ff_bluelet_init(priv, !!(ctx->flags & AVFMT_FLAG_NONBLOCK));
+-}
+-
+-static void bluelet_dec_deinit(struct AVFormatContext *ctx)
+-{
+-    BlueletPriv *priv = ctx->priv_data;
+-
+-    ff_bluelet_deinit(priv);
++    if (ctx->url && !strcmp(ctx->url, "lea"))
++        av_opt_set(priv, "mode", "lea", 0);
++
++    priv->capture_timer_fd = -1;
++    if (!strcmp(priv->mode, "lea")) {
++        priv->capture_timer_fd = timerfd_create(CLOCK_MONOTONIC, TFD_CLOEXEC | TFD_NONBLOCK);
++        if (priv->capture_timer_fd < 0)
++            return AVERROR(errno);
++#ifndef CONFIG_UORB
++        priv->capture_reconnect_allowed = true;
++#endif
++    }
++    ret = ff_bluelet_init(priv, priv->capture_timer_fd >= 0 || !!(ctx->flags & AVFMT_FLAG_NONBLOCK));
++    if (ret < 0 && !priv->capture_reconnect_allowed) {
++        ff_bluelet_deinit(priv);
++        if (priv->capture_timer_fd >= 0)
++            close(priv->capture_timer_fd);
++        priv->capture_timer_fd = -1;
++        return ret;
++    }
++    if (priv->capture_reconnect_allowed) {
++        if (ret < 0)
++            ff_bluelet_disconnect(priv);
++        priv->capture_retry_us = av_gettime_relative() + (ret < 0 ? 200000 : 2000000);
++    }
++    ret = bluelet_arm_timer(priv);
++    if (ret < 0) {
++        ff_bluelet_deinit(priv);
++        if (priv->capture_timer_fd >= 0)
++            close(priv->capture_timer_fd);
++        priv->capture_timer_fd = -1;
++    }
++    return ret;
+ }
+ 
+ static int bluelet_dec_control_message(struct AVFormatContext *ctx, int type,
+@@ -150,9 +335,19 @@ static int bluelet_dec_control_message(struct AVFormatContext *ctx, int type,
+             av_opt_set_defaults(caps);
+             return 0;
+         }
+-        case AV_APP_TO_DEV_GET_POLLFD:
+-            if (!data || data_size < sizeof(struct pollfd) * 2)
++        case AV_APP_TO_DEV_GET_POLLFD: {
++            unsigned needed = (priv->ctrl_fd > 0) +
++                              (priv->data_fd > 0 && !priv->available) +
++                              (priv->capture_timer_fd >= 0);
++#ifdef CONFIG_UORB
++            needed += priv->uorb_fd > 0;
++#endif
++            if (!data || data_size / sizeof(*poll) < needed)
+                 return AVERROR(EINVAL);
++            if (priv->capture_timer_fd >= 0) {
++                poll[ret].fd = priv->capture_timer_fd;
++                poll[ret++].events = POLLIN;
++            }
+ 
+             if (priv->ctrl_fd > 0) {
+                 poll[ret].fd     = priv->ctrl_fd;
+@@ -174,39 +369,66 @@ static int bluelet_dec_control_message(struct AVFormatContext *ctx, int type,
+ #endif
+ 
+             break;
++        }
+         case AV_APP_TO_DEV_POLL_AVAILABLE:
+-            if (poll->revents & (POLLERR | POLLHUP)) {
+-                ff_bluelet_disconnect(priv);
+-                return 0;
++            if (!poll || data_size < sizeof(*poll))
++                return AVERROR(EINVAL);
++            if (poll->fd == priv->capture_timer_fd)
++                return bluelet_capture_timer(ctx);
++#ifdef CONFIG_UORB
++            if (poll->fd == priv->uorb_fd) {
++                ret = ff_bluelet_handle_uorb_event(priv);
++                if (!priv->capture_reconnect_allowed)
++                    return bluelet_capture_failed(ctx, AVERROR(ENOTCONN));
++                priv->capture_retry_us = av_gettime_relative() + (ret < 0 ? 200000 : 2000000);
++                return bluelet_arm_timer(priv);
+             }
++#endif
++            /* Another descriptor in the same poll batch may have closed the
++             * pair already. Never treat its stale event as a new connection. */
++            if (poll->fd != priv->ctrl_fd && poll->fd != priv->data_fd)
++                return 0;
++            if (poll->revents & (POLLERR | POLLHUP | POLLNVAL))
++                return bluelet_capture_failed(ctx, AVERROR(ENOTCONN));
+ 
+             if (poll->revents & POLLOUT) {
++                int error = 0;
++                socklen_t size = sizeof(error);
++                if (getsockopt(poll->fd, SOL_SOCKET, SO_ERROR, &error, &size) < 0)
++                    error = errno;
++                if (error)
++                    return bluelet_capture_failed(ctx, AVERROR(error));
+                 if (priv->ctrl_fd == poll->fd) {
+                     priv->available = false;
+                     priv->ctrl_connected = true;
+-                } else
++                } else {
+                     priv->data_connected = true;
++                }
++                if (priv->ctrl_connected && priv->data_connected)
++                    priv->capture_retry_us = 0;
+             }
+ 
+             if (poll->revents & POLLIN) {
+                 if (priv->ctrl_fd == poll->fd) {
+                     int action = ff_bluelet_handle_event(priv);
+-                    if (action == BLUELET_ACTION_AVAILABLE) {
++                    if (action < 0)
++                        return bluelet_capture_failed(ctx, action);
++                    ret = ff_bluelet_discard_input(priv);
++                    if (ret < 0 && ret != AVERROR(EAGAIN))
++                        return bluelet_capture_failed(ctx, ret);
++                    if (action == BLUELET_ACTION_AVAILABLE)
+                         avdevice_dev_to_app_control_message(ctx, AV_DEV_TO_APP_BUFFER_READABLE, NULL, 0);
+-                    } else if (action == BLUELET_ACTION_CONFIG) {
++                    else if (action == BLUELET_ACTION_CONFIG)
+                         avdevice_dev_to_app_control_message(ctx, AV_DEV_TO_APP_STATE_CHANGED, NULL, 0);
+-                    }
+-                } else if (priv->data_fd == poll->fd) {
+-                    priv->available = true;
++                } else {
++                    ret = ff_bluelet_discard_input(priv);
++                    if (ret < 0 && ret != AVERROR(EAGAIN))
++                        return bluelet_capture_failed(ctx, ret);
++                    priv->available = ret >= 0;
+                     avdevice_dev_to_app_control_message(ctx, AV_DEV_TO_APP_BUFFER_READABLE, NULL, 0);
+                 }
+-#ifdef CONFIG_UORB
+-                else if (priv->uorb_fd == poll->fd)
+-                    ff_bluelet_handle_uorb_event(priv);
+-#endif
+             }
+-
+-            break;
++            return bluelet_arm_timer(priv);
+         case AV_APP_TO_DEV_START:
+             ff_bluelet_start(priv);
+             priv->start = 1;
+@@ -219,6 +441,9 @@ static int bluelet_dec_control_message(struct AVFormatContext *ctx, int type,
+             avdevice_dev_to_app_control_message(ctx, AV_DEV_TO_APP_STATE_CHANGED, NULL, 0);
+ 
+             return 0;
++        case AV_APP_TO_DEV_END_STREAM:
++            bluelet_end_stream(ctx);
++            return ff_bluelet_stop(priv);
+         case AV_APP_TO_DEV_DUMP:
+             snprintf(data, data_size, "%s|%s|%d|%d|%d,%d",
+                      priv->server_name, priv->mode ,priv->codec_id, priv->state, priv->ctrl_fd, priv->data_fd);
+@@ -253,11 +478,26 @@ static const AVClass bluelet_dec_cap_class = {
+     .query_ranges = bluelet_dec_capbility_query_ranges,
+ };
+ 
++static int bluelet_dec_query_ranges(struct AVOptionRanges **ranges, void *obj,
++                                    const char *key, int flags)
++{
++    AVFormatContext *ctx = obj;
++    AVDeviceCapabilitiesQuery caps = { .device_context = ctx };
++    if (!strcmp(key, "control_message")) {
++        *ranges = av_mallocz(sizeof(**ranges));
++        if (!*ranges)
++            return AVERROR(ENOMEM);
++        (*ranges)->range = (AVOptionRange **)bluelet_dec_control_message;
++        return 0;
++    }
++    return bluelet_dec_capbility_query_ranges(ranges, &caps, key, flags);
++}
++
+ #define OFFSET(x) offsetof(BlueletPriv, x)
+ #define FLAGS AV_OPT_FLAG_DECODING_PARAM|AV_OPT_FLAG_AUDIO_PARAM
+ static const AVOption options[] = {
+-    { "sample_rate", "Set sample rate", OFFSET(sample_rate), AV_OPT_TYPE_INT,    {.i64 = 48000},     1, INT_MAX, FLAGS },
+-    { "channels",    "Set channels",    OFFSET(channels),    AV_OPT_TYPE_INT,    {.i64 = 2},         1, INT_MAX, FLAGS },
++    { "sample_rate", "Negotiated sample rate", OFFSET(sample_rate), AV_OPT_TYPE_INT, {.i64 = 48000}, 1, INT_MAX, FLAGS | AV_OPT_FLAG_READONLY },
++    { "channels",    "Negotiated channels",    OFFSET(channels),    AV_OPT_TYPE_INT, {.i64 = 2},     1, INT_MAX, FLAGS | AV_OPT_FLAG_READONLY },
+     { "server_name", "Set server name", OFFSET(server_name), AV_OPT_TYPE_STRING, { .str = "local" }, 0, 0,       FLAGS },
+     { "auto",        "Auto Start",      OFFSET(start),       AV_OPT_TYPE_INT,    {.i64 = 0},         0, INT_MAX, FLAGS },
+     { "mode", "Audio mode", OFFSET(mode), AV_OPT_TYPE_STRING, { .str = "a2dp" }, 0, 0,       FLAGS },
+@@ -270,18 +510,16 @@ static const AVClass bluelet_demuxer_class = {
+     .option     = options,
+     .version    = LIBAVUTIL_VERSION_INT,
+     .category   = AV_CLASS_CATEGORY_DEVICE_AUDIO_INPUT,
++    .query_ranges = bluelet_dec_query_ranges,
+ };
+ 
+-const AVInputFormat ff_bluelet_demuxer = {
+-    .name                       = "bluelet",
+-    .long_name                  = NULL_IF_CONFIG_SMALL("BLUELET audio input"),
++const FFInputFormat ff_bluelet_demuxer = {
++    .p.name                     = "bluelet",
++    .p.long_name                = NULL_IF_CONFIG_SMALL("BLUELET audio input"),
+     .priv_data_size             = sizeof(BlueletPriv),
+     .read_header                = bluelet_read_header,
+     .read_packet                = bluelet_read_packet,
+-    .init                       = bluelet_dec_init,
+-    .deinit                     = bluelet_dec_deinit,
+-    .control_message            = bluelet_dec_control_message,
+     .read_close                 = bluelet_read_close,
+-    .flags                      = AVFMT_NOFILE,
+-    .priv_class                 = &bluelet_demuxer_class,
++    .p.flags                    = AVFMT_NOFILE,
++    .p.priv_class               = &bluelet_demuxer_class,
+ };
+diff --git a/libavdevice/bluelet_enc.c b/libavdevice/bluelet_enc.c
+index e4cca6458311362d8c03205a1aa7ae8442856519..31a5632a6d9355d956030460659889a3e3a65f91 100644
+--- a/libavdevice/bluelet_enc.c
++++ b/libavdevice/bluelet_enc.c
+@@ -51,7 +51,11 @@ static int bluelet_enc_init(struct AVFormatContext *ctx)
+     priv->playback = true;
+     priv->recv_ts = 0;
+     priv->send_ts = 0;
+-    ff_bluelet_init(priv, !!(ctx->flags & AVFMT_FLAG_NONBLOCK));
++    if (ctx->url && !strcmp(ctx->url, "lea"))
++        av_opt_set(priv, "mode", "lea", 0);
++    int ret = ff_bluelet_init(priv, !!(ctx->flags & AVFMT_FLAG_NONBLOCK));
++    if (ret < 0)
++        return ret;
+ 
+     return 1;
+ }
+@@ -77,6 +81,17 @@ static int bluelet_write_header(AVFormatContext *ctx)
+ 
+     priv->recv_ts = 0;
+     priv->send_ts = 0;
++    priv->written_bytes = 0;
++    priv->drain_pending = false;
++    priv->drain_requested = false;
++    priv->drain_complete = false;
++    priv->drain_offset = 0;
++    priv->drain_error = 0;
++    priv->discard_pending = false;
++    priv->discard_requested = false;
++    priv->discard_complete = false;
++    priv->discard_offset = 0;
++    priv->discard_error = 0;
+ 
+     ret = ff_bluelet_start(priv);
+     if (ret >= 0)
+@@ -192,7 +207,10 @@ static int bluelet_enc_control_message(struct AVFormatContext *ctx, int type,
+ 
+             if (priv->ctrl_fd > 0) {
+                 poll[ret].fd = priv->ctrl_fd;
+-                poll[ret].events = priv->ctrl_connected ? POLLIN : POLLOUT;;
++                poll[ret].events = priv->ctrl_connected ? POLLIN : POLLOUT;
++                if ((priv->drain_pending && !priv->drain_requested) ||
++                    (priv->discard_pending && !priv->discard_requested))
++                    poll[ret].events |= POLLOUT;
+                 ret++;
+             }
+             if (priv->data_fd > 0 && priv->lastpkt != NULL) {
+@@ -219,8 +237,10 @@ static int bluelet_enc_control_message(struct AVFormatContext *ctx, int type,
+                 return AVERROR(EINVAL);
+ 
+             if (priv->ctrl_fd == poll->fd) {
+-                if (poll->revents & POLLOUT)
++                if (poll->revents & POLLOUT) {
+                     priv->ctrl_connected = true;
++                    avdevice_dev_to_app_control_message(ctx, AV_DEV_TO_APP_BUFFER_WRITABLE, NULL, 0);
++                }
+ 
+                 if (poll->revents & POLLIN) {
+                     int action = ff_bluelet_handle_event(priv);
+@@ -267,11 +287,28 @@ static int bluelet_enc_control_message(struct AVFormatContext *ctx, int type,
+                     av_dict_set_int(dict, "vbr", priv->aac.vbr, 0);
+                     av_dict_set_int(dict, "latm", 1, 0);
+                     av_dict_set_int(dict, "peak", 1, 0);
++                } else if (priv->codec_id == AV_CODEC_ID_LC3) {
++                    av_dict_set(dict, "frame_duration",
++                                priv->lc3.frame_us == 7500 ? "7.5" : "10", 0);
++                    av_dict_set_int(dict, "high_resolution", 0, 0);
+                 }
+                 return 0;
+             }
+             break;
+         }
++        case AV_APP_TO_DEV_DRAIN:
++            return ff_bluelet_drain(priv);
++        case AV_APP_TO_DEV_FLUSH:
++            /* This packet contains only bytes not yet accepted by the data
++             * socket. The discard boundary accounts for its written prefix. */
++            av_packet_free(&priv->lastpkt);
++            return ff_bluelet_discard(priv);
++        case AV_APP_TO_DEV_PLAY:
++        case AV_APP_TO_DEV_START:
++            return ff_bluelet_start(priv);
++        case AV_APP_TO_DEV_PAUSE:
++        case AV_APP_TO_DEV_STOP:
++            return ff_bluelet_stop(priv);
+         case AV_APP_TO_DEV_DUMP: {
+             snprintf(data, data_size, "%s|%s|%d|%p|%d,%d",
+                      priv->server_name, priv->mode, priv->state, priv->lastpkt, priv->ctrl_fd, priv->data_fd);
+@@ -292,6 +329,8 @@ static int bluelet_enc_capbility_query_ranges(struct AVOptionRanges **ranges_, v
+     BlueletPriv *priv = devcap->device_context->priv_data;
+     const AVCodec *codec;
+ 
++    if (!priv->codec_id || !priv->sample_rate || !priv->channels)
++        return AVERROR(EAGAIN);
+     codec = avcodec_find_encoder(priv->codec_id);
+     if (!codec)
+         return AVERROR(EINVAL);
+@@ -307,6 +346,13 @@ static const AVClass bluelet_enc_cap_class = {
+     .query_ranges = bluelet_enc_capbility_query_ranges,
+ };
+ 
++static int bluelet_enc_query_ranges(struct AVOptionRanges **ranges, void *obj,
++                                    const char *key, int flags)
++{
++    AVDeviceCapabilitiesQuery caps = { .device_context = obj };
++    return bluelet_enc_capbility_query_ranges(ranges, &caps, key, flags);
++}
++
+ static int bluelet_enc_check_bitstream(struct AVFormatContext *ctx, struct AVStream *st,
+                                        const AVPacket *pkt)
+ {
+@@ -338,6 +384,7 @@ static const AVClass bluelet_muxer_class = {
+     .option     = options,
+     .version    = LIBAVUTIL_VERSION_INT,
+     .category   = AV_CLASS_CATEGORY_DEVICE_AUDIO_OUTPUT,
++    .query_ranges = bluelet_enc_query_ranges,
+ };
+ 
+ 
+diff --git a/libavfilter/Makefile b/libavfilter/Makefile
+index 60f3b02f484f8beecd7ee6261c95d0873e1671c6..2f2d26b933bfc02248b798c867dae30b94a58ce7 100644
+--- a/libavfilter/Makefile
++++ b/libavfilter/Makefile
+@@ -197,7 +197,7 @@ OBJS-$(CONFIG_ADEVSINK_FILTER)               += asink_adevsink.o
+ OBJS-$(CONFIG_ADEVSRC_FILTER)                += asrc_adevsrc.o mapping.o
+ OBJS-$(CONFIG_ALSASINK_FILTER)               += asink_alsasink.o alsa.o
+ OBJS-$(CONFIG_ANULLSINK_FILTER)              += asink_anullsink.o
+-OBJS-$(CONFIG_ASUBGRAPH_FILTER)              += af_asubgraph.o mapping.o
++OBJS-$(CONFIG_ASUBGRAPH_FILTER)              += af_asubgraph.o mapping.o amix.o
+ OBJS-$(CONFIG_ALSASRC_FILTER)                += asrc_alsasrc.o alsa.o volume.o mapping.o
+ OBJS-$(CONFIG_TINYCOMPRSINK_FILTER)         += asink_tinycomprsink.o amix.o
+ 
+diff --git a/libavfilter/af_asubgraph.c b/libavfilter/af_asubgraph.c
+index f279d261939553f2fe81349555ed919b8460a4c3..4579a3eb05373e034dbc7578e08b9a1030dccf1b 100644
+--- a/libavfilter/af_asubgraph.c
++++ b/libavfilter/af_asubgraph.c
+@@ -67,9 +67,10 @@ typedef struct SubGraphPriv {
+     struct SubCmdQueue cmd_queue;
+ 
+     int nb_inputs;
+-    int nb_outputs;
+     char *map_str;
+     int *map;
++    /* AV_OPT_TYPE_FLAG_ARRAY stores its count immediately after the pointer. */
++    unsigned nb_outputs;
+ 
+     char *graph_desc;
+     AMixContext *mix;
+@@ -344,9 +345,15 @@ static int asubgraph_query_alg_formats(const AVFilterContext *ctx, AVFilterForma
+ 
+     tmp_cfg     = &last_alg->inputs[0]->outcfg;
+     alg_cfg_out = &last_alg->outputs[0]->incfg;
+-    ret = last_alg->filter->formats.query_func2(last_alg, &tmp_cfg, &alg_cfg_out);
+-    if (ret < 0)
+-        goto end;
++    /* A single-filter subgraph has already populated both configurations.
++     * Querying it twice overwrites the first lists without releasing their
++     * references (query_func2 expects initially empty configurations).
++     */
++    if (last_alg != first_alg) {
++        ret = last_alg->filter->formats.query_func2(last_alg, &tmp_cfg, &alg_cfg_out);
++        if (ret < 0)
++            goto end;
++    }
+ 
+     for (i = 0; i < ctx->nb_inputs; i++) {
+         ff_formats_unref(&cfg_in[i]->formats);
+@@ -587,7 +594,7 @@ static int asubgraph_drain_mix(AVFilterContext *ctx)
+     }
+ 
+     priv->drained = true;
+-    if (ret = AVERROR(EAGAIN))
++    if (ret == AVERROR(EAGAIN))
+         ret = 0;
+     av_log(ctx, AV_LOG_INFO, "%s: drain mix %d\n", ctx->name, ret);
+     for (int i = 0; i < priv->nb_inputs; i++)
+@@ -670,8 +677,12 @@ static int asubgraph_output_frame(AVFilterContext *ctx, bool need_drain)
+     int i;
+ 
+     if (need_drain && !priv->drained) {
+-        asubgraph_drain_mix(ctx);
++        ret = asubgraph_drain_mix(ctx);
++        if (ret < 0 && ret != AVERROR_EOF)
++            return ret;
+         ret = av_buffersrc_add_frame_flags(priv->graph_inst.src_filter, NULL, 0);
++        if (ret < 0 && ret != AVERROR_EOF)
++            return ret;
+         av_log(ctx, AV_LOG_INFO, "%s: EOF is reached, send the eos to graph_inst.\n",
+                ctx->name);
+     }
+@@ -974,4 +985,4 @@ const AVFilter ff_af_asubgraph = {
+     .activate        = asubgraph_activate,
+     .process_command = asubgraph_process_command,
+     .flags           = AVFILTER_FLAG_DYNAMIC_INPUTS | AVFILTER_FLAG_DYNAMIC_OUTPUTS,
+-};
+\ No newline at end of file
++};
+diff --git a/libavfilter/alsa.c b/libavfilter/alsa.c
+index d076446ff962b8cf7eb3053375e08b516d90fe6f..dd6fbb5220d502159981ac7b8d6c02ffbbf3fd34 100644
+--- a/libavfilter/alsa.c
++++ b/libavfilter/alsa.c
+@@ -314,7 +314,7 @@ fail:
+ 
+ int alsa_close(AlsaHandle *s)
+ {
+-    snd_pcm_close(s->h);
++    int ret = snd_pcm_close(s->h);
+     av_frame_free(&s->last_frame);
+     av_channel_layout_uninit(&s->ch_layout);
+     s->sample_rate = 0;
+@@ -323,7 +323,7 @@ int alsa_close(AlsaHandle *s)
+     s->h           = NULL;
+     s->format      = AV_SAMPLE_FMT_NONE;
+ 
+-    return 0;
++    return ret;
+ }
+ 
+ static int alsa_xrun_recover(snd_pcm_t *handle, int err)
+@@ -348,6 +348,7 @@ static int alsa_xrun_recover(snd_pcm_t *handle, int err)
+ int alsa_write(AlsaHandle *s, void **bufs, int size)
+ {
+     int ret;
++    int recovered = 0;
+ 
+     while (1) {
+         if (bufs[1])
+@@ -358,7 +359,11 @@ int alsa_write(AlsaHandle *s, void **bufs, int size)
+         if (ret >= 0 || ret == -EAGAIN)
+             break;
+ 
+-        if (alsa_xrun_recover(s->h, ret) < 0)
++        /* A failed reset must not keep the graph thread in an unbounded
++         * recovery loop. Retry once; a persistent error belongs to the
++         * caller's stop/reopen path.
++         */
++        if (recovered++ || alsa_xrun_recover(s->h, ret) < 0)
+             break;
+     }
+ 
+diff --git a/libavfilter/alsa.h b/libavfilter/alsa.h
+index e4a708b1f597ca0a307fdc4f6707858f12aa2bc2..41273195e78a284285ac3fec14886f85bda686b1 100644
+--- a/libavfilter/alsa.h
++++ b/libavfilter/alsa.h
+@@ -34,6 +34,7 @@
+ typedef struct AlsaHandle {
+     snd_pcm_t *h;
+     bool draining;
++    int drain_error;               /**< latched until the next stream opens */
+     int frame_size;
+     AVFrame *last_frame;
+     int periods;
+diff --git a/libavfilter/asink_abufsink.c b/libavfilter/asink_abufsink.c
+index 7fad4d2cfcf8379592a5ded882ee8d7aac270859..3be395d027e2ff8003af08c071054968e4100f0f 100644
+--- a/libavfilter/asink_abufsink.c
++++ b/libavfilter/asink_abufsink.c
+@@ -26,7 +26,6 @@
+ #include "avfilter.h"
+ #include "avfilter_internal.h"
+ #include "filters.h"
+-#include "internal.h"
+ #include "formats.h"
+ 
+ #include "libavutil/audio_fifo.h"
+diff --git a/libavfilter/asink_adevsink.c b/libavfilter/asink_adevsink.c
+index f0238d171c2e1d57856e14de07c1f94b0c0dbd28..7f13006e82215fec1b07f45dad32a51a6bfc115e 100644
+--- a/libavfilter/asink_adevsink.c
++++ b/libavfilter/asink_adevsink.c
+@@ -34,7 +34,7 @@
+ #include "avfilter.h"
+ #include "avfilter_internal.h"
+ #include "formats.h"
+-#include "internal.h"
++
+ 
+ typedef struct ADevSinkPriv {
+     const AVClass   *class;
+@@ -49,6 +49,10 @@ typedef struct ADevSinkPriv {
+     uint32_t        sample_rate;
+     AVChannelLayout ch_layout;
+     bool            started;
++    bool            draining;
++    bool            aborting;
++    bool            flush_sent;
++    int             drain_error;
+ 
+     AVPacket        *last_pkt;
+ } ADevSinkPriv;
+@@ -190,6 +194,10 @@ static int adevsink_start(AVFilterContext *ctx)
+     }
+ 
+     priv->started = true;
++    priv->draining = false;
++    priv->aborting = false;
++    priv->flush_sent = false;
++    priv->drain_error = 0;
+     return 0;
+ }
+ 
+@@ -207,6 +215,7 @@ static void adevsink_stop(AVFilterContext *ctx)
+     adevsink_close_encoder(ctx);
+ 
+     priv->started = false;
++    priv->draining = false;
+ }
+ 
+ static int adevsink_init_dict(AVFilterContext *ctx)
+@@ -283,8 +292,13 @@ static int adevsink_output_packet(AVFilterContext *ctx, int status)
+     }
+ 
+     if (ret == AVERROR_EOF || status) {
+-        // ff_inlink_set_status(ctx->inputs[0], AVERROR_EOF);
+-        adevsink_stop(ctx);
++        if (!strcmp(priv->format, "bluelet") && !strcmp(priv->devname, "lea")) {
++            priv->draining = true;
++            ff_filter_set_ready(ctx, 100);
++        } else {
++            adevsink_stop(ctx);
++        }
++        ret = 0;
+     }
+ 
+     return ret;
+@@ -324,6 +338,17 @@ static int adevsink_activate(AVFilterContext *ctx)
+     int64_t pts;
+     int ret;
+ 
++    if (priv->draining) {
++        ret = avdevice_app_to_dev_control_message(priv->fmt_ctx,
++                    priv->aborting ? AV_APP_TO_DEV_FLUSH : AV_APP_TO_DEV_DRAIN, NULL, 0);
++        if (ret == AVERROR(EAGAIN))
++            return 0;
++        if (ret < 0)
++            priv->drain_error = ret;
++        adevsink_stop(ctx);
++        return ret;
++    }
++
+     ret = adevsink_output_packet(ctx, 0);
+     if (ret < 0)
+         return ret;
+@@ -357,103 +382,118 @@ static int adevsink_activate(AVFilterContext *ctx)
+         }
+     }
+ 
+-    ff_inlink_request_frame(inlink);
++    if (!priv->flush_sent && ff_inlink_acknowledge_status(inlink, &ret, &pts)) {
++        priv->flush_sent = true;
++        if (ret == AVERROR_EOF && priv->started)
++            return adevsink_send_frame(ctx, NULL);
++        if (ret < 0 && ret != AVERROR_EOF)
++            priv->drain_error = ret;
++        return 0;
++    }
++    if (!ff_outlink_get_status(inlink))
++        ff_inlink_request_frame(inlink);
+ 
+-    return ret;
++    return 0;
+ }
+ 
+-static int adevsink_query_formats(AVFilterContext *ctx)
++static int adevsink_query_formats(const AVFilterContext *ctx,
++                                  AVFilterFormatsConfig **cfg_in,
++                                  AVFilterFormatsConfig **cfg_out)
+ {
+-    AVFilterChannelLayouts *layouts = NULL;
+-    AVFilterLink *link = ctx->inputs[0];
+-    AVFilterFormats *formats = NULL;
+     ADevSinkPriv *priv = ctx->priv;
++    AVFilterFormatsConfig next = { 0 };
++    AVFilterFormats *formats = NULL, *rates = NULL;
++    AVFilterChannelLayouts *layouts = NULL;
+     AVOptionRanges *ranges = NULL;
+     AVChannelLayout layout;
+-    bool codec = false;
+-    int ret, i;
++    int ret, i, n;
+ 
+     if (priv->sample_fmt != AV_SAMPLE_FMT_NONE) {
+         ret = ff_add_format(&formats, priv->sample_fmt);
+         if (ret < 0)
+             goto out;
+     } else {
+-        ret = av_opt_query_ranges2(&ranges, priv->fmt_ctx->priv_data, priv->fmt_ctx, "sample_fmts", AV_OPT_MULTI_COMPONENT_RANGE);
+-        if (ret >= 0) {
+-            for (i = 0; i < ranges->nb_ranges; i++) {
+-                ret = ff_add_format(&formats, ranges->range[i]->value_min);
+-                if (ret < 0)
+-                    goto out;
+-            }
+-            av_opt_freep_ranges(&ranges);
+-        } else {
+-            formats = ff_all_formats(AVMEDIA_TYPE_AUDIO);
++        ret = av_opt_query_ranges2(&ranges, priv->fmt_ctx->priv_data, priv->fmt_ctx,
++                                  "sample_fmts", AV_OPT_MULTI_COMPONENT_RANGE);
++        if (ret < 0)
++            goto out;
++        for (i = 0; i < ranges->nb_ranges; i++) {
++            ret = ff_add_format(&formats, ranges->range[i]->value_min);
++            if (ret < 0)
++                goto out;
+         }
++        av_opt_freep_ranges(&ranges);
+     }
+-
+-    ret = ff_set_common_formats(ctx, formats);
+-    if (ret < 0)
+-        goto out;
+-
+-    formats = NULL;
+     if (priv->sample_rate) {
+-        ret = ff_add_format(&formats, priv->sample_rate);
++        ret = ff_add_format(&rates, priv->sample_rate);
+         if (ret < 0)
+             goto out;
+     } else {
+-        ret = av_opt_query_ranges2(&ranges, priv->fmt_ctx->priv_data, priv->fmt_ctx, "sample_rates", AV_OPT_MULTI_COMPONENT_RANGE);
+-        if (ret >= 0) {
+-            for (i = 0; i < ranges->nb_ranges; i++) {
+-                ret = ff_add_format(&formats, ranges->range[i]->value_min);
+-                if (ret < 0)
+-                    goto out;
+-            }
+-            av_opt_freep_ranges(&ranges);
++        ret = av_opt_query_ranges2(&ranges, priv->fmt_ctx->priv_data, priv->fmt_ctx,
++                                  "sample_rates", AV_OPT_MULTI_COMPONENT_RANGE);
++        if (ret < 0)
++            goto out;
++        for (i = 0; i < ranges->nb_ranges; i++) {
++            ret = ff_add_format(&rates, ranges->range[i]->value_min);
++            if (ret < 0)
++                goto out;
+         }
++        av_opt_freep_ranges(&ranges);
+     }
+-
+-    ret = ff_set_common_samplerates(ctx, formats);
+-    if (ret < 0)
+-        goto out;
+-
+     if (priv->ch_layout.nb_channels) {
+         ret = ff_add_channel_layout(&layouts, &priv->ch_layout);
+         if (ret < 0)
+             goto out;
+     } else {
+-        ret = av_opt_query_ranges2(&ranges, priv->fmt_ctx->priv_data, priv->fmt_ctx, "channels", AV_OPT_MULTI_COMPONENT_RANGE);
+-        if (ret >= 0) {
+-            int n;
+-
+-            for (n = 0; n < ranges->nb_ranges; n++) {
+-                if (ranges->range[n]->is_range) {
+-                    for (i = ranges->range[0]->value_min; i <= ranges->range[0]->value_max; i++) {
+-                        av_channel_layout_default(&layout, i);
+-                        ret = ff_add_channel_layout(&layouts, &layout);
+-                        if (ret < 0)
+-                            goto out;
+-                    }
+-                } else {
+-                    i = ranges->range[n]->value_min;
+-                    av_channel_layout_default(&layout, i);
+-                    ret = ff_add_channel_layout(&layouts, &layout);
+-                    if (ret < 0)
+-                        goto out;
+-                }
++        ret = av_opt_query_ranges2(&ranges, priv->fmt_ctx->priv_data, priv->fmt_ctx,
++                                  "channels", AV_OPT_MULTI_COMPONENT_RANGE);
++        if (ret < 0)
++            goto out;
++        for (n = 0; n < ranges->nb_ranges; n++) {
++            int min_ch = ranges->range[n]->value_min;
++            int max_ch = ranges->range[n]->is_range ? ranges->range[n]->value_max : min_ch;
++            for (i = min_ch; i <= max_ch; i++) {
++                av_channel_layout_default(&layout, i);
++                ret = ff_add_channel_layout(&layouts, &layout);
++                if (ret < 0)
++                    goto out;
+             }
+-
+-            av_opt_freep_ranges(&ranges);
+         }
+     }
++    if (!formats || !rates || !layouts) {
++        ret = AVERROR(EAGAIN);
++        goto out;
++    }
+ 
+-    ret = ff_set_common_channel_layouts(ctx, layouts);
++    /* Prepare owned references before replacing any negotiated capability. */
++    ret = ff_formats_ref(formats, &next.formats);
++    formats = NULL; /* ref frees an unowned list on allocation failure. */
++    if (ret < 0)
++        goto out;
++    ret = ff_formats_ref(rates, &next.samplerates);
++    rates = NULL;
++    if (ret < 0)
++        goto out;
++    ret = ff_channel_layouts_ref(layouts, &next.channel_layouts);
++    layouts = NULL;
+     if (ret < 0)
+         goto out;
+ 
++    ff_formats_unref(&cfg_in[0]->formats);
++    ff_formats_unref(&cfg_in[0]->samplerates);
++    ff_channel_layouts_unref(&cfg_in[0]->channel_layouts);
++    ff_formats_changeref(&next.formats, &cfg_in[0]->formats);
++    ff_formats_changeref(&next.samplerates, &cfg_in[0]->samplerates);
++    ff_channel_layouts_changeref(&next.channel_layouts, &cfg_in[0]->channel_layouts);
+     ret = 0;
+-
+ out:
+     av_opt_freep_ranges(&ranges);
++    ff_formats_unref(&formats);
++    ff_formats_unref(&rates);
++    ff_channel_layouts_unref(&layouts);
++    ff_formats_unref(&next.formats);
++    ff_formats_unref(&next.samplerates);
++    ff_channel_layouts_unref(&next.channel_layouts);
+     return ret;
+ }
+ 
+@@ -554,6 +594,45 @@ static int adevsink_process_command(AVFilterContext *ctx,
+ static int adevsink_forward_command(AVFilterContext *ctx, int pad_idx, const char* target, const char *cmd,
+                                     const char *arg, char *res, int res_len, int flags)
+ {
++    ADevSinkPriv *priv = ctx->priv;
++    FilterLinkInternal *li = ff_link_internal(ctx->inputs[0]);
++    int done = li->status_out == AVERROR_EOF && !ff_framequeue_queued_frames(&li->fifo)
++               && !priv->started && !priv->last_pkt;
++
++    /* abufsrc gates new frames while paused. Already queued samples must
++     * remain owned by this sink and finish; EOF/abort performs device stop. */
++    if (!strcmp(cmd, "play") || !strcmp(cmd, "pause")) {
++        return 0;
++    } else if (!strcmp(cmd, "drain_status")) {
++        int *status = (int *)res;
++        if (!res || res_len < 2 * sizeof(int))
++            return AVERROR(EINVAL);
++        status[0] &= done;
++        if (!status[1])
++            status[1] = priv->drain_error;
++        if (priv->draining)
++            ff_filter_set_ready(ctx, 100);
++        return 0;
++    } else if (!strcmp(cmd, "drained")) {
++        if (!res || res_len < sizeof(int))
++            return AVERROR(EINVAL);
++        *(int *)res &= done;
++        return 0;
++    } else if (!strcmp(cmd, "abort")) {
++        AVFrame *frame = NULL;
++        while (ff_inlink_consume_frame(ctx->inputs[0], &frame) > 0)
++            av_frame_free(&frame);
++        ff_inlink_set_status(ctx->inputs[0], AVERROR_EOF);
++        priv->drain_error = AVERROR(ECANCELED);
++        if (priv->started && !strcmp(priv->devname, "lea")) {
++            priv->aborting = true;
++            priv->draining = true;
++            ff_filter_set_ready(ctx, 100);
++        } else {
++            adevsink_stop(ctx);
++        }
++        return 0;
++    }
+     return adevsink_process_command(ctx, cmd, arg, res, res_len, flags);
+ }
+ 
+@@ -623,7 +702,8 @@ const AVFilter ff_asink_adevsink = {
+     .uninit          = adevsink_uninit,
+     .activate        = adevsink_activate,
+     FILTER_INPUTS(adevsink_inputs),
+-    FILTER_QUERY_FUNC(adevsink_query_formats),
++    FILTER_QUERY_FUNC2(adevsink_query_formats),
+     .process_command = adevsink_process_command,
++    .forward_command = adevsink_forward_command,
+     .flags           = AVFILTER_FLAG_SUPPORT_POLL,
+ };
+diff --git a/libavfilter/asink_alsasink.c b/libavfilter/asink_alsasink.c
+index 000cf6782e199460e26b468e621fffc7e158d496..12c7dc3c9206d253095262b6eb686156ddc5cf1a 100644
+--- a/libavfilter/asink_alsasink.c
++++ b/libavfilter/asink_alsasink.c
+@@ -62,6 +62,7 @@ static int alsasink_open(AVFilterContext *ctx, int pad)
+     if (sink->h)
+         return 0;
+ 
++    sink->drain_error = 0;
+     ret = alsa_open(sink, priv->devname, SND_PCM_STREAM_PLAYBACK,
+                     link->sample_rate, link->ch_layout, link->format,
+                     priv->periods, priv->period_time);
+@@ -73,29 +74,51 @@ static int alsasink_open(AVFilterContext *ctx, int pad)
+ 
+ }
+ 
+-static void alsasink_drain(AVFilterContext *ctx, int pad)
++static int alsasink_close(AVFilterContext *ctx, int pad);
++
++static int alsasink_drain(AVFilterContext *ctx, int pad)
+ {
+     AlsaSinkPriv *priv = ctx->priv;
+     AlsaHandle *sink = &priv->handles[pad];
++    int ret;
+ 
+-    if (!sink->h)
+-        return;
++    if (!sink->h) {
++        sink->draining = false;
++        return sink->drain_error;
++    }
++    if (sink->drain_error) {
++        alsasink_close(ctx, pad);
++        return sink->drain_error;
++    }
+ 
+     sink->poll_available = 0;
+     sink->draining = true;
+-    snd_pcm_drain(sink->h);
++    ret = snd_pcm_drain(sink->h);
++    if (ret == AVERROR(EAGAIN))
++        return ret;
++
++    /* snd_pcm_close consumes its handle even when STOP fails. The audio
++     * upper half retains DMA-owned buffers and retries cleanup on reopen.
++     * Latch the failure separately from completion of this sink's lifetime.
++     */
++    if (ret < 0)
++        sink->drain_error = ret;
++    ret = alsasink_close(ctx, pad);
++    if (ret < 0 && !sink->drain_error)
++        sink->drain_error = ret;
++    return sink->drain_error;
+ }
+ 
+-static void alsasink_close(AVFilterContext *ctx, int pad)
++static int alsasink_close(AVFilterContext *ctx, int pad)
+ {
+     AlsaSinkPriv *priv = ctx->priv;
+     AlsaHandle *sink = &priv->handles[pad];
+ 
+     if (!sink->h)
+-        return;
++        return 0;
+ 
+     sink->draining = false;
+-    alsa_close(sink);
++    return alsa_close(sink);
+ }
+ 
+ static void alsasink_consume_samples(AVFrame *frame, int consumed, int frame_size, int ch)
+@@ -228,9 +251,16 @@ static int alsasink_activate(AVFilterContext *ctx)
+     int i;
+ 
+     for (i = 0; i < ctx->nb_inputs; i++) {
++        AlsaHandle *sink = &priv->handles[i];
+         inlink = ctx->inputs[i];
+         li = ff_link_internal(inlink);
+ 
++        if (sink->draining) {
++            ret = alsasink_drain(ctx, i);
++            if (ret < 0 && ret != AVERROR(EAGAIN))
++                return ret;
++            continue;
++        }
+         if (li->status_out)
+             continue;
+ 
+@@ -261,7 +291,9 @@ static int alsasink_activate(AVFilterContext *ctx)
+         if (ret >= 0 && ff_outlink_get_status(inlink) != AVERROR_EOF && !li->frame_blocked_in)
+             ff_inlink_request_frame(inlink);
+         else if (ret == AVERROR_EOF) {
+-            alsasink_drain(ctx, i);
++            ret = alsasink_drain(ctx, i);
++            if (ret < 0 && ret != AVERROR(EAGAIN))
++                return ret;
+             ret = 0;
+         }
+     }
+@@ -410,7 +442,6 @@ static int alsasink_process_command(AVFilterContext *ctx,
+ 
+         return ret;
+     } else if (!strcmp(cmd, "poll_available")) {
+-        snd_pcm_sw_params_t *sw_params;
+         snd_pcm_state_t state;
+ 
+         for (i = 0; i < ctx->nb_inputs; i++) {
+@@ -422,18 +453,19 @@ static int alsasink_process_command(AVFilterContext *ctx,
+             if (state == SND_PCM_STATE_PAUSED)
+                 continue;
+ 
+-            if (sink->draining)
+-                snd_pcm_drain(sink->h);
+-            else
+-                sink->poll_available++;
++            if (sink->draining) {
++                ret = alsasink_drain(ctx, i);
++                if (ret < 0 && ret != AVERROR(EAGAIN))
++                    return ret;
++                continue;
++            }
++
++            sink->poll_available++;
+ 
+             snd_pcm_avail_update(sink->h);
+             if (state == SND_PCM_STATE_XRUN) {
+                 snd_pcm_pause(sink->h, 1);
+                 sink->poll_available = 0;
+-            } else if (state == SND_PCM_STATE_SETUP) {
+-                if (sink->draining)
+-                    alsasink_close(ctx, i);
+             }
+         }
+ 
+@@ -463,7 +495,47 @@ static int alsasink_forward_command(AVFilterContext *ctx,
+ 
+     av_log(ctx, AV_LOG_DEBUG, "Forwarding command '%s'\n", cmd);
+ 
+-    if (!strcmp(cmd, "latency")) {
++    if (!strcmp(cmd, "abort")) {
++        if (pad_idx < 0 || pad_idx >= ctx->nb_inputs)
++            return AVERROR(EINVAL);
++        li = ff_link_internal(ctx->inputs[pad_idx]);
++        sink = &priv->handles[pad_idx];
++        if (!li->status_out)
++            ff_inlink_set_status(ctx->inputs[pad_idx], AVERROR_EOF);
++        av_frame_free(&sink->last_frame);
++        sink->drain_error = AVERROR(ECANCELED);
++        sink->draining = true;
++        ff_filter_set_ready(ctx, 100);
++        return 0;
++    } else if (!strcmp(cmd, "drain_status")) {
++        int *status = (int *)res;
++        if (!res || res_len < 2 * sizeof(int) || pad_idx < 0 || pad_idx >= ctx->nb_inputs)
++            return AVERROR(EINVAL);
++        li = ff_link_internal(ctx->inputs[pad_idx]);
++        sink = &priv->handles[pad_idx];
++        status[0] &= li->status_out == AVERROR_EOF
++            && !ff_framequeue_queued_frames(&li->fifo)
++            && !sink->last_frame && !sink->h;
++        if (!status[1])
++            status[1] = sink->drain_error;
++        if (sink->draining)
++            ff_filter_set_ready(ctx, 100);
++        return 0;
++    } else if (!strcmp(cmd, "drained")) {
++        if (!res || res_len < sizeof(int) || pad_idx < 0 || pad_idx >= ctx->nb_inputs)
++            return AVERROR(EINVAL);
++
++        li = ff_link_internal(ctx->inputs[pad_idx]);
++        sink = &priv->handles[pad_idx];
++        /* EOF is acknowledged before snd_pcm_drain has necessarily finished.
++         * Keep the result false until the hardware handle has been closed.
++         * AND the result so a branch cannot hide another active sink.
++         */
++        *(int *)res &= li->status_out == AVERROR_EOF
++            && !ff_framequeue_queued_frames(&li->fifo)
++            && !sink->last_frame && !sink->h;
++        return 0;
++    } else if (!strcmp(cmd, "latency")) {
+         if (!res || res_len < sizeof(int64_t) || pad_idx >= ctx->nb_inputs || pad_idx < 0)
+             return AVERROR(EINVAL);
+ 
+@@ -478,13 +550,24 @@ static int alsasink_forward_command(AVFilterContext *ctx,
+         }
+ 
+         sink = &priv->handles[pad_idx];
+-        if (!sink->h || snd_pcm_state(sink->h) != SND_PCM_STATE_RUNNING) {
++        /* A partially written frame has left the link FIFO, but its
++         * remaining samples have not entered ALSA. duration still refers
++         * to the original frame; nb_samples tracks the unwritten tail.
++         */
++        if (sink->last_frame)
++            latency += av_rescale(sink->last_frame->nb_samples,
++                                  AV_TIME_BASE, sink->sample_rate);
++
++        if (!sink->h) {
+             *(int64_t*)res = latency;
+             return 0;
+         }
+ 
++        /* PREPARED, PAUSED and DRAINING may also own queued PCM frames. */
+         ret = snd_pcm_delay(sink->h, &frame_count);
+         if (ret < 0 || frame_count < 0) {
++            if (ret >= 0)
++                ret = AVERROR(EIO);
+             av_log(ctx, AV_LOG_ERROR, "Error getting delay: %s\n", snd_strerror(ret));
+             return ret;
+         }
+diff --git a/libavfilter/asrc_abufsrc.c b/libavfilter/asrc_abufsrc.c
+index 22eada42372e668178131e5d683567445b133877..1f3327ed1db63e85020cfe43ca4a9ae9aa7f7058 100644
+--- a/libavfilter/asrc_abufsrc.c
++++ b/libavfilter/asrc_abufsrc.c
+@@ -228,10 +228,13 @@ static av_cold void abufsrc_uninit(AVFilterContext *ctx)
+         return;
+ 
+     av_frame_free(&priv->frame);
+-    for (int i = 0; i < priv->nb_outputs; i++)
+-        volume_uninit(&priv->vol_ctx[i]);
++    if (priv->vol_ctx)
++        for (int i = 0; i < priv->nb_outputs; i++)
++            volume_uninit(&priv->vol_ctx[i]);
+     av_freep(&priv->vol_ctx);
++    av_freep(&priv->volume);
+     av_freep(&priv->map);
++    av_channel_layout_uninit(&priv->ch_layout);
+ }
+ 
+ static int abufsrc_query_formats(const AVFilterContext *ctx,
+@@ -314,7 +317,8 @@ static int abufsrc_activate(AVFilterContext *ctx)
+         if (!priv->frame)
+             return AVERROR(ENOMEM);
+ 
+-        if (ret = priv->on_event_cb(priv->on_event_cb_udata, 0, (intptr_t)priv->frame) < 0) {
++        ret = priv->on_event_cb(priv->on_event_cb_udata, 0, (intptr_t)priv->frame);
++        if (ret < 0) {
+             av_frame_free(&priv->frame);
+             return ret;
+         }
+@@ -329,9 +333,17 @@ static int abufsrc_activate(AVFilterContext *ctx)
+         return AVERROR(ENOMEM);
+ 
+     av_frame_move_ref(frame, priv->frame);
+-    if (priv->on_event_cb(priv->on_event_cb_udata, 0, (intptr_t)priv->frame) < 0) {
+-       av_frame_free(&priv->frame);
+-       priv->fade_type = FADE_OUT;
++    ret = priv->on_event_cb(priv->on_event_cb_udata, 0, (intptr_t)priv->frame);
++    if (ret == AVERROR(EAGAIN) || ret == FFERROR_NOT_READY) {
++        /* Wait for the producer without fading or losing the last frame.
++         * Explicit unlink still owns the final fade and EOF propagation. */
++        av_frame_move_ref(priv->frame, frame);
++        av_frame_free(&frame);
++        return ret;
++    }
++    if (ret < 0) {
++        av_frame_free(&priv->frame);
++        priv->fade_type = FADE_OUT;
+     }
+ 
+     if (priv->next_pts == frame->pts && priv->fade_type == FADE_NONE) { //should not set fade again, when in fade process.
+@@ -454,7 +466,6 @@ static int abufsrc_get_latency(AVFilterContext *ctx, int64_t *latency)
+     BuffSrcPriv *priv = ctx->priv;
+     int64_t sink_latency = 0;
+     int64_t src_latency = 0;
+-    char msg[64];
+     int ret = 0;
+     int i;
+ 
+@@ -520,7 +531,35 @@ static int abufsrc_get_parameter(AVFilterContext *ctx, const char *key, char *va
+     int64_t latency;
+     int ret = 0;
+ 
+-    if (!strcmp(key, "format")) {
++    if (!strcmp(key, "drain_status")) {
++        int status[2] = {s->sample_fmt == AV_SAMPLE_FMT_NONE && !s->frame, 0};
++        for (int i = 0; status[0] && i < ctx->nb_outputs; i++) {
++            if (s->map && s->map[i] == ROUTE_ON) {
++                ret = avfilter_forward_command(ctx, i, NULL, "drain_status", NULL,
++                                               (char *)status, sizeof(status), 0);
++                if (ret < 0)
++                    return ret;
++            }
++        }
++        snprintf(value, len, "drained:%d:error:%d", status[0], status[1]);
++        return 0;
++    } else if (!strcmp(key, "drained")) {
++        int drained = s->sample_fmt == AV_SAMPLE_FMT_NONE && !s->frame;
++
++        /* Unlink acknowledgement only ends the source. Downstream filters
++         * can still own frames, resampler samples and a draining PCM handle.
++         */
++        for (int i = 0; drained && i < ctx->nb_outputs; i++) {
++            if (s->map && s->map[i] == ROUTE_ON) {
++                ret = avfilter_forward_command(ctx, i, NULL, "drained", NULL,
++                                               (char *)&drained, sizeof(drained), 0);
++                if (ret < 0)
++                    return ret;
++            }
++        }
++        snprintf(value, len, "drained:%d", drained);
++        return 0;
++    } else if (!strcmp(key, "format")) {
+         snprintf(value, len, "fmt=%d:rate=%d:ch=%d", s->sample_fmt, s->sample_rate, s->ch_layout.nb_channels);
+         return 0;
+     } else if (!strcmp(key, "player_volume")) {
+@@ -552,6 +591,8 @@ static int abufsrc_get_parameter(AVFilterContext *ctx, const char *key, char *va
+         return 0;
+     } else if (!strcmp(key, "latency")) {
+         ret = abufsrc_get_latency(ctx, &latency);
++        if (ret < 0)
++            return ret;
+         snprintf(value, len, "latency:%" PRId64, latency);
+ 
+         av_log(s, AV_LOG_INFO, "get_parameter: %s = %" PRId64 "\n", key, latency);
+@@ -604,7 +645,10 @@ static int abufsrc_proccess_command(AVFilterContext *ctx, const char *cmd, const
+ 
+         return ret;
+     } else if (!av_strcasecmp(cmd, "unlink")) {
+-        if (priv->frame)
++        int aborting = args && !strcmp(args, "abort");
++        if (aborting)
++            av_frame_free(&priv->frame);
++        else if (priv->frame)
+             ret = abufsrc_fadeout_last_frame(ctx);
+ 
+         if (priv->on_event_cb)
+@@ -613,7 +657,10 @@ static int abufsrc_proccess_command(AVFilterContext *ctx, const char *cmd, const
+         for (i= 0; i < priv->nb_outputs; i++) {
+             if (priv->map && priv->map[i] == ROUTE_ON) {
+                 ff_outlink_set_status(ctx->outputs[i], AVERROR_EOF, AV_NOPTS_VALUE);
+-                avfilter_forward_command(ctx, i, NULL, "pause", NULL, NULL, 0, 0);
++                /* EOF must drain queued samples through the sink. Pausing
++                 * here stops a device before it can deliver the tail. */
++                if (aborting)
++                    avfilter_forward_command(ctx, i, NULL, "abort", NULL, NULL, 0, 0);
+             }
+ 
+             volume_uninit(&priv->vol_ctx[i]);
+diff --git a/libavfilter/asrc_adevsrc.c b/libavfilter/asrc_adevsrc.c
+index 837ac917a94b365ff0898722d03228a4d66a4a0b..7550c1f8573b9173bec977ddc6b023718fc4e005 100644
+--- a/libavfilter/asrc_adevsrc.c
++++ b/libavfilter/asrc_adevsrc.c
+@@ -37,7 +37,7 @@
+ #include "avfilter_internal.h"
+ #include "filters.h"
+ #include "formats.h"
+-#include "internal.h"
++#include "avfilter_internal.h"
+ #include "libavutil/mem.h"
+ #include "mapping.h"
+ 
+@@ -46,6 +46,8 @@
+ typedef int (*fmt_control_msg)(struct AVFormatContext *s1, int type,
+                                void *data, size_t data_size);
+ 
++static int adevsrc_get_control_message(AVFormatContext *s, fmt_control_msg *cb);
++
+ typedef struct ADevSrcPriv {
+     const AVClass   *class;
+ 
+@@ -87,12 +89,26 @@ static int adevsrc_control_message(struct AVFormatContext *s, int type,
+ int adevsrc_read_close(AVFormatContext *s)
+ {
+     const FFInputFormat *iformat;
++    fmt_control_msg control;
++    int ret;
+ 
+     if (!s || !s->iformat)
+         return AVERROR(EINVAL);
+ 
+     ff_flush_packet_queue(s);
+ 
++    /* A device may keep its control endpoint alive between capture streams.
++     * Final avformat_close_input() always invokes the real read_close().
++     */
++    ret = adevsrc_get_control_message(s, &control);
++    if (ret >= 0) {
++        ret = control(s, AV_APP_TO_DEV_END_STREAM, NULL, 0);
++        if (ret != AVERROR(ENOSYS)) {
++            s->flags &= ~AVFMT_FLAG_CODEC_READY;
++            return ret;
++        }
++    }
++
+     iformat = ffifmt(s->iformat);
+     if (iformat->read_close) {
+         iformat->read_close(s);
+@@ -105,18 +121,14 @@ int adevsrc_read_close(AVFormatContext *s)
+ static void adevsrc_close(AVFilterContext *ctx)
+ {
+     ADevSrcPriv *priv = ctx->priv;
+-    const FFInputFormat *iformat;
++    int ret;
+ 
+     if (!priv->dec_ctx)
+         return;
+ 
+-    ff_flush_packet_queue(priv->fmt_ctx);
+-
+-    iformat = ffifmt(priv->fmt_ctx->iformat);
+-    if (iformat->read_close) {
+-        iformat->read_close(priv->fmt_ctx);
+-        priv->fmt_ctx->flags &= (~AVFMT_FLAG_CODEC_READY);
+-    }
++    ret = adevsrc_read_close(priv->fmt_ctx);
++    if (ret < 0)
++        av_log(ctx, AV_LOG_ERROR, "End capture stream failed: %d\n", ret);
+ 
+     avcodec_free_context(&priv->dec_ctx);
+     priv->dec_ctx = NULL;
+@@ -127,12 +139,19 @@ static int adevsrc_config_props(AVFilterLink *link)
+     AVFilterContext *ctx = link->src;
+     ADevSrcPriv *priv = ctx->priv;
+     AVDictionary *fmt_opt = NULL;
++    const AVOption *option;
+     char tmp[64];
+     int ret;
+ 
+-    av_dict_set_int(&fmt_opt, "sample_rate", link->sample_rate, 0);
++    /* Compressed input devices report the peer's negotiated parameters.
++     * A stale graph link must not overwrite those before renegotiation. */
++    option = av_opt_find(priv->fmt_ctx->priv_data, "sample_rate", NULL, 0, 0);
++    if (!option || !(option->flags & AV_OPT_FLAG_READONLY))
++        av_dict_set_int(&fmt_opt, "sample_rate", link->sample_rate, 0);
+     av_channel_layout_describe(&link->ch_layout, tmp, sizeof(tmp));
+-    av_dict_set(&fmt_opt, "ch_layout", tmp, 0);
++    option = av_opt_find(priv->fmt_ctx->priv_data, "ch_layout", NULL, 0, 0);
++    if (!option || !(option->flags & AV_OPT_FLAG_READONLY))
++        av_dict_set(&fmt_opt, "ch_layout", tmp, 0);
+ 
+     ret = av_opt_set_dict(priv->fmt_ctx->priv_data, &fmt_opt);
+ 
+@@ -184,6 +203,8 @@ static int adevsrc_open(AVFilterContext *ctx)
+     if (ret < 0)
+         goto out;
+ 
++    priv->dec_ctx->request_sample_fmt = link->format;
++
+     /* Init the decoders */
+     ret = avcodec_open2(priv->dec_ctx, dec, NULL);
+     if (ret < 0)
+@@ -292,27 +313,6 @@ error:
+     return ret;
+ }
+ 
+-static int adevsrc_send_empty_frame(AVFilterContext *ctx)
+-{
+-    AVFilterLink *link = ctx->outputs[0];
+-    AVFrame *frame;
+-    int ret;
+-
+-    frame = av_frame_alloc();
+-    if (!frame)
+-      return AVERROR(ENOMEM);
+-
+-    frame->nb_samples = 0;
+-    frame->format = link->format;
+-    frame->sample_rate = link->sample_rate;
+-    av_channel_layout_copy(&frame->ch_layout, &link->ch_layout);
+-
+-    if ((ret = ff_filter_frame(link, frame)) < 0)
+-      av_log(ctx, AV_LOG_ERROR, "send empty frame failed:%d\n", ret);
+-
+-    return ret;
+-}
+-
+ static int adevsrc_activate(AVFilterContext *ctx)
+ {
+     AVFilterLink *link = ctx->outputs[0];
+@@ -335,7 +335,10 @@ static int adevsrc_activate(AVFilterContext *ctx)
+ 
+ out:
+     if (ret == AVERROR_EOF) {
+-        adevsrc_send_empty_frame(ctx);
++        /* End the link without queuing a zero-sample frame with no PCM
++         * storage. MEDIA format negotiation clears link status on relink.
++         */
++        ff_outlink_set_status(link, AVERROR_EOF, AV_NOPTS_VALUE);
+         adevsrc_close(ctx);
+         ret = 0;
+     } else if (ret < 0 && ret != AVERROR(EAGAIN))
+@@ -344,13 +347,12 @@ out:
+     return ret;
+ }
+ 
+-static int adevsrc_get_control_message(AVFilterContext *ctx, fmt_control_msg *cb)
++static int adevsrc_get_control_message(AVFormatContext *s, fmt_control_msg *cb)
+ {
+-    ADevSrcPriv *priv = ctx->priv;
+     AVOptionRanges *ranges = NULL;
+     int ret;
+ 
+-    ret = av_opt_query_ranges2(&ranges, priv->fmt_ctx->priv_data, priv->fmt_ctx,
++    ret = av_opt_query_ranges2(&ranges, s->priv_data, s,
+                                "control_message", AV_OPT_MULTI_COMPONENT_RANGE);
+     if (ret == 0 && ranges->nb_ranges == 0) {
+         *cb = (fmt_control_msg)ranges->range;
+@@ -370,7 +372,7 @@ static int adevsrc_process_command(AVFilterContext *ctx, const char *cmd, const
+     ADevSrcPriv *priv = ctx->priv;
+     int ret;
+ 
+-    ret = adevsrc_get_control_message(ctx, &avdevice_app_to_dev_control_message);
++    ret = adevsrc_get_control_message(priv->fmt_ctx, &avdevice_app_to_dev_control_message);
+     if (ret < 0) {
+         av_log(ctx, AV_LOG_ERROR, "get control_message failed\n");
+         return ret;
+diff --git a/libavfilter/avfilter.c b/libavfilter/avfilter.c
+index a5d111b300989f6bed33fd11c7afe9c4906a0cfb..ab56a4183f2808d94287b2329a488a9fe5e1dbea 100644
+--- a/libavfilter/avfilter.c
++++ b/libavfilter/avfilter.c
+@@ -227,7 +227,7 @@ static int link_init_dump_pcm(AVFilterLink *link)
+ 
+     for (i = 0; i < link->nb_dump_pcm_fds; i++) {
+         snprintf(path, sizeof(path), FFMPEG_TMPDIR"/%.16s-%.8s-%d.pcm", link->src->name, link->dst->name, i);
+-        fd = open(path, O_WRONLY | O_CREAT);
++        fd = open(path, O_WRONLY | O_CREAT, 0600);
+         if (fd < 0) {
+             link_uninit_dump_pcm(link, true);
+             return AVERROR(errno);
+diff --git a/libavformat/unix.c b/libavformat/unix.c
+index 21b6cfdf1be5565f44fa046417ae3ef8f3714ee7..fb100759ad2e075afe11c480050237fe4f994d14 100644
+--- a/libavformat/unix.c
++++ b/libavformat/unix.c
+@@ -104,6 +104,8 @@ static int unix_open(URLContext *h, const char *filename, int flags)
+ 
+     s->fd = fd;
+     h->max_packet_size = s->pkt_size;
++    /* Socket input cannot seek back after probing or footer inspection. */
++    h->is_streamed = 1;
+ 
+     return 0;
+ 
+diff --git a/libavformat/wavdec.c b/libavformat/wavdec.c
+index 78e37b88d75205e006e5dcf4730120ebea3673a8..36c077d2763346ee517a49f858ff0425964a0ba6 100644
+--- a/libavformat/wavdec.c
++++ b/libavformat/wavdec.c
+@@ -141,7 +141,7 @@ static int64_t wav_seek_tag(WAVDemuxContext * wav, AVIOContext *s, int64_t offse
+ /* return the size of the found tag */
+ static int64_t find_tag(WAVDemuxContext * wav, AVIOContext *pb, uint32_t tag1)
+ {
+-    unsigned int tag;
++    uint32_t tag;
+     int64_t size;
+ 
+     for (;;) {

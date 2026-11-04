@@ -6,9 +6,9 @@
 
 #include <nuttx/compiler.h>
 
-weak_data const unsigned char aligned_data(4) romfs_img[] =
+weak_data const unsigned char aligned_data(4) g_s31_appromfs[] =
 {
   0x00
 };
 
-weak_data const unsigned int romfs_img_len = 1;
+weak_data const unsigned int g_s31_appromfs_len = 1;

@@ -1,0 +1,426 @@
+diff --git a/kvdb/backend.c b/kvdb/backend.c
+index 5de00a7ff2d4a34f68d91dce0309563d1aa6456f..6d0ec046defd8f23e5870070cdd1179532c1575d 100644
+--- a/kvdb/backend.c
++++ b/kvdb/backend.c
+@@ -87,6 +87,10 @@ int kvdb_init(struct kvdb** kvdb)
+             if (ret == -EEXIST)
+                 ret = 0;
+         }
++#ifdef CONFIG_KVDB_SERVER
++        if (ret >= 0)
++            ret = kvdb_file_recover(CONFIG_KVDB_TEMPORARY_PATH, false);
++#endif
+     }
+ #endif
+     return ret;
+diff --git a/kvdb/client.c b/kvdb/client.c
+index 632d8abfd18287cd9f7241edf837d6199cc737d8..04f362bef6037314d44ec8d0d8ddfec7112b280b 100644
+--- a/kvdb/client.c
++++ b/kvdb/client.c
+@@ -807,21 +807,28 @@ int property_commit(void)
+     int fd = property_connect();
+     int ret;
+     int value;
++    size_t received = 0;
+     if (fd < 0)
+         return fd;
+ 
+-    ret = send(fd, "C", 1, 0);
+-    if (ret < 0) {
++    do {
++        ret = send(fd, "C", 1, 0);
++    } while (ret < 0 && errno == EINTR);
++    if (ret != 1) {
+         KVERR("send error %d\n", errno);
+-        ret = -errno;
++        ret = ret < 0 ? -errno : -EIO;
+         goto out;
+     }
+ 
+-    ret = recv(fd, &value, sizeof(value), 0);
+-    if (ret < sizeof(value)) {
+-        KVERR("recv error %d, ret %d\n", errno, ret);
+-        ret = -errno;
+-        goto out;
++    while (received < sizeof(value)) {
++        ret = recv(fd, (char*)&value + received, sizeof(value) - received, 0);
++        if (ret < 0 && errno == EINTR)
++            continue;
++        if (ret <= 0) {
++            ret = ret < 0 ? -errno : -ENODATA;
++            goto out;
++        }
++        received += ret;
+     }
+ 
+     ret = value;
+diff --git a/kvdb/file.c b/kvdb/file.c
+index 214072fa317fdacee40153c2ae87a7e017189aa0..236b2745c382a9e1a56761c19238d35cc17cb94c 100644
+--- a/kvdb/file.c
++++ b/kvdb/file.c
+@@ -18,9 +18,12 @@
+  * Included Files
+  ****************************************************************************/
+ 
++#include <ctype.h>
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
+ #include <unistd.h>
+ 
+ #include "internal.h"
+@@ -34,9 +37,40 @@
+  * kvdb_file_genpath
+  ****************************************************************************/
+ 
+-static void kvdb_file_genpath(const char* path, const char* key, char* filepath)
++/* Temporary names occupy the other backend's key namespace. Persistent
++ * keys start with "persist."; temporary keys cannot start with it.
++ */
++
++#define KVDB_PERSIST_TMP ".kvdb-tmp-"
++#define KVDB_VOLATILE_TMP PERSIST_LABEL ".kvdb-tmp-"
++
++static int kvdb_file_genpath(const char* path, const char* key, char* filepath)
+ {
+-    snprintf(filepath, PATH_MAX, "%s/%s", path, key);
++    int len;
++
++    if (!key || !key[0] || strchr(key, '/')
++        || !strcmp(key, ".") || !strcmp(key, ".."))
++        return -EINVAL;
++
++    len = snprintf(filepath, PATH_MAX, "%s/%s", path, key);
++    return len < 0 || len >= PATH_MAX ? -ENAMETOOLONG : 0;
++}
++
++static bool kvdb_file_temporary(const char* name, bool persistent)
++{
++    const char* prefix = persistent ? KVDB_PERSIST_TMP : KVDB_VOLATILE_TMP;
++    size_t len = strlen(prefix);
++    size_t i;
++
++    if (strlen(name) != len + 6 || strncmp(name, prefix, len))
++        return false;
++
++    for (i = len; i < len + 6; i++) {
++        if (!isalnum((unsigned char)name[i]))
++            return false;
++    }
++
++    return true;
+ }
+ 
+ /****************************************************************************
+@@ -47,38 +81,77 @@ static void kvdb_file_genpath(const char* path, const char* key, char* filepath)
+  * kvdb_file_set
+  ****************************************************************************/
+ 
+-int kvdb_file_set(const char* path, const char* key,
+-    const void* value, size_t val_len)
++static int kvdb_file_replace(const char* path, const char* key,
++    const void* value, size_t val_len, bool persistent)
+ {
+     char filepath[PATH_MAX];
++    char temporary[PATH_MAX];
+     size_t nbyteswrite = 0;
+     ssize_t result;
++    int ret = 0;
+     int fd;
+ 
+-    kvdb_file_genpath(path, key, filepath);
+-    fd = open(filepath, O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC, 0666);
++    if (!value && val_len)
++        return -EINVAL;
++
++    ret = kvdb_file_genpath(path, key, filepath);
++    if (ret < 0)
++        return ret;
++
++    ret = snprintf(temporary, sizeof(temporary), "%s/%sXXXXXX", path,
++        persistent ? KVDB_PERSIST_TMP : KVDB_VOLATILE_TMP);
++    if (ret < 0 || (size_t)ret >= sizeof(temporary))
++        return -ENAMETOOLONG;
++
++    fd = mkstemp(temporary);
+     if (fd < 0) {
+-        KVERR("open %s error with %d", filepath, errno);
++        KVERR("create temporary property error with %d", errno);
+         return -errno;
+     }
+ 
+-    while (nbyteswrite < val_len) {
+-        result = write(fd, value, val_len);
++    ret = fcntl(fd, F_SETFD, FD_CLOEXEC) < 0 ? -errno : 0;
++    while (ret == 0 && nbyteswrite < val_len) {
++        result = write(fd, (const char*)value + nbyteswrite,
++            val_len - nbyteswrite);
+         if (result < 0) {
+-            if (result == -EINTR) {
++            if (errno == EINTR) {
+                 continue;
+             }
+ 
++            ret = -errno;
+             KVERR("write %s error with %d", filepath, errno);
+-            close(fd);
+-            return -errno;
++            break;
++        }
++
++        if (result == 0) {
++            ret = -EIO;
++            break;
+         }
+ 
+         nbyteswrite += result;
+     }
+ 
+-    close(fd);
+-    return 0;
++    if (ret == 0 && fsync(fd) < 0)
++        ret = -errno;
++
++    if (close(fd) < 0 && ret == 0) {
++        ret = -errno;
++    }
++
++    if (ret == 0 && rename(temporary, filepath) < 0)
++        ret = -errno;
++
++    if (ret < 0 && unlink(temporary) < 0) {
++        KVERR("remove temporary property error with %d", errno);
++    }
++
++    return ret;
++}
++
++int kvdb_file_set(const char* path, const char* key,
++    const void* value, size_t val_len)
++{
++    return kvdb_file_replace(path, key, value, val_len, false);
+ }
+ 
+ /****************************************************************************
+@@ -94,16 +167,18 @@ ssize_t kvdb_file_get(const char* path, const char* key,
+     ssize_t ret;
+     int fd;
+ 
+-    kvdb_file_genpath(path, key, filepath);
++    ret = kvdb_file_genpath(path, key, filepath);
++    if (ret < 0)
++        return ret;
+ 
+     if (value == NULL) {
+ 
+         /* Readonly property only check if exist, no read required. */
+ 
+-        if (access(filepath, O_RDONLY) == 0)
++        if (access(filepath, F_OK) == 0)
+             return val_len;
+         else
+-            return -ENOENT;
++            return -errno;
+     }
+ 
+     fd = open(filepath, O_RDONLY | O_CLOEXEC, 0666);
+@@ -138,9 +213,10 @@ ssize_t kvdb_file_get(const char* path, const char* key,
+  * kvdb_file_list
+  ****************************************************************************/
+ 
+-int kvdb_file_list(const char* path, kvdb_consume consume, void* cookie)
++static int kvdb_file_list_internal(const char* path, kvdb_consume consume,
++    void* cookie, bool persistent)
+ {
+-    char value[PROP_VALUE_MAX];
++    char value[PROP_VALUE_MAX + 1];
+     struct dirent* entry;
+     int ret = 0;
+     DIR* dir;
+@@ -151,14 +227,19 @@ int kvdb_file_list(const char* path, kvdb_consume consume, void* cookie)
+         return -errno;
+     }
+ 
+-    while ((entry = readdir(dir)) != NULL) {
+-        if (entry->d_type != DT_REG) {
++    for (;;) {
++        errno = 0;
++        entry = readdir(dir);
++        if (!entry) {
++            ret = -errno;
++            break;
++        }
++        if (entry->d_type != DT_REG || kvdb_file_temporary(entry->d_name, persistent)) {
+             continue;
+         }
+ 
+         ret = kvdb_file_get(path, entry->d_name, value, PROP_VALUE_MAX);
+         if (ret < 0) {
+-            ret = -errno;
+             break;
+         }
+ 
+@@ -166,7 +247,53 @@ int kvdb_file_list(const char* path, kvdb_consume consume, void* cookie)
+         ret = 0;
+     }
+ 
+-    closedir(dir);
++    if (closedir(dir) < 0 && ret == 0)
++        ret = -errno;
++
++    return ret;
++}
++
++int kvdb_file_list(const char* path, kvdb_consume consume, void* cookie)
++{
++    return kvdb_file_list_internal(path, consume, cookie, false);
++}
++
++/* SERVER calls this only after acquiring its exclusive listening socket,
++ * before accepting writers. DIRECT users must not remove another process's
++ * active temporary files during initialization.
++ */
++
++int kvdb_file_recover(const char* path, bool persistent)
++{
++    char filepath[PATH_MAX];
++    struct dirent* entry;
++    int ret = 0;
++    DIR* dir = opendir(path);
++
++    if (!dir)
++        return errno == ENOENT ? 0 : -errno;
++
++    for (;;) {
++        errno = 0;
++        entry = readdir(dir);
++        if (!entry) {
++            ret = -errno;
++            break;
++        }
++        if (entry->d_type != DT_REG || !kvdb_file_temporary(entry->d_name, persistent))
++            continue;
++
++        ret = kvdb_file_genpath(path, entry->d_name, filepath);
++        if (ret < 0)
++            break;
++        if (unlink(filepath) < 0) {
++            ret = -errno;
++            break;
++        }
++    }
++
++    if (closedir(dir) < 0 && ret == 0)
++        ret = -errno;
+     return ret;
+ }
+ 
+@@ -177,9 +304,11 @@ int kvdb_file_list(const char* path, kvdb_consume consume, void* cookie)
+ int kvdb_file_delete(const char* path, const char* key)
+ {
+     char filepath[PATH_MAX];
++    int ret = kvdb_file_genpath(path, key, filepath);
+ 
+-    kvdb_file_genpath(path, key, filepath);
+-    return unlink(filepath);
++    if (ret < 0)
++        return ret;
++    return unlink(filepath) < 0 ? -errno : 0;
+ }
+ 
+ #ifdef CONFIG_KVDB_FILE
+@@ -199,7 +328,11 @@ int kvdb_file_delete(const char* path, const char* key)
+ 
+ int kvdb_persist_init(struct kvdb** kvdb)
+ {
++#ifdef CONFIG_KVDB_SERVER
++    return kvdb_file_recover(CONFIG_KVDB_PERSIST_PATH, true);
++#else
+     return 0;
++#endif
+ }
+ 
+ /****************************************************************************
+@@ -242,7 +375,7 @@ void kvdb_persist_uninit(struct kvdb* kvdb)
+ int kvdb_persist_set(struct kvdb* kvdb, const char* key, size_t key_len,
+     const void* value, size_t val_len, bool force)
+ {
+-    return kvdb_file_set(CONFIG_KVDB_PERSIST_PATH, key, value, val_len);
++    return kvdb_file_replace(CONFIG_KVDB_PERSIST_PATH, key, value, val_len, true);
+ }
+ 
+ /****************************************************************************
+@@ -307,7 +440,7 @@ int kvdb_persist_delete(struct kvdb* kvdb, const char* key, size_t key_len)
+ 
+ int kvdb_persist_list(struct kvdb* kvdb, kvdb_consume consume, void* cookie)
+ {
+-    return kvdb_file_list(CONFIG_KVDB_PERSIST_PATH, consume, cookie);
++    return kvdb_file_list_internal(CONFIG_KVDB_PERSIST_PATH, consume, cookie, true);
+ }
+ 
+ /****************************************************************************
+@@ -325,6 +458,49 @@ int kvdb_persist_list(struct kvdb* kvdb, kvdb_consume consume, void* cookie)
+ 
+ int kvdb_persist_commit(struct kvdb* kvdb)
+ {
+-    return 0;
++    char filepath[PATH_MAX];
++    struct dirent* entry;
++    int ret = 0;
++    DIR* dir = opendir(CONFIG_KVDB_PERSIST_PATH);
++
++    if (!dir)
++        return -errno;
++
++    /* File operations publish only after syncing and closing a complete
++     * replacement. This additional barrier reports file/iteration errors;
++     * metadata durability remains the mounted filesystem's contract.
++     */
++
++    for (;;) {
++        int fd;
++
++        errno = 0;
++        entry = readdir(dir);
++        if (!entry) {
++            ret = -errno;
++            break;
++        }
++        if (entry->d_type != DT_REG || kvdb_file_temporary(entry->d_name, true))
++            continue;
++
++        ret = kvdb_file_genpath(CONFIG_KVDB_PERSIST_PATH, entry->d_name, filepath);
++        if (ret < 0)
++            break;
++        fd = open(filepath, O_RDONLY | O_CLOEXEC);
++        if (fd < 0) {
++            ret = -errno;
++            break;
++        }
++        if (fsync(fd) < 0)
++            ret = -errno;
++        if (close(fd) < 0 && ret == 0)
++            ret = -errno;
++        if (ret < 0)
++            break;
++    }
++
++    if (closedir(dir) < 0 && ret == 0)
++        ret = -errno;
++    return ret;
+ }
+ #endif
+diff --git a/kvdb/internal.h b/kvdb/internal.h
+index be2745317a4551580b71933dc89d7110dc09cda8..45a2bb37f927750f4fd4fc0e0f1eae4521293828 100644
+--- a/kvdb/internal.h
++++ b/kvdb/internal.h
+@@ -86,6 +86,7 @@ int kvdb_file_set(const char* path, const char* key, const void* value, size_t v
+ ssize_t kvdb_file_get(const char* path, const char* key, void* value, size_t val_len);
+ int kvdb_file_list(const char* path, kvdb_consume consume, void* cookie);
+ int kvdb_file_delete(const char* path, const char* key);
++int kvdb_file_recover(const char* path, bool persistent);
+ #endif
+ 
+ #if defined(__cplusplus)

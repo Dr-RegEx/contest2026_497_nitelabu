@@ -1,0 +1,8 @@
+# Standalone MEDIA target qualification before HMI integration.
+# Preserve all codecs and normal service/player stack sizes for measurement.
+#include "../korvo-media/defconfig"
+CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP=y
+CONFIG_ESP32S31_FFMPEG_PSRAM_BSS=y
+CONFIG_TLS_TASK_NELEM=8
+CONFIG_EXAMPLES_S31MEDIACHECK=y
+CONFIG_STACK_COLORATION=y

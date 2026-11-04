@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: Apache-2.0
+config EXAMPLES_S31SDCHECK
+	tristate "S31 bounded two-core VFS qualification"
+	default n
+	depends on SMP && !DISABLE_PTHREAD && !DISABLE_MOUNTPOINT
+	help
+		Check CPU affinity and two-thread synthetic file integrity through
+		standard VFS calls. Creates a new owned directory, retains files for
+		remount verification, and refuses unknown files during cleanup.
+		This is a qualification tool, not a filesystem throughput benchmark.
+
+if EXAMPLES_S31SDCHECK
+config EXAMPLES_S31SDCHECK_STACKSIZE
+	int "Main task stack size"
+	default 16384
+endif

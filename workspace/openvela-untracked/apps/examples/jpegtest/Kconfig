@@ -7,8 +7,10 @@ config EXAMPLES_JPEGTEST
 	default n
 	depends on LIB_JPEG_TURBO
 	---help---
-		Enable the jpegtest command.  It encodes a small RGB888 image,
-		decodes it as RGB565, and checks the RGB565 packing helpers.
+		Enable the jpegtest command.  It encodes synthetic RGB888 images,
+		checks decoded RGB888 pixels and RGB565 conversion, and rejects
+		truncated inputs.  Optional width, height and repeat arguments
+		exercise product sizes without camera capture or filesystem I/O.
 
 if EXAMPLES_JPEGTEST
 

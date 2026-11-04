@@ -1,13 +1,16 @@
-# 公共仓修改与复现
+# 修改与源码定位
 
-唯一补丁入口是仓库根目录的 `workspace/apply-openvela-snapshot.sh`。
+补丁和新增文件以 [snapshot.json](../../workspace/snapshot.json)、[锁定 manifest](../../workspace/manifest-locked.xml)及其校验清单为准。`workspace/patches/`、`workspace/openvela-untracked/` 和 `workspace/dependencies/` 是源码恢复载荷；项目数从相应清单读取。
 
-`workspace/manifest-locked.xml` 锁定 Gitee open-vela 公共仓可获取的基线。
-`workspace/snapshot.json` 明确记录项目路径、基线和新增文件；`workspace/patches/`
-包含本地已提交和未提交的全部源码差异。不能仅对本机 HEAD 导出 diff，
-否则其他机器会缺失尚未发布的适配提交。
+| 修改内容 | canonical 位置（相对于 platform-root） |
+| --- | --- |
+| BSP、引脚、配置继承、设备注册 | `openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/` |
+| S31 驱动、启动与内存 | `openvela-dev/nuttx/arch/risc-v/src/esp32s31/` |
+| Espressif 共用适配 | `openvela-dev/nuttx/arch/risc-v/src/common/espressif/` |
+| HAL / IDF 依赖 | `s31-reference/deps/esp-hal-3rdparty/`、`s31-reference/tmp/esp-idf-clean/` |
+| Factory UI、assets 与生命周期 | `openvela-dev/frameworks/runtimes/services/xmsdemo/factory/` |
+| 原生服务 | `openvela-dev/frameworks/runtimes/services/`、`openvela-dev/frameworks/multimedia/media/` |
 
-本目录是实际板级代码的可读副本；复现脚本已通过公共仓补丁将同一代码放入
-`nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/`，无需再复制。
+详细入口见 [源码分层](../SOURCE-MAP.md)。更改板资源前核对 pinmux、ADC/RF 与外设共享约束。保留 LICENSE、NOTICE、UPSTREAM、模型及资源许可，不按测试名称删除源码依赖。
 
-本次仅用于复刻仓团队复现，尚未向比赛官仓或公共仓发起 PR。
+当前公共薄快照尚待整体刷新和独立回放。按 [恢复与构建](../../workspace/REPRODUCE.md)使用对应源码包与依赖；[验证索引](../../docs/validation/README.md)记录精确镜像的结果，历史记录不自动适用于新编译输出。

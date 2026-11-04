@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: Apache-2.0
+config EXAMPLES_S31DIGIT
+	tristate "S31 touchscreen handwritten digit recognition"
+	default n
+	depends on VIDEO_FB && FB_UPDATE && INPUT_TOUCHSCREEN
+
+config EXAMPLES_S31DIGIT_SIMD
+	bool "Use CPU1 PIE INT8 dot products"
+	depends on EXAMPLES_S31DIGIT && ESP32S31_PIE
+	default n

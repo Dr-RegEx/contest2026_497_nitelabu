@@ -22,6 +22,7 @@
 #include <debug.h>
 #include <stdint.h>
 #include <string.h>
+#include <syslog.h>
 #ifdef CONFIG_ESP32S31_FLASH_AUDIO_TRACE
 #  include <stdio.h>
 #  include <nuttx/sched.h>
@@ -43,6 +44,11 @@
 #include "soc/gpio_sig_map.h"
 #include "soc/interrupts.h"
 
+#if defined(CONFIG_SMP) && \
+    (!defined(CONFIG_ARCH_USE_S_MODE) || defined(CONFIG_ARCH_RV_HAVE_CLIC))
+#  error "S31 SMP I2S interrupt ownership requires the S-mode IRQ contract"
+#endif
+
 /* Deliberately isolated from the half-duplex driver. RX owns the continuous
  * 48 kHz clock, including while no capture buffer is queued. TX is a slave.
  * All DMA memory is internal SRAM. Each descriptor occupies its own cache
@@ -51,7 +57,7 @@
 
 #define DUP_DMA AHB_DMA_LL_GET_HW(0)
 #define DUP_BLOCK 512
-#define DUP_SLOTS 4
+#define DUP_SLOTS CONFIG_ESP32S31_I2S_DUPLEX_DMA_SLOTS
 #define DUP_LIMIT 8
 #define DUP_RX_SOURCE ETS_AHB_PDMA_IN_CH0_INTR_SOURCE
 #define DUP_TX_SOURCE ETS_AHB_PDMA_OUT_CH0_INTR_SOURCE
@@ -60,12 +66,26 @@
                        GDMA_LL_EVENT_RX_DESC_EMPTY | GDMA_LL_EVENT_RX_FIFO_OVF)
 #define DUP_TX_ERRORS (GDMA_LL_EVENT_TX_DESC_ERROR | GDMA_LL_EVENT_TX_FIFO_UDF)
 
-#ifdef CONFIG_ESP32S31_I2S_CAPTURE_16K_MONO
+#ifdef CONFIG_ESP32S31_KORVO_AUDIO
 #  define DUP_RATE 16000u
-#elif defined(CONFIG_ESP32S31_I2S_DUPLEX_44K)
-#  define DUP_RATE 44100u
+#  define DUP_MCLK_PIN -1
+#  define DUP_BCLK_PIN 3
+#  define DUP_WS_PIN 4
+#  define DUP_DIN_PIN 5
+#  define DUP_DOUT_PIN 6
 #else
+#  define DUP_MCLK_PIN 52
+#  define DUP_BCLK_PIN 53
+#  define DUP_WS_PIN 55
+#  define DUP_DIN_PIN 54
+#  define DUP_DOUT_PIN 56
+#  ifdef CONFIG_ESP32S31_I2S_CAPTURE_16K_MONO
+#  define DUP_RATE 16000u
+#  elif defined(CONFIG_ESP32S31_I2S_DUPLEX_44K)
+#  define DUP_RATE 44100u
+#  else
 #  define DUP_RATE 48000u
+#  endif
 #endif
 #define DUP_MCLK (DUP_RATE * 256u)
 #define DUP_BYTES_PER_SECOND (DUP_RATE * 4u)
@@ -102,6 +122,8 @@ struct dup_endpoint_s
   bool rx;
   bool active;
   bool dma_running;
+  bool paused;
+  clock_t pause_tick;
   atomic_t errors;
 };
 
@@ -208,6 +230,7 @@ static void dup_cancel(struct dup_endpoint_s *ep, int result)
   unsigned int i;
 
   ep->active = false;
+  ep->paused = false;
   if (!ep->rx || !g_ep[0].active)
     {
       dup_stop_dma(ep);
@@ -253,6 +276,106 @@ static int dup_irq(int irq, void *context, void *arg)
   return OK;
 }
 
+/* IRQ routing belongs to CPU0. Serializing the task-side initializer does
+ * not stop migration between setup, enable and teardown; those operations
+ * must execute on the owner CPU. Keep failed cleanup state for the next
+ * initialization attempt instead of destroying an ISR-visible semaphore.
+ */
+
+struct dup_irq_route_s
+{
+  int cpuint;
+  bool attached;
+};
+
+static struct dup_irq_route_s g_routes[2] = {{-1, false}, {-1, false}};
+static mutex_t g_init_lock = NXMUTEX_INITIALIZER;
+static bool g_wake_initialized;
+
+static int dup_irq_update(void *arg)
+{
+  const int sources[2] = {DUP_TX_SOURCE, DUP_RX_SOURCE};
+  irqstate_t flags = enter_critical_section();
+  int direction;
+  int ret = OK;
+
+  if (arg != NULL)
+    {
+      for (direction = 0; direction < 2; direction++)
+        {
+          g_routes[direction].cpuint =
+            esp_setup_irq(sources[direction], 1, ESP_IRQ_TRIGGER_LEVEL);
+          if (g_routes[direction].cpuint < 0)
+            {
+              ret = g_routes[direction].cpuint;
+              goto cleanup;
+            }
+
+          ret = irq_attach(ESP_SOURCE2IRQ(sources[direction]), dup_irq,
+                           &g_ep[direction]);
+          if (ret < 0)
+            {
+              goto cleanup;
+            }
+
+          g_routes[direction].attached = true;
+          up_enable_irq(ESP_SOURCE2IRQ(sources[direction]));
+        }
+
+      leave_critical_section(flags);
+      return OK;
+    }
+
+cleanup:
+  for (direction = 1; direction >= 0; direction--)
+    {
+      if (g_routes[direction].cpuint >= 0)
+        {
+          up_disable_irq(ESP_SOURCE2IRQ(sources[direction]));
+          if (g_routes[direction].attached)
+            {
+              irq_detach(ESP_SOURCE2IRQ(sources[direction]));
+              g_routes[direction].attached = false;
+            }
+
+          esp_teardown_irq(sources[direction], g_routes[direction].cpuint);
+          g_routes[direction].cpuint = -1;
+        }
+    }
+
+  leave_critical_section(flags);
+  return ret;
+}
+
+static int dup_irq_on_owner(bool install)
+{
+  void *arg = install ? (void *)(uintptr_t)1 : NULL;
+#ifdef CONFIG_SMP
+  return nxsched_smp_call_single(0, dup_irq_update, arg);
+#else
+  return dup_irq_update(arg);
+#endif
+}
+
+static bool dup_init_task_context(void)
+{
+#ifdef CONFIG_SMP
+  irqstate_t flags = up_irq_save();
+  bool allowed = !up_interrupt_context() && (flags & STATUS_IE) != 0;
+
+  up_irq_restore(flags);
+  if (!allowed)
+    {
+      syslog(LOG_ERR, "S31_I2S_INIT stage=context status=%lx\n",
+             (unsigned long)flags);
+    }
+
+  return allowed;
+#else
+  return true;
+#endif
+}
+
 static void dup_configure(void)
 {
   i2s_hal_slot_config_t slot =
@@ -266,7 +389,8 @@ static void dup_configure(void)
       .ws_width = 16,
       .bit_shift = true,
 #if defined(CONFIG_ESP32S31_I2S_DUPLEX_44K) || \
-    defined(CONFIG_ESP32S31_I2S_CAPTURE_16K_MONO)
+    defined(CONFIG_ESP32S31_I2S_CAPTURE_16K_MONO) || \
+    defined(CONFIG_ESP32S31_KORVO_AUDIO)
       .left_align = true,
 #endif
     },
@@ -302,9 +426,13 @@ static void dup_configure(void)
   i2s_hal_set_rx_clock(&g_hal, &clk, I2S_CLK_SRC_XTAL, NULL);
   i2s_ll_rx_enable_recomb(g_hal.dev, false);
   leave_critical_section(flags);
-  esp_gpio_matrix_out(52, I2S0_MCLK_PAD_OUT_IDX, false, false);
-  esp_gpio_matrix_out(53, I2S0_I_BCK_PAD_OUT_IDX, false, false);
-  esp_gpio_matrix_out(55, I2S0_I_WS_PAD_OUT_IDX, false, false);
+  if (DUP_MCLK_PIN >= 0)
+    {
+      esp_gpio_matrix_out(DUP_MCLK_PIN, I2S0_MCLK_PAD_OUT_IDX, false, false);
+    }
+
+  esp_gpio_matrix_out(DUP_BCLK_PIN, I2S0_I_BCK_PAD_OUT_IDX, false, false);
+  esp_gpio_matrix_out(DUP_WS_PIN, I2S0_I_WS_PAD_OUT_IDX, false, false);
 }
 
 static int dup_start_dma(struct dup_endpoint_s *ep)
@@ -432,7 +560,7 @@ static void dup_service(struct dup_endpoint_s *ep)
           for (req = ep->head; req != NULL && offset < DUP_BLOCK;
                req = req->next)
             {
-              if (!ep->active || req->result != OK ||
+              if (!ep->active || ep->paused || req->result != OK ||
                   req->completed == req->bytes)
                 {
                   continue;
@@ -473,7 +601,8 @@ static void dup_service(struct dup_endpoint_s *ep)
           ep->slotreq[index] = NULL;
           ep->slotbytes[index] = 0;
           memset(buffer, 0, DUP_BLOCK);
-          for (req = ep->head; req != NULL; req = req->next)
+          for (req = ep->paused ? NULL : ep->head;
+               req != NULL; req = req->next)
             {
               if (req->result == OK && req->scheduled < req->bytes)
                 {
@@ -516,6 +645,59 @@ static void dup_service(struct dup_endpoint_s *ep)
       __sync_synchronize();
       ep->index = (index + 1) % DUP_SLOTS;
     }
+}
+
+static bool dup_timed_out(struct dup_endpoint_s *ep,
+                          struct dup_request_s *req, clock_t now)
+{
+  return !ep->paused && req->completed < req->bytes &&
+         ((req->started_valid && now - req->started >= req->timeout) ||
+          (!req->started_valid && now - req->queued >= req->queue_timeout));
+}
+
+/* Pause the sample queue, not the duplex clock master. Already scheduled TX
+ * ring blocks drain (at most DUP_SLOTS 512-byte periods), then DMA emits
+ * zeros. At 16 kHz stereo S16 each slot provides 8 ms of buffering.
+ * Unscheduled samples and RX requests retain ownership.
+ * Resume continues their offsets and excludes paused time from deadlines.
+ * The caller holds g_lock; callbacks remain in the worker outside that lock.
+ */
+
+static int dup_pause(struct dup_endpoint_s *ep, bool pause)
+{
+  struct dup_request_s *req;
+  clock_t now = clock_systime_ticks();
+  clock_t elapsed;
+
+  if (!ep->active)
+    {
+      return -EPIPE;
+    }
+
+  if (ep->paused == pause)
+    {
+      return OK;
+    }
+
+  if (pause)
+    {
+      ep->pause_tick = now;
+    }
+  else
+    {
+      elapsed = now - ep->pause_tick;
+      for (req = ep->head; req != NULL; req = req->next)
+        {
+          req->queued += elapsed;
+          if (req->started_valid)
+            {
+              req->started += elapsed;
+            }
+        }
+    }
+
+  ep->paused = pause;
+  return OK;
 }
 
 static int dup_worker(int argc, char *argv[])
@@ -563,12 +745,7 @@ static int dup_worker(int argc, char *argv[])
           ep = &g_ep[direction];
           for (req = ep->head; req != NULL; req = req->next)
             {
-              if (req->completed < req->bytes &&
-                  ((req->started_valid &&
-                    clock_systime_ticks() - req->started >= req->timeout) ||
-                   (!req->started_valid &&
-                    clock_systime_ticks() - req->queued >=
-                    req->queue_timeout)))
+              if (dup_timed_out(ep, req, clock_systime_ticks()))
                 {
                   dup_cancel(ep, -ETIMEDOUT);
                   break;
@@ -711,7 +888,7 @@ static int dup_enqueue(struct i2s_dev_s *dev, struct ap_buffer_s *apb,
       req->callback = callback;
       req->arg = arg;
       req->bytes = bytes;
-      req->queued = clock_systime_ticks();
+      req->queued = ep->paused ? ep->pause_tick : clock_systime_ticks();
       for (prior = ep->head; prior != NULL; prior = prior->next)
         {
           ahead += prior->bytes - prior->completed;
@@ -827,6 +1004,14 @@ static int dup_ioctl(struct i2s_dev_s *dev, int cmd, unsigned long arg)
         nxmutex_unlock(&g_lock);
         return ret;
 
+      case AUDIOIOC_PAUSE:
+      case AUDIOIOC_RESUME:
+        nxmutex_lock(&g_lock);
+        ret = dup_pause(ep, cmd == AUDIOIOC_PAUSE);
+        nxsem_post(&g_wake);
+        nxmutex_unlock(&g_lock);
+        return ret;
+
       case AUDIOIOC_STOP:
       case AUDIOIOC_SHUTDOWN:
         nxmutex_lock(&g_lock);
@@ -869,22 +1054,56 @@ static const struct i2s_ops_s g_dup_ops =
 
 struct i2s_dev_s *esp32s31_i2s_duplex_initialize(bool rx)
 {
-  int cpuint[2];
-  int source[2] = {DUP_TX_SOURCE, DUP_RX_SOURCE};
+  struct i2s_dev_s *dev = NULL;
   int direction;
   int ret;
-  int pin;
+  unsigned int pin;
+  const char *stage = "context";
+  const int pins[] =
+    {DUP_MCLK_PIN, DUP_BCLK_PIN, DUP_WS_PIN, DUP_DIN_PIN, DUP_DOUT_PIN};
   irqstate_t flags;
+
+  if (!dup_init_task_context())
+    {
+      return NULL;
+    }
+
+  ret = nxmutex_lock(&g_init_lock);
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "S31_I2S_INIT stage=mutex result=%d\n", ret);
+      return NULL;
+    }
 
   if (g_ready)
     {
-      return &g_ep[rx].dev;
+      dev = &g_ep[rx].dev;
+      goto out;
+    }
+
+  if (g_wake_initialized)
+    {
+      /* A previous worker/IRQ setup failed and owner dispatch could not
+       * complete cleanup. Do not initialize over live routing or g_wake.
+       */
+
+      stage = "old-irq-cleanup";
+      ret = dup_irq_on_owner(false);
+      if (ret < 0)
+        {
+          goto out;
+        }
+
+      nxsem_destroy(&g_wake);
+      g_wake_initialized = false;
     }
 
   /* DMA descriptors and payload must be in uncached internal SRAM. The S31
    * linker places DRAM_ATTR in this region, outside both flash/PSRAM caches.
    */
 
+  stage = "dma-address-cache";
+  ret = -EINVAL;
   if (!esp_ptr_internal(g_data) || !esp_ptr_dma_capable(g_data) ||
       !esp_ptr_internal(g_desc) || !esp_ptr_dma_capable(g_desc) ||
       esp_cache_msync(g_data, sizeof(g_data),
@@ -894,21 +1113,32 @@ struct i2s_dev_s *esp32s31_i2s_duplex_initialize(bool rx)
                       ESP_CACHE_MSYNC_FLAG_DIR_C2M) !=
                       ESP_ERR_NOT_SUPPORTED)
     {
-      return NULL;
+      goto out;
     }
 
-  nxsem_init(&g_wake, 0, 0);
-  esp32s31_audio_pa(false);
-  for (pin = 52; pin <= 56; pin++)
+  stage = "semaphore";
+  ret = nxsem_init(&g_wake, 0, 0);
+  if (ret < 0)
     {
-      if (esp_configgpio(pin, pin == 54 ? INPUT : OUTPUT) < 0)
+      goto out;
+    }
+
+  g_wake_initialized = true;
+  esp32s31_audio_pa(false);
+  nxsem_set_protocol(&g_wake, SEM_PRIO_NONE);
+  for (pin = 0; pin < sizeof(pins) / sizeof(pins[0]); pin++)
+    {
+      stage = "gpio";
+      if (pins[pin] >= 0 &&
+          esp_configgpio(pins[pin], pins[pin] == DUP_DIN_PIN ?
+                                   INPUT : OUTPUT) < 0)
         {
           goto fail_sem;
         }
     }
 
-  esp_gpio_matrix_in(54, I2S0_I_SD_PAD_IN_IDX, false);
-  esp_gpio_matrix_out(56, I2S0_O_SD_PAD_OUT_IDX, false, false);
+  esp_gpio_matrix_in(DUP_DIN_PIN, I2S0_I_SD_PAD_IN_IDX, false);
+  esp_gpio_matrix_out(DUP_DOUT_PIN, I2S0_O_SD_PAD_OUT_IDX, false, false);
   flags = enter_critical_section();
   i2s_ll_enable_bus_clock(0, true);
   i2s_ll_reset_register(0);
@@ -932,26 +1162,14 @@ struct i2s_dev_s *esp32s31_i2s_duplex_initialize(bool rx)
 
   leave_critical_section(flags);
   dup_configure();
-  for (direction = 0; direction < 2; direction++)
+  stage = "irq-owner";
+  ret = dup_irq_on_owner(true);
+  if (ret < 0)
     {
-      cpuint[direction] = esp_setup_irq(source[direction], 1,
-                                      ESP_IRQ_TRIGGER_LEVEL);
-      if (cpuint[direction] < 0)
-        {
-          goto fail_irq;
-        }
-
-      ret = irq_attach(ESP_SOURCE2IRQ(source[direction]), dup_irq,
-                       &g_ep[direction]);
-      if (ret < 0)
-        {
-          esp_teardown_irq(source[direction], cpuint[direction]);
-          goto fail_irq;
-        }
-
-      up_enable_irq(ESP_SOURCE2IRQ(source[direction]));
+      goto fail_irq;
     }
 
+  stage = "worker";
   ret = kthread_create("s31_duplex",
                        CONFIG_ESP32S31_I2S_DUPLEX_WORKER_PRIORITY,
                        4096, dup_worker, NULL);
@@ -964,17 +1182,25 @@ struct i2s_dev_s *esp32s31_i2s_duplex_initialize(bool rx)
 #ifdef CONFIG_ESP32S31_FLASH_AUDIO_TRACE
   kthread_create("s31_observe", 254, 4096, dup_trace_observer, NULL);
 #endif
-  return &g_ep[rx].dev;
+  dev = &g_ep[rx].dev;
+  goto out;
 
 fail_irq:
-  while (--direction >= 0)
+  if (dup_irq_on_owner(false) < 0)
     {
-      up_disable_irq(ESP_SOURCE2IRQ(source[direction]));
-      irq_detach(ESP_SOURCE2IRQ(source[direction]));
-      esp_teardown_irq(source[direction], cpuint[direction]);
+      goto out;
     }
 
 fail_sem:
   nxsem_destroy(&g_wake);
-  return NULL;
+  g_wake_initialized = false;
+out:
+  nxmutex_unlock(&g_init_lock);
+  if (dev == NULL)
+    {
+      syslog(LOG_ERR, "S31_I2S_INIT stage=%s result=%d rx=%d\n",
+             stage, ret, rx);
+    }
+
+  return dev;
 }
