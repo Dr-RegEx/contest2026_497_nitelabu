@@ -1,0 +1,12 @@
+# Isolated ZBlue Bluetooth Mesh build candidate.  No peer node is needed for
+# this compile check; provisioning and model traffic still require a second
+# device and are not claimed here.
+#include "../xts-flat-bttool/defconfig"
+
+CONFIG_BT_MESH=y
+CONFIG_BT_MESH_PB_ADV=y
+CONFIG_BT_MESH_PB_GATT=y
+CONFIG_BT_MESH_PROVISIONEE=y
+CONFIG_BT_MESH_RELAY=y
+CONFIG_BT_MESH_RELAY_ENABLED=y
+CONFIG_BT_MESH_GATT_PROXY=y

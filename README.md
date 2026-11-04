@@ -31,7 +31,7 @@
 sudo apt-get update
 sudo apt-get install -y git git-lfs repo python3 python3-venv python3-pip \
   cmake ninja-build build-essential bison flex gperf gettext texinfo \
-  libncurses-dev libssl-dev genromfs xz-utils unzip patch curl rsync
+  libncurses-dev libssl-dev genromfs xz-utils unzip patch curl rsync xxd
 mkdir -p s31-review/openvela-dev && cd s31-review/openvela-dev
 repo init -u https://github.com/open-vela/contest2026_497_nitelabu.git \
   -b dev-ai-contest-2026 -m contest2026_497_nitelabu.xml
@@ -45,29 +45,32 @@ bash "$CONTEST_REPO/workspace/apply-openvela-snapshot.sh" "$PWD"
 
 补丁脚本先校验所有基线、补丁和文件，再写入。它只接受干净的固定版本工程；同一工作区只运行一次。失败时会明确报错，不会把已有源码静默跳过。不要使用旧的 `netlab` manifest 或旧板级补丁。
 
-上述命令完成源码拉取与补丁应用，不包含完整 SDK 准备。构建还需要匹配的 HAL/IDF、Python 环境、主机生成器和工具链；按 [工程恢复说明](workspace/REPRODUCE.md)准备 `platform-root/tools`、`platform-root/s31-reference` 及独立 SDK。旧 `setup-dependencies.sh` 的 `.s31-deps` 布局不能直接替代当前构建入口所需环境。已有离线产品与 SDK 包的恢复方式也见该文档；Git 仓库本身不包含完整 SDK。
+准备公开依赖（固定 HAL、工具链、Python 包）：
+
+```bash
+bash "$CONTEST_REPO/workspace/setup-dependencies.sh" "$PWD"
+```
+
+依赖保存在 checkout 下的 `.s31-deps`，不需要开发者私有离线产品包或完整 ESP-IDF SDK。安装脚本核对工具链校验值并应用对应 HAL 补丁；SDMMC 所需的上游头文件与主机生成器运行库随仓库提供，保留原许可证。详细环境要求、缓存与故障处理见 [工程恢复说明](workspace/REPRODUCE.md)。
 
 ## 四、编译、烧录与运行
 
-在第三节的环境准备完成后，设置实际 SDK 和独立输出目录：
+在第三节 checkout 目录中，先构建最小系统，再选择目标功能：
 
 ```bash
-SDK=/path/to/restored-sdk
-BUILD_OUTPUT=/path/to/new-build-output
-
+CHECKOUT="$PWD"
 bash "$CONTEST_REPO/workspace/build.sh" --list
+bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
+  --profile nsh --output "$(dirname "$CHECKOUT")/build-nsh" --jobs 8
 
 # Korvo 原生 Factory：摄像头主面板、咖啡机界面及系统服务
-bash "$CONTEST_REPO/workspace/build.sh" \
-  --platform-root "$PLATFORM_ROOT" --sdk "$SDK" \
-  --profile korvo-openvela-factory --output "$BUILD_OUTPUT" --jobs 8
+bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
+  --profile korvo-openvela-factory --output "$(dirname "$CHECKOUT")/build-factory" --jobs 8
 ```
 
-最小 NSH 使用 `--profile nsh`；SMP/MMU、网络和外部应用使用 `--profile demo-rmt-netapps-competition`；Function 有线网使用 `--profile function-ethernet`。每次构建指定新的输出目录。旧 Factory 离线产品包不含有线网配置，构建该配置需使用完整对应源码及依赖。
+Function 有线网使用 `--profile function-ethernet`；SMP/MMU、网络和外部应用配置为 `demo-rmt-netapps-competition`。每个配置指定新的输出目录，产物位于 `OUTPUT/build/`，构建记录保存在 `OUTPUT/receipt.json`。该入口使用独立输出目录并启用源码保护，不复用历史编译产物。完整离线产品包的旧入口单独保留为 `workspace/build-offline.py`。 五个公开构建配置均已在独立输出目录验证，镜像、AppFS 与新识别镜像实板结果见 [公开复现记录](docs/validation/public-reproduction.json)。
 
-产物位于 `BUILD_OUTPUT/build/`。使用 CMake/Ninja 专用入口；不要在同一源码树混入 Make 生成的 `.config` 或 `include/nuttx/config.h`。原 Factory 产品已完成独立接收端构建，有线网 canonical ELF、bin 和配置与实测版本逐字节一致；当前公共薄快照已通过补丁重建及载荷校验，完整新环境构建尚未重新验证。详见 [工程恢复说明](workspace/REPRODUCE.md)。
-
-Korvo 默认演示采用[原版双核数字识别固件](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-digit-stable/README.md)，上电自动显示摄像头画面及识别结果；[Factory 演示](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-factory/README.md)独立保留。两者分别烧录，未实现按钮跳转。原版数字识别目录保留稳定固件与部分源码快照，不宣称能够独立重建该稳定镜像。
+Korvo 默认演示采用[原版双核数字识别固件](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-digit-stable/README.md)，上电自动显示摄像头画面及识别结果；[Factory 演示](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-factory/README.md)独立保留。两者分别烧录，未实现按钮跳转。原版数字识别源码已恢复为独立可构建配置 `korvo-digit-rebuild`，构建命令见 [原版识别源码](workspace/digit-demo/README.md)。新编译镜像已完成双核启动、100/100 自检及摄像/显示/推理进度验证；历史稳定固件继续保留，二者不宣称逐字节一致。
 
 烧录前连接目标板 USB-UART，确认实际端口并保存本板原固件备份。按对应固件目录的校验与烧录说明操作；不要混用不同配置的 Flash 布局。通用 Factory 部署与回退步骤见 [固件部署](workspace/FLASH-MANUAL.md)。
 

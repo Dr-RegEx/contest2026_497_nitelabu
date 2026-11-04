@@ -1,114 +1,113 @@
 #!/usr/bin/env python3
-"""Build a registered profile using the platform's real helper; never flash."""
+"""Build S31 using only the pinned public checkout and setup-dependencies.sh."""
 import argparse
 import json
+import os
 from pathlib import Path
-import re
 import subprocess
 import sys
 
 sys.dont_write_bytecode = True
-from entrypoint_support import (BOARD, HERE, clean_env, contained, fresh_output,
-                                local_path, platform_layout, read_json, sha)
-
-
-def profile_inputs(root, profile):
-    base = root / BOARD / 'configs'
-    seen, active = {}, set()
-
-    def visit(path):
-        path = path.resolve()
-        if not path.is_relative_to(base.resolve()):
-            raise ValueError('Profile include escapes canonical configs: ' + str(path))
-        if path in active:
-            raise ValueError('Profile include cycle: ' + str(path))
-        if str(path) in seen:
-            return
-        if not path.is_file():
-            raise ValueError('Profile/source integration missing: ' + str(path))
-        active.add(path)
-        seen[str(path)] = sha(path)
-        for line in path.read_text().splitlines():
-            if re.match(r'\s*#\s*include\b', line):
-                match = re.fullmatch(r'\s*#\s*include\s+"([^"]+)"\s*', line)
-                if not match:
-                    raise ValueError('Unsupported profile include: ' + line)
-                visit(path.parent / match[1])
-        active.remove(path)
-
-    visit(base / profile / 'defconfig')
-    return seen
+from entrypoint_support import HERE, clean_env, fresh_output, sha
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--list', action='store_true', help='Show profiles and qualification boundaries')
-    parser.add_argument('--platform-root', help='Parent of openvela-dev, tools and s31-reference')
-    parser.add_argument('--sdk', help='Restored offline SDK directory (sets IDF_TOOLS_PATH)')
-    parser.add_argument('--profile', default='korvo-openvela-factory')
-    parser.add_argument('--output', help='New directory outside source, SDK and contest repository')
+    parser.add_argument('--list', action='store_true')
+    parser.add_argument('--workspace', type=Path, help='repo checkout containing nuttx, apps, etc.')
+    parser.add_argument('--deps', type=Path, help='default: WORKSPACE/.s31-deps')
+    parser.add_argument('--profile', default='nsh')
+    parser.add_argument('--output', required=False, help='new build output outside source/dependencies')
     parser.add_argument('--jobs', type=int, default=4)
-    parser.add_argument('--share-source', action='store_true', help='Opt into helper source-preserving CMake mode; default copies source into output')
-    parser.add_argument('--dry-run', action='store_true', help='Validate paths, locks and profile includes; print command without preparing or building')
+    parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
-    registry = read_json(HERE / 'profiles.json')
+    registry = json.loads((HERE / 'profiles.json').read_text())
     if args.list:
-        print(json.dumps(registry, indent=2, ensure_ascii=False))
+        print(json.dumps(registry, ensure_ascii=False, indent=2))
         return 0
-    if not all((args.platform_root, args.sdk, args.output)):
-        parser.error('--platform-root, --sdk and --output are required')
-    if args.jobs < 1 or args.profile not in registry['profiles']:
-        parser.error('Use positive --jobs and a profile from --list')
+    if not args.workspace or not args.output or args.jobs < 1:
+        parser.error('--workspace, --output and positive --jobs are required')
+    if args.profile not in registry['profiles']:
+        parser.error('Choose a profile from --list')
     if registry['profiles'][args.profile].get('buildable_by_front_door') is False:
-        parser.error('This profile preserves a prebuilt firmware; use its firmware/README.md for deployment. A complete original build tree is not provided.')
-    root, sdk = (local_path(x).resolve(strict=True) for x in (args.platform_root, args.sdk))
-    output = fresh_output(args.output, (root, sdk, HERE.parent))
-    platform_layout(root)
-    configs = profile_inputs(root, args.profile)
-    lock = read_json(root / 'tools/build-support/host-packages.json')
+        parser.error('This profile is a preserved binary; see its firmware README for source/deployment status.')
+    root = args.workspace.resolve(strict=True)
+    deps = (args.deps or root / '.s31-deps').resolve(strict=True)
+    output = fresh_output(args.output, (root, deps, HERE.parent))
+    inputs = json.loads((deps / 'receipt.json').read_text())
+    if inputs['status'] != 'PUBLIC_DEPENDENCIES_READY':
+        raise ValueError('Run setup-dependencies.sh for this public checkout first')
+    for name, expected in inputs['inputs'].items():
+        if sha(HERE / 'dependencies' / name) != expected:
+            raise ValueError('Dependency inputs changed; rerun setup-dependencies.sh: ' + name)
+    headers = HERE / 'dependencies/idf-sdmmc'
+    for name, expected in json.loads((headers / 'sha256.json').read_text()).items():
+        if sha(headers / name) != expected:
+            raise ValueError('SDMMC header checksum mismatch: ' + name)
+    if args.profile == 'korvo-digit-rebuild':
+        command = [sys.executable, '-B', str(HERE / 'digit-demo/build.py'),
+                   '--workspace', str(root), '--deps', str(deps),
+                   '--output', str(output), '--jobs', str(args.jobs)]
+        if args.dry_run:
+            command.append('--dry-run')
+        return subprocess.call(command)
+    config = root / 'nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs' / args.profile / 'defconfig'
+    if not config.is_file():
+        raise ValueError('Missing profile in checkout; apply the public snapshot first: ' + str(config))
     env = clean_env()
-    env['IDF_TOOLS_PATH'] = str(sdk)
-    for relative, head in lock['repositories'].items():
-        repo = contained(root, relative)
-        actual = subprocess.check_output(['git', '-C', str(repo), 'rev-parse', 'HEAD'], env=env, text=True).strip()
-        if actual != head:
-            raise ValueError('Dependency HEAD differs: ' + relative)
-    for item in lock['packages']:
-        path = contained(root, item['file'])
-        if not path.is_file() or sha(path) != item['sha256']:
-            raise ValueError('Missing/changed locked host package: ' + item['file'])
-    sdk_receipt = read_json(sdk / 'receipt.json')
-    if sdk_receipt['status'] != 'OFFLINE_SDK_RESTORED_AND_COMMANDS_VERIFIED':
-        raise ValueError('SDK restore is incomplete; run restore-offline.py sdk')
-    for name in ('tools', 'python_env'):
-        if not (sdk / name).is_dir():
-            raise ValueError('Missing restored SDK directory: ' + name)
-    helper = root / 'tools/tests/korvo-adc-keys/build.py'
-    command = [sys.executable, '-B', str(helper), '--profile', args.profile,
-               '--output', str(output), '--jobs', str(args.jobs)]
-    if args.share_source:
-        command.append('--workspace-source')
-    report = dict(schema=1, status='PREFLIGHT_ONLY', command=command,
-                  platform_root=str(root), sdk=str(sdk), output=str(output),
-                  profile=args.profile, profile_inputs=configs,
-                  profile_qualification=registry['profiles'][args.profile],
-                  helper_sha256=sha(helper), environment_sha256=sha(root / 'tools/build-support/environment.py'),
-                  registry_sha256=sha(HERE / 'profiles.json'),
-                  host_lock_sha256=sha(root / 'tools/build-support/host-packages.json'),
-                  sdk_restore_receipt_sha256=sha(sdk / 'receipt.json'),
-                  board_tested_by_this_invocation=False, downloads_requested=False)
-    print(json.dumps(report, indent=2, ensure_ascii=False), flush=True)
+    for name in tuple(env):
+        if name.startswith(('IDF_', 'ESP_IDF_', 'VELA_')):
+            env.pop(name, None)
+    env['PATH'] = os.pathsep.join([str(deps / 'venv/bin'), str(deps / 'riscv32-esp-elf/bin'),
+        str(root / 'prebuilts/tools/linux/x86_64'), '/usr/local/bin', '/usr/bin', '/bin'])
+    env['LD_LIBRARY_PATH'] = str(deps / 'sysroot/usr/lib/x86_64-linux-gnu')
+    env['ESP_HAL_3RDPARTY_LOCAL'] = str(deps / 'esp-hal-3rdparty')
+    python = deps / 'venv/bin/python3'
+    commands = [
+        ['cmake', '-S', str(root / 'nuttx'), '-B', str(output / 'build'), '-G', 'Ninja',
+         '-DBOARD_CONFIG=esp32s31-core-function-board:' + args.profile,
+         '-DNUTTX_APPS_DIR=' + str(root / 'apps'), '-DPython3_EXECUTABLE=' + str(python),
+         '-DESP32S31_SDMMC_IDF_INCLUDE=' + str(headers / 'include'),
+         '-DNUTTX_PRESERVE_SOURCE=ON', '-DFETCHCONTENT_FULLY_DISCONNECTED=ON',
+         '-DCMAKE_EXPORT_COMPILE_COMMANDS=ON', '-DMAKE_PARALLELISM=-j' + str(args.jobs)],
+        ['cmake', '--build', str(output / 'build'), '--parallel', str(args.jobs)]]
+    report = dict(schema=1, status='PREFLIGHT_ONLY', profile=args.profile,
+                  workspace=str(root), dependencies=str(deps), commands=commands,
+                  snapshot_sha256=sha(HERE / 'snapshot.json'),
+                  payload_manifest_sha256=sha(HERE / 'source-sha256.json'),
+                  dependency_receipt_sha256=sha(deps / 'receipt.json'),
+                  hardware_tested=False)
     if args.dry_run:
+        print(json.dumps(report, indent=2))
         return 0
-    result = subprocess.run(command, env=env).returncode
-    report.update(status='BUILD_HELPER_FINISHED', returncode=result)
-    if output.is_dir():
-        (output / 'entrypoint-receipt.json').write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n')
-    return result
+    output.mkdir(parents=True)
+    code = 1
+    try:
+        for command, name in zip(commands, ('configure.log', 'build.log')):
+            print(name + ': ' + str(output / name), flush=True)
+            with (output / name).open('w') as log:
+                code = subprocess.run(command, env=env, stdout=log, stderr=subprocess.STDOUT).returncode
+            if code:
+                print((output / name).read_text(errors='replace')[-10000:], file=sys.stderr)
+                break
+    finally:
+        report.update(status='BUILD_PASS' if code == 0 else 'BUILD_FAILED', returncode=code)
+        report['artifacts'] = {name: dict(sha256=sha(output / 'build' / name),
+            bytes=(output / 'build' / name).stat().st_size) for name in
+            ('nuttx', 'nuttx.bin', 'appfs.img', '.config') if (output / 'build' / name).is_file()}
+        if code == 0 and args.profile == 'korvo-openvela-factory':
+            manifest = dict(profile=args.profile, board='ESP32-S31 Korvo-1',
+                flat_single_image=True, appfs_required=False, kernel_offset=0x2000,
+                flash_bytes=16 * 1024 * 1024,
+                artifacts={n: report['artifacts'][n] for n in ('nuttx', 'nuttx.bin', '.config')})
+            (output / 'build/manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+        (output / 'receipt.json').write_text(json.dumps(report, indent=2) + '\n')
+    print(report['status'] + ': ' + str(output / 'receipt.json'), flush=True)
+    return code
 
 
 if __name__ == '__main__':
     try:
         raise SystemExit(main())
-    except (ValueError, KeyError, OSError, subprocess.SubprocessError) as error:
-        sys.exit('Build preflight failed: ' + str(error))
+    except (ValueError, OSError, KeyError, subprocess.CalledProcessError) as exc:
+        sys.exit(str(exc))

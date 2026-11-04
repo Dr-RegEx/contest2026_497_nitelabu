@@ -10672,10 +10672,10 @@ index 0000000000000000000000000000000000000000..d40b86f3a0dce4de6d0e52f05f030711
 +/esp-hal-3rdparty
 diff --git a/arch/risc-v/src/esp32s31/CMakeLists.txt b/arch/risc-v/src/esp32s31/CMakeLists.txt
 new file mode 100644
-index 0000000000000000000000000000000000000000..5eb6c494c3e6ab09e9b3c141df4a8dbf3d90a259
+index 0000000000000000000000000000000000000000..b2c79d0f5d323af738cbf4430096a105dfc2a6d2
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/CMakeLists.txt
-@@ -0,0 +1,285 @@
+@@ -0,0 +1,292 @@
 +# ##############################################################################
 +# arch/risc-v/src/esp32s31/CMakeLists.txt
 +#
@@ -10791,12 +10791,19 @@ index 0000000000000000000000000000000000000000..5eb6c494c3e6ab09e9b3c141df4a8dbf
 +endif()
 +
 +if(CONFIG_ESP32S31_SDMMC)
++  if(NOT ESP32S31_SDMMC_IDF_INCLUDE)
++    set(ESP32S31_SDMMC_IDF_INCLUDE
++        "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../s31-reference/tmp/esp-idf-clean/components/sdmmc/include")
++  endif()
++  if(NOT EXISTS "${ESP32S31_SDMMC_IDF_INCLUDE}/sdmmc_cmd.h")
++    message(FATAL_ERROR "Set ESP32S31_SDMMC_IDF_INCLUDE to the pinned SDMMC headers (workspace/build.sh does this)")
++  endif()
 +  target_sources(arch PRIVATE esp32s31_sdmmc.c esp32s31_sdmmc_os.c)
 +  target_include_directories(arch PRIVATE
 +    ${ESP_HAL_3RDPARTY_REPO}/components/upper_hal_sdmmc/legacy/include
 +    ${ESP_HAL_3RDPARTY_REPO}/components/upper_hal_sdmmc/include
 +    ${ESP_HAL_3RDPARTY_REPO}/components/esp_hal_sd/include
-+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../s31-reference/tmp/esp-idf-clean/components/sdmmc/include)
++    ${ESP32S31_SDMMC_IDF_INCLUDE})
 +endif()
 +
 +

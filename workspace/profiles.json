@@ -2,8 +2,8 @@
   "evidence_roots": {
     "contest_repository": "."
   },
-  "layout": "platform-root/openvela-dev with sibling tools and s31-reference",
-  "observed_date": "2026-11-04",
+  "layout": "Public repo checkout with .s31-deps; optional explicit dependency directory",
+  "observed_date": "2026-11-05",
   "profiles": {
     "demo-rmt-netapps-competition": {
       "board": "ESP32-S31 Function-CoreBoard-1",
@@ -11,13 +11,13 @@
         "status": "not_claimed_by_historical_reproduction"
       },
       "build_test": {
-        "appfs_sha256": "6fa1ad11d58db35ebbedee5d8419a34b4516107df041719dfc52dfb52bae8dc0",
-        "current_front_door_full_build_tested": false,
-        "image_sha256": "26b4e2500f77b253cf5fdee5e994438bb9893a0c619e1f2f1cc77729fb45a9bb",
+        "status": "fresh_public_build_pass",
+        "current_front_door_full_build_tested": true,
+        "image_sha256": "775f34958da96c07a7537869348c9aef4a9c5e0525a17d8f4731dd9a875d7d61",
         "records": [
-          "historical_builds"
+          "public_reproduction"
         ],
-        "status": "historical_2026_09_19_build_pass"
+        "appfs_sha256": "cab78d888e672e44849b8eb1d3c36b723f609a6ba8e3a51e8d80592d8198172f"
       },
       "cores": 2,
       "defconfig": "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-netapps-competition/defconfig",
@@ -34,7 +34,12 @@
         "external AppFS applications"
       ],
       "services": [],
-      "source_delivery": "Existing network profile; preserve paired output and its historical evidence"
+      "source_delivery": "Existing network profile; preserve paired output and its historical evidence",
+      "public_reproduction": {
+        "status": "PASS",
+        "record": "docs/validation/public-reproduction.json",
+        "image_sha256": "775f34958da96c07a7537869348c9aef4a9c5e0525a17d8f4731dd9a875d7d61"
+      }
     },
     "function-ethernet": {
       "board": "ESP32-S31 Function-CoreBoard-1",
@@ -57,11 +62,12 @@
         "status": "basic_link_ping_tcp_udp_pass"
       },
       "build_test": {
-        "image_sha256": "fb23365cb347cf7106ac1943a7076483b6f33508f86439f5cf2e7d1da163d02b",
+        "status": "fresh_public_build_pass",
+        "current_front_door_full_build_tested": true,
+        "image_sha256": "27bc31c444be15356decab2d010b02e2078cd0ab22226d4db7ccca1d2deb55ae",
         "records": [
-          "ethernet_canonical"
-        ],
-        "status": "canonical_build_byte_identical_to_accepted_elf_bin_config"
+          "public_reproduction"
+        ]
       },
       "cores": 1,
       "defconfig": "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/function-ethernet/defconfig",
@@ -81,7 +87,12 @@
         "YT8531 PHY"
       ],
       "services": [],
-      "source_delivery": "Canonical driver/BSP and dependency patches merged into the public 36-project snapshot. Exact canonical build matches the accepted ELF/bin/config; full fresh receiver build remains unverified."
+      "source_delivery": "Canonical driver/BSP and dependency patches merged into the public 36-project snapshot. Exact canonical build matches the accepted ELF/bin/config; full fresh receiver build remains unverified.",
+      "public_reproduction": {
+        "status": "PASS",
+        "record": "docs/validation/public-reproduction.json",
+        "image_sha256": "27bc31c444be15356decab2d010b02e2078cd0ab22226d4db7ccca1d2deb55ae"
+      }
     },
     "korvo-openvela-factory": {
       "board": "ESP32-S31 Korvo-1",
@@ -111,12 +122,12 @@
         "status": "scoped_factory_acceptance"
       },
       "build_test": {
-        "board_tested": false,
-        "image_sha256": "7e4842c9de12b6e564bed234bb5e8906bcb351a8433fd15d336376f91f28369c",
+        "status": "fresh_public_build_pass",
+        "current_front_door_full_build_tested": true,
+        "image_sha256": "7f92e4ab350d18d2e913343bf4d60df5b7a7feaff0ebb944d9c0b4c33e2e80ee",
         "records": [
-          "factory_build"
-        ],
-        "status": "independent_receiver_build_reviewed"
+          "public_reproduction"
+        ]
       },
       "cores": 1,
       "defconfig": "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/korvo-openvela-factory/defconfig",
@@ -152,7 +163,12 @@
         "WM",
         "MEDIA"
       ],
-      "source_delivery": "Original native Factory source; recreated recognition integration excluded from release."
+      "source_delivery": "Original native Factory source; recreated recognition integration excluded from release.",
+      "public_reproduction": {
+        "status": "PASS",
+        "record": "docs/validation/public-reproduction.json",
+        "image_sha256": "7f92e4ab350d18d2e913343bf4d60df5b7a7feaff0ebb944d9c0b4c33e2e80ee"
+      }
     },
     "nsh": {
       "board": "ESP32-S31 Function-CoreBoard-1",
@@ -160,12 +176,12 @@
         "status": "not_claimed_by_historical_reproduction"
       },
       "build_test": {
-        "current_front_door_full_build_tested": false,
-        "image_sha256": "b948cc08c404ccd34def3c146a283bc8a12370bb59fff903c60497687af7501e",
+        "status": "fresh_public_build_pass",
+        "current_front_door_full_build_tested": true,
+        "image_sha256": "ace25345bee5400f3bb9ac74c9ec1f78d64efb06190c87164a6919057da95012",
         "records": [
-          "historical_builds"
-        ],
-        "status": "historical_2026_09_19_build_pass"
+          "public_reproduction"
+        ]
       },
       "cores": 1,
       "defconfig": "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/nsh/defconfig",
@@ -179,7 +195,12 @@
         "NSH console"
       ],
       "services": [],
-      "source_delivery": "Existing basic profile; historical build does not qualify a new build"
+      "source_delivery": "Existing basic profile; historical build does not qualify a new build",
+      "public_reproduction": {
+        "status": "PASS",
+        "record": "docs/validation/public-reproduction.json",
+        "image_sha256": "ace25345bee5400f3bb9ac74c9ec1f78d64efb06190c87164a6919057da95012"
+      }
     },
     "korvo-digit-stable": {
       "board": "ESP32-S31 Korvo-1",
@@ -215,6 +236,36 @@
         "BLE",
         "SD recording"
       ]
+    },
+    "korvo-digit-rebuild": {
+      "board": "ESP32-S31 Korvo-1",
+      "mode": "KERNEL/SMP/MMU",
+      "cores": 2,
+      "buildable_by_front_door": true,
+      "source_delivery": "Original digit renderer and inference with restored pre-lifecycle sources; separate source/HAL copy. See workspace/digit-demo/README.md.",
+      "build_test": {
+        "status": "fresh_public_build_pass",
+        "current_front_door_full_build_tested": true,
+        "image_sha256": "b45b53ea1a10ee834e6b01774912879ddd06ed221c6740f63b5f1df5c1ad3211",
+        "records": [
+          "public_reproduction"
+        ]
+      },
+      "board_test": {
+        "status": "dual_core_selftest_and_capture_display_inference_progress_pass",
+        "human_visual_test": false,
+        "image_sha256": "b45b53ea1a10ee834e6b01774912879ddd06ed221c6740f63b5f1df5c1ad3211"
+      },
+      "image_layout": {
+        "kind": "single_simple_boot_image",
+        "kernel_offset": 8192,
+        "appfs_required": false
+      },
+      "public_reproduction": {
+        "status": "PASS",
+        "record": "docs/validation/public-reproduction.json",
+        "image_sha256": "b45b53ea1a10ee834e6b01774912879ddd06ed221c6740f63b5f1df5c1ad3211"
+      }
     }
   },
   "qualification_rule": "Results are bound to exact images. Historical results and build-only records do not qualify different firmware; the Ethernet canonical ELF/bin/config identity is recorded explicitly.",
@@ -274,7 +325,12 @@
     "digit_stable": {
       "path": "docs/validation/digit-stable.json",
       "scope": "contest_repository",
-      "sha256": "8c1a504128fa1f626fc0498154e645265b434f70331528e1151076b05ee0df03"
+      "sha256": "ff92dc5c479e413a99dd6bd34106110aeabb5da97610bfe7b2e48a62d7f416cd"
+    },
+    "public_reproduction": {
+      "scope": "contest_repository",
+      "path": "docs/validation/public-reproduction.json",
+      "sha256": "8cf61bcb22f89ba3304ad73c4e08d4fbf9e5605e376abf9b5cce1fc5061c0d9f"
     }
   },
   "schema": 1,
