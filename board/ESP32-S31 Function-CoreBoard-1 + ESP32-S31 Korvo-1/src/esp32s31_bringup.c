@@ -650,7 +650,11 @@ static int start_wifi_station(void)
 }
 #endif
 
+#ifdef CONFIG_ESP32S31_VISION
+static int esp_bringup_peripherals(void)
+#else
 int esp_bringup(void)
+#endif
 {
   int ret = OK;
 
@@ -1027,6 +1031,15 @@ int esp_bringup(void)
     }
 #endif
 
+#ifdef CONFIG_ESP32S31_VISION
+  extern int s31vision_initialize(void);
+  ret = s31vision_initialize();
+  if (ret < 0)
+    {
+      return ret;
+    }
+#endif
+
 #ifdef CONFIG_ESP32S31_FLASH_APPFS
   uint8_t header[8];
   struct mtd_dev_s *seed_mtd;
@@ -1296,6 +1309,41 @@ int esp_bringup(void)
 #ifdef CONFIG_ESPRESSIF_WIFI
   return start_wifi_station();
 #endif
-
   return 0;
 }
+
+#ifdef CONFIG_ESP32S31_VISION
+int esp_bringup(void)
+{
+  cpu_set_t original;
+  cpu_set_t peripheral_cpu;
+  int ret;
+  int restore;
+
+  if (sched_getaffinity(0, sizeof(original), &original) < 0)
+    {
+      return -errno;
+    }
+
+  CPU_ZERO(&peripheral_cpu);
+  CPU_SET(0, &peripheral_cpu);
+  if (sched_setaffinity(0, sizeof(peripheral_cpu), &peripheral_cpu) < 0)
+    {
+      return -errno;
+    }
+
+  /* Route peripheral IRQ setup on CPU0, then restore the caller's mask.
+   * System services must not inherit the camera's CPU restriction.
+   * The video and inference workers set their own independent affinity.
+   */
+
+  ret = esp_bringup_peripherals();
+  restore = sched_setaffinity(0, sizeof(original), &original);
+  if (restore < 0 && ret >= 0)
+    {
+      ret = -errno;
+    }
+
+  return ret;
+}
+#endif

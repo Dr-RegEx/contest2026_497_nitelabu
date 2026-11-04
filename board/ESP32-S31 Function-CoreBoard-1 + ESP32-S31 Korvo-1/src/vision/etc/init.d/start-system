@@ -1,0 +1,11 @@
+# Host qualification must verify /data is the BSP LittleFS mount first.
+# Run once per boot. Check readiness of all four services.
+set -e
+mkdir -p /data/app
+mkdir -p /data/data
+mkdir -p /data/persist
+kvdbd &
+servicemanager &
+mediad &
+systemd &
+echo "Korvo Factory dual-core services starting"

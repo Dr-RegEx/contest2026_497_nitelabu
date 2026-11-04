@@ -88,6 +88,7 @@ private:
     static void* audioEntry(void* p) { static_cast<NativeBackend*>(p)->audioRun(); return nullptr; }
     static void* peripheralEntry(void* p) { static_cast<NativeBackend*>(p)->peripheralRun(); return nullptr; }
     void cameraRun();
+    void visionRun();
     int cameraSession();
     int queueCapture(int fd, unsigned index, uint8_t* memory);
     bool cameraWanted();
@@ -107,7 +108,7 @@ private:
     pthread_mutex_t mMutex = PTHREAD_MUTEX_INITIALIZER;
     std::atomic<bool> mStop{false};
     std::atomic<uintptr_t> mReleased{0};
-    bool mStarted = false, mActive = false, mPreview = true;
+    bool mStarted = false, mActive = false, mPreview = true, mDigitRequested = false;
     pthread_t mThreads[3]{};
     unsigned mThreadCount = 0;
     Snapshot mSnapshot;
@@ -162,6 +163,7 @@ int NativeBackend::setActive(bool active)
         mActive = active;
         if (!active) {
             mAudioCancel = true;
+            mDigitRequested = false;
             mCount = 0;
             mHead = 0;
         }
@@ -183,6 +185,14 @@ int NativeBackend::submit(Command command, int argument)
     int ret = 0;
     if (!mStarted || cancelled()) ret = -ESHUTDOWN;
     else if (!mActive) ret = -EHOSTDOWN;
+    else if (command == Command::StartDigit || command == Command::StopDigit) {
+#ifdef CONFIG_ESP32S31_VISION
+        if (mAudioBusy) ret = -EBUSY;
+        else mDigitRequested = command == Command::StartDigit;
+#else
+        ret = -ENOSYS;
+#endif
+    }
     else if (command == Command::StopAudio || command == Command::ResetAudio) {
 #ifndef CONFIG_MEDIA
         ret = -ENOSYS;
@@ -383,6 +393,10 @@ int NativeBackend::cameraSession()
 }
 void NativeBackend::cameraRun()
 {
+#ifdef CONFIG_ESP32S31_VISION
+    visionRun();
+    return;
+#endif
     // The maintained driver cannot be enabled on the current SMP kernel profile.
     // Keep the capture implementation compiled/typechecked, but do not probe a
     // foreign /dev/video0 when this specific bridge is absent from the profile.
@@ -402,6 +416,92 @@ void NativeBackend::cameraRun()
         int ret = cameraSession();
         cameraStatus(ret, ret ? "Camera capture failed; toggle to retry" : "Camera stopped");
     }
+#endif
+}
+
+void NativeBackend::visionRun()
+{
+#ifdef CONFIG_ESP32S31_VISION
+    mFrames[0] = static_cast<uint8_t*>(std::malloc(kPreviewBytes));
+    mFrames[1] = static_cast<uint8_t*>(std::malloc(kPreviewBytes));
+    int control = open("/dev/vision", O_RDWR);
+    int frame = open("/dev/vision-frame", O_RDONLY | O_NONBLOCK);
+    if (!mFrames[0] || !mFrames[1] || control < 0 || frame < 0) {
+        int error = !mFrames[0] || !mFrames[1] ? -ENOMEM : -errno;
+        cameraStatus(error, "Camera service unavailable");
+        { Lock lock(mMutex); status(mSnapshot.digit, State::Error, error, "Vision service unavailable"); }
+        if (frame >= 0) close(frame);
+        if (control >= 0) close(control);
+        return;
+    }
+    int mode = 0, attempted = -1;
+    uint64_t sequence = 0, lastFrame = nowNs(), lastStatus = 0;
+    while (!cancelled()) {
+        int desired;
+        { Lock lock(mMutex); desired = !mActive ? 0 : mDigitRequested ? 2 : mPreview ? 1 : 0; }
+        if (desired != attempted) {
+            attempted = desired;
+            { Lock lock(mMutex);
+              status(mSnapshot.digit, State::Starting, 0, desired == 2 ? "Starting original digit demo" : "Returning to Factory"); }
+            const char* command = desired == 2 ? "start" : desired == 1 ? "preview" : "stop";
+            int ret = write(control, command, std::strlen(command));
+            int error = ret < 0 ? -errno : 0;
+            // If startup failed, stop must acknowledge retirement before preview
+            // may be restored. The driver retains an uncertain lease on failure.
+            int cleanup = 0;
+            if (error) {
+                cleanup = write(control, "stop", 4);
+                mode = -1;
+            } else mode = desired;
+            lastFrame = nowNs();
+            { Lock lock(mMutex);
+              mSnapshot.digitDisplayOwned = error ? cleanup < 0 : desired == 2;
+              status(mSnapshot.digit, error ? State::Error : desired == 2 ? State::Ready : State::Idle,
+                     error, error ? "Vision transition failed" : desired == 2 ? "Original CPU1 SIMD demo" : "Factory");
+              status(mSnapshot.camera, error ? State::Error : desired == 2 ? State::Busy : State::Idle,
+                     error, desired == 2 ? "Original VGA recognition" : "Native preview"); }
+            std::printf("S31Factory vision mode=%d requested=%d error=%d\n", mode, desired, error);
+        }
+        if (mode == 1) {
+            int index;
+            { Lock lock(mMutex);
+              consumeRelease();
+              index = mLeasedIndex == 0 ? 1 : 0;
+              if (mLatest == index) mLatest = -1;
+            }
+            ssize_t count = read(frame, mFrames[index], kPreviewBytes);
+            if (count == static_cast<ssize_t>(kPreviewBytes)) {
+                lastFrame = nowNs();
+                Lock lock(mMutex);
+                mFrameTime[index] = lastFrame; mFrameSequence[index] = ++sequence;
+                mLatest = index; mSnapshot.capturedFrames = sequence;
+                mSnapshot.cameraWidth = 640; mSnapshot.cameraHeight = 480;
+                status(mSnapshot.camera, State::Ready, 0, "Native RGB565 preview");
+            } else if (count < 0 && errno != EAGAIN) {
+                cameraStatus(-errno, "Preview read failed");
+            } else if (nowNs() - lastFrame > 4000000000ULL) {
+                cameraStatus(-ETIMEDOUT, "No camera frame");
+            }
+        }
+        if (mode > 0 && nowNs() - lastStatus >= 1000000000ULL) {
+            lastStatus = nowNs();
+            int state = open("/dev/vision", O_RDONLY);
+            if (state >= 0) {
+                char info[256]{};
+                ssize_t n = read(state, info, sizeof(info)-1);
+                close(state);
+                if (n > 0 && (std::strstr(info, "state=fault") || std::strstr(info, "state=stopped"))) {
+                    mode = -1;
+                    Lock lock(mMutex);
+                    status(mSnapshot.digit, State::Error, -EIO, "Vision stopped; return to Factory");
+                }
+            }
+        }
+        delay(20);
+    }
+    write(control, "stop", 4);
+    close(frame);
+    close(control); // Driver also performs cooperative stop on owner loss.
 #endif
 }
 

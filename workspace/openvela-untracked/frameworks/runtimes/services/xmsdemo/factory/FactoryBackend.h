@@ -17,6 +17,8 @@ enum class AudioState : uint8_t { Unavailable, Idle, Recording, Playing, Stoppin
 struct Snapshot {
     uint64_t sampledNs = 0; // CLOCK_MONOTONIC; 0 means no sample yet.
     Status camera;
+    Status digit;
+    bool digitDisplayOwned = false;
     uint32_t cameraWidth = 0, cameraHeight = 0;
     uint64_t capturedFrames = 0, cameraDroppedFrames = 0;
     Status audio;
@@ -48,7 +50,7 @@ struct CameraFrame {
 };
 
 enum class Command : uint8_t {
-    StartRecording, StopAudio, PlayRecording, ResetAudio, ProbeStorage, SelectLed
+    StartRecording, StopAudio, PlayRecording, ResetAudio, ProbeStorage, SelectLed, StartDigit, StopDigit
 };
 
 class FactoryBackend {

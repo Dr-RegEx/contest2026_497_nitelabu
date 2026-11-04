@@ -122,6 +122,10 @@ static bool g_core_source_enabled;
 static bool g_dma_connected;
 static bool g_first_update;
 static int g_dma_error;
+#ifdef CONFIG_ESP32S31_VISION
+static bool g_vision_owner;
+static unsigned g_displayed_frames;
+#endif
 
 /* The KERNEL page pool is physical PSRAM with a supervisor identity map.
  * Each allocation owns complete pages: userspace mmap must not expose a
@@ -359,8 +363,8 @@ static int s31_lcd_getplane(FAR struct fb_vtable_s *vtable, int plane,
   return OK;
 }
 
-static int s31_lcd_update(FAR struct fb_vtable_s *vtable,
-                          FAR const struct fb_area_s *area)
+static int s31_lcd_present(FAR struct fb_vtable_s *vtable,
+                          FAR const struct fb_area_s *area, bool direct)
 {
   unsigned int next;
   uint32_t status;
@@ -380,7 +384,7 @@ static int s31_lcd_update(FAR struct fb_vtable_s *vtable,
       return OK;
     }
 
-  ret = nxmutex_lock(&g_lcd_lock);
+  ret = direct ? 0 : nxmutex_lock(&g_lcd_lock);
   if (ret < 0)
     {
       return ret;
@@ -391,6 +395,18 @@ static int s31_lcd_update(FAR struct fb_vtable_s *vtable,
       ret = g_ready ? g_dma_error : -ENODEV;
       goto out;
     }
+
+#ifdef CONFIG_ESP32S31_VISION
+  /* WM can keep servicing touch and drawing its separate staging mapping.
+   * While leased, acknowledge its flush without touching the DMA buffers.
+   * Grant/revoke use this same mutex and thus drain every physical update.
+   */
+  if (!direct && g_vision_owner)
+    {
+      ret = OK;
+      goto out;
+    }
+#endif
 
   /* Copy the whole staging image also for partial updates: either scan
    * buffer can then become the complete next frame without stale regions.
@@ -410,7 +426,7 @@ static int s31_lcd_update(FAR struct fb_vtable_s *vtable,
 
   esp32s31_dcache_writeback_all();
 #endif
-  memcpy(g_scan[next], g_frame, LCD_FBSIZE);
+  if (!direct) memcpy(g_scan[next], g_frame, LCD_FBSIZE);
   if (g_first_update)
     {
       syslog(LOG_INFO, "S31 LCD: UPDATE_STAGE=cache-writeback\n");
@@ -525,6 +541,43 @@ out:
   nxmutex_unlock(&g_lcd_lock);
   return ret;
 }
+
+static int s31_lcd_update(FAR struct fb_vtable_s *vtable,
+                          FAR const struct fb_area_s *area)
+{
+  return s31_lcd_present(vtable, area, false);
+}
+
+#ifdef CONFIG_ESP32S31_VISION
+int s31vision_lcd_lease(bool acquire)
+{
+  int ret = nxmutex_lock(&g_lcd_lock);
+  if (ret < 0) return ret;
+  ret = !g_ready ? -ENODEV : g_dma_error;
+  if (!ret) g_vision_owner = acquire;
+  nxmutex_unlock(&g_lcd_lock);
+  return ret;
+}
+void s31vision_lcd_probe(void) {}
+unsigned s31vision_lcd_displayed(void) { return g_displayed_frames; }
+uint16_t *s31vision_lcd_acquire(void)
+{
+  if (nxmutex_lock(&g_lcd_lock) < 0) return NULL;
+  if (!g_vision_owner || !g_ready || g_dma_error)
+    {
+      nxmutex_unlock(&g_lcd_lock);
+      return NULL;
+    }
+  return (uint16_t *)g_scan[g_front ^ 1];
+}
+int s31vision_lcd_present(void)
+{
+  const struct fb_area_s area = {.x=0, .y=0, .w=LCD_WIDTH, .h=LCD_HEIGHT};
+  int ret = s31_lcd_present(NULL, &area, true);
+  if (ret >= 0) g_displayed_frames++;
+  return ret;
+}
+#endif
 
 static struct fb_vtable_s g_lcd_vtable =
 {

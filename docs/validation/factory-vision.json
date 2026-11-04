@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "profile": "korvo-factory-vision",
+  "status": "physical_acceptance_pending",
+  "build": {
+    "status": "BUILD_PASS",
+    "fresh_output": true,
+    "public_entrypoint": true,
+    "snapshot_sha256": "5b6894da3ac16e430ce402e3a1c977e584757efad5527c0df37eab260d07b45b",
+    "artifacts": {
+      "nuttx": {
+        "sha256": "1b9ae75bb8b2359bab2d2605316e9378cd2c881ee9cbc4b7fc6586e49689d061",
+        "bytes": 1838656
+      },
+      "nuttx.bin": {
+        "sha256": "d7ac8d5feed7a4549f31fd674c293b1a0e35700ca50ffbc35ff7a52b39af1b9e",
+        "bytes": 1668908
+      },
+      "appfs.img": {
+        "sha256": "9f43022a1c4f27a74fefcd3829e7b1bc89eb3902ee25b4048d80783f575d0eb8",
+        "bytes": 7657472
+      },
+      ".config": {
+        "sha256": "1cfdd19bec88207076f53180635a434421362390300ed57113eac2520d0bab14",
+        "bytes": 97868
+      }
+    }
+  },
+  "original_core_assets_sha256": {
+    "vision_model.h": "0a75dad9b837c4b2d837c187be3fbbd5cf301102a8e0abdc9ad2642f03f21973",
+    "vision_infer.h": "958f826a38d57ac4b9877910f48fc1976a823201a6f12efe41742d69d6ba2f6e",
+    "vision_preprocess.h": "4a49d167379fbae694f2fe3cc793d255bcd7d562f137262e75ff7ccd406aca12",
+    "vision_font.h": "8613595a1b1ab68f30df3cd2b84ef3f0afde8c1c552fafb6ac2f705cc483bd4c",
+    "s31vision_ops.S": "f51743752d8b505a94296da4986e3f61a3cc1a75bb7c1f1ddb6d0d78f736a02d"
+  },
+  "previous_candidate_runs": [
+    {
+      "status": "INCOMPLETE",
+      "kernel_sha256": "fbe60d43269b0717c16720ab4d50d2c107311b72b22080754d7186728b1eeef5",
+      "appfs_sha256": "f3086a00e10511fea48b47115549707fa254da13283d725e41a91ce6cbe35257",
+      "config_sha256": "4dc9aa28a7bab0105737c66095159de7a47c99ab8d536d635cd0341e89086e1c",
+      "cycles": [
+        {
+          "index": 1,
+          "digit_first": [
+            82,
+            73,
+            59
+          ],
+          "digit_second": [
+            116,
+            105,
+            88
+          ],
+          "preview": [
+            50,
+            0,
+            0
+          ]
+        },
+        {
+          "index": 2,
+          "digit_first": [
+            81,
+            76,
+            50
+          ],
+          "digit_second": [
+            116,
+            108,
+            80
+          ],
+          "preview": [
+            53,
+            0,
+            0
+          ]
+        },
+        {
+          "index": 3,
+          "digit_first": [
+            91,
+            82,
+            78
+          ],
+          "digit_second": [
+            125,
+            113,
+            106
+          ],
+          "preview": [
+            52,
+            0,
+            0
+          ]
+        }
+      ],
+      "original_restored": true,
+      "error": "AssertionError('cat /dev/vision\\r\\nstate=running error=0 active=1 captured=119 displayed=0 inferred=0 digit=-1 recording=off\\r\\nnsh> \\x1b[Kecho __S31_b7cd6a480ddc_27__\\r\\n__S31_b7cd6a480ddc_27__\\r\\nnsh> \\x1b[K')"
+    },
+    {
+      "status": "INCOMPLETE",
+      "kernel_sha256": "9ce4e78d2fc5de23b4f90f7643e7c57bbc8cabf7bc959a7e8ec2d32d73f8d74e",
+      "appfs_sha256": "85da1c3cce895ad43a5e4b73f96beaa5109f0919fc36bb94ac8bfe57426ef366",
+      "config_sha256": "1cfdd19bec88207076f53180635a434421362390300ed57113eac2520d0bab14",
+      "cycles": [
+        {
+          "index": 1,
+          "digit_first": [
+            89,
+            80,
+            77
+          ],
+          "digit_second": [
+            124,
+            112,
+            105
+          ],
+          "preview": [
+            53,
+            0,
+            0
+          ]
+        }
+      ],
+      "original_restored": true,
+      "error": "RuntimeError('NSH command reported an error: am start org.openvela.s31.factorydemo/FactoryActivity -a s31.factory.dashboard')"
+    },
+    {
+      "status": "INCOMPLETE",
+      "kernel_sha256": "eec8ea7299db1ab95b7cd9e48afaf92449e26552b0294766e479bf74dc1123ef",
+      "appfs_sha256": "ed68e0e48f1d093a8230d0861b01eb97f1955480aa09d1527489b75cfd7afe7f",
+      "config_sha256": "1cfdd19bec88207076f53180635a434421362390300ed57113eac2520d0bab14",
+      "cycles": [],
+      "original_restored": true,
+      "error": "TimeoutError('Missing executed command-completion marker: am start org.openvela.s31.factorydemo/FactoryActivity')"
+    }
+  ],
+  "physical_display": false,
+  "physical_touch": false,
+  "limits": [
+    "Previous candidate automated transitions do not establish physical acceptance of the latest image.",
+    "One previous run stalled launching the AM shell client before any coffee transition; recovery succeeded. This remains open.",
+    "Latest coffee pixel allocation change needs on-board acceptance.",
+    "No USB Host, SD, ADC keys, wireless, acoustic quality or sustained-load acceptance for this SMP profile."
+  ],
+  "latest_board_prepare": {
+    "status": "HUMAN_ACCEPTANCE_READY",
+    "kernel_sha256": "d7ac8d5feed7a4549f31fd674c293b1a0e35700ca50ffbc35ff7a52b39af1b9e",
+    "appfs_sha256": "9f43022a1c4f27a74fefcd3829e7b1bc89eb3902ee25b4048d80783f575d0eb8",
+    "config_sha256": "1cfdd19bec88207076f53180635a434421362390300ed57113eac2520d0bab14",
+    "home_preview_first": [
+      212,
+      0,
+      0
+    ],
+    "home_preview_second": [
+      246,
+      0,
+      0
+    ],
+    "candidate_kept_for_human": true
+  }
+}

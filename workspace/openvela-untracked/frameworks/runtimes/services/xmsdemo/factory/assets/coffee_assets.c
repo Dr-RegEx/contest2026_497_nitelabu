@@ -15,6 +15,73 @@
 
 #include "lvgl.h"
 
+#ifdef CONFIG_ESP32S31_VISION
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <unistd.h>
+
+/* Decoded backgrounds exceed 1 MiB.  The kernel-build process heap keeps
+ * its high-water allocation after free(); use reclaimable shared pages for
+ * these temporary pixels so the original vision service can start again.
+ * Keep the source PNGs and the native libpng/LVGL decoder unchanged.
+ */
+struct coffee_pixel_mapping {
+    size_t size;
+    int fd;
+};
+
+#define COFFEE_PIXEL_PREFIX 64u
+static lv_draw_buf_malloc_cb s_pixel_malloc;
+static lv_draw_buf_free_cb s_pixel_free;
+static bool s_pixel_mapping;
+
+static void *pixel_malloc(size_t size, lv_color_format_t format)
+{
+    (void)format;
+    if (size > SIZE_MAX - COFFEE_PIXEL_PREFIX) return NULL;
+    size_t length = size + COFFEE_PIXEL_PREFIX;
+    int fd = memfd_create("coffee-pixels", MFD_CLOEXEC);
+    if (fd < 0) return NULL;
+    if (ftruncate(fd, length) < 0) { close(fd); return NULL; }
+    void *base = mmap(NULL, length, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    if (base == MAP_FAILED) { close(fd); return NULL; }
+    struct coffee_pixel_mapping *mapping = base;
+    mapping->size = length;
+    mapping->fd = fd;
+    return (uint8_t *)base + COFFEE_PIXEL_PREFIX;
+}
+
+static void pixel_free(void *pixels)
+{
+    if (!pixels) return;
+    struct coffee_pixel_mapping *mapping =
+        (void *)((uint8_t *)pixels - COFFEE_PIXEL_PREFIX);
+    size_t length = mapping->size;
+    int fd = mapping->fd;
+    munmap(mapping, length);
+    close(fd);
+}
+
+static void pixel_mapping_enable(void)
+{
+    lv_draw_buf_handlers_t *handlers = &LV_GLOBAL_DEFAULT()->image_cache_draw_buf_handlers;
+    s_pixel_malloc = handlers->buf_malloc_cb;
+    s_pixel_free = handlers->buf_free_cb;
+    handlers->buf_malloc_cb = pixel_malloc;
+    handlers->buf_free_cb = pixel_free;
+    s_pixel_mapping = true;
+}
+
+static void pixel_mapping_disable(void)
+{
+    if (!s_pixel_mapping) return;
+    lv_draw_buf_handlers_t *handlers = &LV_GLOBAL_DEFAULT()->image_cache_draw_buf_handlers;
+    handlers->buf_malloc_cb = s_pixel_malloc;
+    handlers->buf_free_cb = s_pixel_free;
+    s_pixel_mapping = false;
+}
+#endif
+
 #if !LV_USE_LIBPNG || !LV_USE_FS_POSIX
 #error "Coffee assets require LV_USE_LIBPNG and LV_USE_FS_POSIX"
 #endif
@@ -88,6 +155,9 @@ static void release_paths(void)
     }
     s_directory[0] = '\0';
     s_initialized = false;
+#ifdef CONFIG_ESP32S31_VISION
+    pixel_mapping_disable();
+#endif
 }
 
 static int validate_file(unsigned int id)
@@ -209,6 +279,9 @@ int coffee_assets_init_at(const char *directory)
             return ret;
         }
     }
+#ifdef CONFIG_ESP32S31_VISION
+    pixel_mapping_enable();
+#endif
     s_initialized = true;
     return 0;
 }

@@ -15,7 +15,7 @@
 
 比赛仓的板目录是 BSP 可读镜像。manifest linkfile 将它展示为 `vendor/openvela/boards/contest2026_497_board`；编译读取上述 canonical BSP，无须手工复制到 vendor。镜像同步需以 canonical 的 Kconfig、构建文件、configs/include/scripts/src 文件哈希核对。
 
-Factory 采用单核 FLAT，Wi-Fi/BLE 关闭；修改 camera、touch、ADC keys、audio、存储或 USB 时检查资源所有权。Factory 主界面 → digit → Return 的集成流程已完成源码与主机检查，精确镜像实板验证待完成。原独立双核 digit 保留为可选历史演示。
+`korvo-openvela-factory` 是独立的单核 FLAT 配置；`korvo-factory-vision` 是双核 KERNEL/MMU 组合配置。后者由 Factory 按钮启动原版内核数字识别任务并在 Return 后恢复预览，接口和部署见 [组合配置说明](../workspace/FACTORY-VISION.md)，精确镜像验收状态见 [配置登记表](../workspace/profiles.json)。修改 camera、touch、audio 或显示驱动时检查资源所有权。原独立双核 digit 及其构建配置继续保留。
 
 保留 `ov3660.LICENSE` / `ov3660.NOTICE`、Factory 的 `manifest.json` / `UPSTREAM.json` / `LICENSES.md`、PNG、字体、coffee 资源和模型许可。配置闭包依赖的测试源码也属于恢复载荷。
 

@@ -92,6 +92,31 @@ void FactoryActivity::onCreate()
     lv_obj_set_style_bg_color(mOverlay, lv_color_black(), 0);
     lv_obj_set_style_bg_opa(mOverlay, LV_OPA_70, 0);
     lv_label_set_text(mOverlay, "Display draw -- ms | interval -- ms | camera -- ms");
+#ifdef CONFIG_ESP32S31_VISION
+    mDigitEntry = lv_button_create(mHost);
+    lv_obj_set_pos(mDigitEntry, 288, 294);
+    lv_obj_set_size(mDigitEntry, 200, 46);
+    auto digitLabel = lv_label_create(mDigitEntry);
+    lv_label_set_text(digitLabel, "Digit recognition");
+    lv_obj_set_style_text_font(digitLabel, &lv_font_montserrat_18, 0);
+    lv_obj_center(digitLabel);
+    lv_obj_add_event_cb(mDigitEntry, digitClicked, LV_EVENT_CLICKED, this);
+    mDigitCover = panel(mHost);
+    lv_obj_set_style_bg_color(mDigitCover, lv_color_black(), 0);
+    lv_obj_set_style_bg_opa(mDigitCover, LV_OPA_COVER, 0);
+    lv_obj_add_flag(mDigitCover, LV_OBJ_FLAG_CLICKABLE);
+    auto transition = lv_label_create(mDigitCover);
+    lv_label_set_text(transition, "Opening original digit demo...");
+    lv_obj_center(transition);
+    auto back = lv_button_create(mDigitCover);
+    lv_obj_set_pos(back, 646, 438);
+    lv_obj_set_size(back, 148, 40);
+    auto label = lv_label_create(back);
+    lv_label_set_text(label, "Return");
+    lv_obj_center(label);
+    lv_obj_add_event_cb(back, returnClicked, LV_EVENT_CLICKED, this);
+    lv_obj_add_flag(mDigitCover, LV_OBJ_FLAG_HIDDEN);
+#endif
     mDisplay = lv_obj_get_display(root);
     // Creation/startup and retirement belong to the process executor.
     // Acquire only while resumed; a pending startup is cancellable by destroy.
@@ -128,6 +153,12 @@ void FactoryActivity::processIntent()
 {
     if (mPendingAction.empty() || !mResumed) return;
     const std::string action = mPendingAction;
+    if (action == "s31.factory.digit" || action == "s31.factory.return") {
+        if (!mBackend || !mBackend.active()) return;
+        enterDigit(action == "s31.factory.digit");
+        mPendingAction.clear();
+        return;
+    }
     if (action == "s31.factory.close") {
         mPendingAction.clear();
         std::printf("S31Factory action=close result=0\n");
@@ -206,6 +237,8 @@ void FactoryActivity::onPause()
     // The worker retries pause even after the UI polling timer is gone. Keep
     // this backend and its RAM recording for a later resume of this Activity.
     mBackend.setActive(false);
+    mDigitWanted = false;
+    if (mDigitCover) lv_obj_add_flag(mDigitCover, LV_OBJ_FLAG_HIDDEN);
 }
 
 void FactoryActivity::onDestroy()
@@ -283,6 +316,28 @@ void FactoryActivity::action(void* context, DashboardAction selected, int argume
     }
 }
 
+void FactoryActivity::enterDigit(bool enter)
+{
+    if (!mBackend || !mBackend.active() || !mDigitCover) return;
+    int ret = mBackend->submit(enter ? Command::StartDigit : Command::StopDigit);
+    if (ret) { report("Digit transition", ret); return; }
+    mDigitWanted = enter;
+    if (enter) {
+        stopCoffee();
+        lv_obj_remove_flag(mDigitCover, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_move_foreground(mDigitCover);
+    }
+    // Return stays visible until the worker acknowledges camera/LCD retirement.
+}
+void FactoryActivity::digitClicked(lv_event_t* event)
+{
+    static_cast<FactoryActivity*>(lv_event_get_user_data(event))->enterDigit(true);
+}
+void FactoryActivity::returnClicked(lv_event_t* event)
+{
+    static_cast<FactoryActivity*>(lv_event_get_user_data(event))->enterDigit(false);
+}
+
 void FactoryActivity::factoryClicked(lv_event_t* event)
 {
     auto self = static_cast<FactoryActivity*>(lv_event_get_user_data(event));
@@ -300,10 +355,18 @@ void FactoryActivity::changeView(bool coffee)
     if (coffee) {
         if (!coffee_window_owns(mCoffee)) {
             int ret = coffee_window_create(mCoffee);
-            if (ret) { report("Coffee assets/UI", ret); coffee = false; }
+            if (ret) {
+                std::printf("S31Factory coffee_create error=%d\n", ret);
+                report("Coffee assets/UI", ret);
+                coffee = false;
+            }
         }
     } else stopCoffee();
     mCoffeeVisible = coffee;
+    if (mDigitEntry) {
+        if (coffee) lv_obj_add_flag(mDigitEntry, LV_OBJ_FLAG_HIDDEN);
+        else lv_obj_remove_flag(mDigitEntry, LV_OBJ_FLAG_HIDDEN);
+    }
     if (coffee) {
         lv_obj_add_flag(mDashboard.factory_screen, LV_OBJ_FLAG_HIDDEN);
         lv_obj_remove_flag(mCoffee, LV_OBJ_FLAG_HIDDEN);
@@ -443,6 +506,13 @@ void FactoryActivity::refresh()
         if (mBackend) {
             int ret = mBackend->snapshot(mSnapshot);
             if (ret && ret != -EAGAIN) report("Status", ret);
+        }
+        if (mDigitCover && !mDigitWanted && !mSnapshot.digitDisplayOwned &&
+            (mSnapshot.digit.state == State::Idle || mSnapshot.digit.state == State::Error) &&
+            !lv_obj_has_flag(mDigitCover, LV_OBJ_FLAG_HIDDEN)) {
+            lv_obj_add_flag(mDigitCover, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_invalidate(mHost);
+            std::printf("S31Factory vision returned to dashboard\n");
         }
         if (mSnapshot.audioState == AudioState::Error) mPlayAfterStop = false;
         if (mPlayAfterStop && mSnapshot.audioState == AudioState::Idle) {

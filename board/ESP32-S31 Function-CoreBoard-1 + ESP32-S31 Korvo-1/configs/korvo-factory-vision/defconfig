@@ -1,0 +1,51 @@
+# Factory UI with the original dual-core kernel vision service.
+#include "../korvo-smp-services/defconfig"
+CONFIG_XMSDEMO_FACTORY=m
+# CONFIG_XMSDEMO_LAUNCHER is not set
+# CONFIG_XMSDEMO_PLATFORM is not set
+# CONFIG_XMSDEMO_PLATFORM_MEDIA is not set
+# CONFIG_XMSDEMO_LVGLDEMO is not set
+# CONFIG_LV_USE_DEMO_WIDGETS is not set
+# CONFIG_LV_USE_DEMO_MUSIC is not set
+# CONFIG_EXAMPLES_S31FOUNDATION is not set
+# CONFIG_FEATURE is not set
+# CONFIG_INTERPRETERS_QUICKJS is not set
+CONFIG_ESP32S31_PIE=y
+CONFIG_ESP32S31_VISION=y
+CONFIG_SCHED_KTHREAD_GC=y
+CONFIG_ESP32S31_CAMERA_OV3660=y
+CONFIG_ESP32S31_CAMERA_DVP=y
+CONFIG_ESP32S31_CAMERA_DVP_HRES=640
+CONFIG_ESP32S31_CAMERA_DVP_VRES=480
+CONFIG_ESP32S31_CAMERA_DVP_XCLK_FREQ=16000000
+# CONFIG_ESP32S31_CAMERA_V4L2 is not set
+CONFIG_I2C_DRIVER=y
+CONFIG_SCHED_HPWORK=y
+CONFIG_SCHED_HPWORKSTACKSIZE=4096
+CONFIG_LIBM=y
+CONFIG_ARCH_HEAP_NPAGES=768
+CONFIG_ARCH_DATA_NPAGES=512
+CONFIG_ARCH_TEXT_NPAGES=1024
+CONFIG_ELF_APP_MAX_FILESIZE=6291456
+# Native LVGL decoding of the original transparent PNG resources in the embedded ROM filesystem.
+CONFIG_LIB_PNG=y
+CONFIG_LV_USE_LIBPNG=y
+CONFIG_LV_USE_THEME_SIMPLE=y
+CONFIG_LV_FONT_MONTSERRAT_14=y
+CONFIG_LV_FONT_MONTSERRAT_18=y
+CONFIG_LV_FONT_MONTSERRAT_24=y
+CONFIG_LV_FONT_MONTSERRAT_46=y
+CONFIG_LIB_ZLIB=y
+CONFIG_LV_USE_FS_POSIX=y
+CONFIG_LV_FS_POSIX_LETTER=83
+CONFIG_LV_FS_POSIX_PATH=""
+CONFIG_LV_FS_POSIX_CACHE_SIZE=0
+CONFIG_LV_DRAW_SW_DRAW_UNIT_CNT=1
+CONFIG_LV_DRAW_BUF_STRIDE_ALIGN=1
+CONFIG_LV_DRAW_BUF_ALIGN=4
+CONFIG_LV_CACHE_DEF_SIZE=0
+CONFIG_LV_IMAGE_HEADER_CACHE_DEF_CNT=48
+CONFIG_LV_DECODER_IMG_SIZE_EXPAND=0
+
+# Native MEDIA Capture and Music graphs use bounded 16-bit PCM sessions.
+CONFIG_LIB_FFMPEG_CONFIGURATION="--disable-asm --disable-inline-asm --disable-rvv --disable-tx-double --disable-tx-int32 --enable-avcodec --enable-avdevice --enable-avfilter --enable-avformat --enable-swresample --enable-alsa --enable-decoder='aac,mp3float,opus,pcm_s16le' --enable-encoder=pcm_s16le --enable-demuxer='aac,mov,mp3,ogg,wav,pcm_s16le' --enable-muxer=pcm_s16le --enable-parser='aac,mpegaudio,opus' --enable-filter='abufsrc,asubgraph,abuffer,abuffersink,aresample,alsasink,alsasrc,abufsink' --enable-protocol=file,unix --enable-hardcoded-tables"

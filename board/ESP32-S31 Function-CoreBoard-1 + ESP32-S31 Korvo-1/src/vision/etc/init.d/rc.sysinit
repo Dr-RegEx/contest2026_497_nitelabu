@@ -1,0 +1,4 @@
+/* The BSP owns /system/bin ROMFS, /data LittleFS and /tmp tmpfs. */
+/* shm_open uses the pseudo filesystem; do not mount binfs or shmfs. */
+mkdir -p /var/shm
+mkdir -p /tmp/db

@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 2d8c5056bc76e4c3ee22824aa0d157dc4788d561..7170066b838a181ce122ec39cf9ccdc08fac4ffd 100644
+index 2d8c5056bc7..7170066b838 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -109,11 +109,8 @@ set(CMAKE_INSTALL_PREFIX
@@ -103,7 +103,7 @@ index 2d8c5056bc76e4c3ee22824aa0d157dc4788d561..7170066b838a181ce122ec39cf9ccdc0
        nuttx
        PRIVATE $<$<NOT:$<BOOL:${DISABLE_LINK_GROUP}>>:-Wl,--start-group>
 diff --git a/arch/Kconfig b/arch/Kconfig
-index 326b0a8e3a3ae5ea6eac8ce10de8588f5d46557b..db4e02990061eb1faab02b72058e967bd9593d87 100644
+index 326b0a8e3a3..db4e0299006 100644
 --- a/arch/Kconfig
 +++ b/arch/Kconfig
 @@ -407,6 +407,15 @@ config ARCH_HAVE_ADDRENV
@@ -160,7 +160,7 @@ index 326b0a8e3a3ae5ea6eac8ce10de8588f5d46557b..db4e02990061eb1faab02b72058e967b
  
  config ARCH_SHM_MAXREGIONS
 diff --git a/arch/risc-v/Kconfig b/arch/risc-v/Kconfig
-index 9c478054aaf991a2cd341c987bda83e05c39ffa9..7d45c5b4d1b1b5622d50e1322f96bebf23c8a550 100644
+index 9c478054aaf..7d45c5b4d1b 100644
 --- a/arch/risc-v/Kconfig
 +++ b/arch/risc-v/Kconfig
 @@ -190,6 +190,49 @@ config ARCH_CHIP_ESP32H2
@@ -248,7 +248,7 @@ index 9c478054aaf991a2cd341c987bda83e05c39ffa9..7d45c5b4d1b1b5622d50e1322f96bebf
  endif
 diff --git a/arch/risc-v/include/esp32s31/.gitignore b/arch/risc-v/include/esp32s31/.gitignore
 new file mode 100644
-index 0000000000000000000000000000000000000000..a9e61e717ee17785cbe2fa825197cc8d8985df5a
+index 00000000000..a9e61e717ee
 --- /dev/null
 +++ b/arch/risc-v/include/esp32s31/.gitignore
 @@ -0,0 +1,2 @@
@@ -256,7 +256,7 @@ index 0000000000000000000000000000000000000000..a9e61e717ee17785cbe2fa825197cc8d
 +/irq.h
 diff --git a/arch/risc-v/include/esp32s31/chip.h b/arch/risc-v/include/esp32s31/chip.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..5d4f6605f9ba407e066dead00112e8e4cb1d3a82
+index 00000000000..5d4f6605f9b
 --- /dev/null
 +++ b/arch/risc-v/include/esp32s31/chip.h
 @@ -0,0 +1,10 @@
@@ -271,7 +271,7 @@ index 0000000000000000000000000000000000000000..5d4f6605f9ba407e066dead00112e8e4
 +
 +#endif /* __ARCH_RISCV_INCLUDE_ESP32S31_CHIP_H */
 diff --git a/arch/risc-v/include/irq.h b/arch/risc-v/include/irq.h
-index 43ecad32ff159ce13741375aee566dfb23d5eb1d..0bcbff5b39a52c6cd346b61814b1ed1a9d4bc5fb 100644
+index 43ecad32ff1..0bcbff5b39a 100644
 --- a/arch/risc-v/include/irq.h
 +++ b/arch/risc-v/include/irq.h
 @@ -257,7 +257,9 @@
@@ -319,7 +319,7 @@ index 43ecad32ff159ce13741375aee566dfb23d5eb1d..0bcbff5b39a52c6cd346b61814b1ed1a
  
  #endif /* CONFIG_ARCH_RV_HAVE_CLIC */
 diff --git a/arch/risc-v/src/cmake/Toolchain.cmake b/arch/risc-v/src/cmake/Toolchain.cmake
-index 6acfdbcf17acaa859ea49709b49559568303eba5..584ba34e0445f23bc37050bce07219f770d6e55c 100644
+index 6acfdbcf17a..584ba34e044 100644
 --- a/arch/risc-v/src/cmake/Toolchain.cmake
 +++ b/arch/risc-v/src/cmake/Toolchain.cmake
 @@ -32,7 +32,9 @@ endif()
@@ -350,7 +350,7 @@ index 6acfdbcf17acaa859ea49709b49559568303eba5..584ba34e0445f23bc37050bce07219f7
  
  if(CONFIG_ARCH_RV_SHADOW_STACK_ALL)
 diff --git a/arch/risc-v/src/common/CMakeLists.txt b/arch/risc-v/src/common/CMakeLists.txt
-index 57a44f5aa2b198b1a03c62b27e4131abe2a19523..4ee4d283d9e6f169bc3ed7f132b483db230ead83 100644
+index 57a44f5aa2b..4ee4d283d9e 100644
 --- a/arch/risc-v/src/common/CMakeLists.txt
 +++ b/arch/risc-v/src/common/CMakeLists.txt
 @@ -20,14 +20,26 @@
@@ -414,7 +414,7 @@ index 57a44f5aa2b198b1a03c62b27e4131abe2a19523..4ee4d283d9e6f169bc3ed7f132b483db
  
  if(CONFIG_RISCV_PERCPU_SCRATCH)
 diff --git a/arch/risc-v/src/common/Make.defs b/arch/risc-v/src/common/Make.defs
-index 0d2a859f671ee40b755c13c0c4661a2493beba41..9d9a7f7cc0f494915ea288debf642fa010eb6928 100644
+index 0d2a859f671..9d9a7f7cc0f 100644
 --- a/arch/risc-v/src/common/Make.defs
 +++ b/arch/risc-v/src/common/Make.defs
 @@ -25,7 +25,7 @@ CMN_ASRCS += riscv_vectors.S riscv_exception_common.S riscv_mhartid.S
@@ -456,7 +456,7 @@ index 0d2a859f671ee40b755c13c0c4661a2493beba41..9d9a7f7cc0f494915ea288debf642fa0
  ifeq ($(CONFIG_ARCH_HAVE_MULTICPU),y)
  ifeq ($(CONFIG_ARCH_USE_S_MODE),y)
 diff --git a/arch/risc-v/src/common/Toolchain.defs b/arch/risc-v/src/common/Toolchain.defs
-index e660a19f817f1bfc68fba7f176cda6e58d6730d6..5e943c49e677ca81078fc3d225b84a230147a301 100644
+index e660a19f817..5e943c49e67 100644
 --- a/arch/risc-v/src/common/Toolchain.defs
 +++ b/arch/risc-v/src/common/Toolchain.defs
 @@ -153,6 +153,10 @@ endif
@@ -486,7 +486,7 @@ index e660a19f817f1bfc68fba7f176cda6e58d6730d6..5e943c49e677ca81078fc3d225b84a23
  
  include $(TOPDIR)/tools/Rust.defs
 diff --git a/arch/risc-v/src/common/addrenv.h b/arch/risc-v/src/common/addrenv.h
-index d19e232a86f2a0049a7edbf1c44a93f9240b963c..d9295207d8fd13db79ce5ca7dd8d428c45ef0c0e 100644
+index d19e232a86f..d9295207d8f 100644
 --- a/arch/risc-v/src/common/addrenv.h
 +++ b/arch/risc-v/src/common/addrenv.h
 @@ -48,12 +48,29 @@
@@ -521,7 +521,7 @@ index d19e232a86f2a0049a7edbf1c44a93f9240b963c..d9295207d8fd13db79ce5ca7dd8d428c
   * Public Function Prototypes
   ****************************************************************************/
 diff --git a/arch/risc-v/src/common/crt0.c b/arch/risc-v/src/common/crt0.c
-index cbbd964d7f19a7f4689f225275ed59eb3f0732ef..c3efd66ccf3d542261d4381ebadc803c493e7595 100644
+index cbbd964d7f1..c3efd66ccf3 100644
 --- a/arch/risc-v/src/common/crt0.c
 +++ b/arch/risc-v/src/common/crt0.c
 @@ -39,10 +39,23 @@
@@ -577,7 +577,7 @@ index cbbd964d7f19a7f4689f225275ed59eb3f0732ef..c3efd66ccf3d542261d4381ebadc803c
  
    /* Call exit() if/when the main() returns */
 diff --git a/arch/risc-v/src/common/espressif/Kconfig b/arch/risc-v/src/common/espressif/Kconfig
-index 2e432d08143b0f23e56ccff0b0db79b26675275f..4d875495670b2ee768951d6f05c1c986f07e8414 100644
+index 2e432d08143..4d875495670 100644
 --- a/arch/risc-v/src/common/espressif/Kconfig
 +++ b/arch/risc-v/src/common/espressif/Kconfig
 @@ -3,10 +3,11 @@
@@ -892,7 +892,7 @@ index 2e432d08143b0f23e56ccff0b0db79b26675275f..4d875495670b2ee768951d6f05c1c986
  	---help---
  		Enables polling of sensor.
 diff --git a/arch/risc-v/src/common/espressif/Make.defs b/arch/risc-v/src/common/espressif/Make.defs
-index 5489b422d833ad58df2ba7a843f30e6f03b972e9..d2acf03e36140c30501341671e9acc6437b69687 100644
+index 5489b422d83..d2acf03e361 100644
 --- a/arch/risc-v/src/common/espressif/Make.defs
 +++ b/arch/risc-v/src/common/espressif/Make.defs
 @@ -95,7 +95,9 @@ ifeq ($(CONFIG_ESP_RMT),y)
@@ -982,7 +982,7 @@ index 5489b422d833ad58df2ba7a843f30e6f03b972e9..d2acf03e36140c30501341671e9acc64
  INCLUDES += ${INCDIR_PREFIX}$(ARCH_SRCDIR)$(DELIM)common$(DELIM)espressif
  INCLUDES += ${INCDIR_PREFIX}$(ARCH_SRCDIR)$(DELIM)common$(DELIM)espressif$(DELIM)platform_include
 diff --git a/arch/risc-v/src/common/espressif/chip.h b/arch/risc-v/src/common/espressif/chip.h
-index 6c16bb48dc49ce44762a4176c26b1b4fe02ad195..ff35f0a3b8c1b0a678f1076a08de8b1440b16c81 100644
+index 6c16bb48dc4..ff35f0a3b8c 100644
 --- a/arch/risc-v/src/common/espressif/chip.h
 +++ b/arch/risc-v/src/common/espressif/chip.h
 @@ -29,6 +29,9 @@
@@ -1030,7 +1030,7 @@ index 6c16bb48dc49ce44762a4176c26b1b4fe02ad195..ff35f0a3b8c1b0a678f1076a08de8b14
 +
  #endif /* __ARCH_RISCV_SRC_COMMON_ESPRESSIF_CHIP_H */
 diff --git a/arch/risc-v/src/common/espressif/esp_allocateheap.c b/arch/risc-v/src/common/espressif/esp_allocateheap.c
-index 4c3343c199bbb668e0eaaa9832f885758a6b8714..c4945de32c30fa0a6bf0e71d37e9cfbf6852976d 100644
+index 4c3343c199b..c4945de32c3 100644
 --- a/arch/risc-v/src/common/espressif/esp_allocateheap.c
 +++ b/arch/risc-v/src/common/espressif/esp_allocateheap.c
 @@ -35,6 +35,11 @@
@@ -1096,7 +1096,7 @@ index 4c3343c199bbb668e0eaaa9832f885758a6b8714..c4945de32c30fa0a6bf0e71d37e9cfbf
  #endif
 -
 diff --git a/arch/risc-v/src/common/espressif/esp_gpio.c b/arch/risc-v/src/common/espressif/esp_gpio.c
-index fcdb7200212bd3c097dec681ad5cca0b382715e0..dd24765e60f2560c171b5f7ce3b7a65933c8fd25 100644
+index fcdb7200212..dd24765e60f 100644
 --- a/arch/risc-v/src/common/espressif/esp_gpio.c
 +++ b/arch/risc-v/src/common/espressif/esp_gpio.c
 @@ -53,6 +53,15 @@
@@ -1206,7 +1206,7 @@ index fcdb7200212bd3c097dec681ad5cca0b382715e0..dd24765e60f2560c171b5f7ce3b7a659
  
    DEBUGASSERT(irq >= ESP_FIRST_GPIOIRQ && irq <= ESP_LAST_GPIOIRQ);
 diff --git a/arch/risc-v/src/common/espressif/esp_gpio.h b/arch/risc-v/src/common/espressif/esp_gpio.h
-index 6c9651e591db16baee0c5935236488aa23edfee4..04a8d12df379c01fb92a7868dd291397783aceb1 100644
+index 6c9651e591d..04a8d12df37 100644
 --- a/arch/risc-v/src/common/espressif/esp_gpio.h
 +++ b/arch/risc-v/src/common/espressif/esp_gpio.h
 @@ -30,6 +30,10 @@
@@ -1257,7 +1257,7 @@ index 6c9651e591db16baee0c5935236488aa23edfee4..04a8d12df379c01fb92a7868dd291397
  /****************************************************************************
   * Public Types
 diff --git a/arch/risc-v/src/common/espressif/esp_head.S b/arch/risc-v/src/common/espressif/esp_head.S
-index aed416631b299d35e1e8d36be5661fdfa5f87011..1bc009d6bbb3bb01bc237b0e08bceadb47f4ff70 100644
+index aed416631b2..1bc009d6bbb 100644
 --- a/arch/risc-v/src/common/espressif/esp_head.S
 +++ b/arch/risc-v/src/common/espressif/esp_head.S
 @@ -67,9 +67,25 @@ __start:
@@ -1287,7 +1287,7 @@ index aed416631b299d35e1e8d36be5661fdfa5f87011..1bc009d6bbb3bb01bc237b0e08bceadb
    /* Jump to __esp_start */
  
 diff --git a/arch/risc-v/src/common/espressif/esp_hr_timer.c b/arch/risc-v/src/common/espressif/esp_hr_timer.c
-index 9275468652cea3d0be947042e5b384a881249087..759168a9fe4f44ff56f26805cb8c723ad1726127 100644
+index 9275468652c..759168a9fe4 100644
 --- a/arch/risc-v/src/common/espressif/esp_hr_timer.c
 +++ b/arch/risc-v/src/common/espressif/esp_hr_timer.c
 @@ -53,11 +53,23 @@
@@ -1477,7 +1477,7 @@ index 9275468652cea3d0be947042e5b384a881249087..759168a9fe4f44ff56f26805cb8c723a
    g_hr_timer_initialized = true;
  
 diff --git a/arch/risc-v/src/common/espressif/esp_i2c.c b/arch/risc-v/src/common/espressif/esp_i2c.c
-index 2084617735b69d5875841fb55c525c0c73b7b7b3..681133609d24f32fdff17ebafdef5d97bd1844cb 100644
+index 2084617735b..681133609d2 100644
 --- a/arch/risc-v/src/common/espressif/esp_i2c.c
 +++ b/arch/risc-v/src/common/espressif/esp_i2c.c
 @@ -31,6 +31,7 @@
@@ -2031,7 +2031,7 @@ index 2084617735b69d5875841fb55c525c0c73b7b7b3..681133609d24f32fdff17ebafdef5d97
  }
  #endif
 diff --git a/arch/risc-v/src/common/espressif/esp_idle.c b/arch/risc-v/src/common/espressif/esp_idle.c
-index 29ee677eeb52020f27acb0de6100b3805cb9f6be..c0916c85b3440f3af1492c0ba837bb5fbde8f29f 100644
+index 29ee677eeb5..c0916c85b34 100644
 --- a/arch/risc-v/src/common/espressif/esp_idle.c
 +++ b/arch/risc-v/src/common/espressif/esp_idle.c
 @@ -28,6 +28,13 @@
@@ -2067,7 +2067,7 @@ index 29ee677eeb52020f27acb0de6100b3805cb9f6be..c0916c85b3440f3af1492c0ba837bb5f
  
  #endif
 diff --git a/arch/risc-v/src/common/espressif/esp_irq.c b/arch/risc-v/src/common/espressif/esp_irq.c
-index 0f03170bf0290c28ac286b4ff39e213cbc1ec18e..81faef5fddccf40d580e083b87df9b5adb9e7a85 100644
+index 0f03170bf02..81faef5fddc 100644
 --- a/arch/risc-v/src/common/espressif/esp_irq.c
 +++ b/arch/risc-v/src/common/espressif/esp_irq.c
 @@ -42,6 +42,9 @@
@@ -2414,7 +2414,7 @@ index 0f03170bf0290c28ac286b4ff39e213cbc1ec18e..81faef5fddccf40d580e083b87df9b5a
   * Name: esp_intr_noniram_disable
   *
 diff --git a/arch/risc-v/src/common/espressif/esp_irq.h b/arch/risc-v/src/common/espressif/esp_irq.h
-index 8e41986870efe1aa4d934c7f3ee2ad8bc9cbe10c..c2aa112e00ba95baf0ab0b093d710b5e3d46fe90 100644
+index 8e41986870e..c2aa112e00b 100644
 --- a/arch/risc-v/src/common/espressif/esp_irq.h
 +++ b/arch/risc-v/src/common/espressif/esp_irq.h
 @@ -262,6 +262,15 @@ int esp_irq_set_iram_isr(int irq);
@@ -2434,7 +2434,7 @@ index 8e41986870efe1aa4d934c7f3ee2ad8bc9cbe10c..c2aa112e00ba95baf0ab0b093d710b5e
   * Name:  esp_irq_noniram_status
   *
 diff --git a/arch/risc-v/src/common/espressif/esp_libc_stubs.c b/arch/risc-v/src/common/espressif/esp_libc_stubs.c
-index 79433fd316132f3f93031d00249b9502d89ec782..f8a5bd8b42789d956fbf3098420a35967e08d513 100644
+index 79433fd3161..f8a5bd8b427 100644
 --- a/arch/risc-v/src/common/espressif/esp_libc_stubs.c
 +++ b/arch/risc-v/src/common/espressif/esp_libc_stubs.c
 @@ -34,6 +34,7 @@
@@ -2589,7 +2589,7 @@ index 79433fd316132f3f93031d00249b9502d89ec782..f8a5bd8b42789d956fbf3098420a3596
  }
 -
 diff --git a/arch/risc-v/src/common/espressif/esp_lowputc.c b/arch/risc-v/src/common/espressif/esp_lowputc.c
-index f614b8e1321eb9234227ff834f8dcdd43580c12a..f0d8afef5d4a26d201dd96d8ea4b31f3c038943c 100644
+index f614b8e1321..f0d8afef5d4 100644
 --- a/arch/risc-v/src/common/espressif/esp_lowputc.c
 +++ b/arch/risc-v/src/common/espressif/esp_lowputc.c
 @@ -49,6 +49,9 @@
@@ -2651,7 +2651,7 @@ index f614b8e1321eb9234227ff834f8dcdd43580c12a..f0d8afef5d4a26d201dd96d8ea4b31f3
  
  /****************************************************************************
 diff --git a/arch/risc-v/src/common/espressif/esp_random.c b/arch/risc-v/src/common/espressif/esp_random.c
-index 261b7238ec8b57a7bb595bd6b1c30d32472ba5db..4495feb73add753a15c19eb02f1673537657e957 100644
+index 261b7238ec8..4495feb73ad 100644
 --- a/arch/risc-v/src/common/espressif/esp_random.c
 +++ b/arch/risc-v/src/common/espressif/esp_random.c
 @@ -24,6 +24,7 @@
@@ -2721,7 +2721,7 @@ index 261b7238ec8b57a7bb595bd6b1c30d32472ba5db..4495feb73add753a15c19eb02f167353
  }
  #endif
 diff --git a/arch/risc-v/src/common/espressif/esp_rmt.c b/arch/risc-v/src/common/espressif/esp_rmt.c
-index 810666f30bb4a893838cf43f7dcae19d05ad053f..e971ea9956d263d6dcf041bd1e6538b67f1d5083 100644
+index 810666f30bb..e971ea9956d 100644
 --- a/arch/risc-v/src/common/espressif/esp_rmt.c
 +++ b/arch/risc-v/src/common/espressif/esp_rmt.c
 @@ -31,6 +31,7 @@
@@ -3593,7 +3593,7 @@ index 810666f30bb4a893838cf43f7dcae19d05ad053f..e971ea9956d263d6dcf041bd1e6538b6
          }
  
 diff --git a/arch/risc-v/src/common/espressif/esp_rtc.c b/arch/risc-v/src/common/espressif/esp_rtc.c
-index 1790256a831848b88edbfcb696a33dde7cb826de..bb9616f865ccf57609c89b30bb09c2e517a22077 100644
+index 1790256a831..bb9616f865c 100644
 --- a/arch/risc-v/src/common/espressif/esp_rtc.c
 +++ b/arch/risc-v/src/common/espressif/esp_rtc.c
 @@ -39,6 +39,10 @@
@@ -3763,7 +3763,7 @@ index 1790256a831848b88edbfcb696a33dde7cb826de..bb9616f865ccf57609c89b30bb09c2e5
    spin_unlock_irqrestore(&priv->lock, flags);
  
 diff --git a/arch/risc-v/src/common/espressif/esp_rtc_gpio.c b/arch/risc-v/src/common/espressif/esp_rtc_gpio.c
-index 62dc537bd6bf71d97445731e4d5638656229578f..94c06b24df1d56f12cb75bb4907187ecdacc476e 100644
+index 62dc537bd6b..94c06b24df1 100644
 --- a/arch/risc-v/src/common/espressif/esp_rtc_gpio.c
 +++ b/arch/risc-v/src/common/espressif/esp_rtc_gpio.c
 @@ -37,7 +37,11 @@
@@ -3779,7 +3779,7 @@ index 62dc537bd6bf71d97445731e4d5638656229578f..94c06b24df1d56f12cb75bb4907187ec
  #include "soc/rtc_cntl_periph.h"
  #include "soc/periph_defs.h"
 diff --git a/arch/risc-v/src/common/espressif/esp_serial.c b/arch/risc-v/src/common/espressif/esp_serial.c
-index 3b62cbc7f289f034d6e830bdae62865b4b476299..9d21810a7c56e816c8e0e4e5bc2676a9d8fcdc6f 100644
+index 3b62cbc7f28..9d21810a7c5 100644
 --- a/arch/risc-v/src/common/espressif/esp_serial.c
 +++ b/arch/risc-v/src/common/espressif/esp_serial.c
 @@ -570,6 +570,17 @@ static void esp_txint(uart_dev_t *dev, bool enable)
@@ -3904,7 +3904,7 @@ index 3b62cbc7f289f034d6e830bdae62865b4b476299..9d21810a7c56e816c8e0e4e5bc2676a9
  }
  
 diff --git a/arch/risc-v/src/common/espressif/esp_spiflash.c b/arch/risc-v/src/common/espressif/esp_spiflash.c
-index bfd47f9292c02f11516f5371a48c8ab550865002..2d16acc3c85897ec2d2d98204d1213bdea170166 100644
+index bfd47f9292c..2d16acc3c85 100644
 --- a/arch/risc-v/src/common/espressif/esp_spiflash.c
 +++ b/arch/risc-v/src/common/espressif/esp_spiflash.c
 @@ -36,6 +36,7 @@
@@ -4541,7 +4541,7 @@ index bfd47f9292c02f11516f5371a48c8ab550865002..2d16acc3c85897ec2d2d98204d1213bd
  
    spi_flash_guard_set(&g_spi_flash_guard_funcs);
 diff --git a/arch/risc-v/src/common/espressif/esp_spiflash_mtd.c b/arch/risc-v/src/common/espressif/esp_spiflash_mtd.c
-index 444eba857b6ac0109b9819543fab470db40fbc50..815e2cbfc065b0782dfbf355594ffa756be6c822 100644
+index 444eba857b6..815e2cbfc06 100644
 --- a/arch/risc-v/src/common/espressif/esp_spiflash_mtd.c
 +++ b/arch/risc-v/src/common/espressif/esp_spiflash_mtd.c
 @@ -44,6 +44,21 @@
@@ -4921,7 +4921,7 @@ index 444eba857b6ac0109b9819543fab470db40fbc50..815e2cbfc065b0782dfbf355594ffa75
    if (ret == OK)
      {
 diff --git a/arch/risc-v/src/common/espressif/esp_start.c b/arch/risc-v/src/common/espressif/esp_start.c
-index 625439296e06c1c75f4b369fe269dbebd06b93b0..15ea5aee44a98606620ce9a6099f5e3338bd0430 100644
+index 625439296e0..15ea5aee44a 100644
 --- a/arch/risc-v/src/common/espressif/esp_start.c
 +++ b/arch/risc-v/src/common/espressif/esp_start.c
 @@ -25,10 +25,12 @@
@@ -5513,7 +5513,7 @@ index 625439296e06c1c75f4b369fe269dbebd06b93b0..15ea5aee44a98606620ce9a6099f5e33
  
    nx_start();
 diff --git a/arch/risc-v/src/common/espressif/esp_timer.c b/arch/risc-v/src/common/espressif/esp_timer.c
-index 9c12603d5f69ae5c7ab64098b95ac560c66722c0..339f665b5fa5d11a0735ef578b7b19d73947b37c 100644
+index 9c12603d5f6..339f665b5fa 100644
 --- a/arch/risc-v/src/common/espressif/esp_timer.c
 +++ b/arch/risc-v/src/common/espressif/esp_timer.c
 @@ -40,7 +40,14 @@
@@ -5633,7 +5633,7 @@ index 9c12603d5f69ae5c7ab64098b95ac560c66722c0..339f665b5fa5d11a0735ef578b7b19d7
    if (devpath == NULL)
      {
 diff --git a/arch/risc-v/src/common/espressif/esp_timerisr.c b/arch/risc-v/src/common/espressif/esp_timerisr.c
-index f758b88d83533d667008bfe0b7f6319684875811..1720fff3871658671c5a81b67d84f4f238e1e728 100644
+index f758b88d835..1720fff3871 100644
 --- a/arch/risc-v/src/common/espressif/esp_timerisr.c
 +++ b/arch/risc-v/src/common/espressif/esp_timerisr.c
 @@ -26,13 +26,18 @@
@@ -5944,7 +5944,7 @@ index f758b88d83533d667008bfe0b7f6319684875811..1720fff3871658671c5a81b67d84f4f2
 +  up_enable_irq(CHIP_SYSTIMER_IRQ);
  }
 diff --git a/arch/risc-v/src/common/espressif/esp_usbserial.c b/arch/risc-v/src/common/espressif/esp_usbserial.c
-index 088ae9a1a7f93215cb0322912f755bc1aa7c2507..ba7dc9e330ebccc48d4107a55beb8511a95f5e2b 100644
+index 088ae9a1a7f..ba7dc9e330e 100644
 --- a/arch/risc-v/src/common/espressif/esp_usbserial.c
 +++ b/arch/risc-v/src/common/espressif/esp_usbserial.c
 @@ -48,6 +48,9 @@
@@ -6033,7 +6033,7 @@ index 088ae9a1a7f93215cb0322912f755bc1aa7c2507..ba7dc9e330ebccc48d4107a55beb8511
  }
 -
 diff --git a/arch/risc-v/src/common/espressif/esp_vectors.S b/arch/risc-v/src/common/espressif/esp_vectors.S
-index 28d50a5843ff5490e68d45b3291b5f992538dd77..6cc8790cfed3b36f7081273d9e31f796cf6ca72b 100644
+index 28d50a5843f..6cc8790cfed 100644
 --- a/arch/risc-v/src/common/espressif/esp_vectors.S
 +++ b/arch/risc-v/src/common/espressif/esp_vectors.S
 @@ -27,6 +27,7 @@
@@ -6117,7 +6117,7 @@ index 28d50a5843ff5490e68d45b3291b5f992538dd77..6cc8790cfed3b36f7081273d9e31f796
 +
 +  .option pop
 diff --git a/arch/risc-v/src/common/espressif/esp_wifi_init.c b/arch/risc-v/src/common/espressif/esp_wifi_init.c
-index 4939ef9ff4dd34c1288c821051aa059b3c11467d..1275ab477c2a1d5c5b1601989d170241bad6062d 100644
+index 4939ef9ff4d..1275ab477c2 100644
 --- a/arch/risc-v/src/common/espressif/esp_wifi_init.c
 +++ b/arch/risc-v/src/common/espressif/esp_wifi_init.c
 @@ -39,6 +39,10 @@
@@ -6222,7 +6222,7 @@ index 4939ef9ff4dd34c1288c821051aa059b3c11467d..1275ab477c2a1d5c5b1601989d170241
 +}
 +#endif
 diff --git a/arch/risc-v/src/common/espressif/esp_wifi_utils.c b/arch/risc-v/src/common/espressif/esp_wifi_utils.c
-index a47d0e206d25d6b2f5df60716938c0cb66405976..719fe7e80995377388879d866fcfeb919fa585e7 100644
+index a47d0e206d2..719fe7e8099 100644
 --- a/arch/risc-v/src/common/espressif/esp_wifi_utils.c
 +++ b/arch/risc-v/src/common/espressif/esp_wifi_utils.c
 @@ -31,6 +31,7 @@
@@ -6344,7 +6344,7 @@ index a47d0e206d25d6b2f5df60716938c0cb66405976..719fe7e80995377388879d866fcfeb91
  
    return ret;
 diff --git a/arch/risc-v/src/common/espressif/esp_wlan.c b/arch/risc-v/src/common/espressif/esp_wlan.c
-index 443b8d525caadf1a964c52c52a047361ca11c5c3..0a45939d25f88a45661a01ccf0d6e24306a62920 100644
+index 443b8d525ca..0a45939d25f 100644
 --- a/arch/risc-v/src/common/espressif/esp_wlan.c
 +++ b/arch/risc-v/src/common/espressif/esp_wlan.c
 @@ -28,13 +28,17 @@
@@ -7593,7 +7593,7 @@ index 443b8d525caadf1a964c52c52a047361ca11c5c3..0a45939d25f88a45661a01ccf0d6e243
  
    return OK;
 diff --git a/arch/risc-v/src/common/espressif/esp_ws2812.c b/arch/risc-v/src/common/espressif/esp_ws2812.c
-index cc4e14865a4b0ad8af5e1ed88e18da852a519714..dacac086c03cc66bb5c7282dec66cf39e9bc4ff2 100644
+index cc4e14865a4..dacac086c03 100644
 --- a/arch/risc-v/src/common/espressif/esp_ws2812.c
 +++ b/arch/risc-v/src/common/espressif/esp_ws2812.c
 @@ -33,6 +33,9 @@
@@ -7885,7 +7885,7 @@ index cc4e14865a4b0ad8af5e1ed88e18da852a519714..dacac086c03cc66bb5c7282dec66cf39
  
  /****************************************************************************
 diff --git a/arch/risc-v/src/common/pgalloc.h b/arch/risc-v/src/common/pgalloc.h
-index be39da0d3a0d536d46115c35b64e492921b9303b..bfc1d7ab6cd0c97c976a925bab34dbd2627b4087 100644
+index be39da0d3a0..bfc1d7ab6cd 100644
 --- a/arch/risc-v/src/common/pgalloc.h
 +++ b/arch/risc-v/src/common/pgalloc.h
 @@ -29,6 +29,9 @@
@@ -7936,7 +7936,7 @@ index be39da0d3a0d536d46115c35b64e492921b9303b..bfc1d7ab6cd0c97c976a925bab34dbd2
  }
  
 diff --git a/arch/risc-v/src/common/riscv_addrenv.c b/arch/risc-v/src/common/riscv_addrenv.c
-index c80ad4db61ecc8d52204ea1399cdc71f95d4759a..4e0297e75b3cc69b6916734aa8709e3ea14853b5 100644
+index c80ad4db61e..4e0297e75b3 100644
 --- a/arch/risc-v/src/common/riscv_addrenv.c
 +++ b/arch/risc-v/src/common/riscv_addrenv.c
 @@ -72,6 +72,10 @@
@@ -8090,7 +8090,7 @@ index c80ad4db61ecc8d52204ea1399cdc71f95d4759a..4e0297e75b3cc69b6916734aa8709e3e
    return OK;
  }
 diff --git a/arch/risc-v/src/common/riscv_addrenv_kstack.c b/arch/risc-v/src/common/riscv_addrenv_kstack.c
-index f53c6977863ebdca88f663a48b2c418457c9ba44..5336c3e9deca25dc4d247f62d3bd6168881ce2ef 100644
+index f53c6977863..5336c3e9dec 100644
 --- a/arch/risc-v/src/common/riscv_addrenv_kstack.c
 +++ b/arch/risc-v/src/common/riscv_addrenv_kstack.c
 @@ -64,9 +64,13 @@ int up_addrenv_kstackalloc(struct tcb_s *tcb)
@@ -8110,7 +8110,7 @@ index f53c6977863ebdca88f663a48b2c418457c9ba44..5336c3e9deca25dc4d247f62d3bd6168
      {
        berr("ERROR: Failed to allocate the kernel stack\n");
 diff --git a/arch/risc-v/src/common/riscv_addrenv_perms.c b/arch/risc-v/src/common/riscv_addrenv_perms.c
-index 3a928b8c9c3c54fcc66f2f079d179e8efddfc2f0..dd7a414c91ef8d63b70a8faa0da49d1877674d61 100644
+index 3a928b8c9c3..dd7a414c91e 100644
 --- a/arch/risc-v/src/common/riscv_addrenv_perms.c
 +++ b/arch/risc-v/src/common/riscv_addrenv_perms.c
 @@ -98,6 +98,8 @@ static int modify_region(uintptr_t vstart, uintptr_t vend, uintptr_t setmask)
@@ -8123,7 +8123,7 @@ index 3a928b8c9c3c54fcc66f2f079d179e8efddfc2f0..dd7a414c91ef8d63b70a8faa0da49d18
  }
  
 diff --git a/arch/risc-v/src/common/riscv_addrenv_shm.c b/arch/risc-v/src/common/riscv_addrenv_shm.c
-index 6f3f690b5fd16aea5516872d1e6d8a0a930ae7d6..d907d8083f9ac84788d6042e4e7432fd3d021172 100644
+index 6f3f690b5fd..d907d8083f9 100644
 --- a/arch/risc-v/src/common/riscv_addrenv_shm.c
 +++ b/arch/risc-v/src/common/riscv_addrenv_shm.c
 @@ -65,22 +65,50 @@
@@ -8185,7 +8185,7 @@ index 6f3f690b5fd16aea5516872d1e6d8a0a930ae7d6..d907d8083f9ac84788d6042e4e7432fd
  /****************************************************************************
   * Name: up_shmdt
 diff --git a/arch/risc-v/src/common/riscv_addrenv_utils.c b/arch/risc-v/src/common/riscv_addrenv_utils.c
-index 2f1716c8db9c51448778d4a96702d1749162d030..85d509ecc410c2ec613447e575def10bbb28ba6f 100644
+index 2f1716c8db9..85d509ecc41 100644
 --- a/arch/risc-v/src/common/riscv_addrenv_utils.c
 +++ b/arch/risc-v/src/common/riscv_addrenv_utils.c
 @@ -41,6 +41,21 @@
@@ -8256,7 +8256,7 @@ index 2f1716c8db9c51448778d4a96702d1749162d030..85d509ecc410c2ec613447e575def10b
  }
  
 diff --git a/arch/risc-v/src/common/riscv_createstack.c b/arch/risc-v/src/common/riscv_createstack.c
-index b4c47b51c4a63334cc2fb3ac72bd33e3aaa7517f..a081e201858143f28da9f103ea87d687718188d7 100644
+index b4c47b51c4a..a081e201858 100644
 --- a/arch/risc-v/src/common/riscv_createstack.c
 +++ b/arch/risc-v/src/common/riscv_createstack.c
 @@ -186,12 +186,40 @@ int up_create_stack(struct tcb_s *tcb, size_t stack_size, int ttype)
@@ -8302,7 +8302,7 @@ index b4c47b51c4a63334cc2fb3ac72bd33e3aaa7517f..a081e201858143f28da9f103ea87d687
  #ifdef CONFIG_DEBUG_FEATURES
        /* Was the allocation successful? */
 diff --git a/arch/risc-v/src/common/riscv_exception.c b/arch/risc-v/src/common/riscv_exception.c
-index cb17b84a77a6f2f010b47e3f2ba50a37f3ae60f3..c4cf39ee72c29fd99386c6249e20d420705a53cd 100644
+index cb17b84a77a..c4cf39ee72c 100644
 --- a/arch/risc-v/src/common/riscv_exception.c
 +++ b/arch/risc-v/src/common/riscv_exception.c
 @@ -96,11 +96,27 @@ int riscv_exception(int mcause, void *regs, void *args)
@@ -8334,7 +8334,7 @@ index cb17b84a77a6f2f010b47e3f2ba50a37f3ae60f3..c4cf39ee72c29fd99386c6249e20d420
    if ((atomic_read(&tcb->flags) & TCB_FLAG_TTYPE_MASK) !=
        TCB_FLAG_TTYPE_KERNEL)
 diff --git a/arch/risc-v/src/common/riscv_exception_common.S b/arch/risc-v/src/common/riscv_exception_common.S
-index 3751011540a1718f471cc4e5ecc19f5ec53c8de9..965847d56517a7e59b80e663285d3e47a9fca9e1 100644
+index 3751011540a..965847d5651 100644
 --- a/arch/risc-v/src/common/riscv_exception_common.S
 +++ b/arch/risc-v/src/common/riscv_exception_common.S
 @@ -39,6 +39,11 @@
@@ -8571,7 +8571,7 @@ index 3751011540a1718f471cc4e5ecc19f5ec53c8de9..965847d56517a7e59b80e663285d3e47
    tail return_from_exception
  
 diff --git a/arch/risc-v/src/common/riscv_fpu.S b/arch/risc-v/src/common/riscv_fpu.S
-index 11f24b90ca4f48bd23c2193b9cf0b964f3d5a2a3..4f21b846891bca2da4bb3f78266591b13637c69b 100644
+index 11f24b90ca4..4f21b846891 100644
 --- a/arch/risc-v/src/common/riscv_fpu.S
 +++ b/arch/risc-v/src/common/riscv_fpu.S
 @@ -105,6 +105,13 @@ riscv_savefpu:
@@ -8589,7 +8589,7 @@ index 11f24b90ca4f48bd23c2193b9cf0b964f3d5a2a3..4f21b846891bca2da4bb3f78266591b1
  #endif
    li         t1, ~MSTATUS_FS
 diff --git a/arch/risc-v/src/common/riscv_initialstate.c b/arch/risc-v/src/common/riscv_initialstate.c
-index 68ffb0dc4fc252acb8e5cd0a9400999f6c0e7482..aeaaf8ff2345f097ddd82dde289cd99b907831fd 100644
+index 68ffb0dc4fc..aeaaf8ff234 100644
 --- a/arch/risc-v/src/common/riscv_initialstate.c
 +++ b/arch/risc-v/src/common/riscv_initialstate.c
 @@ -143,13 +143,22 @@ void up_initial_state(struct tcb_s *tcb)
@@ -8621,7 +8621,7 @@ index 68ffb0dc4fc252acb8e5cd0a9400999f6c0e7482..aeaaf8ff2345f097ddd82dde289cd99b
    /* Save the task entry point */
  
 diff --git a/arch/risc-v/src/common/riscv_mmu.h b/arch/risc-v/src/common/riscv_mmu.h
-index 96ab0c038e33df2db97fbe7559cc446fdc5eddab..9bd692e68b67dd80d36f82adb4514c3f78fe5dfe 100644
+index 96ab0c038e3..9bd692e68b6 100644
 --- a/arch/risc-v/src/common/riscv_mmu.h
 +++ b/arch/risc-v/src/common/riscv_mmu.h
 @@ -21,6 +21,9 @@
@@ -8659,7 +8659,7 @@ index 96ab0c038e33df2db97fbe7559cc446fdc5eddab..9bd692e68b67dd80d36f82adb4514c3f
   * Name: mmu_enable
   *
 diff --git a/arch/risc-v/src/common/riscv_pgalloc.c b/arch/risc-v/src/common/riscv_pgalloc.c
-index 766012599cc7b082fe6d46c7643641a2daef2ec3..95bf4b35494ad85613f8207c2d7dd1d65879277b 100644
+index 766012599cc..95bf4b35494 100644
 --- a/arch/risc-v/src/common/riscv_pgalloc.c
 +++ b/arch/risc-v/src/common/riscv_pgalloc.c
 @@ -32,6 +32,7 @@
@@ -8946,7 +8946,7 @@ index 766012599cc7b082fe6d46c7643641a2daef2ec3..95bf4b35494ad85613f8207c2d7dd1d6
  
  #endif /* CONFIG_BUILD_KERNEL */
 diff --git a/arch/risc-v/src/common/riscv_releasestack.c b/arch/risc-v/src/common/riscv_releasestack.c
-index e21769f69a2b8b548fa7a29db4a5664720f1fe51..5fcd22bf9f064cff4364cabef1c2edef494d729d 100644
+index e21769f69a2..5fcd22bf9f0 100644
 --- a/arch/risc-v/src/common/riscv_releasestack.c
 +++ b/arch/risc-v/src/common/riscv_releasestack.c
 @@ -124,7 +124,11 @@ void up_release_stack(struct tcb_s *dtcb, int ttype)
@@ -8962,7 +8962,7 @@ index e21769f69a2b8b548fa7a29db4a5664720f1fe51..5fcd22bf9f064cff4364cabef1c2edef
  
    /* Mark the stack freed */
 diff --git a/arch/risc-v/src/common/riscv_schedulesigaction.c b/arch/risc-v/src/common/riscv_schedulesigaction.c
-index 586a43a0b368a959e45c697c1f25d19c86241270..4be936371ce96485fbdeefcac78a705bad47a3b1 100644
+index 586a43a0b36..4be936371ce 100644
 --- a/arch/risc-v/src/common/riscv_schedulesigaction.c
 +++ b/arch/risc-v/src/common/riscv_schedulesigaction.c
 @@ -104,6 +104,13 @@ void up_schedule_sigaction(struct tcb_s *tcb)
@@ -8980,7 +8980,7 @@ index 586a43a0b368a959e45c697c1f25d19c86241270..4be936371ce96485fbdeefcac78a705b
    /* Then set up to vector to the trampoline with interrupts
     * disabled.  We must already be in privileged thread mode to be
 diff --git a/arch/risc-v/src/common/riscv_swint.c b/arch/risc-v/src/common/riscv_swint.c
-index 60b2c84c7ade74e2cdd3701e845b3f07fde2690e..d77e746d54ace738a473b15f1638a794730e8e0b 100644
+index 60b2c84c7ad..d77e746d54a 100644
 --- a/arch/risc-v/src/common/riscv_swint.c
 +++ b/arch/risc-v/src/common/riscv_swint.c
 @@ -90,19 +90,12 @@ uintptr_t dispatch_syscall(unsigned int nbr, uintptr_t parm1,
@@ -9055,7 +9055,7 @@ index 60b2c84c7ade74e2cdd3701e845b3f07fde2690e..d77e746d54ace738a473b15f1638a794
  
                /* Now set the updated SP and user copy of "info" to A2 */
 diff --git a/arch/risc-v/src/common/supervisor/riscv_syscall.S b/arch/risc-v/src/common/supervisor/riscv_syscall.S
-index 1d7da7ee31db84faba6801aca5bb051f171f47b9..f2f2fb2ada350ed0e4699553910451864d3f8251 100644
+index 1d7da7ee31d..f2f2fb2ada3 100644
 --- a/arch/risc-v/src/common/supervisor/riscv_syscall.S
 +++ b/arch/risc-v/src/common/supervisor/riscv_syscall.S
 @@ -31,6 +31,10 @@
@@ -9085,7 +9085,7 @@ index 1d7da7ee31db84faba6801aca5bb051f171f47b9..f2f2fb2ada350ed0e469955391045186
  
  #if CONFIG_ARCH_INTERRUPTSTACK > 15
 diff --git a/arch/risc-v/src/esp32c6/esp_coex_adapter.c b/arch/risc-v/src/esp32c6/esp_coex_adapter.c
-index 88fed2ea4488d5d3535320ad88a3a3f970c9a1b7..c599e084da331d61cf9b7c05d155c7d78ea38b27 100644
+index 88fed2ea448..c599e084da3 100644
 --- a/arch/risc-v/src/esp32c6/esp_coex_adapter.c
 +++ b/arch/risc-v/src/esp32c6/esp_coex_adapter.c
 @@ -31,6 +31,7 @@
@@ -9286,7 +9286,7 @@ index 88fed2ea4488d5d3535320ad88a3a3f970c9a1b7..c599e084da331d61cf9b7c05d155c7d7
 +#endif
  }
 diff --git a/arch/risc-v/src/esp32c6/esp_wifi_adapter.c b/arch/risc-v/src/esp32c6/esp_wifi_adapter.c
-index b926318a2c31b96b745d1acef4b8cb5b660f0a08..87365329b069d9b1e7f74cc464f0a31b495c334c 100644
+index b926318a2c3..87365329b06 100644
 --- a/arch/risc-v/src/esp32c6/esp_wifi_adapter.c
 +++ b/arch/risc-v/src/esp32c6/esp_wifi_adapter.c
 @@ -41,6 +41,7 @@
@@ -10662,7 +10662,7 @@ index b926318a2c31b96b745d1acef4b8cb5b660f0a08..87365329b069d9b1e7f74cc464f0a31b
    return OK;
 diff --git a/arch/risc-v/src/esp32s31/.gitignore b/arch/risc-v/src/esp32s31/.gitignore
 new file mode 100644
-index 0000000000000000000000000000000000000000..d40b86f3a0dce4de6d0e52f05f030711237a8f37
+index 00000000000..d40b86f3a0d
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/.gitignore
 @@ -0,0 +1,4 @@
@@ -10672,7 +10672,7 @@ index 0000000000000000000000000000000000000000..d40b86f3a0dce4de6d0e52f05f030711
 +/esp-hal-3rdparty
 diff --git a/arch/risc-v/src/esp32s31/CMakeLists.txt b/arch/risc-v/src/esp32s31/CMakeLists.txt
 new file mode 100644
-index 0000000000000000000000000000000000000000..b2c79d0f5d323af738cbf4430096a105dfc2a6d2
+index 00000000000..b2c79d0f5d3
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/CMakeLists.txt
 @@ -0,0 +1,292 @@
@@ -10970,7 +10970,7 @@ index 0000000000000000000000000000000000000000..b2c79d0f5d323af738cbf4430096a105
 +endif()
 diff --git a/arch/risc-v/src/esp32s31/Kconfig b/arch/risc-v/src/esp32s31/Kconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..da5a1f4e813cb1f426baa4925e1ce5f3ed523835
+index 00000000000..da5a1f4e813
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/Kconfig
 @@ -0,0 +1,595 @@
@@ -11571,7 +11571,7 @@ index 0000000000000000000000000000000000000000..da5a1f4e813cb1f426baa4925e1ce5f3
 +endif # ARCH_CHIP_ESP32S31
 diff --git a/arch/risc-v/src/esp32s31/Make.defs b/arch/risc-v/src/esp32s31/Make.defs
 new file mode 100644
-index 0000000000000000000000000000000000000000..85e579e0b14ba6ebd9d030e41220ffe322e425ed
+index 00000000000..85e579e0b14
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/Make.defs
 @@ -0,0 +1,201 @@
@@ -11778,7 +11778,7 @@ index 0000000000000000000000000000000000000000..85e579e0b14ba6ebd9d030e41220ffe3
 +endif
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot.S b/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot.S
 new file mode 100644
-index 0000000000000000000000000000000000000000..af77f1b548d0cbb3f77cf9b283940dc3a7333471
+index 00000000000..af77f1b548d
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot.S
 @@ -0,0 +1,195 @@
@@ -11979,7 +11979,7 @@ index 0000000000000000000000000000000000000000..af77f1b548d0cbb3f77cf9b283940dc3
 +        .-esp32s31_cpu1_supervisor_trap
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot.c b/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..5f79f9c15381cc08f10547621b0fed830269099d
+index 00000000000..5f79f9c1538
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot.c
 @@ -0,0 +1,110 @@
@@ -12095,7 +12095,7 @@ index 0000000000000000000000000000000000000000..5f79f9c15381cc08f10547621b0fed83
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot.h b/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..90730606e4dfd9f8b6adfa79c4832e51d954f87d
+index 00000000000..90730606e4d
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot.h
 @@ -0,0 +1,50 @@
@@ -12151,7 +12151,7 @@ index 0000000000000000000000000000000000000000..90730606e4dfd9f8b6adfa79c4832e51
 +#endif /* __ARCH_RISCV_SRC_ESP32S31_ESP32S31_CPU1_BOOT_H */
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot_asm.S b/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot_asm.S
 new file mode 100644
-index 0000000000000000000000000000000000000000..079bb0e4845aee70a47729e60809180e0543790d
+index 00000000000..079bb0e4845
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_cpu1_boot_asm.S
 @@ -0,0 +1,12 @@
@@ -12169,7 +12169,7 @@ index 0000000000000000000000000000000000000000..079bb0e4845aee70a47729e60809180e
 +#include "esp32s31_cpu1_boot.S"
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_espressif.cmake b/arch/risc-v/src/esp32s31/esp32s31_espressif.cmake
 new file mode 100644
-index 0000000000000000000000000000000000000000..24e87a2b8c6b4f52f24bce73346e2d83c736dce4
+index 00000000000..24e87a2b8c6
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_espressif.cmake
 @@ -0,0 +1,297 @@
@@ -12472,7 +12472,7 @@ index 0000000000000000000000000000000000000000..24e87a2b8c6b4f52f24bce73346e2d83
 +endif()
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_flash_guard.c b/arch/risc-v/src/esp32s31/esp32s31_flash_guard.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..747450bb31eb4b1531e15e147a46b84ad07d863c
+index 00000000000..747450bb31e
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_flash_guard.c
 @@ -0,0 +1,49 @@
@@ -12527,7 +12527,7 @@ index 0000000000000000000000000000000000000000..747450bb31eb4b1531e15e147a46b84a
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_intctx.c b/arch/risc-v/src/esp32s31/esp32s31_intctx.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..0e17759d759f9a406cf7077fd62cefa0f9887224
+index 00000000000..0e17759d759
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_intctx.c
 @@ -0,0 +1,55 @@
@@ -12588,7 +12588,7 @@ index 0000000000000000000000000000000000000000..0e17759d759f9a406cf7077fd62cefa0
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_mm_init.c b/arch/risc-v/src/esp32s31/esp32s31_mm_init.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..d17ad4237baad3041225bb248f7aceca80e8bf07
+index 00000000000..d17ad4237ba
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_mm_init.c
 @@ -0,0 +1,544 @@
@@ -13138,7 +13138,7 @@ index 0000000000000000000000000000000000000000..d17ad4237baad3041225bb248f7aceca
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_mm_init.h b/arch/risc-v/src/esp32s31/esp32s31_mm_init.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..2e26e608faa10c7bbfd9219c9544a8457d705ff2
+index 00000000000..2e26e608faa
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_mm_init.h
 @@ -0,0 +1,22 @@
@@ -13166,7 +13166,7 @@ index 0000000000000000000000000000000000000000..2e26e608faa10c7bbfd9219c9544a845
 +#endif /* __ARCH_RISCV_SRC_ESP32S31_ESP32S31_MM_INIT_H */
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_monitor.h b/arch/risc-v/src/esp32s31/esp32s31_monitor.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..83c4e41a041909bec4030a0eb36eb0ff26792d28
+index 00000000000..83c4e41a041
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_monitor.h
 @@ -0,0 +1,24 @@
@@ -13196,7 +13196,7 @@ index 0000000000000000000000000000000000000000..83c4e41a041909bec4030a0eb36eb0ff
 +#endif /* __ARCH_RISCV_SRC_ESP32S31_ESP32S31_MONITOR_H */
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_monstat.c b/arch/risc-v/src/esp32s31/esp32s31_monstat.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..cabb9ce1b15b8b8dd3f5d15e98a4629bf9b72148
+index 00000000000..cabb9ce1b15
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_monstat.c
 @@ -0,0 +1,527 @@
@@ -13729,7 +13729,7 @@ index 0000000000000000000000000000000000000000..cabb9ce1b15b8b8dd3f5d15e98a4629b
 +#endif /* CONFIG_ARCH_USE_S_MODE */
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_monstat.h b/arch/risc-v/src/esp32s31/esp32s31_monstat.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..c737e3f635e5222ab4e49f3a5fe24e4023677da5
+index 00000000000..c737e3f635e
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_monstat.h
 @@ -0,0 +1,41 @@
@@ -13776,7 +13776,7 @@ index 0000000000000000000000000000000000000000..c737e3f635e5222ab4e49f3a5fe24e40
 +#endif /* __ARCH_RISCV_SRC_ESP32S31_ESP32S31_MONSTAT_H */
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_os_adapter.c b/arch/risc-v/src/esp32s31/esp32s31_os_adapter.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..4bae308acf2de739eea8a3cda35ce1d0045f26a2
+index 00000000000..4bae308acf2
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_os_adapter.c
 @@ -0,0 +1,107 @@
@@ -13889,7 +13889,7 @@ index 0000000000000000000000000000000000000000..4bae308acf2de739eea8a3cda35ce1d0
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_pgalloc.c b/arch/risc-v/src/esp32s31/esp32s31_pgalloc.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..b6313b9822271d6d7c643ccaa310629d544102b2
+index 00000000000..b6313b98222
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_pgalloc.c
 @@ -0,0 +1,37 @@
@@ -13932,7 +13932,7 @@ index 0000000000000000000000000000000000000000..b6313b9822271d6d7c643ccaa310629d
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_phy_timer.c b/arch/risc-v/src/esp32s31/esp32s31_phy_timer.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..c8c7cf47fdf5e034c1ea61d03e956e17d929fcd5
+index 00000000000..c8c7cf47fdf
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_phy_timer.c
 @@ -0,0 +1,101 @@
@@ -14039,7 +14039,7 @@ index 0000000000000000000000000000000000000000..c8c7cf47fdf5e034c1ea61d03e956e17
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_pm_stubs.c b/arch/risc-v/src/esp32s31/esp32s31_pm_stubs.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..228dc2465e799affdb20b3b35c8b13f1312f889e
+index 00000000000..228dc2465e7
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_pm_stubs.c
 @@ -0,0 +1,20 @@
@@ -14065,7 +14065,7 @@ index 0000000000000000000000000000000000000000..228dc2465e799affdb20b3b35c8b13f1
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_smode_libc.c b/arch/risc-v/src/esp32s31/esp32s31_smode_libc.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..f79697d4389e6d1293766194cf53e217f8f50d28
+index 00000000000..f79697d4389
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_smode_libc.c
 @@ -0,0 +1,319 @@
@@ -14390,7 +14390,7 @@ index 0000000000000000000000000000000000000000..f79697d4389e6d1293766194cf53e217
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_smp.c b/arch/risc-v/src/esp32s31/esp32s31_smp.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..11c8234a0abc6d95e0fc43b257b82407f2d1b798
+index 00000000000..11c8234a0ab
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_smp.c
 @@ -0,0 +1,583 @@
@@ -14979,7 +14979,7 @@ index 0000000000000000000000000000000000000000..11c8234a0abc6d95e0fc43b257b82407
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_supervisor.S b/arch/risc-v/src/esp32s31/esp32s31_supervisor.S
 new file mode 100644
-index 0000000000000000000000000000000000000000..ba5e88dcc27aa9d6b78680d6b16ba6609a06e54e
+index 00000000000..ba5e88dcc27
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_supervisor.S
 @@ -0,0 +1,1119 @@
@@ -16104,7 +16104,7 @@ index 0000000000000000000000000000000000000000..ba5e88dcc27aa9d6b78680d6b16ba660
 +  .section .note.GNU-stack, "", @progbits
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_tlb.c b/arch/risc-v/src/esp32s31/esp32s31_tlb.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..a178df1e076cae3f81430775db4fb95f323bb797
+index 00000000000..a178df1e076
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_tlb.c
 @@ -0,0 +1,352 @@
@@ -16462,7 +16462,7 @@ index 0000000000000000000000000000000000000000..a178df1e076cae3f81430775db4fb95f
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_tlb.h b/arch/risc-v/src/esp32s31/esp32s31_tlb.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..edfd454baea9adb7e384be57c1d7545e89396f2b
+index 00000000000..edfd454baea
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_tlb.h
 @@ -0,0 +1,50 @@
@@ -16518,7 +16518,7 @@ index 0000000000000000000000000000000000000000..edfd454baea9adb7e384be57c1d7545e
 +#endif /* __ARCH_RISCV_SRC_ESP32S31_ESP32S31_TLB_H */
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_wifi_event.c b/arch/risc-v/src/esp32s31/esp32s31_wifi_event.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..d4d2e0c538d3037e604dbd3930cfcb2b127162da
+index 00000000000..d4d2e0c538d
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_wifi_event.c
 @@ -0,0 +1,332 @@
@@ -16856,7 +16856,7 @@ index 0000000000000000000000000000000000000000..d4d2e0c538d3037e604dbd3930cfcb2b
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_wifi_event.h b/arch/risc-v/src/esp32s31/esp32s31_wifi_event.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..45de2fddcfee4ca9e378fb68f63b2bd4e3926e3a
+index 00000000000..45de2fddcfe
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_wifi_event.h
 @@ -0,0 +1,34 @@
@@ -16896,7 +16896,7 @@ index 0000000000000000000000000000000000000000..45de2fddcfee4ca9e378fb68f63b2bd4
 +#endif /* __ARCH_RISCV_SRC_ESP32S31_ESP32S31_WIFI_EVENT_H */
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_wifi_os_compat.c b/arch/risc-v/src/esp32s31/esp32s31_wifi_os_compat.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..6d8c8aea2ed88f44189053e9aae930e4d39d09fd
+index 00000000000..6d8c8aea2ed
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_wifi_os_compat.c
 @@ -0,0 +1,142 @@
@@ -17044,7 +17044,7 @@ index 0000000000000000000000000000000000000000..6d8c8aea2ed88f44189053e9aae930e4
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_wifi_task.c b/arch/risc-v/src/esp32s31/esp32s31_wifi_task.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..4b7eefcb92c1f61c6cdf8a557ce0c191acf90d23
+index 00000000000..4b7eefcb92c
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_wifi_task.c
 @@ -0,0 +1,158 @@
@@ -17208,7 +17208,7 @@ index 0000000000000000000000000000000000000000..4b7eefcb92c1f61c6cdf8a557ce0c191
 +}
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_wifi_task.h b/arch/risc-v/src/esp32s31/esp32s31_wifi_task.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..afcb024082af27ef34ee303dc7ccf42a0d28dd28
+index 00000000000..afcb024082a
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_wifi_task.h
 @@ -0,0 +1,12 @@
@@ -17226,7 +17226,7 @@ index 0000000000000000000000000000000000000000..afcb024082af27ef34ee303dc7ccf42a
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_wireless.cmake b/arch/risc-v/src/esp32s31/esp32s31_wireless.cmake
 new file mode 100644
-index 0000000000000000000000000000000000000000..b8789d06a642d10117c128d325f4db151d522605
+index 00000000000..b8789d06a64
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_wireless.cmake
 @@ -0,0 +1,309 @@
@@ -17541,7 +17541,7 @@ index 0000000000000000000000000000000000000000..b8789d06a642d10117c128d325f4db15
 +    -include${NUTTX_CHIP_ABS_DIR}/hal_backports/include/esp32s31_wifi_os_compat.h)
 diff --git a/arch/risc-v/src/esp32s31/esp32s31_wireless.mk b/arch/risc-v/src/esp32s31/esp32s31_wireless.mk
 new file mode 100644
-index 0000000000000000000000000000000000000000..2151521ed25a9fd0a1ce0bb1c2cad4b27d0dfdce
+index 00000000000..2151521ed25
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp32s31_wireless.mk
 @@ -0,0 +1,239 @@
@@ -17786,7 +17786,7 @@ index 0000000000000000000000000000000000000000..2151521ed25a9fd0a1ce0bb1c2cad4b2
 +EXTRA_LIBS += -lphy -lcoexist -lmesh -lespnow -lcore -lnet80211 -lpp
 diff --git a/arch/risc-v/src/esp32s31/esp_chip_rev.c b/arch/risc-v/src/esp32s31/esp_chip_rev.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..c94d7bcc8e29c07574a2cb11a453cb75c08a0472
+index 00000000000..c94d7bcc8e2
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/esp_chip_rev.c
 @@ -0,0 +1,18 @@
@@ -17810,7 +17810,7 @@ index 0000000000000000000000000000000000000000..c94d7bcc8e29c07574a2cb11a453cb75
 +}
 diff --git a/arch/risc-v/src/esp32s31/hal_backports/bootloader_random_esp32s31.c b/arch/risc-v/src/esp32s31/hal_backports/bootloader_random_esp32s31.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..50602758b7e806cf3501d74099f7b63e1ed4885f
+index 00000000000..50602758b7e
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_backports/bootloader_random_esp32s31.c
 @@ -0,0 +1,46 @@
@@ -17862,7 +17862,7 @@ index 0000000000000000000000000000000000000000..50602758b7e806cf3501d74099f7b63e
 +}
 diff --git a/arch/risc-v/src/esp32s31/hal_backports/esp_gpio_reserve.c b/arch/risc-v/src/esp32s31/hal_backports/esp_gpio_reserve.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..7761afa8cfd8c65e27feea3f79a88159932553d5
+index 00000000000..7761afa8cfd
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_backports/esp_gpio_reserve.c
 @@ -0,0 +1,60 @@
@@ -17928,7 +17928,7 @@ index 0000000000000000000000000000000000000000..7761afa8cfd8c65e27feea3f79a88159
 +}
 diff --git a/arch/risc-v/src/esp32s31/hal_backports/esp_sleep_pd_config_stub.c b/arch/risc-v/src/esp32s31/hal_backports/esp_sleep_pd_config_stub.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..565b5df58bf20eb37eaa355cc5520f93aa0f1cef
+index 00000000000..565b5df58bf
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_backports/esp_sleep_pd_config_stub.c
 @@ -0,0 +1,24 @@
@@ -17958,7 +17958,7 @@ index 0000000000000000000000000000000000000000..565b5df58bf20eb37eaa355cc5520f93
 +}
 diff --git a/arch/risc-v/src/esp32s31/hal_backports/include/esp32s31_cache_utils_compat.h b/arch/risc-v/src/esp32s31/hal_backports/include/esp32s31_cache_utils_compat.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..229e8efa2d5d27ab4a88ec2a3c78d3bdeb0c6412
+index 00000000000..229e8efa2d5
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_backports/include/esp32s31_cache_utils_compat.h
 @@ -0,0 +1,22 @@
@@ -17986,7 +17986,7 @@ index 0000000000000000000000000000000000000000..229e8efa2d5d27ab4a88ec2a3c78d3bd
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/hal_backports/include/esp32s31_phy_timer.h b/arch/risc-v/src/esp32s31/hal_backports/include/esp32s31_phy_timer.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..7c78c998559017e045463827f3b3f92f44994d79
+index 00000000000..7c78c998559
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_backports/include/esp32s31_phy_timer.h
 @@ -0,0 +1,20 @@
@@ -18012,7 +18012,7 @@ index 0000000000000000000000000000000000000000..7c78c998559017e045463827f3b3f92f
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/hal_backports/include/esp32s31_wifi_os_compat.h b/arch/risc-v/src/esp32s31/hal_backports/include/esp32s31_wifi_os_compat.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..ff8ba308faabb819d604f50b1c5ce22d77b682dd
+index 00000000000..ff8ba308faa
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_backports/include/esp32s31_wifi_os_compat.h
 @@ -0,0 +1,64 @@
@@ -18082,7 +18082,7 @@ index 0000000000000000000000000000000000000000..ff8ba308faabb819d604f50b1c5ce22d
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/hal_backports/include/hal/rmt_ll_compat.h b/arch/risc-v/src/esp32s31/hal_backports/include/hal/rmt_ll_compat.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..86702dd2608499e5e1f7b7ee5a2033903ea4de7d
+index 00000000000..86702dd2608
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_backports/include/hal/rmt_ll_compat.h
 @@ -0,0 +1,121 @@
@@ -18209,7 +18209,7 @@ index 0000000000000000000000000000000000000000..86702dd2608499e5e1f7b7ee5a203390
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/hal_backports/include/soc/regi2c_dig_reg.h b/arch/risc-v/src/esp32s31/hal_backports/include/soc/regi2c_dig_reg.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..9edbec550c9ed9056f69abad36065971a67d779f
+index 00000000000..9edbec550c9
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_backports/include/soc/regi2c_dig_reg.h
 @@ -0,0 +1,25 @@
@@ -18240,7 +18240,7 @@ index 0000000000000000000000000000000000000000..9edbec550c9ed9056f69abad36065971
 +#define I2C_DIG_REG_SCK_DCAP_LSB            0
 diff --git a/arch/risc-v/src/esp32s31/hal_backports/rtc_clk_init.c b/arch/risc-v/src/esp32s31/hal_backports/rtc_clk_init.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..82bfd2c1a2e97edc450ed7066aefffd71f14ce33
+index 00000000000..82bfd2c1a2e
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_backports/rtc_clk_init.c
 @@ -0,0 +1,85 @@
@@ -18331,7 +18331,7 @@ index 0000000000000000000000000000000000000000..82bfd2c1a2e97edc450ed7066aefffd7
 +}
 diff --git a/arch/risc-v/src/esp32s31/hal_esp32s31.cmake b/arch/risc-v/src/esp32s31/hal_esp32s31.cmake
 new file mode 100644
-index 0000000000000000000000000000000000000000..9df460ee92040ccb5903fa4a21ea4ae856ed642f
+index 00000000000..9df460ee920
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_esp32s31.cmake
 @@ -0,0 +1,630 @@
@@ -18967,7 +18967,7 @@ index 0000000000000000000000000000000000000000..9df460ee92040ccb5903fa4a21ea4ae8
 +endfunction()
 diff --git a/arch/risc-v/src/esp32s31/hal_esp32s31.mk b/arch/risc-v/src/esp32s31/hal_esp32s31.mk
 new file mode 100644
-index 0000000000000000000000000000000000000000..e2773d5128d5c524a93cd83d8f140dc4bec416cf
+index 00000000000..e2773d5128d
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/hal_esp32s31.mk
 @@ -0,0 +1,474 @@
@@ -19447,7 +19447,7 @@ index 0000000000000000000000000000000000000000..e2773d5128d5c524a93cd83d8f140dc4
 +endif
 diff --git a/arch/risc-v/src/esp32s31/include/esp32s31/rom/ets_sys.h b/arch/risc-v/src/esp32s31/include/esp32s31/rom/ets_sys.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..a71bae2646e2a91d64b18f409f4ea31f2f3a499c
+index 00000000000..a71bae2646e
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/include/esp32s31/rom/ets_sys.h
 @@ -0,0 +1,31 @@
@@ -19484,7 +19484,7 @@ index 0000000000000000000000000000000000000000..a71bae2646e2a91d64b18f409f4ea31f
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/include/esp_private/esp_wifi_private.h b/arch/risc-v/src/esp32s31/include/esp_private/esp_wifi_private.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..02b11a1b980a9e86328c31381fcf58c154f7ff0f
+index 00000000000..02b11a1b980
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/include/esp_private/esp_wifi_private.h
 @@ -0,0 +1,28 @@
@@ -19518,7 +19518,7 @@ index 0000000000000000000000000000000000000000..02b11a1b980a9e86328c31381fcf58c1
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/include/esp_wifi_default.h b/arch/risc-v/src/esp32s31/include/esp_wifi_default.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..acf2a81ddf1aec1dc89fda80d413fb71fd062b63
+index 00000000000..acf2a81ddf1
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/include/esp_wifi_default.h
 @@ -0,0 +1,11 @@
@@ -19535,7 +19535,7 @@ index 0000000000000000000000000000000000000000..acf2a81ddf1aec1dc89fda80d413fb71
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/include/irq.h b/arch/risc-v/src/esp32s31/include/irq.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..9b6a280b0ef805e3dbc2979c200e7b359cd28b64
+index 00000000000..9b6a280b0ef
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/include/irq.h
 @@ -0,0 +1,69 @@
@@ -19610,7 +19610,7 @@ index 0000000000000000000000000000000000000000..9b6a280b0ef805e3dbc2979c200e7b35
 +#endif /* __ARCH_RISCV_SRC_ESP32S31_INCLUDE_IRQ_H */
 diff --git a/arch/risc-v/src/esp32s31/include/platform/os.h b/arch/risc-v/src/esp32s31/include/platform/os.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..265b4115f4302f9ee04f6c37fff0489c9de4fccb
+index 00000000000..265b4115f43
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/include/platform/os.h
 @@ -0,0 +1,22 @@
@@ -19638,7 +19638,7 @@ index 0000000000000000000000000000000000000000..265b4115f4302f9ee04f6c37fff0489c
 +#endif
 diff --git a/arch/risc-v/src/esp32s31/include/riscv/csr.h b/arch/risc-v/src/esp32s31/include/riscv/csr.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..dc23f3dada7eb7fb60e65c0284793ce6e746f8ce
+index 00000000000..dc23f3dada7
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/include/riscv/csr.h
 @@ -0,0 +1,146 @@
@@ -19790,7 +19790,7 @@ index 0000000000000000000000000000000000000000..dc23f3dada7eb7fb60e65c0284793ce6
 +#endif /* __ARCH_RISCV_SRC_ESP32S31_INCLUDE_RISCV_CSR_H */
 diff --git a/arch/risc-v/src/esp32s31/include/sdkconfig.h b/arch/risc-v/src/esp32s31/include/sdkconfig.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..9abeee6b2b1836027d8436b268a03c732768c3f9
+index 00000000000..9abeee6b2b1
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/include/sdkconfig.h
 @@ -0,0 +1,1177 @@
@@ -20973,7 +20973,7 @@ index 0000000000000000000000000000000000000000..9abeee6b2b1836027d8436b268a03c73
 +#define CONFIG_TIMER_TASK_STACK_SIZE CONFIG_ESP_TIMER_TASK_STACK_SIZE
 diff --git a/arch/risc-v/src/esp32s31/riscv_extctx.S b/arch/risc-v/src/esp32s31/riscv_extctx.S
 new file mode 100644
-index 0000000000000000000000000000000000000000..1067c757e512a9ca8238d0b4376f7f0b016444ce
+index 00000000000..1067c757e51
 --- /dev/null
 +++ b/arch/risc-v/src/esp32s31/riscv_extctx.S
 @@ -0,0 +1,99 @@
@@ -21077,7 +21077,7 @@ index 0000000000000000000000000000000000000000..1067c757e512a9ca8238d0b4376f7f0b
 +#endif
 +.endm
 diff --git a/audio/Kconfig b/audio/Kconfig
-index 512d91a566bc44909ae27e34c6a2b1157d02c0e8..83fdb216420e57eebb4f581a23b8795b98cbcc1d 100644
+index 512d91a566b..83fdb216420 100644
 --- a/audio/Kconfig
 +++ b/audio/Kconfig
 @@ -11,6 +11,30 @@ config AUDIO
@@ -21112,7 +21112,7 @@ index 512d91a566bc44909ae27e34c6a2b1157d02c0e8..83fdb216420e57eebb4f581a23b8795b
  	bool "Support audio composition"
  	default n
 diff --git a/audio/audio.c b/audio/audio.c
-index 35e1344a92e8da4a000326b5db499817e237d515..ec9ed588d8d002a9640fdc416e7b5789da11d108 100644
+index 35e1344a92e..ec9ed588d8d 100644
 --- a/audio/audio.c
 +++ b/audio/audio.c
 @@ -44,8 +44,16 @@
@@ -22219,7 +22219,7 @@ index 35e1344a92e8da4a000326b5db499817e237d515..ec9ed588d8d002a9640fdc416e7b5789
    kmm_free(upper);
    dev->priv = NULL;
 diff --git a/binfmt/Kconfig b/binfmt/Kconfig
-index 53d14140812fd9b7668321c5fe109f2d0c758259..cadc98a03a6f142f9dea3a52c8e0c52c62372caf 100644
+index 53d14140812..cadc98a03a6 100644
 --- a/binfmt/Kconfig
 +++ b/binfmt/Kconfig
 @@ -101,6 +101,23 @@ config ELF_STACKSIZE
@@ -22247,7 +22247,7 @@ index 53d14140812fd9b7668321c5fe109f2d0c758259..cadc98a03a6f142f9dea3a52c8e0c52c
  endif
  
 diff --git a/binfmt/binfmt_execmodule.c b/binfmt/binfmt_execmodule.c
-index b94fedb0ed2ff9c6cc3f8c8be866a51b7ff72d83..de79accafd6e15cbfc77c0247d249fd007de4d7a 100644
+index b94fedb0ed2..de79accafd6 100644
 --- a/binfmt/binfmt_execmodule.c
 +++ b/binfmt/binfmt_execmodule.c
 @@ -307,11 +307,6 @@ int exec_module(FAR struct binary_s *binp,
@@ -22272,7 +22272,7 @@ index b94fedb0ed2ff9c6cc3f8c8be866a51b7ff72d83..de79accafd6e15cbfc77c0247d249fd0
  
  #ifdef CONFIG_BINFMT_LOADABLE
 diff --git a/binfmt/elf.c b/binfmt/elf.c
-index d59129f0e2740d9d3cd77e8f982be359842123b8..d982369bed861db911fbd03996884e470a1166da 100644
+index d59129f0e27..d982369bed8 100644
 --- a/binfmt/elf.c
 +++ b/binfmt/elf.c
 @@ -173,8 +173,21 @@ static int elf_loadbinary(FAR struct binary_s *binp,
@@ -22309,7 +22309,7 @@ index d59129f0e2740d9d3cd77e8f982be359842123b8..d982369bed861db911fbd03996884e47
  
 diff --git a/binfmt/elf_verify_app.c b/binfmt/elf_verify_app.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..9b12984719140a8f434f18adbd1ceca6884468f0
+index 00000000000..9b129847191
 --- /dev/null
 +++ b/binfmt/elf_verify_app.c
 @@ -0,0 +1,382 @@
@@ -22696,7 +22696,7 @@ index 0000000000000000000000000000000000000000..9b12984719140a8f434f18adbd1ceca6
 +
 +#endif
 diff --git a/boards/Kconfig b/boards/Kconfig
-index c5591528c36c5dfdc8a607f3b70d601539dbda99..9ce9313e7885479495969137f17fd67a1a5c1153 100644
+index c5591528c36..9ce9313e788 100644
 --- a/boards/Kconfig
 +++ b/boards/Kconfig
 @@ -541,6 +541,15 @@ config ARCH_BOARD_ESP32H2_DEVKIT
@@ -22735,7 +22735,7 @@ index c5591528c36c5dfdc8a607f3b70d601539dbda99..9ce9313e7885479495969137f17fd67a
  endif
 diff --git a/boards/risc-v/esp32s31/common/Makefile b/boards/risc-v/esp32s31/common/Makefile
 new file mode 100644
-index 0000000000000000000000000000000000000000..030b17555622da57940c0001afbc047216d314b2
+index 00000000000..030b1755562
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/common/Makefile
 @@ -0,0 +1,17 @@
@@ -22758,14 +22758,14 @@ index 0000000000000000000000000000000000000000..030b17555622da57940c0001afbc0472
 +include $(TOPDIR)/boards/Board.mk
 diff --git a/boards/risc-v/esp32s31/common/scripts/.gitignore b/boards/risc-v/esp32s31/common/scripts/.gitignore
 new file mode 100644
-index 0000000000000000000000000000000000000000..0fa3d8108a58d96f2a755e34aa51f87dae37228f
+index 00000000000..0fa3d8108a5
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/common/scripts/.gitignore
 @@ -0,0 +1 @@
 +/*.ld.tmp
 diff --git a/boards/risc-v/esp32s31/common/scripts/common.ld b/boards/risc-v/esp32s31/common/scripts/common.ld
 new file mode 100644
-index 0000000000000000000000000000000000000000..c9ed531007071caed41fdbfcfd3f33e4c7568be4
+index 00000000000..c9ed5310070
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/common/scripts/common.ld
 @@ -0,0 +1,45 @@
@@ -22816,7 +22816,7 @@ index 0000000000000000000000000000000000000000..c9ed531007071caed41fdbfcfd3f33e4
 +#endif /* CONFIG_ESPRESSIF_SOC_RTC_MEM_SUPPORTED */
 diff --git a/boards/risc-v/esp32s31/common/scripts/esp32s31_aliases.ld b/boards/risc-v/esp32s31/common/scripts/esp32s31_aliases.ld
 new file mode 100644
-index 0000000000000000000000000000000000000000..4fdd3a65739b1505d166fbacdf6c5882023ddf44
+index 00000000000..4fdd3a65739
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/common/scripts/esp32s31_aliases.ld
 @@ -0,0 +1,9 @@
@@ -22831,7 +22831,7 @@ index 0000000000000000000000000000000000000000..4fdd3a65739b1505d166fbacdf6c5882
 +cache_set_idrom_mmu_size = Cache_Set_IDROM_MMU_Size;
 diff --git a/boards/risc-v/esp32s31/common/scripts/esp32s31_flat_memory.ld b/boards/risc-v/esp32s31/common/scripts/esp32s31_flat_memory.ld
 new file mode 100644
-index 0000000000000000000000000000000000000000..ce0021e84a85a60599e890f299c8d80160eac3d7
+index 00000000000..ce0021e84a8
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/common/scripts/esp32s31_flat_memory.ld
 @@ -0,0 +1,44 @@
@@ -22881,7 +22881,7 @@ index 0000000000000000000000000000000000000000..ce0021e84a85a60599e890f299c8d801
 +       ".flash_rodata_dummy must begin at the DROM origin")
 diff --git a/boards/risc-v/esp32s31/common/scripts/esp32s31_sections.ld b/boards/risc-v/esp32s31/common/scripts/esp32s31_sections.ld
 new file mode 100644
-index 0000000000000000000000000000000000000000..ecc115dbb4b11f3985d81c8d4758506d6a4dd020
+index 00000000000..ecc115dbb4b
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/common/scripts/esp32s31_sections.ld
 @@ -0,0 +1,905 @@
@@ -23792,7 +23792,7 @@ index 0000000000000000000000000000000000000000..ecc115dbb4b11f3985d81c8d4758506d
 +}
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/CMakeLists.txt b/boards/risc-v/esp32s31/esp32s31-core-function-board/CMakeLists.txt
 new file mode 100644
-index 0000000000000000000000000000000000000000..ec61c1857cf5abd9bae0630fa5c53cd4d472926e
+index 00000000000..ec61c1857cf
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/CMakeLists.txt
 @@ -0,0 +1,3 @@
@@ -23801,10 +23801,10 @@ index 0000000000000000000000000000000000000000..ec61c1857cf5abd9bae0630fa5c53cd4
 +add_subdirectory(src)
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/Kconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/Kconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..65ed044f987b30d2eab6ce402c99f75a94961b82
+index 00000000000..35aa8d28e4a
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/Kconfig
-@@ -0,0 +1,765 @@
+@@ -0,0 +1,771 @@
 +#
 +# For a description of the syntax of this configuration file,
 +# see the file kconfig-language.txt in the NuttX tools repository.
@@ -24091,6 +24091,12 @@ index 0000000000000000000000000000000000000000..65ed044f987b30d2eab6ce402c99f75a
 +		leave the shared frame unchanged until the update returns.
 +		This option alone does not qualify a complete graphics product.
 +
++config ESP32S31_VISION
++	bool "Korvo original dual-core vision with Factory lifecycle"
++	depends on BUILD_KERNEL && ESP32S31_SMP && ESP32S31_PIE
++	select SCHED_KTHREAD_GC
++	default n
++
 +config ESP32S31_KORVO_RGB565
 +	bool "Korvo-1 SUB3 RGB565 framebuffer"
 +	depends on (BUILD_FLAT && !SMP && ESPRESSIF_SPIRAM_USER_HEAP) || ESP32S31_KORVO_SMP_LCD_QUALIFICATION
@@ -24193,7 +24199,7 @@ index 0000000000000000000000000000000000000000..65ed044f987b30d2eab6ce402c99f75a
 +	depends on SYSTEM_ACTIVITY_SERVICE && SYSTEM_PACKAGE_SERVICE
 +	depends on SYSTEM_WINDOW_SERVICE && ANDROID_SERVICEMANAGER
 +	depends on ESP32S31_FLASH_APPFS && ETC_ROMFS && FS_TMPFS && FS_SHMFS
-+	depends on XMSDEMO_LAUNCHER && XMSDEMO_LVGLDEMO
++	depends on (XMSDEMO_LAUNCHER && XMSDEMO_LVGLDEMO) || (ESP32S31_VISION && XMSDEMO_FACTORY)
 +	default n
 +	help
 +		Run independent native applications on the
@@ -24274,8 +24280,8 @@ index 0000000000000000000000000000000000000000..65ed044f987b30d2eab6ce402c99f75a
 +
 +config ESP32S31_CAMERA_OV3660
 +	bool "External OV3660 VGA RGB565 sensor"
-+	depends on BUILD_FLAT && DRIVERS_VIDEO && !ESP32S31_CAMERA_OV2640
-+	depends on ESPRESSIF_I2C0 && I2C_DRIVER && !SMP && SCHED_HPWORK
++	depends on (BUILD_FLAT || ESP32S31_VISION) && DRIVERS_VIDEO && !ESP32S31_CAMERA_OV2640
++	depends on ESPRESSIF_I2C0 && I2C_DRIVER && (!SMP || ESP32S31_VISION) && SCHED_HPWORK
 +	depends on ESPRESSIF_I2C0_SCLPIN = 1 && ESPRESSIF_I2C0_SDAPIN = 0
 +	help
 +		Initialize an external OV3660 with 16-bit SCCB register addresses,
@@ -24284,7 +24290,7 @@ index 0000000000000000000000000000000000000000..65ed044f987b30d2eab6ce402c99f75a
 +
 +config ESP32S31_CAMERA_DVP
 +	bool "Prepare the S31 DVP controller for the external camera"
-+	depends on (ESP32S31_CAMERA_OV2640 || ESP32S31_CAMERA_OV3660) && !SMP && SCHED_HPWORK
++	depends on (ESP32S31_CAMERA_OV2640 || ESP32S31_CAMERA_OV3660) && (!SMP || ESP32S31_VISION) && SCHED_HPWORK
 +	default n
 +	help
 +		Build the locked Espressif Camera Controller, CAM HAL and GDMA path,
@@ -24572,7 +24578,7 @@ index 0000000000000000000000000000000000000000..65ed044f987b30d2eab6ce402c99f75a
 +		Poll the SUB3 touch controller on I2C0 and expose /dev/input0.
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/README.md b/boards/risc-v/esp32s31/esp32s31-core-function-board/README.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..06b34b2aa61ef8175cacf558f53250bce51a61e5
+index 00000000000..06b34b2aa61
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/README.md
 @@ -0,0 +1,837 @@
@@ -25415,7 +25421,7 @@ index 0000000000000000000000000000000000000000..06b34b2aa61ef8175cacf558f53250bc
 +使用现有隔离构建器`tools/tests/korvo-adc-keys/build.py --profile korvo-fs --output 新目录`构建，随后运行`tools/board-tests/audit_korvo_fs.py --build 新目录 --output 新审查文件`。Flash部署只用既有完整备份和配对工具；原xTS命令、独立提交型基准及结果边界见工作区`backups/xts-adaptation-and-test-evidence/korvo-safe-fs/README.md`。
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-cpu1-init/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-cpu1-init/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..8d9769afd898c8033d0c85870da5f0da9b107610
+index 00000000000..8d9769afd89
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-cpu1-init/defconfig
 @@ -0,0 +1,3 @@
@@ -25424,7 +25430,7 @@ index 0000000000000000000000000000000000000000..8d9769afd898c8033d0c85870da5f0da
 +CONFIG_SMP_DEFAULT_CPUSET=0x2
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-i2c-cpu1-init/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-i2c-cpu1-init/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..9a0fe5fe19f9cef5e0c049d15d4a69454d6d6765
+index 00000000000..9a0fe5fe19f
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-i2c-cpu1-init/defconfig
 @@ -0,0 +1,3 @@
@@ -25433,7 +25439,7 @@ index 0000000000000000000000000000000000000000..9a0fe5fe19f9cef5e0c049d15d4a6945
 +CONFIG_SMP_DEFAULT_CPUSET=0x2
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-i2c/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-i2c/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..8c49e20c9443331032206318afb71974c08e145c
+index 00000000000..8c49e20c944
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-i2c/defconfig
 @@ -0,0 +1,11 @@
@@ -25450,7 +25456,7 @@ index 0000000000000000000000000000000000000000..8c49e20c9443331032206318afb71974
 +CONFIG_DEBUG_I2C_ERROR=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-event/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-event/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..a9e02ded21dead17f3366d9f618641a94623b00f
+index 00000000000..a9e02ded21d
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-event/defconfig
 @@ -0,0 +1,2 @@
@@ -25458,7 +25464,7 @@ index 0000000000000000000000000000000000000000..a9e02ded21dead17f3366d9f618641a9
 +CONFIG_ESP32S31_WIFI_EVENT_TEST=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-common/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-common/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..f3c47bbc399e959f8bae7c3c9c037bc78b6de081
+index 00000000000..f3c47bbc399
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-common/defconfig
 @@ -0,0 +1,18 @@
@@ -25482,7 +25488,7 @@ index 0000000000000000000000000000000000000000..f3c47bbc399e959f8bae7c3c9c037bc7
 +CONFIG_EXAMPLES_HELLO=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-core/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-core/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..66aea71f4e5093caabbe9972fc3880a14f9fb160
+index 00000000000..66aea71f4e5
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-core/defconfig
 @@ -0,0 +1,16 @@
@@ -25504,7 +25510,7 @@ index 0000000000000000000000000000000000000000..66aea71f4e5093caabbe9972fc3880a1
 +CONFIG_FS_LINKS=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-cxx/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-cxx/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..83b66ad9614ac45b8547b1ed353fcfdf5f653c1b
+index 00000000000..83b66ad9614
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-cxx/defconfig
 @@ -0,0 +1,12 @@
@@ -25522,7 +25528,7 @@ index 0000000000000000000000000000000000000000..83b66ad9614ac45b8547b1ed353fcfdf
 +CONFIG_TESTING_CXXTEST=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-drivers/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-drivers/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..b2eaa0739b542e70ea104476fb0c459ce67a54d9
+index 00000000000..b2eaa0739b5
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-drivers/defconfig
 @@ -0,0 +1,12 @@
@@ -25540,7 +25546,7 @@ index 0000000000000000000000000000000000000000..b2eaa0739b542e70ea104476fb0c459c
 +CONFIG_TIMER=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-fsheap/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-fsheap/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..664651907834a2f863a1e2845e0eabceed0a83c6
+index 00000000000..66465190783
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-fsheap/defconfig
 @@ -0,0 +1,8 @@
@@ -25554,7 +25560,7 @@ index 0000000000000000000000000000000000000000..664651907834a2f863a1e2845e0eabce
 +# CONFIG_FS_HEAPLARGE_ONLY is not set
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-io/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-io/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..a8849986d583639ee47aa64dd5bff8702cf34b3e
+index 00000000000..a8849986d58
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-io/defconfig
 @@ -0,0 +1,17 @@
@@ -25577,7 +25583,7 @@ index 0000000000000000000000000000000000000000..a8849986d583639ee47aa64dd5bff870
 +CONFIG_SYSTEM_TASKSET=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-memory/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-memory/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..121a5fc000c44dbfaf000fa63c99a8af235ec549
+index 00000000000..121a5fc000c
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-memory/defconfig
 @@ -0,0 +1,6 @@
@@ -25589,7 +25595,7 @@ index 0000000000000000000000000000000000000000..121a5fc000c44dbfaf000fa63c99a8af
 +CONFIG_TESTING_RAMTEST=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-ostest/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-ostest/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..87d7e8399d77069d00bbf696491b19ad65205ab8
+index 00000000000..87d7e8399d7
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-ostest/defconfig
 @@ -0,0 +1,4 @@
@@ -25599,7 +25605,7 @@ index 0000000000000000000000000000000000000000..87d7e8399d77069d00bbf696491b19ad
 +CONFIG_TESTING_OSTEST_STACKSIZE=16384
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-reboot/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-reboot/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..5943f97935a2b91fd33380a828c4a6ba73b5d275
+index 00000000000..5943f97935a
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-reboot/defconfig
 @@ -0,0 +1,5 @@
@@ -25610,7 +25616,7 @@ index 0000000000000000000000000000000000000000..5943f97935a2b91fd33380a828c4a6ba
 +# CONFIG_NSH_DISABLE_REBOOT is not set
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-rng/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-rng/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..97b52fc37477dd78f15311244c21269aec902ea2
+index 00000000000..97b52fc3747
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-rng/defconfig
 @@ -0,0 +1,5 @@
@@ -25621,7 +25627,7 @@ index 0000000000000000000000000000000000000000..97b52fc37477dd78f15311244c21269a
 +CONFIG_LIBC_STREAM_MAX=64
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-rtc/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-rtc/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..9be6dfd1e32ae6bfae268227e5d65043ee06b373
+index 00000000000..9be6dfd1e32
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-rtc/defconfig
 @@ -0,0 +1,9 @@
@@ -25636,7 +25642,7 @@ index 0000000000000000000000000000000000000000..9be6dfd1e32ae6bfae268227e5d65043
 +CONFIG_RTC_IOCTL=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-ymodem/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-ymodem/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..dd47c9ee078a692be4f05ff59dda2f553358fb1a
+index 00000000000..dd47c9ee078
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-ymodem/defconfig
 @@ -0,0 +1,6 @@
@@ -25648,7 +25654,7 @@ index 0000000000000000000000000000000000000000..dd47c9ee078a692be4f05ff59dda2f55
 +CONFIG_SYSTEM_YMODEM_STACKSIZE=8192
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..2bd7b1156f528c6f0bc4ea15893993c0be957e10
+index 00000000000..2bd7b1156f5
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt/defconfig
 @@ -0,0 +1,9 @@
@@ -25663,7 +25669,7 @@ index 0000000000000000000000000000000000000000..2bd7b1156f528c6f0bc4ea15893993c0
 +CONFIG_EXAMPLES_S31LED=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..20a245c50a8d7e9234d9c4637267839e20a91491
+index 00000000000..20a245c50a8
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo/defconfig
 @@ -0,0 +1,185 @@
@@ -25854,7 +25860,7 @@ index 0000000000000000000000000000000000000000..20a245c50a8d7e9234d9c4637267839e
 +# CONFIG_EXAMPLES_UDP_NETINIT is not set
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/esp32s31-core-function-board/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/esp32s31-core-function-board/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..3d1f98b2a691a96a48891e73e2f753a9ad4f5e03
+index 00000000000..3d1f98b2a69
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/esp32s31-core-function-board/defconfig
 @@ -0,0 +1,2 @@
@@ -25862,7 +25868,7 @@ index 0000000000000000000000000000000000000000..3d1f98b2a691a96a48891e73e2f753a9
 +#include "../nsh/defconfig"
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/nsh/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/nsh/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..ef7464ce130186643e5b65c65a366be1594c24a9
+index 00000000000..ef7464ce130
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/nsh/defconfig
 @@ -0,0 +1,43 @@
@@ -25911,7 +25917,7 @@ index 0000000000000000000000000000000000000000..ef7464ce130186643e5b65c65a366be1
 +# CONFIG_ESPRESSIF_BROWNOUT_DET is not set
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..c4f44525fdafd2777123d66f7c55e085dec10603
+index 00000000000..c4f44525fda
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/production/defconfig
 @@ -0,0 +1,163 @@
@@ -26080,7 +26086,7 @@ index 0000000000000000000000000000000000000000..c4f44525fdafd2777123d66f7c55e085
 +CONFIG_WIRELESS_WAPI_INITCONF=y
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/smp/defconfig b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/smp/defconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..c071e50eaa0e2f8a57516256510279729e34d481
+index 00000000000..c071e50eaa0
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/smp/defconfig
 @@ -0,0 +1,110 @@
@@ -26196,7 +26202,7 @@ index 0000000000000000000000000000000000000000..c071e50eaa0e2f8a5751625651027972
 +# CONFIG_ESPRESSIF_BROWNOUT_DET is not set
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/include/board.h b/boards/risc-v/esp32s31/esp32s31-core-function-board/include/board.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..2f4bcfeea96ac6a5e13fda8a2f982accda8ea00e
+index 00000000000..2f4bcfeea96
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/include/board.h
 @@ -0,0 +1,80 @@
@@ -26282,7 +26288,7 @@ index 0000000000000000000000000000000000000000..2f4bcfeea96ac6a5e13fda8a2f982acc
 +#endif /* __BOARDS_RISCV_ESP32S31_CORE_FUNCTION_BOARD_INCLUDE_BOARD_H */
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/scripts/Make.defs b/boards/risc-v/esp32s31/esp32s31-core-function-board/scripts/Make.defs
 new file mode 100644
-index 0000000000000000000000000000000000000000..6e41cb50fb8fc6275bf56a9bc16650d120185224
+index 00000000000..6e41cb50fb8
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/scripts/Make.defs
 @@ -0,0 +1,32 @@
@@ -26320,10 +26326,10 @@ index 0000000000000000000000000000000000000000..6e41cb50fb8fc6275bf56a9bc16650d1
 +LDELFFLAGS += -melf32lriscv
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/src/CMakeLists.txt b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/CMakeLists.txt
 new file mode 100644
-index 0000000000000000000000000000000000000000..7f77080ac99d79f83b85ca1c568e9656b25d30ec
+index 00000000000..92033f886d2
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/CMakeLists.txt
-@@ -0,0 +1,285 @@
+@@ -0,0 +1,314 @@
 +# SPDX-License-Identifier: Apache-2.0
 +
 +set(SRCS esp32s31_boot.c esp32s31_bringup.c)
@@ -26527,7 +26533,10 @@ index 0000000000000000000000000000000000000000..7f77080ac99d79f83b85ca1c568e9656
 +  # PackageManager scans the real board ROMFS, independently of the upstream
 +  # demos' simulator resource copies. configure_file tracks manifest changes.
 +  set(HMI_DEMOS ${NUTTX_APPS_DIR}/frameworks/runtimes/services/xmsdemo)
-+  set(HMI_APPS launcher)
++  set(HMI_APPS)
++  if(CONFIG_XMSDEMO_LAUNCHER)
++    list(APPEND HMI_APPS launcher)
++  endif()
 +  if(CONFIG_XMSDEMO_LVGLDEMO)
 +    list(APPEND HMI_APPS lvgldemo)
 +  endif()
@@ -26551,6 +26560,13 @@ index 0000000000000000000000000000000000000000..7f77080ac99d79f83b85ca1c568e9656
 +    configure_file(${HMI_DEMOS}/${HMI_APP}/manifest.json
 +                   ${CMAKE_CURRENT_BINARY_DIR}/etc/app/${HMI_NAME}/manifest.json
 +                   COPYONLY)
++    if(CONFIG_ESP32S31_VISION AND HMI_APP STREQUAL "factory")
++      file(READ ${HMI_DEMOS}/factory/manifest.json FACTORY_MANIFEST)
++      string(JSON FACTORY_MANIFEST SET "${FACTORY_MANIFEST}" activities 0
++             intent-filter "{\"actions\":[\"action.system.HOME\"]}")
++      file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/etc/app/${HMI_NAME}/manifest.json
++           "${FACTORY_MANIFEST}\n")
++    endif()
 +    list(APPEND HMI_MANIFESTS
 +         ${CMAKE_CURRENT_BINARY_DIR}/etc/app/${HMI_NAME}/manifest.json)
 +  endforeach()
@@ -26578,7 +26594,10 @@ index 0000000000000000000000000000000000000000..7f77080ac99d79f83b85ca1c568e9656
 +         ${CMAKE_CURRENT_BINARY_DIR}/etc/media/demo-tone.wav)
 +  endif()
 +  set(HMI_INIT ${CMAKE_CURRENT_SOURCE_DIR}/hmi/etc/init.d)
-+  if(CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
++  if(CONFIG_ESP32S31_VISION)
++    set(HMI_INIT ${CMAKE_CURRENT_SOURCE_DIR}/vision/etc/init.d)
++    add_board_rcraws(${HMI_INIT}/start-system)
++  elseif(CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
 +    set(HMI_INIT ${CMAKE_CURRENT_SOURCE_DIR}/smp-hmi/etc/init.d)
 +    add_board_rcraws(${HMI_INIT}/start-system)
 +  endif()
@@ -26594,6 +26613,22 @@ index 0000000000000000000000000000000000000000..7f77080ac99d79f83b85ca1c568e9656
 +  target_link_libraries(board PRIVATE romfs_etc)
 +endif()
 +
++if(CONFIG_ESP32S31_VISION)
++  list(APPEND SRCS s31vision_dma.c s31vision.c s31vision_ops.S)
++  # Preserve the original kernel's NuttX expf/roundf implementation. Native
++  # MEDIA ELF processes also need libm functions absent from that small library.
++  # Append the toolchain fallback to user ELF links only, never the kernel.
++  execute_process(
++    COMMAND ${CMAKE_C_COMPILER} -march=rv32imafc_zicsr_zifencei -mabi=ilp32f
++            --print-file-name=libm.a
++    OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE S31_USER_LIBM
++    COMMAND_ERROR_IS_FATAL ANY)
++  if(NOT EXISTS "${S31_USER_LIBM}")
++    message(FATAL_ERROR "Missing S31 user ELF math library: ${S31_USER_LIBM}")
++  endif()
++  set_property(TARGET nuttx_global APPEND PROPERTY
++               NUTTX_ELF_LINK_EXTRA_LIBRARIES "${S31_USER_LIBM}")
++endif()
 +target_sources(board PRIVATE ${SRCS})
 +
 +string(REPLACE "\"" "" CHIP_SERIES "${CONFIG_ESPRESSIF_CHIP_SERIES}")
@@ -26611,7 +26646,7 @@ index 0000000000000000000000000000000000000000..7f77080ac99d79f83b85ca1c568e9656
 +set_property(GLOBAL APPEND PROPERTY LD_SCRIPT ${LDSCRIPTS})
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/src/Make.defs b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/Make.defs
 new file mode 100644
-index 0000000000000000000000000000000000000000..30407a61267053d57f40af627cea30673a915821
+index 00000000000..30407a61267
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/Make.defs
 @@ -0,0 +1,143 @@
@@ -26760,7 +26795,7 @@ index 0000000000000000000000000000000000000000..30407a61267053d57f40af627cea3067
 +endif
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31-core-function-board.h b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31-core-function-board.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..b50f05cf26b97d476dfc6e41b449cdd544a6eae1
+index 00000000000..b50f05cf26b
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31-core-function-board.h
 @@ -0,0 +1,69 @@
@@ -26835,7 +26870,7 @@ index 0000000000000000000000000000000000000000..b50f05cf26b97d476dfc6e41b449cdd5
 +#endif
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_boot.c b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_boot.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..857969f171983e7eda7576a2180428cf0f3b154c
+index 00000000000..857969f1719
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_boot.c
 @@ -0,0 +1,38 @@
@@ -26878,11 +26913,11 @@ index 0000000000000000000000000000000000000000..857969f171983e7eda7576a2180428cf
 +}
 +#endif
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_bringup.c b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_bringup.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..86d8e59b6f5fe30ae8ee4b9c3f1036ca3f9b57ea
+new file mode 100755
+index 00000000000..d156a60a490
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_bringup.c
-@@ -0,0 +1,1301 @@
+@@ -0,0 +1,1349 @@
 +/****************************************************************************
 + * boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_bringup.c
 + *
@@ -27535,7 +27570,11 @@ index 0000000000000000000000000000000000000000..86d8e59b6f5fe30ae8ee4b9c3f1036ca
 +}
 +#endif
 +
++#ifdef CONFIG_ESP32S31_VISION
++static int esp_bringup_peripherals(void)
++#else
 +int esp_bringup(void)
++#endif
 +{
 +  int ret = OK;
 +
@@ -27912,6 +27951,15 @@ index 0000000000000000000000000000000000000000..86d8e59b6f5fe30ae8ee4b9c3f1036ca
 +    }
 +#endif
 +
++#ifdef CONFIG_ESP32S31_VISION
++  extern int s31vision_initialize(void);
++  ret = s31vision_initialize();
++  if (ret < 0)
++    {
++      return ret;
++    }
++#endif
++
 +#ifdef CONFIG_ESP32S31_FLASH_APPFS
 +  uint8_t header[8];
 +  struct mtd_dev_s *seed_mtd;
@@ -28181,12 +28229,47 @@ index 0000000000000000000000000000000000000000..86d8e59b6f5fe30ae8ee4b9c3f1036ca
 +#ifdef CONFIG_ESPRESSIF_WIFI
 +  return start_wifi_station();
 +#endif
-+
 +  return 0;
 +}
++
++#ifdef CONFIG_ESP32S31_VISION
++int esp_bringup(void)
++{
++  cpu_set_t original;
++  cpu_set_t peripheral_cpu;
++  int ret;
++  int restore;
++
++  if (sched_getaffinity(0, sizeof(original), &original) < 0)
++    {
++      return -errno;
++    }
++
++  CPU_ZERO(&peripheral_cpu);
++  CPU_SET(0, &peripheral_cpu);
++  if (sched_setaffinity(0, sizeof(peripheral_cpu), &peripheral_cpu) < 0)
++    {
++      return -errno;
++    }
++
++  /* Route peripheral IRQ setup on CPU0, then restore the caller's mask.
++   * System services must not inherit the camera's CPU restriction.
++   * The video and inference workers set their own independent affinity.
++   */
++
++  ret = esp_bringup_peripherals();
++  restore = sched_setaffinity(0, sizeof(original), &original);
++  if (restore < 0 && ret >= 0)
++    {
++      ret = -errno;
++    }
++
++  return ret;
++}
++#endif
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_buttons.c b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_buttons.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..b777854cf1468b394fd95125b23b8ba5535aacc6
+index 00000000000..b777854cf14
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_buttons.c
 @@ -0,0 +1,70 @@
@@ -28262,7 +28345,7 @@ index 0000000000000000000000000000000000000000..b777854cf1468b394fd95125b23b8ba5
 +#endif
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_event_test.c b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_event_test.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..052a167d76a98298c8499dbc89b8eb521beb2fb2
+index 00000000000..052a167d76a
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_event_test.c
 @@ -0,0 +1,298 @@
@@ -28566,7 +28649,7 @@ index 0000000000000000000000000000000000000000..052a167d76a98298c8499dbc89b8eb52
 +}
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_reset.c b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_reset.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..191f9988756ce9fc601c5502becb3d96b2ad637f
+index 00000000000..191f9988756
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_reset.c
 @@ -0,0 +1,111 @@
@@ -28683,7 +28766,7 @@ index 0000000000000000000000000000000000000000..191f9988756ce9fc601c5502becb3d96
 +#endif
 diff --git a/boards/risc-v/esp32s31/esp32s31-core-function-board/src/romfs_stub.c b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/romfs_stub.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..6d8d5e0a7afa33bcf51cb22b2f9e6ac3124fad77
+index 00000000000..6d8d5e0a7af
 --- /dev/null
 +++ b/boards/risc-v/esp32s31/esp32s31-core-function-board/src/romfs_stub.c
 @@ -0,0 +1,14 @@
@@ -28702,7 +28785,7 @@ index 0000000000000000000000000000000000000000..6d8d5e0a7afa33bcf51cb22b2f9e6ac3
 +
 +weak_data const unsigned int g_s31_appromfs_len = 1;
 diff --git a/cmake/menuconfig.cmake b/cmake/menuconfig.cmake
-index dab4718bfe1011ecdb3005c4a8c6e0bdefe6aec8..364927a0535f39dd6897ed3345614c6544075ed0 100644
+index dab4718bfe1..364927a0535 100644
 --- a/cmake/menuconfig.cmake
 +++ b/cmake/menuconfig.cmake
 @@ -28,6 +28,12 @@ set(KCONFIG_ENV
@@ -28776,7 +28859,7 @@ index dab4718bfe1011ecdb3005c4a8c6e0bdefe6aec8..364927a0535f39dd6897ed3345614c65
 +  ${NUTTX_SAVE_DEFCONFIG_COMMANDS}
    WORKING_DIRECTORY ${NUTTX_DIR})
 diff --git a/cmake/nuttx_add_application.cmake b/cmake/nuttx_add_application.cmake
-index 6eb9682f32de693fe83cd2d09c8354b05f83005c..c5dde131ee5683f04b5e4b125f2990314eda9f24 100644
+index 6eb9682f32d..c5dde131ee5 100644
 --- a/cmake/nuttx_add_application.cmake
 +++ b/cmake/nuttx_add_application.cmake
 @@ -28,18 +28,13 @@ define_property(
@@ -28831,7 +28914,7 @@ index 6eb9682f32de693fe83cd2d09c8354b05f83005c..c5dde131ee5683f04b5e4b125f299031
        if(TARGET STARTUP_OBJS)
          add_dependencies(${ELF_TARGET} STARTUP_OBJS)
 diff --git a/cmake/nuttx_add_library.cmake b/cmake/nuttx_add_library.cmake
-index 9064b2046d71512b832d0cae1b24e05e735dc29c..4c7346e005fcdfc893f807067eb4880d55b0ebaa 100644
+index 9064b2046d7..4c7346e005f 100644
 --- a/cmake/nuttx_add_library.cmake
 +++ b/cmake/nuttx_add_library.cmake
 @@ -58,9 +58,16 @@ function(nuttx_add_library_internal target)
@@ -28855,7 +28938,7 @@ index 9064b2046d71512b832d0cae1b24e05e735dc29c..4c7346e005fcdfc893f807067eb4880d
    # Set global compile options & definitions We use the "nuttx" target to hold
    # these properties so that libraries added after this property is set can read
 diff --git a/cmake/nuttx_add_romfs.cmake b/cmake/nuttx_add_romfs.cmake
-index f20883ff10f24d688371f391d15bddfbdca1b178..20702ae122bcd973d2e9e44269941b98b9490623 100644
+index f20883ff10f..20702ae122b 100644
 --- a/cmake/nuttx_add_romfs.cmake
 +++ b/cmake/nuttx_add_romfs.cmake
 @@ -166,6 +166,9 @@ function(nuttx_add_romfs)
@@ -28869,7 +28952,7 @@ index f20883ff10f24d688371f391d15bddfbdca1b178..20702ae122bcd973d2e9e44269941b98
    endforeach()
  
 diff --git a/cmake/nuttx_generate_headers.cmake b/cmake/nuttx_generate_headers.cmake
-index 1e12a42b7d8958a8843bab8073100692686fcdfa..2d6e726ff4cff2462dce2756e3c86c71fb18abed 100644
+index 1e12a42b7d8..2d6e726ff4c 100644
 --- a/cmake/nuttx_generate_headers.cmake
 +++ b/cmake/nuttx_generate_headers.cmake
 @@ -40,18 +40,22 @@ if(NOT EXISTS ${CMAKE_BINARY_DIR}/include_apps)
@@ -28923,7 +29006,7 @@ index 1e12a42b7d8958a8843bab8073100692686fcdfa..2d6e726ff4cff2462dce2756e3c86c71
      nuttx_create_symlink(${NUTTX_CHIP_ABS_DIR}/include
                           ${CMAKE_BINARY_DIR}/include/arch/chip)
 diff --git a/cmake/nuttx_mkconfig.cmake b/cmake/nuttx_mkconfig.cmake
-index 351e9bd4c94e37ec0032f5b71a9c1139a0612b00..e90d32eb34af382a2df38e1062268da0c40b24b0 100644
+index 351e9bd4c94..e90d32eb34a 100644
 --- a/cmake/nuttx_mkconfig.cmake
 +++ b/cmake/nuttx_mkconfig.cmake
 @@ -161,3 +161,9 @@ file(APPEND ${CONFIG_H}
@@ -28937,7 +29020,7 @@ index 351e9bd4c94e37ec0032f5b71a9c1139a0612b00..e90d32eb34af382a2df38e1062268da0
 +configure_file(${CMAKE_BINARY_DIR}/.config ${CMAKE_BINARY_DIR}/.config.prev
 +               COPYONLY)
 diff --git a/crypto/Kconfig b/crypto/Kconfig
-index 6bf77de0800900b15a681b03622d3e9b091304b8..bea1eb0b7ef28fc29408289de5b79adde33e2b78 100644
+index 6bf77de0800..bea1eb0b7ef 100644
 --- a/crypto/Kconfig
 +++ b/crypto/Kconfig
 @@ -19,6 +19,13 @@ config CRYPTO_ALGTEST
@@ -28955,7 +29038,7 @@ index 6bf77de0800900b15a681b03622d3e9b091304b8..bea1eb0b7ef28fc29408289de5b79add
  
  config CRYPTO_AES128_DISABLE
 diff --git a/crypto/crypto.c b/crypto/crypto.c
-index e7dad6d77b044baf7e316bebc974f90098fcedbf..67bd58364aa5df95835440ed1621b8d26b178de2 100644
+index e7dad6d77b0..67bd58364aa 100644
 --- a/crypto/crypto.c
 +++ b/crypto/crypto.c
 @@ -72,6 +72,7 @@ int crypto_newsession(FAR uint64_t *sid,
@@ -29066,7 +29149,7 @@ index e7dad6d77b044baf7e316bebc974f90098fcedbf..67bd58364aa5df95835440ed1621b8d2
  
    if (hid == crypto_drivers_num)
 diff --git a/crypto/ecc.c b/crypto/ecc.c
-index 2a980c4432d694d4996c93238ebffd58e8b10683..16caf1c6de9caf465a7ad7edb1cc6851104fb163 100644
+index 2a980c4432d..16caf1c6de9 100644
 --- a/crypto/ecc.c
 +++ b/crypto/ecc.c
 @@ -35,6 +35,7 @@
@@ -29162,7 +29245,7 @@ index 2a980c4432d694d4996c93238ebffd58e8b10683..16caf1c6de9caf465a7ad7edb1cc6851
        if (vli_iszero(k))
          {
 diff --git a/drivers/analog/comp.c b/drivers/analog/comp.c
-index 6f871ccc75d98b54b8266bdc043110ae7aaf18ec..9b393cc2bba36ff2003d74fa594061694edbde6f 100644
+index 6f871ccc75d..9b393cc2bba 100644
 --- a/drivers/analog/comp.c
 +++ b/drivers/analog/comp.c
 @@ -220,13 +220,15 @@ static int comp_open(FAR struct file *filep)
@@ -29209,7 +29292,7 @@ index 6f871ccc75d98b54b8266bdc043110ae7aaf18ec..9b393cc2bba36ff2003d74fa59406169
        return 1;
      }
 diff --git a/drivers/audio/Kconfig b/drivers/audio/Kconfig
-index cfe5008d72f4d43a322ff438f5e19fb1d083531b..953ed8ea08f9e63b602e368075b574f6c4fbeac6 100644
+index cfe5008d72f..953ed8ea08f 100644
 --- a/drivers/audio/Kconfig
 +++ b/drivers/audio/Kconfig
 @@ -204,6 +204,44 @@ config ES8311_SRC_BCLK
@@ -29258,7 +29341,7 @@ index cfe5008d72f4d43a322ff438f5e19fb1d083531b..953ed8ea08f9e63b602e368075b574f6
  	int "ES8311 maximum in-flight audio buffers"
  	default 2
 diff --git a/drivers/audio/es8311.c b/drivers/audio/es8311.c
-index 33b89476b9bf207f6ee8e117b6785e7e6da7aeb9..5772dcc1da2cec50bac0d61354f1d1f36612d2bc 100644
+index 33b89476b9b..5772dcc1da2 100644
 --- a/drivers/audio/es8311.c
 +++ b/drivers/audio/es8311.c
 @@ -50,7 +50,16 @@
@@ -30692,7 +30775,7 @@ index 33b89476b9bf207f6ee8e117b6785e7e6da7aeb9..5772dcc1da2cec50bac0d61354f1d1f3
        return &priv->dev;
      }
 diff --git a/drivers/audio/es8311.h b/drivers/audio/es8311.h
-index cb8e1297bec5f924a690784168571a3b0239340b..e547fd71dab8030644a93ecabd7f6d763ffd6943 100644
+index cb8e1297bec..e547fd71dab 100644
 --- a/drivers/audio/es8311.h
 +++ b/drivers/audio/es8311.h
 @@ -33,6 +33,9 @@
@@ -30739,7 +30822,7 @@ index cb8e1297bec5f924a690784168571a3b0239340b..e547fd71dab8030644a93ecabd7f6d76
    bool                                reserved;         /* True: Device is reserved */
    volatile int                        result;           /* The result of the last transfer */
 diff --git a/drivers/binder/Kconfig b/drivers/binder/Kconfig
-index 78bec338b3d243952f3b7d3c53413c8b3b8a9cfb..79272295d95d7d3b0c3c455c57046e65a4dda0ba 100644
+index 78bec338b3d..79272295d95 100644
 --- a/drivers/binder/Kconfig
 +++ b/drivers/binder/Kconfig
 @@ -8,6 +8,7 @@ comment "Binder Driver for NuttX"
@@ -30769,7 +30852,7 @@ index 78bec338b3d243952f3b7d3c53413c8b3b8a9cfb..79272295d95d7d3b0c3c455c57046e65
 +		large IPC buffers in external RAM without consuming internal SRAM.
 +		Only FLAT builds share this address space and allocation lifetime.
 diff --git a/drivers/binder/binder.c b/drivers/binder/binder.c
-index 715bb3f68d015b1088444c6e727af37896ca39b0..194879edf57e8b97568a0f7576456904b4031b1a 100644
+index 715bb3f68d0..194879edf57 100644
 --- a/drivers/binder/binder.c
 +++ b/drivers/binder/binder.c
 @@ -27,6 +27,7 @@
@@ -30928,7 +31011,7 @@ index 715bb3f68d015b1088444c6e727af37896ca39b0..194879edf57e8b97568a0f7576456904
  
  static int binder_poll(FAR struct file *filp,
 diff --git a/drivers/binder/binder_alloc.c b/drivers/binder/binder_alloc.c
-index d33fa14f15876b70cbd4fff499854299b89a8d4b..ca9bdb6cec14e9109e4986f2a07a3150413ad426 100644
+index d33fa14f158..ca9bdb6cec1 100644
 --- a/drivers/binder/binder_alloc.c
 +++ b/drivers/binder/binder_alloc.c
 @@ -38,6 +38,10 @@
@@ -31050,7 +31133,7 @@ index d33fa14f15876b70cbd4fff499854299b89a8d4b..ca9bdb6cec14e9109e4986f2a07a3150
      }
  
 diff --git a/drivers/binder/binder_internal.h b/drivers/binder/binder_internal.h
-index 14041f85f20ce6f65f7faafb2fc42c245f3b6930..0cc82a7c738a494cbc99680b0080a5164f5bf7f7 100644
+index 14041f85f20..0cc82a7c738 100644
 --- a/drivers/binder/binder_internal.h
 +++ b/drivers/binder/binder_internal.h
 @@ -231,6 +231,12 @@ struct binder_alloc
@@ -31067,7 +31150,7 @@ index 14041f85f20ce6f65f7faafb2fc42c245f3b6930..0cc82a7c738a494cbc99680b0080a516
  };
  
 diff --git a/drivers/can/can.c b/drivers/can/can.c
-index 2b25196a985fcf1c4b6c4e61ced78c45fc68355f..b8303b5092db495f58a2dd1d955051ceca3bac80 100644
+index 2b25196a985..b8303b5092d 100644
 --- a/drivers/can/can.c
 +++ b/drivers/can/can.c
 @@ -708,6 +708,19 @@ static ssize_t can_write(FAR struct file *filep, FAR const char *buffer,
@@ -31121,7 +31204,7 @@ index 2b25196a985fcf1c4b6c4e61ced78c45fc68355f..b8303b5092db495f58a2dd1d955051ce
 \ No newline at end of file
 +#endif /* CONFIG_CAN_TXREADY */
 diff --git a/drivers/drivers_initialize.c b/drivers/drivers_initialize.c
-index 6882417eff7198317cec31c54b1fc34c0f006c19..0690ce7e60c21e4e4275dbd1b453d1dcf2b185d6 100644
+index 6882417eff7..0690ce7e60c 100644
 --- a/drivers/drivers_initialize.c
 +++ b/drivers/drivers_initialize.c
 @@ -61,7 +61,6 @@
@@ -31146,7 +31229,7 @@ index 6882417eff7198317cec31c54b1fc34c0f006c19..0690ce7e60c21e4e4275dbd1b453d1dc
 diff --git a/drivers/input/mouse_upper.c b/drivers/input/mouse_upper.c
 old mode 100644
 new mode 100755
-index 1ad58bfbfe7a5a1b31b2ffb3c35e020cca388c98..be2e34836731efa63753a299bcc78ca4491da19b
+index 1ad58bfbfe7..be2e3483673
 --- a/drivers/input/mouse_upper.c
 +++ b/drivers/input/mouse_upper.c
 @@ -46,6 +46,8 @@ struct mouse_openpriv_s
@@ -31620,7 +31703,7 @@ index 1ad58bfbfe7a5a1b31b2ffb3c35e020cca388c98..be2e34836731efa63753a299bcc78ca4
 +    }
  }
 diff --git a/drivers/mmcsd/CMakeLists.txt b/drivers/mmcsd/CMakeLists.txt
-index 5728f7046f163c10c917285a50307c13a9e3886b..7aece349ea7b2cf3c58e1968fb02f0adc8144cea 100644
+index 5728f7046f1..7aece349ea7 100644
 --- a/drivers/mmcsd/CMakeLists.txt
 +++ b/drivers/mmcsd/CMakeLists.txt
 @@ -26,7 +26,7 @@ if(CONFIG_MMCSD)
@@ -31633,7 +31716,7 @@ index 5728f7046f163c10c917285a50307c13a9e3886b..7aece349ea7b2cf3c58e1968fb02f0ad
  
    if(CONFIG_MMCSD_SPI)
 diff --git a/drivers/mmcsd/Kconfig b/drivers/mmcsd/Kconfig
-index 7ace74ea7ecca02c57328c5eaff1ff05df415fcf..16b87694f3ae2ebb1779ace436db95c914164f9a 100644
+index 7ace74ea7ec..16b87694f3a 100644
 --- a/drivers/mmcsd/Kconfig
 +++ b/drivers/mmcsd/Kconfig
 @@ -130,6 +130,25 @@ config MMCSD_SDIO
@@ -31663,7 +31746,7 @@ index 7ace74ea7ecca02c57328c5eaff1ff05df415fcf..16b87694f3ae2ebb1779ace436db95c9
  	bool "SDIO bus share support"
  	default n
 diff --git a/drivers/mmcsd/sdio.c b/drivers/mmcsd/sdio.c
-index a259fa8e0ae7537df3a51b6b602c71abab41bdec..620730cf3d89e077dc78816943a32b9db5dd344d 100644
+index a259fa8e0ae..620730cf3d8 100644
 --- a/drivers/mmcsd/sdio.c
 +++ b/drivers/mmcsd/sdio.c
 @@ -27,6 +27,7 @@
@@ -32551,7 +32634,7 @@ index a259fa8e0ae7537df3a51b6b602c71abab41bdec..620730cf3d89e077dc78816943a32b9d
 +  return ret;
  }
 diff --git a/drivers/mtd/mtd_partition.c b/drivers/mtd/mtd_partition.c
-index c22dc30ef870f2a0fc0a8b8f5f7ac0c1fbfe7ffc..55b4b3efc6d65e3c6d5b9e11f3a165a6626134fe 100644
+index c22dc30ef87..55b4b3efc6d 100644
 --- a/drivers/mtd/mtd_partition.c
 +++ b/drivers/mtd/mtd_partition.c
 @@ -155,35 +155,24 @@ const struct procfs_operations g_part_operations =
@@ -32652,7 +32735,7 @@ index c22dc30ef870f2a0fc0a8b8f5f7ac0c1fbfe7ffc..55b4b3efc6d65e3c6d5b9e11f3a165a6
            ferr("ERROR: Write beyond the end of the partition\n");
            return -ENXIO;
 diff --git a/drivers/sensors/bmi160.c b/drivers/sensors/bmi160.c
-index 08e0a1cfc427e72be75fb31f8f4f56c7c310a9fb..32345f04a7cddde6bdd3f71cba4f4d3a99ba898f 100644
+index 08e0a1cfc42..32345f04a7c 100644
 --- a/drivers/sensors/bmi160.c
 +++ b/drivers/sensors/bmi160.c
 @@ -146,20 +146,36 @@ static ssize_t bmi160_read(FAR struct file *filep, FAR char *buffer,
@@ -32708,7 +32791,7 @@ index 08e0a1cfc427e72be75fb31f8f4f56c7c310a9fb..32345f04a7cddde6bdd3f71cba4f4d3a
  
    sninfo("BMI160 driver loaded successfully!\n");
 diff --git a/drivers/sensors/bmi160_base.c b/drivers/sensors/bmi160_base.c
-index 8cc4da16488d9ac254b8298bd177e79918667eec..7467478791c6e6c2a8a07a116e80aa27deab9f88 100644
+index 8cc4da16488..7467478791c 100644
 --- a/drivers/sensors/bmi160_base.c
 +++ b/drivers/sensors/bmi160_base.c
 @@ -57,7 +57,6 @@ static void bmi160_configspi(FAR struct spi_dev_s *spi)
@@ -32756,7 +32839,7 @@ index 8cc4da16488d9ac254b8298bd177e79918667eec..7467478791c6e6c2a8a07a116e80aa27
  
  /****************************************************************************
 diff --git a/drivers/sensors/bmi160_base.h b/drivers/sensors/bmi160_base.h
-index baff98339482b2f3a76c738088ae24ab1b84cb80..99c4fc3af3ce0795b47cc7575450d5dd05bdf1a1 100644
+index baff9833948..99c4fc3af3c 100644
 --- a/drivers/sensors/bmi160_base.h
 +++ b/drivers/sensors/bmi160_base.h
 @@ -238,8 +238,8 @@ uint8_t bmi160_getreg8(FAR struct bmi160_dev_s *priv, uint8_t regaddr);
@@ -32771,7 +32854,7 @@ index baff98339482b2f3a76c738088ae24ab1b84cb80..99c4fc3af3ce0795b47cc7575450d5dd
  int bmi160_checkid(FAR struct bmi160_dev_s *priv);
  
 diff --git a/drivers/sensors/bmi160_uorb.c b/drivers/sensors/bmi160_uorb.c
-index d7a30d9d303a087e074bece76f9adc5b7de516e6..90e6cf080d47e73aa5a0af2d84b45b1d5d8c32f5 100644
+index d7a30d9d303..90e6cf080d4 100644
 --- a/drivers/sensors/bmi160_uorb.c
 +++ b/drivers/sensors/bmi160_uorb.c
 @@ -465,28 +465,31 @@ static int bmi160_accel_activate(FAR struct sensor_lowerhalf_s *lower,
@@ -32922,7 +33005,7 @@ index d7a30d9d303a087e074bece76f9adc5b7de516e6..90e6cf080d47e73aa5a0af2d84b45b1d
 diff --git a/drivers/usbhost/usbhost_hidmouse.c b/drivers/usbhost/usbhost_hidmouse.c
 old mode 100644
 new mode 100755
-index f48f824152be645612b1a08399c06409d4537a0f..3d3e63455d02db7adccf9669224ce6d06cb45489
+index f48f824152b..3d3e63455d0
 --- a/drivers/usbhost/usbhost_hidmouse.c
 +++ b/drivers/usbhost/usbhost_hidmouse.c
 @@ -41,6 +41,7 @@
@@ -33531,7 +33614,7 @@ index f48f824152be645612b1a08399c06409d4537a0f..3d3e63455d02db7adccf9669224ce6d0
  
    return OK;
 diff --git a/drivers/video/fb.c b/drivers/video/fb.c
-index a431c7e958b0be2850b112077cb828555d017afa..a9ef96828827f9e03e569879291aaf8c9ed72e3a 100644
+index a431c7e958b..a9ef9682882 100644
 --- a/drivers/video/fb.c
 +++ b/drivers/video/fb.c
 @@ -29,6 +29,7 @@
@@ -33647,7 +33730,7 @@ index a431c7e958b0be2850b112077cb828555d017afa..a9ef96828827f9e03e569879291aaf8c
        map->vaddr = (FAR char *)panelinfo.fbmem + map->offset;
  #endif
 diff --git a/drivers/video/v4l2_cap.c b/drivers/video/v4l2_cap.c
-index 4b14c53c4fafbb9d3d4a76125e344afb46f7d8e5..33ec3b6e11177bd1b32aa2f13ed11c7c972fb5b2 100644
+index 4b14c53c4fa..33ec3b6e111 100644
 --- a/drivers/video/v4l2_cap.c
 +++ b/drivers/video/v4l2_cap.c
 @@ -2012,6 +2012,14 @@ static int complete_capture(uint8_t err_code,
@@ -33836,7 +33919,7 @@ index 4b14c53c4fafbb9d3d4a76125e344afb46f7d8e5..33ec3b6e11177bd1b32aa2f13ed11c7c
 diff --git a/fs/inode/fs_inodefree.c b/fs/inode/fs_inodefree.c
 old mode 100644
 new mode 100755
-index 517eb4104621911e538f8b714a0da277329c7b14..3ed8ef911b2e536f5e1eca2bdee0a6c69d4cc667
+index 517eb410462..3ed8ef911b2
 --- a/fs/inode/fs_inodefree.c
 +++ b/fs/inode/fs_inodefree.c
 @@ -35,6 +35,10 @@
@@ -33881,7 +33964,7 @@ index 517eb4104621911e538f8b714a0da277329c7b14..3ed8ef911b2e536f5e1eca2bdee0a6c6
      }
  }
 diff --git a/fs/inode/fs_inodesearch.c b/fs/inode/fs_inodesearch.c
-index de096c1126d2833f74b0dd8e45b7760310d8ec04..19fec196cd584c3c7e4fec93d4ca0f42f7b5ff43 100644
+index de096c1126d..19fec196cd5 100644
 --- a/fs/inode/fs_inodesearch.c
 +++ b/fs/inode/fs_inodesearch.c
 @@ -258,7 +258,7 @@ static int _inode_checkpath(const char *path)
@@ -33906,7 +33989,7 @@ index de096c1126d2833f74b0dd8e45b7760310d8ec04..19fec196cd584c3c7e4fec93d4ca0f42
  
        path++;
 diff --git a/fs/littlefs/CMakeLists.txt b/fs/littlefs/CMakeLists.txt
-index a3c70aeab82ed99a1e6ed4015be8a79dfe4a5983..b06f269caea5a17527ee47ec620cc082dc800fed 100644
+index a3c70aeab82..b06f269caea 100644
 --- a/fs/littlefs/CMakeLists.txt
 +++ b/fs/littlefs/CMakeLists.txt
 @@ -21,22 +21,22 @@
@@ -33959,7 +34042,7 @@ index a3c70aeab82ed99a1e6ed4015be8a79dfe4a5983..b06f269caea5a17527ee47ec620cc082
  
    if(CONFIG_TRACE_LITTLEFS_FS)
 diff --git a/fs/littlefs/Kconfig b/fs/littlefs/Kconfig
-index 0dd1f0b248dccd6e0dff0fac7be4f31763fe919b..d93e2d7327b1bbce70a522bd88bee7f787465163 100644
+index 0dd1f0b248d..d93e2d7327b 100644
 --- a/fs/littlefs/Kconfig
 +++ b/fs/littlefs/Kconfig
 @@ -6,6 +6,18 @@ config FS_LITTLEFS
@@ -33982,7 +34065,7 @@ index 0dd1f0b248dccd6e0dff0fac7be4f31763fe919b..d93e2d7327b1bbce70a522bd88bee7f7
  	int "LITTLEFS Program size multiplication factor"
  	default 4
 diff --git a/fs/littlefs/Make.defs b/fs/littlefs/Make.defs
-index 8eb7f2be3eecc22a26f5d22688cfd034e8ad217d..60fc446ccfd5b61897956a72f4f1752e5664753c 100644
+index 8eb7f2be3ee..60fc446ccfd 100644
 --- a/fs/littlefs/Make.defs
 +++ b/fs/littlefs/Make.defs
 @@ -24,6 +24,9 @@ ifeq ($(CONFIG_FS_LITTLEFS),y)
@@ -34032,7 +34115,7 @@ index 8eb7f2be3eecc22a26f5d22688cfd034e8ad217d..60fc446ccfd5b61897956a72f4f1752e
  
  endif
 diff --git a/fs/littlefs/lfs_vfs.c b/fs/littlefs/lfs_vfs.c
-index da587a0aee3aeac0f68edd61924287334b3c66e8..b9cba7efb0c089f3ca72eea3d1126674c987befe 100644
+index da587a0aee3..b9cba7efb0c 100644
 --- a/fs/littlefs/lfs_vfs.c
 +++ b/fs/littlefs/lfs_vfs.c
 @@ -63,10 +63,40 @@ struct littlefs_dir_s
@@ -35174,7 +35257,7 @@ index da587a0aee3aeac0f68edd61924287334b3c66e8..b9cba7efb0c089f3ca72eea3d1126674
    else
      {
 diff --git a/fs/littlefs/lfs_vfs.h b/fs/littlefs/lfs_vfs.h
-index 56311669a97a14c9827ee389a3b9e29ae4f46160..8dd6963ec8ff30677a8c5dcc4c7130c23ee29eda 100644
+index 56311669a97..8dd6963ec8f 100644
 --- a/fs/littlefs/lfs_vfs.h
 +++ b/fs/littlefs/lfs_vfs.h
 @@ -28,4 +28,17 @@
@@ -35196,7 +35279,7 @@ index 56311669a97a14c9827ee389a3b9e29ae4f46160..8dd6963ec8ff30677a8c5dcc4c7130c2
 +#undef malloc
 +#undef free
 diff --git a/fs/procfs/fs_procfs.c b/fs/procfs/fs_procfs.c
-index 03e336f7f89a30284c067c1d72660131b46e0f8f..45f29b0ef130478a0bafc5e1494faebe666fb3b9 100644
+index 03e336f7f89..45f29b0ef13 100644
 --- a/fs/procfs/fs_procfs.c
 +++ b/fs/procfs/fs_procfs.c
 @@ -160,7 +160,7 @@ static const struct procfs_entry_s g_procfs_entries[] =
@@ -35209,7 +35292,7 @@ index 03e336f7f89a30284c067c1d72660131b46e0f8f..45f29b0ef130478a0bafc5e1494faebe
  #endif
  
 diff --git a/fs/procfs/fs_procfsmeminfo.c b/fs/procfs/fs_procfsmeminfo.c
-index 2b173a9e006cc2f40057e09250031d65219dfdd6..0ed01a816c235d1e73e1ea7dd5ec748bd80d568c 100644
+index 2b173a9e006..0ed01a816c2 100644
 --- a/fs/procfs/fs_procfsmeminfo.c
 +++ b/fs/procfs/fs_procfsmeminfo.c
 @@ -750,13 +750,13 @@ dump:
@@ -35269,7 +35352,7 @@ index 2b173a9e006cc2f40057e09250031d65219dfdd6..0ed01a816c235d1e73e1ea7dd5ec748b
     * list and free it. Otherwise, readers are still using it and the
     * last reader will handle cleanup.
 diff --git a/fs/shm/shm_open.c b/fs/shm/shm_open.c
-index b7086fe1d2d1153f2002ce0e5a3e70b30259479c..1353a163a519a9246c13142bca34ad58043d7847 100644
+index b7086fe1d2d..1353a163a51 100644
 --- a/fs/shm/shm_open.c
 +++ b/fs/shm/shm_open.c
 @@ -128,6 +128,20 @@ static int file_shm_open(FAR struct file *shm, FAR const char *name,
@@ -35294,7 +35377,7 @@ index b7086fe1d2d1153f2002ce0e5a3e70b30259479c..1353a163a519a9246c13142bca34ad58
            inode->i_private = NULL;
            inode->i_size = 0;
 diff --git a/fs/shm/shmfs.c b/fs/shm/shmfs.c
-index cb7087a6ae13851b945e65c373628fc989177fd6..60e3cfa2655a6ad9f030858f9ac04b49ccd63fb0 100644
+index cb7087a6ae1..60e3cfa2655 100644
 --- a/fs/shm/shmfs.c
 +++ b/fs/shm/shmfs.c
 @@ -25,6 +25,9 @@
@@ -35693,7 +35776,7 @@ index cb7087a6ae13851b945e65c373628fc989177fd6..60e3cfa2655a6ad9f030858f9ac04b49
 +#endif
  }
 diff --git a/fs/shm/shmfs_alloc.c b/fs/shm/shmfs_alloc.c
-index e1ab967aa4413f7ef83335bd39d191edd701aee3..b6fd5546626b436f84fddca1b6101fdb64ae10ec 100644
+index e1ab967aa44..b6fd5546626 100644
 --- a/fs/shm/shmfs_alloc.c
 +++ b/fs/shm/shmfs_alloc.c
 @@ -109,13 +109,23 @@ FAR struct shmfs_object_s *shmfs_alloc_object(size_t length)
@@ -35722,7 +35805,7 @@ index e1ab967aa4413f7ef83335bd39d191edd701aee3..b6fd5546626b436f84fddca1b6101fdb
        for (; i < n_pages; i++)
          {
 diff --git a/fs/tmpfs/fs_tmpfs.c b/fs/tmpfs/fs_tmpfs.c
-index 9ca21fe47c84d87197390a91d96689a4e53749ba..36b9d9ef4e1fadd13b2f1f875c6f0753cd5c2143 100644
+index 9ca21fe47c8..36b9d9ef4e1 100644
 --- a/fs/tmpfs/fs_tmpfs.c
 +++ b/fs/tmpfs/fs_tmpfs.c
 @@ -212,7 +212,8 @@ const struct mountpt_operations g_tmpfs_operations =
@@ -35934,7 +36017,7 @@ index 9ca21fe47c84d87197390a91d96689a4e53749ba..36b9d9ef4e1fadd13b2f1f875c6f0753
  errout_with_oldparent:
    oldparent->tdo_refs--;
 diff --git a/fs/vfs/fs_close.c b/fs/vfs/fs_close.c
-index e788145306e33cedd11d3a09d4c13995048b2c59..948655f828379e6e4c59581bac5c68ec09c95973 100644
+index e788145306e..948655f8283 100644
 --- a/fs/vfs/fs_close.c
 +++ b/fs/vfs/fs_close.c
 @@ -133,19 +133,22 @@ int file_close(FAR struct file *filep)
@@ -35966,7 +36049,7 @@ index e788145306e33cedd11d3a09d4c13995048b2c59..948655f828379e6e4c59581bac5c68ec
  #if defined(CONFIG_FS_NOTIFY) || defined(CONFIG_FS_PATHCACHE)
        if (path != NULL)
 diff --git a/fs/vfs/fs_rename.c b/fs/vfs/fs_rename.c
-index 0f7dae6a7e561db5df3fd23f8e3db953e07e7544..66c3c91441c35ec696609ac4e84a1276f2a6924a 100644
+index 0f7dae6a7e5..66c3c91441c 100644
 --- a/fs/vfs/fs_rename.c
 +++ b/fs/vfs/fs_rename.c
 @@ -468,7 +468,8 @@ static int mountptrename(FAR const char *oldpath, FAR struct inode *oldinode,
@@ -35998,7 +36081,7 @@ index 0f7dae6a7e561db5df3fd23f8e3db953e07e7544..66c3c91441c35ec696609ac4e84a1276
  #endif
  
 diff --git a/include/limits.h b/include/limits.h
-index 5558dcfc5fe7aafe2e3a1054b76fb14ebe1ba10b..e56de683eb079ad33eec46ec18e145081742c91a 100644
+index 5558dcfc5fe..e56de683eb0 100644
 --- a/include/limits.h
 +++ b/include/limits.h
 @@ -222,7 +222,7 @@
@@ -36011,7 +36094,7 @@ index 5558dcfc5fe7aafe2e3a1054b76fb14ebe1ba10b..e56de683eb079ad33eec46ec18e14508
  #define TZ_MAX_TIMES   CONFIG_LIBC_TZ_MAX_TIMES
  #define TZ_MAX_TYPES   CONFIG_LIBC_TZ_MAX_TYPES
 diff --git a/include/nuttx/addrenv.h b/include/nuttx/addrenv.h
-index ac4b06eaa50db3a3063290d0e23fe4edfe36875b..4cf9826032f9d0e4306350b654cbe1cb2a6a8dc5 100644
+index ac4b06eaa50..4cf9826032f 100644
 --- a/include/nuttx/addrenv.h
 +++ b/include/nuttx/addrenv.h
 @@ -141,6 +141,13 @@
@@ -36037,7 +36120,7 @@ index ac4b06eaa50db3a3063290d0e23fe4edfe36875b..4cf9826032f9d0e4306350b654cbe1cb
  
  #ifndef __ASSEMBLY__
 diff --git a/include/nuttx/arch.h b/include/nuttx/arch.h
-index 1825f548b97dfc7b442d9790939d280bfb110eb7..b26f417ca6ecc7b45ec4bd6a18c52a9a00dcd5eb 100644
+index 1825f548b97..b26f417ca6e 100644
 --- a/include/nuttx/arch.h
 +++ b/include/nuttx/arch.h
 @@ -1265,6 +1265,19 @@ ssize_t up_addrenv_heapsize(FAR const arch_addrenv_t *addrenv);
@@ -36073,7 +36156,7 @@ index 1825f548b97dfc7b442d9790939d280bfb110eb7..b26f417ca6ecc7b45ec4bd6a18c52a9a
  
  /****************************************************************************
 diff --git a/include/nuttx/audio/audio.h b/include/nuttx/audio/audio.h
-index d2d7ce3dcaca199b7fc21083628aed2e0898087c..067af2641043d3fabf3b258bfe7a4cef9557685d 100644
+index d2d7ce3dcac..067af264104 100644
 --- a/include/nuttx/audio/audio.h
 +++ b/include/nuttx/audio/audio.h
 @@ -114,11 +114,19 @@
@@ -36107,7 +36190,7 @@ index d2d7ce3dcaca199b7fc21083628aed2e0898087c..067af2641043d3fabf3b258bfe7a4cef
  
  /* Structure defining the messages passed to a listening audio thread
 diff --git a/include/nuttx/audio/es8311.h b/include/nuttx/audio/es8311.h
-index 6d7d58c674dd911e843c6f84f0420f87acaf510b..c2556ee0deb19701e46865d1783d7635edf4b54d 100644
+index 6d7d58c674d..c2556ee0deb 100644
 --- a/include/nuttx/audio/es8311.h
 +++ b/include/nuttx/audio/es8311.h
 @@ -117,6 +117,9 @@ struct es8311_lower_s
@@ -36121,7 +36204,7 @@ index 6d7d58c674dd911e843c6f84f0420f87acaf510b..c2556ee0deb19701e46865d1783d7635
  
  /****************************************************************************
 diff --git a/include/nuttx/crypto/crypto.h b/include/nuttx/crypto/crypto.h
-index f9b09ed91cf83dbf88ef7951eec420668fb96878..64e42840ae1563efb2b3c04f5de9900f3aee4129 100644
+index f9b09ed91cf..64e42840ae1 100644
 --- a/include/nuttx/crypto/crypto.h
 +++ b/include/nuttx/crypto/crypto.h
 @@ -74,6 +74,16 @@ extern "C"
@@ -36144,7 +36227,7 @@ index f9b09ed91cf83dbf88ef7951eec420668fb96878..64e42840ae1563efb2b3c04f5de9900f
 diff --git a/include/nuttx/fs/fs.h b/include/nuttx/fs/fs.h
 old mode 100644
 new mode 100755
-index 0ad0c2f7959f63ae479fbe19b2c49c08cf7cea00..8ef4441433bcfb1ad067e5d226b0138527587770
+index 0ad0c2f7959..8ef4441433b
 --- a/include/nuttx/fs/fs.h
 +++ b/include/nuttx/fs/fs.h
 @@ -258,6 +258,13 @@ struct file_operations
@@ -36183,7 +36266,7 @@ index 0ad0c2f7959f63ae479fbe19b2c49c08cf7cea00..8ef4441433bcfb1ad067e5d226b01385
  #endif /* CONFIG_DISABLE_MOUNTPOINT */
  
 diff --git a/include/nuttx/fs/procfs.h b/include/nuttx/fs/procfs.h
-index 4d6e4346aa49cdaee7b0e3eb16f4194948f9ada8..8c6c9ebc6019a29a1c90ca4341d7b481ce7e6594 100644
+index 4d6e4346aa4..8c6c9ebc601 100644
 --- a/include/nuttx/fs/procfs.h
 +++ b/include/nuttx/fs/procfs.h
 @@ -281,13 +281,13 @@ int procfs_register(FAR const struct procfs_entry_s *entry);
@@ -36214,7 +36297,7 @@ index 4d6e4346aa49cdaee7b0e3eb16f4194948f9ada8..8c6c9ebc6019a29a1c90ca4341d7b481
 diff --git a/include/nuttx/input/mouse.h b/include/nuttx/input/mouse.h
 old mode 100644
 new mode 100755
-index 6328b78f2e890c245d1432e431f756a39ee4d1e7..316a2b69a332182fc6912285fd9c9d7be94627b4
+index 6328b78f2e8..316a2b69a33
 --- a/include/nuttx/input/mouse.h
 +++ b/include/nuttx/input/mouse.h
 @@ -245,8 +245,11 @@ int mouse_register(FAR struct mouse_lowerhalf_s *lower,
@@ -36232,7 +36315,7 @@ index 6328b78f2e890c245d1432e431f756a39ee4d1e7..316a2b69a332182fc6912285fd9c9d7b
   * Arguments:
   *   lower     - A pointer to an insatnce of mouse lower half driver.
 diff --git a/include/nuttx/mm/map.h b/include/nuttx/mm/map.h
-index 61c837814d63f4e7b94d630fd48d38cd86aeb9d1..bb31e7b6867838f053d87f30bb04dcc149110480 100644
+index 61c837814d6..bb31e7b6867 100644
 --- a/include/nuttx/mm/map.h
 +++ b/include/nuttx/mm/map.h
 @@ -225,6 +225,14 @@ void vm_release_region(FAR struct mm_map_s *mm, FAR void *vaddr,
@@ -36250,8 +36333,23 @@ index 61c837814d63f4e7b94d630fd48d38cd86aeb9d1..bb31e7b6867838f053d87f30bb04dcc1
  /****************************************************************************
   * Name: vm_unmap_region
   *
+diff --git a/include/nuttx/mm/mm.h b/include/nuttx/mm/mm.h
+index be8619f877c..2592bb0908f 100644
+--- a/include/nuttx/mm/mm.h
++++ b/include/nuttx/mm/mm.h
+@@ -355,6 +355,10 @@ void mm_delayfree(FAR struct mm_heap_s *heap, FAR void *mem);
+ #ifdef CONFIG_MM_KERNEL_HEAP
+ void kmm_free(FAR void *mem);
+ void kmm_delayfree(FAR void *mem);
++#ifdef CONFIG_SCHED_KTHREAD_GC
++/* Collect only the calling CPU's deferred kernel frees in thread context. */
++void kmm_collect(void);
++#endif
+ #endif
+ 
+ /* Functions contained in umm_free.c ****************************************/
 diff --git a/include/nuttx/sched.h b/include/nuttx/sched.h
-index e45b333f2ebd27d2060c71fc7dbb53f76b7bab5e..ec7094a8e1b8140ff8118d3cfcda34b441662263 100644
+index e45b333f2eb..ec7094a8e1b 100644
 --- a/include/nuttx/sched.h
 +++ b/include/nuttx/sched.h
 @@ -108,6 +108,9 @@
@@ -36275,7 +36373,7 @@ index e45b333f2ebd27d2060c71fc7dbb53f76b7bab5e..ec7094a8e1b8140ff8118d3cfcda34b4
  
    /* The following function pointer is non-zero if there are pending signals
 diff --git a/include/nuttx/sdio.h b/include/nuttx/sdio.h
-index aff35af838ccfbac7f07efbdf8a4e292cefc9107..eb37a56e65beb71d61aed54ed54875f5563dd390 100644
+index aff35af838c..eb37a56e65b 100644
 --- a/include/nuttx/sdio.h
 +++ b/include/nuttx/sdio.h
 @@ -407,8 +407,12 @@
@@ -36359,7 +36457,7 @@ index aff35af838ccfbac7f07efbdf8a4e292cefc9107..eb37a56e65beb71d61aed54ed54875f5
  #if defined(__cplusplus)
  }
 diff --git a/include/nuttx/video/imgdata.h b/include/nuttx/video/imgdata.h
-index df0f5a3e55c7892408456bd2a555a493b180873b..48e5dea14a12ba4d80f7ee8a90e77d93c106ee6f 100644
+index df0f5a3e55c..48e5dea14a1 100644
 --- a/include/nuttx/video/imgdata.h
 +++ b/include/nuttx/video/imgdata.h
 @@ -29,6 +29,9 @@
@@ -36409,7 +36507,7 @@ index df0f5a3e55c7892408456bd2a555a493b180873b..48e5dea14a12ba4d80f7ee8a90e77d93
  
  #ifdef __cplusplus
 diff --git a/include/nuttx/video/imgsensor.h b/include/nuttx/video/imgsensor.h
-index 1da25dfaf37456778e25bc0fc188539b4d2dd4d3..d84511232ddb4a87c89b3f77f107a8a92df5d73c 100644
+index 1da25dfaf37..d84511232dd 100644
 --- a/include/nuttx/video/imgsensor.h
 +++ b/include/nuttx/video/imgsensor.h
 @@ -386,6 +386,14 @@ struct imgsensor_ops_s
@@ -36428,7 +36526,7 @@ index 1da25dfaf37456778e25bc0fc188539b4d2dd4d3..d84511232ddb4a87c89b3f77f107a8a9
  
  /* Image sensor private data.  This structure only defines the initial fields
 diff --git a/include/stdio.h b/include/stdio.h
-index 7e976f6c255779dcb8de5c3548c9bd2ff3a83036..35301fabe2e1df8ebdfa843c779bd0a2332994be 100644
+index 7e976f6c255..35301fabe2e 100644
 --- a/include/stdio.h
 +++ b/include/stdio.h
 @@ -43,7 +43,7 @@
@@ -36441,7 +36539,7 @@ index 7e976f6c255779dcb8de5c3548c9bd2ff3a83036..35301fabe2e1df8ebdfa843c779bd0a2
  /* The (default) size of the I/O buffers */
  
 diff --git a/libs/libc/audio/lib_buffer.c b/libs/libc/audio/lib_buffer.c
-index df6d7893fb071811e88a4475826aa2ed0881416e..a3f1eb0bde397cc89091f03e7639606cb0f73a3d 100644
+index df6d7893fb0..a3f1eb0bde3 100644
 --- a/libs/libc/audio/lib_buffer.c
 +++ b/libs/libc/audio/lib_buffer.c
 @@ -40,6 +40,9 @@
@@ -36493,7 +36591,7 @@ index df6d7893fb071811e88a4475826aa2ed0881416e..a3f1eb0bde397cc89091f03e7639606c
  }
  
 diff --git a/libs/libc/elf/elf_addrenv.c b/libs/libc/elf/elf_addrenv.c
-index c9e7215f83b843a55b218ff299eb3b8111bd2b5c..34fccf1f235f06702f10ce074a1d335158f53cca 100644
+index c9e7215f83b..34fccf1f235 100644
 --- a/libs/libc/elf/elf_addrenv.c
 +++ b/libs/libc/elf/elf_addrenv.c
 @@ -85,11 +85,12 @@ int libelf_addrenv_alloc(FAR struct mod_loadinfo_s *loadinfo,
@@ -36513,7 +36611,7 @@ index c9e7215f83b843a55b218ff299eb3b8111bd2b5c..34fccf1f235f06702f10ce074a1d3351
    FAR struct arch_addrenv_s *addrenv;
    FAR void *vtext;
 diff --git a/libs/libc/elf/elf_symbols.c b/libs/libc/elf/elf_symbols.c
-index 5fcad4d7bcf53430ff7de8e20c2c96eb34e45d79..954b57bebe3391fd3536579705889ae8a6851537 100644
+index 5fcad4d7bcf..954b57bebe3 100644
 --- a/libs/libc/elf/elf_symbols.c
 +++ b/libs/libc/elf/elf_symbols.c
 @@ -706,7 +706,15 @@ int libelf_findsymbol(FAR struct mod_loadinfo_s *loadinfo,
@@ -36534,7 +36632,7 @@ index 5fcad4d7bcf53430ff7de8e20c2c96eb34e45d79..954b57bebe3391fd3536579705889ae8
            berr("ERROR: Failed to get symbol name\n");
            return ret;
 diff --git a/libs/libc/elf/gnu-elf.ld.in b/libs/libc/elf/gnu-elf.ld.in
-index aa97a0f5495420782836de21c15f61b044a9514b..d506a769abf62628ed74ddc553097807bf423d92 100644
+index aa97a0f5495..d506a769abf 100644
 --- a/libs/libc/elf/gnu-elf.ld.in
 +++ b/libs/libc/elf/gnu-elf.ld.in
 @@ -71,6 +71,14 @@ SECTIONS
@@ -36580,7 +36678,7 @@ index aa97a0f5495420782836de21c15f61b044a9514b..d506a769abf62628ed74ddc553097807
        _edata = . ;
      }
 diff --git a/libs/libc/misc/lib_tempbuffer.c b/libs/libc/misc/lib_tempbuffer.c
-index 46a56cc73d3049b90d11a43778e2b1b8787a4c7f..73d6fff50dfce902078dd539abd5941b21b7017b 100644
+index 46a56cc73d3..73d6fff50df 100644
 --- a/libs/libc/misc/lib_tempbuffer.c
 +++ b/libs/libc/misc/lib_tempbuffer.c
 @@ -25,6 +25,7 @@
@@ -36692,7 +36790,7 @@ index 46a56cc73d3049b90d11a43778e2b1b8787a4c7f..73d6fff50dfce902078dd539abd5941b
      }
  
 diff --git a/libs/libc/netdb/Kconfig b/libs/libc/netdb/Kconfig
-index cf125f4c2b19f023640c27cc52d6fdf19746dcdc..a301a89aaa206d45b84273a4b52e34140d47ffd4 100644
+index cf125f4c2b1..a301a89aaa2 100644
 --- a/libs/libc/netdb/Kconfig
 +++ b/libs/libc/netdb/Kconfig
 @@ -5,7 +5,7 @@
@@ -36705,7 +36803,7 @@ index cf125f4c2b19f023640c27cc52d6fdf19746dcdc..a301a89aaa206d45b84273a4b52e3414
  
  menu "NETDB Support"
 diff --git a/libs/libc/sched/clock_getcpuclockid.c b/libs/libc/sched/clock_getcpuclockid.c
-index d40caf0f477bd416575d48e37751927540fb091a..c062bd2b9db022f356d9ca5517290096bb636c97 100644
+index d40caf0f477..c062bd2b9db 100644
 --- a/libs/libc/sched/clock_getcpuclockid.c
 +++ b/libs/libc/sched/clock_getcpuclockid.c
 @@ -27,6 +27,7 @@
@@ -36717,7 +36815,7 @@ index d40caf0f477bd416575d48e37751927540fb091a..c062bd2b9db022f356d9ca5517290096
  #include <nuttx/clock.h>
  #include <nuttx/sched.h>
 diff --git a/libs/libc/stdio/Kconfig b/libs/libc/stdio/Kconfig
-index 0e9f714f292f0149bc214c4d6b4838e43dde4d7c..3c75be132d6ce1296ac2add0ddfb865c112a1b3e 100644
+index 0e9f714f292..3c75be132d6 100644
 --- a/libs/libc/stdio/Kconfig
 +++ b/libs/libc/stdio/Kconfig
 @@ -5,6 +5,15 @@
@@ -36754,7 +36852,7 @@ index 0e9f714f292f0149bc214c4d6b4838e43dde4d7c..3c75be132d6ce1296ac2add0ddfb865c
  
  config NUNGET_CHARS
 diff --git a/libs/libc/stdio/lib_clearerr.c b/libs/libc/stdio/lib_clearerr.c
-index 43f2adb553769f038f187ba1cb14d79ddc3095e0..974447f1dc689ea229f13c2cb44dc28b17a52a96 100644
+index 43f2adb5537..974447f1dc6 100644
 --- a/libs/libc/stdio/lib_clearerr.c
 +++ b/libs/libc/stdio/lib_clearerr.c
 @@ -50,7 +50,7 @@
@@ -36767,7 +36865,7 @@ index 43f2adb553769f038f187ba1cb14d79ddc3095e0..974447f1dc689ea229f13c2cb44dc28b
  
  void clearerr(FAR FILE *stream)
 diff --git a/libs/libc/stdio/lib_fopen.c b/libs/libc/stdio/lib_fopen.c
-index 0e4ff66ace9bd4d6bf0d33ec7fecb119f2896823..e7e96c78dcd382eef981c81caa5a4b0f9e18a176 100644
+index 0e4ff66ace9..e7e96c78dcd 100644
 --- a/libs/libc/stdio/lib_fopen.c
 +++ b/libs/libc/stdio/lib_fopen.c
 @@ -90,7 +90,7 @@ FAR FILE *fdopen(int fd, FAR const char *mode)
@@ -36780,7 +36878,7 @@ index 0e4ff66ace9bd4d6bf0d33ec7fecb119f2896823..e7e96c78dcd382eef981c81caa5a4b0f
            nxmutex_unlock(&list->sl_lock);
            set_errno(EMFILE);
 diff --git a/libs/libc/stdio/lib_freopen.c b/libs/libc/stdio/lib_freopen.c
-index f2546d58fa76fbf73649be640a07ba3030a8edc0..ea55523711d11c2bca1ae0589e5f15302b3046e0 100644
+index f2546d58fa7..ea55523711d 100644
 --- a/libs/libc/stdio/lib_freopen.c
 +++ b/libs/libc/stdio/lib_freopen.c
 @@ -36,6 +36,7 @@
@@ -36810,7 +36908,7 @@ index f2546d58fa76fbf73649be640a07ba3030a8edc0..ea55523711d11c2bca1ae0589e5f1530
  #if CONFIG_NUNGET_CHARS > 0
        /* Clear any characters pushed back onto the stream */
 diff --git a/libs/libc/stdio/lib_fseeko.c b/libs/libc/stdio/lib_fseeko.c
-index 822ba0d6a26857911921fd538efb24b69c788263..635642b4f86a60c913f5057d816ace3ff7fd1465 100644
+index 822ba0d6a26..635642b4f86 100644
 --- a/libs/libc/stdio/lib_fseeko.c
 +++ b/libs/libc/stdio/lib_fseeko.c
 @@ -33,6 +33,7 @@
@@ -36918,7 +37016,7 @@ index 822ba0d6a26857911921fd538efb24b69c788263..635642b4f86a60c913f5057d816ace3f
      {
        funlockfile(stream);
 diff --git a/libs/libc/stdio/lib_libfflush.c b/libs/libc/stdio/lib_libfflush.c
-index 56c87021ffdbcbfe69d9a5961eafc211b9a7d751..1e1bf1cc73b55dea13cce33531517fd183aeac29 100644
+index 56c87021ffd..1e1bf1cc73b 100644
 --- a/libs/libc/stdio/lib_libfflush.c
 +++ b/libs/libc/stdio/lib_libfflush.c
 @@ -35,6 +35,7 @@
@@ -36955,7 +37053,7 @@ index 56c87021ffdbcbfe69d9a5961eafc211b9a7d751..1e1bf1cc73b55dea13cce33531517fd1
  
        /* How many bytes of write data are used in the buffer now */
 diff --git a/libs/libc/stdio/lib_libfread_unlocked.c b/libs/libc/stdio/lib_libfread_unlocked.c
-index d15b4c05764ef42b63230553fde3fc1c06c79872..6cca4260f4b0d3c1caa5364e66b2a91808dd313a 100644
+index d15b4c05764..6cca4260f4b 100644
 --- a/libs/libc/stdio/lib_libfread_unlocked.c
 +++ b/libs/libc/stdio/lib_libfread_unlocked.c
 @@ -37,6 +37,7 @@
@@ -37076,7 +37174,7 @@ index d15b4c05764ef42b63230553fde3fc1c06c79872..6cca4260f4b0d3c1caa5364e66b2a918
  
  errout_with_errno:
 diff --git a/libs/libc/stdio/lib_rdflush_unlocked.c b/libs/libc/stdio/lib_rdflush_unlocked.c
-index 59f2cbc33d792a613a2b864a50068285ca9b8003..cb3890e38a58ccc5d08ffe0449b88628df349e9d 100644
+index 59f2cbc33d7..cb3890e38a5 100644
 --- a/libs/libc/stdio/lib_rdflush_unlocked.c
 +++ b/libs/libc/stdio/lib_rdflush_unlocked.c
 @@ -32,6 +32,7 @@
@@ -37121,7 +37219,7 @@ index 59f2cbc33d792a613a2b864a50068285ca9b8003..cb3890e38a58ccc5d08ffe0449b88628
     * of the read-ahead data. We do not support concurrent buffered read/write
     * access.
 diff --git a/libs/libc/stdio/lib_setvbuf.c b/libs/libc/stdio/lib_setvbuf.c
-index 3231dbf176d8f4b6d46dd7e07b2aecb860a439e9..bdf9310748dc75a834eaa8def299e31e99a8fe98 100644
+index 3231dbf176d..bdf9310748d 100644
 --- a/libs/libc/stdio/lib_setvbuf.c
 +++ b/libs/libc/stdio/lib_setvbuf.c
 @@ -37,6 +37,7 @@
@@ -37152,7 +37250,7 @@ index 3231dbf176d8f4b6d46dd7e07b2aecb860a439e9..bdf9310748dc75a834eaa8def299e31e
    return OK;
  
 diff --git a/libs/libc/stdio/lib_wrflush_unlocked.c b/libs/libc/stdio/lib_wrflush_unlocked.c
-index 32603882b636cf197bc9274838eede4c9a3085b8..e7a4b6d381b46492f66ce94342ecadc5c925a2cc 100644
+index 32603882b63..e7a4b6d381b 100644
 --- a/libs/libc/stdio/lib_wrflush_unlocked.c
 +++ b/libs/libc/stdio/lib_wrflush_unlocked.c
 @@ -31,6 +31,7 @@
@@ -37180,7 +37278,7 @@ index 32603882b636cf197bc9274838eede4c9a3085b8..e7a4b6d381b46492f66ce94342ecadc5
     * return an error if it is called for a stream that is not opened for
     * writing.  Check that first so that this function will not fail in
 diff --git a/libs/libc/stream/lib_bufferedoutstream.c b/libs/libc/stream/lib_bufferedoutstream.c
-index 25b549084153414ae47982ce8d7114049ed7a7b8..9a0ba04f6e4258e8bc995708014abe8e63b2b51e 100644
+index 25b54908415..9a0ba04f6e4 100644
 --- a/libs/libc/stream/lib_bufferedoutstream.c
 +++ b/libs/libc/stream/lib_bufferedoutstream.c
 @@ -46,17 +46,36 @@ static int bufferedoutstream_flush(FAR struct lib_outstream_s *self)
@@ -37271,7 +37369,7 @@ index 25b549084153414ae47982ce8d7114049ed7a7b8..9a0ba04f6e4258e8bc995708014abe8e
  
    return ret;
 diff --git a/libs/libc/stream/lib_libvscanf.c b/libs/libc/stream/lib_libvscanf.c
-index 4ff44799e91a4393e58559d10b0f0e0e31d1859d..826052013958beef6e3e5c443143f72d7e5d1d8c 100644
+index 4ff44799e91..82605201395 100644
 --- a/libs/libc/stream/lib_libvscanf.c
 +++ b/libs/libc/stream/lib_libvscanf.c
 @@ -273,11 +273,15 @@ static int vscanf_internal(FAR struct lib_instream_s *stream, FAR int *lastc,
@@ -37337,7 +37435,7 @@ index 4ff44799e91a4393e58559d10b0f0e0e31d1859d..826052013958beef6e3e5c443143f72d
                c = lib_stream_getc(stream);
              }
 diff --git a/mm/kasan/CMakeLists.txt b/mm/kasan/CMakeLists.txt
-index 0adf7e890a41ac767b959360c1eaa68c0353f2ec..e7af63f105512abe9064719ae6f10f1753f52a62 100644
+index 0adf7e890a4..e7af63f1055 100644
 --- a/mm/kasan/CMakeLists.txt
 +++ b/mm/kasan/CMakeLists.txt
 @@ -30,9 +30,20 @@ if(CONFIG_MM_KASAN)
@@ -37361,8 +37459,44 @@ index 0adf7e890a41ac767b959360c1eaa68c0353f2ec..e7af63f105512abe9064719ae6f10f17
 +if(TARGET kmm)
 +  target_compile_options(kmm PRIVATE ${FLAGS})
 +endif()
+diff --git a/mm/kmm_heap/kmm_free.c b/mm/kmm_heap/kmm_free.c
+index 3873c688754..791c41995c0 100644
+--- a/mm/kmm_heap/kmm_free.c
++++ b/mm/kmm_heap/kmm_free.c
+@@ -29,6 +29,10 @@
+ 
+ #include <nuttx/mm/mm.h>
+ 
++#ifdef CONFIG_SCHED_KTHREAD_GC
++#  include "mm_heap/mm.h"
++#endif
++
+ /****************************************************************************
+  * Public Functions
+  ****************************************************************************/
+@@ -71,3 +75,20 @@ void kmm_delayfree(FAR void *mem)
+ {
+   mm_delayfree(KNR_HEAP, mem);
+ }
++
++#ifdef CONFIG_SCHED_KTHREAD_GC
++/****************************************************************************
++ * Name: kmm_collect
++ *
++ * Description:
++ *   Drain the calling CPU's deferred kernel frees. The caller must execute
++ *   in normal thread context on that CPU, after any exiting thread has
++ *   switched away from its deferred stack. Never inspect remote lists.
++ ****************************************************************************/
++
++void kmm_collect(void)
++{
++  DEBUGASSERT(!up_interrupt_context());
++  mm_free_delaylist(KNR_HEAP);
++}
++#endif
 diff --git a/mm/map/vm_region.c b/mm/map/vm_region.c
-index 42dff6746c6f94c95b4c9bd42540932a97468ebf..565ed7bfefddbc849ed1dddeaa62a5e3f4b4d3bf 100644
+index 42dff6746c6..565ed7bfefd 100644
 --- a/mm/map/vm_region.c
 +++ b/mm/map/vm_region.c
 @@ -100,8 +100,11 @@ void vm_release_region(FAR struct mm_map_s *mm, FAR void *vaddr, size_t size)
@@ -37453,7 +37587,7 @@ index 42dff6746c6f94c95b4c9bd42540932a97468ebf..565ed7bfefddbc849ed1dddeaa62a5e3
  
  int vm_unmap_region(FAR struct mm_map_s *mm,
 diff --git a/mm/mempool/mempool_procfs.c b/mm/mempool/mempool_procfs.c
-index 91e0432e8df391236569784b2b6f4b35e5e8ec68..f1c1742ba2218fd80134c09dad50e8f045d74187 100644
+index 91e0432e8df..f1c1742ba22 100644
 --- a/mm/mempool/mempool_procfs.c
 +++ b/mm/mempool/mempool_procfs.c
 @@ -42,7 +42,7 @@
@@ -37466,7 +37600,7 @@ index 91e0432e8df391236569784b2b6f4b35e5e8ec68..f1c1742ba2218fd80134c09dad50e8f0
  /****************************************************************************
   * Private Types
 diff --git a/mm/mm_heap/mm_free.c b/mm/mm_heap/mm_free.c
-index 1e39053faf688b6c395658e15212ff770fba49cf..bd09a04b377894136edc08ffc35dc23c462b9c4e 100644
+index 1e39053faf6..bd09a04b377 100644
 --- a/mm/mm_heap/mm_free.c
 +++ b/mm/mm_heap/mm_free.c
 @@ -47,14 +47,17 @@ static void add_delaylist(FAR struct mm_heap_s *heap, FAR void *mem,
@@ -37490,7 +37624,7 @@ index 1e39053faf688b6c395658e15212ff770fba49cf..bd09a04b377894136edc08ffc35dc23c
  
  #ifdef CONFIG_DEBUG_ASSERTIONS
 diff --git a/mm/mm_heap/mm_malloc.c b/mm/mm_heap/mm_malloc.c
-index 9e53145bf6d4d81c098a7109b20655dfe8db1076..f13d03ca369dc8baafbdc182ee7251215e48f961 100644
+index 9e53145bf6d..f13d03ca369 100644
 --- a/mm/mm_heap/mm_malloc.c
 +++ b/mm/mm_heap/mm_malloc.c
 @@ -61,14 +61,17 @@ static bool free_delaylist(FAR struct mm_heap_s *heap, bool force)
@@ -37522,7 +37656,7 @@ index 9e53145bf6d4d81c098a7109b20655dfe8db1076..f13d03ca369dc8baafbdc182ee725121
        return false;
      }
 diff --git a/mm/mm_heap/mm_memalign.c b/mm/mm_heap/mm_memalign.c
-index 88a52998f3a1d53cd7e5abbc09a7448fe01effdd..c88cd0fc983c79f74f16905a872a71facfd723d7 100644
+index 88a52998f3a..c88cd0fc983 100644
 --- a/mm/mm_heap/mm_memalign.c
 +++ b/mm/mm_heap/mm_memalign.c
 @@ -109,9 +109,10 @@ FAR void *mm_memalign(FAR struct mm_heap_s *heap, size_t alignment,
@@ -37563,7 +37697,7 @@ index 88a52998f3a1d53cd7e5abbc09a7448fe01effdd..c88cd0fc983c79f74f16905a872a71fa
  
        if (precedingsize < MM_MIN_CHUNK)
 diff --git a/mm/mm_heap/mm_sbrk.c b/mm/mm_heap/mm_sbrk.c
-index a687f93ce7f902b8de1b7b2859a00e6b1c554852..c7e78c204d7280b0778d02994b7a85420a35baa9 100644
+index a687f93ce7f..c7e78c204d7 100644
 --- a/mm/mm_heap/mm_sbrk.c
 +++ b/mm/mm_heap/mm_sbrk.c
 @@ -28,6 +28,7 @@
@@ -37652,7 +37786,7 @@ index a687f93ce7f902b8de1b7b2859a00e6b1c554852..c7e78c204d7280b0778d02994b7a8542
 +  return ret;
  }
 diff --git a/mm/umm_heap/umm_initialize.c b/mm/umm_heap/umm_initialize.c
-index 4372068559ab2a6e41efa54cb41e12c076f2bdf0..28b52083c04fb38cc63480441a3a624c6e50a19b 100644
+index 4372068559a..28b52083c04 100644
 --- a/mm/umm_heap/umm_initialize.c
 +++ b/mm/umm_heap/umm_initialize.c
 @@ -109,7 +109,15 @@ void umm_initialize(FAR void *heap_start, size_t heap_size)
@@ -37673,7 +37807,7 @@ index 4372068559ab2a6e41efa54cb41e12c076f2bdf0..28b52083c04fb38cc63480441a3a624c
  #endif
  
 diff --git a/net/arp/arp_out.c b/net/arp/arp_out.c
-index 6edc80a79bcfa29683e73088b05f1a75928fa6c1..ae5267f9b89e4d59750a9c05c7e5cf0fd5042f0e 100644
+index 6edc80a79bc..ae5267f9b89 100644
 --- a/net/arp/arp_out.c
 +++ b/net/arp/arp_out.c
 @@ -276,7 +276,11 @@ void arp_out(FAR struct net_driver_s *dev)
@@ -37703,7 +37837,7 @@ index 6edc80a79bcfa29683e73088b05f1a75928fa6c1..ae5267f9b89e4d59750a9c05c7e5cf0f
  #endif
  
 diff --git a/net/arp/arp_send.c b/net/arp/arp_send.c
-index 84398c90b107af8e54644c26202d4590d71e6926..f6450e54da955b95d45dba3fe200bac207ff4afc 100644
+index 84398c90b10..f6450e54da9 100644
 --- a/net/arp/arp_send.c
 +++ b/net/arp/arp_send.c
 @@ -381,6 +381,7 @@ int arp_send(in_addr_t ipaddr)
@@ -37715,7 +37849,7 @@ index 84398c90b107af8e54644c26202d4590d71e6926..f6450e54da955b95d45dba3fe200bac2
              }
          }
 diff --git a/net/arp/arp_table.c b/net/arp/arp_table.c
-index 7e628a016798182533795a66c9d19a2b4e6109c1..1603eb450190bf80380af42249c0bcca2287f03f 100644
+index 7e628a01679..1603eb45019 100644
 --- a/net/arp/arp_table.c
 +++ b/net/arp/arp_table.c
 @@ -57,6 +57,7 @@
@@ -37783,7 +37917,7 @@ index 7e628a016798182533795a66c9d19a2b4e6109c1..1603eb450190bf80380af42249c0bcca
            if (work_available(&tabptr->at_work))
              {
 diff --git a/net/devif/devif_poll.c b/net/devif/devif_poll.c
-index 10c7c0af8e9f5f3e3c53cddaa4fb1bb361916d3c..d7874c4d7ae8d568a20d0e50605ede2559b862bf 100644
+index 10c7c0af8e9..d7874c4d7ae 100644
 --- a/net/devif/devif_poll.c
 +++ b/net/devif/devif_poll.c
 @@ -874,6 +874,13 @@ static int devif_poll_connections(FAR struct net_driver_s *dev,
@@ -37817,7 +37951,7 @@ index 10c7c0af8e9f5f3e3c53cddaa4fb1bb361916d3c..d7874c4d7ae8d568a20d0e50605ede25
      }
  
 diff --git a/net/local/local_recvmsg.c b/net/local/local_recvmsg.c
-index eff19e77826fe7ebcdc1ba1b8fff5c0a0d864fc1..5b0f64c2ad63172b7e49523a64677c7cbb57e7e5 100644
+index eff19e77826..5b0f64c2ad6 100644
 --- a/net/local/local_recvmsg.c
 +++ b/net/local/local_recvmsg.c
 @@ -35,6 +35,7 @@
@@ -37859,7 +37993,7 @@ index eff19e77826fe7ebcdc1ba1b8fff5c0a0d864fc1..5b0f64c2ad63172b7e49523a64677c7c
      }
  
 diff --git a/net/procfs/net_tcp.c b/net/procfs/net_tcp.c
-index 8b840caeebc71186ede7e854fa1b70a36cee7e15..ed5f13b17d8a80001cf6d94b165659115745e80f 100644
+index 8b840caeebc..ed5f13b17d8 100644
 --- a/net/procfs/net_tcp.c
 +++ b/net/procfs/net_tcp.c
 @@ -46,9 +46,9 @@
@@ -37899,7 +38033,7 @@ index 8b840caeebc71186ede7e854fa1b70a36cee7e15..ed5f13b17d8a80001cf6d94b16565911
                                            "%-*s\n"
                                            ,
 diff --git a/net/tcp/tcp_accept.c b/net/tcp/tcp_accept.c
-index 38e31ec0106b0c4c58db9695352026c4a21dcf03..45b9b901ebe2154edaec0a21c37e18ab31bbd03c 100644
+index 38e31ec0106..45b9b901ebe 100644
 --- a/net/tcp/tcp_accept.c
 +++ b/net/tcp/tcp_accept.c
 @@ -49,8 +49,6 @@
@@ -37957,7 +38091,7 @@ index 38e31ec0106b0c4c58db9695352026c4a21dcf03..45b9b901ebe2154edaec0a21c37e18ab
  
  out:
 diff --git a/net/tcp/tcp_conn.c b/net/tcp/tcp_conn.c
-index 685cf2667919abcc4388938fca6104aa0cc34348..164b166ef4525778b183ff41037df838fa92bac5 100644
+index 685cf266791..164b166ef45 100644
 --- a/net/tcp/tcp_conn.c
 +++ b/net/tcp/tcp_conn.c
 @@ -1152,6 +1152,11 @@ FAR struct tcp_conn_s *tcp_alloc_accept(FAR struct net_driver_s *dev,
@@ -37973,7 +38107,7 @@ index 685cf2667919abcc4388938fca6104aa0cc34348..164b166ef4525778b183ff41037df838
        /* Fill in the necessary fields for the new connection. */
  
 diff --git a/net/tcp/tcp_send_buffered.c b/net/tcp/tcp_send_buffered.c
-index a39e06f5772b8d0061936d962f1c09ae5cf54c8d..406979e261c6e5796f4035f1e5d6667709c98463 100644
+index a39e06f5772..406979e261c 100644
 --- a/net/tcp/tcp_send_buffered.c
 +++ b/net/tcp/tcp_send_buffered.c
 @@ -1789,8 +1789,13 @@ void tcp_sendbuffer_notify(FAR struct tcp_conn_s *conn)
@@ -37992,7 +38126,7 @@ index a39e06f5772b8d0061936d962f1c09ae5cf54c8d..406979e261c6e5796f4035f1e5d66677
        nxsem_post(&conn->sconn.s_sndsem);
      }
 diff --git a/net/tcp/tcp_shutdown.c b/net/tcp/tcp_shutdown.c
-index 841e5c4b28205b05202e94392f3ec8ad84f14725..a0f6478c8726c1401a5f777c9171d668b4cee7d2 100644
+index 841e5c4b282..a0f6478c872 100644
 --- a/net/tcp/tcp_shutdown.c
 +++ b/net/tcp/tcp_shutdown.c
 @@ -30,6 +30,9 @@
@@ -38044,7 +38178,7 @@ index 841e5c4b28205b05202e94392f3ec8ad84f14725..a0f6478c8726c1401a5f777c9171d668
        conn->shdcb->priv  = conn; /* reference for event handler to free cb */
  
 diff --git a/net/udp/udp_callback.c b/net/udp/udp_callback.c
-index ca359c62d1f6032131e2ef399f616b3861ce7331..b11ebdf2cd45be44997ec1296c7d781635d9ef3c 100644
+index ca359c62d1f..b11ebdf2cd4 100644
 --- a/net/udp/udp_callback.c
 +++ b/net/udp/udp_callback.c
 @@ -28,6 +28,7 @@
@@ -38123,7 +38257,7 @@ index ca359c62d1f6032131e2ef399f616b3861ce7331..b11ebdf2cd45be44997ec1296c7d7816
        /* There is no handler to receive new data and there are no free
         * read-ahead buffers to retain the data -- drop the packet.
 diff --git a/net/udp/udp_sendto_buffered.c b/net/udp/udp_sendto_buffered.c
-index 0e9fa2087f14e16a4551f00b314701668226fb4f..64c46aca592871bab54c2768249822728939d3a5 100644
+index 0e9fa2087f1..64c46aca592 100644
 --- a/net/udp/udp_sendto_buffered.c
 +++ b/net/udp/udp_sendto_buffered.c
 @@ -981,8 +981,13 @@ void udp_sendbuffer_notify(FAR struct udp_conn_s *conn)
@@ -38141,8 +38275,50 @@ index 0e9fa2087f14e16a4551f00b314701668226fb4f..64c46aca592871bab54c276824982272
      {
        nxsem_post(&conn->sconn.s_sndsem);
      }
+diff --git a/sched/Kconfig b/sched/Kconfig
+index 34ad0ec0e20..882e8d4deba 100644
+--- a/sched/Kconfig
++++ b/sched/Kconfig
+@@ -740,6 +740,37 @@ config RR_INTERVAL
+ 		Round robin scheduling (SCHED_RR) is enabled by setting this
+ 		interval to a positive, non-zero value.
+ 
++config SCHED_KTHREAD_GC
++	bool "Collect per-CPU deferred kernel allocations"
++	default n
++	depends on SMP && MM_KERNEL_HEAP && MM_DEFAULT_MANAGER
++	---help---
++		Start one low priority collector on each CPU. Each drains only
++		its own deferred kernel-heap frees in normal thread context.
++		This reclaims exited kernel-thread stacks on an otherwise idle CPU
++		without collecting another CPU's still-executing exit stack.
++		Collection can be delayed by higher priority threads on that CPU.
++		User process heaps and other memory managers are outside this option.
++
++if SCHED_KTHREAD_GC
++
++config SCHED_KTHREAD_GC_PRIORITY
++	int "Kernel collector priority"
++	default 50
++	range 1 255
++
++config SCHED_KTHREAD_GC_STACKSIZE
++	int "Kernel collector stack size"
++	default 3072
++	range 1024 16384
++
++config SCHED_KTHREAD_GC_INTERVAL_USEC
++	int "Delay between kernel collector passes (microseconds)"
++	default 100000
++	range 10000 1000000
++
++endif
++
+ config SCHED_NOPREEMPT_KERNEL
+ 	bool "nopreemptive kernel"
+ 	default n
 diff --git a/sched/addrenv/addrenv.c b/sched/addrenv/addrenv.c
-index a1f0da1259aab047bf059999fc5d0336106a2bbb..aa214e8db53338d8a53ba17c26d9c8716d391154 100644
+index a1f0da1259a..aa214e8db53 100644
 --- a/sched/addrenv/addrenv.c
 +++ b/sched/addrenv/addrenv.c
 @@ -44,23 +44,87 @@
@@ -38356,7 +38532,7 @@ index a1f0da1259aab047bf059999fc5d0336106a2bbb..aa214e8db53338d8a53ba17c26d9c871
        tcb->group->tg_addrenv_own = NULL;
      }
 diff --git a/sched/group/group_setuptaskfiles.c b/sched/group/group_setuptaskfiles.c
-index ae29d126a5c222f9c6eb05bf500a73883bd78912..c410b338ab7ef28627153bf3aac9ccb138b7aedb 100644
+index ae29d126a5c..c410b338ab7 100644
 --- a/sched/group/group_setuptaskfiles.c
 +++ b/sched/group/group_setuptaskfiles.c
 @@ -30,6 +30,7 @@
@@ -38399,8 +38575,64 @@ index ae29d126a5c222f9c6eb05bf500a73883bd78912..c410b338ab7ef28627153bf3aac9ccb1
      }
  #endif
  
+diff --git a/sched/init/CMakeLists.txt b/sched/init/CMakeLists.txt
+index f028952dd1a..8e8c99fb17a 100644
+--- a/sched/init/CMakeLists.txt
++++ b/sched/init/CMakeLists.txt
+@@ -26,4 +26,8 @@ if(CONFIG_SMP)
+   list(APPEND SRCS nx_smpstart.c)
+ endif()
+ 
++if(CONFIG_SCHED_KTHREAD_GC)
++  list(APPEND SRCS nx_kthread_gc.c)
++endif()
++
+ target_sources(sched PRIVATE ${SRCS})
+diff --git a/sched/init/Make.defs b/sched/init/Make.defs
+index 88fcc52b92b..36c64c6238f 100644
+--- a/sched/init/Make.defs
++++ b/sched/init/Make.defs
+@@ -26,6 +26,10 @@ ifeq ($(CONFIG_SMP),y)
+ CSRCS += nx_smpstart.c
+ endif
+ 
++ifeq ($(CONFIG_SCHED_KTHREAD_GC),y)
++CSRCS += nx_kthread_gc.c
++endif
++
+ # Include init build support
+ 
+ DEPPATH += --dep-path init
+diff --git a/sched/init/init.h b/sched/init/init.h
+index be95446c801..37530d926aa 100644
+--- a/sched/init/init.h
++++ b/sched/init/init.h
+@@ -121,4 +121,8 @@ void nx_idle_trampoline(void);
+ 
+ void nx_bringup(void);
+ 
++#ifdef CONFIG_SCHED_KTHREAD_GC
++void nx_kthread_gc_start(void);
++#endif
++
+ #endif /* __SCHED_INIT_INIT_H */
+diff --git a/sched/init/nx_bringup.c b/sched/init/nx_bringup.c
+index 20bda25ba0e..f7928748379 100644
+--- a/sched/init/nx_bringup.c
++++ b/sched/init/nx_bringup.c
+@@ -536,6 +536,10 @@ void nx_bringup(void)
+ 
+   nx_workqueues();
+ 
++#ifdef CONFIG_SCHED_KTHREAD_GC
++  nx_kthread_gc_start();
++#endif
++
+   /* Once the operating system has been initialized, the system must be
+    * started by spawning the user initialization thread of execution.  This
+    * will be the first user-mode thread.
 diff --git a/sched/init/nx_start.c b/sched/init/nx_start.c
-index 0cdeeea94ddc92e5bd9a9580a3d7b69050fed701..dcab92be0fb729cf8bafbcf22201bce54a2926e5 100644
+index 0cdeeea94dd..dcab92be0fb 100644
 --- a/sched/init/nx_start.c
 +++ b/sched/init/nx_start.c
 @@ -828,6 +828,14 @@ void nx_start(void)
@@ -38419,7 +38651,7 @@ index 0cdeeea94ddc92e5bd9a9580a3d7b69050fed701..dcab92be0fb729cf8bafbcf22201bce5
  
    /* Let other threads have access to the memory manager */
 diff --git a/sched/mqueue/mq_send.c b/sched/mqueue/mq_send.c
-index 548f4a49bbb2ba6272923f774f193d4c6a4518ea..9310a2713869ee9d2ece7f0a131f1d4118ce8186 100644
+index 548f4a49bbb..9310a271386 100644
 --- a/sched/mqueue/mq_send.c
 +++ b/sched/mqueue/mq_send.c
 @@ -332,6 +332,17 @@ int file_mq_timedsend_internal(FAR struct file *mq, FAR const char *msg,
@@ -38441,7 +38673,7 @@ index 548f4a49bbb2ba6272923f774f193d4c6a4518ea..9310a2713869ee9d2ece7f0a131f1d41
         * queue to become non-full.
         */
 diff --git a/sched/sched/sched_addreadytorun.c b/sched/sched/sched_addreadytorun.c
-index 7b76b5f506457f22d239f5e490c7ead86286221b..bc268bf2097149c263c9f82cfc63e5197f431353 100644
+index 7b76b5f5064..bc268bf2097 100644
 --- a/sched/sched/sched_addreadytorun.c
 +++ b/sched/sched/sched_addreadytorun.c
 @@ -157,6 +157,20 @@ bool nxsched_switch_running(int cpu, bool switch_equal)
@@ -38466,7 +38698,7 @@ index 7b76b5f506457f22d239f5e490c7ead86286221b..bc268bf2097149c263c9f82cfc63e519
      {
        sched_priority--;
 diff --git a/sched/semaphore/sem_waitirq.c b/sched/semaphore/sem_waitirq.c
-index 70552158c26c9114a7e994a700be59ade9dfc87b..40f0168136a96f358b8fbb1f43432b688b458d08 100644
+index 70552158c26..40f0168136a 100644
 --- a/sched/semaphore/sem_waitirq.c
 +++ b/sched/semaphore/sem_waitirq.c
 @@ -43,24 +43,8 @@
@@ -38526,7 +38758,7 @@ index 70552158c26c9114a7e994a700be59ade9dfc87b..40f0168136a96f358b8fbb1f43432b68
      }
  }
 diff --git a/sched/signal/sig_cleanup.c b/sched/signal/sig_cleanup.c
-index df63a2d783f6eb8cbf99af989221bef056acfc19..482c626a3e3a3a0621e8ff3e7317dbe537cdc219 100644
+index df63a2d783f..482c626a3e3 100644
 --- a/sched/signal/sig_cleanup.c
 +++ b/sched/signal/sig_cleanup.c
 @@ -47,6 +47,38 @@
@@ -38569,7 +38801,7 @@ index df63a2d783f6eb8cbf99af989221bef056acfc19..482c626a3e3a3a0621e8ff3e7317dbe5
    /* Deallocate all entries in the list of pending signal actions */
  
 diff --git a/sched/signal/sig_dispatch.c b/sched/signal/sig_dispatch.c
-index 703d1c2ca1d3416722a2048d904ccaaf3536f6aa..041606a8be30ff923bd74cb84d958f92800e1e0b 100644
+index 703d1c2ca1d..041606a8be3 100644
 --- a/sched/signal/sig_dispatch.c
 +++ b/sched/signal/sig_dispatch.c
 @@ -294,7 +294,7 @@ static FAR sigpendq_t *nxsig_alloc_pendingsignal(void)
@@ -38628,7 +38860,7 @@ index 703d1c2ca1d3416722a2048d904ccaaf3536f6aa..041606a8be30ff923bd74cb84d958f92
            /* Add the structure to the group pending signal list */
  
 diff --git a/sched/signal/sig_pending.c b/sched/signal/sig_pending.c
-index c6e70d5b4cdacb99f4d940ba92b325ec4b47288f..4bde622546b7d1ee4d6351325d167bc9c4b49f7a 100644
+index c6e70d5b4cd..4bde622546b 100644
 --- a/sched/signal/sig_pending.c
 +++ b/sched/signal/sig_pending.c
 @@ -98,7 +98,10 @@ sigset_t nxsig_pendingset(FAR struct tcb_s *stcb)
@@ -38644,7 +38876,7 @@ index c6e70d5b4cdacb99f4d940ba92b325ec4b47288f..4bde622546b7d1ee4d6351325d167bc9
  
    spin_unlock_irqrestore(&group->tg_lock, flags);
 diff --git a/sched/signal/sig_ppoll.c b/sched/signal/sig_ppoll.c
-index 91df026f292b34ff75a95240f82e9ff8ed343120..46760257e776c092d61ce49a94c78e42fc4cab11 100644
+index 91df026f292..46760257e77 100644
 --- a/sched/signal/sig_ppoll.c
 +++ b/sched/signal/sig_ppoll.c
 @@ -105,7 +105,14 @@ int ppoll(FAR struct pollfd *fds, nfds_t nfds,
@@ -38680,7 +38912,7 @@ index 91df026f292b34ff75a95240f82e9ff8ed343120..46760257e776c092d61ce49a94c78e42
  
        /* Now, handle the (rare?) case where (a) a blocked signal was received
 diff --git a/sched/signal/sig_pselect.c b/sched/signal/sig_pselect.c
-index af9bc2b716b8828f0b9cf8beb9ce39e0dfacca6a..31a28b70ac88d2843eae45511780fdce195f1aa2 100644
+index af9bc2b716b..31a28b70ac8 100644
 --- a/sched/signal/sig_pselect.c
 +++ b/sched/signal/sig_pselect.c
 @@ -102,7 +102,14 @@ int pselect(int nfds, FAR fd_set *readfds, FAR fd_set *writefds,
@@ -38716,7 +38948,7 @@ index af9bc2b716b8828f0b9cf8beb9ce39e0dfacca6a..31a28b70ac88d2843eae45511780fdce
  
        /* Now, handle the (rare?) case where (a) a blocked signal was received
 diff --git a/sched/signal/sig_removependingsignal.c b/sched/signal/sig_removependingsignal.c
-index 517dfdc62af93bf96b626e3afd47e67634bd24e2..5f72fb53124f9f9ef17d129f9ed442e9ad6f3796 100644
+index 517dfdc62af..5f72fb53124 100644
 --- a/sched/signal/sig_removependingsignal.c
 +++ b/sched/signal/sig_removependingsignal.c
 @@ -66,7 +66,8 @@ FAR sigpendq_t *nxsig_remove_pendingsignal(FAR struct tcb_s *stcb, int signo)
@@ -38730,7 +38962,7 @@ index 517dfdc62af93bf96b626e3afd47e67634bd24e2..5f72fb53124f9f9ef17d129f9ed442e9
  
    if (currsig)
 diff --git a/sched/signal/sig_suspend.c b/sched/signal/sig_suspend.c
-index c75678c07139add62c5915af28e69cf96ff3e679..f096594aeb17aaa0af094c7344cdec6c9ad5e766 100644
+index c75678c0713..f096594aeb1 100644
 --- a/sched/signal/sig_suspend.c
 +++ b/sched/signal/sig_suspend.c
 @@ -114,7 +114,7 @@ int sigsuspend(FAR const sigset_t *set)
@@ -38752,7 +38984,7 @@ index c75678c07139add62c5915af28e69cf96ff3e679..f096594aeb17aaa0af094c7344cdec6c
  
        /* Now, handle the (rare?) case where (a) a blocked signal was received
 diff --git a/sched/signal/sig_timedwait.c b/sched/signal/sig_timedwait.c
-index da156423dc996455bde1069e06ad7df94e9c8a39..2f41c7d9c25a1dc3242c1f7914df8a0068632474 100644
+index da156423dc9..2f41c7d9c25 100644
 --- a/sched/signal/sig_timedwait.c
 +++ b/sched/signal/sig_timedwait.c
 @@ -459,17 +459,18 @@ int nxsig_timedwait(FAR const sigset_t *set, FAR struct siginfo *info,
@@ -38794,7 +39026,7 @@ index da156423dc996455bde1069e06ad7df94e9c8a39..2f41c7d9c25a1dc3242c1f7914df8a00
  }
  
 diff --git a/sched/signal/signal.h b/sched/signal/signal.h
-index 21b637da52afe3415c4fcddf1bad6fc329fc9891..1813edd786b7407bdce49d23b57af203231bd6f9 100644
+index 21b637da52a..1813edd786b 100644
 --- a/sched/signal/signal.h
 +++ b/sched/signal/signal.h
 @@ -82,6 +82,7 @@ struct sigpendq
@@ -38874,7 +39106,7 @@ index 21b637da52afe3415c4fcddf1bad6fc329fc9891..1813edd786b7407bdce49d23b57af203
 +
  #endif /* __SCHED_SIGNAL_SIGNAL_H */
 diff --git a/sched/task/task_exithook.c b/sched/task/task_exithook.c
-index 02ad7e3ed6da86c8ab7d56d2968c9e6891e2e692..1320c5c9269c8c64a2a967e35f25fcf4eb6c62ef 100644
+index 02ad7e3ed6d..1320c5c9269 100644
 --- a/sched/task/task_exithook.c
 +++ b/sched/task/task_exithook.c
 @@ -478,16 +478,16 @@ void nxtask_exithook(FAR struct tcb_s *tcb, int status)
@@ -38899,7 +39131,7 @@ index 02ad7e3ed6da86c8ab7d56d2968c9e6891e2e692..1320c5c9269c8c64a2a967e35f25fcf4
    if ((atomic_read(&tcb->flags) & TCB_FLAG_TTYPE_MASK) ==
        TCB_FLAG_TTYPE_KERNEL)
 diff --git a/sched/tls/task_uninitinfo.c b/sched/tls/task_uninitinfo.c
-index 3dc2327070f37680d3d04e5ddecf2153cc7a22e3..14a72e452215fffe8ae31ab707fec4975259f628 100644
+index 3dc2327070f..14a72e45221 100644
 --- a/sched/tls/task_uninitinfo.c
 +++ b/sched/tls/task_uninitinfo.c
 @@ -37,6 +37,23 @@
@@ -38946,8 +39178,49 @@ index 3dc2327070f37680d3d04e5ddecf2153cc7a22e3..14a72e452215fffe8ae31ab707fec497
  #endif
  
    /* Release all environment variables */
+diff --git a/sched/wqueue/kwork_thread.c b/sched/wqueue/kwork_thread.c
+index 3af44a139cc..9ff7847be94 100644
+--- a/sched/wqueue/kwork_thread.c
++++ b/sched/wqueue/kwork_thread.c
+@@ -78,6 +78,18 @@
+ #define HPWORK_STACKSIZE (CONFIG_SCHED_HPNTHREADS * CONFIG_SCHED_HPWORKSTACKSIZE)
+ #define LPWORK_STACKSIZE (CONFIG_SCHED_LPNTHREADS * CONFIG_SCHED_LPWORKSTACKSIZE)
+ 
++#if defined(CONFIG_ARCH_CHIP_ESP32S31) && defined(CONFIG_BUILD_KERNEL)
++/* Match up_create_stack(): S31 kernel threads obtain TLS from their TCB,
++ * and up_use_stack() requires only RISC-V ABI alignment. Applying the user
++ * TLS alignment here can leave a 64 KiB SRAM hole before each tiny static
++ * worker stack, exhausting the kernel heap when services and camera coexist.
++ */
++
++#  define KWORK_STACK_ALIGNMENT STACKFRAME_ALIGN
++#else
++#  define KWORK_STACK_ALIGNMENT STACK_ALIGNMENT
++#endif
++
+ /****************************************************************************
+  * Public Data
+  ****************************************************************************/
+@@ -668,7 +680,7 @@ int work_start_highpri(void)
+ 
+   /* Start the high-priority, kernel mode worker thread(s) */
+ 
+-  static aligned_data(STACK_ALIGNMENT)
++  static aligned_data(KWORK_STACK_ALIGNMENT)
+ #ifdef SCHED_HPWORKSTACKSECTION
+   locate_data(CONFIG_SCHED_HPWORKSTACKSECTION)
+ #endif
+@@ -705,7 +717,7 @@ int work_start_lowpri(void)
+ 
+   /* Start the low-priority, kernel mode worker thread(s) */
+ 
+-  static aligned_data(STACK_ALIGNMENT)
++  static aligned_data(KWORK_STACK_ALIGNMENT)
+ #ifdef SCHED_LPWORKSTACKSECTION
+   locate_data(CONFIG_SCHED_LPWORKSTACKSECTION);
+ #endif
 diff --git a/tools/espressif/Config.mk b/tools/espressif/Config.mk
-index 8ac396863c9e1651c1884c35f81b75411c09dd76..787b11e04be8e614f8be79df1f7d2a833ec46c64 100644
+index 8ac396863c9..787b11e04be 100644
 --- a/tools/espressif/Config.mk
 +++ b/tools/espressif/Config.mk
 @@ -95,7 +95,11 @@ ifeq ($(CONFIG_ESPRESSIF_BOOTLOADER_MCUBOOT),y)
@@ -38973,7 +39246,7 @@ index 8ac396863c9e1651c1884c35f81b75411c09dd76..787b11e04be8e614f8be79df1f7d2a83
  endef
 diff --git a/tools/espressif/esp32s31_demo.py b/tools/espressif/esp32s31_demo.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..38fca98cb0a7c5ca6790aae5572c71c9632a810e
+index 00000000000..38fca98cb0a
 --- /dev/null
 +++ b/tools/espressif/esp32s31_demo.py
 @@ -0,0 +1,245 @@
@@ -39224,7 +39497,7 @@ index 0000000000000000000000000000000000000000..38fca98cb0a7c5ca6790aae5572c71c9
 +    raise SystemExit(main())
 diff --git a/tools/espressif/esp32s31_event_smoke.py b/tools/espressif/esp32s31_event_smoke.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..2eb57ab3dcc444e0747bd64c8429f3c3b8b6a3e9
+index 00000000000..2eb57ab3dcc
 --- /dev/null
 +++ b/tools/espressif/esp32s31_event_smoke.py
 @@ -0,0 +1,59 @@
@@ -39289,7 +39562,7 @@ index 0000000000000000000000000000000000000000..2eb57ab3dcc444e0747bd64c8429f3c3
 +    main()
 diff --git a/tools/espressif/esp32s31_i2c_smoke.py b/tools/espressif/esp32s31_i2c_smoke.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..d04b22b773343a5613f3bebda2b48a27ff71e958
+index 00000000000..d04b22b7733
 --- /dev/null
 +++ b/tools/espressif/esp32s31_i2c_smoke.py
 @@ -0,0 +1,87 @@
@@ -39382,7 +39655,7 @@ index 0000000000000000000000000000000000000000..d04b22b773343a5613f3bebda2b48a27
 +    main()
 diff --git a/tools/espressif/esp32s31_led_smoke.py b/tools/espressif/esp32s31_led_smoke.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..b650118cfdbbdf4d473cd220b88e39f4f0b2739d
+index 00000000000..b650118cfdb
 --- /dev/null
 +++ b/tools/espressif/esp32s31_led_smoke.py
 @@ -0,0 +1,47 @@
@@ -39435,7 +39708,7 @@ index 0000000000000000000000000000000000000000..b650118cfdbbdf4d473cd220b88e39f4
 +    main()
 diff --git a/tools/espressif/esp32s31_nuttx_smoke.py b/tools/espressif/esp32s31_nuttx_smoke.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..de00675da874dff8c5f071d259623b71d904adb7
+index 00000000000..de00675da87
 --- /dev/null
 +++ b/tools/espressif/esp32s31_nuttx_smoke.py
 @@ -0,0 +1,2177 @@
@@ -41618,7 +41891,7 @@ index 0000000000000000000000000000000000000000..de00675da874dff8c5f071d259623b71
 +    raise SystemExit(main())
 diff --git a/tools/espressif/esp32s31_prepare_appfs.py b/tools/espressif/esp32s31_prepare_appfs.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..a2f1d30292109245ef1c29d5c18a6dbb61937882
+index 00000000000..a2f1d302921
 --- /dev/null
 +++ b/tools/espressif/esp32s31_prepare_appfs.py
 @@ -0,0 +1,127 @@
@@ -41751,7 +42024,7 @@ index 0000000000000000000000000000000000000000..a2f1d30292109245ef1c29d5c18a6dbb
 +    main()
 diff --git a/tools/espressif/esp32s31_production_smoke.py b/tools/espressif/esp32s31_production_smoke.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..310cb64595065a7dfb58147d905e5b883ea264bb
+index 00000000000..310cb645950
 --- /dev/null
 +++ b/tools/espressif/esp32s31_production_smoke.py
 @@ -0,0 +1,145 @@
@@ -41902,7 +42175,7 @@ index 0000000000000000000000000000000000000000..310cb64595065a7dfb58147d905e5b88
 +    raise SystemExit(main())
 diff --git a/tools/espressif/esp32s31_simple_boot_digest.py b/tools/espressif/esp32s31_simple_boot_digest.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..0a2948ece7e1c32a188b0803eaa73d97cf7c911c
+index 00000000000..0a2948ece7e
 --- /dev/null
 +++ b/tools/espressif/esp32s31_simple_boot_digest.py
 @@ -0,0 +1,100 @@
@@ -42008,7 +42281,7 @@ index 0000000000000000000000000000000000000000..0a2948ece7e1c32a188b0803eaa73d97
 +    main()
 diff --git a/tools/test_arp_queue_expiry.py b/tools/test_arp_queue_expiry.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..7025972b8ad57b84bb327c9f15e0cc27ab92f1c5
+index 00000000000..7025972b8ad
 --- /dev/null
 +++ b/tools/test_arp_queue_expiry.py
 @@ -0,0 +1,122 @@
@@ -42136,7 +42409,7 @@ index 0000000000000000000000000000000000000000..7025972b8ad57b84bb327c9f15e0cc27
 +    main()
 diff --git a/tools/test_arp_queue_ownership.py b/tools/test_arp_queue_ownership.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..258f32cd244d21273a89983533e14e90c1f60711
+index 00000000000..258f32cd244
 --- /dev/null
 +++ b/tools/test_arp_queue_ownership.py
 @@ -0,0 +1,85 @@
@@ -42227,7 +42500,7 @@ index 0000000000000000000000000000000000000000..258f32cd244d21273a89983533e14e90
 +    main()
 diff --git a/tools/test_arp_send_callback_failure.py b/tools/test_arp_send_callback_failure.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..b8c2e0a2e7b7f2ecaf505318a586202b9b1a6f08
+index 00000000000..b8c2e0a2e7b
 --- /dev/null
 +++ b/tools/test_arp_send_callback_failure.py
 @@ -0,0 +1,114 @@
@@ -42347,7 +42620,7 @@ index 0000000000000000000000000000000000000000..b8c2e0a2e7b7f2ecaf505318a586202b
 +    main()
 diff --git a/tools/test_cmake_config_header.py b/tools/test_cmake_config_header.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..1a2835f0e6e6c416f431d3a085f6e9408adddb39
+index 00000000000..1a2835f0e6e
 --- /dev/null
 +++ b/tools/test_cmake_config_header.py
 @@ -0,0 +1,51 @@
@@ -42404,7 +42677,7 @@ index 0000000000000000000000000000000000000000..1a2835f0e6e6c416f431d3a085f6e940
 +    main()
 diff --git a/tools/test_elf_default_heapsize.py b/tools/test_elf_default_heapsize.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..b47eaa743e4b04cecd16cf70b80ca4509a3ede2f
+index 00000000000..b47eaa743e4
 --- /dev/null
 +++ b/tools/test_elf_default_heapsize.py
 @@ -0,0 +1,62 @@
@@ -42472,7 +42745,7 @@ index 0000000000000000000000000000000000000000..b47eaa743e4b04cecd16cf70b80ca450
 +    main()
 diff --git a/tools/test_elf_unnamed_symbols.py b/tools/test_elf_unnamed_symbols.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..2e219b89a9d63d57c3fadbaab04d98e9a85a7d5c
+index 00000000000..2e219b89a9d
 --- /dev/null
 +++ b/tools/test_elf_unnamed_symbols.py
 @@ -0,0 +1,105 @@
@@ -42583,7 +42856,7 @@ index 0000000000000000000000000000000000000000..2e219b89a9d63d57c3fadbaab04d98e9
 +    main()
 diff --git a/tools/test_esp32s31_appfs_manifest.py b/tools/test_esp32s31_appfs_manifest.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..a597685a02bb26ea308b38977bcb28002621c799
+index 00000000000..a597685a02b
 --- /dev/null
 +++ b/tools/test_esp32s31_appfs_manifest.py
 @@ -0,0 +1,47 @@
@@ -42636,7 +42909,7 @@ index 0000000000000000000000000000000000000000..a597685a02bb26ea308b38977bcb2800
 +    unittest.main(verbosity=2)
 diff --git a/tools/test_esp32s31_buttons.py b/tools/test_esp32s31_buttons.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..d53bc115461ca32b361b8451199f7f28b042bb14
+index 00000000000..d53bc115461
 --- /dev/null
 +++ b/tools/test_esp32s31_buttons.py
 @@ -0,0 +1,86 @@
@@ -42728,7 +43001,7 @@ index 0000000000000000000000000000000000000000..d53bc115461ca32b361b8451199f7f28
 +    main()
 diff --git a/tools/test_esp32s31_demo.py b/tools/test_esp32s31_demo.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..db4a69e9e4acc74939d901eb0128edb3bb2d3460
+index 00000000000..db4a69e9e4a
 --- /dev/null
 +++ b/tools/test_esp32s31_demo.py
 @@ -0,0 +1,82 @@
@@ -42816,7 +43089,7 @@ index 0000000000000000000000000000000000000000..db4a69e9e4acc74939d901eb0128edb3
 +    unittest.main(verbosity=2)
 diff --git a/tools/test_esp32s31_dhcp_probe.py b/tools/test_esp32s31_dhcp_probe.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..d2c356dd1392940d2268c751d17cc412c99bf67e
+index 00000000000..d2c356dd139
 --- /dev/null
 +++ b/tools/test_esp32s31_dhcp_probe.py
 @@ -0,0 +1,74 @@
@@ -42896,7 +43169,7 @@ index 0000000000000000000000000000000000000000..d2c356dd1392940d2268c751d17cc412
 +    main()
 diff --git a/tools/test_esp32s31_elf_metadata.py b/tools/test_esp32s31_elf_metadata.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..b5d5667e9fe2a8be61357a1079ea8d437b141d40
+index 00000000000..b5d5667e9fe
 --- /dev/null
 +++ b/tools/test_esp32s31_elf_metadata.py
 @@ -0,0 +1,65 @@
@@ -42967,7 +43240,7 @@ index 0000000000000000000000000000000000000000..b5d5667e9fe2a8be61357a1079ea8d43
 +    main()
 diff --git a/tools/test_esp32s31_event_smoke.py b/tools/test_esp32s31_event_smoke.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..514c51142145c5b62b1d98d2b5882103dfe94ece
+index 00000000000..514c5114214
 --- /dev/null
 +++ b/tools/test_esp32s31_event_smoke.py
 @@ -0,0 +1,35 @@
@@ -43008,7 +43281,7 @@ index 0000000000000000000000000000000000000000..514c51142145c5b62b1d98d2b5882103
 +print('EVENT_TRANSCRIPT=PASS markers/count/order/cpus/results/fatal/cleanup')
 diff --git a/tools/test_esp32s31_fpu_context.py b/tools/test_esp32s31_fpu_context.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..2b62f18cd1e7a482b71b7affd339a0bacd49e129
+index 00000000000..2b62f18cd1e
 --- /dev/null
 +++ b/tools/test_esp32s31_fpu_context.py
 @@ -0,0 +1,144 @@
@@ -43158,7 +43431,7 @@ index 0000000000000000000000000000000000000000..2b62f18cd1e7a482b71b7affd339a0ba
 +    main()
 diff --git a/tools/test_esp32s31_i2c_reset.py b/tools/test_esp32s31_i2c_reset.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..9318c8d42801c5cdfb947b3ba63528b6298097c7
+index 00000000000..9318c8d4280
 --- /dev/null
 +++ b/tools/test_esp32s31_i2c_reset.py
 @@ -0,0 +1,135 @@
@@ -43299,7 +43572,7 @@ index 0000000000000000000000000000000000000000..9318c8d42801c5cdfb947b3ba63528b6
 +    main()
 diff --git a/tools/test_esp32s31_irq_completion.py b/tools/test_esp32s31_irq_completion.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..421feeefa3b5586a64e5721158d5a11986c723f4
+index 00000000000..421feeefa3b
 --- /dev/null
 +++ b/tools/test_esp32s31_irq_completion.py
 @@ -0,0 +1,92 @@
@@ -43397,7 +43670,7 @@ index 0000000000000000000000000000000000000000..421feeefa3b5586a64e5721158d5a119
 +    main()
 diff --git a/tools/test_esp32s31_irq_route.py b/tools/test_esp32s31_irq_route.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..c8f9ec7f1f16bccd1126814000689b4dce90968d
+index 00000000000..c8f9ec7f1f1
 --- /dev/null
 +++ b/tools/test_esp32s31_irq_route.py
 @@ -0,0 +1,109 @@
@@ -43512,7 +43785,7 @@ index 0000000000000000000000000000000000000000..c8f9ec7f1f16bccd1126814000689b4d
 +    main()
 diff --git a/tools/test_esp32s31_irq_unmap.py b/tools/test_esp32s31_irq_unmap.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..2599bed2ffc1d6fab3a98defd0ecff864fa06285
+index 00000000000..2599bed2ffc
 --- /dev/null
 +++ b/tools/test_esp32s31_irq_unmap.py
 @@ -0,0 +1,94 @@
@@ -43612,7 +43885,7 @@ index 0000000000000000000000000000000000000000..2599bed2ffc1d6fab3a98defd0ecff86
 +    main()
 diff --git a/tools/test_esp32s31_phy_clock.py b/tools/test_esp32s31_phy_clock.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..37d06cc64befc7128a36219f6c75acd6e903798a
+index 00000000000..37d06cc64be
 --- /dev/null
 +++ b/tools/test_esp32s31_phy_clock.py
 @@ -0,0 +1,91 @@
@@ -43709,7 +43982,7 @@ index 0000000000000000000000000000000000000000..37d06cc64befc7128a36219f6c75acd6
 +    main()
 diff --git a/tools/test_esp32s31_ping_probe.py b/tools/test_esp32s31_ping_probe.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..00a676409c5462f87ee5f65a5c20084750eb055e
+index 00000000000..00a676409c5
 --- /dev/null
 +++ b/tools/test_esp32s31_ping_probe.py
 @@ -0,0 +1,35 @@
@@ -43750,7 +44023,7 @@ index 0000000000000000000000000000000000000000..00a676409c5462f87ee5f65a5c200847
 +    main()
 diff --git a/tools/test_esp32s31_rmt_compat.py b/tools/test_esp32s31_rmt_compat.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..3cb7dbbac35fe19c1dbc9d5aeb153218c1684342
+index 00000000000..3cb7dbbac35
 --- /dev/null
 +++ b/tools/test_esp32s31_rmt_compat.py
 @@ -0,0 +1,84 @@
@@ -43840,7 +44113,7 @@ index 0000000000000000000000000000000000000000..3cb7dbbac35fe19c1dbc9d5aeb153218
 +    main()
 diff --git a/tools/test_esp32s31_wifi_event.py b/tools/test_esp32s31_wifi_event.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..2e7d9c0b8d980731625207e7af27f24803bcc867
+index 00000000000..2e7d9c0b8d9
 --- /dev/null
 +++ b/tools/test_esp32s31_wifi_event.py
 @@ -0,0 +1,253 @@
@@ -44099,7 +44372,7 @@ index 0000000000000000000000000000000000000000..2e7d9c0b8d980731625207e7af27f248
 +    main()
 diff --git a/tools/test_esp32s31_wifi_got_ip.py b/tools/test_esp32s31_wifi_got_ip.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..2e9178b61d9c0bb6988165410c21acf4d21d11bd
+index 00000000000..2e9178b61d9
 --- /dev/null
 +++ b/tools/test_esp32s31_wifi_got_ip.py
 @@ -0,0 +1,104 @@
@@ -44209,7 +44482,7 @@ index 0000000000000000000000000000000000000000..2e9178b61d9c0bb6988165410c21acf4
 +    main()
 diff --git a/tools/test_esp32s31_wifi_heap_callbacks.py b/tools/test_esp32s31_wifi_heap_callbacks.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..181c1a0f8a28ddd83fcd1af0b32c2474ff40cb5c
+index 00000000000..181c1a0f8a2
 --- /dev/null
 +++ b/tools/test_esp32s31_wifi_heap_callbacks.py
 @@ -0,0 +1,91 @@
@@ -44306,7 +44579,7 @@ index 0000000000000000000000000000000000000000..181c1a0f8a28ddd83fcd1af0b32c2474
 +    main()
 diff --git a/tools/test_esp32s31_wifi_iram.py b/tools/test_esp32s31_wifi_iram.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..493ade568d06a3d7e879543033b3fdd8fe3c6db2
+index 00000000000..493ade568d0
 --- /dev/null
 +++ b/tools/test_esp32s31_wifi_iram.py
 @@ -0,0 +1,91 @@
@@ -44403,7 +44676,7 @@ index 0000000000000000000000000000000000000000..493ade568d06a3d7e879543033b3fdd8
 +    main()
 diff --git a/tools/test_esp32s31_wifi_modem_status.py b/tools/test_esp32s31_wifi_modem_status.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..d9049ddd8c6b2fd34fee0a99c369703c7b5933ab
+index 00000000000..d9049ddd8c6
 --- /dev/null
 +++ b/tools/test_esp32s31_wifi_modem_status.py
 @@ -0,0 +1,135 @@
@@ -44544,7 +44817,7 @@ index 0000000000000000000000000000000000000000..d9049ddd8c6b2fd34fee0a99c369703c
 +    main()
 diff --git a/tools/test_esp32s31_wifi_protocol.py b/tools/test_esp32s31_wifi_protocol.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..803e00d0e89b07df09f8a7c5c105eb14db53fe8d
+index 00000000000..803e00d0e89
 --- /dev/null
 +++ b/tools/test_esp32s31_wifi_protocol.py
 @@ -0,0 +1,93 @@
@@ -44643,7 +44916,7 @@ index 0000000000000000000000000000000000000000..803e00d0e89b07df09f8a7c5c105eb14
 +    main()
 diff --git a/tools/test_esp32s31_wifi_task.py b/tools/test_esp32s31_wifi_task.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..696abd13cfd8c980bdb66d2759016750b3223fae
+index 00000000000..696abd13cfd
 --- /dev/null
 +++ b/tools/test_esp32s31_wifi_task.py
 @@ -0,0 +1,113 @@
@@ -44762,7 +45035,7 @@ index 0000000000000000000000000000000000000000..696abd13cfd8c980bdb66d2759016750
 +    main()
 diff --git a/tools/test_esp32s31_wifi_tx_budget.py b/tools/test_esp32s31_wifi_tx_budget.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..2ecdf3b4159fdf6b9b8771956b0753b46da3ddc8
+index 00000000000..2ecdf3b4159
 --- /dev/null
 +++ b/tools/test_esp32s31_wifi_tx_budget.py
 @@ -0,0 +1,51 @@
@@ -44819,7 +45092,7 @@ index 0000000000000000000000000000000000000000..2ecdf3b4159fdf6b9b8771956b0753b4
 +    main()
 diff --git a/tools/test_esp32s31_wireless_make.py b/tools/test_esp32s31_wireless_make.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..a7c9619d26a632146ce246fb78df7de61ea141f0
+index 00000000000..a7c9619d26a
 --- /dev/null
 +++ b/tools/test_esp32s31_wireless_make.py
 @@ -0,0 +1,111 @@
@@ -44936,7 +45209,7 @@ index 0000000000000000000000000000000000000000..a7c9619d26a632146ce246fb78df7de6
 +    main()
 diff --git a/tools/test_esp_gpio_irq_banks.py b/tools/test_esp_gpio_irq_banks.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..25993d31bfc08b3cbdcbf831928966f39ad1311b
+index 00000000000..25993d31bfc
 --- /dev/null
 +++ b/tools/test_esp_gpio_irq_banks.py
 @@ -0,0 +1,87 @@
@@ -45029,7 +45302,7 @@ index 0000000000000000000000000000000000000000..25993d31bfc08b3cbdcbf831928966f3
 +    main()
 diff --git a/tools/test_esp_hr_timer_lifecycle.py b/tools/test_esp_hr_timer_lifecycle.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..527f3df2fa7544933defa66a3eba329b9c49b1c7
+index 00000000000..527f3df2fa7
 --- /dev/null
 +++ b/tools/test_esp_hr_timer_lifecycle.py
 @@ -0,0 +1,141 @@
@@ -45176,7 +45449,7 @@ index 0000000000000000000000000000000000000000..527f3df2fa7544933defa66a3eba329b
 +    main()
 diff --git a/tools/test_esp_i2c_commands.py b/tools/test_esp_i2c_commands.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..77623fc9966e71e022791793237704e45d1ba72b
+index 00000000000..77623fc9966
 --- /dev/null
 +++ b/tools/test_esp_i2c_commands.py
 @@ -0,0 +1,119 @@
@@ -45301,7 +45574,7 @@ index 0000000000000000000000000000000000000000..77623fc9966e71e022791793237704e4
 +    main()
 diff --git a/tools/test_esp_i2c_frequency.py b/tools/test_esp_i2c_frequency.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..140e79a98aef5068772636fc08ec07082e9d06d8
+index 00000000000..140e79a98ae
 --- /dev/null
 +++ b/tools/test_esp_i2c_frequency.py
 @@ -0,0 +1,96 @@
@@ -45403,7 +45676,7 @@ index 0000000000000000000000000000000000000000..140e79a98aef5068772636fc08ec0708
 +    main()
 diff --git a/tools/test_esp_i2c_kernel_buffers.py b/tools/test_esp_i2c_kernel_buffers.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..9c5bbd524cb6c5ba1428969130052f6aaae1e62a
+index 00000000000..9c5bbd524cb
 --- /dev/null
 +++ b/tools/test_esp_i2c_kernel_buffers.py
 @@ -0,0 +1,135 @@
@@ -45544,7 +45817,7 @@ index 0000000000000000000000000000000000000000..9c5bbd524cb6c5ba1428969130052f6a
 +    main()
 diff --git a/tools/test_esp_i2c_spurious_irq.py b/tools/test_esp_i2c_spurious_irq.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..41c660453f26d85f4f9ef8f0988ba179e2685a94
+index 00000000000..41c660453f2
 --- /dev/null
 +++ b/tools/test_esp_i2c_spurious_irq.py
 @@ -0,0 +1,104 @@
@@ -45654,7 +45927,7 @@ index 0000000000000000000000000000000000000000..41c660453f26d85f4f9ef8f0988ba179
 +    main()
 diff --git a/tools/test_esp_i2c_transfer_lock.py b/tools/test_esp_i2c_transfer_lock.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..b08baba337db2ec58057e5609084fa7ff4a10404
+index 00000000000..b08baba337d
 --- /dev/null
 +++ b/tools/test_esp_i2c_transfer_lock.py
 @@ -0,0 +1,148 @@
@@ -45808,7 +46081,7 @@ index 0000000000000000000000000000000000000000..b08baba337db2ec58057e5609084fa7f
 +    main()
 diff --git a/tools/test_esp_rmt_acquire.py b/tools/test_esp_rmt_acquire.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..8a18d09ce19389f06bf19ecfcf531fafa2ad6040
+index 00000000000..8a18d09ce19
 --- /dev/null
 +++ b/tools/test_esp_rmt_acquire.py
 @@ -0,0 +1,103 @@
@@ -45917,7 +46190,7 @@ index 0000000000000000000000000000000000000000..8a18d09ce19389f06bf19ecfcf531faf
 +    main()
 diff --git a/tools/test_esp_rmt_completion.py b/tools/test_esp_rmt_completion.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..d1a01328ffb074a801194c32123e3b8297315fb6
+index 00000000000..d1a01328ffb
 --- /dev/null
 +++ b/tools/test_esp_rmt_completion.py
 @@ -0,0 +1,102 @@
@@ -46025,7 +46298,7 @@ index 0000000000000000000000000000000000000000..d1a01328ffb074a801194c32123e3b82
 +    main()
 diff --git a/tools/test_esp_rmt_initialize.py b/tools/test_esp_rmt_initialize.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..9c7b9295280488012ca1dcda0d7430ddd3927fdf
+index 00000000000..9c7b9295280
 --- /dev/null
 +++ b/tools/test_esp_rmt_initialize.py
 @@ -0,0 +1,100 @@
@@ -46131,7 +46404,7 @@ index 0000000000000000000000000000000000000000..9c7b9295280488012ca1dcda0d7430dd
 +    main()
 diff --git a/tools/test_esp_rmt_install.py b/tools/test_esp_rmt_install.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..cbc05f08d849ac244a551546ac7c83c6d8bc7a4b
+index 00000000000..cbc05f08d84
 --- /dev/null
 +++ b/tools/test_esp_rmt_install.py
 @@ -0,0 +1,212 @@
@@ -46349,7 +46622,7 @@ index 0000000000000000000000000000000000000000..cbc05f08d849ac244a551546ac7c83c6
 +    main()
 diff --git a/tools/test_esp_rmt_rx_start.py b/tools/test_esp_rmt_rx_start.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..e907a9f5c7eb7aa431d9d30aeb7f7304f5b44f26
+index 00000000000..e907a9f5c7e
 --- /dev/null
 +++ b/tools/test_esp_rmt_rx_start.py
 @@ -0,0 +1,107 @@
@@ -46462,7 +46735,7 @@ index 0000000000000000000000000000000000000000..e907a9f5c7eb7aa431d9d30aeb7f7304
 +    main()
 diff --git a/tools/test_esp_rmt_tx_concurrency.py b/tools/test_esp_rmt_tx_concurrency.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..ff5a9ec7516f9ec517b322ebaccaa3befd60f3dd
+index 00000000000..ff5a9ec7516
 --- /dev/null
 +++ b/tools/test_esp_rmt_tx_concurrency.py
 @@ -0,0 +1,165 @@
@@ -46633,7 +46906,7 @@ index 0000000000000000000000000000000000000000..ff5a9ec7516f9ec517b322ebaccaa3be
 +    lifecycle(run_fixture=run_fixture)
 diff --git a/tools/test_esp_rmt_tx_lifecycle.py b/tools/test_esp_rmt_tx_lifecycle.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..272216a777d6c68c1540e56d3b1f223c9bf37e1b
+index 00000000000..272216a777d
 --- /dev/null
 +++ b/tools/test_esp_rmt_tx_lifecycle.py
 @@ -0,0 +1,201 @@
@@ -46840,7 +47113,7 @@ index 0000000000000000000000000000000000000000..272216a777d6c68c1540e56d3b1f223c
 +    main()
 diff --git a/tools/test_esp_rmt_write.py b/tools/test_esp_rmt_write.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..b62a8af943af2d630cad2a407832e09e1ee2ee61
+index 00000000000..b62a8af943a
 --- /dev/null
 +++ b/tools/test_esp_rmt_write.py
 @@ -0,0 +1,102 @@
@@ -46948,7 +47221,7 @@ index 0000000000000000000000000000000000000000..b62a8af943af2d630cad2a407832e09e
 +    main()
 diff --git a/tools/test_esp_wifi_ba_window.py b/tools/test_esp_wifi_ba_window.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..a696c3eb147871a19d0eeaf385aff8501b02e701
+index 00000000000..a696c3eb147
 --- /dev/null
 +++ b/tools/test_esp_wifi_ba_window.py
 @@ -0,0 +1,59 @@
@@ -47013,7 +47286,7 @@ index 0000000000000000000000000000000000000000..a696c3eb147871a19d0eeaf385aff850
 +    main()
 diff --git a/tools/test_esp_wifi_connect.py b/tools/test_esp_wifi_connect.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..49966a97f6228c4f96ea535479eea6c7a7ba5223
+index 00000000000..49966a97f62
 --- /dev/null
 +++ b/tools/test_esp_wifi_connect.py
 @@ -0,0 +1,79 @@
@@ -47098,7 +47371,7 @@ index 0000000000000000000000000000000000000000..49966a97f6228c4f96ea535479eea6c7
 +    main()
 diff --git a/tools/test_esp_wifi_irq_mask.py b/tools/test_esp_wifi_irq_mask.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..997cab66144c2f6176de1af9891b29b21040872c
+index 00000000000..997cab66144
 --- /dev/null
 +++ b/tools/test_esp_wifi_irq_mask.py
 @@ -0,0 +1,97 @@
@@ -47201,7 +47474,7 @@ index 0000000000000000000000000000000000000000..997cab66144c2f6176de1af9891b29b2
 +    main()
 diff --git a/tools/test_esp_wifi_isr_woken.py b/tools/test_esp_wifi_isr_woken.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..1b4033a3b851d37d4cb390a959d9266955f1fedd
+index 00000000000..1b4033a3b85
 --- /dev/null
 +++ b/tools/test_esp_wifi_isr_woken.py
 @@ -0,0 +1,86 @@
@@ -47293,7 +47566,7 @@ index 0000000000000000000000000000000000000000..1b4033a3b851d37d4cb390a959d92669
 +    main()
 diff --git a/tools/test_esp_wifi_queue_zero.py b/tools/test_esp_wifi_queue_zero.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..c788e75bd43ab0ea7a60a77560d38724a1f9eef8
+index 00000000000..c788e75bd43
 --- /dev/null
 +++ b/tools/test_esp_wifi_queue_zero.py
 @@ -0,0 +1,134 @@
@@ -47433,7 +47706,7 @@ index 0000000000000000000000000000000000000000..c788e75bd43ab0ea7a60a77560d38724
 +    main()
 diff --git a/tools/test_esp_wifi_rx_queue.py b/tools/test_esp_wifi_rx_queue.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..b5459de18adb9e454c0e0e9282ab881c9d60d3f1
+index 00000000000..b5459de18ad
 --- /dev/null
 +++ b/tools/test_esp_wifi_rx_queue.py
 @@ -0,0 +1,79 @@
@@ -47518,7 +47791,7 @@ index 0000000000000000000000000000000000000000..b5459de18adb9e454c0e0e9282ab881c
 +    main()
 diff --git a/tools/test_esp_wifi_scan_results.py b/tools/test_esp_wifi_scan_results.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..df498e4cb7be13b23e26767bfa228bc5f594a38f
+index 00000000000..df498e4cb7b
 --- /dev/null
 +++ b/tools/test_esp_wifi_scan_results.py
 @@ -0,0 +1,140 @@
@@ -47664,7 +47937,7 @@ index 0000000000000000000000000000000000000000..df498e4cb7be13b23e26767bfa228bc5
 +    main()
 diff --git a/tools/test_esp_ws2812_lifecycle.py b/tools/test_esp_ws2812_lifecycle.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..8494d64ac50f9b8caace9b4d1d6b4c89f4850af0
+index 00000000000..8494d64ac50
 --- /dev/null
 +++ b/tools/test_esp_ws2812_lifecycle.py
 @@ -0,0 +1,111 @@
@@ -47781,7 +48054,7 @@ index 0000000000000000000000000000000000000000..8494d64ac50f9b8caace9b4d1d6b4c89
 +    main()
 diff --git a/tools/test_esp_ws2812_write.py b/tools/test_esp_ws2812_write.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..78af65b7832798eff7ed0569c3a1af5e6c087b7c
+index 00000000000..78af65b7832
 --- /dev/null
 +++ b/tools/test_esp_ws2812_write.py
 @@ -0,0 +1,151 @@
@@ -47938,7 +48211,7 @@ index 0000000000000000000000000000000000000000..78af65b7832798eff7ed0569c3a1af5e
 +    main()
 diff --git a/tools/test_mtd_partition_bounds.py b/tools/test_mtd_partition_bounds.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..7b9041427cacdbc298cc3af31f4d6e5c2b2f2a62
+index 00000000000..7b9041427ca
 --- /dev/null
 +++ b/tools/test_mtd_partition_bounds.py
 @@ -0,0 +1,142 @@
@@ -48086,7 +48359,7 @@ index 0000000000000000000000000000000000000000..7b9041427cacdbc298cc3af31f4d6e5c
 +    raise SystemExit(main())
 diff --git a/tools/test_procfs_meminfo_lifecycle.py b/tools/test_procfs_meminfo_lifecycle.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..bd2b4aba9dd4ceb08250f9dcfbd0f381a6ed89f0
+index 00000000000..bd2b4aba9dd
 --- /dev/null
 +++ b/tools/test_procfs_meminfo_lifecycle.py
 @@ -0,0 +1,119 @@
@@ -48211,7 +48484,7 @@ index 0000000000000000000000000000000000000000..bd2b4aba9dd4ceb08250f9dcfbd0f381
 +    main()
 diff --git a/tools/test_tcp_accept_address_context.py b/tools/test_tcp_accept_address_context.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..7bbd032e7c8fc36e2d5651acbd0d678079da4532
+index 00000000000..7bbd032e7c8
 --- /dev/null
 +++ b/tools/test_tcp_accept_address_context.py
 @@ -0,0 +1,135 @@

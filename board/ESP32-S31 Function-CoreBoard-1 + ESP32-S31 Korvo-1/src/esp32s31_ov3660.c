@@ -12,6 +12,12 @@
 #include <stddef.h>
 #include <syslog.h>
 #include "esp32s31_ov3660_defaults.h"
+#ifdef CONFIG_ESP32S31_VISION
+static struct i2c_master_s *vision_sensor_bus;
+# define OV3660_PLL_MULT 0x09
+#else
+# define OV3660_PLL_MULT 0x04
+#endif
 
 #if !defined(CONFIG_ESP32S31_CAMERA_DVP) || \
     CONFIG_ESP32S31_CAMERA_DVP_HRES != 640 || \
@@ -78,9 +84,11 @@ static int ov3660_table(struct i2c_master_s *i2c,
 int esp32s31_ov3660_initialize(struct i2c_master_s *i2c)
 {
   /* Official 4:3 crop, binned/scaled VGA, no flip/mirror; VGA non-JPEG
-   * PLL: multiplier 4, sysdiv 1, prediv 0, seld5 2, PCLK divider 2.
-   * With 16 MHz XCLK upstream documents approximately 4.44 fps, not 30.
-   * The native RGB565 byte/color ordering still needs a real color chart.
+   * Independent vision profile: multiplier 9, sysdiv 1, prediv 0,
+   * seld5 2, PCLK divider 2 => SYSCLK/PCLK 18 MHz at XCLK=16 MHz.
+   * Timing totals unchanged. The old multiplier=4 profile is ~4.44 FPS.
+   * Approximately 10 sensor FPS; verify host timing and visual integrity.
+   * Register meanings: Espressif esp32-camera sensors/ov3660.c set_pll().
    */
 
   static const uint16_t vga[][2] =
@@ -100,13 +108,13 @@ int esp32s31_ov3660_initialize(struct i2c_master_s *i2c)
     {0x3812, 0x00}, {0x3813, 0x02},
     {0x3820, 0x01}, {0x3821, 0x01}, {0x4514, 0xaa},
     {0x4520, 0x0b}, {0x3814, 0x31}, {0x3815, 0x31},
-    {0x303a, 0x00}, {0x303b, 0x04}, {0x303c, 0x11},
+    {0x303a, 0x00}, {0x303b, OV3660_PLL_MULT}, {0x303c, 0x11},
     {0x303d, 0x02}, {0x3824, 0x02}, {0x460c, 0x22}
   };
   static const uint16_t verify[][2] =
   {
     {0x3808, 0x02}, {0x3809, 0x80}, {0x380a, 0x01}, {0x380b, 0xe0},
-    {0x501f, 0x01}, {0x4300, 0x61}
+    {0x501f, 0x01}, {0x4300, 0x61}, {0x303b, OV3660_PLL_MULT}
   };
   size_t i;
   int high;
@@ -118,6 +126,9 @@ int esp32s31_ov3660_initialize(struct i2c_master_s *i2c)
       return -EINVAL;
     }
 
+#ifdef CONFIG_ESP32S31_VISION
+  vision_sensor_bus=i2c;
+#endif
   high = ov3660_read(i2c, 0x300a);
   if (high < 0)
     {
@@ -189,3 +200,15 @@ int esp32s31_ov3660_initialize(struct i2c_master_s *i2c)
 
   return 0;
 }
+
+#ifdef CONFIG_ESP32S31_VISION
+void s31vision_sensor_stats(void)
+{
+  struct i2c_master_s *b=vision_sensor_bus;
+  syslog(LOG_INFO,"VISION SENSOR HTS=%02x%02x VTS=%02x%02x exposure=%02x%02x%02x extra=%02x%02x\n",
+    ov3660_read(b,0x380c),ov3660_read(b,0x380d),ov3660_read(b,0x380e),ov3660_read(b,0x380f),
+    ov3660_read(b,0x3500),ov3660_read(b,0x3501),ov3660_read(b,0x3502),
+    ov3660_read(b,0x350c),ov3660_read(b,0x350d));
+}
+
+#endif

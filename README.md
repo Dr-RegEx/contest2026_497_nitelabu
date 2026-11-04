@@ -70,7 +70,7 @@ bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
 
 Function 有线网使用 `--profile function-ethernet`；SMP/MMU、网络和外部应用配置为 `demo-rmt-netapps-competition`。每个配置指定新的输出目录，产物位于 `OUTPUT/build/`，构建记录保存在 `OUTPUT/receipt.json`。该入口使用独立输出目录并启用源码保护，不复用历史编译产物。完整离线产品包的旧入口单独保留为 `workspace/build-offline.py`。 五个公开构建配置均已在独立输出目录验证，镜像、AppFS 与新识别镜像实板结果见 [公开复现记录](docs/validation/public-reproduction.json)。
 
-Korvo 默认演示采用[原版双核数字识别固件](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-digit-stable/README.md)，上电自动显示摄像头画面及识别结果；[Factory 演示](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-factory/README.md)独立保留。两者分别烧录，未实现按钮跳转。原版数字识别源码已恢复为独立可构建配置 `korvo-digit-rebuild`，构建命令见 [原版识别源码](workspace/digit-demo/README.md)。新编译镜像已完成双核启动、100/100 自检及摄像/显示/推理进度验证；历史稳定固件继续保留，二者不宣称逐字节一致。
+Korvo 组合演示使用 `korvo-factory-vision`：上电进入 Factory 主界面，点击 **Digit recognition** 进入原版双核数字识别，点击 **Return** 恢复主界面预览。公开构建已通过，当前组合镜像的人工触摸与画面验收待完成，详见 [构建和配对部署](workspace/FACTORY-VISION.md)及[精确镜像记录](docs/validation/factory-vision.json)。[原版独立识别固件](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-digit-stable/README.md)与[独立 Factory](board/ESP32-S31%20Function-CoreBoard-1%20%2B%20ESP32-S31%20Korvo-1/firmware/korvo-factory/README.md)继续保留；原版识别也可通过 `korvo-digit-rebuild` 独立构建，见 [源码说明](workspace/digit-demo/README.md)。
 
 烧录前连接目标板 USB-UART，确认实际端口并保存本板原固件备份。按对应固件目录的校验与烧录说明操作；不要混用不同配置的 Flash 布局。通用 Factory 部署与回退步骤见 [固件部署](workspace/FLASH-MANUAL.md)。
 

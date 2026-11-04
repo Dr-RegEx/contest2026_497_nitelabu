@@ -266,6 +266,45 @@
         "record": "docs/validation/public-reproduction.json",
         "image_sha256": "b45b53ea1a10ee834e6b01774912879ddd06ed221c6740f63b5f1df5c1ad3211"
       }
+    },
+    "korvo-factory-vision": {
+      "board": "ESP32-S31 Korvo-1",
+      "mode": "KERNEL/MMU",
+      "cores": 2,
+      "headline": false,
+      "build_test": {
+        "status": "fresh_public_build_pass",
+        "current_front_door_full_build_tested": true,
+        "image_sha256": "d7ac8d5feed7a4549f31fd674c293b1a0e35700ca50ffbc35ff7a52b39af1b9e",
+        "appfs_sha256": "9f43022a1c4f27a74fefcd3829e7b1bc89eb3902ee25b4048d80783f575d0eb8",
+        "record": "docs/validation/factory-vision.json"
+      },
+      "board_test": {
+        "status": "home_boot_and_live_capture_pass_touch_pending",
+        "prior_candidate_automated_cycles": 3,
+        "record": "docs/validation/factory-vision.json",
+        "image_sha256": "d7ac8d5feed7a4549f31fd674c293b1a0e35700ca50ffbc35ff7a52b39af1b9e",
+        "appfs_sha256": "9f43022a1c4f27a74fefcd3829e7b1bc89eb3902ee25b4048d80783f575d0eb8"
+      },
+      "image_layout": {
+        "kind": "kernel_and_appfs_pair",
+        "appfs_required": true,
+        "kernel_offset": 8192,
+        "appfs_offset": 2097152,
+        "appfs_max_bytes": 12582912,
+        "data_offset": 14680064,
+        "data_bytes": 2097152,
+        "deployment_manifest": "workspace/FACTORY-VISION.md"
+      },
+      "defconfig": "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/korvo-factory-vision/defconfig",
+      "disabled": [
+        "USB Host",
+        "SD",
+        "ADC keys",
+        "WiFi",
+        "BLE"
+      ],
+      "source_delivery": "Same-image Factory HOME and original dual-core vision service; preserved original model, preprocessing, font and SIMD core."
     }
   },
   "qualification_rule": "Results are bound to exact images. Historical results and build-only records do not qualify different firmware; the Ethernet canonical ELF/bin/config identity is recorded explicitly.",

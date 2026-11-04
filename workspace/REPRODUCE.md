@@ -28,6 +28,8 @@ bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
 bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
   --profile korvo-openvela-factory --output /path/to/new-factory-output --jobs 4
 bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
+  --profile korvo-factory-vision --output /path/to/new-factory-vision-output --jobs 4
+bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
   --profile korvo-digit-rebuild --output /path/to/new-digit-output --jobs 4
 bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
   --profile demo-rmt-netapps-competition --output /path/to/new-netapps-output --jobs 4
@@ -36,6 +38,8 @@ bash "$CONTEST_REPO/workspace/build.sh" --workspace "$CHECKOUT" \
 输出目录不能已经存在，也不能包含或位于源码、依赖、作品仓中。每次使用新目录，失败目录保留日志。配置与编译日志为 `configure.log`、`build.log`，退出码和镜像校验值在 `receipt.json`，固件在 `build/nuttx.bin`。`--dry-run` 仅检查输入和显示命令，不代表编译通过。
 
 最小配置用于启动与 UART shell；有线网配置用于 Function-CoreBoard；Factory 配置用于 Korvo 屏幕、摄像头和系统服务。不同配置的内核与 AppFS 不能混用。Flash 布局及预期实板现象见 [部署说明](FLASH-MANUAL.md)和各固件目录 README。
+
+`korvo-factory-vision` 为双核组合配置：Factory 主界面通过按钮进入原版数字识别并返回。其内核与 AppFS 配对布局见 [Factory 与原版识别](FACTORY-VISION.md)。
 
 ## 3. 失败排查
 

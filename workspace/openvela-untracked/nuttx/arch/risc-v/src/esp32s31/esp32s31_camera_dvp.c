@@ -23,12 +23,19 @@
 #include "esp_cam_ctlr_dvp.h"
 #include "esp_heap_caps.h"
 
+#ifdef CONFIG_ESP32S31_VISION
+# define CAMERA_BUFFERS 3
+#else
+# define CAMERA_BUFFERS 2
+#endif
 struct esp32s31_camera_dvp_s
 {
   esp_cam_ctlr_handle_t controller;
-  void *frame[2];
+  void *frame[CAMERA_BUFFERS];
+  void (*raw_callback)(unsigned index);
+  unsigned raw_inflight;
   size_t frame_size;
-  enum { FRAME_FREE, FRAME_DMA, FRAME_COPY } frame_state[2];
+  enum { FRAME_FREE, FRAME_DMA, FRAME_COPY } frame_state[CAMERA_BUFFERS];
   int copy_index;
   bool copy_busy;
   bool copy_running;
@@ -42,6 +49,8 @@ struct esp32s31_camera_dvp_s
   void *capture_arg;
   size_t received;
   struct work_s copy_work;
+  unsigned raw_frames;
+  unsigned dropped_frames;
   bool enabled;
   bool started;
 };
@@ -62,7 +71,7 @@ static bool IRAM_ATTR esp32s31_camera_get_buffer
   transaction->buffer = NULL;
   transaction->buflen = 0;
   flags = spin_lock_irqsave(&g_camera_lock);
-  for (i = 0; i < 2; i++)
+  for (i = 0; i < CAMERA_BUFFERS; i++)
     {
       if (camera->frame_state[i] == FRAME_FREE)
         {
@@ -96,6 +105,17 @@ static void esp32s31_camera_copy_work(FAR void *arg)
   bool locked = false;
   size_t copied;
   int index;
+
+#ifdef CONFIG_ESP32S31_VISION
+  /* The standalone vision profile reserves CPU1 for inference. HPWORK only
+   * runs camera work in this profile, and is pinned before touching pixels. */
+  static bool pinned;
+  if (!pinned)
+    {
+      cpu_set_t video_cpu = 1;
+      pinned = sched_setaffinity(0, sizeof(video_cpu), &video_cpu) == 0;
+    }
+#endif
 
   /* STREAMOFF/REQBUFS/CLOSE own this task mutex while invalidating buffers.
    * Never block here: close may hold it while draining this work queue. */
@@ -185,7 +205,8 @@ static bool IRAM_ATTR esp32s31_camera_frame_done
 
   (void)handle;
   flags = spin_lock_irqsave(&g_camera_lock);
-  for (index = 0; index < 2; index++)
+  camera->raw_frames++;
+  for (index = 0; index < CAMERA_BUFFERS; index++)
     {
       if (transaction->buffer == camera->frame[index])
         {
@@ -193,16 +214,38 @@ static bool IRAM_ATTR esp32s31_camera_frame_done
         }
     }
 
-  if (index == 2 || camera->frame_state[index] != FRAME_DMA)
+  if (index == CAMERA_BUFFERS || camera->frame_state[index] != FRAME_DMA)
     {
+      camera->dropped_frames++;
       spin_unlock_irqrestore(&g_camera_lock, flags);
       return false;
+    }
+
+  if (camera->raw_callback != NULL)
+    {
+      if (transaction->received_size != camera->frame_size)
+        {
+          camera->dropped_frames++;
+          camera->frame_state[index] = FRAME_FREE;
+          spin_unlock_irqrestore(&g_camera_lock, flags);
+          return false;
+        }
+      camera->frame_state[index] = FRAME_COPY;
+      void (*callback)(unsigned) = camera->raw_callback;
+      camera->raw_inflight++;
+      spin_unlock_irqrestore(&g_camera_lock, flags);
+      callback(index);
+      flags = spin_lock_irqsave(&g_camera_lock);
+      camera->raw_inflight--;
+      spin_unlock_irqrestore(&g_camera_lock, flags);
+      return true;
     }
 
   if (camera->copy_busy || camera->target == NULL ||
       camera->capture_cb == NULL ||
       transaction->received_size != camera->frame_size)
     {
+      camera->dropped_frames++;
       camera->frame_state[index] = FRAME_FREE;
       spin_unlock_irqrestore(&g_camera_lock, flags);
       return false;
@@ -269,7 +312,7 @@ void esp32s31_camera_dvp_uninitialize(void)
         }
     }
 
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < CAMERA_BUFFERS; i++)
     {
       if (g_camera.frame[i] != NULL)
         {
@@ -416,7 +459,7 @@ int esp32s31_camera_dvp_initialize(void)
     }
 
   g_camera.frame_size = frame_size;
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < CAMERA_BUFFERS; i++)
     {
       g_camera.frame[i] = esp_cam_ctlr_alloc_buffer(g_camera.controller,
                             frame_size, MALLOC_CAP_DMA | MALLOC_CAP_SPIRAM);
@@ -452,6 +495,7 @@ int esp32s31_camera_dvp_initialize(void)
 int esp32s31_camera_dvp_start(void)
 {
   esp_err_t result;
+  irqstate_t flags;
 
   if (g_camera.controller == NULL || !g_camera.enabled)
     {
@@ -461,6 +505,14 @@ int esp32s31_camera_dvp_start(void)
   if (g_camera.started)
     {
       return -EALREADY;
+    }
+
+  flags = spin_lock_irqsave(&g_camera_lock);
+  bool callback_busy = g_camera.raw_inflight != 0;
+  spin_unlock_irqrestore(&g_camera_lock, flags);
+  if (callback_busy)
+    {
+      return -EBUSY;
     }
 
   result = esp_cam_ctlr_start(g_camera.controller);
@@ -496,7 +548,7 @@ int esp32s31_camera_dvp_stop(void)
       cancelled = work_cancel(HPWORK, &g_camera.copy_work);
       flags = spin_lock_irqsave(&g_camera_lock);
       g_camera.generation++;
-      for (i = 0; i < 2; i++)
+      for (i = 0; i < CAMERA_BUFFERS; i++)
         {
           if (g_camera.frame_state[i] == FRAME_DMA || cancelled == 0)
             {
@@ -515,4 +567,33 @@ int esp32s31_camera_dvp_stop(void)
     }
 
   return esp32s31_camera_result(result);
+}
+
+void s31vision_camera_stats(void)
+{
+  syslog(LOG_INFO,"VISION CAMERA raw=%u dropped=%u\n",g_camera.raw_frames,g_camera.dropped_frames);
+}
+
+/* Raw frame ownership API for the independent vision service. A frame is
+ * exposed only after the HAL has invalidated DMA-written cache lines. */
+void *s31vision_camera_buffer(unsigned index)
+{
+  return index < CAMERA_BUFFERS ? g_camera.frame[index] : NULL;
+}
+int s31vision_camera_raw_callback(void (*callback)(unsigned))
+{
+  irqstate_t flags=spin_lock_irqsave(&g_camera_lock);
+  int ret=0;
+  if(!g_camera.controller)ret=-ENODEV;
+  else if(g_camera.started || g_camera.raw_inflight)ret=-EBUSY;
+  else g_camera.raw_callback=callback;
+  spin_unlock_irqrestore(&g_camera_lock,flags);
+  return ret;
+}
+void s31vision_camera_release(unsigned index)
+{
+  irqstate_t flags=spin_lock_irqsave(&g_camera_lock);
+  if(index<CAMERA_BUFFERS && g_camera.frame_state[index]==FRAME_COPY)
+    g_camera.frame_state[index]=FRAME_FREE;
+  spin_unlock_irqrestore(&g_camera_lock,flags);
 }

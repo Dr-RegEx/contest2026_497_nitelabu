@@ -201,7 +201,10 @@ if(CONFIG_ESP32S31_KORVO_HMI OR CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
   # PackageManager scans the real board ROMFS, independently of the upstream
   # demos' simulator resource copies. configure_file tracks manifest changes.
   set(HMI_DEMOS ${NUTTX_APPS_DIR}/frameworks/runtimes/services/xmsdemo)
-  set(HMI_APPS launcher)
+  set(HMI_APPS)
+  if(CONFIG_XMSDEMO_LAUNCHER)
+    list(APPEND HMI_APPS launcher)
+  endif()
   if(CONFIG_XMSDEMO_LVGLDEMO)
     list(APPEND HMI_APPS lvgldemo)
   endif()
@@ -225,6 +228,13 @@ if(CONFIG_ESP32S31_KORVO_HMI OR CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
     configure_file(${HMI_DEMOS}/${HMI_APP}/manifest.json
                    ${CMAKE_CURRENT_BINARY_DIR}/etc/app/${HMI_NAME}/manifest.json
                    COPYONLY)
+    if(CONFIG_ESP32S31_VISION AND HMI_APP STREQUAL "factory")
+      file(READ ${HMI_DEMOS}/factory/manifest.json FACTORY_MANIFEST)
+      string(JSON FACTORY_MANIFEST SET "${FACTORY_MANIFEST}" activities 0
+             intent-filter "{\"actions\":[\"action.system.HOME\"]}")
+      file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/etc/app/${HMI_NAME}/manifest.json
+           "${FACTORY_MANIFEST}\n")
+    endif()
     list(APPEND HMI_MANIFESTS
          ${CMAKE_CURRENT_BINARY_DIR}/etc/app/${HMI_NAME}/manifest.json)
   endforeach()
@@ -252,7 +262,10 @@ if(CONFIG_ESP32S31_KORVO_HMI OR CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
          ${CMAKE_CURRENT_BINARY_DIR}/etc/media/demo-tone.wav)
   endif()
   set(HMI_INIT ${CMAKE_CURRENT_SOURCE_DIR}/hmi/etc/init.d)
-  if(CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
+  if(CONFIG_ESP32S31_VISION)
+    set(HMI_INIT ${CMAKE_CURRENT_SOURCE_DIR}/vision/etc/init.d)
+    add_board_rcraws(${HMI_INIT}/start-system)
+  elseif(CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
     set(HMI_INIT ${CMAKE_CURRENT_SOURCE_DIR}/smp-hmi/etc/init.d)
     add_board_rcraws(${HMI_INIT}/start-system)
   endif()
@@ -268,6 +281,22 @@ if(CONFIG_ESP32S31_KORVO_HMI OR CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
   target_link_libraries(board PRIVATE romfs_etc)
 endif()
 
+if(CONFIG_ESP32S31_VISION)
+  list(APPEND SRCS s31vision_dma.c s31vision.c s31vision_ops.S)
+  # Preserve the original kernel's NuttX expf/roundf implementation. Native
+  # MEDIA ELF processes also need libm functions absent from that small library.
+  # Append the toolchain fallback to user ELF links only, never the kernel.
+  execute_process(
+    COMMAND ${CMAKE_C_COMPILER} -march=rv32imafc_zicsr_zifencei -mabi=ilp32f
+            --print-file-name=libm.a
+    OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE S31_USER_LIBM
+    COMMAND_ERROR_IS_FATAL ANY)
+  if(NOT EXISTS "${S31_USER_LIBM}")
+    message(FATAL_ERROR "Missing S31 user ELF math library: ${S31_USER_LIBM}")
+  endif()
+  set_property(TARGET nuttx_global APPEND PROPERTY
+               NUTTX_ELF_LINK_EXTRA_LIBRARIES "${S31_USER_LIBM}")
+endif()
 target_sources(board PRIVATE ${SRCS})
 
 string(REPLACE "\"" "" CHIP_SERIES "${CONFIG_ESPRESSIF_CHIP_SERIES}")

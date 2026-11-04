@@ -284,6 +284,12 @@ config ESP32S31_KORVO_SMP_LCD_QUALIFICATION
 		leave the shared frame unchanged until the update returns.
 		This option alone does not qualify a complete graphics product.
 
+config ESP32S31_VISION
+	bool "Korvo original dual-core vision with Factory lifecycle"
+	depends on BUILD_KERNEL && ESP32S31_SMP && ESP32S31_PIE
+	select SCHED_KTHREAD_GC
+	default n
+
 config ESP32S31_KORVO_RGB565
 	bool "Korvo-1 SUB3 RGB565 framebuffer"
 	depends on (BUILD_FLAT && !SMP && ESPRESSIF_SPIRAM_USER_HEAP) || ESP32S31_KORVO_SMP_LCD_QUALIFICATION
@@ -386,7 +392,7 @@ config ESP32S31_KORVO_SMP_HMI_QUALIFICATION
 	depends on SYSTEM_ACTIVITY_SERVICE && SYSTEM_PACKAGE_SERVICE
 	depends on SYSTEM_WINDOW_SERVICE && ANDROID_SERVICEMANAGER
 	depends on ESP32S31_FLASH_APPFS && ETC_ROMFS && FS_TMPFS && FS_SHMFS
-	depends on XMSDEMO_LAUNCHER && XMSDEMO_LVGLDEMO
+	depends on (XMSDEMO_LAUNCHER && XMSDEMO_LVGLDEMO) || (ESP32S31_VISION && XMSDEMO_FACTORY)
 	default n
 	help
 		Run independent native applications on the
@@ -467,8 +473,8 @@ config ESP32S31_CAMERA_OV2640
 
 config ESP32S31_CAMERA_OV3660
 	bool "External OV3660 VGA RGB565 sensor"
-	depends on BUILD_FLAT && DRIVERS_VIDEO && !ESP32S31_CAMERA_OV2640
-	depends on ESPRESSIF_I2C0 && I2C_DRIVER && !SMP && SCHED_HPWORK
+	depends on (BUILD_FLAT || ESP32S31_VISION) && DRIVERS_VIDEO && !ESP32S31_CAMERA_OV2640
+	depends on ESPRESSIF_I2C0 && I2C_DRIVER && (!SMP || ESP32S31_VISION) && SCHED_HPWORK
 	depends on ESPRESSIF_I2C0_SCLPIN = 1 && ESPRESSIF_I2C0_SDAPIN = 0
 	help
 		Initialize an external OV3660 with 16-bit SCCB register addresses,
@@ -477,7 +483,7 @@ config ESP32S31_CAMERA_OV3660
 
 config ESP32S31_CAMERA_DVP
 	bool "Prepare the S31 DVP controller for the external camera"
-	depends on (ESP32S31_CAMERA_OV2640 || ESP32S31_CAMERA_OV3660) && !SMP && SCHED_HPWORK
+	depends on (ESP32S31_CAMERA_OV2640 || ESP32S31_CAMERA_OV3660) && (!SMP || ESP32S31_VISION) && SCHED_HPWORK
 	default n
 	help
 		Build the locked Espressif Camera Controller, CAM HAL and GDMA path,

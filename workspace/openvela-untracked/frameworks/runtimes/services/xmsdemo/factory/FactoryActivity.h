@@ -20,6 +20,9 @@ private:
     static void tick(lv_timer_t* timer);
     static void action(void* context, DashboardAction action, int argument);
     static void factoryClicked(lv_event_t* event);
+    static void digitClicked(lv_event_t* event);
+    static void returnClicked(lv_event_t* event);
+    void enterDigit(bool enter);
     static void displayEvent(lv_event_t* event);
     void refresh();
     void pollBackend();
@@ -40,6 +43,8 @@ private:
     FactoryDashboard mDashboard;
     lv_obj_t *mHost = nullptr, *mCoffee = nullptr, *mBack = nullptr;
     lv_obj_t *mOverlay = nullptr, *mNotice = nullptr;
+    lv_obj_t *mDigitEntry = nullptr, *mDigitCover = nullptr;
+    bool mDigitWanted = false;
     lv_timer_t* mTimer = nullptr;
     lv_draw_buf_t* mCanvasBuffer = nullptr;
     lv_display_t* mDisplay = nullptr;

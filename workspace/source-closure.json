@@ -100,7 +100,7 @@
     "original_factory_reference_files_verified": 196,
     "patch_tree_reconstruction_verified": true,
     "rejected_e407_added": false,
-    "reviewed_untracked_files": 619
+    "reviewed_untracked_files": 631
   },
   "replay_verified": true,
   "public_reproduction": {
@@ -114,5 +114,24 @@
       "korvo-digit-rebuild",
       "demo-rmt-netapps-competition"
     ]
+  },
+  "factory_vision": {
+    "profile": "korvo-factory-vision",
+    "public_snapshot_replay_verified": true,
+    "original_digit_core_reused": true,
+    "same_image_board_validation": "human_acceptance_pending",
+    "source_projects": {
+      "frameworks/runtimes/services/xmsdemo": {
+        "upstream_patched": 4,
+        "separate_files": 209
+      },
+      "nuttx": {
+        "upstream_patched": 352,
+        "separate_files": 316
+      }
+    },
+    "snapshot_sha256": "5b6894da3ac16e430ce402e3a1c977e584757efad5527c0df37eab260d07b45b",
+    "public_front_door_build": "PASS",
+    "validation_record": "../docs/validation/factory-vision.json"
   }
 }
