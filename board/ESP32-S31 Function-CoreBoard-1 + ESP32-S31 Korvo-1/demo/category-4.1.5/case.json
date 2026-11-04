@@ -1,64 +1,32 @@
 {
-  "name": "category-4.1.5",
+  "canonical_profile": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/xts-flat-category-fs-sync/defconfig",
+  "canonical_source_root": "platform-root/openvela-dev",
+  "current_build": "Use the canonical BSP profile in a restored platform tree; local copies are historical source references.",
+  "historical_record": {
+    "demo": "category-4.1.5",
+    "path": "../../../../docs/validation/historical.json"
+  },
   "keys": [
     "category:4.1.5"
   ],
+  "license_rule": "Retain source headers and all original LICENSE/NOTICE/UPSTREAM attributions.",
+  "licenses": [
+    "licenses/tests/LICENSE"
+  ],
+  "local_config": "config/xts-flat-category-fs-sync/defconfig",
+  "local_sources": [
+    {
+      "origin": "tests/testcases/vela_fs_test",
+      "path": "src/vela_fs_test"
+    }
+  ],
+  "name": "category-4.1.5",
   "profile": "xts-flat-category-fs-sync",
+  "schema": 2,
+  "scope": "historical-source-reference",
   "sources": [
     "tests/testcases/vela_fs_test"
   ],
-  "evidence_ids": [
-    1595
-  ],
-  "note": "只在已备份的专用测试卷执行，真实断电 3 轮，恢复时不格式化；逐轮记录原文件和原始程序恢复结果。",
-  "original": "4.1.5",
-  "evidence": [
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/result.json",
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/SHA256SUMS",
-    "workspace/evidence/backups-2026-09-10-scan-stress/logs/power1595-recovery.log",
-    "workspace/evidence/backups-2026-09-10-scan-stress/power1595-recovery-result.json",
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1590-create.log",
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1594-create.log",
-    "docs/acceptance/xts-category-status.md"
-  ],
   "title": "文件系统异常场景--创建文件时掉电",
-  "original_line": 3157,
-  "config_inheritance_verified": true,
-  "local_sources": [
-    {
-      "path": "src/vela_fs_test",
-      "origin": "tests/testcases/vela_fs_test"
-    }
-  ],
-  "local_config": "config/xts-flat-category-fs-sync/defconfig",
-  "local_evidence": [
-    {
-      "path": "evidence/docs/acceptance/xts-category-status.md",
-      "origin": "docs/acceptance/xts-category-status.md"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/SHA256SUMS",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/SHA256SUMS"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1590-create.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1590-create.log"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1594-create.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/power1594-create.log"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/result.json",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1595-poweroff02-pass/result.json"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/power1595-recovery.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/power1595-recovery.log"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/power1595-recovery-result.json",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/power1595-recovery-result.json"
-    }
-  ]
+  "validation_index": "../../../../docs/validation/index.json"
 }

@@ -1,0 +1,128 @@
+diff --git a/devtools/agent_vmw7.json b/devtools/agent_vmw7.json
+index cd7b777fe5d4610886f3fd57c6948ab79b9e836e..95d62ba36a0cc7721d56a43ed3300e1b7027ce3d 100644
+--- a/devtools/agent_vmw7.json
++++ b/devtools/agent_vmw7.json
+@@ -1,33 +1,33 @@
+-{
+-    "cmake_variants" : [
+-        {"name": "generator",
+-         "generators": [
+-            {"generator": [
+-                "Visual Studio 7 .NET 2003",
+-                "Visual Studio 9 2008",
+-                "Visual Studio 9 2008 Win64",
+-                "Visual Studio 10",
+-                "Visual Studio 10 Win64",
+-                "Visual Studio 11",
+-                "Visual Studio 11 Win64"
+-                ]
+-            },
+-            {"generator": ["MinGW Makefiles"],
+-             "env_prepend": [{"path": "c:/wut/prg/MinGW/bin"}]
+-            }
+-         ]
+-        },
+-        {"name": "shared_dll",
+-         "variables": [
+-            ["BUILD_SHARED_LIBS=true"],
+-            ["BUILD_SHARED_LIBS=false"]
+-          ]
+-        },
+-        {"name": "build_type",
+-         "build_types": [
+-            "debug",
+-            "release"
+-            ]
+-        }
+-    ]
+-}
++{
++    "cmake_variants" : [
++        {"name": "generator",
++         "generators": [
++            {"generator": [
++                "Visual Studio 7 .NET 2003",
++                "Visual Studio 9 2008",
++                "Visual Studio 9 2008 Win64",
++                "Visual Studio 10",
++                "Visual Studio 10 Win64",
++                "Visual Studio 11",
++                "Visual Studio 11 Win64"
++                ]
++            },
++            {"generator": ["MinGW Makefiles"],
++             "env_prepend": [{"path": "c:/wut/prg/MinGW/bin"}]
++            }
++         ]
++        },
++        {"name": "shared_dll",
++         "variables": [
++            ["BUILD_SHARED_LIBS=true"],
++            ["BUILD_SHARED_LIBS=false"]
++          ]
++        },
++        {"name": "build_type",
++         "build_types": [
++            "debug",
++            "release"
++            ]
++        }
++    ]
++}
+diff --git a/devtools/agent_vmxp.json b/devtools/agent_vmxp.json
+index f82a0773a2f1f5545f94a315b950efc713ebee37..39d5e53a99d969c59a739a76383e7785f87fdc73 100644
+--- a/devtools/agent_vmxp.json
++++ b/devtools/agent_vmxp.json
+@@ -1,26 +1,26 @@
+-{
+-    "cmake_variants" : [
+-        {"name": "generator",
+-         "generators": [
+-            {"generator": [
+-                "Visual Studio 6",
+-                "Visual Studio 7",
+-                "Visual Studio 8 2005"
+-                ]
+-            }
+-         ]
+-        },
+-        {"name": "shared_dll",
+-         "variables": [
+-            ["BUILD_SHARED_LIBS=true"],
+-            ["BUILD_SHARED_LIBS=false"]
+-          ]
+-        },
+-        {"name": "build_type",
+-         "build_types": [
+-            "debug",
+-            "release"
+-            ]
+-        }
+-    ]
+-}
++{
++    "cmake_variants" : [
++        {"name": "generator",
++         "generators": [
++            {"generator": [
++                "Visual Studio 6",
++                "Visual Studio 7",
++                "Visual Studio 8 2005"
++                ]
++            }
++         ]
++        },
++        {"name": "shared_dll",
++         "variables": [
++            ["BUILD_SHARED_LIBS=true"],
++            ["BUILD_SHARED_LIBS=false"]
++          ]
++        },
++        {"name": "build_type",
++         "build_types": [
++            "debug",
++            "release"
++            ]
++        }
++    ]
++}

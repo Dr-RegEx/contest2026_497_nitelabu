@@ -1,0 +1,3108 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 59d6ab1655e171531e6797f793aba3448ab78278..7313350c8eb2c05b245e6e095554e003b3627db4 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -100,8 +100,30 @@ if(CONFIG_BLUETOOTH)
+   endif()
+ 
+   if(CONFIG_BLUETOOTH_BLE_AUDIO)
+-    file(GLOB APPEND_FILES ${BLUETOOTH_DIR}/framework/api/bt_lea*.c)
+-    list(APPEND CSRCS ${APPEND_FILES})
++    if(CONFIG_BLUETOOTH_LEAUDIO_CLIENT)
++      list(APPEND CSRCS ${BLUETOOTH_DIR}/framework/api/bt_lea_client.c)
++    endif()
++    if(CONFIG_BLUETOOTH_LEAUDIO_SERVER)
++      list(APPEND CSRCS ${BLUETOOTH_DIR}/framework/api/bt_lea_server.c)
++    endif()
++    if(CONFIG_BLUETOOTH_LEAUDIO_CCP)
++      list(APPEND CSRCS ${BLUETOOTH_DIR}/framework/api/bt_lea_ccp.c)
++    endif()
++    if(CONFIG_BLUETOOTH_LEAUDIO_MCP)
++      list(APPEND CSRCS ${BLUETOOTH_DIR}/framework/api/bt_lea_mcp.c)
++    endif()
++    if(CONFIG_BLUETOOTH_LEAUDIO_MCS)
++      list(APPEND CSRCS ${BLUETOOTH_DIR}/framework/api/bt_lea_mcs.c)
++    endif()
++    if(CONFIG_BLUETOOTH_LEAUDIO_TBS)
++      list(APPEND CSRCS ${BLUETOOTH_DIR}/framework/api/bt_lea_tbs.c)
++    endif()
++    if(CONFIG_BLUETOOTH_LEAUDIO_VMICP)
++      list(APPEND CSRCS ${BLUETOOTH_DIR}/framework/api/bt_lea_vmicp.c)
++    endif()
++    if(CONFIG_BLUETOOTH_LEAUDIO_VMICS)
++      list(APPEND CSRCS ${BLUETOOTH_DIR}/framework/api/bt_lea_vmics.c)
++    endif()
+   endif()
+ 
+   if(CONFIG_BLUETOOTH_FRAMEWORK_SOCKET_IPC)
+@@ -319,6 +341,14 @@ if(CONFIG_BLUETOOTH)
+     if(CONFIG_BLUETOOTH_STACK_LE_ZBLUE)
+       list(APPEND CSRCS ${BLUETOOTH_DIR}/service/stacks/zephyr/sal_adapter_le_interface.c)
+ 
++      if(CONFIG_BLUETOOTH_LEAUDIO_SERVER)
++        list(APPEND CSRCS ${BLUETOOTH_DIR}/service/stacks/zephyr/sal_lea_server_interface.c)
++      endif()
++
++      if(CONFIG_BT_AUDIO_TX)
++        list(APPEND CSRCS ${BLUETOOTH_DIR}/service/stacks/zephyr/sal_lea_iso.c)
++      endif()
++
+       if(CONFIG_BLUETOOTH_BLE_ADV)
+         list(APPEND CSRCS ${BLUETOOTH_DIR}/service/stacks/zephyr/sal_le_advertise_interface.c)
+       endif()
+@@ -888,21 +918,23 @@ if(CONFIG_BLUETOOTH)
+       DEPENDS
+       libbluetooth)
+ 
+-    nuttx_add_application(
+-      NAME
+-      adapter_test
+-      SRCS
+-      ${BLUETOOTH_DIR}/tests/adapter_test.c
+-      INCLUDE_DIRECTORIES
+-      ${INCDIR}
+-      STACKSIZE
+-      8192
+-      PRIORITY
+-      ${SCHED_PRIORITY_DEFAULT}
+-      COMPILE_FLAGS
+-      ${CFLAGS}
+-      DEPENDS
+-      libbluetooth)
++    if(CONFIG_BLUETOOTH_ADAPTER_TEST)
++      nuttx_add_application(
++        NAME
++        adapter_test
++        SRCS
++        ${BLUETOOTH_DIR}/tests/adapter_test.c
++        INCLUDE_DIRECTORIES
++        ${INCDIR}
++        STACKSIZE
++        8192
++        PRIORITY
++        ${SCHED_PRIORITY_DEFAULT}
++        COMPILE_FLAGS
++        ${CFLAGS}
++        DEPENDS
++        libbluetooth)
++    endif()
+   endif()
+ 
+   if(CONFIG_BLUETOOTH_UPGRADE)
+diff --git a/Kconfig b/Kconfig
+index 72eccd067f842a6f4237c15ee461cc2847be2909..70836f80450739afd5cff8ce3cf6338f95e73ccb 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -826,6 +826,15 @@ config BLUETOOTH_TOOLS
+ 	default n
+ 	select BLUETOOTH_FRAMEWORK
+ 
++config BLUETOOTH_ADAPTER_TEST
++	bool "Standalone Bluetooth adapter test application"
++	depends on BLUETOOTH_TOOLS
++	default y
++	help
++		Build adapter_test in addition to the interactive bttool.
++		Disable on images with limited application storage when bttool
++		provides the required adapter and profile commands.
++
+ menuconfig APP_BT_SAMPLE_CODE
+ 	bool "Sample Code"
+ 	default n
+diff --git a/Makefile b/Makefile
+index 017b32735813636c399657ac50cb8b5d2f4ca661..aac36887260480a70ebef040931acc749a971bed 100644
+--- a/Makefile
++++ b/Makefile
+@@ -71,7 +71,30 @@ ifeq ($(CONFIG_BLUETOOTH_PAN), y)
+ CSRCS += framework/api/bt_pan.c
+ endif #CONFIG_BLUETOOTH_PAN
+ ifeq ($(CONFIG_BLUETOOTH_BLE_AUDIO), y)
+-CSRCS := framework/api/bt_lea*.c
++ifeq ($(CONFIG_BLUETOOTH_LEAUDIO_CLIENT), y)
++CSRCS += framework/api/bt_lea_client.c
++endif
++ifeq ($(CONFIG_BLUETOOTH_LEAUDIO_SERVER), y)
++CSRCS += framework/api/bt_lea_server.c
++endif
++ifeq ($(CONFIG_BLUETOOTH_LEAUDIO_CCP), y)
++CSRCS += framework/api/bt_lea_ccp.c
++endif
++ifeq ($(CONFIG_BLUETOOTH_LEAUDIO_MCP), y)
++CSRCS += framework/api/bt_lea_mcp.c
++endif
++ifeq ($(CONFIG_BLUETOOTH_LEAUDIO_MCS), y)
++CSRCS += framework/api/bt_lea_mcs.c
++endif
++ifeq ($(CONFIG_BLUETOOTH_LEAUDIO_TBS), y)
++CSRCS += framework/api/bt_lea_tbs.c
++endif
++ifeq ($(CONFIG_BLUETOOTH_LEAUDIO_VMICP), y)
++CSRCS += framework/api/bt_lea_vmicp.c
++endif
++ifeq ($(CONFIG_BLUETOOTH_LEAUDIO_VMICS), y)
++CSRCS += framework/api/bt_lea_vmics.c
++endif
+ endif #CONFIG_BLUETOOTH_BLE_AUDIO
+ 
+ ifeq ($(CONFIG_BLUETOOTH_FRAMEWORK_SOCKET_IPC), y)
+@@ -246,6 +269,12 @@ endif #CONFIG_BLUETOOTH_AVRCP_CONTROL/CONFIG_BLUETOOTH_AVRCP_TARGET
+ 
+ ifeq ($(CONFIG_BLUETOOTH_STACK_LE_ZBLUE), y)
+ 	CSRCS += service/stacks/zephyr/sal_adapter_le_interface.c
++ifeq ($(CONFIG_BLUETOOTH_LEAUDIO_SERVER), y)
++	CSRCS += service/stacks/zephyr/sal_lea_server_interface.c
++endif
++ifeq ($(CONFIG_BT_AUDIO_TX), y)
++	CSRCS += service/stacks/zephyr/sal_lea_iso.c
++endif
+ ifeq ($(CONFIG_BLUETOOTH_BLE_ADV), y)
+ 	CSRCS += service/stacks/zephyr/sal_le_advertise_interface.c
+ endif #CONFIG_BLUETOOTH_BLE_ADV
+@@ -630,9 +659,11 @@ endif #CONFIG_APP_BT_SAMPLE_CODE
+ ifeq ($(CONFIG_BLUETOOTH_TOOLS), y)
+ 	PROGNAME += bttool
+ 	MAINSRC  += tools/bt_tools.c
++ifeq ($(CONFIG_BLUETOOTH_ADAPTER_TEST), y)
+ 	PROGNAME += adapter_test
+ 	MAINSRC  += tests/adapter_test.c
+ endif
++endif
+ 
+ ifeq ($(CONFIG_BLUETOOTH_UPGRADE), y)
+ 	PROGNAME += bt_upgrade
+diff --git a/framework/api/bt_adapter.c b/framework/api/bt_adapter.c
+index c38d3433e7f96b8efef4f8f497341818de16fb42..0c023f808aff48b81e6edbb427ebfd1ba3333d5a 100644
+--- a/framework/api/bt_adapter.c
++++ b/framework/api/bt_adapter.c
+@@ -82,7 +82,7 @@ bt_status_t BTSYMBOLS(bt_adapter_start_limited_discovery)(bt_instance_t* ins, ui
+     return adapter_start_discovery(timeout, true);
+ }
+ 
+-bt_status_t BTSYMBOLS(bt_adapter_set_debug_mode)(bt_instance_t* ins, uint8_t mode, uint8_t operation)
++bt_status_t BTSYMBOLS(bt_adapter_set_debug_mode)(bt_instance_t* ins, bt_debug_mode_t mode, uint8_t operation)
+ {
+     return adapter_set_debug_mode(mode, operation);
+ }
+diff --git a/framework/api/bt_device.c b/framework/api/bt_device.c
+index cf1bc155c0cfd0ce2101423e8069fbab86922afc..ceb7e3ba269a1a2a8d05fe7312d097420b9fcf5f 100644
+--- a/framework/api/bt_device.c
++++ b/framework/api/bt_device.c
+@@ -204,4 +204,14 @@ bt_status_t BTSYMBOLS(bt_device_set_le_sc_remote_oob_data)(bt_instance_t* ins, b
+ bt_status_t BTSYMBOLS(bt_device_get_le_sc_local_oob_data)(bt_instance_t* ins, bt_address_t* addr)
+ {
+     return adapter_le_get_local_oob_data(addr);
+-}
+\ No newline at end of file
++}
++
++bt_status_t BTSYMBOLS(bt_device_enable_enhanced_mode)(bt_instance_t* ins, bt_address_t* addr, bt_enhanced_mode_t mode)
++{
++    return BT_STATUS_NOT_SUPPORTED;
++}
++
++bt_status_t BTSYMBOLS(bt_device_disable_enhanced_mode)(bt_instance_t* ins, bt_address_t* addr, bt_enhanced_mode_t mode)
++{
++    return BT_STATUS_NOT_SUPPORTED;
++}
+diff --git a/framework/api/bt_lea_server.c b/framework/api/bt_lea_server.c
+index 7e0f1c60e7d7b0eb7fbbec8d0e10a60c62de73a1..9d84d70f7d873d26269496f76b6d77f23e3ff9d1 100644
+--- a/framework/api/bt_lea_server.c
++++ b/framework/api/bt_lea_server.c
+@@ -79,3 +79,19 @@ profile_connection_state_t bt_lea_server_get_connection_state(bt_instance_t* ins
+ 
+     return profile->get_connection_state(addr);
+ }
++
++bt_status_t bt_lea_server_receive_control(bt_instance_t* ins,
++    lea_server_receive_control_t control,
++    lea_server_receive_control_callback callback, void* cookie)
++{
++    lea_server_interface_t* profile;
++
++    if (control < LEA_SERVER_RECEIVE_PAUSE || control > LEA_SERVER_RECEIVE_UNMUTE || !callback)
++        return BT_STATUS_PARM_INVALID;
++
++    profile = get_profile_service();
++    if (!profile || !profile->receive_control)
++        return BT_STATUS_NOT_READY;
++
++    return profile->receive_control(control, callback, cookie);
++}
+diff --git a/framework/include/bt_lea_server.h b/framework/include/bt_lea_server.h
+index 7f01eff59aa105f153adc0534ed4759a7b7f2385..2f6f58d2c9b10af5645354be5b1b68683429cfdf 100644
+--- a/framework/include/bt_lea_server.h
++++ b/framework/include/bt_lea_server.h
+@@ -55,4 +55,28 @@ profile_connection_state_t bt_lea_server_get_connection_state(bt_instance_t* ins
+ 
+ bt_status_t bt_lea_server_disconnect_audio(bt_instance_t* ins, bt_address_t* addr);
+ 
+-#endif
+\ No newline at end of file
++typedef enum {
++    LEA_SERVER_RECEIVE_PAUSE,
++    LEA_SERVER_RECEIVE_RESUME,
++    LEA_SERVER_RECEIVE_MUTE,
++    LEA_SERVER_RECEIVE_UNMUTE,
++} lea_server_receive_control_t;
++
++typedef void (*lea_server_receive_control_callback)(void* cookie,
++    lea_server_receive_control_t control, bt_status_t status);
++
++/* Control the local, shared receive pipeline, not the remote media player or
++ * an individual ASE. Pause and mute are independent; both must be cleared to
++ * resume. Packets received while paused/muted are discarded. A stopped stream
++ * cannot be resumed with this API. Offloaded receive is not supported.
++ *
++ * SUCCESS means queued. The required callback reports the operation's result
++ * on the Bluetooth event thread, including NOT_READY after a service restart.
++ * On immediate failure no callback is made. Keep the event loop and cookie
++ * alive until completion; the callback must not block the event thread.
++ */
++bt_status_t bt_lea_server_receive_control(bt_instance_t* ins,
++    lea_server_receive_control_t control,
++    lea_server_receive_control_callback callback, void* cookie);
++
++#endif
+diff --git a/service/common/service_loop.c b/service/common/service_loop.c
+index 90d591d7ccde1d49076f959a6125906b13174c32..e0061b0255b459bfdd03eddfb6cbace511df3db5 100644
+--- a/service/common/service_loop.c
++++ b/service/common/service_loop.c
+@@ -366,23 +366,41 @@ void service_loop_remove_poll(service_poll_t* poll)
+     uv_close((uv_handle_t*)&poll->handle, handle_close_cb);
+ }
+ 
++int service_loop_reset_timer(service_timer_t* timer, uint64_t timeout, uint64_t repeat)
++{
++    if (!timer || uv_is_closing((uv_handle_t*)&timer->handle))
++        return UV_EINVAL;
++
++    /* uv_timer_start uses the loop's cached clock. Refresh it for deadlines
++     * computed after other work in the current event-loop iteration.
++     */
++    uv_update_time(timer->handle.loop);
++    return uv_timer_start(&timer->handle, service_timer_cb, timeout, repeat);
++}
++
+ service_timer_t* service_loop_timer(uint64_t timeout, uint64_t repeat, service_timer_cb_t cb, void* userdata)
+ {
+     uv_loop_t* handle = get_service_uv_loop();
+-    service_loop_t* loop = handle->data;
++    service_timer_t* timer;
+ 
+     if (!cb)
+         return NULL;
+ 
+-    service_timer_t* timer = malloc(sizeof(service_timer_t));
++    timer = malloc(sizeof(service_timer_t));
+     if (!timer)
+         return NULL;
+ 
+-    uv_timer_init(loop->handle, &timer->handle);
++    if (uv_timer_init(handle, &timer->handle) < 0) {
++        free(timer);
++        return NULL;
++    }
+     timer->callback = cb;
+     timer->userdata = userdata;
+     timer->handle.data = timer;
+-    uv_timer_start(&timer->handle, service_timer_cb, timeout, repeat);
++    if (service_loop_reset_timer(timer, timeout, repeat) < 0) {
++        uv_close((uv_handle_t*)&timer->handle, handle_close_cb);
++        return NULL;
++    }
+ 
+     return timer;
+ }
+diff --git a/service/common/service_loop.h b/service/common/service_loop.h
+index 3c7a25e343ed8bb391dd42895274215d8a156620..8da8dbdf8596ff0bf21e66eff26f80624eb54dcb 100644
+--- a/service/common/service_loop.h
++++ b/service/common/service_loop.h
+@@ -81,6 +81,7 @@ int service_loop_reset_poll(service_poll_t* poll, int pevents);
+ void service_loop_remove_poll(service_poll_t* poll);
+ service_timer_t* service_loop_timer(uint64_t timeout, uint64_t repeat, service_timer_cb_t cb, void* userdata);
+ service_timer_t* service_loop_timer_no_repeating(uint64_t timeout, service_timer_cb_t cb, void* userdata);
++int service_loop_reset_timer(service_timer_t* timer, uint64_t timeout, uint64_t repeat);
+ void service_loop_cancel_timer(service_timer_t* timer);
+ service_work_t* service_loop_work(void* user_data, service_work_cb_t work_cb,
+     service_after_work_cb_t after_work_cb);
+diff --git a/service/profiles/audio_interface/audio_transport.c b/service/profiles/audio_interface/audio_transport.c
+index 4bf0f96a53f028bfc1c7c16eca359a962262b323..05169bcbe6a31732653c3b0aa554ea5c2c0a9aec 100644
+--- a/service/profiles/audio_interface/audio_transport.c
++++ b/service/profiles/audio_interface/audio_transport.c
+@@ -70,6 +70,7 @@ typedef struct {
+ typedef struct _audio_transport {
+     uv_loop_t* loop;
+     uint8_t closing;
++    unsigned handles;
+     transport_channel_t ch[AUDIO_TRANS_CH_NUM];
+ } audio_transport_t;
+ 
+@@ -86,31 +87,25 @@ const char* audio_transport_dump_event(uint8_t event)
+     }
+ }
+ 
++static void transport_release_handle(audio_transport_t* transport)
++{
++    assert(transport->handles);
++    transport->handles--;
++    if (transport->closing && !transport->handles)
++        free(transport);
++}
++
+ static void transport_connection_close_cb(uv_handle_t* handle)
+ {
+     transport_channel_t* ch = handle->data;
+-
++    audio_transport_t* transport = ch->ipc_handle;
+     free(handle);
+     if (ch->state == IPC_CONNTECTED) {
+         ch->state = IPC_DISCONNTECTED;
+         if (ch->event_cb)
+             ch->event_cb(ch->ch_id, TRANSPORT_CLOSE_EVT);
+-
+-        if (!ch->closing && ch->ipc_handle) {
+-            audio_transport_t* transport = ch->ipc_handle;
+-            if (!transport->closing)
+-                return;
+-
+-            for (int i = 0; i < AUDIO_TRANS_CH_NUM; i++) {
+-                ch = &transport->ch[i];
+-                if (ch->closing || ch->state != IPC_DISCONNTECTED)
+-                    return;
+-            }
+-
+-            BT_LOGI("%s transport freed:0x%p", __func__, transport);
+-            free(transport);
+-        }
+     }
++    transport_release_handle(transport);
+ }
+ 
+ static void audio_transport_connection_close(transport_channel_t* ch)
+@@ -129,24 +124,9 @@ static void audio_transport_connection_close(transport_channel_t* ch)
+ static void transport_chnl_close_cb(uv_handle_t* handle)
+ {
+     transport_channel_t* ch = handle->data;
+-    audio_transport_t* transport = NULL;
+-
+     free(handle);
+     ch->closing = 0;
+-    if (ch->ipc_handle && ch->state == IPC_DISCONNTECTED) {
+-        transport = ch->ipc_handle;
+-        if (!transport->closing)
+-            return;
+-
+-        for (int i = 0; i < AUDIO_TRANS_CH_NUM; i++) {
+-            ch = &transport->ch[i];
+-            if (ch->closing || ch->state != IPC_DISCONNTECTED)
+-                return;
+-        }
+-
+-        BT_LOGI("%s transport freed:0x%p", __func__, transport);
+-        free(transport);
+-    }
++    transport_release_handle(ch->ipc_handle);
+ }
+ 
+ static void audio_transport_channel_close(transport_channel_t* ch)
+@@ -160,33 +140,35 @@ static void audio_transport_channel_close(transport_channel_t* ch)
+     }
+ }
+ 
++static void transport_rejected_close_cb(uv_handle_t* handle)
++{
++    free(handle);
++}
++
+ static void transport_chnl_listen_cb(uv_stream_t* stream, int status)
+ {
+     transport_channel_t* ch = stream->data;
++    audio_transport_t* transport = ch->ipc_handle;
++    uv_pipe_t* pipe;
+     int ret;
+-
+-    if (status != 0) {
+-        BT_LOGE("%s, status = %d", __func__, status);
++    if (status || transport->closing || ch->closing) return;
++    pipe = malloc(sizeof(*pipe));
++    if (!pipe) return;
++    ret = uv_pipe_init(stream->loop, pipe, 0);
++    if (ret) { free(pipe); return; }
++    if (ch->cli_pipe || ch->state == IPC_CONNTECTED) {
++        uv_accept(stream, (uv_stream_t*)pipe);
++        uv_close((uv_handle_t*)pipe, transport_rejected_close_cb);
+         return;
+     }
+-
+-    ch->cli_pipe = malloc(sizeof(uv_pipe_t));
+-    ret = uv_pipe_init(stream->loop, ch->cli_pipe, 0);
+-    if (ret != 0) {
+-        free(ch->cli_pipe);
+-        ch->cli_pipe = NULL;
+-        BT_LOGE("client pipe init error %s", uv_strerror(ret));
+-        return;
+-    }
+-
+-    ret = uv_accept(stream, (uv_stream_t*)ch->cli_pipe);
+-    if (ret != 0) {
+-        BT_LOGE("accept error %s", uv_strerror(ret));
++    transport->handles++;
++    ch->cli_pipe = pipe;
++    pipe->data = NULL;
++    ret = uv_accept(stream, (uv_stream_t*)pipe);
++    if (ret) {
+         audio_transport_connection_close(ch);
+         return;
+     }
+-
+-    ch->cli_pipe->data = NULL;
+     ch->state = IPC_CONNTECTED;
+     if (ch->event_cb)
+         ch->event_cb(ch->ch_id, TRANSPORT_OPEN_EVT);
+@@ -213,7 +195,7 @@ static void transport_chnl_write_cb(uv_write_t* req, int status)
+         need_close = 1;
+         BT_LOGE("%s status:%d", __func__, status);
+     }
+-    if (wreq->write_cb)
++    if (wreq->write_cb && !((audio_transport_t*)ch->ipc_handle)->closing)
+         wreq->write_cb(ch->ch_id, wreq->buffer);
+ 
+     free(wreq->buffer);
+@@ -256,8 +238,11 @@ audio_transport_t* audio_transport_init(uv_loop_t* loop)
+     }
+ 
+     transport->loop = loop;
+-    for (uint8_t i = 0; i < AUDIO_TRANS_CH_NUM; i++)
++    for (uint8_t i = 0; i < AUDIO_TRANS_CH_NUM; i++) {
+         transport->ch[i].state = IPC_DISCONNTECTED;
++        transport->ch[i].ch_id = i;
++        transport->ch[i].ipc_handle = transport;
++    }
+ 
+     return transport;
+ }
+@@ -269,16 +254,17 @@ bool audio_transport_open(audio_transport_t* transport, uint8_t ch_id,
+     uv_fs_t fs;
+     int ret;
+ 
+-    if (ch_id >= AUDIO_TRANS_CH_NUM || !transport)
++    if (ch_id >= AUDIO_TRANS_CH_NUM || !transport || !path || transport->closing)
+         return false;
+ 
+     ch = &transport->ch[ch_id];
+ 
+-    if (ch->state == IPC_CONNTECTED)
+-        return true;
++    if (ch->svr_pipe || ch->cli_pipe || ch->closing || ch->state == IPC_CONNTECTED)
++        return false;
+ 
+     ch->cli_pipe = NULL;
+     ch->svr_pipe = malloc(sizeof(uv_pipe_t));
++    if (!ch->svr_pipe) return false;
+     ret = uv_pipe_init(transport->loop, ch->svr_pipe, 0);
+     if (ret != 0) {
+         free(ch->svr_pipe);
+@@ -287,8 +273,10 @@ bool audio_transport_open(audio_transport_t* transport, uint8_t ch_id,
+         return false;
+     }
+ 
++    transport->handles++;
+     ch->svr_pipe->data = ch;
+     ret = uv_fs_unlink(transport->loop, &fs, path, NULL);
++    uv_fs_req_cleanup(&fs);
+     if (ret != 0 && ret != UV_ENOENT) {
+         BT_LOGE("unlink error: %s", uv_strerror(ret));
+         goto error;
+@@ -321,28 +309,28 @@ error:
+     return false;
+ }
+ 
+-void audio_transport_close(audio_transport_t* transport, uint8_t ch_id)
++void audio_transport_disconnect(audio_transport_t* transport, uint8_t ch_id)
+ {
+-    transport_channel_t* ch;
+-
+-    if (!transport)
+-        return;
++    if (transport && !transport->closing && ch_id < AUDIO_TRANS_CH_NUM)
++        audio_transport_connection_close(&transport->ch[ch_id]);
++}
+ 
++void audio_transport_close(audio_transport_t* transport, uint8_t ch_id)
++{
++    if (!transport || transport->closing) return;
+     if (ch_id != AUDIO_TRANS_CH_ID_ALL) {
+-        ch = &transport->ch[ch_id];
+-        audio_transport_channel_close(ch);
++        if (ch_id < AUDIO_TRANS_CH_NUM)
++            audio_transport_channel_close(&transport->ch[ch_id]);
+         return;
+     }
+-
++    /* The owner is releasing its state. Pending uv_close callbacks retain the
++     * transport, but must not notify a new owner using the same channel IDs. */
++    transport->closing = 1;
+     for (int i = 0; i < AUDIO_TRANS_CH_NUM; i++) {
+-        ch = &transport->ch[i];
+-        audio_transport_channel_close(ch);
+-        if (ch->closing || ch->state != IPC_DISCONNTECTED)
+-            transport->closing = 1;
++        transport->ch[i].event_cb = NULL;
++        audio_transport_channel_close(&transport->ch[i]);
+     }
+-
+-    if (!transport->closing)
+-        free(transport);
++    if (!transport->handles) free(transport);
+ }
+ 
+ int audio_transport_write(audio_transport_t* transport, uint8_t ch_id,
+@@ -409,6 +397,8 @@ int audio_transport_read_start(audio_transport_t* transport,
+     if (ch->state != IPC_CONNTECTED || !ch->cli_pipe) {
+         return -1;
+     }
++    if (!alloc_cb || !read_cb) return -EINVAL;
++    if (ch->cli_pipe->data) return -EALREADY;
+     rreq = (transport_read_t*)malloc(sizeof(transport_read_t));
+     if (!rreq) {
+         BT_LOGE("read req alloc failed");
+@@ -426,6 +416,7 @@ int audio_transport_read_start(audio_transport_t* transport,
+     if (ret != 0 && ret != UV_EALREADY) {
+         BT_LOGE("read start error :%s", uv_strerror(ret));
+         free(rreq);
++        ch->cli_pipe->data = NULL;
+         audio_transport_connection_close(ch);
+         return ret;
+     }
+@@ -442,7 +433,7 @@ int audio_transport_read_stop(audio_transport_t* transport, uint8_t ch_id)
+         return -EINVAL;
+ 
+     ch = &transport->ch[ch_id];
+-    if (ch->state != IPC_CONNTECTED) {
++    if (ch->state != IPC_CONNTECTED || !ch->cli_pipe) {
+         return -1;
+     }
+ 
+@@ -461,7 +452,7 @@ int audio_transport_read_stop(audio_transport_t* transport, uint8_t ch_id)
+ 
+ transport_conn_state_t audio_transport_get_state(audio_transport_t* transport, uint8_t ch_id)
+ {
+-    if (!transport) {
++    if (!transport || ch_id >= AUDIO_TRANS_CH_NUM) {
+         return IPC_DISCONNTECTED;
+     }
+ 
+diff --git a/service/profiles/include/audio_transport.h b/service/profiles/include/audio_transport.h
+index 52cfa4d34ef1ec2f5c099d9122ecf821cd3dd1b7..0ddbc9ba03fbcd20f983fb8eda0c75dedd547013 100644
+--- a/service/profiles/include/audio_transport.h
++++ b/service/profiles/include/audio_transport.h
+@@ -50,14 +50,24 @@ typedef enum {
+ typedef enum {
+     AUDIO_CTRL_CMD_START,
+     AUDIO_CTRL_CMD_STOP,
+-    AUDIO_CTRL_CMD_CONFIG_DONE
++    AUDIO_CTRL_CMD_CONFIG_DONE,
++    /* LE source: command followed by the little-endian total encoded bytes. */
++    AUDIO_CTRL_CMD_DRAIN,
++    /* Discard through the same byte boundary, without presenting the tail. */
++    AUDIO_CTRL_CMD_DISCARD
+ } audio_ctrl_cmd_t;
+ 
+ typedef enum {
+     AUDIO_CTRL_EVT_STARTED,
+     AUDIO_CTRL_EVT_START_FAIL,
+     AUDIO_CTRL_EVT_STOPPED,
+-    AUDIO_CTRL_EVT_UPDATE_CONFIG
++    AUDIO_CTRL_EVT_UPDATE_CONFIG,
++    AUDIO_CTRL_EVT_DRAINED,
++    AUDIO_CTRL_EVT_DRAIN_FAIL,
++    AUDIO_CTRL_EVT_DISCARDED,
++    AUDIO_CTRL_EVT_DISCARD_FAIL,
++    /* LE capture ended: followed by total bytes queued on the data pipe. */
++    AUDIO_CTRL_EVT_CAPTURE_END
+ } audio_ctrl_evt_t;
+ 
+ typedef enum {
+@@ -78,6 +88,8 @@ const char* audio_transport_dump_event(uint8_t event);
+ audio_transport_t* audio_transport_init(uv_loop_t* loop);
+ bool audio_transport_open(audio_transport_t* transport, uint8_t ch_id,
+     const char* path, transport_event_cb_t cb);
++/* Close only the current client; keep the listening endpoint available. */
++void audio_transport_disconnect(audio_transport_t* transport, uint8_t ch_id);
+ void audio_transport_close(audio_transport_t* transport, uint8_t ch_id);
+ int audio_transport_write(audio_transport_t* transport, uint8_t ch_id,
+     const uint8_t* data, uint16_t len,
+@@ -90,4 +102,4 @@ int audio_transport_read_stop(audio_transport_t* transport, uint8_t ch_id);
+ transport_conn_state_t audio_transport_get_state(audio_transport_t* transport,
+     uint8_t ch_id);
+ 
+-#endif
+\ No newline at end of file
++#endif
+diff --git a/service/profiles/include/lea_server_event.h b/service/profiles/include/lea_server_event.h
+index 56d968fbca9121dfdfc06084c4675facb7bbdaac..8dc5743db6882c8baca15e90063b461fc85c06a9 100644
+--- a/service/profiles/include/lea_server_event.h
++++ b/service/profiles/include/lea_server_event.h
+@@ -71,6 +71,7 @@ typedef enum {
+     STACK_EVENT_ANNOUNCE,
+     STACK_EVENT_DISCONNECT,
+     STACK_EVENT_CLEANUP,
++    RECEIVE_CONTROL,
+ } lea_server_event_t;
+ 
+ typedef struct
+@@ -87,6 +88,7 @@ typedef struct
+ typedef struct
+ {
+     lea_server_event_t event;
++    uint64_t generation;
+     lea_server_data_t data;
+ } lea_server_msg_t;
+ 
+diff --git a/service/profiles/include/lea_server_service.h b/service/profiles/include/lea_server_service.h
+index 66d082bb8052a8daae0184fcb072cfeff63ffd95..8d32bb8306cfdc574f3ffbaa399f249e4ceb53ee 100644
+--- a/service/profiles/include/lea_server_service.h
++++ b/service/profiles/include/lea_server_service.h
+@@ -37,6 +37,8 @@ typedef struct lea_server_interface {
+     bt_status_t (*disconnect)(bt_address_t* addr);
+     bt_status_t (*disconnect_audio)(bt_address_t* addr);
+     profile_connection_state_t (*get_connection_state)(bt_address_t* addr);
++    bt_status_t (*receive_control)(lea_server_receive_control_t control,
++        lea_server_receive_control_callback callback, void* cookie);
+ } lea_server_interface_t;
+ 
+ lea_audio_stream_t* lea_server_add_stream(uint32_t stream_id, bt_address_t* remote_addr);
+diff --git a/service/profiles/leaudio/codec/lea_codec.c b/service/profiles/leaudio/codec/lea_codec.c
+index 2ce191b9342cd699b5ac14fdb977ec1d145547bb..5a2f7cf7c47d8012306132a0f4ef7ea15d6862c6 100644
+--- a/service/profiles/leaudio/codec/lea_codec.c
++++ b/service/profiles/leaudio/codec/lea_codec.c
+@@ -98,7 +98,8 @@ static uint8_t get_channel_count(uint32_t allocation)
+         allocation >>= 1;
+     }
+ 
+-    return channels;
++    /* An unspecified location denotes one channel. */
++    return channels ? channels : 1;
+ }
+ 
+ static uint8_t get_channal_mode(uint32_t allocation)
+@@ -117,15 +118,27 @@ static uint8_t get_channal_mode(uint32_t allocation)
+     return LEA_CHANNEL_MODE_MONO;
+ }
+ 
+-static uint32_t get_bit_rate(lea_codec_config_t* config)
++static uint32_t get_frame_duration_us(uint8_t duration)
+ {
+-    uint8_t channels;
+-    uint8_t duration;
++    switch (duration) {
++    case LEA_CODEC_FRAME_DURATION_7500US:
++        return 7500;
++    case LEA_CODEC_FRAME_DURATION_10000US:
++        return 10000;
++    default:
++        return 0;
++    }
++}
+ 
+-    channels = get_channel_count(config->allocation);
+-    duration = config->duration == 0 ? 134 : 100; // 7.5 ms or 10 ms
++static uint32_t get_bit_rate(lea_codec_config_t* config)
++{
++    uint32_t duration = get_frame_duration_us(config->duration);
++    uint64_t bits = (uint64_t)8 * get_channel_count(config->allocation) * config->octets * 1000000;
+ 
+-    return 8 * channels * config->octets * duration;
++    /* LC3 converts bitrate to bytes by rounding down. Round up here so
++     * every negotiated frame length survives that conversion exactly.
++     */
++    return duration ? (bits + duration - 1) / duration : 0;
+ }
+ 
+ static uint32_t get_sample_rate(uint8_t index)
+@@ -166,24 +179,8 @@ static uint32_t get_sample_rate(uint8_t index)
+ 
+ static uint32_t get_frame_size(lea_codec_config_t* config)
+ {
+-    uint32_t sample_rate;
+-    float scale;
+-
+-    sample_rate = get_sample_rate(config->frequency);
+-
+-    switch (config->duration) {
+-    case LEA_CODEC_FRAME_DURATION_7500US:
+-        scale = 0.0075;
+-        break;
+-    case LEA_CODEC_FRAME_DURATION_10000US:
+-        scale = 0.01;
+-        break;
+-    default:
+-        scale = 0.01;
+-        break;
+-    }
+-
+-    return sample_rate * scale;
++    return (uint64_t)get_sample_rate(config->frequency)
++        * get_frame_duration_us(config->duration) / 1000000;
+ }
+ 
+ static uint32_t get_packet_size(lea_codec_config_t* config)
+@@ -212,6 +209,7 @@ static void lea_codec_lc3_update_config(lea_audio_stream_t* audio_stream)
+     lea_audio_config_t* audio_config;
+     lea_codec_config_t* codec_cfg;
+     lea_stream_info_t* streams_info;
++    unsigned index;
+ 
+     if (audio_stream->is_source) {
+         audio_config = &g_codec_config[LEA_CODEC_SOURCE];
+@@ -220,6 +218,17 @@ static void lea_codec_lc3_update_config(lea_audio_stream_t* audio_stream)
+     }
+ 
+     codec_cfg = &audio_stream->codec_cfg;
++    if (!get_frame_duration_us(codec_cfg->duration) || !get_sample_rate(codec_cfg->frequency)
++        || !codec_cfg->octets || !codec_cfg->blocks)
++        return;
++
++    for (index = 0; index < audio_config->stream_num; index++) {
++        if (audio_config->streams_info[index].stream_handle == audio_stream->iso_handle)
++            break;
++    }
++    if (index == CONFIG_LEA_STREAM_MAX_NUM)
++        return;
++
+     audio_config->active = true;
+     audio_config->codec_type = LEA_CODEC_TYPE_LC3;
+     audio_config->sample_rate = get_sample_rate(codec_cfg->frequency);
+@@ -229,10 +238,11 @@ static void lea_codec_lc3_update_config(lea_audio_stream_t* audio_stream)
+     audio_config->frame_size = get_frame_size(codec_cfg);
+     audio_config->packet_size = get_packet_size(codec_cfg);
+ 
+-    streams_info = &audio_config->streams_info[audio_config->stream_num];
++    streams_info = &audio_config->streams_info[index];
+     streams_info->stream_handle = audio_stream->iso_handle;
+     streams_info->channel_allocation = codec_cfg->allocation;
+-    audio_config->stream_num++;
++    if (index == audio_config->stream_num)
++        audio_config->stream_num++;
+ }
+ 
+ static bool lea_codec_lc3_get_offload_config(lea_offload_config_t* offload)
+@@ -267,6 +277,9 @@ lea_audio_config_t* lea_codec_get_config(bool is_source)
+ 
+ void lea_codec_set_config(lea_audio_stream_t* audio_stream)
+ {
++    if (!audio_stream)
++        return;
++
+     switch (audio_stream->codec_cfg.codec_id.codec_id) {
+     // todo: codec id
+     case LEA_CODEC_TYPE_LC3:
+diff --git a/service/profiles/leaudio/lea_audio_sink.c b/service/profiles/leaudio/lea_audio_sink.c
+index f8904b61485a176c6e6bdb3b9eb1e5b6ffb97307..77af8cc0d01b47e55caef2d43ba73bf5edade265 100644
+--- a/service/profiles/leaudio/lea_audio_sink.c
++++ b/service/profiles/leaudio/lea_audio_sink.c
+@@ -23,6 +23,7 @@
+  ****************************************************************************/
+ #define LOG_TAG "lea_audio_sink"
+ 
++#include <inttypes.h>
+ #include <errno.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -50,19 +51,6 @@
+  * Private Types
+  ****************************************************************************/
+ 
+-typedef enum {
+-    AUDIO_CTRL_CMD_START,
+-    AUDIO_CTRL_CMD_STOP,
+-    AUDIO_CTRL_CMD_CONFIG_DONE
+-} audio_ctrl_cmd_t;
+-
+-typedef enum {
+-    AUDIO_CTRL_EVT_STARTED,
+-    AUDIO_CTRL_EVT_START_FAIL,
+-    AUDIO_CTRL_EVT_STOPPED,
+-    AUDIO_CTRL_EVT_UPDATE_CONFIG
+-} audio_ctrl_evt_t;
+-
+ typedef enum {
+     STREAM_STATE_OFF,
+     STREAM_STATE_RUNNING,
+@@ -71,10 +59,14 @@ typedef enum {
+ 
+ typedef struct {
+     bool ready;
++    bool suspended;
++    bool muted;
++    bool queue_initialized;
+     bool offloading;
+     uint8_t packet_sending_cnt;
+     uint64_t underflow_ts;
+     uint32_t block_ticks;
++    uint64_t written_bytes;
+     stream_state_t state;
+     uv_mutex_t queue_lock;
+     service_timer_t* recv_timer;
+@@ -139,7 +131,11 @@ static void lea_sink_recv_ctrl_data(audio_ctrl_cmd_t cmd)
+ 
+     switch (cmd) {
+     case AUDIO_CTRL_CMD_START: {
+-        lea_audio_sink_start();
++        bt_status_t status = lea_audio_sink_start();
++        if (status != BT_STATUS_SUCCESS || !g_sink_stream.ready) {
++            lea_control_event(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_CTRL, AUDIO_CTRL_EVT_START_FAIL);
++            break;
++        }
+         lea_control_event(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_CTRL, AUDIO_CTRL_EVT_STARTED);
+         if (g_sink_callbacks) {
+             g_sink_callbacks->lea_audio_resume_cb();
+@@ -154,6 +150,8 @@ static void lea_sink_recv_ctrl_data(audio_ctrl_cmd_t cmd)
+         break;
+     }
+     case AUDIO_CTRL_CMD_CONFIG_DONE: {
++        if (g_sink_stream.audio_config.active && !g_sink_stream.suspended && !g_sink_stream.muted)
++            bt_media_set_lea_receive(true);
+         if (g_sink_callbacks) {
+             g_sink_callbacks->lea_audio_meatadata_updated_cb();
+         }
+@@ -225,13 +223,16 @@ static void lea_sink_ctrl_cb(uint8_t ch_id, audio_transport_event_t event)
+         lea_sink_stream_t* stream = &g_sink_stream;
+ 
+         lea_sink_ctrl_start();
+-        if (stream->state == STREAM_STATE_RUNNING) {
++        if (stream->audio_config.active && !stream->suspended && !stream->muted) {
+             lea_sink_update_codec(&stream->audio_config, true);
+         }
+         break;
+     }
+     case TRANSPORT_CLOSE_EVT: {
+         lea_sink_ctrl_stop();
++        bt_media_set_lea_receive(false);
++        lea_audio_sink_stop(false);
++        audio_transport_disconnect(g_sink_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_AUDIO);
+         break;
+     }
+     default: {
+@@ -247,9 +248,11 @@ static void lea_sink_data_cb(uint8_t ch_id, audio_transport_event_t event)
+ 
+     switch (event) {
+     case TRANSPORT_OPEN_EVT: {
++        g_sink_stream.written_bytes = 0;
+         break;
+     }
+     case TRANSPORT_CLOSE_EVT: {
++        audio_transport_disconnect(g_sink_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_CTRL);
+         break;
+     }
+     default: {
+@@ -316,6 +319,7 @@ static void lea_sink_audio_handle_timer(service_timer_t* timer, void* data)
+         }
+ 
+         stream->packet_sending_cnt++;
++        stream->written_bytes += packet->length;
+         list_delete(node);
+         lea_audio_sink_packet_free(packet);
+     }
+@@ -329,11 +333,14 @@ static void lea_sink_flush_packet_queue(void)
+     lea_sink_stream_t* stream = &g_sink_stream;
+     struct list_node *node, *tmp;
+ 
++    if (!stream->queue_initialized) return;
++    uv_mutex_lock(&stream->queue_lock);
+     list_for_every_safe(&stream->packet_queue, node, tmp)
+     {
+         list_delete(node);
+         free(node);
+     }
++    uv_mutex_unlock(&stream->queue_lock);
+ }
+ 
+ static bt_status_t lea_sink_update_codec(lea_audio_config_t* audio_config, bool enable)
+@@ -342,6 +349,14 @@ static bt_status_t lea_sink_update_codec(lea_audio_config_t* audio_config, bool
+     uint8_t len;
+     uint8_t* p = buffer;
+ 
++    if (!enable) {
++        /* An invalid configuration carries only its validity byte. */
++        buffer[0] = 0;
++        lea_ctrl_event_with_data(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_CTRL,
++            AUDIO_CTRL_EVT_UPDATE_CONFIG, buffer, 1);
++        return BT_STATUS_SUCCESS;
++    }
++
+     len = 21;
+     /* set valid code */
+     UINT8_TO_STREAM(p, enable);
+@@ -383,19 +398,27 @@ bt_status_t lea_audio_sink_init(bool offloading)
+         return BT_STATUS_SUCCESS;
+     }
+ 
++    stream->ready = false;
++    stream->suspended = false;
++    stream->muted = false;
++    memset(&stream->audio_config, 0, sizeof(stream->audio_config));
+     stream->recv_timer = NULL;
+     stream->state = STREAM_STATE_OFF;
+     stream->offloading = offloading;
++    stream->written_bytes = 0;
++    stream->packet_sending_cnt = 0;
+ 
+     g_sink_transport = audio_transport_init(get_service_uv_loop());
+     if (!g_sink_transport) {
+         BT_LOGE("fail, audio_transport_init");
++        lea_audio_sink_cleanup();
+         return BT_STATUS_FAIL;
+     }
+ 
+     if (!audio_transport_open(g_sink_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_CTRL,
+             CONFIG_BLUETOOTH_LEA_SINK_CTRL_PATH, lea_sink_ctrl_cb)) {
+         BT_LOGE("fail, audio_transport_open sink ctrl");
++        lea_audio_sink_cleanup();
+         return BT_STATUS_FAIL;
+     }
+ 
+@@ -403,11 +426,16 @@ bt_status_t lea_audio_sink_init(bool offloading)
+         return BT_STATUS_SUCCESS;
+     }
+ 
+-    uv_mutex_init(&stream->queue_lock);
++    if (uv_mutex_init(&stream->queue_lock)) {
++        lea_audio_sink_cleanup();
++        return BT_STATUS_FAIL;
++    }
++    stream->queue_initialized = true;
+     list_initialize(&stream->packet_queue);
+     if (!audio_transport_open(g_sink_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_AUDIO,
+             CONFIG_BLUETOOTH_LEA_SINK_DATA_PATH, lea_sink_data_cb)) {
+         BT_LOGE("fail, audio_transport_open sink audio");
++        lea_audio_sink_cleanup();
+         return BT_STATUS_FAIL;
+     }
+ 
+@@ -444,10 +472,17 @@ bt_status_t lea_audio_sink_start(void)
+ {
+     lea_sink_stream_t* stream = &g_sink_stream;
+ 
++    if (!g_sink_transport || !stream->audio_config.active)
++        return BT_STATUS_FAIL;
++    /* MEDIA may have queued START before the caller suspended or muted.
++     * Such an acknowledgement must never undo the caller's current intent. */
++    if (stream->suspended || stream->muted)
++        return BT_STATUS_SUCCESS;
++
+     stream->ready = true;
+     if (stream->state == STREAM_STATE_RUNNING) {
+-        BT_LOGD("%s stream was started", __func__)
+-        return BT_STATUS_FAIL;
++        BT_LOGD("%s stream was started", __func__);
++        return BT_STATUS_SUCCESS;
+     }
+ 
+     stream->state = STREAM_STATE_RUNNING;
+@@ -465,15 +500,20 @@ bt_status_t lea_audio_sink_stop(bool update_codec)
+ 
+     BT_LOGD("%s, update_codec:%d", __func__, update_codec);
+     stream->ready = false;
+-    if (stream->state == STREAM_STATE_OFF) {
+-        BT_LOGD("%s stream was stopped", __func__)
+-        return BT_STATUS_FAIL;
+-    }
+ 
+     if (update_codec) {
++        stream->suspended = false;
++        stream->muted = false;
++        stream->audio_config.active = false;
++        bt_media_set_lea_receive(false);
+         lea_sink_update_codec(&stream->audio_config, false);
+     }
+ 
++    if (stream->state == STREAM_STATE_OFF) {
++        BT_LOGD("%s stream was stopped", __func__);
++        return BT_STATUS_SUCCESS;
++    }
++
+     if (!stream->offloading) {
+         service_loop_cancel_timer(stream->recv_timer);
+         stream->recv_timer = NULL;
+@@ -481,61 +521,87 @@ bt_status_t lea_audio_sink_stop(bool update_codec)
+     }
+ 
+     stream->state = STREAM_STATE_OFF;
++    if (!stream->offloading) {
++        uint8_t target[8];
++        for (unsigned i = 0; i < sizeof(target); i++)
++            target[i] = stream->written_bytes >> (i * 8);
++        lea_ctrl_event_with_data(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_CTRL,
++            AUDIO_CTRL_EVT_CAPTURE_END, target, sizeof(target));
++    }
+     lea_control_event(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_CTRL, AUDIO_CTRL_EVT_STOPPED);
+ 
+     return BT_STATUS_SUCCESS;
+ }
+ 
+-bt_status_t lea_audio_sink_suspend(void)
++/* Pausing a live controller stream ends this MEDIA capture, but retains the
++ * controller configuration. Paused ISO packets are dropped, not replayed. */
++static bt_status_t lea_sink_pause_capture(void)
++{
++    bt_status_t status = bt_media_set_lea_receive(false);
++
++    lea_sink_update_codec(&g_sink_stream.audio_config, false);
++    lea_audio_sink_stop(false);
++    return status;
++}
++
++static bt_status_t lea_sink_resume_capture(void)
+ {
+     lea_sink_stream_t* stream = &g_sink_stream;
++    bt_status_t status;
+ 
+-    if (!stream->ready) {
+-        BT_LOGE("fail, %s stream not ready", __func__);
+-        return BT_STATUS_FAIL;
++    if (stream->suspended || stream->muted || stream->state == STREAM_STATE_RUNNING)
++        return BT_STATUS_SUCCESS;
++    if (!stream->offloading) {
++        if (!lea_audio_sink_ctrl_is_connected())
++            return BT_STATUS_IPC_ERROR;
++        /* A fresh capture recreates the decoder and observes CAPTURE_END's
++         * old-byte boundary before it consumes newly received audio. */
++        status = lea_sink_update_codec(&stream->audio_config, true);
++        if (status != BT_STATUS_SUCCESS)
++            return status;
+     }
++    return lea_audio_sink_start();
++}
+ 
+-    return lea_audio_sink_stop(false);
++bt_status_t lea_audio_sink_suspend(void)
++{
++    lea_sink_stream_t* stream = &g_sink_stream;
++
++    if (!g_sink_transport || !stream->audio_config.active)
++        return BT_STATUS_FAIL;
++    stream->suspended = true;
++    return lea_sink_pause_capture();
+ }
+ 
+ bt_status_t lea_audio_sink_resume(void)
+ {
+     lea_sink_stream_t* stream = &g_sink_stream;
+ 
+-    if (!stream->ready) {
+-        BT_LOGE("fail, %s stream not ready", __func__);
++    if (!g_sink_transport || !stream->audio_config.active)
+         return BT_STATUS_FAIL;
+-    }
+-
+-    return lea_audio_sink_start();
++    stream->suspended = false;
++    return lea_sink_resume_capture();
+ }
+ 
+ bt_status_t lea_audio_sink_mute(bool mute)
+ {
+     lea_sink_stream_t* stream = &g_sink_stream;
+ 
+-    if (!stream->ready) {
+-        BT_LOGE("fail, %s stream not ready", __func__);
++    if (!g_sink_transport || !stream->audio_config.active)
+         return BT_STATUS_FAIL;
+-    }
+-
+-    if (mute) {
+-        return lea_audio_sink_stop(false);
+-    } else {
+-        return lea_audio_sink_resume();
+-    }
++    stream->muted = mute;
++    return mute ? lea_sink_pause_capture() : lea_sink_resume_capture();
+ }
+ 
+ bt_status_t lea_audio_sink_update_codec(lea_audio_config_t* audio_config, uint16_t sdu_size)
+ {
+     lea_sink_stream_t* stream = &g_sink_stream;
+ 
+-    BT_LOGD("%s, codec_type:%d, sample_rate:%d, bits_per_sample:%d, channel_mode:%d, bit_rate:%d", __func__, audio_config->codec_type, audio_config->sample_rate, audio_config->bits_per_sample, audio_config->channel_mode, audio_config->bit_rate);
++    BT_LOGD("%s, codec_type:%d, sample_rate:%" PRIu32 ", bits_per_sample:%d, channel_mode:%d, bit_rate:%" PRIu32 "", __func__, audio_config->codec_type, audio_config->sample_rate, audio_config->bits_per_sample, audio_config->channel_mode, audio_config->bit_rate);
+ 
+     (void)sdu_size;
+     memcpy(&stream->audio_config, audio_config, sizeof(lea_audio_config_t));
+ 
+-    bt_media_set_lea_available();
+     if (!lea_audio_sink_ctrl_is_connected()) {
+         BT_LOGD("failed, %s ctrl transport was not connected", __func__);
+         return BT_STATUS_IPC_ERROR;
+@@ -553,7 +619,7 @@ void lea_audio_sink_packet_recv(lea_recv_iso_data_t* packet)
+         return;
+     }
+ 
+-    if (stream->state != STREAM_STATE_RUNNING) {
++    if (!stream->queue_initialized || stream->offloading || stream->state != STREAM_STATE_RUNNING) {
+         free(packet);
+         return;
+     }
+@@ -600,16 +666,19 @@ bool lea_audio_sink_ctrl_is_connected(void)
+ void lea_audio_sink_cleanup(void)
+ {
+     lea_sink_stream_t* stream = &g_sink_stream;
+-
+     stream->ready = false;
+-
+-    audio_transport_close(g_sink_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_CTRL);
+-    g_sink_transport = NULL;
++    stream->suspended = false;
++    stream->muted = false;
++    stream->audio_config.active = false;
++    stream->state = STREAM_STATE_OFF;
++    service_loop_cancel_timer(stream->recv_timer);
++    stream->recv_timer = NULL;
+     g_sink_callbacks = NULL;
+-
+-    if (stream->offloading) {
+-        return;
++    lea_sink_flush_packet_queue();
++    if (stream->queue_initialized) {
++        uv_mutex_destroy(&stream->queue_lock);
++        stream->queue_initialized = false;
+     }
+-
+-    audio_transport_close(g_sink_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SINK_AUDIO);
++    audio_transport_close(g_sink_transport, AUDIO_TRANS_CH_ID_ALL);
++    g_sink_transport = NULL;
+ }
+diff --git a/service/profiles/leaudio/lea_audio_source.c b/service/profiles/leaudio/lea_audio_source.c
+index 17d8800cc40fec18edb5079666c7d7765a80c1d9..d3956265a7c16efb152a427c1e3a9446dce48afc 100644
+--- a/service/profiles/leaudio/lea_audio_source.c
++++ b/service/profiles/leaudio/lea_audio_source.c
+@@ -23,10 +23,12 @@
+  ****************************************************************************/
+ #define LOG_TAG "lea_audio_source"
+ 
++#include <inttypes.h>
+ #include <errno.h>
+-#include <nuttx/mm/circbuf.h>
++#include <nuttx/circbuf.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <errno.h>
+ 
+ #include "audio_transport.h"
+ #include "bt_utils.h"
+@@ -67,7 +69,16 @@ typedef struct {
+     stream_state_t stream_state;
+     uint8_t read_congest;
+     uint16_t sdu_size;
+-    uint32_t interval_ms;
++    uint32_t interval_us;
++    uint64_t next_send_us;
++    uint64_t sent_bytes;
++    uint64_t received_bytes;
++    uint64_t drain_target;
++    bool drain_pending;
++    uint64_t discard_target;
++    bool discard_pending;
++    uint8_t ctrl_request[9];
++    unsigned ctrl_used;
+     uint32_t sequence_number;
+     uint32_t max_tx_length;
+     service_timer_t* send_timer;
+@@ -116,21 +127,55 @@ static void lea_control_event(uint8_t ch_id, audio_ctrl_evt_t evt)
+     lea_ctrl_event_with_data(ch_id, evt, NULL, 0);
+ }
+ 
++/* The control and data sockets are independently scheduled. A byte target
++ * prevents an empty ring from acknowledging data still in the socket. */
++static void lea_source_check_drain(lea_source_stream_t* stream)
++{
++    uint8_t target[8];
++
++    if (!stream->drain_pending || stream->sent_bytes < stream->drain_target)
++        return;
++    for (unsigned i = 0; i < sizeof(target); i++)
++        target[i] = stream->drain_target >> (i * 8);
++    stream->drain_pending = false;
++    lea_ctrl_event_with_data(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_CTRL,
++        AUDIO_CTRL_EVT_DRAINED, target, sizeof(target));
++}
++
++static void lea_source_check_discard(lea_source_stream_t* stream)
++{
++    uint8_t target[8];
++
++    if (!stream->discard_pending || stream->received_bytes < stream->discard_target)
++        return;
++    for (unsigned i = 0; i < sizeof(target); i++)
++        target[i] = stream->discard_target >> (i * 8);
++    stream->discard_pending = false;
++    lea_audio_source_stop(false);
++    lea_ctrl_event_with_data(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_CTRL,
++        AUDIO_CTRL_EVT_DISCARDED, target, sizeof(target));
++    if (g_source_callbacks && g_source_callbacks->lea_audio_suspend_cb)
++        g_source_callbacks->lea_audio_suspend_cb();
++}
++
+ static void lea_audio_sink_alloc(uint8_t ch_id, uint8_t** buffer, size_t* len)
+ {
+     lea_source_stream_t* stream = &g_source_stream;
+     int space, next_to_read;
+     uint8_t* alloc_buffer;
+ 
++    *buffer = NULL;
++    *len = 0;
+     if (stream->stream_state == STREAM_STATE_FLUSHING) {
+-        *len = STREAM_FLUSH_SIZE;
+-        *buffer = (uint8_t*)malloc(STREAM_FLUSH_SIZE);
++        uint64_t remaining = stream->discard_target - stream->received_bytes;
++        *len = remaining < STREAM_FLUSH_SIZE ? remaining : STREAM_FLUSH_SIZE;
++        *buffer = (uint8_t*)malloc(*len);
+         return;
+     }
+ 
+     // check pool buffer space enough to read one frame
+     space = circbuf_space(&stream->stream_pool);
+-    if (space == 0) {
++    if (space == 0 || stream->sdu_size == 0) {
+         BT_LOGE("%s, no enough space to read", __func__);
+         *buffer = NULL;
+         return;
+@@ -164,6 +209,12 @@ static void lea_audio_sink_recv(uint8_t ch_id, uint8_t* buffer, ssize_t len)
+         goto out;
+     }
+ 
++    stream->received_bytes += len;
++    if (stream->stream_state == STREAM_STATE_FLUSHING) {
++        lea_source_check_discard(stream);
++        goto out;
++    }
++
+     space = circbuf_space(&stream->stream_pool);
+     if (len > space) {
+         BT_LOGE("%s, unexpected len:%d", __func__, len);
+@@ -192,29 +243,49 @@ static void lea_audio_sink_handler(service_timer_t* timer, void* data)
+ {
+     lea_source_stream_t* stream = (lea_source_stream_t*)data;
+     uint8_t buf[512];
+-    int size;
++    uint64_t now;
+ 
+     if (stream->stream_state != STREAM_STATE_RUNNING) {
+         BT_LOGD("%s state:%d", __func__, stream->stream_state);
+         return;
+     }
+ 
+-    if (!g_source_callbacks) {
++    if (!g_source_callbacks || !g_source_callbacks->lea_audio_send_cb) {
+         BT_LOGE("%s, callbacks null", __func__);
++        lea_audio_source_stop(false);
+         return;
+     }
+ 
+-    audio_transport_read_start(g_source_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_AUDIO, lea_audio_sink_alloc, lea_audio_sink_recv);
++    now = bt_get_os_timestamp_us();
++    if (now >= stream->next_send_us) {
++        /* One SDU per deadline; queued frames must not become a burst. */
++        stream->next_send_us += stream->interval_us;
++        if (circbuf_used(&stream->stream_pool) >= stream->sdu_size) {
++            int size = lea_audio_source_read(buf, stream->sdu_size);
++            g_source_callbacks->lea_audio_send_cb(buf, size);
++            if (stream->stream_state != STREAM_STATE_RUNNING || stream->send_timer != timer)
++                return;
++            stream->sent_bytes += size;
++            lea_source_check_drain(stream);
++        }
++    }
+ 
+-    if (stream->sdu_size > 512) {
+-        BT_LOGE("%s, sdu_size:%d over", __func__, stream->sdu_size);
++    /* The send callback may stop, replace or destroy this stream. */
++    if (stream->stream_state != STREAM_STATE_RUNNING || stream->send_timer != timer)
+         return;
+-    }
+ 
+-    while (circbuf_used(&stream->stream_pool) >= stream->sdu_size) {
+-        size = lea_audio_source_read(buf, stream->sdu_size);
+-        g_source_callbacks->lea_audio_send_cb(buf, size);
+-    }
++    now = bt_get_os_timestamp_us();
++    if (now >= stream->next_send_us) {
++        /* Skip elapsed slots after event-loop delays, retaining bounded
++         * queued data and backpressure instead of a catch-up burst.
++         */
++        stream->next_send_us += ((now - stream->next_send_us) / stream->interval_us + 1)
++            * stream->interval_us;
++    }
++    if (circbuf_space(&stream->stream_pool))
++        audio_transport_read_start(g_source_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_AUDIO, lea_audio_sink_alloc, lea_audio_sink_recv);
++    if (service_loop_reset_timer(timer, (stream->next_send_us - now + 999) / 1000, 0) < 0)
++        lea_audio_source_stop(false);
+ }
+ 
+ static void lea_ctrl_buffer_alloc(uint8_t ch_id, uint8_t** buffer, size_t* len)
+@@ -240,9 +311,12 @@ static void lea_recv_ctrl_data(uint8_t ch_id, audio_ctrl_cmd_t cmd)
+ 
+     switch (cmd) {
+     case AUDIO_CTRL_CMD_START: {
+-        lea_audio_source_start();
++        if (lea_audio_source_start() != BT_STATUS_SUCCESS) {
++            lea_control_event(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_CTRL, AUDIO_CTRL_EVT_START_FAIL);
++            break;
++        }
+         lea_control_event(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_CTRL, AUDIO_CTRL_EVT_STARTED);
+-        if (g_source_callbacks) {
++        if (g_source_callbacks && g_source_callbacks->lea_audio_resume_cb) {
+             g_source_callbacks->lea_audio_resume_cb();
+         }
+         break;
+@@ -250,14 +324,21 @@ static void lea_recv_ctrl_data(uint8_t ch_id, audio_ctrl_cmd_t cmd)
+ 
+     case AUDIO_CTRL_CMD_STOP: {
+         lea_audio_source_stop(false);
+-        if (g_source_callbacks) {
++        if (g_source_callbacks && g_source_callbacks->lea_audio_suspend_cb) {
+             g_source_callbacks->lea_audio_suspend_cb();
+         }
+         break;
+     }
+ 
+     case AUDIO_CTRL_CMD_CONFIG_DONE: {
+-        if (g_source_callbacks) {
++        /* Publish the route only after MEDIA accepted this configuration.
++         * Publishing before UPDATE_CONFIG races the device format query. */
++        if (g_source_stream.audio_config.active) {
++            bt_status_t ret = bt_media_set_lea_available();
++            if (ret != BT_STATUS_SUCCESS)
++                BT_LOGE("%s, media route unavailable: %d", __func__, ret);
++        }
++        if (g_source_callbacks && g_source_callbacks->lea_audio_meatadata_updated_cb) {
+             g_source_callbacks->lea_audio_meatadata_updated_cb();
+         }
+         break;
+@@ -281,12 +362,49 @@ static void lea_ctrl_data_received(uint8_t ch_id, uint8_t* buffer, ssize_t len)
+         return;
+     }
+ 
+-    while (len) {
+-        /* get cmd code*/
+-        STREAM_TO_UINT8(cmd, pbuf);
+-        len--;
+-        /* process cmd*/
+-        lea_recv_ctrl_data(ch_id, cmd);
++    lea_source_stream_t* stream = &g_source_stream;
++    while (len--) {
++        stream->ctrl_request[stream->ctrl_used++] = *pbuf++;
++        cmd = stream->ctrl_request[0];
++        if (cmd == AUDIO_CTRL_CMD_DRAIN || cmd == AUDIO_CTRL_CMD_DISCARD) {
++            if (stream->ctrl_used < sizeof(stream->ctrl_request))
++                continue;
++            uint64_t target = 0;
++            for (unsigned i = 0; i < 8; i++)
++                target |= (uint64_t)stream->ctrl_request[i + 1] << (i * 8);
++            if (cmd == AUDIO_CTRL_CMD_DISCARD) {
++                if (stream->offloading || target < stream->received_bytes ||
++                    stream->stream_state != STREAM_STATE_RUNNING) {
++                    lea_control_event(ch_id, AUDIO_CTRL_EVT_DISCARD_FAIL);
++                } else {
++                    service_loop_cancel_timer(stream->send_timer);
++                    stream->send_timer = NULL;
++                    stream->stream_state = STREAM_STATE_FLUSHING;
++                    stream->discard_target = target;
++                    stream->discard_pending = true;
++                    stream->drain_pending = false;
++                    circbuf_reset(&stream->stream_pool);
++                    lea_source_check_discard(stream);
++                    if (stream->discard_pending) {
++                        int ret = audio_transport_read_start(g_source_transport,
++                            CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_AUDIO,
++                            lea_audio_sink_alloc, lea_audio_sink_recv);
++                        if (ret < 0 && ret != -EALREADY && ret != UV_EALREADY)
++                            lea_audio_source_stop(false);
++                    }
++                }
++            } else if (stream->offloading || !stream->sdu_size || target % stream->sdu_size
++                || stream->stream_state != STREAM_STATE_RUNNING) {
++                lea_control_event(ch_id, AUDIO_CTRL_EVT_DRAIN_FAIL);
++            } else {
++                stream->drain_target = target;
++                stream->drain_pending = true;
++                lea_source_check_drain(stream);
++            }
++        } else {
++            lea_recv_ctrl_data(ch_id, cmd);
++        }
++        stream->ctrl_used = 0;
+     }
+     // free the buffer alloced by lea_ctrl_buffer_alloc
+     free(buffer);
+@@ -322,6 +440,8 @@ static void lea_source_ctrl_cb(uint8_t ch_id, audio_transport_event_t event)
+         break;
+     }
+     case TRANSPORT_CLOSE_EVT: {
++        g_source_stream.ctrl_used = 0;
++        lea_audio_source_stop(false);
+         lea_source_ctrl_stop();
+         break;
+     }
+@@ -341,6 +461,7 @@ static void lea_source_data_cb(uint8_t ch_id, audio_transport_event_t event)
+         break;
+     }
+     case TRANSPORT_CLOSE_EVT: {
++        lea_audio_source_stop(false);
+         break;
+     }
+     default: {
+@@ -400,17 +521,20 @@ bt_status_t lea_audio_source_init(bool offloading)
+     stream->offloading = offloading;
+     stream->send_timer = NULL;
+     stream->stream_state = STREAM_STATE_OFF;
+-    stream->interval_ms = 10; // todo get from lc3 config
++    stream->interval_us = 0;
++    stream->next_send_us = 0;
+ 
+     g_source_transport = audio_transport_init(get_service_uv_loop());
+     if (!g_source_transport) {
+         BT_LOGE("fail, audio_transport_init");
++        lea_audio_source_cleanup();
+         return BT_STATUS_FAIL;
+     }
+ 
+     if (!audio_transport_open(g_source_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_CTRL,
+             CONFIG_BLUETOOTH_LEA_SOURCE_CTRL_PATH, lea_source_ctrl_cb)) {
+         BT_LOGE("fail, audio_transport_open source ctrl");
++        lea_audio_source_cleanup();
+         return BT_STATUS_FAIL;
+     }
+ 
+@@ -421,31 +545,60 @@ bt_status_t lea_audio_source_init(bool offloading)
+     if (!audio_transport_open(g_source_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_AUDIO,
+             CONFIG_BLUETOOTH_LEA_SOURCE_DATA_PATH, lea_source_data_cb)) {
+         BT_LOGE("fail, audio_transport_open source audio");
++        lea_audio_source_cleanup();
+         return BT_STATUS_FAIL;
+     }
+ 
+-    circbuf_init(&stream->stream_pool, NULL, 4096);
++    if (circbuf_init(&stream->stream_pool, NULL, 4096) < 0) {
++        lea_audio_source_cleanup();
++        return BT_STATUS_NOMEM;
++    }
+     return BT_STATUS_SUCCESS;
+ }
+ 
+ bt_status_t lea_audio_source_start(void)
+ {
+     lea_source_stream_t* stream = &g_source_stream;
++    int ret;
+ 
+     BT_LOGD("%s", __func__);
++    if (stream->stream_state == STREAM_STATE_FLUSHING)
++        return BT_STATUS_NOT_READY;
+     if (stream->stream_state == STREAM_STATE_RUNNING) {
+         BT_LOGD("%s. was running", __func__);
+         return BT_STATUS_SUCCESS;
+     }
+ 
+-    stream->stream_state = STREAM_STATE_RUNNING;
++    if (!g_source_transport || !stream->audio_config.active || !stream->interval_us)
++        return BT_STATUS_NOT_READY;
++
+     if (stream->offloading) {
++        stream->stream_state = STREAM_STATE_RUNNING;
+         return BT_STATUS_SUCCESS;
+     }
+ 
++    if (!g_source_callbacks || !g_source_callbacks->lea_audio_send_cb)
++        return BT_STATUS_NOT_READY;
++
+     circbuf_reset(&stream->stream_pool);
++    stream->sent_bytes = 0;
++    stream->received_bytes = 0;
++    stream->drain_pending = false;
++    stream->discard_pending = false;
+     service_loop_cancel_timer(stream->send_timer);
+-    stream->send_timer = service_loop_timer(stream->interval_ms, stream->interval_ms, lea_audio_sink_handler, stream);
++    stream->send_timer = NULL;
++    ret = audio_transport_read_start(g_source_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_AUDIO,
++        lea_audio_sink_alloc, lea_audio_sink_recv);
++    if (ret < 0 && ret != UV_EALREADY)
++        return BT_STATUS_IPC_ERROR;
++
++    stream->next_send_us = bt_get_os_timestamp_us() + stream->interval_us;
++    stream->send_timer = service_loop_timer((stream->interval_us + 999) / 1000, 0, lea_audio_sink_handler, stream);
++    if (!stream->send_timer) {
++        audio_transport_read_stop(g_source_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_AUDIO);
++        return BT_STATUS_NOMEM;
++    }
++    stream->stream_state = STREAM_STATE_RUNNING;
+     return BT_STATUS_SUCCESS;
+ }
+ 
+@@ -455,7 +608,7 @@ bt_status_t lea_audio_source_stop(bool update_codec)
+ 
+     BT_LOGD("%s,update_codec:%d", __func__, update_codec);
+ 
+-    if (stream->stream_state != STREAM_STATE_RUNNING) {
++    if (stream->stream_state == STREAM_STATE_OFF) {
+         BT_LOGE("%s, was stopped", __func__);
+         return BT_STATUS_SUCCESS;
+     }
+@@ -471,6 +624,14 @@ bt_status_t lea_audio_source_stop(bool update_codec)
+     }
+ 
+     stream->stream_state = STREAM_STATE_OFF;
++    stream->next_send_us = 0;
++    stream->drain_pending = false;
++    if (stream->discard_pending) {
++        stream->discard_pending = false;
++        lea_control_event(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_CTRL,
++            AUDIO_CTRL_EVT_DISCARD_FAIL);
++    }
++    circbuf_reset(&stream->stream_pool);
+     lea_control_event(CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_CTRL, AUDIO_CTRL_EVT_STOPPED);
+ 
+     return BT_STATUS_SUCCESS;
+@@ -489,13 +650,32 @@ bt_status_t lea_audio_source_resume(void)
+ bt_status_t lea_audio_source_update_codec(lea_audio_config_t* audio_config, uint16_t sdu_size)
+ {
+     lea_source_stream_t* stream = &g_source_stream;
++    uint64_t samples_us;
++    uint32_t interval_us;
++
++    if (!g_source_transport)
++        return BT_STATUS_NOT_READY;
++    if (!audio_config || !audio_config->active || !audio_config->sample_rate
++        || !audio_config->frame_size || !audio_config->packet_size
++        || audio_config->packet_size > sdu_size || audio_config->packet_size > 512)
++        return BT_STATUS_PARM_INVALID;
++
++    samples_us = (uint64_t)audio_config->frame_size * 1000000;
++    interval_us = samples_us / audio_config->sample_rate;
++    if (samples_us % audio_config->sample_rate
++        || (interval_us != 7500 && interval_us != 10000))
++        return BT_STATUS_PARM_INVALID;
++
++    /* Do not change frame boundaries while old bytes remain in flight. */
++    if (stream->stream_state == STREAM_STATE_RUNNING)
++        return BT_STATUS_BUSY;
+ 
+     memcpy(&stream->audio_config, audio_config, sizeof(lea_audio_config_t));
+-    stream->sdu_size = sdu_size;
++    stream->sdu_size = audio_config->packet_size;
++    stream->interval_us = interval_us;
+ 
+-    BT_LOGD("%s, codec_type:%d, sample_rate:%d, bits_per_sample:%d, channel_mode:%d, bit_rate:%d", __func__, audio_config->codec_type, audio_config->sample_rate, audio_config->bits_per_sample, audio_config->channel_mode, audio_config->bit_rate);
++    BT_LOGD("%s, codec_type:%d, sample_rate:%" PRIu32 ", bits_per_sample:%d, channel_mode:%d, bit_rate:%" PRIu32 "", __func__, audio_config->codec_type, audio_config->sample_rate, audio_config->bits_per_sample, audio_config->channel_mode, audio_config->bit_rate);
+ 
+-    bt_media_set_lea_available();
+     if (!lea_audio_source_ctrl_is_connected()) {
+         stream->stream_state = STREAM_STATE_CONNECTING;
+         BT_LOGD("failed, %s ctrl transport was not connected", __func__);
+@@ -509,7 +689,7 @@ bool lea_audio_source_is_started(void)
+ {
+     lea_source_stream_t* stream = &g_source_stream;
+ 
+-    return stream->stream_state != STREAM_STATE_OFF;
++    return stream->stream_state == STREAM_STATE_RUNNING;
+ }
+ 
+ bool lea_audio_source_ctrl_is_connected(void)
+@@ -527,15 +707,12 @@ bool lea_audio_source_ctrl_is_connected(void)
+ void lea_audio_source_cleanup(void)
+ {
+     lea_source_stream_t* stream = &g_source_stream;
+-
+     stream->stream_state = STREAM_STATE_OFF;
+-    audio_transport_close(g_source_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_CTRL);
+-    g_source_transport = NULL;
++    service_loop_cancel_timer(stream->send_timer);
++    stream->send_timer = NULL;
+     g_source_callbacks = NULL;
+-
+-    if (stream->offloading) {
+-        return;
+-    }
+-
+-    audio_transport_close(g_source_transport, CONFIG_BLUETOOTH_AUDIO_TRANS_ID_SOURCE_AUDIO);
++    audio_transport_close(g_source_transport, AUDIO_TRANS_CH_ID_ALL);
++    g_source_transport = NULL;
++    circbuf_uninit(&stream->stream_pool);
++    memset(stream, 0, sizeof(*stream));
+ }
+diff --git a/service/profiles/leaudio/server/lea_server_event.c b/service/profiles/leaudio/server/lea_server_event.c
+index bc20b3c05b5158dd1c5e6628ae88343597d83bc9..cb9bcdce2185c5fa58cb6a348bd19e52657561fa 100644
+--- a/service/profiles/leaudio/server/lea_server_event.c
++++ b/service/profiles/leaudio/server/lea_server_event.c
+@@ -39,8 +39,11 @@ lea_server_msg_t* lea_server_msg_new_ext(lea_server_event_t event,
+     }
+ 
+     if (size > 0) {
++        if (!data || !(msg->data.data = malloc(size))) {
++            free(msg);
++            return NULL;
++        }
+         msg->data.size = size;
+-        msg->data.data = malloc(size);
+         memcpy(msg->data.data, data, size);
+     }
+ 
+diff --git a/service/profiles/leaudio/server/lea_server_service.c b/service/profiles/leaudio/server/lea_server_service.c
+index 0e17a582368ac29c83620724f95b8fe9afc2819d..5abcc5b0b87c47e7ce6e87efb0fb7ec76c164c65 100644
+--- a/service/profiles/leaudio/server/lea_server_service.c
++++ b/service/profiles/leaudio/server/lea_server_service.c
+@@ -18,6 +18,7 @@
+ /****************************************************************************
+  * Included Files
+  ****************************************************************************/
++#include <inttypes.h>
+ #include <stdint.h>
+ #include <string.h>
+ #include <sys/types.h>
+@@ -89,6 +90,7 @@ typedef struct
+ {
+     bool started;
+     bool offloading;
++    uint64_t generation;
+     uint8_t max_connections;
+     uint32_t sink_location;
+     uint32_t source_location;
+@@ -110,11 +112,17 @@ typedef struct
+     bt_address_t addr;
+ 
+     uint8_t ase_number;
+-    lea_server_endpoint_t ase[2]; // CONFIG_BLUETOOTH_LEAUDIO_SERVER_SINK_ASE_NUMBER + CONFIG_BLUETOOTH_LEAUDIO_SERVER_SOURCE_ASE_NUMBER
++    lea_server_endpoint_t ase[CONFIG_BLUETOOTH_LEAUDIO_SERVER_SINK_ASE_NUMBER + CONFIG_BLUETOOTH_LEAUDIO_SERVER_SOURCE_ASE_NUMBER];
+     lea_server_state_machine_t* leasm;
+     profile_connection_state_t state;
+ } lea_server_device_t;
+ 
++typedef struct {
++    lea_server_receive_control_t control;
++    lea_server_receive_control_callback callback;
++    void* cookie;
++} lea_server_receive_request_t;
++
+ /****************************************************************************
+  * Private Function Prototypes
+  ****************************************************************************/
+@@ -139,6 +147,8 @@ static bt_status_t lea_server_stop_announce(int8_t adv_id);
+ static bt_status_t lea_server_disconnect_device(bt_address_t* addr);
+ static bt_status_t lea_server_disconnect_audio(bt_address_t* addr);
+ static bool lea_server_streams_are_started(bt_address_t* addr);
++static bt_status_t lea_server_receive_control(lea_server_receive_control_t control,
++    lea_server_receive_control_callback callback, void* cookie);
+ 
+ /****************************************************************************
+  * Public Function Prototypes
+@@ -153,7 +163,11 @@ static lea_server_service_t g_lea_server_service = {
+     .leas_devices = NULL,
+     .leas_stream = NULL,
+     .callbacks = NULL,
++    .device_lock = PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP,
++    .stream_lock = PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP,
+ };
++static pthread_mutex_t event_lock = PTHREAD_MUTEX_INITIALIZER;
++static void update_server_ase(lea_server_device_t*, uint8_t, uint8_t, uint16_t);
+ 
+ static lea_sink_callabcks_t g_lea_sink_callbacks = {
+     .lea_audio_meatadata_updated_cb = on_lea_sink_meatadata_updated,
+@@ -177,6 +191,7 @@ static const lea_server_interface_t LEAServerInterface = {
+     .get_connection_state = lea_server_get_connection_state,
+     .disconnect = lea_server_disconnect_device,
+     .disconnect_audio = lea_server_disconnect_audio,
++    .receive_control = lea_server_receive_control,
+ };
+ 
+ static lea_metadata_t g_metadata_info[] = {
+@@ -268,12 +283,8 @@ static void lea_server_device_delete(lea_server_device_t* device)
+     if (!device)
+         return;
+ 
+-    lea_server_msg_t* msg = lea_server_msg_new(DISCONNECT, &device->addr);
+-    if (msg == NULL)
+-        return;
+-
+-    lea_server_state_machine_dispatch(device->leasm, msg);
+-    lea_server_msg_destory(msg);
++    lea_server_msg_t msg = { .event = DISCONNECT, .data.addr = device->addr };
++    lea_server_state_machine_dispatch(device->leasm, &msg);
+     lea_server_state_machine_destory(device->leasm);
+     free(device);
+ }
+@@ -310,26 +321,30 @@ static lea_server_state_machine_t* get_state_machine(bt_address_t* addr)
+     return leasm;
+ }
+ 
+-static void lea_server_do_shutdown(void)
++static bt_status_t lea_server_do_shutdown(void)
+ {
+     lea_server_service_t* service = &g_lea_server_service;
+-
+-    if (!service->started)
+-        return;
+-
+-    pthread_mutex_lock(&service->device_lock);
++    /* Stop stack callbacks before releasing their upper-layer records. A busy
++     * stream or failed unregister keeps those records available for retry. */
++    bt_status_t status = bt_sal_lea_cleanup();
++    if (status != BT_STATUS_SUCCESS)
++        return status;
++    pthread_mutex_lock(&event_lock);
+     service->started = false;
++    pthread_mutex_unlock(&event_lock);
++    lea_audio_sink_cleanup();
++    lea_audio_source_cleanup();
++    pthread_mutex_lock(&service->device_lock);
+     bt_list_free(service->leas_devices);
+-    bt_list_free(service->leas_stream);
+     service->leas_devices = NULL;
+-    service->leas_stream = NULL;
+     pthread_mutex_unlock(&service->device_lock);
+-    pthread_mutex_destroy(&service->device_lock);
++    pthread_mutex_lock(&service->stream_lock);
++    bt_list_free(service->leas_stream);
++    service->leas_stream = NULL;
++    pthread_mutex_unlock(&service->stream_lock);
+     bt_callbacks_list_free(service->callbacks);
+     service->callbacks = NULL;
+-    lea_audio_sink_cleanup();
+-    lea_audio_source_cleanup();
+-    bt_sal_lea_cleanup();
++    return BT_STATUS_SUCCESS;
+ }
+ 
+ static bool lea_server_message_prehandle(lea_server_state_machine_t* leasm,
+@@ -345,7 +360,7 @@ static bool lea_server_message_prehandle(lea_server_state_machine_t* leasm,
+         size_t size;
+         bool ret;
+ 
+-        BT_LOGD("%s addr:%s, started:%d, stream_id:0x%08x", __func__, bt_addr_str(&audio_stream->addr),
++        BT_LOGD("%s addr:%s, started:%d, stream_id:0x%08" PRIx32 "", __func__, bt_addr_str(&audio_stream->addr),
+             audio_stream->started, audio_stream->stream_id);
+         memcpy(&audio_stream->addr, &event->data.addr, sizeof(bt_address_t));
+         audio_stream->started = true;
+@@ -420,15 +435,62 @@ static bool lea_server_message_prehandle(lea_server_state_machine_t* leasm,
+     return true;
+ }
+ 
++static void lea_server_receive_complete(lea_server_msg_t* msg, bt_status_t status)
++{
++    lea_server_receive_request_t* request = msg->data.data;
++
++    request->callback(request->cookie, request->control, status);
++}
++
++static bt_status_t lea_server_apply_receive_control(lea_server_receive_control_t control)
++{
++    if (g_lea_server_service.offloading)
++        return BT_STATUS_NOT_SUPPORTED;
++
++    switch (control) {
++    case LEA_SERVER_RECEIVE_PAUSE:
++        return lea_audio_sink_suspend();
++    case LEA_SERVER_RECEIVE_RESUME:
++        return lea_audio_sink_resume();
++    case LEA_SERVER_RECEIVE_MUTE:
++        return lea_audio_sink_mute(true);
++    case LEA_SERVER_RECEIVE_UNMUTE:
++        return lea_audio_sink_mute(false);
++    default:
++        return BT_STATUS_PARM_INVALID;
++    }
++}
++
+ static void lea_server_process_message(void* data)
+ {
+     lea_server_service_t* service = &g_lea_server_service;
+     lea_server_msg_t* msg = (lea_server_msg_t*)data;
++    pthread_mutex_lock(&event_lock);
++    bool current = service->started && msg->generation == service->generation;
++    pthread_mutex_unlock(&event_lock);
++    if (!current) {
++        if (msg->event == RECEIVE_CONTROL)
++            lea_server_receive_complete(msg, BT_STATUS_NOT_READY);
++        lea_server_msg_destory(msg);
++        return;
++    }
+ 
+     switch (msg->event) {
++    case RECEIVE_CONTROL: {
++        lea_server_receive_request_t* request = msg->data.data;
++        bt_status_t status = lea_server_apply_receive_control(request->control);
++        lea_server_receive_complete(msg, status);
++        break;
++    }
+     case SHUTDOWN:
+         lea_server_do_shutdown();
+         break;
++    case STACK_EVENT_STREAN_RECV:
++        if (lea_server_find_stream(msg->data.valueint1)) {
++            lea_audio_sink_packet_recv(msg->data.data);
++            msg->data.data = NULL; /* packet_recv consumes it */
++        }
++        break;
+     case STACK_EVENT_STACK_STATE:
+         lea_server_notify_stack_state_changed(msg->data.valueint1);
+         break;
+@@ -443,6 +505,10 @@ static void lea_server_process_message(void* data)
+             break;
+         }
+ 
++        if (msg->event >= STACK_EVENT_ASE_CODEC_CONFIG && msg->event <= STACK_EVENT_ASE_IDLE) {
++            lea_server_device_t* device = find_lea_server_device_by_addr(&msg->data.addr);
++            update_server_ase(device, msg->data.valueint1, msg->data.valueint2, msg->data.valueint3);
++        }
+         dispatch = lea_server_message_prehandle(leasm, msg);
+         if (!dispatch) {
+             pthread_mutex_unlock(&service->device_lock);
+@@ -462,16 +528,31 @@ static void lea_server_process_message(void* data)
+ bt_status_t lea_server_send_message(lea_server_msg_t* msg)
+ {
+     assert(msg);
++    pthread_mutex_lock(&event_lock);
++    if (!g_lea_server_service.started) {
++        pthread_mutex_unlock(&event_lock);
++        lea_server_msg_destory(msg);
++        return BT_STATUS_NOT_READY;
++    }
++    msg->generation = g_lea_server_service.generation;
++    pthread_mutex_unlock(&event_lock);
+ 
+     do_in_service_loop(lea_server_process_message, msg);
+ 
+     return BT_STATUS_SUCCESS;
+ }
+ 
+-static bt_status_t lea_server_send_event(bt_address_t* addr, lea_server_event_t evt)
++
++static bt_status_t lea_server_receive_control(lea_server_receive_control_t control,
++    lea_server_receive_control_callback callback, void* cookie)
+ {
+-    lea_server_msg_t* msg = lea_server_msg_new(evt, addr);
++    lea_server_receive_request_t request = { control, callback, cookie };
++    lea_server_msg_t* msg;
++
++    if (control < LEA_SERVER_RECEIVE_PAUSE || control > LEA_SERVER_RECEIVE_UNMUTE || !callback)
++        return BT_STATUS_PARM_INVALID;
+ 
++    msg = lea_server_msg_new_ext(RECEIVE_CONTROL, NULL, &request, sizeof(request));
+     if (!msg)
+         return BT_STATUS_NOMEM;
+ 
+@@ -535,13 +616,8 @@ static void on_lea_source_meatadata_updated()
+ 
+ static void lea_audio_send_data(lea_audio_stream_t* stream, uint8_t* buffer, uint16_t length)
+ {
+-    lea_send_iso_data_t* iso_pkt;
+-
+-    iso_pkt = bt_sal_lea_alloc_send_buffer(stream->sdu_size, stream->iso_handle);
+-    memcpy(iso_pkt->sdu, buffer, length);
+-    iso_pkt->sdu_length = length;
+-
+-    bt_sal_lea_send_iso_data(iso_pkt);
++    if (stream && buffer && length && length <= stream->sdu_size)
++        bt_sal_lea_send_sdu(stream->iso_handle, buffer, length);
+ }
+ 
+ static void on_lea_source_audio_send(uint8_t* buffer, uint16_t length)
+@@ -551,57 +627,44 @@ static void on_lea_source_audio_send(uint8_t* buffer, uint16_t length)
+     lea_audio_stream_t* stream;
+     bt_list_node_t* node;
+ 
++    pthread_mutex_lock(&service->stream_lock);
+     for (node = bt_list_head(list); node != NULL; node = bt_list_next(list, node)) {
+         stream = bt_list_node(node);
+         if (stream->started && stream->is_source) {
+             lea_audio_send_data(stream, buffer, length);
+         }
+     }
++    pthread_mutex_unlock(&service->stream_lock);
+ }
+ 
+ static bt_status_t lea_server_init(void)
+ {
+-    lea_server_service_t* service = &g_lea_server_service;
+-    bt_status_t ret;
+-
+-    BT_LOGD("%s", __func__);
+-    ret = lea_audio_sink_init(service->offloading);
+-    if (ret != BT_STATUS_SUCCESS) {
+-        return ret;
+-    }
+-
+-    ret = lea_audio_source_init(service->offloading);
+-    if (ret != BT_STATUS_SUCCESS) {
+-        return ret;
+-    }
+-
+     return BT_STATUS_SUCCESS;
+ }
+ 
+ static void lea_server_cleanup(void)
+ {
+-    BT_LOGD("%s", __func__);
++    bt_status_t status = lea_server_do_shutdown();
++    if (status != BT_STATUS_SUCCESS)
++        BT_LOGE("service cleanup remains pending: %d", status);
+ }
+ 
+ static bt_status_t lea_server_startup(profile_on_startup_t cb)
+ {
+-    bt_status_t status;
+-    pthread_mutexattr_t attr;
++    bt_status_t status = BT_STATUS_SUCCESS;
+     lea_server_service_t* service = &g_lea_server_service;
+-
+-    BT_LOGD("%s", __func__);
+-    if (service->started)
+-        return BT_STATUS_SUCCESS;
+-
+-    service->leas_devices = bt_list_new((bt_list_free_cb_t)
+-            lea_server_device_delete);
+-    service->leas_stream = bt_list_new(NULL);
++    if (service->started) goto done;
++    if (service->leas_devices || service->leas_stream || service->callbacks) {
++        status = lea_server_do_shutdown();
++        if (status != BT_STATUS_SUCCESS) goto done;
++    }
++    service->leas_devices = bt_list_new((bt_list_free_cb_t)lea_server_device_delete);
++    service->leas_stream = bt_list_new(free);
+     service->callbacks = bt_callbacks_list_new(2);
+-    if (!service->leas_devices || !service->callbacks) {
++    if (!service->leas_devices || !service->leas_stream || !service->callbacks) {
+         status = BT_STATUS_NOMEM;
+         goto fail;
+     }
+-
+ #if defined(CONFIG_KVDB) && defined(__NuttX__)
+     service->sink_location = property_get_int32("persist.bluetooth.lea.sinkloc", CONFIG_BLUETOOTH_LEAUDIO_SERVER_SINK_LOCATION);
+     service->source_location = property_get_int32("persist.bluetooth.lea.srcloc", CONFIG_BLUETOOTH_LEAUDIO_SERVER_SOURCE_LOCATION);
+@@ -609,35 +672,37 @@ static bt_status_t lea_server_startup(profile_on_startup_t cb)
+     service->sink_location = CONFIG_BLUETOOTH_LEAUDIO_SERVER_SINK_LOCATION;
+     service->source_location = CONFIG_BLUETOOTH_LEAUDIO_SERVER_SOURCE_LOCATION;
+ #endif
+-
+-    pthread_mutexattr_init(&attr);
+-    pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+-    pthread_mutex_init(&service->device_lock, &attr);
+-    pthread_mutex_init(&service->stream_lock, &attr);
+-
+-    status = bt_sal_lea_init();
+-    if (status != BT_STATUS_SUCCESS)
++    status = lea_audio_sink_init(service->offloading);
++    if (status != BT_STATUS_SUCCESS) goto fail;
++    status = lea_audio_source_init(service->offloading);
++    if (status != BT_STATUS_SUCCESS) goto fail;
++    pthread_mutex_lock(&event_lock);
++    if (service->generation == UINT64_MAX) {
++        pthread_mutex_unlock(&event_lock);
++        status = BT_STATUS_FAIL;
+         goto fail;
+-
++    }
++    service->generation++;
+     service->started = true;
+-
+-    return BT_STATUS_SUCCESS;
+-
++    pthread_mutex_unlock(&event_lock);
++    status = bt_sal_lea_init();
++    if (status == BT_STATUS_SUCCESS) goto done;
+ fail:
+-    bt_list_free(service->leas_devices);
+-    service->leas_devices = NULL;
+-    bt_callbacks_list_free(service->callbacks);
+-    service->callbacks = NULL;
+-    pthread_mutex_destroy(&service->device_lock);
+-    pthread_mutex_destroy(&service->stream_lock);
++    pthread_mutex_lock(&event_lock);
++    service->started = false;
++    pthread_mutex_unlock(&event_lock);
++    if (lea_server_do_shutdown() != BT_STATUS_SUCCESS)
++        BT_LOGE("startup rollback remains pending");
++done:
++    if (cb) cb(PROFILE_LEAUDIO_SERVER, status == BT_STATUS_SUCCESS);
+     return status;
+ }
+ 
+ static bt_status_t lea_server_shutdown(profile_on_shutdown_t cb)
+ {
+-    BT_LOGD("%s", __func__);
+-
+-    return lea_server_send_event(NULL, SHUTDOWN);
++    bt_status_t status = lea_server_do_shutdown();
++    if (cb) cb(PROFILE_LEAUDIO_SERVER, status == BT_STATUS_SUCCESS);
++    return status;
+ }
+ 
+ static void lea_server_process_msg(profile_msg_t* msg)
+@@ -789,7 +854,8 @@ static void update_server_ase(lea_server_device_t* device, uint8_t id, uint8_t s
+         }
+     }
+ 
+-    if (!found) {
++    if (!found && device->ase_number < sizeof(device->ase) / sizeof(device->ase[0])) {
++        device->ase[device->ase_number].ase_state = state;
+         device->ase[device->ase_number].type = type;
+         device->ase[device->ase_number].ase_id = id;
+         device->ase_number++;
+@@ -826,6 +892,7 @@ lea_audio_stream_t* lea_server_add_stream(
+     lea_server_service_t* service = &g_lea_server_service;
+     lea_audio_stream_t* audio_stream;
+ 
++    if (!service->started) return NULL;
+     audio_stream = lea_server_find_stream(stream_id);
+     if (audio_stream) {
+         memcpy(&audio_stream->addr, remote_addr, sizeof(bt_address_t));
+@@ -868,7 +935,7 @@ lea_audio_stream_t* lea_server_update_stream(lea_audio_stream_t* stream)
+     pthread_mutex_lock(&service->stream_lock);
+     local_stream = bt_list_find(service->leas_stream, lea_server_stream_cmp, &stream->stream_id);
+     if (!local_stream) {
+-        BT_LOGE("fail, %s addr:%s,  stream_id:0x%08x not exist", __func__,
++        BT_LOGE("fail, %s addr:%s,  stream_id:0x%08" PRIx32 " not exist", __func__,
+             bt_addr_str(&stream->addr), stream->stream_id);
+         pthread_mutex_unlock(&service->stream_lock);
+         return NULL;
+@@ -980,7 +1047,7 @@ void lea_server_on_stream_started(lea_audio_stream_t* audio)
+ 
+     stream = lea_server_find_stream(audio->stream_id);
+     if (!stream) {
+-        BT_LOGE("%s, failed stream_id:0x%08x", __func__, audio->stream_id);
++        BT_LOGE("%s, failed stream_id:0x%08" PRIx32 "", __func__, audio->stream_id);
+         return;
+     }
+ 
+@@ -1005,7 +1072,7 @@ void lea_server_on_stream_stopped(uint32_t stream_id)
+ 
+     stream = lea_server_find_stream(stream_id);
+     if (!stream) {
+-        BT_LOGE("%s, failed stream_id:0x%08x", __func__, stream_id);
++        BT_LOGE("%s, failed stream_id:0x%08" PRIx32 "", __func__, stream_id);
+         return;
+     }
+ 
+@@ -1024,7 +1091,7 @@ void lea_server_on_stream_suspend(uint32_t stream_id)
+ 
+     stream = lea_server_find_stream(stream_id);
+     if (!stream) {
+-        BT_LOGE("%s, failed stream_id:0x%08x", __func__, stream_id);
++        BT_LOGE("%s, failed stream_id:0x%08" PRIx32 "", __func__, stream_id);
+         return;
+     }
+ 
+@@ -1043,7 +1110,7 @@ void lea_server_on_stream_resume(uint32_t stream_id)
+ 
+     stream = lea_server_find_stream(stream_id);
+     if (!stream) {
+-        BT_LOGE("%s, failed stream_id:0x%08x", __func__, stream_id);
++        BT_LOGE("%s, failed stream_id:0x%08" PRIx32 "", __func__, stream_id);
+         return;
+     }
+ 
+@@ -1062,7 +1129,7 @@ void lea_server_on_metedata_updated(uint32_t stream_id)
+ 
+     stream = lea_server_find_stream(stream_id);
+     if (!stream) {
+-        BT_LOGE("%s, failed stream_id:0x%08x", __func__, stream_id);
++        BT_LOGE("%s, failed stream_id:0x%08" PRIx32 "", __func__, stream_id);
+         return;
+     }
+ 
+@@ -1077,21 +1144,13 @@ void lea_server_on_metedata_updated(uint32_t stream_id)
+ void lea_server_on_stream_recv(uint32_t stream_id, uint32_t time_stamp,
+     uint16_t seq_number, uint8_t* sdu, uint16_t size)
+ {
+-    lea_audio_stream_t* stream;
+-    lea_recv_iso_data_t* packet;
+-
+-    stream = lea_server_find_stream(stream_id);
+-    if (!stream) {
+-        BT_LOGE("%s, failed stream_id:0x%08x", __func__, stream_id);
+-        return;
+-    }
+-
+-    packet = lea_audio_sink_packet_alloc(time_stamp, seq_number, sdu, size);
+-    if (!packet)
+-        return;
+-
+-    // todo mix from many stream ?
+-    lea_audio_sink_packet_recv(packet);
++    lea_server_msg_t* msg = lea_server_msg_new(STACK_EVENT_STREAN_RECV, NULL);
++    if (!msg) return;
++    msg->data.data = lea_audio_sink_packet_alloc(time_stamp, seq_number, sdu, size);
++    if (!msg->data.data) { lea_server_msg_destory(msg); return; }
++    msg->data.valueint1 = stream_id;
++    /* Host callbacks must not create libuv timers on the Bluetooth RX thread. */
++    lea_server_send_message(msg);
+ }
+ 
+ bt_status_t lea_server_streams_started(bt_address_t* addr)
+@@ -1111,7 +1170,7 @@ bt_status_t lea_server_streams_started(bt_address_t* addr)
+ 
+     for (node = bt_list_head(list); node != NULL; node = bt_list_next(list, node)) {
+         stream = bt_list_node(node);
+-        BT_LOGD("%s addr:%s, started:%d, stream_id:0x%08x", __func__, bt_addr_str(&stream->addr),
++        BT_LOGD("%s addr:%s, started:%d, stream_id:0x%08" PRIx32 "", __func__, bt_addr_str(&stream->addr),
+             stream->started, stream->stream_id);
+         if (stream->started && (bt_addr_compare(addr, &stream->addr) == 0)) {
+             msg = lea_server_msg_new_ext(STACK_EVENT_STREAM_STARTED,
+@@ -1120,6 +1179,7 @@ bt_status_t lea_server_streams_started(bt_address_t* addr)
+                 return BT_STATUS_NOMEM;
+ 
+             lea_server_state_machine_dispatch(leas_sm, msg);
++            lea_server_msg_destory(msg);
+         }
+     }
+ 
+@@ -1128,16 +1188,7 @@ bt_status_t lea_server_streams_started(bt_address_t* addr)
+ 
+ void lea_server_on_ascs_event(bt_address_t* addr, uint8_t id, uint8_t state, uint16_t type)
+ {
+-    lea_server_device_t* device;
+     lea_server_event_t event;
+-
+-    device = find_lea_server_device_by_addr(addr);
+-    if (!device) {
+-        BT_LOGE("%s, device(%s) not exist", __func__, bt_addr_str(addr));
+-        return;
+-    }
+-
+-    update_server_ase(device, id, state, type);
+     switch (state) {
+     case ADPT_LEA_ASE_STATE_IDLE: {
+         event = STACK_EVENT_ASE_IDLE;
+@@ -1166,7 +1217,12 @@ void lea_server_on_ascs_event(bt_address_t* addr, uint8_t id, uint8_t state, uin
+     };
+     }
+ 
+-    lea_server_send_event(addr, event);
++    lea_server_msg_t* msg = lea_server_msg_new(event, addr);
++    if (!msg) return;
++    msg->data.valueint1 = id;
++    msg->data.valueint2 = state;
++    msg->data.valueint3 = type;
++    lea_server_send_message(msg);
+ }
+ 
+ void lea_server_on_csis_lock_state_changed(uint32_t csis_id, bt_address_t* addr, uint8_t lock)
+diff --git a/service/profiles/leaudio/server/lea_server_state_machine.c b/service/profiles/leaudio/server/lea_server_state_machine.c
+index ce4a956c364d04785938515d97646ad69e3a6d23..c54cfb81dbd2807a55e40a859609d12256a3b70f 100644
+--- a/service/profiles/leaudio/server/lea_server_state_machine.c
++++ b/service/profiles/leaudio/server/lea_server_state_machine.c
+@@ -15,6 +15,7 @@
+  ***************************************************************************/
+ #define LOG_TAG "lea_server_stm"
+ 
++#include <inttypes.h>
+ #include <stdbool.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -384,7 +385,7 @@ static void lea_server_stop_audio(uint32_t stream_id)
+ 
+     stream = lea_server_find_stream(stream_id);
+     if (!stream) {
+-        BT_LOGE("failed, stream_id:0x%08x not found", stream_id);
++        BT_LOGE("failed, stream_id:0x%08" PRIx32 " not found", stream_id);
+         return;
+     }
+ 
+diff --git a/service/profiles/system/media_system.c b/service/profiles/system/media_system.c
+index 3bc0795aa3d18c3b886e05528ee53741824e0402..18f42e4834f2226749e0edc0d71b06ac103c9a4d 100644
+--- a/service/profiles/system/media_system.c
++++ b/service/profiles/system/media_system.c
+@@ -364,6 +364,13 @@ bt_status_t bt_media_set_lea_unavailable(void)
+     return BT_STATUS_SUCCESS;
+ }
+ 
++/* Incoming audio must not select the outgoing LE music route. */
++bt_status_t bt_media_set_lea_receive(bool available)
++{
++    return media_policy_set_int("LeAudioReceive", available ? 1 : 0,
++        MEDIA_POLICY_APPLY) == 0 ? BT_STATUS_SUCCESS : BT_STATUS_FAIL;
++}
++
+ bt_status_t bt_media_set_lea_offloading(bool enable)
+ {
+     // todo set le audio offload?
+diff --git a/service/profiles/system/media_system.h b/service/profiles/system/media_system.h
+index aab641870a855caa0898c3c4c21137d18d4b2fa2..b93f955edca491a777b077420e20d91eb57ab3de 100644
+--- a/service/profiles/system/media_system.h
++++ b/service/profiles/system/media_system.h
+@@ -43,6 +43,7 @@ bt_status_t bt_media_set_hfp_offloading(bool enable);
+ bt_status_t bt_media_set_lea_offloading(bool enable);
+ bt_status_t bt_media_set_lea_available(void);
+ bt_status_t bt_media_set_lea_unavailable(void);
++bt_status_t bt_media_set_lea_receive(bool available);
+ bt_status_t bt_media_set_anc_enable(bool enable);
+ 
+ #endif /* __MEDIA_SYSTEM_H__ */
+\ No newline at end of file
+diff --git a/service/src/adapter_service.c b/service/src/adapter_service.c
+index c3553f9a31d405cdbfd101b4ace8a5734b9fd638..74ea6e29d1b7e510be450a957dfc2445f5b24ada 100644
+--- a/service/src/adapter_service.c
++++ b/service/src/adapter_service.c
+@@ -1636,9 +1636,11 @@ static void handle_link_event(void* data)
+ {
+     adapter_remote_event_t* evt = (adapter_remote_event_t*)data;
+     switch (evt->evt_id) {
++#ifdef CONFIG_BLUETOOTH_BREDR_SUPPORT
+     case LINK_MODE_CHANGED_EVT:
+         bt_pm_remote_link_mode_changed(&evt->addr, evt->link_mode.mode, evt->link_mode.sniff_interval);
+         break;
++#endif
+     case LINK_ROLE_CHANGED_EVT:
+         process_link_role_changed_evt(&evt->addr, evt->link_role.role);
+         break;
+@@ -3244,7 +3246,9 @@ bt_status_t adapter_create_bond(bt_address_t* addr, bt_transport_t transport)
+     bt_device_t* device;
+ 
+     adapter_lock();
+-    if (adapter->adapter_state != BT_ADAPTER_STATE_ON) {
++    if (adapter->adapter_state != BT_ADAPTER_STATE_ON
++        && !(transport == BT_TRANSPORT_BLE
++            && adapter->adapter_state == BT_ADAPTER_STATE_BLE_ON)) {
+         adapter_unlock();
+         return BT_STATUS_NOT_ENABLED;
+     }
+diff --git a/service/src/manager_service.c b/service/src/manager_service.c
+index 9a064efd6ac58e5af4f1de8a01c34d9e8d8ad686..bcd85e7cbd3fd0d2b1e868cb3fae77e5e3b1fec4 100644
+--- a/service/src/manager_service.c
++++ b/service/src/manager_service.c
+@@ -196,7 +196,9 @@ void manager_init(void)
+         g_instance_id = index_allocator_create(10);
+ #if defined(CONFIG_BLUETOOTH_SERVICE) && defined(__NuttX__)
+     service_manager_init();
++#ifdef CONFIG_BLUETOOTH_BREDR_SUPPORT
+     bt_pm_init();
++#endif
+ #ifdef CONFIG_BLUETOOTH_CONNECTION_MANAGER
+     bt_cm_init();
+ #endif
+@@ -222,7 +224,9 @@ void manager_cleanup(void)
+ 
+ #if defined(CONFIG_BLUETOOTH_SERVICE) && defined(__NuttX__)
+     service_manager_cleanup();
++#ifdef CONFIG_BLUETOOTH_BREDR_SUPPORT
+     bt_pm_cleanup();
++#endif
+ #ifdef CONFIG_BLUETOOTH_CONNECTION_MANAGER
+     bt_cm_cleanup();
+ #endif
+diff --git a/service/src/scan_manager.c b/service/src/scan_manager.c
+index da822f1561aa2e175a6fd0314b7e275c6b269f9a..02b5a1e4eb420a13d658c3a38bd42a16e77f5bde 100644
+--- a/service/src/scan_manager.c
++++ b/service/src/scan_manager.c
+@@ -25,7 +25,9 @@
+ #include "bt_hash.h"
+ #include "bt_le_scan.h"
+ #include "bt_list.h"
++#ifdef CONFIG_BLUETOOTH_FRAMEWORK_SOCKET_IPC
+ #include "bt_socket.h"
++#endif
+ #include "bt_time.h"
+ #include "sal_interface.h"
+ #include "scan_filter.h"
+@@ -249,10 +251,12 @@ static void notify_scanners_scan_result(void* data)
+     scanner_device_t* device;
+     uint32_t timestamp_ms;
+ 
++#ifdef CONFIG_BLUETOOTH_FRAMEWORK_SOCKET_IPC
+     if (bt_socket_server_is_busy()) {
+         do_in_service_loop_deffered(notify_scanners_scan_result, data, true);
+         return;
+     }
++#endif
+ 
+     timestamp_ms = bt_get_os_timestamp_ms();
+     list_for_every(&scanner_manager.scanning_list, node)
+@@ -413,8 +417,13 @@ static void start_scan(void* data)
+     }
+ 
+     if (!scanner_manager.is_scanning && !list_length(&scanner_manager.scanning_list)) {
+-        bt_sal_le_set_scan_parameters(PRIMARY_ADAPTER, &params);
+-        if (bt_sal_le_start_scan(PRIMARY_ADAPTER) != BT_STATUS_SUCCESS) {
++        if (bt_sal_le_set_scan_parameters(PRIMARY_ADAPTER, &params) != BT_STATUS_SUCCESS
++            || bt_sal_le_start_scan(PRIMARY_ADAPTER) != BT_STATUS_SUCCESS) {
++            /* The failed-start callback releases the remote handle.  Remove
++             * the registration without sending a second stopped callback.
++             */
++            scanner_manager.scanner_list[scanner->scanner_id] = NULL;
++            scanner_manager.scanner_cnt--;
+             scanner->callbacks->on_scan_start_status(get_remote(scanner), BT_SCAN_STATUS_START_FAIL);
+             delete_scanner(scanner);
+             goto ret;
+diff --git a/service/stacks/zephyr/hci_h4.c b/service/stacks/zephyr/hci_h4.c
+index 9206c0c4b6ac479aaa1ee3319e3108e9a71c870c..32e8fc7e7365ba2c68abda8716f6c0d58e70e647 100644
+--- a/service/stacks/zephyr/hci_h4.c
++++ b/service/stacks/zephyr/hci_h4.c
+@@ -67,6 +67,7 @@ struct h4_data {
+     pthread_mutex_t mutex;
+     bt_hci_recv_t recv;
+     void* hci_data;
++    size_t frame_size;
+ };
+ 
+ static const struct device* bt_dev;
+@@ -96,9 +97,13 @@ static int h4_send_data(int fd, uint8_t* buf, int count)
+             if (errno == EAGAIN) {
+                 usleep(1000);
+                 continue;
++            } else if (errno == EINTR) {
++                continue;
+             } else
+-                return ret;
++                return -errno;
+         }
++        if (ret == 0)
++            return -EIO;
+ 
+         nwritten += ret;
+     }
+@@ -225,9 +230,8 @@ static void bt_sal_hci_transport_recv(void)
+     size_t buf_add_len;
+     ssize_t len;
+     const uint8_t* frame_start = frame;
+-    static ssize_t frame_size = 0;
+ 
+-    len = read(h4->fd, frame + frame_size, sizeof(frame) - frame_size);
++    len = read(h4->fd, frame + h4->frame_size, sizeof(frame) - h4->frame_size);
+     if (len < 0) {
+         BT_LOGE("Reading hci failed, errno %d", errno);
+         close(h4->fd);
+@@ -235,27 +239,27 @@ static void bt_sal_hci_transport_recv(void)
+         return;
+     }
+ 
+-    frame_size += len;
++    h4->frame_size += len;
+ 
+-    while (frame_size > 0) {
++    while (h4->frame_size > 0) {
+         const uint8_t* buf_add;
+         const uint8_t packet_type = frame_start[0];
+-        const int32_t decoded_len = hci_packet_complete(frame_start, frame_size);
++        const int32_t decoded_len = hci_packet_complete(frame_start, h4->frame_size);
+ 
+         if (decoded_len == -1) {
+             BT_LOGE("HCI Packet type is invalid, length could not be decoded");
+-            frame_size = 0; /* Drop buffer */
++            h4->frame_size = 0; /* Drop buffer */
+             break;
+         }
+ 
+         if (decoded_len == 0) {
+-            if (frame_size == sizeof(frame)) {
++            if (h4->frame_size == sizeof(frame)) {
+                 BT_LOGE("HCI Packet is too big for frame");
+-                frame_size = 0; /* Drop buffer */
++                h4->frame_size = 0; /* Drop buffer */
+                 break;
+             }
+             if (frame_start != frame) {
+-                memmove(frame, frame_start, frame_size);
++                memmove(frame, frame_start, h4->frame_size);
+             }
+             /* Read more */
+             break;
+@@ -266,7 +270,7 @@ static void bt_sal_hci_transport_recv(void)
+ 
+         buf = get_rx(frame_start);
+ 
+-        frame_size -= decoded_len;
++        h4->frame_size -= decoded_len;
+         frame_start += decoded_len;
+ 
+         if (!buf) {
+@@ -323,10 +327,26 @@ static void hci_poll_recv(service_poll_t* poll, int revent, void* userdata)
+         bt_sal_hci_transport_recv();
+ }
+ 
++static void hci_add_recv(void* data)
++{
++    struct h4_data* h4 = data;
++
++    hci_handle = service_loop_poll_fd(h4->fd, POLL_READABLE, hci_poll_recv, NULL);
++}
++
+ static int h4_open(const struct device* dev, bt_hci_recv_t recv, void* hci_data)
+ {
+     int fd;
+     struct h4_data* h4;
++    uv_loop_t* handle = get_service_uv_loop();
++    service_loop_t* loop = handle ? handle->data : NULL;
++    uv_thread_t current = uv_thread_self();
++
++    /* The framework owns this transport and its receive loop. A standalone
++     * host entry must start that service before opening the controller.
++     */
++    if (!loop || !loop->is_running)
++        return -ENODEV;
+ 
+     fd = open(CONFIG_BT_UART_ON_DEV_NAME, O_RDWR | O_BINARY | O_CLOEXEC);
+     if (fd < 0) {
+@@ -338,24 +358,59 @@ static int h4_open(const struct device* dev, bt_hci_recv_t recv, void* hci_data)
+     h4->fd = fd;
+     h4->recv = recv;
+     h4->hci_data = hci_data;
++    h4->frame_size = 0;
+ 
+     bt_dev = dev;
+     BT_LOGE("H4: %s opened as fd:%d", CONFIG_BT_UART_ON_DEV_NAME, h4->fd);
+ 
+-    hci_handle = service_loop_poll_fd(h4->fd, POLL_READABLE, hci_poll_recv, NULL);
++    /* bt_enable may open HCI on a ZBlue workqueue. libuv poll handles must
++     * be registered on the service thread, just like their removal below.
++     */
++    if (uv_thread_equal(&current, &loop->thread))
++        hci_add_recv(h4);
++    else
++        do_in_service_loop_sync(hci_add_recv, h4);
+     if (!hci_handle) {
+         BT_LOGD("hci fd:%d add poll failed", h4->fd);
+-        return -1;
++        close(h4->fd);
++        h4->fd = -1;
++        h4->recv = NULL;
++        h4->hci_data = NULL;
++        return -EIO;
+     }
+ 
+     return 0;
+ }
+ 
++static int h4_close(const struct device* dev)
++{
++    struct h4_data* h4 = dev->data;
++    service_loop_t* loop = get_service_uv_loop()->data;
++    uv_thread_t current = uv_thread_self();
++    int ret = 0;
++
++    /* Stop receiving on the service loop before the host frees its state. */
++    if (uv_thread_equal(&current, &loop->thread))
++        hci_remove_recv(NULL);
++    else
++        do_in_service_loop_sync(hci_remove_recv, NULL);
++
++    pthread_mutex_lock(&h4->mutex);
++    if (h4->fd >= 0 && close(h4->fd) < 0)
++        ret = -errno;
++    h4->fd = -1;
++    h4->recv = NULL;
++    h4->hci_data = NULL;
++    h4->frame_size = 0;
++    pthread_mutex_unlock(&h4->mutex);
++    return ret;
++}
++
+ static int h4_send(const struct device* dev, struct net_buf* buf)
+ {
+     int len;
+     int ret;
+-    struct h4_data* h4 = bt_dev->data;
++    struct h4_data* h4 = dev->data;
+ 
+     switch (bt_buf_get_type(buf)) {
+     case BT_BUF_ACL_OUT:
+@@ -369,6 +424,7 @@ static int h4_send(const struct device* dev, struct net_buf* buf)
+             net_buf_push_u8(buf, BT_HCI_H4_ISO);
+             break;
+         }
++        /* fall through */
+     default:
+         BT_LOGE("Unknown buffer type");
+         return -EINVAL;
+@@ -377,10 +433,14 @@ static int h4_send(const struct device* dev, struct net_buf* buf)
+     h4_data_dump("BT TX", buf->data[0], buf->data, buf->len);
+ 
+     len = buf->len;
+-    ret = h4_send_data(h4->fd, buf->data, buf->len);
++    pthread_mutex_lock(&h4->mutex);
++    ret = h4->fd >= 0 ? h4_send_data(h4->fd, buf->data, buf->len) : -ENODEV;
++    pthread_mutex_unlock(&h4->mutex);
+     if (ret != len) {
+         BT_LOGE("H4: Failed to send %u bytes: %d", len, ret);
+-        ret = -EINVAL;
++        /* The host retains ownership on failure and unrefs the buffer. */
++        net_buf_pull_u8(buf);
++        return ret < 0 ? ret : -EIO;
+     }
+ 
+     net_buf_unref(buf);
+@@ -390,6 +450,7 @@ static int h4_send(const struct device* dev, struct net_buf* buf)
+ 
+ const struct bt_hci_driver_api h4_drv_api = {
+     .open = h4_open,
++    .close = h4_close,
+     .send = h4_send,
+ };
+ 
+diff --git a/service/stacks/zephyr/sal_adapter_interface.c b/service/stacks/zephyr/sal_adapter_interface.c
+index d28026e8a156ff3ba45bcad3abb2e2e1aa7dcb3c..2b04ddef2844e2a7aaeec1f019399782c51139f1 100644
+--- a/service/stacks/zephyr/sal_adapter_interface.c
++++ b/service/stacks/zephyr/sal_adapter_interface.c
+@@ -116,6 +116,43 @@ struct device_context {
+     int cnt;
+ };
+ 
++static sal_adapter_req_t* sal_adapter_req(bt_controller_id_t id, bt_address_t* addr, sal_func_t func)
++{
++    sal_adapter_req_t* req = calloc(sizeof(sal_adapter_req_t), 1);
++
++    if (req) {
++        req->id = id;
++        req->func = func;
++        if (addr)
++            memcpy(&req->addr, addr, sizeof(bt_address_t));
++    }
++
++    return req;
++}
++
++static void sal_invoke_async(service_work_t* work, void* userdata)
++{
++    sal_adapter_req_t* req = userdata;
++
++    SAL_ASSERT(req);
++    req->func(req);
++    free(userdata);
++}
++
++static bt_status_t sal_send_req(sal_adapter_req_t* req)
++{
++    if (!req)
++        return BT_STATUS_PARM_INVALID;
++
++    if (!service_loop_work((void*)req, sal_invoke_async, NULL)) {
++        BT_LOGE("%s, service_loop_work failed", __func__);
++        free(req);
++        return BT_STATUS_FAIL;
++    }
++
++    return BT_STATUS_SUCCESS;
++}
++
+ #ifdef CONFIG_BLUETOOTH_BREDR_SUPPORT
+ extern int zblue_main(void);
+ static void sal_pending_connect_init(void);
+@@ -191,43 +228,6 @@ static struct bt_conn_auth_cb g_conn_auth_cbs = {
+     .pincode_entry = zblue_on_pincode_entry
+ };
+ 
+-static sal_adapter_req_t* sal_adapter_req(bt_controller_id_t id, bt_address_t* addr, sal_func_t func)
+-{
+-    sal_adapter_req_t* req = calloc(sizeof(sal_adapter_req_t), 1);
+-
+-    if (req) {
+-        req->id = id;
+-        req->func = func;
+-        if (addr)
+-            memcpy(&req->addr, addr, sizeof(bt_address_t));
+-    }
+-
+-    return req;
+-}
+-
+-static void sal_invoke_async(service_work_t* work, void* userdata)
+-{
+-    sal_adapter_req_t* req = userdata;
+-
+-    SAL_ASSERT(req);
+-    req->func(req);
+-    free(userdata);
+-}
+-
+-static bt_status_t sal_send_req(sal_adapter_req_t* req)
+-{
+-    if (!req)
+-        return BT_STATUS_PARM_INVALID;
+-
+-    if (!service_loop_work((void*)req, sal_invoke_async, NULL)) {
+-        BT_LOGE("%s, service_loop_work failed", __func__);
+-        free(req);
+-        return BT_STATUS_FAIL;
+-    }
+-
+-    return BT_STATUS_SUCCESS;
+-}
+-
+ static void zblue_conn_get_addr(struct bt_conn* conn, bt_address_t* addr)
+ {
+     struct bt_conn_info info;
+diff --git a/service/stacks/zephyr/sal_adapter_le_interface.c b/service/stacks/zephyr/sal_adapter_le_interface.c
+index 8733e4a742c46a16e0106d522cda11125c4a4635..02c41e1cda814ef8cebf7fc733e657b1735bb916 100644
+--- a/service/stacks/zephyr/sal_adapter_le_interface.c
++++ b/service/stacks/zephyr/sal_adapter_le_interface.c
+@@ -1458,7 +1458,7 @@ static void zblue_on_ready_cb(bt_controller_id_t dev_id, int err)
+ 
+     if (err) {
+         BT_LOGD("zblue init failed (err %d)\n", err);
+-        adapter_on_adapter_state_changed(BT_BREDR_STACK_STATE_OFF);
++        adapter_on_adapter_state_changed(BLE_STACK_STATE_OFF);
+         return;
+     }
+ 
+@@ -1586,8 +1586,23 @@ bt_status_t bt_sal_le_enable(bt_controller_id_t id)
+ 
+ static void STACK_CALL(le_disable)(void* args)
+ {
++    int ret;
++
++    /* bt_disable() clears the host device, including its callback-list
++     * context. Unregister while that context is still alive.
++     */
+     zblue_unregister_callback();
+-    bt_disable();
++    ret = bt_disable();
++
++    if (ret != 0) {
++        if (bt_is_ready()) {
++            zblue_register_callback();
++        }
++        BT_LOGE("%s: controller disable failed: %d", __func__, ret);
++        return;
++    }
++
++    adapter_on_adapter_state_changed(BLE_STACK_STATE_OFF);
+ }
+ 
+ bt_status_t bt_sal_le_disable(bt_controller_id_t id)
+@@ -1603,10 +1618,7 @@ bt_status_t bt_sal_le_disable(bt_controller_id_t id)
+     if (!req) {
+         return BT_STATUS_NOMEM;
+     }
+-    sal_send_req(req);
+-    adapter_on_adapter_state_changed(BLE_STACK_STATE_OFF);
+-
+-    return BT_STATUS_SUCCESS;
++    return sal_send_req(req);
+ }
+ 
+ #ifdef CONFIG_BT_SMP
+diff --git a/service/stacks/zephyr/sal_connection_manager.c b/service/stacks/zephyr/sal_connection_manager.c
+index 8285edebe0c3aac567e6c0b66ae7268c302e2f2d..60f982da53b74c8625424b81a822da32efec3afb 100644
+--- a/service/stacks/zephyr/sal_connection_manager.c
++++ b/service/stacks/zephyr/sal_connection_manager.c
+@@ -450,6 +450,9 @@ void bt_sal_cm_acl_disconnected_callback(cm_data_t* data)
+ 
+ bt_status_t bt_sal_cm_try_disconnect_profiles(bt_address_t* addr, bool is_unpair)
+ {
++#ifndef CONFIG_BLUETOOTH_BREDR_SUPPORT
++    return BT_STATUS_UNSUPPORTED;
++#else
+     bt_profile_connection_manager_t* manager;
+     struct bt_conn* conn;
+     struct bt_conn_info info;
+@@ -508,10 +511,14 @@ bt_status_t bt_sal_cm_try_disconnect_profiles(bt_address_t* addr, bool is_unpair
+     bt_list_add_tail(bt_sal_disconnecting_list, manager);
+ 
+     return bt_sal_disconnect_internal(PRIMARY_ADAPTER, addr, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
++#endif
+ }
+ 
+ static bt_status_t bt_sal_try_profile_connect(bt_address_t* addr)
+ {
++#ifndef CONFIG_BLUETOOTH_BREDR_SUPPORT
++    return BT_STATUS_UNSUPPORTED;
++#else
+     bt_profile_connection_manager_t* manager;
+     struct bt_conn* conn;
+     struct bt_conn_info info;
+@@ -548,6 +555,7 @@ static bt_status_t bt_sal_try_profile_connect(bt_address_t* addr)
+     }
+ 
+     return bt_sal_trigger_profile_conn_act(manager, bt_sal_connecting_list);
++#endif
+ }
+ 
+ bt_status_t bt_sal_profile_connect_request(bt_address_t* addr, uint8_t profile_id, uint16_t conn_id, bt_controller_id_t id,
+diff --git a/service/stacks/zephyr/sal_gatt_server_interface.c b/service/stacks/zephyr/sal_gatt_server_interface.c
+index 5146fd5012cd6c97f29eb456fb74b22119b014f0..302f36c9cff287aa9a456c78296225f2d682b4b4 100644
+--- a/service/stacks/zephyr/sal_gatt_server_interface.c
++++ b/service/stacks/zephyr/sal_gatt_server_interface.c
+@@ -149,11 +149,14 @@ typedef struct {
+     sal_adapter_args_t adpt;
+ } sal_adapter_req_t;
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ typedef struct {
+     struct bt_gatt_service* srv;
+     struct bt_sdp_record* record;
+ } sal_gatt_sdp_record_t;
+ 
++#endif
++
+ /* Request struct for async notify/indicate dispatch.
+  * First four fields mirror sal_adapter_req_t so sal_invoke_async can cast safely.
+  */
+@@ -183,8 +186,13 @@ static size_t svc_attr_count;
+ 
+ static struct bt_gatt_service server_svcs[CONFIG_GATT_SERVER_MAX_SERVICES];
+ static struct bt_gatt_attr server_db[CONFIG_GATT_SERVER_MAX_ATTRIBUTES];
++/* Zero-length user data is borrowed from the framework element table. */
++static bool server_db_owns_data[CONFIG_GATT_SERVER_MAX_ATTRIBUTES];
++#ifdef CONFIG_BT_ATT_OVER_BR
+ static sal_gatt_sdp_record_t gatt_sdp_records[CONFIG_GATT_SERVER_MAX_SERVICES];
+ 
++#endif
++
+ static int find_free_service_index(void)
+ {
+     int i;
+@@ -219,19 +227,26 @@ static void remove_from_server_db(const struct bt_gatt_attr* start, size_t count
+     }
+ 
+     for (i = 0; i < count; i++) {
+-        free(start[i].user_data);
++        if (server_db_owns_data[index + i]) {
++            free(start[i].user_data);
++        }
+         free((void*)start[i].uuid);
+     }
+ 
+     if (index + count < attr_count) {
+         memmove(&server_db[index], &server_db[index + count],
+             (attr_count - index - count) * sizeof(struct bt_gatt_attr));
++        memmove(&server_db_owns_data[index], &server_db_owns_data[index + count],
++            (attr_count - index - count) * sizeof(server_db_owns_data[0]));
+     }
+ 
+     memset(&server_db[attr_count - count], 0, count * sizeof(struct bt_gatt_attr));
++    memset(&server_db_owns_data[attr_count - count], 0,
++        count * sizeof(server_db_owns_data[0]));
+     attr_count -= count;
+ }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ /* Generic ATT SDP record */
+ static struct bt_sdp_attribute gatt_attrs_template[] = {
+     BT_SDP_NEW_SERVICE,
+@@ -273,6 +288,8 @@ static struct bt_sdp_attribute gatt_attrs_template[] = {
+                     }, ) }, )),
+ };
+ 
++#endif
++
+ static ssize_t read_value(struct bt_conn* conn, const struct bt_gatt_attr* attr,
+     void* buf, uint16_t len, uint16_t offset)
+ {
+@@ -366,12 +383,14 @@ static struct bt_gatt_attr* gatt_db_add(const struct bt_gatt_attr* pattern, size
+ 
+     BT_LOGD("user_data 0x%p, user_data_len: %zu", attr->user_data, user_data_len);
+ 
++    server_db_owns_data[attr_count] = user_data_len != 0;
+     attr_count++;
+     svc_attr_count++;
+ 
+     return attr;
+ }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ static int gatt_sdp_set_srv_cls(struct bt_sdp_attribute* attr, union uuid* uuid)
+ {
+     struct bt_sdp_data_elem *element, *tmp_elem;
+@@ -613,11 +632,15 @@ static void gatt_sdp_delete_record(struct bt_sdp_record* record)
+     free(record);
+ }
+ 
++#endif
++
+ static bt_status_t register_service(bool is_over_br)
+ {
+     int err;
+     int service_index;
++#ifdef CONFIG_BT_ATT_OVER_BR
+     struct bt_sdp_record* record;
++#endif
+     bt_status_t status = BT_STATUS_SUCCESS;
+ 
+     service_index = find_free_service_index();
+@@ -639,6 +662,7 @@ static bt_status_t register_service(bool is_over_br)
+         goto out;
+     }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+     if (!is_over_br) {
+         goto out;
+     }
+@@ -657,6 +681,8 @@ static bt_status_t register_service(bool is_over_br)
+         goto out;
+     }
+ 
++#endif
++
+ out:
+     svc_attr_count = 0U;
+     if (status != BT_STATUS_SUCCESS) {
+@@ -860,6 +886,8 @@ static int alloc_descriptor(const struct bt_gatt_attr* attr, struct add_descript
+             return -EINVAL;
+         }
+ 
++        /* CCC storage was allocated above, rather than copied by gatt_db_add. */
++        server_db_owns_data[attr_desc - server_db] = true;
+         desc->desc_id = attr_desc->handle;
+     } else {
+         user_data.element = desc->element;
+@@ -943,6 +971,7 @@ static struct bt_gatt_cb zblue_gatt_callbacks = {
+     .att_mtu_updated = zblue_gatts_mtu_updated_callback
+ };
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ static bt_status_t do_gatts_disconnect(bt_controller_id_t id, bt_address_t* bd_addr, void* user_data)
+ {
+     struct bt_conn* conn;
+@@ -1022,6 +1051,8 @@ static struct bt_att_conn_cb zblue_att_callbacks = {
+     .disconnected = zblue_gatts_disconnected_callback,
+ };
+ 
++#endif
++
+ static sal_adapter_req_t* sal_adapter_req(bt_controller_id_t id, bt_address_t* addr, sal_func_t func)
+ {
+     sal_adapter_req_t* req = calloc(sizeof(sal_adapter_req_t), 1);
+@@ -1082,7 +1113,9 @@ static void sal_gatts_elements_callback(void* args)
+ bt_status_t bt_sal_gatt_server_enable(void)
+ {
+     bt_gatt_cb_register(&zblue_gatt_callbacks);
++#ifdef CONFIG_BT_ATT_OVER_BR
+     bt_att_conn_cb_register(&zblue_att_callbacks);
++#endif
+ 
+     return BT_STATUS_SUCCESS;
+ }
+@@ -1090,7 +1123,9 @@ bt_status_t bt_sal_gatt_server_enable(void)
+ bt_status_t bt_sal_gatt_server_disable(void)
+ {
+     bt_gatt_cb_unregister(&zblue_gatt_callbacks);
++#ifdef CONFIG_BT_ATT_OVER_BR
+     bt_att_conn_cb_unregister(&zblue_att_callbacks);
++#endif
+ 
+     return BT_STATUS_SUCCESS;
+ }
+@@ -1105,6 +1140,17 @@ bt_status_t bt_sal_gatt_server_add_elements(gatt_element_t* elements, uint16_t s
+     if (!elements || size == 0)
+         return BT_STATUS_PARM_INVALID;
+ 
++#ifndef CONFIG_BT_ATT_OVER_BR
++    /* Reject unsupported bearers before changing the shared attribute DB. */
++    for (index = 0; index < size; index++) {
++        if ((elements[index].type == GATT_PRIMARY_SERVICE
++                || elements[index].type == GATT_SECONDARY_SERVICE)
++            && (elements[index].properties & GATT_PROP_EXPOSED_OVER_BREDR)) {
++            return BT_STATUS_UNSUPPORTED;
++        }
++    }
++#endif
++
+     for (index = 0; index < size; index++) {
+         switch (elements[index].type) {
+         case GATT_PRIMARY_SERVICE:
+@@ -1146,6 +1192,7 @@ bt_status_t bt_sal_gatt_server_add_elements(gatt_element_t* elements, uint16_t s
+     return sal_send_req((void*)req);
+ }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ static sal_gatt_sdp_record_t* get_sdp_from_service(struct bt_gatt_service* srv)
+ {
+     sal_gatt_sdp_record_t* record;
+@@ -1167,6 +1214,8 @@ static sal_gatt_sdp_record_t* get_sdp_from_service(struct bt_gatt_service* srv)
+     return NULL;
+ }
+ 
++#endif
++
+ static struct bt_gatt_service* get_primary_service_from_element(gatt_element_t* element)
+ {
+     struct bt_gatt_service* srv;
+@@ -1202,18 +1251,23 @@ static void remove_service(gatt_element_t* element)
+     size_t i, count, index;
+     struct bt_gatt_attr* start;
+     struct bt_gatt_service* svc = get_primary_service_from_element(element);
++#ifdef CONFIG_BT_ATT_OVER_BR
+     sal_gatt_sdp_record_t* record;
++#endif
+     if (!svc) {
+         BT_LOGW("%s, service not found", __func__);
+         return;
+     }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+     record = get_sdp_from_service(svc);
+     if (record && record->record) {
+         bt_sdp_unregister_service(record->record);
+         gatt_sdp_delete_record(record->record);
+     }
+ 
++#endif
++
+     bt_gatt_service_unregister(svc);
+ 
+     start = svc->attrs;
+@@ -1294,6 +1348,7 @@ static void STACK_CALL(conn_connect)(void* args)
+     }
+ }
+ 
++#ifdef CONFIG_BT_ATT_OVER_BR
+ static bt_status_t gatts_br_profile_connect(bt_controller_id_t id, bt_address_t* addr, void* user_data)
+ {
+     struct bt_conn* conn;
+@@ -1339,6 +1394,8 @@ static void STACK_CALL(conn_br_connect)(void* args)
+     }
+ }
+ 
++#endif
++
+ bt_status_t bt_sal_gatt_server_connect_bear(bt_controller_id_t id, bt_address_t* addr, ble_addr_type_t addr_type, uint8_t bear_type)
+ {
+     sal_adapter_req_t* req;
+@@ -1348,9 +1405,12 @@ bt_status_t bt_sal_gatt_server_connect_bear(bt_controller_id_t id, bt_address_t*
+     case ATT_BEAR_TYPE_LE_ATT:
+         req = sal_adapter_req(id, addr, STACK_CALL(conn_connect));
+         break;
++#ifdef CONFIG_BT_ATT_OVER_BR
+     case ATT_BEAR_TYPE_BR_ATT:
+         req = sal_adapter_req(id, addr, STACK_CALL(conn_br_connect));
+         break;
++#endif
++
+     default:
+         BT_LOGE("%s, unsupported bear_type:%d", __func__, bear_type);
+         return BT_STATUS_UNSUPPORTED;
+@@ -1456,7 +1516,11 @@ static void STACK_CALL(conn_cancel)(void* args)
+     }
+ 
+ br_disconn:
++#ifdef CONFIG_BT_ATT_OVER_BR
+     bt_sal_profile_disconnect_request(&req->addr, PROFILE_GATTS, CONN_ID_DEFAULT, PRIMARY_ADAPTER, do_gatts_disconnect, NULL);
++#else
++    return;
++#endif
+ }
+ 
+ bt_status_t bt_sal_gatt_server_cancel_connection(bt_controller_id_t id, bt_address_t* addr)
+diff --git a/service/stacks/zephyr/sal_le_scan_interface.c b/service/stacks/zephyr/sal_le_scan_interface.c
+index ae0e7e50acf6ba6bb7960eac2ac9c4dd6dac9050..266b4d8ee6391c9bcf4eaae332245beeeb79b943 100644
+--- a/service/stacks/zephyr/sal_le_scan_interface.c
++++ b/service/stacks/zephyr/sal_le_scan_interface.c
+@@ -125,11 +125,30 @@ static void STACK_CALL(stop_scan)(void* args)
+ 
+ bt_status_t bt_sal_le_set_scan_parameters(bt_controller_id_t id, ble_scan_params_t* params)
+ {
++    if (!params)
++        return BT_STATUS_PARM_INVALID;
++
++    /* Primary advertising channels use LE 1M or LE Coded, never LE 2M. */
++    if (params->scan_phy == BT_LE_2M_PHY)
++        return BT_STATUS_NOT_SUPPORTED;
++    if (params->scan_phy != BT_LE_1M_PHY && params->scan_phy != BT_LE_CODED_PHY)
++        return BT_STATUS_PARM_INVALID;
++#ifndef CONFIG_BT_EXT_ADV
++    if (params->scan_phy == BT_LE_CODED_PHY)
++        return BT_STATUS_NOT_SUPPORTED;
++#endif
++
+     memset(&scan_param, 0, sizeof(scan_param));
+     scan_param.type = (uint8_t)params->scan_type;
+     scan_param.interval = params->scan_interval;
+     scan_param.window = params->scan_window;
+ 
++    if (params->scan_phy == BT_LE_CODED_PHY) {
++        scan_param.options |= BT_LE_SCAN_OPT_CODED | BT_LE_SCAN_OPT_NO_1M;
++        scan_param.interval_coded = params->scan_interval;
++        scan_param.window_coded = params->scan_window;
++    }
++
+     if (params->filter_type == BT_LE_SCAN_POLICY_ONLY_WHITE_LIST ||
+         params->filter_type == BT_LE_SCAN_POLICY_ONLY_WHITE_LIST_AND_RPA) {
+         scan_param.options |= BT_LE_SCAN_OPT_FILTER_ACCEPT_LIST;
+diff --git a/service/utils/log_server.c b/service/utils/log_server.c
+index 33ba3c85ed248ccbb38c15d09381835a7f38cca9..9d91e906ea3569541a51673dd2b97f1dc11bd5c8 100644
+--- a/service/utils/log_server.c
++++ b/service/utils/log_server.c
+@@ -283,14 +283,17 @@ void bt_log_server_init(void)
+ 
+ void bt_log_server_cleanup(void)
+ {
++#if defined(CONFIG_KVDB) && defined(__NuttX__)
+     /** stop log property monitor */
+     service_loop_remove_poll(g_logger.poll);
+     g_logger.poll = NULL;
+-    if (g_logger.monitor_fd)
++    if (g_logger.monitor_fd >= 0)
+         property_monitor_close(g_logger.monitor_fd);
+ 
+     g_logger.monitor_fd = -1;
+ 
++#endif
++
+     /** snoop log deinit */
+     if (g_logger.snoop_enable)
+         btsnoop_log_disable();
+diff --git a/tools/lea_server.c b/tools/lea_server.c
+index a98667c14e94de56b971bede91c0e84ed049060a..7d6cd0bb1b2ace70839a617e4584ae45f6a5f20f 100644
+--- a/tools/lea_server.c
++++ b/tools/lea_server.c
+@@ -28,6 +28,7 @@ static int stop_announce_cmd(void* handle, int argc, char* argv[]);
+ static int disconnect_device(void* handle, int argc, char* argv[]);
+ static int get_connection_state(void* handle, int argc, char* argv[]);
+ static int disconnect_audio(void* handle, int argc, char* argv[]);
++static int receive_control(void* handle, int argc, char* argv[]);
+ 
+ static bt_command_t g_lea_server_tables[] = {
+     { "startance", start_announce_cmd, 0, "\"start lea announce, params: <adv_id> <announce_type>\"" },
+@@ -35,6 +36,7 @@ static bt_command_t g_lea_server_tables[] = {
+     { "disconnect", disconnect_device, 0, "\"disconnect lea connection, params: <address>\"" },
+     { "constate", get_connection_state, 0, "\"get lea connection state, params: <address>\"" },
+     { "disconnectaudio", disconnect_audio, 0, "\"disconnect lea audio, params: <address>\"" },
++    { "receive", receive_control, 0, "\"local receive control: <pause|resume|mute|unmute>; result is asynchronous\"" },
+ };
+ 
+ static void* lea_server_callbacks = NULL;
+@@ -114,6 +116,33 @@ static int disconnect_audio(void* handle, int argc, char* argv[])
+     return CMD_OK;
+ }
+ 
++static void receive_control_completed(void* cookie,
++    lea_server_receive_control_t control, bt_status_t status)
++{
++    PRINT("LE Audio receive control:%d completed, status:%d", control, status);
++}
++
++static int receive_control(void* handle, int argc, char* argv[])
++{
++    static const char* const names[] = { "pause", "resume", "mute", "unmute" };
++
++    if (argc != 1)
++        return CMD_USAGE_FAULT;
++
++    for (unsigned i = 0; i < ARRAY_SIZE(names); i++) {
++        if (!strcmp(argv[0], names[i])) {
++            bt_status_t status = bt_lea_server_receive_control(handle,
++                (lea_server_receive_control_t)i, receive_control_completed, NULL);
++            if (status != BT_STATUS_SUCCESS)
++                return CMD_ERROR;
++            PRINT("LE Audio receive control queued; awaiting completion");
++            return CMD_OK;
++        }
++    }
++
++    return CMD_USAGE_FAULT;
++}
++
+ static int get_connection_state(void* handle, int argc, char* argv[])
+ {
+     bt_address_t addr;
+diff --git a/tools/scan.c b/tools/scan.c
+index 56300687c872cd8e82eceb010956e7c21d0176fc..20e799087d9e33ddffaf36fb67058f841d15e083 100644
+--- a/tools/scan.c
++++ b/tools/scan.c
+@@ -72,6 +72,9 @@ static void on_scan_result_cb(bt_scanner_t* scanner, ble_scan_result_t* result)
+ 
+ static void on_scan_start_status_cb(bt_scanner_t* scanner, uint8_t status)
+ {
++    if (status != 0)
++        g_scanner = NULL;
++
+     PRINT("%s, scanner:%p, status:%d", __func__, scanner, status);
+ }
+ 

@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "board": "ESP32-S31 Function-CoreBoard-1",
+  "profile": "function-ethernet",
+  "status": "BASIC_COMMUNICATION_VERIFIED",
+  "artifacts": {
+    "nuttx": {
+      "bytes": 609976,
+      "sha256": "6bb405edef8fc6d094c8afeab74ae3e3a0feba7eeb25bac7d88651cbb794bcb1",
+      "byte_identical_to_board_accepted": true
+    },
+    "nuttx.bin": {
+      "bytes": 338744,
+      "sha256": "fb23365cb347cf7106ac1943a7076483b6f33508f86439f5cf2e7d1da163d02b",
+      "byte_identical_to_board_accepted": true
+    },
+    ".config": {
+      "bytes": 61076,
+      "sha256": "c8e1c7cec071a368729612437ab4d1f6d739b10ef46539cd5deda8b633d18fde",
+      "byte_identical_to_board_accepted": true
+    }
+  },
+  "configuration": "FLAT, one CPU, native eth0, YT8531 RGMII PHY; no Wi-Fi or external AppFS",
+  "checks": {
+    "link": {
+      "speed_mbps": 1000,
+      "duplex": "full"
+    },
+    "ping": {
+      "received": 4,
+      "sent": 4
+    },
+    "tcp_host_to_board": {
+      "sent_bytes": 524288,
+      "received_bytes": 524288
+    },
+    "udp_host_to_board": {
+      "sent_bytes": 131072,
+      "received_bytes": 131072
+    },
+    "interface_disable_enable_ping": {
+      "received": 4,
+      "sent": 4
+    },
+    "final_driver_errors": 0,
+    "final_receive_drops": 0
+  },
+  "source_reorganization": {
+    "shared_hal_implementations_changed": false,
+    "s31_owned_implementations": 4,
+    "rebuilt_elf_binary_configuration_byte_identical": true
+  },
+  "limits": [
+    "Paced basic communication; 1000 Mbps is negotiated link speed, not measured throughput.",
+    "Payload length checked; no application payload checksum comparison.",
+    "Large board-to-host payload, DHCP, IPv6, physical cable hotplug and sustained load not qualified.",
+    "Separate profile; factory and Ethernet capabilities are not claimed to coexist in one image."
+  ],
+  "provenance": {
+    "basic_board_review_sha256": "b2ec27b48bcf43c443898da08607807bf1b3aed83c039134dac30c9f3d10b981",
+    "canonical_identity_review_sha256": "ad3ebead6e7cf97de68d961ba7256f2c4b559144af07773536537e3659e1ee9c"
+  }
+}

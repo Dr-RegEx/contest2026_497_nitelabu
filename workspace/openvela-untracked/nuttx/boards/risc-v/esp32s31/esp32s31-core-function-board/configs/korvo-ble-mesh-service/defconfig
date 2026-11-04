@@ -1,0 +1,6 @@
+# Local framework service and Mesh share the persistent NSH task group.
+# Exiting the Mesh shell returns to NSH while Bluetooth remains initialized.
+# This standalone FLAT profile does not qualify SMP product coexistence.
+#include "../korvo-ble-mesh-storage/defconfig"
+
+CONFIG_NSH_BUILTIN_AS_COMMAND=y

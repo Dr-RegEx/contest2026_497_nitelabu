@@ -1,0 +1,65 @@
+#include <nuttx/config.h>
+
+set -e
+
+#ifdef CONFIG_ESP32S31_KORVO_HMI_NETDIAG
+echo "NETDIAG_WATCHDOG_START"
+wdog -d 1 -p 500 -t 15000 &
+sleep 1
+echo "NETDIAG_WATCHDOG_ARMED"
+#endif
+
+/* NSH continues from rc.sysinit to rcS even after an error. Keep the checked
+ * mount and the service commands in this script; never fall back to tmpfs.
+ */
+#ifdef CONFIG_ESP32S31_KORVO_HMI_DATA
+if mount -t littlefs /dev/hmidata /data
+then
+  echo "Korvo HMI persistent /data mounted"
+else
+  echo "Korvo HMI /data unavailable; services blocked; Flash preserved"
+  false
+fi
+#else
+if mount -t tmpfs /data
+then
+  echo "Korvo HMI volatile /data mounted"
+else
+  echo "Korvo HMI /data unavailable; services not started"
+  false
+fi
+#endif
+mkdir -p /data/app
+mkdir -p /data/data
+mkdir -p /data/persist
+echo "Korvo HMI data paths ready"
+
+#ifdef CONFIG_XMSDEMO_FACTORY
+/* The board owns this mount; applications only access their own files. */
+mkdir -p /mnt/sdcard
+if mount -t vfat /dev/mmcsd0 /mnt/sdcard
+then
+  echo "Korvo factory SD mounted"
+else
+  echo "Korvo factory SD unavailable; storage probe needs the card"
+fi
+#endif
+
+/* Binder clients wait for ServiceManager; SystemServer owns WMS, PMS and AMS. */
+kvdbd &
+servicemanager &
+#if defined(CONFIG_XMSDEMO_PLATFORM_MEDIA) || defined(CONFIG_XMSDEMO_FACTORY)
+/* Native controls use the public MEDIA service; no automatic playback. */
+mediad &
+#endif
+systemd &
+echo "Korvo HMI services requested; use pm and am dump to inspect readiness"
+
+#ifdef CONFIG_ESP32S31_KORVO_HMI_NETDIAG
+sleep 3
+echo "NETDIAG_IFUP_START"
+ifup wlan0
+echo "NETDIAG_IFUP_RETURNED"
+ps
+echo "NETDIAG_PS_RETURNED"
+#endif

@@ -1,0 +1,8 @@
+# Korvo local controller/Mesh qualification using the existing persistent host.
+# The mesh entry does not enable provisioning advertisements by itself.
+# Mount a dedicated existing LittleFS volume before starting it. Peer traffic
+# and product coexistence require separate qualification.
+#include "../xts-flat-ble-mesh-persistent-gatt/defconfig"
+
+CONFIG_ESP32S31_BOARD_KORVO=y
+# CONFIG_ESP32S31_BOARD_FUNCTION is not set

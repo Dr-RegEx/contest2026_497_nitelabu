@@ -1,0 +1,632 @@
+diff --git a/Kconfig b/Kconfig
+index 177d6800a2c7ebd8f9823785a2fb4a3af56cd178..0618acddab3e430a6e6120e548d4525c1937a23f 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -24,7 +24,7 @@ config SYSTEM_WINDOW_SERVICE
+ 	depends on LV_USE_NUTTX
+ 	depends on LV_USE_NUTTX_LIBUV
+ 	depends on UIKIT
+-	depends on KVDB
++	depends on KVDB && !KVDB_DIRECT
+ 
+ if SYSTEM_WINDOW_SERVICE
+ 
+@@ -45,6 +45,17 @@ config ENABLE_BUFFER_QUEUE_BY_NAME
+ 	bool "Enable buffer queue by name"
+ 	default y
+ 
++config SYSTEM_WINDOW_DEFAULT_RGB565
++	bool "Use RGB565 as the default application window format"
++	default n
++	depends on LV_COLOR_DEPTH_16
++	help
++		Use opaque RGB565 buffers for windows that keep the default layout
++		format on a 16-bit display. This halves their shared pixel storage.
++		Applications needing per-pixel alpha must explicitly select ARGB8888
++		in LayoutParams; explicit formats and their parcel encoding remain
++		unchanged.
++
+ config ENABLE_WINDOW_LIMIT_MAX
+ 	int "Support max application window"
+ 	default 10
+diff --git a/app/BaseWindow.cpp b/app/BaseWindow.cpp
+index 6cbac36aea134a7775c5e695016549724881b40e..5aa65f804d9815bfda470e5142e2cbc56a7def7a 100644
+--- a/app/BaseWindow.cpp
++++ b/app/BaseWindow.cpp
+@@ -308,7 +308,10 @@ void BaseWindowDefault::setSurfaceControl(SurfaceControl* surfaceControl) {
+         mUIProxy->updateResolution(surfaceControl->getWidth(), surfaceControl->getHeight(),
+                                    surfaceControl->getFormat());
+ #ifdef CONFIG_ENABLE_BUFFER_QUEUE_BY_NAME
+-        initSurfaceBuffer(mSurfaceControl, false);
++        if (!initSurfaceBuffer(mSurfaceControl, false)) {
++            mSurfaceControl.reset();
++            return;
++        }
+         mSurfaceBufferReady = true;
+ #endif
+     }
+@@ -388,8 +391,7 @@ void BaseWindowDefault::handleOnFrame(int32_t seq) {
+     if (mSurfaceControl.get() == nullptr) {
+         if (info) info->setSkipReason(FrameMetaSkipReason::NoSurface);
+         mWindowManager->relayoutWindow(shared_from_this());
+-        if (mSurfaceControl.get() && mSurfaceControl->isValid()) {
+-            updateOrCreateBufferQueue();
++        if (mSurfaceControl.get() && mSurfaceControl->isValid() && updateOrCreateBufferQueue()) {
+             FLOGD("firstly, update response seq=%" PRIu32 "", seq);
+             mSurfaceControl->getFMQ().updateClientRespSeq(seq);
+         }
+@@ -458,8 +460,8 @@ void BaseWindowDefault::bufferReleased(int32_t bufKey) {
+     FLOGD("release bufKey:%" PRId32 " done!\n", bufKey);
+ }
+ 
+-void BaseWindowDefault::updateOrCreateBufferQueue() {
+-    if (xmsLiteMode()) return;
++bool BaseWindowDefault::updateOrCreateBufferQueue() {
++    if (xmsLiteMode() || !mSurfaceControl) return false;
+     if (mSurfaceControl->bufferQueue() != nullptr) {
+         mSurfaceControl->bufferQueue()->update(mSurfaceControl);
+     } else {
+@@ -467,7 +469,13 @@ void BaseWindowDefault::updateOrCreateBufferQueue() {
+                 std::make_shared<BufferProducer>(mSurfaceControl);
+         mSurfaceControl->setBufferQueue(buffProducer);
+     }
++    if (!mSurfaceControl->bufferQueue()->isValid()) {
++        clearSurfaceBuffer();
++        mSurfaceControl.reset();
++        return false;
++    }
+     FLOGI("done");
++    return true;
+ }
+ 
+ void BaseWindowDefault::setEventListener(WindowEventListener* listener) {
+diff --git a/app/BaseWindowDefault.h b/app/BaseWindowDefault.h
+index faaad78136d268d7375e6196cb7756e83b29fcaa..3ee5c9e4c8f5e7fc7fb1a518edd371ee53e0d6df 100644
+--- a/app/BaseWindowDefault.h
++++ b/app/BaseWindowDefault.h
+@@ -170,7 +170,7 @@ private:
+     void bufferReleased(int32_t bufKey);
+ 
+     std::shared_ptr<BufferProducer> getBufferProducer();
+-    void updateOrCreateBufferQueue();
++    bool updateOrCreateBufferQueue();
+     void handleOnFrame(int32_t seq);
+     void clearSurfaceBuffer();
+ 
+diff --git a/app/WindowManager.cpp b/app/WindowManager.cpp
+index fd1295cc08f766f64862b92d0c4dcb40f5a2e541..725f0f4ad8805dfccf145d9ee17082a973fba0e6 100644
+--- a/app/WindowManager.cpp
++++ b/app/WindowManager.cpp
+@@ -239,7 +239,7 @@ void WindowManagerDefault::relayoutWindow(std::shared_ptr<BaseWindow> win) {
+         surfaceControl = new SurfaceControl(lp.mToken, handle, lp.mWidth, lp.mHeight, lp.mFormat);
+     Status status = mService->relayout(window->getIWindow(), lp, lp.mWidth, lp.mHeight,
+                                        window->getVisibility(), surfaceControl, &result);
+-    if (!status.isOk()) {
++    if (!status.isOk() || result != 0) {
+         FLOGE("relayout window failure!");
+         /* clean local resource */
+         handle.clear();
+diff --git a/common/BufferQueue.cpp b/common/BufferQueue.cpp
+index 602c205d54ac3697f26d6780ea96ed692af4a8e4..e337f91a33fb49941f35fd984683704533c6731a 100644
+--- a/common/BufferQueue.cpp
++++ b/common/BufferQueue.cpp
+@@ -17,6 +17,7 @@
+ 
+ #include "wm/BufferQueue.h"
+ 
++#include <errno.h>
+ #include <sys/mman.h>
+ 
+ #include "WindowUtils.h"
+@@ -57,17 +58,17 @@ void BufferQueue::clearBuffers() {
+     for (auto it = mBuffers.begin(); it != mBuffers.end(); ++it) {
+         it->second.mUserData = nullptr;
+ 
+-        FLOGI("now unmap and close shared memory for %d", it->second.mFd);
++        FLOGI("now unmap shared memory for %d", it->second.mFd);
+ 
+         if (it->second.mBuffer && munmap(it->second.mBuffer, it->second.mSize) == -1) {
+             FLOGE("failed to unmap shared memory for %d", it->second.mFd);
+         }
+ 
+-        if (close(it->second.mFd) == -1) {
+-            FLOGE("failed to close shared memory for %d", it->second.mFd);
+-        }
+     }
+     mBuffers.clear();
++    mDataSlot.clear();
++    mFreeSlot.clear();
++    mSurfaceControl.reset();
+ }
+ 
+ BufferItem* BufferQueue::syncState(BufferKey key, BufferState byState) {
+@@ -85,6 +86,7 @@ BufferItem* BufferQueue::syncState(BufferKey key, BufferState byState) {
+ }
+ 
+ bool BufferQueue::update(const std::shared_ptr<SurfaceControl>& sc) {
++    if (!sc || !sc->isValid() || sc->getBufferSize() == 0) return false;
+     if (sc->isSameSurface(sc, mSurfaceControl.lock())) {
+         return false;
+     }
+@@ -93,8 +95,6 @@ bool BufferQueue::update(const std::shared_ptr<SurfaceControl>& sc) {
+         clearBuffers();
+     }
+ 
+-    mSurfaceControl = sc;
+-
+     auto bufferIds = sc->bufferIds();
+     uint32_t size = sc->getBufferSize();
+ 
+@@ -102,14 +102,17 @@ bool BufferQueue::update(const std::shared_ptr<SurfaceControl>& sc) {
+         BufferKey bufferkey = id.mKey;
+         int bufferFd = id.mFd;
+ 
+-        if (bufferFd == -1) {
++        if (bufferFd < 0 || mBuffers.find(bufferkey) != mBuffers.end()) {
++            clearBuffers();
+             return false;
+         }
+ 
+         void* buffer = mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_SHARED, bufferFd, 0);
+ 
+         if (buffer == MAP_FAILED) {
+-            FLOGE("failed to map shared memory for %d", bufferFd);
++            FLOGE("failed to map shared memory for %d size=%" PRIu32 " errno=%d",
++                  bufferFd, size, errno);
++            clearBuffers();
+             return false;
+         }
+ 
+@@ -118,6 +121,7 @@ bool BufferQueue::update(const std::shared_ptr<SurfaceControl>& sc) {
+         mBuffers[bufferkey] = buffItem;
+         mFreeSlot.push_back(bufferkey);
+     }
++    mSurfaceControl = sc;
+     return true;
+ }
+ 
+diff --git a/common/LayoutParams.cpp b/common/LayoutParams.cpp
+index f4e11338428bdd22458525ef47aa770e3ee1ab5a..ad5ca17a2a6f194d426609929291460305bdef7d 100644
+--- a/common/LayoutParams.cpp
++++ b/common/LayoutParams.cpp
+@@ -16,6 +16,8 @@
+ 
+ #define LOG_TAG "LayoutParams"
+ 
++#include <nuttx/config.h>
++
+ #include "wm/LayoutParams.h"
+ 
+ #include "ParcelUtils.h"
+@@ -30,7 +32,11 @@ LayoutParams::LayoutParams() {
+     mY = 0;
+     mType = TYPE_APPLICATION;
+     mFlags = 0;
++#ifdef CONFIG_SYSTEM_WINDOW_DEFAULT_RGB565
++    mFormat = FORMAT_RGB_565;
++#else
+     mFormat = FORMAT_ARGB_8888;
++#endif
+     mWindowTransitionState = WINDOW_TRANSITION_ENABLE;
+     mToken = NULL;
+     mInputFeatures = 0;
+diff --git a/common/SurfaceControl.cpp b/common/SurfaceControl.cpp
+index e29816885b6036fa752b88ec9ef7ce4ef600b10c..8e1a23074be2d964eba4baaf0981a8f8bfd6fa39 100644
+--- a/common/SurfaceControl.cpp
++++ b/common/SurfaceControl.cpp
+@@ -73,12 +73,17 @@ status_t SurfaceControl::writeToParcel(Parcel* out) const {
+     }
+ 
+     if (mBufferIds.size() > 0) {
+-        mFreeMsgSlot.writeToParcel(out);
++        return mFreeMsgSlot.writeToParcel(out);
+     }
+     return android::OK;
+ }
+ 
+ status_t SurfaceControl::readFromParcel(const Parcel* in) {
++    clearBufferIds();
++    destroyFMQ();
++#ifndef CONFIG_ENABLE_BUFFER_QUEUE_BY_NAME
++    mOwnsBufferFds = true;
++#endif
+     mToken = in->readStrongBinder();
+     mHandle = in->readStrongBinder();
+     SAFE_PARCEL(in->readUint32, &mWidth);
+@@ -88,27 +93,58 @@ status_t SurfaceControl::readFromParcel(const Parcel* in) {
+ 
+     int32_t size;
+     SAFE_PARCEL(in->readInt32, &size);
++    if (size < 0) return -EINVAL;
+     for (int32_t i = 0; i < size; i++) {
+         BufferId buffId;
+ #ifdef CONFIG_ENABLE_BUFFER_QUEUE_BY_NAME
+-        buffId.mName = in->readCString();
++        const char* name = in->readCString();
++        if (!name) {
++            clearBufferIds();
++            return -EINVAL;
++        }
++        buffId.mName = name;
+         buffId.mFd = -1;
+ #else
+         buffId.mName = "";
+         buffId.mFd = dup(in->readFileDescriptor());
+ #endif
+-        SAFE_PARCEL(in->readInt32, &buffId.mKey);
++        status_t status = in->readInt32(&buffId.mKey);
++        if (status != android::OK) {
++            if (buffId.mFd >= 0) close(buffId.mFd);
++            clearBufferIds();
++            return status;
++        }
+         mBufferIds.push_back(buffId);
+     }
+ 
+     if (size > 0) {
+-        mFreeMsgSlot.readFromParcel(in);
++        status_t status = mFreeMsgSlot.readFromParcel(in);
++        if (status != android::OK) clearBufferIds();
++        return status;
+     }
+     return android::OK;
+ }
+ 
+-void SurfaceControl::initBufferIds(const std::vector<BufferId>& ids) {
+-    mBufferIds = ids;
++void SurfaceControl::initBufferIds(const std::vector<BufferId>& ids, bool ownsFds,
++                                   bool ownsNames) {
++    auto replacement = ids;
++    clearBufferIds();
++    mBufferIds = std::move(replacement);
++    mOwnsBufferFds = ownsFds;
++    mOwnsBufferNames = ownsNames;
++}
++
++void SurfaceControl::clearBufferIds() {
++    // Queues own mappings; the surface owns descriptors opened or duplicated
++    // for this process. A reply object only borrows descriptor metadata.
++    mBufferQueue.reset();
++    for (const auto& id : mBufferIds) {
++        if (mOwnsBufferNames) shm_unlink(id.mName.c_str());
++        if (mOwnsBufferFds && id.mFd >= 0) close(id.mFd);
++    }
++    mBufferIds.clear();
++    mOwnsBufferFds = false;
++    mOwnsBufferNames = false;
+ }
+ 
+ bool SurfaceControl::isValid() {
+@@ -121,6 +157,8 @@ bool SurfaceControl::isValid() {
+ }
+ 
+ void SurfaceControl::copyFrom(SurfaceControl& other) {
++    if (this == &other) return;
++    clearBufferIds();
+     mToken = other.mToken;
+     mHandle = other.mHandle;
+     mWidth = other.mWidth;
+@@ -146,10 +184,12 @@ void SurfaceControl::destroyFMQ() {
+     mFreeMsgSlot.destroy();
+ }
+ 
+-static inline bool initSharedBuffer(std::string name, int* pfd, int32_t size) {
++static inline bool initSharedBuffer(std::string name, int* pfd, int32_t size,
++                                   bool exclusive = false) {
+     int32_t flag = O_RDWR | O_CLOEXEC;
+ 
+     if (size > 0) flag |= O_CREAT;
++    if (exclusive) flag |= O_EXCL;
+ 
+     *pfd = -1;
+     const char* cname = name.c_str();
+@@ -174,17 +214,23 @@ static inline bool initSharedBuffer(std::string name, int* pfd, int32_t size) {
+ }
+ 
+ static inline void uninitSharedBuffer(int fd, std::string name) {
+-    if (fd > 0) {
++    if (fd >= 0) {
+         int result = shm_unlink(name.c_str());
+         FLOGI("uninit shared memory for %s, result=%d", name.c_str(), result);
+     }
+ }
+ 
+-/* Surface control only record bufferIds, don't control shared memory's lifecycle */
+-void initSurfaceBuffer(const std::shared_ptr<SurfaceControl>& sc, bool isServer) {
+-    if (sc.get() == nullptr) return;
++/* Surface control owns opened descriptors and server-created names. */
++bool initSurfaceBuffer(const std::shared_ptr<SurfaceControl>& sc, bool isServer) {
++    if (sc.get() == nullptr) return false;
+ 
+     auto bufferIds = sc->bufferIds();
++    if (bufferIds.empty() || sc->getBufferSize() == 0 ||
++        sc->getBufferSize() > INT32_MAX) {
++        uninitSurfaceBuffer(sc);
++        return false;
++    }
++    sc->clearBufferIds();
+     std::vector<BufferId> ids;
+     bool result = true;
+ 
+@@ -194,7 +240,7 @@ void initSurfaceBuffer(const std::shared_ptr<SurfaceControl>& sc, bool isServer)
+     for (const auto& id : bufferIds) {
+         int fd = -1;
+ 
+-        if (!initSharedBuffer(id.mName, &fd, size)) {
++        if (!initSharedBuffer(id.mName, &fd, size, isServer)) {
+             result = false;
+             break;
+         }
+@@ -202,29 +248,30 @@ void initSurfaceBuffer(const std::shared_ptr<SurfaceControl>& sc, bool isServer)
+     }
+ 
+     /* failure : free shared memory*/
+-    if (isServer && !result && ids.size() < 2) {
++    if (!result) {
+         for (const auto& id : ids) {
+-            uninitSharedBuffer(id.mFd, id.mName);
++            if (isServer) uninitSharedBuffer(id.mFd, id.mName);
+             close(id.mFd);
+         }
+-        ids.clear();
++        sc->destroyFMQ();
++        return false;
+     }
+ 
+     FLOGI("%p", sc.get());
+ 
+     /* update buffer ids*/
+-    sc->initBufferIds(ids);
+-    sc->initFMQ(isServer);
++    sc->initBufferIds(ids, true, isServer);
++    if (!sc->initFMQ(isServer)) {
++        uninitSurfaceBuffer(sc);
++        return false;
++    }
++    return true;
+ }
+ 
+ void uninitSurfaceBuffer(const std::shared_ptr<SurfaceControl>& sc) {
+     if (sc.get() == nullptr) return;
+ 
+     FLOGI("try to uninit shared memory");
+-    auto bufferIds = sc->bufferIds();
+-    for (auto it : bufferIds) {
+-        uninitSharedBuffer(it.mFd, it.mName);
+-    }
+     sc->clearBufferIds();
+     sc->destroyFMQ();
+ }
+@@ -233,7 +280,8 @@ void uninitSurfaceBuffer(const std::shared_ptr<SurfaceControl>& sc) {
+ template <typename T>
+ FakeFmq<T>::FakeFmq()
+       : mName(""),
+-        mFd(0),
++        mFd(-1),
++        mOwnsName(false),
+         mCaps(0),
+         mReadPos(0),
+         mWritePos(0),
+@@ -262,8 +310,11 @@ status_t FakeFmq<T>::writeToParcel(Parcel* out) const {
+ 
+ template <typename T>
+ status_t FakeFmq<T>::readFromParcel(const Parcel* in) {
++    destroy();
+ #ifdef CONFIG_ENABLE_BUFFER_QUEUE_BY_NAME
+-    mName = in->readCString();
++    const char* name = in->readCString();
++    if (!name) return -EINVAL;
++    mName = name;
+     mFd = -1;
+ #else
+     mName = "";
+@@ -278,8 +329,11 @@ status_t FakeFmq<T>::readFromParcel(const Parcel* in) {
+ 
+ template <typename T>
+ void FakeFmq<T>::copyFrom(FakeFmq<T>& other) {
++    if (this == &other) return;
++    destroy();
+     mName = other.mName;
+-    mFd = 0;
++    mFd = -1;
++    mOwnsName = false;
+     mCaps = other.mCaps;
+     mReadPos = other.mReadPos;
+     mWritePos = other.mWritePos;
+@@ -290,22 +344,21 @@ void FakeFmq<T>::copyFrom(FakeFmq<T>& other) {
+ 
+ template <typename T>
+ void FakeFmq<T>::destroy() {
+-    if (!mQueue) {
+-        return;
+-    }
+-
+     FLOGI("now unmap and close shared memory for %d, %s", mFd, mName.c_str());
+-    uninitSharedBuffer(mFd, mName);
++    // A peer only borrows the name. Its exit or mapping failure must not
++    // prevent other peers from attaching to the server's existing object.
++    if (mOwnsName) uninitSharedBuffer(mFd, mName);
+ 
+-    if (munmap(mQueue, mQueueSize) == -1) {
++    if (mQueue && munmap(mQueue, mQueueSize) == -1) {
+         FLOGE("failed to unmap shared memory fmq for %d", mFd);
+     }
+ 
+-    if (mFd > 0 && close(mFd) == -1) {
++    if (mFd >= 0 && close(mFd) == -1) {
+         FLOGE("failed to close shared memory for %d", mFd);
+     }
+ 
+-    mFd = 0;
++    mFd = -1;
++    mOwnsName = false;
+     mCaps = 0;
+     mName = "";
+     mReadPos = 0;
+@@ -317,20 +370,23 @@ void FakeFmq<T>::destroy() {
+ 
+ template <typename T>
+ bool FakeFmq<T>::create(const std::vector<T>& qData, bool isServer) {
+-    auto bufCount = qData.size();
+-
+-    if (bufCount <= 0 && mQueue == NULL) {
+-        FLOGW("cannot init empty fmq for %s", mName.c_str());
++    // The helper's size argument is signed 32-bit. Validate before replacing
++    // any current mapping, including the terminator and response sequence.
++    if (qData.empty() || mName.empty() ||
++        qData.size() >= (INT32_MAX - sizeof(uint32_t)) / sizeof(T)) {
++        FLOGW("invalid fmq size or name for %s", mName.c_str());
+         return false;
+     }
+ 
+     /* free previous dirty queue */
++    const std::string name = mName;
+     destroy();
++    mName = name;
+ 
+     uint32_t elmCount = qData.size() + 1;
+     auto size = elmCount * sizeof(T) + sizeof(uint32_t);
+-    int fd = 0;
+-    if (!initSharedBuffer(mName, &fd, isServer ? size : 0)) {
++    int fd = -1;
++    if (!initSharedBuffer(mName, &fd, isServer ? size : 0, isServer)) {
+         FLOGE("failed to init fmq for %s", mName.c_str());
+         return false;
+     }
+@@ -338,8 +394,11 @@ bool FakeFmq<T>::create(const std::vector<T>& qData, bool isServer) {
+     /* mmap */
+     void* buffer = mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+     if (buffer == MAP_FAILED) {
++        const int error = errno;
+         FLOGE("failed to map fmq for %s", mName.c_str());
+-        uninitSharedBuffer(fd, mName);
++        if (isServer) uninitSharedBuffer(fd, mName);
++        close(fd);
++        errno = error;
+         return false;
+     }
+ 
+@@ -347,6 +406,7 @@ bool FakeFmq<T>::create(const std::vector<T>& qData, bool isServer) {
+ 
+     mQueue = (T*)buffer;
+     mFd = fd;
++    mOwnsName = isServer;
+     if (isServer) {
+         int i = 0;
+         memset(buffer, 0, size);
+diff --git a/include/wm/BufferQueue.h b/include/wm/BufferQueue.h
+index 7097d577ba1e98081b377bc4c14bef465fe0debe..c0ab5225107696b442531948711432facf6b4fce 100644
+--- a/include/wm/BufferQueue.h
++++ b/include/wm/BufferQueue.h
+@@ -98,6 +98,8 @@ public:
+      */
+     bool update(const std::shared_ptr<SurfaceControl>& sc);
+ 
++    bool isValid() const { return !mBuffers.empty(); }
++
+     /**
+      * @brief Cancels the specified buffer.
+      *
+diff --git a/include/wm/FakeFmq.h b/include/wm/FakeFmq.h
+index 8cda931ddaf3697175a58e60749161f7d5825c03..004ab22967fb68b042fd59cc24daaaf773b27d68 100644
+--- a/include/wm/FakeFmq.h
++++ b/include/wm/FakeFmq.h
+@@ -186,6 +186,7 @@ public:
+ private:
+     std::string mName;
+     int mFd;
++    bool mOwnsName;
+     uint32_t mCaps;
+     uint32_t mReadPos;
+     uint32_t mWritePos;
+diff --git a/include/wm/SurfaceControl.h b/include/wm/SurfaceControl.h
+index fc785e95e6f3ce58f59b45680f43616724a1f9d1..e428b16940da7e298f7ebe9e170eb81e4bd8caee 100644
+--- a/include/wm/SurfaceControl.h
++++ b/include/wm/SurfaceControl.h
+@@ -101,14 +101,13 @@ public:
+      *
+      * @param ids Vector of BufferId to initialize with.
+      */
+-    void initBufferIds(const std::vector<BufferId>& ids);
++    void initBufferIds(const std::vector<BufferId>& ids, bool ownsFds = false,
++                       bool ownsNames = false);
+ 
+     /**
+      * @brief Clears the buffer IDs associated with the surface.
+      */
+-    void clearBufferIds() {
+-        mBufferIds.clear();
+-    }
++    void clearBufferIds();
+ 
+     /**
+      * @brief Sets the buffer queue for the surface control.
+@@ -226,12 +225,14 @@ private:
+ 
+     sp<IBinder> mToken;
+     sp<IBinder> mHandle;
+-    uint32_t mWidth;
+-    uint32_t mHeight;
+-    uint32_t mFormat;
+-    uint32_t mBufferSize;
++    uint32_t mWidth = 0;
++    uint32_t mHeight = 0;
++    uint32_t mFormat = 0;
++    uint32_t mBufferSize = 0;
+     std::vector<BufferId> mBufferIds;
+     std::shared_ptr<BufferQueue> mBufferQueue;
++    bool mOwnsBufferFds = false;
++    bool mOwnsBufferNames = false;
+     SurfaceFreeInfoClass mFreeMsgSlot;
+ };
+ 
+@@ -241,7 +242,7 @@ private:
+  * @param sc A shared pointer to the SurfaceControl.
+  * @param isServer A boolean indicating if the initialization is for the server side.
+  */
+-void initSurfaceBuffer(const std::shared_ptr<SurfaceControl>& sc, bool isServer);
++bool initSurfaceBuffer(const std::shared_ptr<SurfaceControl>& sc, bool isServer);
+ 
+ /**
+  * @brief Uninitializes the surface buffer.
+diff --git a/server/WindowManagerService.cpp b/server/WindowManagerService.cpp
+index 231c611895ef95568da76b0c62ef6eed25974267..6a158f0c224cd809d76e4308ad3350683b33ad3e 100644
+--- a/server/WindowManagerService.cpp
++++ b/server/WindowManagerService.cpp
+@@ -632,7 +632,7 @@ static int32_t createSurfaceControl(SurfaceControl* outSurfaceControl, WindowSta
+     std::string fmqName = genUniquePath(false, pid, "fakemq");
+     std::shared_ptr<SurfaceControl> surfaceControl = win->createSurfaceControl(ids, fmqName);
+ 
+-    if (!surfaceControl->isValid()) {
++    if (surfaceControl == nullptr || !surfaceControl->isValid()) {
+         outSurfaceControl = nullptr;
+         return -1;
+     }
+diff --git a/server/WindowState.cpp b/server/WindowState.cpp
+index 27213e4e43507aea3eb5ebf63be145d365cae2b9..41999ea514b183693bbdd9dc5241b0d751c51909 100644
+--- a/server/WindowState.cpp
++++ b/server/WindowState.cpp
+@@ -318,12 +318,22 @@ std::shared_ptr<SurfaceControl> WindowState::createSurfaceControl(const std::vec
+                                              mAttrs.mHeight, mAttrs.mFormat, getSurfaceSize());
+     mSurfaceControl->getFMQ().setName(fmqName);
+     mSurfaceControl->initBufferIds(ids);
+-    initSurfaceBuffer(mSurfaceControl, true);
++    if (!initSurfaceBuffer(mSurfaceControl, true)) {
++        mSurfaceControl.reset();
++        WM_PROFILER_END();
++        return nullptr;
++    }
+     /* should update after init fmq */
+     mSurfaceControl->getFMQ().updateClientRespSeq(mFrameReq);
+ 
+     std::shared_ptr<BufferConsumer> buffConsumer =
+             std::make_shared<BufferConsumer>(mSurfaceControl);
++    if (!buffConsumer->isValid()) {
++        uninitSurfaceBuffer(mSurfaceControl);
++        mSurfaceControl.reset();
++        WM_PROFILER_END();
++        return nullptr;
++    }
+     mSurfaceControl->setBufferQueue(buffConsumer);
+ 
+     setHasSurface(true);

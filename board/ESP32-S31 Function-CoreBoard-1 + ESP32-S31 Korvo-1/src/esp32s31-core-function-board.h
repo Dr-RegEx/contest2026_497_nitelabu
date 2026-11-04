@@ -10,9 +10,17 @@
 #define ESP32S31_APPFS_BLOCKDEV "/dev/appfs"
 #define ESP32S31_APPS_MTDDEV    "/dev/apps"
 #define ESP32S31_APPFS_SEED_DIR "/system/bin"
-#define ESP32S31_APPS_DIR       "/apps"
+#ifdef CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION
+#  define ESP32S31_APPS_DIR     "/data"
+#else
+#  define ESP32S31_APPS_DIR     "/apps"
+#endif
 
 int esp_bringup(void);
+
+#ifdef CONFIG_ESP32S31_KORVO_ADC_BUTTONS
+int esp32s31_korvo_buttons_initialize(void);
+#endif
 
 #ifdef CONFIG_ESP32S31_BLE
 int esp32s31_ble_initialize(void);
@@ -20,6 +28,10 @@ int esp32s31_ble_initialize(void);
 
 #ifdef CONFIG_ESP32S31_AUDIO
 int esp32s31_audio_initialize(void);
+#endif
+
+#ifdef CONFIG_ESP32S31_KORVO_AUDIO
+int esp32s31_korvo_audio_initialize(void);
 #endif
 
 #ifdef CONFIG_ESP32S31_XTS_ADC
@@ -44,6 +56,10 @@ int esp32s31_bmi160_uorb_initialize(void);
 
 #ifdef CONFIG_ESP32S31_XTS_FLASH
 int esp32s31_xts_flash_initialize(void);
+#endif
+
+#ifdef CONFIG_ESP32S31_KORVO_HMI_DATA
+int esp32s31_hmi_storage_initialize(void);
 #endif
 
 #ifdef CONFIG_ESP32S31_XTS_MEDIA_VOLUME

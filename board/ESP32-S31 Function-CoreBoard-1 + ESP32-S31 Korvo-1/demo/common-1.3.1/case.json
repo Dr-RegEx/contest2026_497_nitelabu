@@ -1,40 +1,36 @@
 {
-  "name": "common-1.3.1",
+  "canonical_profile": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-core/defconfig",
+  "canonical_source_root": "platform-root/openvela-dev",
+  "current_build": "Use the canonical BSP profile in a restored platform tree; local copies are historical source references.",
+  "historical_record": {
+    "demo": "common-1.3.1",
+    "path": "../../../../docs/validation/historical.json"
+  },
   "keys": [
     "common:1.3.1"
   ],
+  "license_declarations": [
+    {
+      "path": "src/esp32s31_simple_boot_digest.py",
+      "spdx": "Apache-2.0"
+    }
+  ],
+  "license_rule": "Retain source headers and all original LICENSE/NOTICE/UPSTREAM attributions.",
+  "licenses": [],
+  "local_config": "config/demo-rmt-xts-core/defconfig",
+  "local_sources": [
+    {
+      "origin": "nuttx/tools/espressif/esp32s31_simple_boot_digest.py",
+      "path": "src/esp32s31_simple_boot_digest.py"
+    }
+  ],
+  "name": "common-1.3.1",
   "profile": "demo-rmt-xts-core",
+  "schema": 2,
+  "scope": "historical-source-reference",
   "sources": [
     "nuttx/tools/espressif/esp32s31_simple_boot_digest.py"
   ],
-  "evidence_ids": [
-    668,
-    669
-  ],
-  "note": "这是烧写/启动操作例程。按根 README 备份 Flash，再写入同一次构建的内核和 AppFS，记录哈希与启动日志。",
-  "original": "1.3.1",
-  "evidence": [
-    "workspace/evidence/backups-2026-09-10-scan-stress/logs/demo669-mqueue-restored.log",
-    "docs/acceptance/xts-current-status.md"
-  ],
   "title": "烧写测试",
-  "original_line": 506,
-  "config_inheritance_verified": true,
-  "local_sources": [
-    {
-      "path": "src/esp32s31_simple_boot_digest.py",
-      "origin": "nuttx/tools/espressif/esp32s31_simple_boot_digest.py"
-    }
-  ],
-  "local_config": "config/demo-rmt-xts-core/defconfig",
-  "local_evidence": [
-    {
-      "path": "evidence/docs/acceptance/xts-current-status.md",
-      "origin": "docs/acceptance/xts-current-status.md"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/demo669-mqueue-restored.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/demo669-mqueue-restored.log"
-    }
-  ]
+  "validation_index": "../../../../docs/validation/index.json"
 }

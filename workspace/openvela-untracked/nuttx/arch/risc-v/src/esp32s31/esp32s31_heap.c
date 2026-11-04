@@ -27,6 +27,10 @@
 
 static bool g_registering;
 static bool g_registered;
+#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
+static void *g_user_start;
+static size_t g_user_size;
+#endif
 
 esp_err_t __real_heap_caps_add_region_with_caps(const uint32_t caps[],
                                                intptr_t start, intptr_t end);
@@ -70,7 +74,17 @@ esp_err_t __wrap_heap_caps_add_region_with_caps(const uint32_t caps[],
       return ESP_ERR_INVALID_STATE;
     }
 
+#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
+  /* nx_start initializes the internal kernel heap first. Capture the HAL's
+   * free PSRAM interval for the initial user heap, without registering it
+   * with an allocator that has not yet been initialized.
+   */
+
+  g_user_start = (void *)start;
+  g_user_size = end - start;
+#else
   kumm_addregion((void *)start, end - start);
+#endif
   g_registered = true;
   return ESP_OK;
 }
@@ -78,6 +92,11 @@ esp_err_t __wrap_heap_caps_add_region_with_caps(const uint32_t caps[],
 void esp32s31_addregion(void)
 {
   esp_err_t ret;
+
+  if (g_registered)
+    {
+      return;
+    }
 
   if (!esp_psram_is_initialized())
     {
@@ -94,3 +113,17 @@ void esp32s31_addregion(void)
       PANIC();
     }
 }
+
+#ifdef CONFIG_ESP32S31_SPIRAM_SEPARATE_HEAP
+void esp32s31_allocate_user_heap(void **start, size_t *size)
+{
+  esp32s31_addregion();
+  if (!g_registered || g_user_start == NULL || g_user_size == 0)
+    {
+      PANIC();
+    }
+
+  *start = g_user_start;
+  *size = g_user_size;
+}
+#endif

@@ -36,4 +36,4 @@ python3 tools/esp32c6-i2c-slave/verify_echo.py --log /tmp/i2c-echo-new.log
 
 C6 收到读请求后，通过事件队列唤醒任务调用 `i2c_slave_write`，提交响应并释放时钟延展。接收数据随事件复制，避免共享缓冲区被下一笔覆盖；检查发送长度与事件丢失。不可仅在启动时预填响应而忽略后续读请求。
 
-实测记录与固件哈希见 `../../backups/2026-09-10-scan-stress/i2c-generic-echo-result.md`。
+历史实测范围见比赛交付仓 `docs/validation/historical.json` 中的 `i2c-c6` 与 `common:1.3.7`；当前镜像资格见同仓 `docs/validation/README.md`。

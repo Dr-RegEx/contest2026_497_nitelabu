@@ -1,0 +1,22 @@
+diff --git a/src/utils/feature_utils.h b/src/utils/feature_utils.h
+index 8b9456b187a4128eb51820bc546eaad151d19283..05bc9ac8959490c339a7ce52871e5d769f020cf0 100644
+--- a/src/utils/feature_utils.h
++++ b/src/utils/feature_utils.h
+@@ -205,14 +205,13 @@ public:
+     }
+ 
+     FeatureArray(const FeatureArray& other)
++        : RefPtr<FtArray>(other)
+     {
+-        p_ = FeatureInstanceDupValue(other.p_);
+     }
+ 
+-    FeatureArray(const FeatureArray&& other)
++    FeatureArray(FeatureArray&& other)
++        : RefPtr<FtArray>(std::move(other))
+     {
+-        p_ = other.p_;
+-        other.p_ = nullptr;
+     }
+ 
+     RefPtr<FtArray> getShared()

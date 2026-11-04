@@ -3,6 +3,7 @@
 #define __ARCH_RISCV_SRC_ESP32S31_USBHOST_PIO_H
 #include <sys/types.h>
 #include "esp32s31_usbhost_channel.h"
+#include "esp32s31_usbhost_periodic.h"
 
 /* One serialized non-periodic packet. Only the FIFO is accessed by CPU:
  * no user address is handed to the DMA engine. The budget is shared by all
@@ -13,31 +14,60 @@ struct s31_usb_pio_s
   struct s31_hc_io_s io;
   struct s31_hc_transfer_s *xfer;
   void (*delay)(void *arg, unsigned int us);
+  uint64_t (*now_ms)(void);
+  uint64_t deadline_ms;
   uint32_t hcchar;
   unsigned int channel;
   unsigned int budget;
   uint16_t maxpacket;
   bool highspeed;
+  bool periodic;
+  bool launched;
+  uint16_t launch_frame;
+  uint64_t launch_ms;
+  bool yield_nak;
+  bool finish_active;
   bool *need_ping;
+  bool (*cancelled)(void *arg);
+  void *cancel_arg;
 };
 
-static inline bool s31_pio_tick(struct s31_usb_pio_s *pio)
+static inline int s31_pio_abort(struct s31_usb_pio_s *pio)
 {
-  if (pio->budget == 0)
-    return false;
+  if (pio->cancelled && pio->cancelled(pio->cancel_arg) &&
+      !(pio->finish_active && (pio->xfer->phase == S31_HC_ACTIVE ||
+                               pio->xfer->phase == S31_HC_STOPPING)))
+    return -ECANCELED;
+  if (pio->budget == 0 ||
+      (pio->now_ms && pio->now_ms() >= pio->deadline_ms))
+    return -ETIMEDOUT;
+  return 0;
+}
+
+static inline int s31_pio_tick(struct s31_usb_pio_s *pio)
+{
+  int ret = s31_pio_abort(pio);
+  if (ret < 0)
+    return ret;
   pio->budget--;
   pio->delay(pio->io.arg, 100);
-  return true;
+  return 0;
 }
 
 static inline int s31_pio_flush(struct s31_usb_pio_s *pio)
 {
   const struct s31_hc_io_s *io = &pio->io;
   const uint32_t bits = OTG_GRSTCTL_RXFFLSH | OTG_GRSTCTL_TXFFLSH;
-  io->write(io->arg, ESP32S31_OTG_GRSTCTL_OFFSET, bits);
+  int ret;
+  io->write(io->arg, ESP32S31_OTG_GRSTCTL_OFFSET,
+            bits | (pio->periodic ? OTG_GRSTCTL_TXFNUM_HPER :
+                                    OTG_GRSTCTL_TXFNUM_HNONPER));
   while (io->read(io->arg, ESP32S31_OTG_GRSTCTL_OFFSET) & bits)
-    if (!s31_pio_tick(pio))
-      return -ETIMEDOUT;
+    {
+      ret = s31_pio_tick(pio);
+      if (ret < 0)
+        return ret;
+    }
   return 0;
 }
 
@@ -57,10 +87,12 @@ static inline ssize_t s31_usb_pio_packet(void *arg, bool in, uint8_t pid,
   int abortret;
   int ret;
   bool ping;
-  bool hsout = !in && pio->highspeed && pid != 3;
+  bool hsout = !in && pio->highspeed && pid != 3 && !pio->periodic;
 
+  pio->launched = false;
   if (length > pio->maxpacket || !pio->maxpacket ||
-      pio->maxpacket > 512 || pid > 3 || (length && !buffer))
+      pio->maxpacket > (pio->periodic ? 1024 : 512) ||
+      pid > 3 || (length && !buffer))
     return -EINVAL;
   if ((io->read(io->arg, ESP32S31_OTG_GINTSTS_OFFSET) & OTG_GINTSTS_CMOD) == 0 ||
       (io->read(io->arg, ESP32S31_OTG_GAHBCFG_OFFSET) & (1u << 5)))
@@ -75,8 +107,9 @@ static inline ssize_t s31_usb_pio_packet(void *arg, bool in, uint8_t pid,
   for (;;)
     {
       ping = hsout && pio->need_ping && *pio->need_ping;
-      if (!pio->budget)
-        return -ETIMEDOUT;
+      ret = s31_pio_abort(pio);
+      if (ret < 0)
+        return ret;
       if ((io->read(io->arg, ESP32S31_OTG_HPRT_OFFSET) &
            (OTG_HPRT_PCSTS | OTG_HPRT_PENA)) !=
           (OTG_HPRT_PCSTS | OTG_HPRT_PENA))
@@ -90,14 +123,30 @@ static inline ssize_t s31_usb_pio_packet(void *arg, bool in, uint8_t pid,
         return ret;
       do
         {
-          status = io->read(io->arg, ESP32S31_OTG_HNPTXSTS_OFFSET);
-          if ((status & OTG_HNPTXSTS_NPTQXSAV_MASK) != 0 &&
+          status = io->read(io->arg, pio->periodic ?
+                            ESP32S31_OTG_HPTXSTS_OFFSET :
+                            ESP32S31_OTG_HNPTXSTS_OFFSET);
+          if ((status & (pio->periodic ? OTG_HPTXSTS_PTXQSAV_MASK :
+                                         OTG_HNPTXSTS_NPTQXSAV_MASK)) != 0 &&
               (in || ping || (status & 0xffff) >= (length + 3) / 4))
             break;
-          if (!s31_pio_tick(pio))
-            return -ETIMEDOUT;
+          ret = s31_pio_tick(pio);
+          if (ret < 0)
+            return ret;
         }
       while (true);
+      ret = s31_pio_abort(pio);
+      if (ret < 0)
+        return ret;
+      if (pio->periodic)
+        {
+          /* Choose the next frame only after the FIFO/queue has room. */
+          pio->launch_frame = io->read(io->arg, ESP32S31_OTG_HFNUM_OFFSET);
+          pio->launch_ms = pio->now_ms ? pio->now_ms() : 0;
+          hcchar &= ~OTG_HCCHAR_ODDFRM;
+          if (!(pio->launch_frame & 1))
+            hcchar |= OTG_HCCHAR_ODDFRM;
+        }
       io->write(io->arg, ESP32S31_OTG_HCCHAR_OFFSET(pio->channel), hcchar);
       io->write(io->arg, ESP32S31_OTG_HCTSIZ_OFFSET(pio->channel),
                 (uint32_t)(ping ? 0 : (in ? pio->maxpacket : length)) |
@@ -115,6 +164,7 @@ static inline ssize_t s31_usb_pio_packet(void *arg, bool in, uint8_t pid,
       abortret = -ETIMEDOUT;
       io->write(io->arg, ESP32S31_OTG_HCCHAR_OFFSET(pio->channel),
                 hcchar | (1u << 31));
+      pio->launched = true;
       if (!in && !ping)
         for (i = 0; i < length; i += 4)
           {
@@ -125,6 +175,9 @@ static inline ssize_t s31_usb_pio_packet(void *arg, bool in, uint8_t pid,
           }
       for (;;)
         {
+          abortret = s31_pio_abort(pio);
+          if (abortret < 0)
+            break;
           /* Drain RX status before completing XFRC; always drain excess
            * bytes without writing beyond the caller's buffer.
            */
@@ -147,7 +200,8 @@ static inline ssize_t s31_usb_pio_packet(void *arg, bool in, uint8_t pid,
                   received += bytes;
                 }
               /* There may be a separate transfer-complete RX status. */
-              if (!s31_pio_tick(pio))
+              abortret = s31_pio_tick(pio);
+              if (abortret < 0)
                 break;
               continue;
             }
@@ -158,14 +212,15 @@ static inline ssize_t s31_usb_pio_packet(void *arg, bool in, uint8_t pid,
             }
           if (s31_hc_interrupt(pio->xfer, io, pio->channel))
             break;
-          if (!s31_pio_tick(pio))
+          abortret = s31_pio_tick(pio);
+          if (abortret < 0)
             break;
         }
       if (pio->xfer->phase != S31_HC_DONE)
         {
           if (pio->xfer->phase == S31_HC_ACTIVE)
             s31_hc_stop(pio->xfer, io, pio->channel,
-                        abortret == -ENODEV ? -ECANCELED : -ETIMEDOUT);
+                        abortret == -ETIMEDOUT ? -ETIMEDOUT : -ECANCELED);
           /* A bounded extra halt grace period never makes an unhalted
            * channel reusable. Retain STOPPING if hardware never replies.
            */
@@ -181,8 +236,14 @@ static inline ssize_t s31_usb_pio_packet(void *arg, bool in, uint8_t pid,
         {
           if (hsout && pio->need_ping)
             *pio->need_ping = true;
-          if (!s31_pio_tick(pio))
-            return -ETIMEDOUT;
+          /* A halted NAK may yield to another asynchronous endpoint. Keep
+           * the PID and high-speed PING state for the next scheduling turn.
+           */
+          if (pio->yield_nak)
+            return -EAGAIN;
+          ret = s31_pio_tick(pio);
+          if (ret < 0)
+            return ret;
           continue;
         }
       if (pio->xfer->result < 0)

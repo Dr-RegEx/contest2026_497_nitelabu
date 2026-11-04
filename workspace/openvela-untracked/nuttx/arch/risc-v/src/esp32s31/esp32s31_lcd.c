@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  * Native NuttX framebuffer for ESP32-S31-Korvo-1 / SUB3 (ST7262).
- * The initial profile is FLAT, single-core and awake. The HAL GDMA adapter
+ * Supports single-core FLAT and page-backed KERNEL/SMP. The HAL GDMA adapter
  * uses NuttX synchronization; no ESP-IDF application or FreeRTOS
  * runtime is linked by this driver.
  ****************************************************************************/
@@ -22,6 +22,7 @@
 #include <nuttx/irq.h>
 #include <nuttx/kmalloc.h>
 #include <nuttx/mutex.h>
+#include <nuttx/pgalloc.h>
 #include <nuttx/signal.h>
 #include <nuttx/spinlock.h>
 #include <nuttx/video/fb.h>
@@ -30,6 +31,7 @@
 #include "esp_attr.h"
 #include "esp_cache.h"
 #include "esp_clk_tree.h"
+#include "esp_heap_caps.h"
 #include "esp_memory_utils.h"
 #include "esp_private/esp_clk_tree_common.h"
 #include "esp_private/gdma.h"
@@ -42,9 +44,23 @@
 #include "hal/lcd_ll.h"
 #include "hal/lcd_periph.h"
 #include "soc/gpio_sig_map.h"
+#include "esp32s31_mm_init.h"
 
-#if !defined(CONFIG_BUILD_FLAT) || defined(CONFIG_SMP)
-#  error "The initial S31 RGB framebuffer requires a single-core FLAT build"
+#if defined(CONFIG_ESP32S31_KORVO_SMP_LCD_QUALIFICATION)
+#  if !defined(CONFIG_ESP32S31_BOARD_KORVO)
+#    error "SMP LCD qualification is only wired for the Korvo board"
+#  endif
+#  if !defined(CONFIG_BUILD_KERNEL) || !defined(CONFIG_SMP) || \
+      !defined(CONFIG_MM_PGALLOC) || !defined(CONFIG_ARCH_VMA_MAPPING)
+#    error "SMP LCD qualification requires KERNEL, SMP and page-backed VMA"
+#  endif
+#  if CONFIG_ARCH_PGPOOL_PBASE != 0x50000000 || \
+      CONFIG_ARCH_PGPOOL_VBASE != CONFIG_ARCH_PGPOOL_PBASE || \
+      CONFIG_MM_PGSIZE != 4096
+#    error "SMP LCD requires the qualified identity-mapped PSRAM page pool"
+#  endif
+#elif !defined(CONFIG_BUILD_FLAT) || defined(CONFIG_SMP)
+#  error "KERNEL/SMP LCD must use the explicit qualification profile"
 #endif
 #ifndef CONFIG_FB_UPDATE
 #  error "S31 RGB framebuffer requires CONFIG_FB_UPDATE"
@@ -60,6 +76,15 @@
 #define LCD_NODE_BYTES  DMA_DESCRIPTOR_BUFFER_MAX_SIZE_64B_ALIGNED
 #define LCD_NODES       ((LCD_FBSIZE + LCD_NODE_BYTES - 1) / LCD_NODE_BYTES)
 #define LCD_DESC_COUNT  ((LCD_NODES + 3) & ~3)
+
+#ifdef CONFIG_BUILD_KERNEL
+#  define LCD_ALLOC_PAGES MM_NPAGES(LCD_FBSIZE)
+#  define LCD_ALLOC_BYTES (LCD_ALLOC_PAGES * MM_PGSIZE)
+_Static_assert(CONFIG_ARCH_PGPOOL_SIZE >= 3 * LCD_ALLOC_BYTES,
+               "Configured page pool cannot hold three LCD buffers");
+#else
+#  define LCD_ALLOC_BYTES LCD_FBSIZE
+#endif
 
 /* The public framebuffer is a staging buffer. FBIO_UPDATE copies it into
  * the inactive scan buffer, writes back PSRAM, and waits for AXI GDMA's
@@ -97,6 +122,92 @@ static bool g_core_source_enabled;
 static bool g_dma_connected;
 static bool g_first_update;
 static int g_dma_error;
+
+/* The KERNEL page pool is physical PSRAM with a supervisor identity map.
+ * Each allocation owns complete pages: userspace mmap must not expose a
+ * neighbouring kernel allocation in the framebuffer's final partial page.
+ */
+
+static inline void *s31_lcd_alloc(uint32_t caps)
+{
+#ifdef CONFIG_BUILD_KERNEL
+  uintptr_t paddr = mm_pgalloc(LCD_ALLOC_PAGES);
+
+  (void)caps;
+  if (paddr == 0)
+    {
+      return NULL;
+    }
+
+  if (!MM_ISALIGNED(paddr) ||
+      paddr < CONFIG_ARCH_PGPOOL_PBASE ||
+      paddr - CONFIG_ARCH_PGPOOL_PBASE >
+        CONFIG_ARCH_PGPOOL_SIZE - LCD_ALLOC_BYTES ||
+      !esp_ptr_external_ram((void *)paddr) ||
+      !esp_ptr_dma_ext_capable((void *)paddr))
+    {
+      mm_pgfree(paddr, LCD_ALLOC_PAGES);
+      return NULL;
+    }
+
+  return (void *)paddr;
+#else
+  return heap_caps_aligned_alloc(LCD_ALIGNMENT, LCD_FBSIZE, caps);
+#endif
+}
+
+static inline void s31_lcd_free(void *buffer)
+{
+#ifdef CONFIG_BUILD_KERNEL
+  if (buffer != NULL)
+    {
+      mm_pgfree((uintptr_t)buffer, LCD_ALLOC_PAGES);
+    }
+#else
+  heap_caps_free(buffer);
+#endif
+}
+
+static void s31_lcd_free_buffers(void)
+{
+  for (unsigned int i = 0; i < 2; i++)
+    {
+      s31_lcd_free(g_scan[i]);
+      g_scan[i] = NULL;
+    }
+
+  s31_lcd_free(g_frame);
+  g_frame = NULL;
+}
+
+static int s31_lcd_alloc_buffers(void)
+{
+  g_frame = s31_lcd_alloc(MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+  if (g_frame == NULL)
+    {
+      return -ENOMEM;
+    }
+
+  memset(g_frame, 0, LCD_ALLOC_BYTES);
+  for (unsigned int i = 0; i < 2; i++)
+    {
+      g_scan[i] = s31_lcd_alloc(MALLOC_CAP_SPIRAM | MALLOC_CAP_DMA);
+      if (g_scan[i] == NULL)
+        {
+          return -ENOMEM;
+        }
+
+      if (!esp_ptr_external_ram(g_scan[i]) ||
+          !esp_ptr_dma_ext_capable(g_scan[i]))
+        {
+          return -ENOTSUP;
+        }
+
+      memset(g_scan[i], 0, LCD_ALLOC_BYTES);
+    }
+
+  return OK;
+}
 
 static int s31_lcd_result(esp_err_t result)
 {
@@ -166,14 +277,7 @@ static void s31_lcd_release(void)
       g_channel = -1;
     }
 
-  for (unsigned int i = 0; i < 2; i++)
-    {
-      kmm_free(g_scan[i]);
-      g_scan[i] = NULL;
-    }
-
-  kmm_free(g_frame);
-  g_frame = NULL;
+  s31_lcd_free_buffers();
   if (g_clock_enabled)
     {
       PERIPH_RCC_ATOMIC()
@@ -298,14 +402,29 @@ static int s31_lcd_update(FAR struct fb_vtable_s *vtable,
       syslog(LOG_INFO, "S31 LCD: UPDATE_STAGE=copy\n");
     }
 
+#ifdef CONFIG_BUILD_KERNEL
+  /* Commit stores made through process virtual aliases before the kernel
+   * reads its physical staging address. The caller must finish drawing
+   * before FBIO_UPDATE and not modify the shared frame until it returns.
+   */
+
+  esp32s31_dcache_writeback_all();
+#endif
   memcpy(g_scan[next], g_frame, LCD_FBSIZE);
   if (g_first_update)
     {
       syslog(LOG_INFO, "S31 LCD: UPDATE_STAGE=cache-writeback\n");
     }
 
+#ifdef CONFIG_BUILD_KERNEL
+  /* Keep the process-alias path free of address-range invalidations. */
+
+  esp32s31_dcache_writeback_all();
+  ret = OK;
+#else
   ret = s31_lcd_result(esp_cache_msync(g_scan[next], LCD_FBSIZE,
                                      ESP_CACHE_MSYNC_FLAG_DIR_C2M));
+#endif
   if (ret < 0)
     {
       goto out;
@@ -598,34 +717,22 @@ int up_fbinitialize(int display)
       goto fail;
     }
 
-  g_frame = kmm_memalign(LCD_ALIGNMENT, LCD_FBSIZE);
-  if (g_frame == NULL)
+  ret = s31_lcd_alloc_buffers();
+  if (ret < 0)
     {
-      ret = -ENOMEM;
       goto fail;
     }
 
-  memset(g_frame, 0, LCD_FBSIZE);
   memset(g_desc, 0, sizeof(g_desc));
   for (unsigned int i = 0; i < 2; i++)
     {
-      g_scan[i] = kmm_memalign(LCD_ALIGNMENT, LCD_FBSIZE);
-      if (g_scan[i] == NULL)
-        {
-          ret = -ENOMEM;
-          goto fail;
-        }
-
-      if (!esp_ptr_external_ram(g_scan[i]) ||
-          !esp_ptr_dma_ext_capable(g_scan[i]))
-        {
-          ret = -ENOTSUP;
-          goto fail;
-        }
-
-      memset(g_scan[i], 0, LCD_FBSIZE);
+#ifdef CONFIG_BUILD_KERNEL
+      esp32s31_dcache_writeback_all();
+      ret = OK;
+#else
       ret = s31_lcd_result(esp_cache_msync(g_scan[i], LCD_FBSIZE,
                                          ESP_CACHE_MSYNC_FLAG_DIR_C2M));
+#endif
       if (ret < 0)
         {
           goto fail;

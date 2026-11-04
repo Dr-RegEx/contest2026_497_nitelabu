@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: Apache-2.0
+config EXAMPLES_S31FBCHECK
+	tristate "S31 standard framebuffer qualification"
+	default n
+	depends on BUILD_KERNEL && SMP && VIDEO_FB && FB_UPDATE
+	depends on ARCH_VMA_MAPPING
+	help
+		Verify synthetic pixels through two shared framebuffer mappings,
+		standard file read/write and bounded display updates on one CPU.
+		Use separate invocations to test both CPUs and process exit cleanup.
+		No camera, audio, filesystem data or network connection is used.
+
+if EXAMPLES_S31FBCHECK
+config EXAMPLES_S31FBCHECK_STACKSIZE
+	int "Main task stack size"
+	default 16384
+endif

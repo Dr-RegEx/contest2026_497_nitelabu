@@ -1,0 +1,5 @@
+#include "../korvo-fs-cache4k/defconfig"
+
+# Read small CTZ pointers with the MTD's 512B minimum instead of 2048B.
+# Keep 2048B programming, 4096B cache/erase blocks and the original COW path.
+CONFIG_FS_LITTLEFS_READ_SIZE_FACTOR=1

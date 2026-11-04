@@ -1,0 +1,5 @@
+# Korvo BLE privacy with normal runtime logging.
+# Retain the controller and pairing configuration without packet debug output.
+#include "../korvo-ble-privacy/defconfig"
+
+CONFIG_BT_DEBUG_LOG=n

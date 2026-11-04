@@ -1,0 +1,50 @@
+# Product coexistence qualification; the E156 engineering profile is retained.
+#include "../korvo-openvela-engineering-demo/defconfig"
+
+# Standard Korvo PCM lower-half. No capture, automatic playback or media save.
+CONFIG_AUDIO=y
+CONFIG_AUDIO_FORMAT_PCM=y
+CONFIG_AUDIO_FORMAT_RAW=y
+CONFIG_AUDIO_DRIVER_SPECIFIC_BUFFERS=y
+CONFIG_ESP32S31_I2S=y
+CONFIG_ESP32S31_I2S_DUPLEX=y
+CONFIG_ESP32S31_KORVO_AUDIO=y
+CONFIG_ESP32S31_KORVO_PCM_STOP_MS=2000
+CONFIG_PTHREAD_STACK_MIN=4096
+CONFIG_PTHREAD_MUTEX_TYPES=y
+CONFIG_NET_LOCAL_NONBLOCKING=y
+CONFIG_NET_NSOCKET_DESCRIPTORS=32
+CONFIG_ESP32S31_KORVO_MEDIA=y
+CONFIG_ESP32S31_FFMPEG_PSRAM_BSS=y
+CONFIG_EXAMPLES_S31MEDIACHECK=y
+
+# E157 PCM/WAV measured 6868/3368 B on server/Player stacks.
+# Product candidate budgets 16 KiB each; other codecs still need qualification.
+CONFIG_MEDIA_SERVER_STACKSIZE=16384
+CONFIG_MEDIA_PLAYER_STACKSIZE=16384
+CONFIG_MEDIA=y
+CONFIG_MEDIA_SERVER=y
+CONFIG_MEDIA_GRAPH=y
+CONFIG_MEDIA_TOOL=y
+CONFIG_MEDIA_POLICY=y
+CONFIG_MEDIA_SERVER_CPUNAME="local"
+CONFIG_MEDIA_SERVER_CONFIG_PATH="/etc/media/"
+CONFIG_MEDIA_PLAYER_MAX_CNT=1
+CONFIG_MEDIA_RECORDER_MAX_CNT=1
+CONFIG_LIB_PFW=y
+CONFIG_LIB_PFW_DEBUG=n
+CONFIG_AUDIOUTILS_ALSA_LIB=y
+CONFIG_AUDIOUTILS_ALSA_LIB_DEVICE_HW=y
+CONFIG_LIB_FFMPEG=y
+CONFIG_LIB_FFMPEG_AUDIO_TABLEGEN=y
+CONFIG_LIB_FFMPEG_CONFIGURATION="--disable-asm --disable-inline-asm --disable-rvv --disable-tx-double --disable-tx-int32 --enable-avcodec --enable-avdevice --enable-avfilter --enable-avformat --enable-swresample --enable-alsa --enable-decoder='aac,mp3float,opus,pcm_s16le' --enable-demuxer='aac,mov,mp3,ogg,wav' --enable-parser='aac,mpegaudio,opus' --enable-filter='abufsrc,asubgraph,abuffer,abuffersink,aresample,alsasink' --enable-protocol=file,unix --enable-hardcoded-tables"
+CONFIG_MEDIA_LOG_WARN=y
+CONFIG_AUDIOUTILS_ALSA_LIB_LOG_WARN=y
+CONFIG_ESP32S31_I2S_DUPLEX_WORKER_PRIORITY=253
+CONFIG_DEBUG_AUDIO=y
+CONFIG_DEBUG_AUDIO_ERROR=y
+CONFIG_DEBUG_AUDIO_WARN=y
+
+# Bound each SD DMA bounce allocation to 8 KiB (16 x 512-byte sectors).
+# Larger VFS requests remain complete through the standard MMC/SD loop.
+CONFIG_MMCSD_MULTIBLOCK_LIMIT=16

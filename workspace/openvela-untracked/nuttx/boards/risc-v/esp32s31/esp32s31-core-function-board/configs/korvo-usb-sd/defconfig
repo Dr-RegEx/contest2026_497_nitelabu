@@ -1,0 +1,24 @@
+# Korvo USB Host and SD storage qualification using maintained drivers.
+# Single-core FLAT configuration; external devices are connected manually.
+#include "../xts-flat-usb-host-pio/defconfig"
+
+CONFIG_ESP32S31_BOARD_KORVO=y
+CONFIG_USBHOST_ASYNCH=y
+CONFIG_USBHOST_HID=y
+CONFIG_USBHOST_HIDKBD=y
+CONFIG_USBHOST_HIDMOUSE=y
+CONFIG_HIDKBD_NOGETREPORT=y
+
+CONFIG_ESP32S31_SDMMC=y
+CONFIG_ESP32S31_SDMMC_IDF_HOST=y
+CONFIG_MMCSD_NSLOTS=1
+
+# Synthetic file data and independent readback checks, without formatting.
+CONFIG_DEV_URANDOM=y
+CONFIG_NETUTILS_CODECS=y
+CONFIG_CODECS_HASH_MD5=y
+CONFIG_NSH_CMDOPT_HEXDUMP=y
+CONFIG_NSH_QUOTE=y
+CONFIG_UART0_RXBUFSIZE=256
+# CONFIG_NSH_ARGCAT is not set
+# CONFIG_NSH_NETINIT is not set

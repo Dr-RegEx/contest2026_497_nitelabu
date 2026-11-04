@@ -1,0 +1,13 @@
+# LP I2C owns the onboard control bus. Audio PA remains disabled.
+#include "../xts-flat-rtc/defconfig"
+
+CONFIG_ESP32S31_BOARD_KORVO=y
+CONFIG_ESP32S31_LPI2C=y
+CONFIG_ESP32S31_LPI2C_CODEC_TEST=y
+CONFIG_I2C_RESET=y
+CONFIG_NSH_QUOTE=y
+CONFIG_UART0_RXBUFSIZE=256
+# CONFIG_ESPRESSIF_I2C0 is not set
+# CONFIG_ESPRESSIF_I2C1 is not set
+# CONFIG_NSH_ARGCAT is not set
+# CONFIG_NSH_NETINIT is not set

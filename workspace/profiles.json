@@ -1,0 +1,282 @@
+{
+  "evidence_roots": {
+    "contest_repository": "."
+  },
+  "layout": "platform-root/openvela-dev with sibling tools and s31-reference",
+  "observed_date": "2026-11-04",
+  "profiles": {
+    "demo-rmt-netapps-competition": {
+      "board": "ESP32-S31 Function-CoreBoard-1",
+      "board_test": {
+        "status": "not_claimed_by_historical_reproduction"
+      },
+      "build_test": {
+        "appfs_sha256": "6fa1ad11d58db35ebbedee5d8419a34b4516107df041719dfc52dfb52bae8dc0",
+        "current_front_door_full_build_tested": false,
+        "image_sha256": "26b4e2500f77b253cf5fdee5e994438bb9893a0c619e1f2f1cc77729fb45a9bb",
+        "records": [
+          "historical_builds"
+        ],
+        "status": "historical_2026_09_19_build_pass"
+      },
+      "cores": 2,
+      "defconfig": "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-netapps-competition/defconfig",
+      "disabled": [],
+      "headline": false,
+      "image_layout": {
+        "appfs_required": true,
+        "deployment_manifest": "derive from exact build; factory guide does not apply",
+        "kind": "kernel_and_appfs_pair"
+      },
+      "mode": "KERNEL/MMU",
+      "peripherals": [
+        "network applications",
+        "external AppFS applications"
+      ],
+      "services": [],
+      "source_delivery": "Existing network profile; preserve paired output and its historical evidence"
+    },
+    "function-ethernet": {
+      "board": "ESP32-S31 Function-CoreBoard-1",
+      "board_test": {
+        "image_sha256": "fb23365cb347cf7106ac1943a7076483b6f33508f86439f5cf2e7d1da163d02b",
+        "limits": [
+          "No gigabit throughput or sustained-load result; transmitters deliberately paced traffic.",
+          "Counts agree, but no application-level receive checksum or echo-content comparison was performed.",
+          "Large TCP/UDP board-to-host payload transfers, DHCP, IPv6 and physical cable hotplug were not exercised.",
+          "Single-core Ethernet-only profile; no Wi-Fi/BLE coexistence claim."
+        ],
+        "records": [
+          "ethernet_board"
+        ],
+        "scope": [
+          "link and IPv4/ARP/ICMP",
+          "bounded TCP/UDP host-to-board receive",
+          "ifdown/ifup followed by ping"
+        ],
+        "status": "basic_link_ping_tcp_udp_pass"
+      },
+      "build_test": {
+        "image_sha256": "fb23365cb347cf7106ac1943a7076483b6f33508f86439f5cf2e7d1da163d02b",
+        "records": [
+          "ethernet_canonical"
+        ],
+        "status": "canonical_build_byte_identical_to_accepted_elf_bin_config"
+      },
+      "cores": 1,
+      "defconfig": "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/function-ethernet/defconfig",
+      "disabled": [
+        "WiFi",
+        "BLE"
+      ],
+      "headline": true,
+      "image_layout": {
+        "appfs_required": false,
+        "deployment_manifest": "pending; no automatic flashing supported",
+        "kind": "flat_single_image"
+      },
+      "mode": "FLAT",
+      "peripherals": [
+        "native EMAC",
+        "YT8531 PHY"
+      ],
+      "services": [],
+      "source_delivery": "Canonical driver/BSP and dependency patches merged into the public 36-project snapshot. Exact canonical build matches the accepted ELF/bin/config; full fresh receiver build remains unverified."
+    },
+    "korvo-openvela-factory": {
+      "board": "ESP32-S31 Korvo-1",
+      "board_test": {
+        "image_sha256": "9a5b80836ee9613590bec695b19aacbf7ec234f82f01517d209dee3337859a1b",
+        "limits": [
+          "Not full peripheral acceptance on this exact image: physical touch, SD and ADC key acceptance must use their own exact-image records",
+          "Audio queue overflows remain; no acoustic quality acceptance",
+          "No USB device/ADB acceptance transferred from dedicated profiles",
+          "No sustained-load qualification"
+        ],
+        "records": [
+          "factory_manifest",
+          "factory_view",
+          "factory_audio",
+          "factory_keyboard",
+          "factory_services"
+        ],
+        "scope": [
+          "human display confirmation",
+          "real camera capture",
+          "close/return HOME and reset restart",
+          "native service lifecycle",
+          "basic record/stop/play",
+          "physical USB keyboard basic input"
+        ],
+        "status": "scoped_factory_acceptance"
+      },
+      "build_test": {
+        "board_tested": false,
+        "image_sha256": "7e4842c9de12b6e564bed234bb5e8906bcb351a8433fd15d336376f91f28369c",
+        "records": [
+          "factory_build"
+        ],
+        "status": "independent_receiver_build_reviewed"
+      },
+      "cores": 1,
+      "defconfig": "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/korvo-openvela-factory/defconfig",
+      "digit_flow": {
+        "status": "not_included_in_release",
+        "legacy_dualcore_demo": "default independent original stable demo; separate flash deployment"
+      },
+      "disabled": [
+        "WiFi",
+        "BLE"
+      ],
+      "headline": true,
+      "image_layout": {
+        "appfs_required": false,
+        "flash_bytes": 16777216,
+        "kernel_offset": 8192,
+        "kind": "flat_single_image",
+        "record": "factory_manifest"
+      },
+      "mode": "FLAT",
+      "peripherals": [
+        "camera/OV3660",
+        "touch",
+        "display",
+        "SD",
+        "USB Host HID",
+        "ADC keys",
+        "audio"
+      ],
+      "services": [
+        "AM",
+        "PM",
+        "WM",
+        "MEDIA"
+      ],
+      "source_delivery": "Original native Factory source; recreated recognition integration excluded from release."
+    },
+    "nsh": {
+      "board": "ESP32-S31 Function-CoreBoard-1",
+      "board_test": {
+        "status": "not_claimed_by_historical_reproduction"
+      },
+      "build_test": {
+        "current_front_door_full_build_tested": false,
+        "image_sha256": "b948cc08c404ccd34def3c146a283bc8a12370bb59fff903c60497687af7501e",
+        "records": [
+          "historical_builds"
+        ],
+        "status": "historical_2026_09_19_build_pass"
+      },
+      "cores": 1,
+      "defconfig": "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/nsh/defconfig",
+      "disabled": [],
+      "headline": false,
+      "image_layout": {
+        "kind": "derive_from_exact_build_before_deployment"
+      },
+      "mode": "FLAT",
+      "peripherals": [
+        "NSH console"
+      ],
+      "services": [],
+      "source_delivery": "Existing basic profile; historical build does not qualify a new build"
+    },
+    "korvo-digit-stable": {
+      "board": "ESP32-S31 Korvo-1",
+      "mode": "KERNEL/MMU",
+      "cores": 2,
+      "headline": true,
+      "default_demonstration": true,
+      "firmware": "board/ESP32-S31 Function-CoreBoard-1 + ESP32-S31 Korvo-1/firmware/korvo-digit-stable",
+      "buildable_by_front_door": false,
+      "source_delivery": "Preserved stable binary and partial reference snapshots; complete original build is not reconstructed.",
+      "board_test": {
+        "status": "original_mature_demo_verified_running",
+        "image_sha256": "6c6d009b86df99ea4cc58a958d2fe202833ddf8c0aab1f3219059383add0e2b1",
+        "records": [
+          "digit_stable"
+        ]
+      },
+      "image_layout": {
+        "kind": "simple_boot_embedded_kernel",
+        "kernel_offset": 8192,
+        "flash_bytes": 16777216,
+        "appfs_required": false
+      },
+      "services": [],
+      "peripherals": [
+        "camera/OV3660",
+        "display",
+        "CPU1 PIE/SIMD"
+      ],
+      "disabled": [
+        "Factory integration",
+        "WiFi",
+        "BLE",
+        "SD recording"
+      ]
+    }
+  },
+  "qualification_rule": "Results are bound to exact images. Historical results and build-only records do not qualify different firmware; the Ethernet canonical ELF/bin/config identity is recorded explicitly.",
+  "records": {
+    "ethernet_board": {
+      "evidence_id": "sha256:b2ec27b48bcf43c443898da08607807bf1b3aed83c039134dac30c9f3d10b981",
+      "scope": "opaque_historical_record",
+      "sha256": "b2ec27b48bcf43c443898da08607807bf1b3aed83c039134dac30c9f3d10b981"
+    },
+    "ethernet_build": {
+      "evidence_id": "sha256:e4146d3490d8a228f3e758a1c8d8ac32ea1de69e8c68f34491f2ad988a849b66",
+      "scope": "opaque_historical_record",
+      "sha256": "e4146d3490d8a228f3e758a1c8d8ac32ea1de69e8c68f34491f2ad988a849b66"
+    },
+    "ethernet_canonical": {
+      "evidence_id": "sha256:ad3ebead6e7cf97de68d961ba7256f2c4b559144af07773536537e3659e1ee9c",
+      "path": "docs/validation/ethernet.json",
+      "scope": "contest_repository",
+      "sha256": "34d8004420d088278646832a865c49ffdaf2c79e5efe3a08146822a1c4660566"
+    },
+    "factory_audio": {
+      "evidence_id": "sha256:27e1765ee4587f61ee8fff0d51ec451695001ea7d2e12c4e1a8deca28ec1cb1b",
+      "scope": "opaque_historical_record",
+      "sha256": "27e1765ee4587f61ee8fff0d51ec451695001ea7d2e12c4e1a8deca28ec1cb1b"
+    },
+    "factory_build": {
+      "evidence_id": "sha256:9a345881c246bc07f208d9735fb5372be26ed8ba906b8f43753d687cd4c4c514",
+      "scope": "opaque_historical_record",
+      "sha256": "9a345881c246bc07f208d9735fb5372be26ed8ba906b8f43753d687cd4c4c514"
+    },
+    "factory_keyboard": {
+      "evidence_id": "sha256:b447983bcdde19bc0ccc14517fbddd725a912c4a4fc840988567dd0cb1a4fa8b",
+      "scope": "opaque_historical_record",
+      "sha256": "b447983bcdde19bc0ccc14517fbddd725a912c4a4fc840988567dd0cb1a4fa8b"
+    },
+    "factory_manifest": {
+      "evidence_id": "sha256:85aeb1ad4d3136bc28f39790018184c75c85eb678a6bb58c6362a4b735693c79",
+      "scope": "opaque_historical_record",
+      "sha256": "85aeb1ad4d3136bc28f39790018184c75c85eb678a6bb58c6362a4b735693c79"
+    },
+    "factory_services": {
+      "evidence_id": "sha256:3c7db8bf5ecb31ac9aa9a4f30e22eb81aba5658bf04609cbd5ede5d2216082b3",
+      "scope": "opaque_historical_record",
+      "sha256": "3c7db8bf5ecb31ac9aa9a4f30e22eb81aba5658bf04609cbd5ede5d2216082b3"
+    },
+    "factory_view": {
+      "evidence_id": "sha256:b92107b1c3619bfab21247ef99ed402e7689b7deb9d8c975d514a6aa5c945e27",
+      "scope": "opaque_historical_record",
+      "sha256": "b92107b1c3619bfab21247ef99ed402e7689b7deb9d8c975d514a6aa5c945e27"
+    },
+    "historical_builds": {
+      "path": "docs/validation/historical.json",
+      "scope": "contest_repository",
+      "section": "reproduction_builds",
+      "sha256": "f13ee307954a107b4435d1e4ffebcfba2a3137c82d74da30e007fd7ced5a8ebd"
+    },
+    "digit_stable": {
+      "path": "docs/validation/digit-stable.json",
+      "scope": "contest_repository",
+      "sha256": "8c1a504128fa1f626fc0498154e645265b434f70331528e1151076b05ee0df03"
+    }
+  },
+  "schema": 1,
+  "validation_index": "docs/validation/index.json"
+}

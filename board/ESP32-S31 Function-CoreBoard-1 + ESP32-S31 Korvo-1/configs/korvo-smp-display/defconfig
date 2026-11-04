@@ -1,0 +1,10 @@
+# KERNEL/SMP framebuffer and local MEDIA integration on Korvo-1 / SUB3.
+# Synthetic display checks and playback are started explicitly from NSH.
+#include "../korvo-smp-media/defconfig"
+
+CONFIG_DRIVERS_VIDEO=y
+CONFIG_VIDEO_FB=y
+CONFIG_ESP32S31_KORVO_SMP_LCD_QUALIFICATION=y
+CONFIG_ESP32S31_KORVO_RGB565=y
+CONFIG_ESP32S31_KORVO_TOUCH=y
+CONFIG_EXAMPLES_S31FBCHECK=y

@@ -5,10 +5,289 @@
 
 if ARCH_BOARD_ESP32S31_CORE_FUNCTION_BOARD
 
+choice ESP32S31_BOARD_VARIANT
+	prompt "ESP32-S31 physical board"
+	default ESP32S31_BOARD_KORVO if ESP32S31_KORVO_RGB565
+	default ESP32S31_BOARD_FUNCTION
+	help
+		Select the actual board independently of display and other optional
+		peripherals. The conditional default preserves old Korvo display
+		configurations; new profiles should explicitly select their board.
+
+config ESP32S31_BOARD_FUNCTION
+	bool "Function-CoreBoard-1"
+
+config ESP32S31_BOARD_KORVO
+	bool "Korvo-1"
+
+endchoice
+
+if ESP32S31_LPI2C
+
+config ESP32S31_LPI2C_SCL_PIN
+	int "LP I2C clock GPIO (reserve this pin)"
+	range 0 7
+	default 1
+
+config ESP32S31_LPI2C_SDA_PIN
+	int "LP I2C data GPIO (reserve this pin)"
+	range 0 7
+	default 0
+
+config ESP32S31_LPI2C_CODEC_TEST
+	bool "Finite LP I2C test with onboard Korvo ES8389"
+	depends on ESP32S31_BOARD_KORVO && !DISABLE_PSEUDOFS_OPERATIONS
+	depends on I2C_RESET
+	depends on !ESPRESSIF_I2C0 && !ESPRESSIF_I2C1
+	depends on ESP32S31_LPI2C_SCL_PIN = 1 && ESP32S31_LPI2C_SDA_PIN = 0
+	default n
+	help
+		Read the codec ID and verify reversible volume-register changes,
+		100/400 kHz configurations, repeated START, NOSTART, NACK recovery
+		and close/reopen through the standard I2C character device.
+		Keeps the audio PA disabled. This is not an audio test.
+
+endif # ESP32S31_LPI2C
+
+if ESP32S31_LPUART
+
+config ESP32S31_LPUART_LOOPBACK
+	bool "LP UART internal TX/RX loopback (no GPIO)"
+	default n
+
+config ESP32S31_LPUART_TX_PIN
+	int "LP UART TX GPIO (-1 for internal loopback)"
+	range -1 7
+	default -1
+	help
+		External mode requires distinct TX/RX pins reserved by the board.
+		Review the board schematic before selecting pins 0..7; they may
+		already be connected to audio, camera or other onboard devices.
+
+config ESP32S31_LPUART_RX_PIN
+	int "LP UART RX GPIO (-1 for internal loopback)"
+	range -1 7
+	default -1
+
+config ESP32S31_LPUART_LOOPBACK_TEST
+	bool "Finite LP UART standard serial test at boot"
+	depends on ESP32S31_LPUART_LOOPBACK && SERIAL_TERMIOS
+	depends on ESP32S31_LPUART_TX_PIN = -1 && ESP32S31_LPUART_RX_PIN = -1
+	default n
+	help
+		Exercise binary read/write/poll, baud and framing changes, invalid
+		configuration rejection and close/reopen. No external pins are
+		driven. External communication and sleep/wakeup require separate
+		qualification.
+
+endif # ESP32S31_LPUART
+
+if ESP32S31_CANFD
+
+config ESP32S31_CANFD_TX_PIN
+	int "CAN0 TX GPIO (-1 leaves unconfigured)"
+	range -1 54
+	default -1
+	help
+		External mode requires a board-reserved GPIO and CAN transceiver.
+		Do not select pins used by flash, PSRAM, USB or other peripherals.
+
+config ESP32S31_CANFD_RX_PIN
+	int "CAN0 RX GPIO (same as TX for loopback)"
+	range -1 54
+	default -1
+
+config ESP32S31_CANFD_LOOPBACK_TEST
+	bool "Finite CAN0 GPIO37 loopback test at boot"
+	depends on CAN_LOOPBACK && ESP32S31_BOARD_KORVO
+	depends on !ESP_RMT && !ESP32S31_COMP && !ESP32S31_MCPWM
+	depends on ESP32S31_CANFD_TX_PIN = 37 && ESP32S31_CANFD_RX_PIN = 37
+	default n
+	help
+		Exercise standard write/read/poll with classic and FD frames,
+		short write rejection, queued transfers and close/reopen. GPIO37
+		is driven and read back through the pad. This does not qualify an
+		external CAN bus or transceiver.
+
+endif # ESP32S31_CANFD
+
+if ESP32S31_COMP
+
+config ESP32S31_COMP_PIN
+	int "Comparator source GPIO (reserve this pin)"
+	range 37 40
+	default 37
+	help
+		These are the four fixed analog pads, not arbitrary GPIO matrix
+		inputs. Reserve the chosen pad and disable conflicting peripherals.
+
+config ESP32S31_COMP_REFERENCE
+	int "Internal reference in tenths of VDD"
+	range 1 7
+	default 5
+
+config ESP32S31_COMP_LOOPBACK_TEST
+	bool "Finite GPIO37 comparator test at boot"
+	depends on ESP32S31_BOARD_KORVO && !ESP_RMT && !ESP32S31_MCPWM
+	depends on ESP32S31_COMP_PIN = 37 && ESP32S31_COMP_REFERENCE = 5
+	depends on !DISABLE_PTHREAD
+	default n
+	help
+		Drive the onboard LED input low/high and read the actual analog
+		comparison result through /dev/comp0. Check poll and shared opens.
+		No analog accuracy or high-speed input qualification is implied.
+
+endif # ESP32S31_COMP
+
+if ESP32S31_MCPWM
+
+config ESP32S31_MCPWM_PWM_PIN
+	int "MCPWM0 output GPIO"
+	range -1 61
+	default 37 if ESP32S31_BOARD_KORVO
+	default -1
+	help
+		Reserve an output pin before enabling this driver. Korvo GPIO37
+		is the onboard addressable LED input, usable for electrical loopback
+		when the RMT LED driver is disabled. -1 is not a usable pin.
+
+config ESP32S31_MCPWM_CAPTURE_PIN
+	int "MCPWM0 capture input GPIO"
+	range -1 61
+	default 37 if ESP32S31_BOARD_KORVO
+	default -1
+
+config ESP32S31_MCPWM_LOOPBACK_TEST
+	bool "Finite MCPWM GPIO37 loopback test at boot"
+	depends on ESP32S31_BOARD_KORVO && !ESP_RMT
+	depends on ESP32S31_MCPWM_PWM_PIN = 37
+	depends on ESP32S31_MCPWM_CAPTURE_PIN = 37
+	default n
+	help
+		Check standard PWM and capture APIs using the onboard LED line
+		as output and input. No jumper or motor is required. The test
+		does not qualify a motor driver, fault protection or timing accuracy
+		against an external instrument.
+
+endif # ESP32S31_MCPWM
+
+if ESP32S31_PCNT_QE
+
+config ESP32S31_PCNT_PIN_A
+	int "PCNT phase A input GPIO (-1 disconnected)"
+	range -1 61
+	default -1
+	help
+		The board must reserve both phase pins explicitly. Both -1 leaves
+		the peripheral inputs at logic zero without touching physical pads.
+		Do not reuse Korvo LCD, camera, SD, audio or console pins without
+		checking the schematic and disabling the conflicting function.
+
+config ESP32S31_PCNT_PIN_B
+	int "PCNT phase B input GPIO (-1 disconnected)"
+	range -1 61
+	default -1
+
+config ESP32S31_PCNT_MATRIX_TEST
+	bool "Run finite PCNT internal matrix test at boot"
+	depends on ESP32S31_PCNT_PIN_A = -1 && ESP32S31_PCNT_PIN_B = -1
+	default n
+	help
+		Exercise the real PCNT through internal constant signal routing
+		and standard /dev/qe0 open/ioctl/close. No external pads are driven.
+		This is not an external encoder, electrical or frequency test.
+
+endif # ESP32S31_PCNT_QE
+
+config ESP32S31_KORVO_ADC_BUTTONS
+	bool "Korvo ADC42 function keys (qualification)"
+	depends on ESP32S31_BOARD_KORVO && BUILD_FLAT && !SMP && SCHED_LPWORK
+	depends on !ESPRESSIF_WIFI && !ESP32S31_BLE && !ESPRESSIF_TEMP
+	select INPUT
+	select INPUT_BUTTONS
+	default n
+	help
+		Register the four ADC1/channel0 keys at /dev/buttons using the
+		standard button upper half. Sampling starts with the first client
+		and stops after the last closes. No GPIO61 button is used.
+		The ADC lower half is private to this client, without /dev/adc0.
+		This first integration retains the isolated ADC clock/power boundary;
+		RF/temperature/SMP coexistence requires further shared-power work.
+		Raw thresholds below use measured Korvo key readings; they are not
+		calibrated voltages. Verify the levels on each board revision.
+
+if ESP32S31_KORVO_ADC_BUTTONS
+
+config ESP32S31_KORVO_KEYS_PERIOD_MS
+	int "ADC key sampling period (ms)"
+	range 5 200
+	default 20
+
+config ESP32S31_KORVO_KEYS_DEBOUNCE
+	int "Consecutive samples required for a key transition"
+	range 1 20
+	default 3
+
+config ESP32S31_KORVO_KEYS_RAW_VOLUP
+	int "VOL+ raw center"
+	range 1 131071
+	default 1809
+	help
+		Measured raw centers for VOL+/VOL-/PLAY/SET are 1809/1360/829/287,
+		with released keys reading zero on the qualified Korvo board.
+		The 17-bit result field does not imply an ideal increasing voltage
+		transfer function. These are button bands, not voltage calibration.
+
+config ESP32S31_KORVO_KEYS_RAW_VOLDOWN
+	int "VOL- raw center"
+	range 1 131071
+	default 1360
+
+config ESP32S31_KORVO_KEYS_RAW_PLAY
+	int "PLAY (schematic MODE) raw center"
+	range 1 131071
+	default 829
+
+config ESP32S31_KORVO_KEYS_RAW_SET
+	int "SET raw center"
+	range 1 131071
+	default 287
+
+config ESP32S31_KORVO_KEYS_RAW_WINDOW
+	int "Raw acceptance half width"
+	range 1 30000
+	default 80
+
+config ESP32S31_KORVO_KEYS_RAW_HYSTERESIS
+	int "Extra raw margin for a held key"
+	range 0 10000
+	default 20
+
+config ESP32S31_KORVO_KEYS_TRACE
+	bool "Log raw ADC key readings for calibration (5 samples/second max)"
+	default n
+	help
+		Diagnostic only. While the button device is open, log a raw sample
+		at most once per 200 ms. Disable after recording real thresholds.
+
+endif # ESP32S31_KORVO_ADC_BUTTONS
+
+config ESP32S31_KORVO_SMP_LCD_QUALIFICATION
+	bool "Korvo KERNEL/SMP framebuffer support"
+	depends on BUILD_KERNEL && ARCH_USE_S_MODE
+	depends on SMP && MM_PGALLOC && ARCH_VMA_MAPPING
+	default n
+	help
+		Use page-owned PSRAM buffers and shared framebuffer mappings.
+		Select the Korvo board explicitly; the driver rejects other boards.
+		The application must finish pixel writes before FBIO_UPDATE and
+		leave the shared frame unchanged until the update returns.
+		This option alone does not qualify a complete graphics product.
+
 config ESP32S31_KORVO_RGB565
 	bool "Korvo-1 SUB3 RGB565 framebuffer"
-	depends on BUILD_FLAT && !SMP && ESPRESSIF_SPIRAM_USER_HEAP
-	depends on !ESPRESSIF_SPI2 && !ESP_RMT
+	depends on (BUILD_FLAT && !SMP && ESPRESSIF_SPIRAM_USER_HEAP) || ESP32S31_KORVO_SMP_LCD_QUALIFICATION
+	depends on !ESPRESSIF_SPI2
 	depends on DRIVERS_VIDEO && VIDEO_FB
 	select FB_UPDATE
 	default n
@@ -16,13 +295,16 @@ config ESP32S31_KORVO_RGB565
 		Use the shared S31 boot support with Korvo-1 LCD pin assignments.
 		Register an 800x480 RGB565 framebuffer for the ST7262 SUB3 panel.
 		The NuttX driver owns the LCD, DMA, cache synchronization and frame
-		completion. This isolated FLAT profile does not initialize the
-		Function-CoreBoard's LED, button, codec or camera pins.
+		completion. This driver does not initialize the
+		Function-CoreBoard's button or codec pins. The board RGB LED uses
+		Korvo GPIO37 when enabled separately via RMT.
 
 config ESP32S31_XTS_ADC
 	bool "Expose ADC1 raw samples on J2 GPIO47"
 	depends on ADC && BUILD_FLAT && !SMP
+	depends on ESP32S31_BOARD_FUNCTION
 	depends on !ESPRESSIF_WIFI && !ESP32S31_BLE && !ESP32S31_XTS_GPIO
+	depends on !ESPRESSIF_TEMP
 	default n
 	help
 		Isolated polling ADC1 channel5 on GPIO47 (J2 pin13). Register
@@ -33,6 +315,7 @@ config ESP32S31_XTS_ADC
 config ESP32S31_AUDIO
 	bool "Board ES8311 raw PCM playback and capture"
 	depends on ESP32S31_I2S && ESPRESSIF_I2C0 && AUDIO
+	depends on ESP32S31_BOARD_FUNCTION
 	depends on ESPRESSIF_I2C0_SCLPIN = 50 && ESPRESSIF_I2C0_SDAPIN = 51
 	select DRIVERS_AUDIO
 	select AUDIO_ES8311
@@ -43,6 +326,130 @@ config ESP32S31_AUDIO
 		The default isolated profile supports half-duplex raw PCM.
 		The dedicated duplex option enables shared codec ownership.
 		GPIO57 controls the amplifier and remains off while idle.
+
+config ESP32S31_KORVO_AUDIO
+	bool "Korvo ES8389 standard PCM (qualification)"
+	depends on ESP32S31_BOARD_KORVO
+	depends on (BUILD_FLAT && !SMP) || (BUILD_KERNEL && ESP32S31_SMP && ARCH_USE_S_MODE && AUDIO_PROCESS_OWNERSHIP)
+	depends on ESP32S31_I2S_DUPLEX && ESPRESSIF_I2C0 && AUDIO
+	depends on !AUDIO_MULTI_SESSION && !AUDIO_EXCLUDE_STOP
+	depends on SCHED_LPWORK
+	depends on ESPRESSIF_I2C0_SCLPIN = 1 && ESPRESSIF_I2C0_SDAPIN = 0
+	select DRIVERS_AUDIO
+	select AUDIO_SHARED_BUFFER_WORK
+	default n
+	help
+		Register /dev/audio/pcm0p and pcm0c for the onboard ES8389 at
+		7-bit address 0x10. Fixed 16 kHz, signed 16-bit LE, two Philips
+		slots, BCLK 512 kHz; no external MCLK output. GPIO3/4/5/6 carry
+		BCLK/WS/DIN/DOUT, PA7 is enabled only by the codec after unmute.
+		Kernel/SMP builds retain the owning process address environment
+		until callbacks and device release complete. DMA interrupt routing
+		is owned by CPU0. Whole-endpoint STOP drains accepted callbacks;
+		in-flight single-buffer cancellation remains unsupported.
+		Enabling this driver does not qualify RF or product coexistence.
+
+config ESP32S31_KORVO_MEDIA
+	bool "Korvo local MEDIA playback qualification"
+	depends on ESP32S31_KORVO_AUDIO && MEDIA_SERVER && MEDIA_GRAPH
+	depends on MEDIA_POLICY && AUDIOUTILS_ALSA_LIB_DEVICE_HW && ETC_ROMFS
+	depends on MEDIA_SERVER_CONFIG_PATH = "/etc/media/" || (BLUETOOTH_LEAUDIO_SERVER && MEDIA_SERVER_CONFIG_PATH = "/etc/media-lea/")
+	default n
+	help
+		Embed the board-specific 16 kHz playback graph and policy in the
+		read-only /etc ROMFS. Start mediad and clients explicitly from NSH.
+		No automatic playback, capture, recording, mount of user storage
+		or wireless provisioning. Recorder routing, focus, pause/resume,
+		SMP and peripheral coexistence remain separate qualification work.
+
+config ESP32S31_KORVO_HMI
+	bool "Korvo standard graphics and XMS Lite startup"
+	depends on ESP32S31_KORVO_RGB565 && ESP32S31_KORVO_TOUCH
+	depends on BUILD_FLAT && !SMP && SYSTEM_SERVER_LITE
+	depends on SYSTEM_ACTIVITY_SERVICE && SYSTEM_PACKAGE_SERVICE
+	depends on SYSTEM_WINDOW_SERVICE && ANDROID_SERVICEMANAGER
+	depends on ETC_ROMFS && FS_TMPFS && FS_BINFS && FS_SHMFS
+	depends on XMSDEMO_LAUNCHER && (XMSDEMO_LVGLDEMO || XMSDEMO_FACTORY)
+	default n
+	help
+		Embed the native launcher/LVGL manifests and board startup scripts
+		in /etc. Check /data and standard IPC resources before starting
+		Binder ServiceManager and SystemServer. The base profile uses
+		volatile /data; the separate HMI_DATA option enables persistence.
+		Wi-Fi and recording are not enabled by this option. SMP/KERNEL graphics and
+		MEDIA integration require their own validated product configuration.
+
+config ESP32S31_KORVO_SMP_HMI_QUALIFICATION
+	bool "Korvo SMP SystemServer resources"
+	depends on BUILD_KERNEL && SMP && !SYSTEM_SERVER_LITE
+	depends on ESP32S31_KORVO_SMP_LCD_QUALIFICATION && ESP32S31_KORVO_TOUCH
+	depends on SYSTEM_ACTIVITY_SERVICE && SYSTEM_PACKAGE_SERVICE
+	depends on SYSTEM_WINDOW_SERVICE && ANDROID_SERVICEMANAGER
+	depends on ESP32S31_FLASH_APPFS && ETC_ROMFS && FS_TMPFS && FS_SHMFS
+	depends on XMSDEMO_LAUNCHER && XMSDEMO_LVGLDEMO
+	default n
+	help
+		Run independent native applications on the
+		SMP kernel. Preserve read-only executable AppFS at /system/bin,
+		mount its writable LittleFS remainder directly at /data, and embed
+		the actual manifests, fonts and MEDIA resources. Services start
+		explicitly after the host verifies mounts and resource readiness.
+		This does not enable the FLAT HMI partition or automatic networking.
+
+config ESP32S31_KORVO_HMI_NETDIAG
+	bool "Automatic HMI/Wi-Fi watchdog diagnostic (not a product boot)"
+	depends on ESP32S31_KORVO_HMI && ESPRESSIF_WIFI
+	depends on ESP32S31_RWDT && EXAMPLES_WATCHDOG = y
+	default n
+	help
+		Arm the watchdog before HMI startup and run a credential-free
+		ifup/ps sequence automatically. The unfed watchdog intentionally
+		panics and resets. Use only with a bounded host capture/recovery
+		transaction; never enable this option in a delivered product.
+
+config ESP32S31_KORVO_HMI_DATA
+	bool "Korvo HMI persistent LittleFS data partition"
+	depends on ESP32S31_KORVO_HMI && ESPRESSIF_FLASH_16M
+	depends on !ESP32S31_XTS_FLASH && !ESP32S31_XTS_MEDIA_VOLUME
+	depends on !ESP32S31_FLASH_APPFS
+	select ESPRESSIF_SPIFLASH
+	select ESPRESSIF_MTD
+	select FS_LITTLEFS
+	default n
+	help
+		Register /dev/hmidata and use LittleFS for /data. Only an entirely
+		erased partition may be formatted at first boot; a nonblank mount
+		failure is retained for recovery. Service startup requires a successful
+		mount, with no volatile fallback. Back up and restore this entire
+		partition as well as the firmware when testing another image.
+
+if ESP32S31_KORVO_HMI_DATA
+
+config ESP32S31_HMI_DATA_OFFSET
+	hex "HMI data Flash offset"
+	default 0xe00000
+	range 0x500000 0xfff000
+
+config ESP32S31_HMI_DATA_SIZE
+	hex "HMI data partition size"
+	default 0x100000
+	range 0x1000 0xb00000
+	help
+		Offset and size must be aligned to the actual erase size and fit
+		within the chip. The build/deployment plan must also check that the
+		firmware and every other live partition remain outside this interval.
+
+endif
+
+config ESP32S31_KORVO_PCM_STOP_MS
+	int "Korvo PCM callback drain timeout (ms)"
+	depends on ESP32S31_KORVO_AUDIO
+	range 20 30000
+	default 2000
+	help
+		Bound the callback-drain wait. On timeout retain APB references and
+		request slots for late callbacks and retry. This is not a timeout
+		for failed hardware accesses or all system locks.
 
 config ESP32S31_CAMERA_OV2640
 	bool "Probe an external OV2640 over the isolated SCCB bus"
@@ -172,6 +579,7 @@ endif # ESP32S31_CAMERA_DVP
 config ESP32S31_XTS_PWM
 	bool "Expose S31 PWM on J2 GPIO48"
 	depends on BUILD_FLAT && PWM && !PWM_MULTICHAN && !PWM_PULSECOUNT
+	depends on ESP32S31_BOARD_FUNCTION
 	depends on !ESPRESSIF_LEDC
 	default n
 	---help---
@@ -182,6 +590,7 @@ config ESP32S31_XTS_PWM
 config ESP32S31_XTS_GPIO
 	bool "Expose J2 GPIO47/48 for the original GPIO xTS"
 	depends on DEV_GPIO && !GPIO_LOWER_HALF
+	depends on ESP32S31_BOARD_FUNCTION
 	select ESPRESSIF_GPIO_IRQ
 	default n
 	---help---
@@ -192,6 +601,7 @@ config ESP32S31_XTS_GPIO
 config ESP32S31_XTS_BMI160
 	bool "Bind an external BMI160 to I2C0 for the original sensor xTS"
 	depends on BUILD_FLAT && ESPRESSIF_I2C0 && I2C_DRIVER
+	depends on ESP32S31_BOARD_FUNCTION
 	depends on SENSORS_BMI160_I2C && !SENSORS_BMI160_UORB
 	default n
 	---help---
@@ -203,6 +613,7 @@ config ESP32S31_XTS_BMI160
 config ESP32S31_XTS_BMI160_UORB
 	bool "Bind an external BMI160 to the uORB sensor framework"
 	depends on BUILD_FLAT && ESPRESSIF_I2C0 && I2C_DRIVER
+	depends on ESP32S31_BOARD_FUNCTION
 	depends on SENSORS_BMI160_I2C && SENSORS_BMI160_UORB
 	default n
 	---help---
@@ -343,3 +754,12 @@ config ESP32S31_FLASH_APPFS_E0_CORPUS
 endif
 
 endif # ARCH_BOARD_ESP32S31_CORE_FUNCTION_BOARD
+
+config ESP32S31_KORVO_TOUCH
+	bool "Korvo SUB3 GT1151 touch"
+	depends on ESPRESSIF_I2C0 && ESP32S31_KORVO_RGB565
+	select INPUT
+	select INPUT_TOUCHSCREEN
+	depends on SCHED_LPWORK
+	help
+		Poll the SUB3 touch controller on I2C0 and expose /dev/input0.

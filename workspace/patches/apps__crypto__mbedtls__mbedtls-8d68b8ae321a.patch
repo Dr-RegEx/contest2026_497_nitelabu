@@ -1,0 +1,16 @@
+diff --git a/library/psa_crypto.c b/library/psa_crypto.c
+index 82e28dcb1a6fc3c3f23cbfc9737248e1c14fc084..828586e1df478a47345fd4fb9db1b488b421bcfd 100644
+--- a/library/psa_crypto.c
++++ b/library/psa_crypto.c
+@@ -2476,6 +2476,11 @@ static psa_status_t psa_mac_setup(psa_mac_operation_t *operation,
+         goto exit;
+     }
+ 
++    /* PSA_MAC_OPERATION_INIT only directly zeroes the int-sized dummy member
++     * of the driver context union. Initialize the whole context before a
++     * driver accesses its nested operations, such as the hash used by HMAC. */
++    memset(&operation->ctx, 0, sizeof(operation->ctx));
++
+     operation->is_sign = is_sign;
+     /* Dispatch the MAC setup call with validated input */
+     if (is_sign) {

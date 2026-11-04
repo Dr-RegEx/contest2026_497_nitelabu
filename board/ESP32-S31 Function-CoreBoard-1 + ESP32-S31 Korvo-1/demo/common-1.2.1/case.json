@@ -1,44 +1,33 @@
 {
-  "name": "common-1.2.1",
+  "canonical_profile": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-reboot/defconfig",
+  "canonical_source_root": "platform-root/openvela-dev",
+  "current_build": "Use the canonical BSP profile in a restored platform tree; local copies are historical source references.",
+  "historical_record": {
+    "demo": "common-1.2.1",
+    "path": "../../../../docs/validation/historical.json"
+  },
   "keys": [
     "common:1.2.1"
   ],
+  "license_rule": "Retain source headers and all original LICENSE/NOTICE/UPSTREAM attributions.",
+  "licenses": [
+    "licenses/apps/LICENSE",
+    "licenses/apps/NOTICE"
+  ],
+  "local_config": "config/demo-rmt-xts-reboot/defconfig",
+  "local_sources": [
+    {
+      "origin": "apps/nshlib/nsh_syscmds.c",
+      "path": "src/nsh_syscmds.c"
+    }
+  ],
+  "name": "common-1.2.1",
   "profile": "demo-rmt-xts-reboot",
+  "schema": 2,
+  "scope": "historical-source-reference",
   "sources": [
     "apps/nshlib/nsh_syscmds.c"
   ],
-  "evidence_ids": [
-    726
-  ],
-  "note": "执行 10 次软件 reboot，每次保存从 ROM 到 NSH 的日志；不要把 reboot 当作物理掉电。",
-  "original": "1.2.1",
-  "evidence": [
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md",
-    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log",
-    "docs/acceptance/xts-current-status.md"
-  ],
   "title": "Reboot启动异常测试",
-  "original_line": 435,
-  "config_inheritance_verified": true,
-  "local_sources": [
-    {
-      "path": "src/nsh_syscmds.c",
-      "origin": "apps/nshlib/nsh_syscmds.c"
-    }
-  ],
-  "local_config": "config/demo-rmt-xts-reboot/defconfig",
-  "local_evidence": [
-    {
-      "path": "evidence/docs/acceptance/xts-current-status.md",
-      "origin": "docs/acceptance/xts-current-status.md"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint726-xts.md"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts726-reboot.log"
-    }
-  ]
+  "validation_index": "../../../../docs/validation/index.json"
 }

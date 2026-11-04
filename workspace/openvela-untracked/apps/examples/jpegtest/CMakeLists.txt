@@ -13,11 +13,7 @@ if(CONFIG_EXAMPLES_JPEGTEST)
     MODULE
     ${CONFIG_EXAMPLES_JPEGTEST}
     SRCS
-    jpegtest_main.c)
-
-  # libjpeg-turbo exports this include path to its own target.  The public
-  # jpeglib API is also consumed directly by this application target.
-  target_include_directories(
-    apps_jpegtest PRIVATE
+    jpegtest_main.c
+    INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/../../external/libjpeg-turbo/libjpeg-turbo)
 endif()

@@ -1,0 +1,76 @@
+diff --git a/demos/widgets/lv_demo_widgets.c b/demos/widgets/lv_demo_widgets.c
+index e095f0b5c8b4991a880c18286841abe53623ebdd..f54b0066e14e7c205ef654e156dd137a32a6f511 100644
+--- a/demos/widgets/lv_demo_widgets.c
++++ b/demos/widgets/lv_demo_widgets.c
+@@ -114,6 +114,13 @@ static lv_obj_t * scale3_mbps_label;
+ 
+ void lv_demo_widgets(void)
+ {
++    lv_demo_widgets_create(lv_screen_active());
++}
++
++bool lv_demo_widgets_create(lv_obj_t * parent)
++{
++    if(parent == NULL || tv != NULL) return false;
++
+     if(LV_HOR_RES <= 320) disp_size = DISP_SMALL;
+     else if(LV_HOR_RES < 720) disp_size = DISP_MEDIUM;
+     else disp_size = DISP_LARGE;
+@@ -181,11 +188,11 @@ void lv_demo_widgets(void)
+     lv_style_set_border_width(&style_bullet, 0);
+     lv_style_set_radius(&style_bullet, LV_RADIUS_CIRCLE);
+ 
+-    tv = lv_tabview_create(lv_screen_active());
++    tv = lv_tabview_create(parent);
+     lv_tabview_set_tab_bar_size(tv, tab_h);
+     lv_obj_add_event_cb(tv, tabview_delete_event_cb, LV_EVENT_DELETE, NULL);
+ 
+-    lv_obj_set_style_text_font(lv_screen_active(), font_normal, 0);
++    lv_obj_set_style_text_font(parent, font_normal, 0);
+ 
+     lv_obj_t * t1 = lv_tabview_add_tab(tv, "Profile");
+     lv_obj_t * t2 = lv_tabview_add_tab(tv, "Analytics");
+@@ -218,6 +225,7 @@ void lv_demo_widgets(void)
+     shop_create(t3);
+ 
+     color_changer_create(tv);
++    return true;
+ }
+ 
+ void lv_demo_widgets_start_slideshow(void)
+@@ -294,7 +302,7 @@ static void profile_create(lv_obj_t * parent)
+     lv_obj_center(label);
+ 
+     /*Create a keyboard*/
+-    lv_obj_t * kb = lv_keyboard_create(lv_screen_active());
++    lv_obj_t * kb = lv_keyboard_create(lv_obj_get_parent(tv));
+     lv_obj_add_flag(kb, LV_OBJ_FLAG_HIDDEN);
+ 
+     /*Create the second panel*/
+@@ -1699,6 +1707,7 @@ static void tabview_delete_event_cb(lv_event_t * e)
+         lv_style_reset(&style_title);
+         lv_style_reset(&style_icon);
+         lv_style_reset(&style_bullet);
++        tv = NULL;
+     }
+ }
+ #endif
+diff --git a/demos/widgets/lv_demo_widgets.h b/demos/widgets/lv_demo_widgets.h
+index c8d382a08b72d37c913464a9b1c4857fb4ec25df..1d2c71d92fd19636572ff2c6258ead0d4e5f0eea 100644
+--- a/demos/widgets/lv_demo_widgets.h
++++ b/demos/widgets/lv_demo_widgets.h
+@@ -37,6 +37,14 @@ extern "C" {
+  * GLOBAL PROTOTYPES
+  **********************/
+ void lv_demo_widgets(void);
++
++/**
++ * Create the singleton demo under an application-owned parent.
++ * Delete the parent before creating another instance. Returns false if the
++ * parent is NULL or an instance is still alive. The legacy entry uses the
++ * active screen as its parent.
++ */
++bool lv_demo_widgets_create(lv_obj_t * parent);
+ void lv_demo_widgets_start_slideshow(void);
+ 
+ /**********************

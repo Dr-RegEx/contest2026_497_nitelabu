@@ -1,0 +1,12 @@
+# Basic Korvo resistor-ladder keys through the standard button interface.
+# Raw trace is for the initial physical calibration, not a voltage reading.
+#include "../xts-flat-rtc/defconfig"
+
+CONFIG_ESP32S31_BOARD_KORVO=y
+CONFIG_ESP32S31_KORVO_ADC_BUTTONS=y
+CONFIG_ESP32S31_KORVO_KEYS_TRACE=y
+CONFIG_EXAMPLES_S31KEYS=y
+CONFIG_NSH_QUOTE=y
+CONFIG_UART0_RXBUFSIZE=256
+# CONFIG_NSH_ARGCAT is not set
+# CONFIG_NSH_NETINIT is not set

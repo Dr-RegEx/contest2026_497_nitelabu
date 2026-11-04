@@ -1,0 +1,10 @@
+#!/bin/sh
+for argument in "$@"; do
+  case "$argument" in
+    clone|fetch|pull|reset|clean|checkout|submodule)
+      echo "OFFLINE_GUARD: git $argument disabled during isolated builds." >&2
+      exit 90
+      ;;
+  esac
+done
+exec /usr/bin/git "$@"

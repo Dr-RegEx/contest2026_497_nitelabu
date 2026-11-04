@@ -1,0 +1,3085 @@
+{
+  "additional_measurements_not_counted_as_pass": [
+    "wifi-rate-diagnostics",
+    "ble-controller-info"
+  ],
+  "cases": {
+    "category:4.1.11": {
+      "boundary": "",
+      "id": "4.1.11",
+      "result": "PASS1013 原始30/30",
+      "status": "🟢 已通过",
+      "title": "KVDB测试"
+    },
+    "category:4.1.113": {
+      "boundary": "",
+      "id": "4.1.113",
+      "result": "PASS1331 原始下载及大小核验通过",
+      "status": "🟢 已通过",
+      "title": "NetApp--curl http文件下载测试"
+    },
+    "category:4.1.114": {
+      "boundary": "",
+      "id": "4.1.114",
+      "result": "PASS1334 原始公网网页命令通过",
+      "status": "🟢 已通过",
+      "title": "NetApp--curl网页能力测试"
+    },
+    "category:4.1.115": {
+      "boundary": "",
+      "id": "4.1.115",
+      "result": "PASS1453 original SCP download",
+      "status": "🟢 已通过",
+      "title": "NetApp--设备支持通过scp方式从其他终端获取文件到本地"
+    },
+    "category:4.1.116": {
+      "boundary": "",
+      "id": "4.1.116",
+      "result": "PASS1454 original SCP upload",
+      "status": "🟢 已通过",
+      "title": "NetApp--设备支持通过scp方式向其他终端传输本地文件"
+    },
+    "category:4.1.117": {
+      "boundary": "",
+      "id": "4.1.117",
+      "result": "PASS1337 复核原始1336双向传输通过",
+      "status": "🟢 已通过",
+      "title": "NetApp--设备支持ftpd"
+    },
+    "category:4.1.127": {
+      "boundary": "",
+      "id": "4.1.127",
+      "result": "PASS1198 原始命令无报错",
+      "status": "🟢 已通过",
+      "title": "Audio--nxlooper回环功能测试"
+    },
+    "category:4.1.2": {
+      "boundary": "",
+      "id": "4.1.2",
+      "result": "PASS1006",
+      "status": "🟢 已通过",
+      "title": "文件系统--romfs只读文件系统测试"
+    },
+    "category:4.1.21": {
+      "boundary": "",
+      "id": "4.1.21",
+      "result": "PASS1310 原始关联/DHCP/ping10/10",
+      "status": "🟢 已通过",
+      "title": "WiFi--2.4G--Wapi连接为WPA2加密方式时加入2.4G网络"
+    },
+    "category:4.1.25": {
+      "boundary": "",
+      "id": "4.1.25",
+      "result": "PASS1458 两次RSSI -59/-60 dBm，正常返回且动态变化",
+      "status": "🟢 已通过",
+      "title": "WiFi--2.4G--Wapi Sense获取链接2.4G AP的RSSI"
+    },
+    "category:4.1.26": {
+      "boundary": "",
+      "id": "4.1.26",
+      "result": "PASS1435 original wapi show",
+      "status": "🟢 已通过",
+      "title": "WiFi--2.4G--Wapi Show获取2.4G AP的无线参数"
+    },
+    "category:4.1.28": {
+      "boundary": "",
+      "id": "4.1.28",
+      "result": "PASS1312 配置字段逐项核对一致",
+      "status": "🟢 已通过",
+      "title": "WiFi--2.4G--wapi config保存正常"
+    },
+    "category:4.1.29": {
+      "boundary": "",
+      "id": "4.1.29",
+      "result": "PASS1325 保存配置后原始reboot重连通过",
+      "status": "🟢 已通过",
+      "title": "WiFi--2.4G--wapi config保存后设备reboot再reconnect"
+    },
+    "category:4.1.3": {
+      "boundary": "",
+      "id": "4.1.3",
+      "result": "PASS1006",
+      "status": "🟢 已通过",
+      "title": "fatutf8文件系统编码能力测试"
+    },
+    "category:4.1.30": {
+      "boundary": "",
+      "id": "4.1.30",
+      "result": "PASS1320 1318修复后原重连/DHCP/ping通过",
+      "status": "🟢 已通过",
+      "title": "WiFi--2.4G--wapi reconncet"
+    },
+    "category:4.1.31": {
+      "boundary": "",
+      "id": "4.1.31",
+      "result": "PASS1342 原始公网断网检查通过",
+      "status": "🟢 已通过",
+      "title": "WiFi--2.4G--wapi disconnect后与外网不通"
+    },
+    "category:4.1.4": {
+      "boundary": "",
+      "id": "4.1.4",
+      "result": "PASS1589 原始3轮真实掉电及一致性校验",
+      "status": "🟢 已通过",
+      "title": "文件系统异常场景--写入时掉电"
+    },
+    "category:4.1.5": {
+      "boundary": "",
+      "id": "4.1.5",
+      "result": "PASS1595 原始3轮创建阶段/真实掉电/恢复读写",
+      "status": "🟢 已通过",
+      "title": "文件系统异常场景--创建文件时掉电"
+    },
+    "category:4.1.57": {
+      "boundary": "",
+      "id": "4.1.57",
+      "result": "PASS1034",
+      "status": "🟢 已通过",
+      "title": "WiFi--wapi CountryCode的设置和获取"
+    },
+    "category:4.1.6": {
+      "boundary": "",
+      "id": "4.1.6",
+      "result": "PASS1603 原始3轮真实掉电/四线程校验/空间统计",
+      "status": "🟢 已通过",
+      "title": "文件系统异常场景--掉电重启时磁盘空间变化"
+    },
+    "category:4.2.12": {
+      "boundary": "",
+      "id": "4.2.12",
+      "result": "PASS1087原始程序+用户试听",
+      "status": "🟢 已通过",
+      "title": "Audio_DSP--Capture_cmoka_2channels"
+    },
+    "category:4.2.13": {
+      "boundary": "",
+      "id": "4.2.13",
+      "result": "PASS1143原始命令+用户试听",
+      "status": "🟢 已通过",
+      "title": "Audio_DSP--Capture_cmoka_1channels"
+    },
+    "category:5.1.1": {
+      "boundary": "",
+      "id": "5.1.1",
+      "result": "PASS1173",
+      "status": "🟢 已通过",
+      "title": "文件系统分区写满异常测试"
+    },
+    "category:5.1.10": {
+      "boundary": "",
+      "id": "5.1.10",
+      "result": "PASS 原始工作量",
+      "status": "🟢 已通过",
+      "title": "文件系统的多线程读写测试vela_fs_multi_thread_read_write_test"
+    },
+    "category:5.1.13": {
+      "boundary": "",
+      "id": "5.1.13",
+      "result": "PASS994，原始dd实测通过",
+      "status": "🟢 已通过",
+      "title": "裸设备读写性能测试"
+    },
+    "category:5.1.15": {
+      "boundary": "",
+      "id": "5.1.15",
+      "result": "PASS：1181原始1000轮，1184收尾",
+      "status": "🟢 已通过",
+      "title": "文件系统fstest执行1000次"
+    },
+    "category:5.1.16": {
+      "boundary": "",
+      "id": "5.1.16",
+      "result": "PASS1164/1169 按原文观察标准",
+      "status": "🟢 已通过",
+      "title": "文件系统碎片读写测试"
+    },
+    "category:5.1.17": {
+      "boundary": "",
+      "id": "5.1.17",
+      "result": "PASS1163 原始一小时",
+      "status": "🟢 已通过",
+      "title": "文件系统多线程操作文件测试"
+    },
+    "category:5.1.18": {
+      "boundary": "",
+      "id": "5.1.18",
+      "result": "PASS1081/1082 reboot及crash均通过",
+      "status": "🟢 已通过",
+      "title": "文件系统crash后crc校验 vela_fs_stability_test03"
+    },
+    "category:5.1.19": {
+      "boundary": "",
+      "id": "5.1.19",
+      "result": "PASS1126，显式sync挂载",
+      "status": "🟢 已通过",
+      "title": "文件系统crash后文件完整性校验vela_fs_stability_test04 文件"
+    },
+    "category:5.1.2": {
+      "boundary": "",
+      "id": "5.1.2",
+      "result": "PASS1065 原始1000×1024字节",
+      "status": "🟢 已通过",
+      "title": "文件系统文件写入速度测试vela_fs_stress_write_speed"
+    },
+    "category:5.1.26": {
+      "boundary": "",
+      "id": "5.1.26",
+      "result": "PASS1347 原始100轮全部完成",
+      "status": "🟢 已通过",
+      "title": "WiFi--2.4G网络---设备连接2.4G后wapi反复扫描周边无线AP"
+    },
+    "category:5.1.27": {
+      "boundary": "",
+      "id": "5.1.27",
+      "result": "PASS1606，原始100轮同一组3AP，无报错；RSSI及排序变化保留，review明确口径",
+      "status": "🟢 已通过",
+      "title": "WiFi--2.4G网络---设备连接2.4G后wapi扫描指定2.4G AP"
+    },
+    "category:5.1.29": {
+      "boundary": "",
+      "id": "5.1.29",
+      "result": "PASS1457 原始100/100轮，无自动重试；1425失败保留",
+      "status": "🟢 已通过",
+      "title": "WiFi--2.4G网络---wapi反复disconnect 2.4G网络"
+    },
+    "category:5.1.3": {
+      "boundary": "",
+      "id": "5.1.3",
+      "result": "PASS1022",
+      "status": "🟢 已通过",
+      "title": "文件系统创建和删除压力测试vela_fs_stress_loop_create_delete_file_test"
+    },
+    "category:5.1.4": {
+      "boundary": "",
+      "id": "5.1.4",
+      "result": "PASS1028",
+      "status": "🟢 已通过",
+      "title": "文件系统反复创建和删除文件vela_fs_stress_maximum_file_name_test"
+    },
+    "category:5.1.41": {
+      "boundary": "",
+      "id": "5.1.41",
+      "result": "PASS1035",
+      "status": "🟢 已通过",
+      "title": "WiFi--反复ifup&ifdown"
+    },
+    "category:5.1.42": {
+      "boundary": "",
+      "id": "5.1.42",
+      "result": "PASS1112，原始100轮",
+      "status": "🟢 已通过",
+      "title": "WiFi--设备未配网时反复扫描周边无线AP"
+    },
+    "category:5.1.5": {
+      "boundary": "",
+      "id": "5.1.5",
+      "result": "PASS 原始工作量",
+      "status": "🟢 已通过",
+      "title": "文件系统多线程文件读写测试vela_fs_stress_multi_thread_file_operate_test"
+    },
+    "category:5.1.6": {
+      "boundary": "",
+      "id": "5.1.6",
+      "result": "PASS 原始工作量",
+      "status": "🟢 已通过",
+      "title": "文件系统反复读写测试vela_fs_stress_read_and_write_loops_test"
+    },
+    "category:5.1.68": {
+      "boundary": "",
+      "id": "5.1.68",
+      "result": "PASS1155，3MiB卷原始10轮；1119失败保留",
+      "status": "🟢 已通过",
+      "title": "KVDB稳定性vela_kvdb_stability_test02测试"
+    },
+    "category:5.1.8": {
+      "boundary": "",
+      "id": "5.1.8",
+      "result": "PASS 原始工作量",
+      "status": "🟢 已通过",
+      "title": "文件系统多线程写文件测试vela_fs_multi_thread_write_test"
+    },
+    "category:5.1.9": {
+      "boundary": "",
+      "id": "5.1.9",
+      "result": "PASS 原始工作量",
+      "status": "🟢 已通过",
+      "title": "文件系统多线程读文件vela_fs_multi_thread_read_test"
+    },
+    "category:ble-switch": {
+      "boundary": "",
+      "id": "xTS原文未编号",
+      "result": "PASS1085 原始完整开关",
+      "status": "🟢 已通过",
+      "title": "开关BLE蓝牙"
+    },
+    "common:1.1.1": {
+      "boundary": "",
+      "id": "1.1.1",
+      "result": "689：8/8通过",
+      "status": "🟢 已通过",
+      "title": "系统内存管理测试"
+    },
+    "common:1.1.10": {
+      "boundary": "",
+      "id": "1.1.10",
+      "result": "733：pclose及正常返回通过",
+      "status": "🟢 已通过",
+      "title": "Kernel-popen测试"
+    },
+    "common:1.1.11": {
+      "boundary": "",
+      "id": "1.1.11",
+      "result": "732：FIFO、传输、互锁及重定向通过",
+      "status": "🟢 已通过",
+      "title": "Kernel-pipe测试"
+    },
+    "common:1.1.12": {
+      "boundary": "",
+      "id": "1.1.12",
+      "result": "734：100次哈希一致且正确",
+      "status": "🟢 已通过",
+      "title": "Kernel-md5值测试"
+    },
+    "common:1.1.13": {
+      "boundary": "",
+      "id": "1.1.13",
+      "result": "797：容器、C++17、RTTI及异常处理通过",
+      "status": "🟢 已通过",
+      "title": "Kernel-C++功能测试"
+    },
+    "common:1.1.2": {
+      "boundary": "",
+      "id": "1.1.2",
+      "result": "688：9/9通过；旧失败保留",
+      "status": "🟢 已通过",
+      "title": "系统调度测试"
+    },
+    "common:1.1.3": {
+      "boundary": "",
+      "id": "1.1.3",
+      "result": "709：83/83通过",
+      "status": "🟢 已通过",
+      "title": "系统调用测试"
+    },
+    "common:1.1.4": {
+      "boundary": "",
+      "id": "1.1.4",
+      "result": "771/775：原配置完整循环正常退出",
+      "status": "🟢 已通过",
+      "title": "Kernel-ostest测试"
+    },
+    "common:1.1.5": {
+      "boundary": "",
+      "id": "1.1.5",
+      "result": "693：1040ms",
+      "status": "🟢 已通过",
+      "title": "Kernel-getprime测试"
+    },
+    "common:1.1.6": {
+      "boundary": "",
+      "id": "1.1.6",
+      "result": "839：原始分配/重分配/对齐测试完成，含16MiB PSRAM",
+      "status": "🟢 已通过",
+      "title": "Kernel-mm内存测试"
+    },
+    "common:1.1.7": {
+      "boundary": "",
+      "id": "1.1.7",
+      "result": "694：164项成功、0失败",
+      "status": "🟢 已通过",
+      "title": "Kernel-scanftest扫描测试"
+    },
+    "common:1.1.8": {
+      "boundary": "",
+      "id": "1.1.8",
+      "result": "695：hello通过",
+      "status": "🟢 已通过",
+      "title": "Kernel-C测试"
+    },
+    "common:1.1.9": {
+      "boundary": "",
+      "id": "1.1.9",
+      "result": "718：动态/栈/静态三类实例通过",
+      "status": "🟢 已通过",
+      "title": "Kernel-Cxx测试"
+    },
+    "common:1.2.1": {
+      "boundary": "",
+      "id": "1.2.1",
+      "result": "726：10/10次软件重启无异常",
+      "status": "🟢 已通过",
+      "title": "Reboot启动异常测试"
+    },
+    "common:1.2.2": {
+      "boundary": "",
+      "id": "1.2.2",
+      "result": "1580：实体RESET按键启动日志无异常；不替代真实断电计时",
+      "status": "🟢 已通过",
+      "title": "Cold boot启动异常测试"
+    },
+    "common:1.2.3": {
+      "boundary": "",
+      "id": "1.2.3",
+      "result": "736：两核资源统计；共享内存解释见xts736-footprint.md",
+      "status": "🟢 已通过",
+      "title": "系统RAM资源占用统计"
+    },
+    "common:1.2.4": {
+      "boundary": "",
+      "id": "1.2.4",
+      "result": "736：两核df及物理Flash布局统计",
+      "status": "🟢 已通过",
+      "title": "系统Flash资源占用统计"
+    },
+    "common:1.3.1": {
+      "boundary": "",
+      "id": "1.3.1",
+      "result": "668/669：受保护刷写、哈希及NSH启动",
+      "status": "🟢 已通过",
+      "title": "烧写测试"
+    },
+    "common:1.3.10": {
+      "boundary": "",
+      "id": "1.3.10",
+      "result": "744：UART三模式及10次突发采样通过",
+      "status": "🟢 已通过",
+      "title": "Uart串口功能测试"
+    },
+    "common:1.3.11": {
+      "boundary": "",
+      "id": "1.3.11",
+      "result": "805：129字节/65573字节文件双向传输一致",
+      "status": "🟢 已通过",
+      "title": "Uart文件传输功能测试"
+    },
+    "common:1.3.12": {
+      "boundary": "",
+      "id": "1.3.12",
+      "result": "841：RTC API/闹钟/周期原始3/3通过",
+      "status": "🟢 已通过",
+      "title": "RTC时钟功能测试"
+    },
+    "common:1.3.13": {
+      "boundary": "",
+      "id": "1.3.13",
+      "result": "743：原始timer0测试通过",
+      "status": "🟢 已通过",
+      "title": "Timer定时器功能测试"
+    },
+    "common:1.3.14": {
+      "boundary": "",
+      "id": "1.3.14",
+      "result": "989项目验收：24h四次记录误差均在2秒内；早期采样间隔及记录缺口保留说明",
+      "status": "🟢 已通过",
+      "title": "时间一致性测试"
+    },
+    "common:1.3.15": {
+      "boundary": "",
+      "id": "1.3.15",
+      "result": "1016：原始模式0→1→2→3及真实看门狗复位通过",
+      "status": "🟢 已通过",
+      "title": "Watchdog测试"
+    },
+    "common:1.3.16": {
+      "boundary": "",
+      "id": "1.3.16",
+      "result": "1682用户确认通过；786原始26项未定义统计输出及808补充记录保留，不重跑",
+      "status": "🟢 用户确认通过",
+      "title": "RNG功能测试"
+    },
+    "common:1.3.17": {
+      "boundary": "",
+      "id": "1.3.17",
+      "result": "1010：原始8个Crypto程序通过；部分算法软件实现，硬件范围见历史记录",
+      "status": "🟢 已通过",
+      "title": "Crypto功能测试"
+    },
+    "common:1.3.2": {
+      "boundary": "",
+      "id": "1.3.2",
+      "result": "767：fstest原始10轮，20成功/0失败",
+      "status": "🟢 已通过",
+      "title": "RAM读写测试"
+    },
+    "common:1.3.3": {
+      "boundary": "",
+      "id": "1.3.3",
+      "result": "705/706/707：字/半字/字节模式通过",
+      "status": "🟢 已通过",
+      "title": "RAM读写性能测试"
+    },
+    "common:1.3.4": {
+      "boundary": "",
+      "id": "1.3.4",
+      "result": "840：RAM块设备原始3/3通过",
+      "status": "🟢 已通过",
+      "title": "RAM随机读写测试"
+    },
+    "common:1.3.5": {
+      "boundary": "",
+      "id": "1.3.5",
+      "result": "992：Flash块设备原始3/3通过",
+      "status": "🟢 已通过",
+      "title": "Flash功能测试"
+    },
+    "common:1.3.6": {
+      "boundary": "同一配对镜像分别启动验证；连续重复启动缺口保留",
+      "id": "1.3.6",
+      "result": "GPIO47↔48 杜邦线实测：低/高电平两组各 4/4 PASS，回环 0/1 一致，上升沿 IRQ count=1。两组在同一 Kernel/AppFS 配对镜像的分别启动中完成。连续第二次启动仅回显、20 秒超时的问题仍保留，不宣称重复启动稳定性已修复。",
+      "status": "🟢 已通过",
+      "title": "GPIO功能测试"
+    },
+    "common:1.3.7": {
+      "boundary": "",
+      "id": "1.3.7",
+      "result": "按用户指定S31主机↔C6从机验收：[I2C](i2c-generic-echo-result.md)100/400kHz、32/32组回传一致；[SPI](spi-c6-result.md)100kHz/1MHz、C6接收14/14帧、S31回传13/13帧一致。独立测试配置，不采用原始传感器用例",
+      "status": "🟢 通用通信功能已通过",
+      "title": "I2C/SPI功能测试"
+    },
+    "common:2.1.3": {
+      "boundary": "",
+      "id": "2.1.3",
+      "result": "1604：10次真实USB上下电，平均0.265831秒",
+      "status": "🟢 已通过",
+      "title": "Cold Boot启动时间测试"
+    },
+    "common:2.1.4": {
+      "boundary": "",
+      "id": "2.1.4",
+      "result": "726：10次软件重启，平均0.548秒",
+      "status": "🟢 已通过",
+      "title": "Reboot启动时间测试"
+    },
+    "common:3.1.1": {
+      "boundary": "",
+      "id": "3.1.1",
+      "result": "864：未配网12小时，资源无增长、无复位/异常",
+      "status": "🟢 已通过",
+      "title": "12h待机稳定性测试"
+    },
+    "extra:1": {
+      "boundary": "所用xTS原文未找到独立GATT读写用例；蓝牙开关已有原文用例，已列在53项中，不重复编号",
+      "id": "用户自添加第1项",
+      "result": "1544/1551/1564：FF05/FF02读取，13字节写入及清理",
+      "status": "🟢 已验证所列范围",
+      "title": "BLE GATT实机读写"
+    },
+    "extra:13": {
+      "boundary": "Korvo OV3660 SUB3 单核 FLAT",
+      "id": "用户自添加第13项",
+      "result": "Korvo-1 + OV3660 + SUB3 实物采集显示通过。ID=0x3660，640×480 RGB565 居中显示于 800×480 framebuffer；颜色修复后 600/600 PASS，135.35 秒，复核 135.33 秒（约 4.43fps），用户确认景物变化、红绿蓝颜色及画面完整性“完全正常”。不重启重开 20→600 帧另有修复前颜色版本的记录，不冒称最终确认时未重启。不包含 OV2640/JPEG、动态帧率、SMP 或其它板型。",
+      "status": "🟢 实物采集显示通过",
+      "title": "Camera OV3660摄像头适配"
+    },
+    "extra:2": {
+      "boundary": "未找到独立SIMD原始用例；不等于AI框架/模型或加速倍数验证，按要求在蓝牙之后完成",
+      "id": "用户自添加第2项",
+      "result": "1566：两线程各100轮向量加法/INT8点积，200组点积一致；每线程20次CPU迁移；睡眠切换寄存器保护；1633/1654回归",
+      "status": "🟢 已验证所列范围",
+      "title": "SIMD指令集与PIE上下文保护"
+    },
+    "extra:3": {
+      "boundary": "仅验证固定样本编码，未替代Camera实物采集",
+      "id": "用户自添加第3项",
+      "result": "`jpegtest`在1725 JPEG/RGB镜像实板执行，JPEG SOI及编码输出通过；证据：[media1725](media1725-jpeg-rgb-board-build.md)、`jpeg1728-board-test/uart.log`",
+      "status": "🟢 板级自测通过",
+      "title": "JPEG编码"
+    },
+    "extra:4": {
+      "boundary": "仅验证固定样本解码，未替代Camera实物采集",
+      "id": "用户自添加第4项",
+      "result": "`jpegtest`实板解码2×2 RGB888并完成输出尺寸校验；证据：[media1725](media1725-jpeg-rgb-board-build.md)、`jpeg1728-board-test/uart.log`",
+      "status": "🟢 板级自测通过",
+      "title": "JPEG解码"
+    },
+    "extra:6": {
+      "boundary": "尚无Camera/显示链路，当前为固定样本格式验证",
+      "id": "用户自添加第6项",
+      "result": "`jpegtest`实板输出2×2 RGB888，逐像素参与JPEG往返；证据：[media1725](media1725-jpeg-rgb-board-build.md)、`jpeg1728-board-test/uart.log`",
+      "status": "🟢 板级自测通过",
+      "title": "RGB888像素格式支持"
+    },
+    "extra:7": {
+      "boundary": "尚无Camera/显示链路，当前为固定样本格式验证",
+      "id": "用户自添加第7项",
+      "result": "`jpegtest`实板执行RGB888→RGB565打包并校验8字节结果；证据：[media1725](media1725-jpeg-rgb-board-build.md)、`jpeg1728-board-test/uart.log`；另有 rgb565-display 实屏循环与 camera-ov3660 实物采集上屏。",
+      "status": "🟢 板级自测通过",
+      "title": "RGB565像素格式支持"
+    }
+  },
+  "catalog_evidence_id": "sha256:84669c2c1face64c615f8425e89887fe911431919e6160e8e59244c80bb02d31",
+  "catalog_published_update": "2026-09-20",
+  "current_firmware_acceptance": false,
+  "demos": {
+    "ble-controller-info": {
+      "case_evidence_id": "sha256:674a152e66800a920fae5a649ac0a8b59b120ce0ef1d1232baee27ab392c4a8a",
+      "evidence_ids": [
+        "sha256:145143137d349f73b264d41bdfc40a97db7bac120bd9bd4ab5f21516475e8c6a",
+        "sha256:5f221842db6490a0e9530134aed9ac085ba73c364f3a800bc692865fc7df315e",
+        "sha256:8b44503f33480ba2df40d0c1cdb34965bf46d80a21b9b9da6abef4c75394fac4",
+        "sha256:af7b1323df226a9f0c4437e1dadb487c36cac578ff1d49b881a57a714f6de877"
+      ],
+      "keys": [
+        "extra:8"
+      ],
+      "kind": "capability-observation",
+      "profile": "demo-rmt-bttool-kernel",
+      "retained_defconfig_sha256": "5ecdc8990e92dc02d45307a6f193170b5ed70e172f0d1592d8f175e165af2397",
+      "summary": "1747 Kernel/AppFS 配对镜像实际读取控制器 HCI=6.0(0x0e)、rev=0x0000、mfr=0x02e5、LEfeat=ff79ffff901b0000，enable/disable 正常。数据来自 HCI 0x1001/0x2003 的控制器回包，纠正旧库名推断；不证明全部 BLE 5.4 能力、认证、LE Audio、Mesh 或全部 xTS 互通通过。",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "BLE 控制器版本与 LE 特性实板读取"
+    },
+    "ble-gatt": {
+      "case_evidence_id": "sha256:35394bafa03bf277ef32323aa3f196428ee69c2e5029ac0c92d1ccfe84a8e2b5",
+      "evidence_ids": [
+        "sha256:104bbe78ea981733f455763352e87d5cf2881ab4bc50b7c1c3c1d08af898d6c9",
+        "sha256:245a735647a9688028e4a7195b359c599725942daca537f2da47cbe7f2875d46",
+        "sha256:2cd06c57e265270456315bedcc97ac6e7ace161ed1b223c5af229c1b4f52a301",
+        "sha256:4778bfe88e81b066dd4d968514f83621aafaed843abee270aa73d7577aa0ae0a",
+        "sha256:59d3aac005ec1e9b7b7eab36ebccc1a6eba893058717578484546b3c2da36cf5",
+        "sha256:695511aadc2ff1e11f1bc5b93a6f4c21cdeea9221b5fa82dd9601ecd628f628f",
+        "sha256:6eeacd47970ac8214ddd9327c7a9d1721e8f5efba41a101436230d26af09bee8",
+        "sha256:779635a9a82e3fc1d888c778dac626b5c0678a3d811dc09d8b48585be997130b",
+        "sha256:90d6a1289f524c562e489c7df4e2bbb87553698453156c4fc165075c62f4c6dc",
+        "sha256:93cf387b404a834fedd52c8b87a3bfca75a3ab42bcaeded71cef57d6b18ef904",
+        "sha256:ac210db3996a1efd89d140557a09967ff36db78060e5d6107d4d0984ffbefaae",
+        "sha256:c7e98ed580687bb85d2c161657ba4c19b3b727d2f4399ff7c532fc12215b4685",
+        "sha256:df725e404c2fd49937eb1eee81643ba8af139577ac2725e20665f562a7ffda43",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:edccf79fcff7e6f2265ee999e55d8eb9ec2a5e1197d9663b6c021798cbc54929",
+        "sha256:f7475faf96efcfa2653e2cd74af694982650c5b6c3aabc4c9aeac7fb927713c4"
+      ],
+      "keys": [
+        "extra:1"
+      ],
+      "note": "需 BLE 对端；已验证 FF05/FF02 读取、13 字节写入及服务清理。此为开发自测范围，不新增 xTS 编号。",
+      "profile": "demo-rmt-bttool-coex-pie",
+      "retained_defconfig_sha256": "fc0fb3fc6c0052e43b2c3069c96cba6637dff342724dbcbf9ab3a995c6d0761b",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "BLE GATT实机读写"
+    },
+    "camera-ov3660": {
+      "case_evidence_id": "sha256:116cf372153d56bac3755ff3ebfd8b29f7d2206dcba8a89365ce5803b3bdb566",
+      "evidence_ids": [
+        "sha256:03c7fdf12fde826fc569804005a7b64e51c2d87030463d371d64c7b3b02dbce5",
+        "sha256:08e273d3f0415cc91a248b44df3e75e395c61e65bd1fc9d3e1c20e4c0943eb95",
+        "sha256:13dc5432b348833c6d2c00d96cd85417a949e40738c80c9ad434eb2109cca3b4",
+        "sha256:19121e1a76fef5082030617730ab33f1c99ea3a47d00542ddc34f89f5d99909f",
+        "sha256:1dbdc749413db1231a665d33c840430bcd234630d5c5255b870a651c16e0add9",
+        "sha256:24b4472cbe149adf7e9079b4bf60bb7f1f5420c7223b5ff0d83d7f686e3be47b",
+        "sha256:268a3f9703c8aa393f9435c13f24de7a62652c55e3811d913fabaab8b6ce979d",
+        "sha256:34d4aa6d9a206b76775e42f70d3c63a711798991ae956381c2595f360b45b763",
+        "sha256:353215faa2ff53af1103c2d9eb814131a7469aa0f10d58f4411be982bec994e7",
+        "sha256:38d18cf7d6e6058ade838577019fc537275f2a01ab9fbdc586d51f3962d4ea83",
+        "sha256:429440e356aa89382ea6a9f737a421f7a678180c0bc43e4cb41196794d748ab1",
+        "sha256:4366a6834063f625c1ea7a61e7e4d7c3f50084f35e36a1ff7ad010a21cdb06cf",
+        "sha256:4cb93609fc8ebf08ebb32317fe47367743a145c8ea3a875c89ab4bf7aead8ae8",
+        "sha256:4cbb5db79f002e9de0a708a34c0a4a966087a6586e4c37e58822f41a436d8409",
+        "sha256:531c1a94d8cee08251d7d0414206f0fb9bbf94ad8db2a8e7ec6172565f82ce60",
+        "sha256:56c03b1d4fd009f146edc6b4ed8e6c6ff71bcd538ae317a5d4378fc5fb76b6b0",
+        "sha256:6109f192f01984800f330d26af8a161440e6d7902510047d83741555b2e8ac62",
+        "sha256:614192acf3eecca0dd5d9c06518a0e8d4edca5cea41f03c200d4d571d9958655",
+        "sha256:61dfbb4707685755b24c1a808daf049cd0346da90e1e35e6b58ec6e494d085c3",
+        "sha256:639bfe0204253c261a3eca263e3226d55a21106d08d8c125b13cb4ee6e65c73a",
+        "sha256:650d2cd85192ed2e5f04d9e44ed1afb870dd89bb2d4cf956d0c10f838cf0458a",
+        "sha256:6ee3f9348671f3a61ee2993e786f40fa85f8d2f48b64e880b56f36698e8ad941",
+        "sha256:73ba79a0f4e67d532efa737785807b347e8b9a7d2e22dd920dbc84b0c1b4459e",
+        "sha256:7e3690736b381f576b9ad61a36d43ae6e83bb1659cb81c5eda9f3df991506535",
+        "sha256:8508bf5f0a6f5a12666a3584eb420e10e6fe79dbf96a0f03faa2495ceca08f2c",
+        "sha256:865bb8874ccd2679d02e0f38edbd0716255af213126b7c9a709d917b91ba684b",
+        "sha256:8c659dcf6fae5ad24dca1007429daad51d7991bd7fc0dfa1392f393ca13bb0af",
+        "sha256:909ed2a1fc1c9eea49eccf0e8e6faa91321fd4d1d5be13ff3e34be5fd5d76251",
+        "sha256:9d2b33a13e548b1522552b6529cf54bf0635c305ed3d2e44428a379299fe9438",
+        "sha256:a139c0ea3d495ec01bf9f6c2fde98085c28736b36855f87acafe28639fb042f3",
+        "sha256:ac4e0ed71c61b67de5b1d77804769f4a375a13e3ac93545f0b8e50ed184069de",
+        "sha256:b0b08108dcc92edd30766f0b8c49aec6156e18122a85832f58a7dd99ee2ccd9d",
+        "sha256:b0cb57a892871616f4ca1a3d2c3f7ce7f30dc699b6f92da46d13bf7b51092073",
+        "sha256:b3800cb038b71c9fe5c2d8ca84e39bd7dbea342f04b8be49b9a96771a96a55a6",
+        "sha256:b546a5af973d15ef8a408879187a8dbb21d33081ad50b8bc1c098ff96f1cb816",
+        "sha256:c3c71d6b7fc7cdab73b351da14f145d9bbec711758fce0572d922dc1f7df9e8e",
+        "sha256:cf328a7981d463920de28cea6c082f6918463e9b3296e6427216ec7b9f026664",
+        "sha256:cfc13ded9769aff7caf90b851364e41181f685f0d75df43f5fe170f7f6c34a82",
+        "sha256:d61c871438e7fd9eb078faf60cacdfd1f7026da3c3bc254b1cc1b6e72f30bb51",
+        "sha256:d865b5d16e11008ff46a3936a929ee09a580a2a702898fad521bff7d9ccea838",
+        "sha256:d9134b7c9cdb7b57ad60918c1a307b81cb458b296acb08aac369de7c362e4b4b",
+        "sha256:e0410692b4847081b6c408a6241c73de4fa8d9b6621f68450b2ac29f5cfcf9a2",
+        "sha256:e1a3a763f34c4ed9cdcf3018eb857dba9324ae184de89c742eb0e4279770ce65",
+        "sha256:e6205e289b624d997e7d4a9863435c20d6a953d8152925681c10211ee6dc6a92",
+        "sha256:f1151cf6281a81a6e5698e6bac174ba806c52056e113c255476f10ca3ce69cc6",
+        "sha256:f48142fe84762d74bbd5fc6ae9e1b7f094104bf82af5844d5eee81e930084717",
+        "sha256:f927d11febddfcb01a4bc69d80de31ad31471b2a4580405bf0d6a793e86048be",
+        "sha256:fb9f9ca89b4c1997a326a8e028d187d96ff426e90c6b6fb95d35c440be6c9abe",
+        "sha256:fda1d4e82e6fc1d54f5c803acd44981eb50938c45308efa68b4fd8f75729330e"
+      ],
+      "keys": [
+        "extra:13",
+        "extra:7"
+      ],
+      "kind": "accepted",
+      "profile": "korvo-camera-preview",
+      "retained_defconfig_sha256": "0401499c965a56f531657b00a7b6fbb72470b22a722f276a2c68df8ad3229c08",
+      "summary": "Korvo-1 + OV3660 + SUB3 实物采集显示通过。ID=0x3660，640×480 RGB565 居中显示于 800×480 framebuffer；颜色修复后 600/600 PASS，135.35 秒，复核 135.33 秒（约 4.43fps），用户确认景物变化、红绿蓝颜色及画面完整性“完全正常”。不重启重开 20→600 帧另有修复前颜色版本的记录，不冒称最终确认时未重启。不包含 OV2640/JPEG、动态帧率、SMP 或其它板型。",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Korvo OV3660 摄像头实时采集上屏"
+    },
+    "category-4.1.11": {
+      "case_evidence_id": "sha256:70c0aa9e64591ffc20f9cfda9fd59f959be59548ddcc1753376c341243e46e9c",
+      "evidence_ids": [
+        "sha256:4b5c69e7ae2e07ba49d15203b14400b9ab02daf6cf25c0abcbe164d7d45e7a15",
+        "sha256:a3eb9f4536f40b4685c651a5b00410adbe70fe3888e2fb36c5c346778d2d9334",
+        "sha256:c43e3654c8045e2a971cc93635f8128f8181f67f49a2a35b97d84eaaaffc34a0",
+        "sha256:d2ac457e7d700128e810cbef5186381023569fd2ad8ccbc530a49e691f3ea29a",
+        "sha256:e1672ddb81a01b2ea6c237fec51e20c255d5e8dcdefbc426b4ba0e540cff1b6b",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:f0742bc2a3f35d162d20fe74ff752bebdcbc58b4a2a573bdff4aea6e48f08283"
+      ],
+      "keys": [
+        "category:4.1.11"
+      ],
+      "note": "使用专用可写 LittleFS 卷，逐项核对 30 个子用例。",
+      "profile": "xts-flat-category-kv",
+      "retained_defconfig_sha256": "94533aeaf9e55a437d0fa11b1632082fcfd0ac62537e374a35dcd237c2659d8d",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "KVDB测试"
+    },
+    "category-4.1.113": {
+      "case_evidence_id": "sha256:4e9787da5d9bb6d03f7527fcda637f062846f49649cecc6760d6cf086c28a83a",
+      "evidence_ids": [
+        "sha256:25a91147d9e7a2487787779f9b1e9d73a4fd0a3407de33384b5bc32c9dc7a165",
+        "sha256:5b75b0c4638b191c7181afef2b5c36241598adcca683fdcaad246aa0dad18dfc",
+        "sha256:632b493ee7b8bd4710d3287348cd1cdaf24627887dc727ba8482cdf5ce0393e9",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.113"
+      ],
+      "note": "联网后使用自己可访问的 HTTP 地址，下载文件核对长度/内容；网页请求需核对实际响应。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "NetApp--curl http文件下载测试"
+    },
+    "category-4.1.114": {
+      "case_evidence_id": "sha256:a33a5a17ced031b8f1a1886e4bfddfee7af903762be3634377010a012689695b",
+      "evidence_ids": [
+        "sha256:395042e4ca1a87440cb0a2f24bf13a95d0fdfab4ff1e963fbe02be023320da9b",
+        "sha256:56221fc3c75913a8f50ba4415816d958074f2f95c519140f8310ee6d0d105ab8",
+        "sha256:bc712126d8f6eb19b8ab53954346d3a3f6a7f4d01d409329b78f196b91052ecd",
+        "sha256:bfdfebf2c9dee48db3a3490d974e1898fb612ce7e616f1828ed68eb0e2ac9c26",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.114"
+      ],
+      "note": "联网后使用自己可访问的 HTTP 地址，下载文件核对长度/内容；网页请求需核对实际响应。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "NetApp--curl网页能力测试"
+    },
+    "category-4.1.115": {
+      "case_evidence_id": "sha256:85927e22c60bc362320c4ddc1e6f166e0ddfca6a5b52bf6f204dbeb6fcfd4b22",
+      "evidence_ids": [
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:fa5d9b6b8274bab3154c541021731415723e74279f994330155c065d3ef4f185",
+        "sha256:fdf2e58dec2babee3ca6ebe234b0730c759a00007ca212a4a41dc380fb1be9da"
+      ],
+      "keys": [
+        "category:4.1.115"
+      ],
+      "note": "主机准备允许连接的 SSH/SCP 服务、临时测试账号和文件，分别上传/下载比对；仓库不提供测试密码。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "NetApp--设备支持通过scp方式从其他终端获取文件到本地"
+    },
+    "category-4.1.116": {
+      "case_evidence_id": "sha256:b00790a6c82572c2da6086f199dfec30546ffb1d6ba05dbae49b7c073764e03e",
+      "evidence_ids": [
+        "sha256:3284d19aedf2bb61efeb64b050c418e9425ff675a7526c30fb58b351d5bf5dc1",
+        "sha256:6ff0e70a59097b5b754f5b461d76338bd8e8c0cf169f0a9f7396ca626c839d08",
+        "sha256:7c7ce49ae775c2e89ab381273a3882b6d99a4c3c84a8c6da90a16ec59157b13f",
+        "sha256:8e42ba0583fe3fabf1e31b891417c980895a5fae87f3b200268706733d50aee9",
+        "sha256:cddfb511d909550477496b121baef6ae98fa1ff0b0cb253b95acc76dddebd594",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.116"
+      ],
+      "note": "主机准备允许连接的 SSH/SCP 服务、临时测试账号和文件，分别上传/下载比对；仓库不提供测试密码。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "NetApp--设备支持通过scp方式向其他终端传输本地文件"
+    },
+    "category-4.1.117": {
+      "case_evidence_id": "sha256:7451f97bfa0e46de08374a6353cca1d2afd1e625fcd4a9557cfae5bb4756e0a6",
+      "evidence_ids": [
+        "sha256:2e8c6d15d3f72591117e16db3cda35eb45e8375a85e6842c9a004d9114e8e88a",
+        "sha256:3d2cdd05fe9a7d51dfc887a229d8f8b96c7c705539b7cd10f92d01d009d43f63",
+        "sha256:7ebc23cde0fc6cb3e32cf74bacb877cf3b8025b507d633f96791f7518a86efd0",
+        "sha256:d7240fbcb41cab2c9ec383946f3f968b37cbe8f30692fb01c962951683d1525c",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.117"
+      ],
+      "note": "主机使用 FTP 客户端完成双向文件传输并比对；历史 1336/1337 为实际传输及复核。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "NetApp--设备支持ftpd"
+    },
+    "category-4.1.127": {
+      "case_evidence_id": "sha256:e2c2315963ebc42f3b3b3fcbeacf82c2a148fc760382b4a5db2d02097cb87d2a",
+      "evidence_ids": [
+        "sha256:7d67ef942913babadda1db3480c4e5a40e18b5fd96b6eaaa8c379a7ecf92a968",
+        "sha256:811bf7e0485ebd167bf0ec72aae8c992439b645f7ba3abb6cde9e1f195b288d5",
+        "sha256:c3416a2b1bd58052f749a766667e24cf989b1e6a2e68641af309f12e8f2b8459",
+        "sha256:cd9799d8c252c5feccce540cb29e4b627c71cd0f58feaa186e94df186fcec9b3",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.127"
+      ],
+      "note": "**通过范围仅为原始命令执行无报错**。日志明确 AUDIBLE_LOOPBACK=PENDING；未完成外接扬声器听验，不等同于声音质量通过。",
+      "profile": "xts-flat-audio-duplex",
+      "retained_defconfig_sha256": "83e526650090dfe0168fb218dd518a15468398f401717d36b99e4fe860b26ce9",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Audio--nxlooper回环功能测试"
+    },
+    "category-4.1.2": {
+      "case_evidence_id": "sha256:780faf76b9ca9ee25defdc9a6c952acab231055b4c2a43065947d288b6629925",
+      "evidence_ids": [
+        "sha256:18e9469037ca1ce3685e8d88b8161324a156e168cf7c276dde13f90a1ae7403b",
+        "sha256:5191d6e634601dc902cb23bb0c3a4ea9bef227e4ac09aaef9b786418713da2d2",
+        "sha256:6f3c7a5f9a5aa6f64cade6b77819da0c62b76a2b26b18739c90eace5175a3813",
+        "sha256:76065dd0f7b919e3a67f1878a5fcaf0ed123fdb773a9e6a15ff6e48658ecc4a9",
+        "sha256:cd6bfe630412599063b43b517d1208abd6cd60150b8e8a7fbaf8a166fcd594aa",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e291af26a4c16605d1bcd45e6a3b6a8829a3c990ad211dbfadd43b80d11fadee"
+      ],
+      "keys": [
+        "category:4.1.2"
+      ],
+      "note": "",
+      "profile": "xts-flat-category-fs",
+      "retained_defconfig_sha256": "3e3da6b2b7332c39671fbbb7b414e4182d8a0a692f62c98a2d61ee6d4985b9d8",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统--romfs只读文件系统测试"
+    },
+    "category-4.1.21": {
+      "case_evidence_id": "sha256:02232c2156e17139d2f985af5134c5f1a264bb4ce7c2a03adf93bfd5ba102da4",
+      "evidence_ids": [
+        "sha256:08d68a40c212f6dc4daa8132b1a1e1e05f1c67f3e341761ea63512186bb27156",
+        "sha256:354a7a72525f96b4c62a67130ab113a1753429781b1b874b046a55c7dc3bcbae",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:f173526b0dc59a0740a68d65b3f561f0afcb8c958003c84e877aa0e6f3e13e03",
+        "sha256:fc3c9d664660f21e8d58ceff765b84a5517503862a52b371b68a166b20b8f9cc"
+      ],
+      "keys": [
+        "category:4.1.21"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--2.4G--Wapi连接为WPA2加密方式时加入2.4G网络"
+    },
+    "category-4.1.25": {
+      "case_evidence_id": "sha256:b657ba13813367a663063e39d6a96bda7b079c583acbeaa0a636ab4a4ca8c3d2",
+      "evidence_ids": [
+        "sha256:0968bc3ab2a7cb87f9afafd9b32789412ae0530a1b720fd4a268541b2f6c5eca",
+        "sha256:0fc9d1816446ba6afd56e28f0f25d811d319f642a487b87b9f83fc7f590d1601",
+        "sha256:49cc27c98233eb89fe2fb49bfd082e793352b0b805e05daf984ff70f90160cd7",
+        "sha256:dba75f05283186ce509b01c3223f2e6ef29802e5d0dc776dab2e993839490b01",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.25"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--2.4G--Wapi Sense获取链接2.4G AP的RSSI"
+    },
+    "category-4.1.26": {
+      "case_evidence_id": "sha256:511ce3e2da8d438eb422a3ba9699357f7857a255d0d7b6378bad55caf90a0981",
+      "evidence_ids": [
+        "sha256:0ceabaf38e46275149987d36ca889fd0ea79083ebf9b12bf1aa9192d4546fb09",
+        "sha256:36b0899068e6dcb4da761ab8c46e2547a8d11608a6a1c5dec5bbb4fa2600a0ac",
+        "sha256:abd9579c191957073fbdd1cc59f8f8a04ad7a78a904a9db6fab23395ccec9453",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:f30056f7fc40d88b4a311a6cf5e95f896556179ba7434f9f7109c9e88f021b4f"
+      ],
+      "keys": [
+        "category:4.1.26"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--2.4G--Wapi Show获取2.4G AP的无线参数"
+    },
+    "category-4.1.28": {
+      "case_evidence_id": "sha256:14aaca3fdcf64ac0e4854ff1192e06eeeb67856da212ce26f89b98280dd4185b",
+      "evidence_ids": [
+        "sha256:3f9f59c2faaf01f6332608e545e55830a7e254605ed7cae60b6ce0c744c72a9e",
+        "sha256:7e50b3c490bbc854420bb749e2a2163de04ab2e7fb74c526d95241313b3f9fa3",
+        "sha256:a22f190aaaa5dc78931bcecfdb5e6f16e5fc1ff5227a73d30767d362d616d8e8",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.28"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--2.4G--wapi config保存正常"
+    },
+    "category-4.1.29": {
+      "case_evidence_id": "sha256:c809a2d84470811dfc9f4b2ddcb6be4ee5ced307aac496b0f2f3117e409e0d28",
+      "evidence_ids": [
+        "sha256:27a37a1ef0339b8e35658e1833c53cf905cc0914d38fdeaf701b4fe5cbaf96f0",
+        "sha256:84feadeabe302b0d2025d85be4043280fd1d095987414c8228c5f58333af6fcc",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e741d976bb709f35b05d3f9ffccfc23fdb73962e70621c0d6e90911230dffb1f"
+      ],
+      "keys": [
+        "category:4.1.29"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--2.4G--wapi config保存后设备reboot再reconnect"
+    },
+    "category-4.1.3": {
+      "case_evidence_id": "sha256:2282ebc5fc0ee8c993915321f801f57f0dc52bb1eaae5dd79b7381513b36a189",
+      "evidence_ids": [
+        "sha256:18e9469037ca1ce3685e8d88b8161324a156e168cf7c276dde13f90a1ae7403b",
+        "sha256:5191d6e634601dc902cb23bb0c3a4ea9bef227e4ac09aaef9b786418713da2d2",
+        "sha256:6f3c7a5f9a5aa6f64cade6b77819da0c62b76a2b26b18739c90eace5175a3813",
+        "sha256:76065dd0f7b919e3a67f1878a5fcaf0ed123fdb773a9e6a15ff6e48658ecc4a9",
+        "sha256:cd6bfe630412599063b43b517d1208abd6cd60150b8e8a7fbaf8a166fcd594aa",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e291af26a4c16605d1bcd45e6a3b6a8829a3c990ad211dbfadd43b80d11fadee"
+      ],
+      "keys": [
+        "category:4.1.3"
+      ],
+      "note": "",
+      "profile": "xts-flat-category-fs",
+      "retained_defconfig_sha256": "3e3da6b2b7332c39671fbbb7b414e4182d8a0a692f62c98a2d61ee6d4985b9d8",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "fatutf8文件系统编码能力测试"
+    },
+    "category-4.1.30": {
+      "case_evidence_id": "sha256:58f685ec1ef8ef58650e47e14c46599aeb90242d93f7e5471ecb7d5ac999b41a",
+      "evidence_ids": [
+        "sha256:0bcd949382f239ac1fe0a390de89891e850d630a249688558b82e1ad16ee3f9c",
+        "sha256:21138b647d26c8c197bae8a21ec4687ffa1dc2e19254464a9e873d19dcce83fb",
+        "sha256:546ee045ef9cdc5f879c534b6eea9ba63043ecc7efea7ad7fe362af89fd02f0b",
+        "sha256:bfdee44c1e239e50ee4a55e20fc59f12e5ffa0eff42e6ca8bd812a80dee5524b",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.30"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--2.4G--wapi reconncet"
+    },
+    "category-4.1.31": {
+      "case_evidence_id": "sha256:fd17cc1ee27d89d300d825d7942f92161e6f1abce04b23a8688ece5971e69be8",
+      "evidence_ids": [
+        "sha256:08ff1ab44dd629deb04a1c93ac8e30c6c43b1244006e903d215a5187b3bb78d1",
+        "sha256:4972de351e75db447c95703511da23e08e9ba458f6a723aed48fba8d75b5b7d5",
+        "sha256:6904376fd32dfa61e5c524248668aa78eb92d15b085ce4dbe7aba8266b4b0f1c",
+        "sha256:a64776f2ec9e4460bdbc2105a6c6223a882ca8440f7ef801c7d397fa67d5f6ca",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:f687e854488d3486f68d22983410ee73243f8ff48ec29a9c814b4f014fd90ae6"
+      ],
+      "keys": [
+        "category:4.1.31"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--2.4G--wapi disconnect后与外网不通"
+    },
+    "category-4.1.4": {
+      "case_evidence_id": "sha256:1d1c1939a74271712055d621b8659be0b23dedde68ff3ee1e44dd83283055a93",
+      "evidence_ids": [
+        "sha256:19b2703e9f3491d7293f2a97091cb6f47a23f5612f61863cb511093cc1653f5c",
+        "sha256:5840ba9fe04d991b83479d589aa1e804f8dc19a06c32fff14ea02f58db197640",
+        "sha256:61e7aaf51ae7900d8c72951b1ef080e5b4d06c2653db9251a90893c4ec8c60bc",
+        "sha256:728592d073273f2d9a2544cd7421dc49c73c2991220b6d26f7d8a6a853857919",
+        "sha256:b34cb6f79e956203bd34c4378d870d4185af6eba8f0d98232aa4d81819935249",
+        "sha256:cb0d073559e41775952f042dab2a2849b884f9d941528c2d5b39efcfe5db693c",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.4"
+      ],
+      "note": "只在已备份的专用测试卷执行，真实断电 3 轮，恢复时不格式化；逐轮记录原文件和原始程序恢复结果。",
+      "profile": "xts-flat-category-fs-sync",
+      "retained_defconfig_sha256": "9803cca3465bf323e62162479559b493807728cdc2274b7e067e14da73435405",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统异常场景--写入时掉电"
+    },
+    "category-4.1.5": {
+      "case_evidence_id": "sha256:a2005d488411e5cef6b88bf586d70584b567c95e8e4791f89c79eec8f593a0a7",
+      "evidence_ids": [
+        "sha256:1dffee0f72382b6cb6b4f817630e94697362e957e426e8800cf95e282daeacca",
+        "sha256:35569de855fcd738332bbf0555e8249f3aa061ef0993d0b419457fea789d87ee",
+        "sha256:3b25486bb3c39cca137af60a1784a4f9b505af8842f0fec53ed8f05530c935a6",
+        "sha256:62f71af2c2228aae07a48eb72db351ea9e08de4ea688147b2790e12e1524365c",
+        "sha256:78e71630cf967369adeaa656decc8b67b16394a5a769c9a570db11113013dcf8",
+        "sha256:d076ec8b2ea65ca12fffa74a181ebe52ae0aced991fbbe6ed1e49b97ec924593",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.5"
+      ],
+      "note": "只在已备份的专用测试卷执行，真实断电 3 轮，恢复时不格式化；逐轮记录原文件和原始程序恢复结果。",
+      "profile": "xts-flat-category-fs-sync",
+      "retained_defconfig_sha256": "9803cca3465bf323e62162479559b493807728cdc2274b7e067e14da73435405",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统异常场景--创建文件时掉电"
+    },
+    "category-4.1.57": {
+      "case_evidence_id": "sha256:b68783fa0b8d3b1f4313a10b6bed86ac4a2af76e2dbd9917816842e2b8769ae4",
+      "evidence_ids": [
+        "sha256:862e5aa42980a0aec2426727a65757ce169e7ec28b272167fe7b4ba8da059540",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.1.57"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--wapi CountryCode的设置和获取"
+    },
+    "category-4.1.6": {
+      "case_evidence_id": "sha256:d1445b5cf198bb3438265892879e52312ad39a3c883332ad3827e3c7f507ae44",
+      "evidence_ids": [
+        "sha256:93ab0a485a0ad674029742671572a249f22722b8935644f721157f3d44d440b7",
+        "sha256:aa24d7dfb878e58ebd697840aaf3999a1991efe480bfc45fb629412fe5ebc447",
+        "sha256:b8559fc833978c429b4fb36cf4c5d483d3974904024f021ed8dff9d899faed1d",
+        "sha256:c3308ad7487a3976d103050b7d11d5071e02ccbe50108409a6e3d1bd02238af5",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:ef8c980c78794665fb29304a98bc6ed278bcbe6d1a0650a57540809d67772090",
+        "sha256:fed230e1b5e2039032479533e645c8c07bd138fd24d44b0043393d77f4eb861e"
+      ],
+      "keys": [
+        "category:4.1.6"
+      ],
+      "note": "只在已备份的专用测试卷执行，真实断电 3 轮，恢复时不格式化；逐轮记录原文件和原始程序恢复结果。",
+      "profile": "xts-flat-category-fs-sync",
+      "retained_defconfig_sha256": "9803cca3465bf323e62162479559b493807728cdc2274b7e067e14da73435405",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统异常场景--掉电重启时磁盘空间变化"
+    },
+    "category-4.2.12": {
+      "case_evidence_id": "sha256:c42d72e8f2d182e4a5b68ab6cf8ad983693d84f31875134a7d5cf8e8d215bd70",
+      "evidence_ids": [
+        "sha256:40b4a39fd724d66b2e3f3e36a4fb2e3c5fb40c50a1b5187062b8bbc27bac399f",
+        "sha256:4f44cdc427354d5f95b20cda4c8f0d54d7815b63582dc23db5554d656bff4741",
+        "sha256:65250723b640658b8dfa98ee9d39cd47faa44dd4192e51b6d16d3398cc248edb",
+        "sha256:b74a02e88a7f1e98dd2f39f09a588e739f8b39df107c07c7a51acf905930d73d",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e40f1f6fb799377ea2656d4c6493b8ea2b2c21ed3b591a2c9e3cbd83671f2906"
+      ],
+      "keys": [
+        "category:4.2.12"
+      ],
+      "note": "历史录音为 2 通道、16bit、44100Hz、10 秒；通过结论包括后续用户试听确认，早期日志中的 LISTENING_PENDING 原样保留。",
+      "profile": "xts-flat-audio",
+      "retained_defconfig_sha256": "a666cb83e844febacb0cb01f3e8644a556414d2874c0e9d171c1d1764df0122d",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Audio_DSP--Capture_cmoka_2channels"
+    },
+    "category-4.2.13": {
+      "case_evidence_id": "sha256:ad63b527e94ecf345a9f1bcc7bcb9016049abf7566531c9f3baa49bdb0a2db65",
+      "evidence_ids": [
+        "sha256:6d021bc34ce643897c86fd38e84ae60b30e2ca075cb57b8f0d570a2c67bf1596",
+        "sha256:7dd63c89cdc51aeb48609fca6907be3f746cbeb8a9d27f30ad34c49b744b52c4",
+        "sha256:88b101c85db56386a684791c407a94bf3d14227a98ca3b490172e8c4c006f7f0",
+        "sha256:b9f161c569a8a1f72b6d98bea0a69cd62d8f5e9506d0488ede7d612b00466196",
+        "sha256:c777e705b4f0bfaf63f7280247eef39bb9f1f89421ddb581f089dfa0660ebbcd",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:4.2.13"
+      ],
+      "note": "历史录音为 1 通道、16bit、16000Hz、10 秒；通过结论包括用户试听。录音文件导出后试听，不以文件存在作为声音正常的判据。",
+      "profile": "xts-flat-audio-mono-args",
+      "retained_defconfig_sha256": "e5f5ea13cc4b29431bbf4f7ccd3464e9914c8bd285009070d46ab4d1672770f6",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Audio_DSP--Capture_cmoka_1channels"
+    },
+    "category-5.1.1": {
+      "case_evidence_id": "sha256:ef32325eb4dc8c579e81e9c75ac3517c3aa9502c67dadb10e97ed4ce130093b6",
+      "evidence_ids": [
+        "sha256:3539c0a85d0bbd0c700fd5e89c662d9d96745223af4dd97f41eeb84a275e2dc7",
+        "sha256:5779b22e4c7c6a699d7047541d7f3dcf1a0e26f08693ce3faac70dd13788a712",
+        "sha256:7fac72747f613ffe1fe54beaa739b1a2b69c849d9fc6e5e9d584568218d9ce3e",
+        "sha256:9b7dc76f9534d54ac1a53b74645ed1ba35f2736db349e2b1014c95ee29225320",
+        "sha256:9de69fe77c2a61aa6b7fd28bbe26da953b3df88a1c90f542fc64b6a9bf9d831c",
+        "sha256:a66cda0cf8d93becfdf217349658ec8465e78cf834690455598400f76c0e7b95",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:5.1.1"
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "profile": "xts-flat-category-fs-name",
+      "retained_defconfig_sha256": "b0f8e6e78f58c195d52f0ee05836903c92b83453f7cf17bc4320a05446189eac",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统分区写满异常测试"
+    },
+    "category-5.1.10": {
+      "case_evidence_id": "sha256:533d00f92b92c0427b81f58e7f5e40d7ded9f2e736e2aaad13fae0a5ae831d3e",
+      "evidence_ids": [
+        "sha256:527a8b7652cc4dee5dd7666cc01af2db9eb7547be8b0e48465079b5cb2a125ee",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:5.1.10"
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "profile": "xts-flat-category-fs-name",
+      "retained_defconfig_sha256": "b0f8e6e78f58c195d52f0ee05836903c92b83453f7cf17bc4320a05446189eac",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统的多线程读写测试vela_fs_multi_thread_read_write_test"
+    },
+    "category-5.1.13": {
+      "case_evidence_id": "sha256:6354eeffd55d718eba498465d0052d4376c82df5c26adbad75f1b1bf7c3f2d08",
+      "evidence_ids": [
+        "sha256:0987b1882530d5b09ca1b5191091ea4aec5a96828a51e161d7176bbdef8f87e4",
+        "sha256:3aeac272d09344b2aaab464d1e83d94ce26e2e05cc643180ce82db430877bdfa",
+        "sha256:7910fb27d1459aaea3134fcdfebce560641b28011700bfbbb943fcf244777950",
+        "sha256:986ff5bf5c3a562991b3427a3b858f557a64634a621060d4772136fda50dbcd1",
+        "sha256:d0b819a8e07b8e39f00be5e2d28dd055257879210d8a70e936664ed483ffe145",
+        "sha256:d8ec38d87cb1437c0c5f4e5efffaf4fd684812edb854912f10fcd8a0e1f91bac",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:5.1.13"
+      ],
+      "note": "写入会覆盖 `/dev/xtsraw` 的测试区。先核验分区和备份，历史命令为 4096 字节 ×64 块的双向 dd。",
+      "profile": "xts-flat-flash-raw",
+      "retained_defconfig_sha256": "99de5fba2408e5bf1de5e568b4c42706a1fc148566b9a5c957ba71f0931dd690",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "裸设备读写性能测试"
+    },
+    "category-5.1.15": {
+      "case_evidence_id": "sha256:bd196e91e8ab1e015d0ad0e82a87cce5e05ddb294e1a1ca653c7b10ecf80b032",
+      "evidence_ids": [
+        "sha256:011c3e5030b5dd3251611df081f589742e7bb9990aaded832abbaa555084efd6",
+        "sha256:282580dc0f1e35003729265d342a0789302d9536f03d70b6a88a9abb766cefd4",
+        "sha256:2bf6a58936c5249c7ae08775b6840531c1c264eef86f3f5bb213fca66c83b97f",
+        "sha256:4db8f98af13959f93fad34e9c2e3b38381da1712e461c03793177690eae66f40",
+        "sha256:97e28ab4775690cae8e546204fc79998f745c70d682ec139da711832340099bd",
+        "sha256:a4afe5974de859f42aca74fec0a700f7c8130ef5d4b7815d16612cfed5b67c22",
+        "sha256:c73a340efb582d8ea1d9dec49c1e4a61da6a20c2a53f18e6976d3c4d36247e5a",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e522fff2d041506ce6f7d39a5f6131c849817d67923bf0ca7819bcd485484f8b"
+      ],
+      "keys": [
+        "category:5.1.15"
+      ],
+      "note": "保留原始 1000 轮，不以少量循环替代；测试使用独立卷和目录。",
+      "profile": "xts-flat-category-fs-name",
+      "retained_defconfig_sha256": "b0f8e6e78f58c195d52f0ee05836903c92b83453f7cf17bc4320a05446189eac",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统fstest执行1000次"
+    },
+    "category-5.1.16": {
+      "case_evidence_id": "sha256:70a7124d4b3a8ce415b4b034017a8831922eb1669c7b0bcd2b97746225e05db3",
+      "evidence_ids": [
+        "sha256:0b14b164ad3b728d0259e9b9f33932c0057a568f285eb64f739467fb6d970b0a",
+        "sha256:258c04ae6c01f9f98fb5f0a9bf4678af2933086d3f6183d7719d9066176999fc",
+        "sha256:5d6ecf3662253fa5a61315090f42f1295a97248534a42467dd067abf74f105da",
+        "sha256:cd1fcb2d58b6e420541633b8a32883d31ac0323fb489a36f8b1e554aa75b802c",
+        "sha256:e0493d91e3a5120c73ae238e4f9bae5cd2e6f310ccae76621bb34efa9b58a3fd",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:ef1281c6e25a214c9b648ae4260876d866d7201210da8f58dc7e7165b18ee420"
+      ],
+      "keys": [
+        "category:5.1.16"
+      ],
+      "note": "专用 3MiB 测试卷，碎片用例保持原观察标准，多线程操作保持原始 1 小时工作量。",
+      "profile": "xts-flat-category-fs-large",
+      "retained_defconfig_sha256": "c148c0d01394acda4c02a05a198a00e5dae12c71fc08d848e0626c416ddd3153",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统碎片读写测试"
+    },
+    "category-5.1.17": {
+      "case_evidence_id": "sha256:95953d1bb594ed88c25fa61612fcac95480655a91bad9dcb6a739ea275e506bf",
+      "evidence_ids": [
+        "sha256:34d3e52e0206dff2d7a233e4a952b422c9b89ecfac52b60fa8b1eea71b9118e4",
+        "sha256:56720a60a1dd53d8b41e6b2f8cf7d09f1369f467638937d9ea8480d8ceb1dfd3",
+        "sha256:57fd43935705c64a30ea01e17e829edeecaa7487a04551a5152106843bbc685d",
+        "sha256:b2d59e26b51c42f77502fab3e2ddf1848c8cb2a2e5c5821b2647b384d510375f",
+        "sha256:da15131628441760f130f1bd7e79dfff7afc67c721c9bb7b9bb65d023bb69e12",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:5.1.17"
+      ],
+      "note": "专用 3MiB 测试卷，碎片用例保持原观察标准，多线程操作保持原始 1 小时工作量。",
+      "profile": "xts-flat-category-fs-large",
+      "retained_defconfig_sha256": "c148c0d01394acda4c02a05a198a00e5dae12c71fc08d848e0626c416ddd3153",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统多线程操作文件测试"
+    },
+    "category-5.1.18": {
+      "case_evidence_id": "sha256:6b3dfb0e2a882b410a417ad59f083efb9b455351def2229619e964d224b670e4",
+      "evidence_ids": [
+        "sha256:14b14ea8ff78dbaf36e0bbf42ef4a87cfda11195cfdc44f73dfecd6e48f4d129",
+        "sha256:2f6ca5da70ca006df378f621463453775c62cccb2977bbb5ce9168505d93a471",
+        "sha256:844b9aaf5a847b08139fafff552d867808f6e9451b460485a1d78166e08cad12",
+        "sha256:871f64313a1209262be79717e2c1d89617b64388ad81ba0195f5dd1b835fdb7f",
+        "sha256:d9f33dd71ccb258aec7cc6fd3ef5af18c0f71b0a1e241bd1dad6d1af44cbedfc",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e6aeeb6cd95c21e90abc2aa713c84e50df1ff9a67ceff14b064ce0a099c167ad",
+        "sha256:e71aa75819bf6fbf4305611a528e18e8d781c9f188a42499f5b2a9b309cea628"
+      ],
+      "keys": [
+        "category:5.1.18"
+      ],
+      "note": "先备份测试卷；crash/reboot 属于步骤的一部分。test04 使用显式 sync 挂载，恢复时不能格式化清空待检查文件。",
+      "profile": "xts-flat-category-fs-sync",
+      "retained_defconfig_sha256": "9803cca3465bf323e62162479559b493807728cdc2274b7e067e14da73435405",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统crash后crc校验 vela_fs_stability_test03"
+    },
+    "category-5.1.19": {
+      "case_evidence_id": "sha256:a93ed43a1c4a1bbb5f91d5bfa5409b828bfc2691765c105c302bb667a5b145aa",
+      "evidence_ids": [
+        "sha256:1b5c2bdff0f54fc32ee31f9d3b1132c1111c4034d63741aba81e6913526cfd9c",
+        "sha256:4480384eba3fc86b91871f0a8ab4c4611eaeb36efa713aa76fe42262c6c25ed9",
+        "sha256:48fbf94d87d669c0d1cf74ea445b3f8a37291c2d2d20eb8a08b4ca31c33ad0a4",
+        "sha256:63b061969390e5ef80fd07e3743130d418ee838b7e08bd08703b7771e1d4dc85",
+        "sha256:662194feee49d4a38cb0230e387aee610976cbaa119cbf6d3696032234411e09",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:5.1.19"
+      ],
+      "note": "先备份测试卷；crash/reboot 属于步骤的一部分。test04 使用显式 sync 挂载，恢复时不能格式化清空待检查文件。",
+      "profile": "xts-flat-category-fs-sync",
+      "retained_defconfig_sha256": "9803cca3465bf323e62162479559b493807728cdc2274b7e067e14da73435405",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统crash后文件完整性校验vela_fs_stability_test04 文件"
+    },
+    "category-5.1.2": {
+      "case_evidence_id": "sha256:5b4483b2a9c73e85a419a27d8e4a3d22a1643731f1e791d361c3287be06e25e1",
+      "evidence_ids": [
+        "sha256:2a8ccf1054193917394741f78210821833d932ba420baca96a420846897e345a",
+        "sha256:65af07736aed03f8ad36ea22f9c4ab40bc2b2de3ea5d68655d555071a44b0792",
+        "sha256:c600505968c488d3ad5841240cc16446fcc58adc2747418ea20ec689133b5ff8",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e59ba6af7a25b3f5fada10997d52019b485f4f04e985a4e38b3d258b8ebdf602",
+        "sha256:f6e63c9c043c5591186b923733adfd377e5e6bf0751deb079e5114d66c3d135f"
+      ],
+      "keys": [
+        "category:5.1.2"
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "profile": "xts-flat-category-fs-name",
+      "retained_defconfig_sha256": "b0f8e6e78f58c195d52f0ee05836903c92b83453f7cf17bc4320a05446189eac",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统文件写入速度测试vela_fs_stress_write_speed"
+    },
+    "category-5.1.26": {
+      "case_evidence_id": "sha256:b60217de6186567635b88d6e7eda74de7c653be2d5a3508bb8c48e5c792b01bf",
+      "evidence_ids": [
+        "sha256:31fa17538cf835e9317cc4e4801ae929470d5cd86f1e0df830e02b8769a25675",
+        "sha256:32aed3a075985d8ccb8a8bb0d72af9b04683c4a2d9f9bf26f93a46acf06ca11f",
+        "sha256:7a4a82338cd7b2f52079e675acafcb2fa1b01513736623cc2cd4ae31615ad52a",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e9dc27239a61d1301eb4833e944f7881748adbf288eafe22b5ea240341abf808"
+      ],
+      "keys": [
+        "category:5.1.26"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--2.4G网络---设备连接2.4G后wapi反复扫描周边无线AP"
+    },
+    "category-5.1.27": {
+      "case_evidence_id": "sha256:95606a21c6afd6b2f6d51323243da08a93bc667482becacd855d6949fb73691c",
+      "evidence_ids": [
+        "sha256:1020820cbfdd9adf668b0c84fb3553bcd441a4a8c3cc57aec0f27daeb8adb658",
+        "sha256:7c358188fe6bafba20f6aa6374ba31a3fbb9be943625d15dbbb784ba7850b3ea",
+        "sha256:a5b133bd25d17b005edafd25a638f8c7f0c18d1bf1f91514fa86762e61d5de8b",
+        "sha256:ceb2af47302ed90be55ff619d20efda13fa4b60c03df7f95544bf9bf1d7d2457",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:f4d2001a654b33afc0375b10d2d6692bd6dd9c69fb22d4dc607aa66463b4a5fe",
+        "sha256:feeca706b723ef822b0a08baa8c53fd4dbb720b1be2d560a328b937b592d30a6"
+      ],
+      "keys": [
+        "category:5.1.27"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--2.4G网络---设备连接2.4G后wapi扫描指定2.4G AP"
+    },
+    "category-5.1.29": {
+      "case_evidence_id": "sha256:b580c6ee852db511520ea87677b0f2b0a990a369bc9959df6d822a03581f8183",
+      "evidence_ids": [
+        "sha256:2a1847401cc163fde8e1eda73b45a76b7456b41b5fb6001f1b750816a76fce3c",
+        "sha256:6f75829bc9486fa3e25c5b66b1140b5512a5604e55f92c1b3219fe9588838a71",
+        "sha256:c8b063eed6097607a87fc6fd600308f1b8312349487045eafdc3c932d51ee7fd",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:f7a9c671760dfda82cfb0d1920c3bc2008a0f60eab64a26db370e3700dc78ad6"
+      ],
+      "keys": [
+        "category:5.1.29"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--2.4G网络---wapi反复disconnect 2.4G网络"
+    },
+    "category-5.1.3": {
+      "case_evidence_id": "sha256:226dc890b502d38156236864efb15185da2242420ff36c7376b4f3358e310e77",
+      "evidence_ids": [
+        "sha256:040320f3d36889ce69f7eeab617906ee39ae2e584ca22042390c837175f82d1b",
+        "sha256:0ad7011ce0f799ff47e9de6c605dfda552c921347329e3f97b9de7ff40e58036",
+        "sha256:2c035dab515df13a4996ae4dc6a167166e31c07d5deafb6bb256688ebf7254ff",
+        "sha256:c13ba71152daddcbf1a3e2df8f4f1830303985a1c706f967ceb78f41727613fc",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:ff5a5796f89f46e6309c3fc73626667cf4352380b1a5d2afeb394f996b55c08c"
+      ],
+      "keys": [
+        "category:5.1.3"
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "profile": "xts-flat-category-fs-name",
+      "retained_defconfig_sha256": "b0f8e6e78f58c195d52f0ee05836903c92b83453f7cf17bc4320a05446189eac",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统创建和删除压力测试vela_fs_stress_loop_create_delete_file_test"
+    },
+    "category-5.1.4": {
+      "case_evidence_id": "sha256:7cfcfd9322642ca02b41a97aea279fbe099be0aa1150711ce4323680eaece81b",
+      "evidence_ids": [
+        "sha256:a76991112f894a7035c2f7759c6f751d01853d0ace5e9d60cc512b9875e30e8a",
+        "sha256:bc29b36e99009f9da3caa3f0c6106eea0385beefb6fc5724251360b965d9623b",
+        "sha256:d763053a4361cda66add44239d6f225fbf13c71e5ef5725703e645f0f88f94c6",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e8c32a8cc112f58afa49da5cf3d71ae3a6b79afee7c30edffcd4c7212d45fe36",
+        "sha256:f270533c1a01d1c6eeb57d9b337a7add24a9d8a0e61cafba9e38b66725594da3"
+      ],
+      "keys": [
+        "category:5.1.4"
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "profile": "xts-flat-category-fs-name",
+      "retained_defconfig_sha256": "b0f8e6e78f58c195d52f0ee05836903c92b83453f7cf17bc4320a05446189eac",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统反复创建和删除文件vela_fs_stress_maximum_file_name_test"
+    },
+    "category-5.1.41": {
+      "case_evidence_id": "sha256:4941ee04d85be2289f46608017ce7d98b9c12d77ddba70d46add3aa50cb98889",
+      "evidence_ids": [
+        "sha256:4ce615ec4ae5a860acfef0b4da428dea39330f0e45a62d6da4a16ea66494a0d2",
+        "sha256:862e5aa42980a0aec2426727a65757ce169e7ec28b272167fe7b4ba8da059540",
+        "sha256:990d4c580e470dfdda6f510bb005ab2976753f647abedc4613ea910e117ff453",
+        "sha256:a2c153568bfed558240b96b020f69a72f875c4d3e36dacb2da07acce2871c8d8",
+        "sha256:a4dbe838a96683a6fdd86b66f811e81a1d3c5da3ffec16452539c03a86a7d9ed",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:5.1.41"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--反复ifup&ifdown"
+    },
+    "category-5.1.42": {
+      "case_evidence_id": "sha256:e1920f347556c35030c088e7ccaafecf069505e1f291d268faab1b5c4e903261",
+      "evidence_ids": [
+        "sha256:617157d10106c56fb76988a727463a60442012a4d1723616d82911e424431b70",
+        "sha256:76a10fdfade9a8aba70814657b4e882e18bf4a5aa0475107c279c0d919596674",
+        "sha256:770fa1f904db31b6968c3c6d0d455f34d4f9bc0c794a96f16896227b826c2bf1",
+        "sha256:a8d4c959ebc908551f925e310991c2d56b6ac9ed025366e8ac1124cb74434bc9",
+        "sha256:e203ec90566205b03342debb5328d8167c76358c8a561fd1d19387083894f498",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:5.1.42"
+      ],
+      "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "WiFi--设备未配网时反复扫描周边无线AP"
+    },
+    "category-5.1.5": {
+      "case_evidence_id": "sha256:972515bacb7861b6fee9814a799e7ceb6db8b5780a438e0bf97cceedd0cc69bb",
+      "evidence_ids": [
+        "sha256:3d743a5fec1c95b30c4d6b595a8df4c6d0f523626e595a2712730ed023b55b25",
+        "sha256:45bd2459b031f51e71f5e478dbcf2ac0c58be570bd7f4ab0d4d6c32a86bf804d",
+        "sha256:6405ae8bd546a62d0af2ca1cf6b78b24400895dbcd9840963cd47cd28c0c0f17",
+        "sha256:b32b3607beb3e82b4bcb41651c4af028b30d5bb53d7866d375ab4e0ce57df8ee",
+        "sha256:be140097723d59b8f3f3cb7f38888637f19f15e642dc2f5497d634ce452075b5",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e7bc5a12b35881785e907d7b6dd586478470827625b29db7434d3a55ebd1b83e"
+      ],
+      "keys": [
+        "category:5.1.5"
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "profile": "xts-flat-category-fs-name",
+      "retained_defconfig_sha256": "b0f8e6e78f58c195d52f0ee05836903c92b83453f7cf17bc4320a05446189eac",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统多线程文件读写测试vela_fs_stress_multi_thread_file_operate_test"
+    },
+    "category-5.1.6": {
+      "case_evidence_id": "sha256:1bbb2cc6c83299a6c770ee3ff011bcb128edcbe6f05e2a08087dc6e55911a081",
+      "evidence_ids": [
+        "sha256:8221fc09bd7b6506943ffb3debc803b3f306c2ef84a74f5eb7410deb2784fb90",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:5.1.6"
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "profile": "xts-flat-category-fs-name",
+      "retained_defconfig_sha256": "b0f8e6e78f58c195d52f0ee05836903c92b83453f7cf17bc4320a05446189eac",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统反复读写测试vela_fs_stress_read_and_write_loops_test"
+    },
+    "category-5.1.68": {
+      "case_evidence_id": "sha256:8413c1dc07aab4e8c7f37bc1735e24c7399ee3ed44c19e6553ad3a07522a5b4b",
+      "evidence_ids": [
+        "sha256:53446677987d343b14206623850f7be2d386803c896194b69b2c8be139f6c2d6",
+        "sha256:570387fd3147bd1480ffb43daa5be7de121522f5aca4261731090e573ca5fa76",
+        "sha256:6343d491fafde8f5017492579722c2cb244834caf26f055decaa867e3e4b9dd5",
+        "sha256:bc6c693ee902cdd1bd1aafdc0250d5d7dd9de949307eeebd1d5ff491bcd5da22",
+        "sha256:d8b3497e91f150a43374e98894920e43c71f55396ad68df19970c4250593e7d4",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:5.1.68"
+      ],
+      "note": "独立 3MiB 卷，原始 10 轮全部完成；1119 等较小卷失败证据保留，不替换成新 PASS。",
+      "profile": "xts-flat-category-kv-large1144",
+      "retained_defconfig_sha256": "2a96fda9a67d984659ecc92939baca96ef3ae5072e946f328a2b3139441c630d",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "KVDB稳定性vela_kvdb_stability_test02测试"
+    },
+    "category-5.1.8": {
+      "case_evidence_id": "sha256:11517a5dd6f9dfbbdfb45184596ca3858af53353cae9331dd721d1f69d39d11c",
+      "evidence_ids": [
+        "sha256:2320201d63f0b8645dbc5c88f7212e468ee5c226d6e715c2fdbd666f37ce2b02",
+        "sha256:7cdd93405c16ac17b1a30c21caef6be41c777a69e1d460ea54a3571e6c3d23be",
+        "sha256:b32b3607beb3e82b4bcb41651c4af028b30d5bb53d7866d375ab4e0ce57df8ee",
+        "sha256:c26e05ab6a2ef4663ba3aa8e14a975c092d278b0e82e164e4d3d4ac3ef339323",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:ec08b3f3a2416d00a55acef7742eee75908ac80f6775b8f974e3a81a3ae5c00b",
+        "sha256:ed970b2b83650752e2b4e06112fb2d8f05f96f3002a7ca5f9fd3ec3c4310af59"
+      ],
+      "keys": [
+        "category:5.1.8"
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "profile": "xts-flat-category-fs-name",
+      "retained_defconfig_sha256": "b0f8e6e78f58c195d52f0ee05836903c92b83453f7cf17bc4320a05446189eac",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统多线程写文件测试vela_fs_multi_thread_write_test"
+    },
+    "category-5.1.9": {
+      "case_evidence_id": "sha256:c076d765f9d5597b9580801d92e9c24e834348c7a9d91d5c0dbdb14377e8aa44",
+      "evidence_ids": [
+        "sha256:4803e75b5ad3aa6893702f260ebf623e5549b29cb69ec2006cd664b0d0454bfc",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728"
+      ],
+      "keys": [
+        "category:5.1.9"
+      ],
+      "note": "使用已备份的专用 LittleFS 测试卷和独立工作目录。参数、循环数及挂载方式以原始步骤和对应通过日志为准；禁止把运行目录设为系统 /etc 或其他已有数据目录。",
+      "profile": "xts-flat-category-fs-name",
+      "retained_defconfig_sha256": "b0f8e6e78f58c195d52f0ee05836903c92b83453f7cf17bc4320a05446189eac",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "文件系统多线程读文件vela_fs_multi_thread_read_test"
+    },
+    "category-ble-switch": {
+      "case_evidence_id": "sha256:614866d185cabd822ef93366d2cc078e3a1d2438760d5910338915722d5c8ce7",
+      "evidence_ids": [
+        "sha256:22324858109b2419875a8dd94908ea58dbf375b9fd15df29fadfa9c92a4f57c3",
+        "sha256:2926ebe86102960e03157cedef72bff1505db64f60f13fb61e8a31ca8456e36d",
+        "sha256:515f8177400a3bd62a8c79f9d9bf131cc9e42a8164b8f3155bab321709add312",
+        "sha256:8296689332984d5ca187cb185b156854800abc928ee9e81846cf7454b8df5e61",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:f4c1c317e68e808b620e6aab94702d18845614d427ca9acf2b156594b6ba4351"
+      ],
+      "keys": [
+        "category:ble-switch"
+      ],
+      "note": "NSH 启动 bttool 后在 bttool 提示符依次 enable、state、disable、state、quit；state 应完成 2→0。蓝牙开关通过不等同于其他 BLE 用例通过。",
+      "profile": "xts-flat-bttool",
+      "retained_defconfig_sha256": "c10bb8e0cefc5d4580396bd0368f62ed4ad7bbf2d1da00ef9c53b33d76eb8b09",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "开关BLE蓝牙"
+    },
+    "common-1.1.1": {
+      "case_evidence_id": "sha256:e0174082596930a979556692787a12a23ab301982cac261fcffff35cb18d6449",
+      "evidence_ids": [
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:aa47c124a6d7f729828e85cd3cdf41c1c3e9d9047f18e1ebd24d7dcfde3cbfd2"
+      ],
+      "keys": [
+        "common:1.1.1"
+      ],
+      "note": "",
+      "profile": "demo-rmt-xts-core",
+      "retained_defconfig_sha256": "819119435d2ddcd8e062d932f1b5e410d9b373488a07d3e7ce20471bfee510d3",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "系统内存管理测试"
+    },
+    "common-1.1.10": {
+      "case_evidence_id": "sha256:ab80a5e3ef4bd50de7e52df4b75749815e67a86985e6681c0e5b1ad091212310",
+      "evidence_ids": [
+        "sha256:557c357a54e97cc9637f1287ebfb9100b6962245e602b60aee9d404890dd997b",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.1.10"
+      ],
+      "note": "",
+      "profile": "demo-rmt-xts-io",
+      "retained_defconfig_sha256": "5f3b4157d9cb130141e76c6c7fd75c71922605a2ea46dce89bf3f66bfb1d2df5",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Kernel-popen测试"
+    },
+    "common-1.1.11": {
+      "case_evidence_id": "sha256:8b53817eb237f1f3f8f939212b04d2d336f9c969dc4567147798f428a979bd59",
+      "evidence_ids": [
+        "sha256:2f9d263f329677194f187fef1c75f8d93494349bb728fe09b6c4e65333b5ad65",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.1.11"
+      ],
+      "note": "",
+      "profile": "demo-rmt-xts-io",
+      "retained_defconfig_sha256": "5f3b4157d9cb130141e76c6c7fd75c71922605a2ea46dce89bf3f66bfb1d2df5",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Kernel-pipe测试"
+    },
+    "common-1.1.12": {
+      "case_evidence_id": "sha256:557d7ff40f45f88fd37b0cd2892c7597cfac24eb98039408f4ddd1338d309ee9",
+      "evidence_ids": [
+        "sha256:160f88d17fb3aa47127fcf917b471112ad0f48868a8cf1052caf8aedb76ce055",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.1.12"
+      ],
+      "note": "历史命令为 `md5_test -f /etc/1.txt -c 100`；先确认 ROMFS 中的测试文件存在。",
+      "profile": "demo-rmt-xts-io",
+      "retained_defconfig_sha256": "5f3b4157d9cb130141e76c6c7fd75c71922605a2ea46dce89bf3f66bfb1d2df5",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Kernel-md5值测试"
+    },
+    "common-1.1.13": {
+      "case_evidence_id": "sha256:6d86aca97460cb5ccaa5ef340e1969683ccb0f3dc040093b92a988f819d4f315",
+      "evidence_ids": [
+        "sha256:00fea54b3cb7c5b67c707979c4ba9e0d9e68553ad6fc291a29bfcb079aa890a7",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.1.13"
+      ],
+      "note": "",
+      "profile": "demo-rmt-xts-cxx",
+      "retained_defconfig_sha256": "4ea8054bb82b7fc4e9134e059d9bd8e8a833b8f7ff905a06ec8910f4fd632bd7",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Kernel-C++功能测试"
+    },
+    "common-1.1.2": {
+      "case_evidence_id": "sha256:8eb652849c7a6e24d2d78799fda8135c4b3b9cffd39f9b700100da9b46969ebf",
+      "evidence_ids": [
+        "sha256:1d58aa9246dc60ce62c17b7d2113992f3f7b9e5ea822f9c086d14e4b3bde4c0e",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.1.2"
+      ],
+      "note": "",
+      "profile": "demo-rmt-xts-core",
+      "retained_defconfig_sha256": "819119435d2ddcd8e062d932f1b5e410d9b373488a07d3e7ce20471bfee510d3",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "系统调度测试"
+    },
+    "common-1.1.3": {
+      "case_evidence_id": "sha256:68f6446b6d06edc4196a5235a50fc3e8a1ba49e918d90adf52e24eb93d682cfd",
+      "evidence_ids": [
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:f472fa07c8fde6317ab9c3dd145f391db77209b5dd3100ea8b7b76bc450a0196"
+      ],
+      "keys": [
+        "common:1.1.3"
+      ],
+      "note": "",
+      "profile": "demo-rmt-xts-common",
+      "retained_defconfig_sha256": "cb0b5594b8b68fc046218665016d65c11b986446f8a49e440c285e9a4d7357ad",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "系统调用测试"
+    },
+    "common-1.1.4": {
+      "case_evidence_id": "sha256:55a346628d3a620e03d2ab0cfef85cd3dad64c0963173d6b31d4d6305a2404ca",
+      "evidence_ids": [
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:9da765b6bfa9b9b337012efd01cb142b0a16b20b6924f7e8cc2563b6d19bff55",
+        "sha256:afa05327d99f3125d66187f4260d84ccbe397598137dddc554cf2b4196eaa7ee"
+      ],
+      "keys": [
+        "common:1.1.4"
+      ],
+      "note": "保留原始循环与线程数量，等待 ostest 正常退出。",
+      "profile": "demo-rmt-xts-ostest",
+      "retained_defconfig_sha256": "6b8ca309f4d56484bc5f275233a05e34fec53f6d67cc61e1f7bfe4bb133ffeca",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Kernel-ostest测试"
+    },
+    "common-1.1.5": {
+      "case_evidence_id": "sha256:5b3dc9771dd3a42e782e31a84586e460cb3cd95a3df458bae57a8438437d5cd7",
+      "evidence_ids": [
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:dab7a27ca6e6c3bec9e1fe8e991df5a01cd31fbd55d526a2fbedc237be507264"
+      ],
+      "keys": [
+        "common:1.1.5"
+      ],
+      "note": "",
+      "profile": "demo-rmt-xts-common",
+      "retained_defconfig_sha256": "cb0b5594b8b68fc046218665016d65c11b986446f8a49e440c285e9a4d7357ad",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Kernel-getprime测试"
+    },
+    "common-1.1.6": {
+      "case_evidence_id": "sha256:a5e5c04e96ab26f6849706dbe0b1f7a7443c5a3186d55c860296d04418b9801a",
+      "evidence_ids": [
+        "sha256:00025c111682f204404f27d149ab178953c4e117f35a0d1670d256db2a9f9c1a",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.1.6"
+      ],
+      "note": "该记录使用 FLAT 镜像验证含 16MiB PSRAM 的堆，不换成 Kernel 配置复用数值。",
+      "profile": "xts-flat-rtc",
+      "retained_defconfig_sha256": "3b081c889c5ad72e91fe6f0e883ccd4338a4e6ee3f7156462d52c8605f995c9b",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Kernel-mm内存测试"
+    },
+    "common-1.1.7": {
+      "case_evidence_id": "sha256:57c72a25d8adda7bb8e3f7fa83f76b66685de2800a1f90fd87c6e179414cb2f4",
+      "evidence_ids": [
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:d447ff8b1ee5e5d5ac3622f33c7817d90e7d63355f8fc47c20860323f00b7ed3"
+      ],
+      "keys": [
+        "common:1.1.7"
+      ],
+      "note": "",
+      "profile": "demo-rmt-xts-common",
+      "retained_defconfig_sha256": "cb0b5594b8b68fc046218665016d65c11b986446f8a49e440c285e9a4d7357ad",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Kernel-scanftest扫描测试"
+    },
+    "common-1.1.8": {
+      "case_evidence_id": "sha256:c8de7d6f70fc15b67e2944d2dfc17420277d1b9c9940244567ac22d7656d4e39",
+      "evidence_ids": [
+        "sha256:89015d874eb3b42a804c6ed16ffa464adb7343964903214acf7b662161f237b9",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.1.8"
+      ],
+      "note": "",
+      "profile": "demo-rmt-xts-common",
+      "retained_defconfig_sha256": "cb0b5594b8b68fc046218665016d65c11b986446f8a49e440c285e9a4d7357ad",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Kernel-C测试"
+    },
+    "common-1.1.9": {
+      "case_evidence_id": "sha256:3f606b8f9d7fddeb1cf74af43f41b81dfab5d900185c3ba42baa5fc766001b41",
+      "evidence_ids": [
+        "sha256:1a646a19ed9535b80609738f78d775e0e60deaadee2cb076e1afffd30fb19640",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.1.9"
+      ],
+      "note": "",
+      "profile": "demo-rmt-xts-cxx",
+      "retained_defconfig_sha256": "4ea8054bb82b7fc4e9134e059d9bd8e8a833b8f7ff905a06ec8910f4fd632bd7",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Kernel-Cxx测试"
+    },
+    "common-1.2.1": {
+      "case_evidence_id": "sha256:7c2d6e31e0e5e7d77c6fdf307e60c4a93bd8d5236ff772b0ecfece8b17dd0e39",
+      "evidence_ids": [
+        "sha256:779758d0a7dfae84c0970781eb62c5ff3b72d59b40480d28698a067365ece487",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:c6f227ee4be7023979214afd0f8cc8495b861158ed1ee4f63e60efdfdcd6f892"
+      ],
+      "keys": [
+        "common:1.2.1"
+      ],
+      "note": "执行 10 次软件 reboot，每次保存从 ROM 到 NSH 的日志；不要把 reboot 当作物理掉电。",
+      "profile": "demo-rmt-xts-reboot",
+      "retained_defconfig_sha256": "e809023f1a793974862930cb868ef8ea1dcba345ec6056cf804169d10a7c68c5",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Reboot启动异常测试"
+    },
+    "common-1.2.2": {
+      "case_evidence_id": "sha256:2568be36ccb8177c278bea77d299d3faf487ea47951d326ec9a02c86b20227d4",
+      "evidence_ids": [
+        "sha256:07dad90291fa017f4d3dec5d37e59a8040d2fd7186b70ef4f1fa4a8ba0af47c6",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:a1f57d3e9c0a684c8cdd1ac8f9e03d6466e218df7796eda2f7a66777f38381d5",
+        "sha256:ece61b0a00cbb094fd3117abdb20273b152b9b4b27dba32d3374a4943608054a"
+      ],
+      "keys": [
+        "common:1.2.2"
+      ],
+      "note": "通过依据为用户按实体 RESET 后启动正常；不替代 2.1.3 的 10 次真实 USB 上下电计时。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Cold boot启动异常测试"
+    },
+    "common-1.2.3": {
+      "case_evidence_id": "sha256:0461d506500115320fb0ba942bd804127b5fa39c2c20279c93345fdb929b29ea",
+      "evidence_ids": [
+        "sha256:446d7d06ce2eac42e4fe376086054f2e990c1c2d31865327135a06a963a97d08",
+        "sha256:74dce2028b740532418a999b5a50fb65d09ecffec898a4c6fa6a20b3b5ee4f60",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.2.3"
+      ],
+      "note": "执行 free、ps，并区分 CPU0/CPU1 与共享堆，不能把共享内存重复相加。",
+      "profile": "demo-rmt-xts-io",
+      "retained_defconfig_sha256": "5f3b4157d9cb130141e76c6c7fd75c71922605a2ea46dce89bf3f66bfb1d2df5",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "系统RAM资源占用统计"
+    },
+    "common-1.2.4": {
+      "case_evidence_id": "sha256:d7232aae799736ca008d903d3886431317b49b72fb32183a5bc1dca4f1c7e4c5",
+      "evidence_ids": [
+        "sha256:446d7d06ce2eac42e4fe376086054f2e990c1c2d31865327135a06a963a97d08",
+        "sha256:74dce2028b740532418a999b5a50fb65d09ecffec898a4c6fa6a20b3b5ee4f60",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.2.4"
+      ],
+      "note": "执行 df、mount；文件系统容量和物理 Flash 分区容量分别记录。",
+      "profile": "demo-rmt-xts-io",
+      "retained_defconfig_sha256": "5f3b4157d9cb130141e76c6c7fd75c71922605a2ea46dce89bf3f66bfb1d2df5",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "系统Flash资源占用统计"
+    },
+    "common-1.3.1": {
+      "case_evidence_id": "sha256:31df6e81e13b38f46c260856a1a9566b4ee97ad5110268b78b690923404d0cdd",
+      "evidence_ids": [
+        "sha256:1fcb3ee29ac17e0ba4faf41923041dab79e633584e0050d28239304c6be3aedd",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.3.1"
+      ],
+      "note": "这是烧写/启动操作例程。按根 README 备份 Flash，再写入同一次构建的内核和 AppFS，记录哈希与启动日志。",
+      "profile": "demo-rmt-xts-core",
+      "retained_defconfig_sha256": "819119435d2ddcd8e062d932f1b5e410d9b373488a07d3e7ce20471bfee510d3",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "烧写测试"
+    },
+    "common-1.3.10": {
+      "case_evidence_id": "sha256:a45957ea4eddb07037725ac5051b28acd6841359331cc4b27e74d2ced4f5f013",
+      "evidence_ids": [
+        "sha256:6b9f783c6e66df05839cf4cf6085d0a5f642964eb76faae2da94b717d91ef877",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:d430ad7fe3503dfef260431f773f620d095d1a30155c7ae35ced55e67856cabf"
+      ],
+      "keys": [
+        "common:1.3.10"
+      ],
+      "note": "历史命令 `cmocka_driver_uart -d /dev/ttyS0 -n0`、`-n1`、`-n2`，主机按原文发送规定字符与 10 次突发数据，测试时独占串口。",
+      "profile": "demo-rmt-xts-drivers",
+      "retained_defconfig_sha256": "eb87af7b70dfffc659b5b986a763e21c651d9cc5f1952441efd91ca546020408",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Uart串口功能测试"
+    },
+    "common-1.3.11": {
+      "case_evidence_id": "sha256:114a3e3ecf57afcec63b6f8690d0128d11abe09217b5a0ce42fca8de1b9cca8d",
+      "evidence_ids": [
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:d73b6d6c2c7490da64d6685c0fd5a843e4079f309b6dc3f1490d4a7451e975e0",
+        "sha256:f7d5128a71a2f9fc3876098949e95c41f00078f7c269f4259f6d4d84e498f7cf"
+      ],
+      "keys": [
+        "common:1.3.11"
+      ],
+      "note": "在 NSH 与主机 YMODEM 客户端之间双向发送 129 字节和 65573 字节文件，并比对内容；不能只看传输退出码。",
+      "profile": "demo-rmt-xts-ymodem",
+      "retained_defconfig_sha256": "bbd3e0a4f7c1e73d57100af58cb5463660089fd6123a70f16af394c31e778e65",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Uart文件传输功能测试"
+    },
+    "common-1.3.12": {
+      "case_evidence_id": "sha256:1ab9ca7a4e3bbb65f264b94ccf3883ae7055e38d9a8c20c38fcd9d496af703aa",
+      "evidence_ids": [
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:a6ced2f653a53068c949ca6ba51e560221d16a93d2cd1aeb22170bbd0f9d22f3"
+      ],
+      "keys": [
+        "common:1.3.12"
+      ],
+      "note": "使用 `/dev/rtc0`；该 FLAT 配置覆盖原始 API/闹钟/周期 3 项，不能替换成缺少完整 RTC 回调的 Kernel 驱动配置。",
+      "profile": "xts-flat-rtc",
+      "retained_defconfig_sha256": "3b081c889c5ad72e91fe6f0e883ccd4338a4e6ee3f7156462d52c8605f995c9b",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "RTC时钟功能测试"
+    },
+    "common-1.3.13": {
+      "case_evidence_id": "sha256:1e288574e0b5d1e29105499b9504698238b5a5732986693e8786e28ee1db5f1a",
+      "evidence_ids": [
+        "sha256:5ae5db321d4645018e00d08e6ec30db0ba16a4cc8288ce99333f917c056f49d0",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.3.13"
+      ],
+      "note": "历史命令：`cmocka_driver_timer -d /dev/timer0`。",
+      "profile": "demo-rmt-xts-drivers",
+      "retained_defconfig_sha256": "eb87af7b70dfffc659b5b986a763e21c651d9cc5f1952441efd91ca546020408",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Timer定时器功能测试"
+    },
+    "common-1.3.14": {
+      "case_evidence_id": "sha256:1c7d4d8f9a826143493043b42f7007d3ad33a73e613872011816feff3f325f41",
+      "evidence_ids": [
+        "sha256:0476e6b1471126907fce20ed90e8e972fb661f8a7967e23d6820614c6c40762e",
+        "sha256:17cdcd3b3e50cc05e18c82486683639dc2a08c82359c5131cbec86eefc3ce06b",
+        "sha256:3c9978e57577d5872958b3c77d856a13f8823f6664bd654582e0c7ca60691650",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:9c58eeb69f117b100f889b2ee1696f98650ee47a553c43023cc6b315efd33fd0",
+        "sha256:f5ebdab503e8adf9dc240e39f3e3e5c99a824e23da12faae489b2ad8089c7fd2"
+      ],
+      "keys": [
+        "common:1.3.14"
+      ],
+      "note": "沿用 24h 四次记录的项目验收口径；原始采样缺口与时间解释见 clock864-acceptance-989.md。新的计时任务需要单独建立连续记录，不能借用旧结果。",
+      "profile": "demo-rmt-xts-standby",
+      "retained_defconfig_sha256": "dbb851af8c469d3c2cc12ce6de0dce617a9c9b79b33b270750dda1958632f4b2",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "时间一致性测试"
+    },
+    "common-1.3.15": {
+      "case_evidence_id": "sha256:a18c9f2507ca3de03e9ebfafec3750a7c3ac63b2784070aa4842df704e735ea9",
+      "evidence_ids": [
+        "sha256:01744c3fc4f6235a7d099c192cafa169f60f4a982735261bd198fbcf9e62399a",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:9ffadb8d331f173bbb1636301679f35e63cdf5efbc2f6e6585270c2b943c546b",
+        "sha256:c6946a0cd876e382d555e0f0212cd1372de8496aebf02662f2e8efa80ba09589",
+        "sha256:d0acf0ab25eb4a2558a2745298a56738da9fe70b1581f186e791364b1904be68",
+        "sha256:ff10256e2ada18e945287da381a11634c900f8097f37fe6db361c7da5a2a81bb"
+      ],
+      "keys": [
+        "common:1.3.15"
+      ],
+      "note": "按模式 0→1→2→3 执行，模式对应复位属于预期行为；保持串口日志跨复位采集。",
+      "profile": "xts-flat-wdt",
+      "retained_defconfig_sha256": "64e2fd30117e94fe21d71ce7480cdcaddb6398f98e2304e97d3a677c4e372e69",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Watchdog测试"
+    },
+    "common-1.3.16": {
+      "case_evidence_id": "sha256:206f18896016dbb833626e2766c572a402f722637e8791066d5d758ff78d0eb5",
+      "evidence_ids": [
+        "sha256:041655c9e7d3ecfbf24f727eecb1a642d7ee90b5b56d815347286674a8a04bfd",
+        "sha256:295fef75b4f1291b3636fadcd3a7b9e16ad01867fddf1f8580576ba2fb86775d",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:b65bdd0d356197052f69f8d6c34715605a67488c28f891bcb84c8242e0e28953",
+        "sha256:ed25a43df89db15d95f9984b1bc437441e586dd2cef36ab1668f42c3bbd4982e"
+      ],
+      "keys": [
+        "common:1.3.16"
+      ],
+      "note": "**用户确认通过**：保留原始 26 项未定义统计输出，不将其改写成统计套件全通过或社区认证。",
+      "profile": "demo-rmt-xts-rng",
+      "retained_defconfig_sha256": "276f953fb9d8d4262a416dff95a3b117fee291c6d77326524f1d25901a8a5cf3",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "RNG功能测试"
+    },
+    "common-1.3.17": {
+      "case_evidence_id": "sha256:86dd2e7bb587360532a2b8a3fab80401a0735b80294e1d4eb74b70b615dc9f1a",
+      "evidence_ids": [
+        "sha256:900c1847e30e484b8ea17715d81a5608d344e1404d2196aef39e2f97eb81eaed",
+        "sha256:9569691a2d18b0e4baca49a52eb6938a2e4b8d8a0183ea921c72fd41b3b702b9",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:9f838e5438b111f7b12615b0830b98e1f870b3edf634daec7741e38895c2b9c4",
+        "sha256:be3c8ed6bcad9b5f7834d123550f09b31e16b26f6e3a1d56686d6d3ec194cb11",
+        "sha256:c819fd42e90ca1c22190f5dc6aac08dd544655d0f5e4eaef06d11cb6a4576126"
+      ],
+      "keys": [
+        "common:1.3.17"
+      ],
+      "note": "原始 8 个 Crypto 程序分别执行；软件回退与硬件加速范围见日志，不能把 API 通过等同于全部硬件加速。",
+      "profile": "demo-rmt-xts-ecc-offline-log",
+      "retained_defconfig_sha256": "c73573673f2bb3804564a6a9dfa7b837f6bb4b22f9df54c5a68481407ed2ec62",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Crypto功能测试"
+    },
+    "common-1.3.2": {
+      "case_evidence_id": "sha256:ff5c6fe7985be6d094d1919a86e2422659a4c11061ca36396cb5c28953fa599d",
+      "evidence_ids": [
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:b95e296e0b23c5d4c4354b4085aa3502b80a360613a7a310e9f5bc54259b0cb4"
+      ],
+      "keys": [
+        "common:1.3.2"
+      ],
+      "note": "使用易失 /tmp：`fstest -n 10 -m /tmp`，保留原始 10 轮工作量。",
+      "profile": "demo-rmt-xts-memory",
+      "retained_defconfig_sha256": "3987a772acf71a64c0b315e8874fc6a089dd03a2351900443244a730a1431446",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "RAM读写测试"
+    },
+    "common-1.3.3": {
+      "case_evidence_id": "sha256:cbc69f0bf346bf4726f732fd30710469839acb553a0909a96a87ab5823f01825",
+      "evidence_ids": [
+        "sha256:392d64bc940c3db12bb54ec2e4fea0e9d4142c36063c7506c0e3481929ab7c2f",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:d80c5da33bf45686c79936c6f4400a45aba8ff0190464de633c4fb1e7413a3f8",
+        "sha256:fdcaf4b2fa9b293ea7bdf78754a810f1f92cd2986c586470d2778d709554a7ea"
+      ],
+      "keys": [
+        "common:1.3.3"
+      ],
+      "note": "历史参数分别为 `ramtest -w -s 209256`、`ramtest -h -s 209256`、`ramtest -b -s 209256`。",
+      "profile": "demo-rmt-xts-memory",
+      "retained_defconfig_sha256": "3987a772acf71a64c0b315e8874fc6a089dd03a2351900443244a730a1431446",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "RAM读写性能测试"
+    },
+    "common-1.3.4": {
+      "case_evidence_id": "sha256:8a185e50fc9b7294628556621602f9a18623e379febfa93aea39ab8dd636e55e",
+      "evidence_ids": [
+        "sha256:08ea15a1ee283608ffd64f207ea0848b79f7fed9378631aee457508ed25b7ebb",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55"
+      ],
+      "keys": [
+        "common:1.3.4"
+      ],
+      "note": "历史准备：`mkrd -m 10 -s 1000 1024`，然后 `cmocka_driver_block -m /dev/ram10`。仅使用独立 RAM 块设备。",
+      "profile": "xts-flat-rtc",
+      "retained_defconfig_sha256": "3b081c889c5ad72e91fe6f0e883ccd4338a4e6ee3f7156462d52c8605f995c9b",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "RAM随机读写测试"
+    },
+    "common-1.3.5": {
+      "case_evidence_id": "sha256:3b25b51e20a9771741572a91930a015b0d6af59ec59aa1b132611130d13c4b09",
+      "evidence_ids": [
+        "sha256:2551be0014677eb7452fe500eab791eb0e2d89c36917c7b391457301af363d34",
+        "sha256:2f5483d3f41f0f4d91b496e866a7869fb1222da94dec0abd7f02ac1c158a5327",
+        "sha256:71a86dfe75260ab2be664cc7c279984f119e169b3d9f9d48849d6fe1e0577f41",
+        "sha256:986ff5bf5c3a562991b3427a3b858f557a64634a621060d4772136fda50dbcd1",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:9d6be2f589898ddad336960c1647328d5bc2bde121f612f87f89c26aa112507f",
+        "sha256:d8ec38d87cb1437c0c5f4e5efffaf4fd684812edb854912f10fcd8a0e1f91bac"
+      ],
+      "keys": [
+        "common:1.3.5"
+      ],
+      "note": "测试会写块设备。只使用该配置注册的 `/dev/xtsflash`（0xc00000 起 1MiB），先按历史记录两次读取核验、备份；不能指向系统数据卷。",
+      "profile": "xts-flat-flash",
+      "retained_defconfig_sha256": "a12a919b59d17189ae45d8b62b71c256d8cee54241641a0d34e3c3920932873a",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Flash功能测试"
+    },
+    "common-1.3.6": {
+      "case_evidence_id": "sha256:27755bbfe684312142c7459b7cb881737d26e700448b5d1533b643c4753b3b07",
+      "evidence_ids": [
+        "sha256:0dd1cad3ab4eea7b693980e078e641604a9260e1b698f32e2157bf45e57f184b",
+        "sha256:0ffd0b4473d744a3f5f58fc8f91d541d73d06fb2a24433eb42e58aea9f4fc412",
+        "sha256:190cb4435796f651e549fecb20e8baa1a3413a2d51489f88f5defeb993871218",
+        "sha256:1e3281dfcf1bb5c2bd956b42ed7ed0e2d92c6f92159417e8fcb51b404d7b749c",
+        "sha256:1e8dd044a087b816895bbbeb2c55bb67ecb417ffbf4152ca229c95b0a76746f7",
+        "sha256:2219137e28f12dbcd797752dd8a98a96955aa7c7b1438e8b051b9bb1054ce317",
+        "sha256:27e363ad2942f75261cbc209375b9963568ceb22dd6406a307b2afc1d8f74b59",
+        "sha256:2cf17f11e02eaf3248e8f0050b00c27ab2e165b8a7d9299f20eb3ffe6442812f",
+        "sha256:332401990b5a77626e5dcd4185c126adfb31e8bf417054416402b0e532d4b71b",
+        "sha256:3dffa61201eec4a837ca17c9fd0508dce277a7c66195144e334c55503d961993",
+        "sha256:3fef00ca1e3f8e2f705e5df918a05cfe25eee4496092d15551f498c779c2ab87",
+        "sha256:4b4b9267d26c65f07cfa0d2ea855719a17e03f106160bed4d5db41cbf3bdbcff",
+        "sha256:4f0391966d2c573bbd2b8fe750e5c324c9773bfe8ba551cc4578286fd299b4a0",
+        "sha256:50426e94bc1e766149e10f9224398593a1cce62121d66b3f40953511aedbe527",
+        "sha256:557f589081b8561d284e2c7f210970c827dc51c5212c2dbd45016109b2ec7e64",
+        "sha256:59ba072519d9c341be91fa9492e23feac081013b3c4925159a860c90f12e527b",
+        "sha256:5edb2c333134cd9077ed741f978ba6e59ef8d5cb09cc87d8c44c6cbfed66baf5",
+        "sha256:637c00043193f77c4448d54e9aea7a77b9f8a0a18aea4eacb77d98f423695469",
+        "sha256:64fb177b396ce156849a7191b32b2bd02ad710e78a6b49cfbf3b2c68cac91a52",
+        "sha256:7a759c197910c2dbbe0753dc0191601b4c51f266364af75d080425903bbd6ddd",
+        "sha256:7f09529c51c29587887029a56321d33a45624ebb16126a68ada7ced062cb97d1",
+        "sha256:817fc35068b3fdb2162dd6d963d7ce311378589e869bfb60aad309a55ba12414",
+        "sha256:8291363c885c74706e29efef1bfce0e92d07b3d58c9829a133708be9ee77108d",
+        "sha256:96bc3158149e5ee79b3fc337e2f04b76eb903189080c28fc1969ec90d465f6c4",
+        "sha256:a5c090a1e90db9b6cc77806e7fb9b6f42c23fc0e0b3dd4c54618b5241018693c",
+        "sha256:b1b3d24254039a330d0284713fc8bcd0f74f1224dfe469c79a89b216b6d558f5",
+        "sha256:be886fbd3f6a2cea9b58df83c43487f1d179b7c3538828a8a62c13df5e47fbf6",
+        "sha256:bf5a8643cce65611dbadaac8440c0b3f58da4020cac405ed68785b0dd89f8263",
+        "sha256:c54f6a6218ab655e684eaf5efa1bb6c505cf4aa29f9f08844d567144c2f6cc8e",
+        "sha256:c664fb7938106e587a468d2f2f8dc00873f84b4e765ae368afbff71329630bf7",
+        "sha256:de05ba2c4d800bf7e18f6f3abdf2e052244b0f9042098c8230f497b4a315ddff",
+        "sha256:de8ba9310cf70c7bd51b69bef33d936e9e77e5d8b9d03e2fe99b6ac2db8b9f60",
+        "sha256:ee54bd438e038d7bffb2fcf4da3693abb04704e5837cbdd4d6b44727d7807e7b",
+        "sha256:ee6f773e8c0f0befda334e3fb3c5fe06bac21b4aeba64d50475d219902ed8ea3",
+        "sha256:f2e90fd79f995b684283b67e49e13a5170460e0395e3608a03d33b5684ad8f3d"
+      ],
+      "keys": [
+        "common:1.3.6"
+      ],
+      "kind": "accepted",
+      "profile": "demo-gpio-loopback",
+      "retained_defconfig_sha256": "06085744108c4247e2a7585f12fb3604100dfdc0b07d07189675c1f19e72aa91",
+      "summary": "GPIO47↔48 杜邦线实测：低/高电平两组各 4/4 PASS，回环 0/1 一致，上升沿 IRQ count=1。两组在同一 Kernel/AppFS 配对镜像的分别启动中完成。连续第二次启动仅回显、20 秒超时的问题仍保留，不宣称重复启动稳定性已修复。",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "GPIO47/48 实物回环与上升沿中断"
+    },
+    "common-2.1.3": {
+      "case_evidence_id": "sha256:d8d5884dae2fd8b8bcb2cbe4e5911f4955fb46b0fe7d563550b86726293cff8d",
+      "evidence_ids": [
+        "sha256:0648db8582218d819d41c2609756272009f4eb346732589645def68a3dedc6b0",
+        "sha256:40a2e24ab2348fabb49e7809d7ac5f1c28ce47359613ba500c11e4c237fce214",
+        "sha256:62e7fa531338c401fc1d515f2125e3bb6b41e1857d60f1934266a86fbd4b7123",
+        "sha256:8169fb05334a4d6fb8634ef6db423f0513cb85e68d33612c8a1f997bbee1fdbb",
+        "sha256:9bf2122f8835642c3a4d36de8b77c912ebd7ac21b859bbddfbdc7ef1f12acf4a",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:d72fe0a9b9e753ff4a6f75f9e65c162ab52d78bcea7a3f1227c0278d072c9a09"
+      ],
+      "keys": [
+        "common:2.1.3"
+      ],
+      "note": "必须真实 USB 断电/上电 10 次；计时口径为 ROM 日志到 NSH，RESET 保持时间不计入。",
+      "profile": "demo-rmt-netapps-competition",
+      "retained_defconfig_sha256": "80d001fc6f6aed6109e5fc9e5e4380465f4303a2d739bcd0514dcb30f68bdafe",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Cold Boot启动时间测试"
+    },
+    "common-2.1.4": {
+      "case_evidence_id": "sha256:c4183ecaa62e48c07c854fb9eeb6ef22c168d934439e9828a150a29674a17781",
+      "evidence_ids": [
+        "sha256:779758d0a7dfae84c0970781eb62c5ff3b72d59b40480d28698a067365ece487",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:c6f227ee4be7023979214afd0f8cc8495b861158ed1ee4f63e60efdfdcd6f892"
+      ],
+      "keys": [
+        "common:2.1.4"
+      ],
+      "note": "复用同一次 10 轮软件 reboot 的时间记录，和 1.2.1 是同一测试过程的不同指标。",
+      "profile": "demo-rmt-xts-reboot",
+      "retained_defconfig_sha256": "e809023f1a793974862930cb868ef8ea1dcba345ec6056cf804169d10a7c68c5",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Reboot启动时间测试"
+    },
+    "common-3.1.1": {
+      "case_evidence_id": "sha256:868faad31bb7fc8e1dd7cb7c38ca36ed2fb13bd7d8152ffd26edf2fc4026f442",
+      "evidence_ids": [
+        "sha256:089ba2adff15512ebb172368537250f10ed486d31922ed2321b1cde7efb6fa4b",
+        "sha256:17cdcd3b3e50cc05e18c82486683639dc2a08c82359c5131cbec86eefc3ce06b",
+        "sha256:92ff5284563ebd9235442a2af331943d36fb9b974a5664d64b5f3ee7149078a3",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:c1ddc31f40c9423ba5ac9dcf5f4a690508a842ecd859c589a83799d915c76b96",
+        "sha256:f8aeeb6fdb1032bfb2cbc8ce5e39d01ed4c238c635c8e84df0b39688959e0ed1",
+        "sha256:fd1b6292a69be8b08664aa440288e033c731097a55f039d2cec234fba21b9a74"
+      ],
+      "keys": [
+        "common:3.1.1"
+      ],
+      "note": "原始 12h 未配网待机，保留供电、UART 和镜像，定期记录资源。当前只整理例程，不启动或重跑长测。",
+      "profile": "demo-rmt-xts-standby",
+      "retained_defconfig_sha256": "dbb851af8c469d3c2cc12ce6de0dce617a9c9b79b33b270750dda1958632f4b2",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "12h待机稳定性测试"
+    },
+    "i2c-c6": {
+      "case_evidence_id": "sha256:a46cbe83e6abf235df50ade62700e483a865423432776454dda9c37ef8bee81e",
+      "evidence_ids": [
+        "sha256:8f827f91699aa5dbabbaff6b11d26e191dbdc8b36e60874c43c5476e5de197e0",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:de07d80afee2909d19debf9ea34d29955bb4ea0b502e928aff9088ab5948cf8f",
+        "sha256:f23828b360f0fd77409eef39b6cc2a026ae3387d35b78f6ea9a7f98e2f3a47cf"
+      ],
+      "keys": [
+        "common:1.3.7"
+      ],
+      "note": "采用用户指定的 S31 主机 ↔ C6 从机通用通信验收；不声称原始传感器用例通过。",
+      "profile": "xts-flat-i2c-c6",
+      "retained_defconfig_sha256": "d3e80468d0fa84d0208fa970a71e9523d292c4a46eed00941104a45fa5b952ab",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "I2C 通用主从通信（S31 ↔ C6）"
+    },
+    "jpeg-rgb": {
+      "case_evidence_id": "sha256:cda9e9e961257c90408119f75427657c5344ee8f096440a5215db20912ad6e3a",
+      "evidence_ids": [
+        "sha256:0992daf87c53811a74a6b8e86358e0b3c07afb155d9bbe6d6c4ed294a3a948c4",
+        "sha256:44257ba96a89b4619098c4e314f772366d4abae2d5ed76bd5148d38159dc1abe",
+        "sha256:89586cb495f46af679f82defd09dad293386a1eb9c1af3d0c6da3c9b31765b54",
+        "sha256:9ba092c25fb4de5679ee72d8548f30b010eb420ba02921b8a1ee062cd3932f65",
+        "sha256:a23d326fada75d65c42ae62db4ae3167557cc050fcd2ecde99119a7115ce59e2",
+        "sha256:c6949cc5edb5bb7a2898c9aff1c426a0bd36fab4cb6f95291c4f40c60ba3ac91",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:e7d11c109239d65529c498fe0de0477bf46a5b2e58d2a43cc29981aa49994574",
+        "sha256:f8027ec5811882691e551fb1ebf9084d1774b88f3c95e49a4a61f17fc99d1208",
+        "sha256:ffbc9c20452dc3ba1857dfedddad527693d24078a35509c7a79991739899a4b0"
+      ],
+      "keys": [
+        "extra:3",
+        "extra:4",
+        "extra:6",
+        "extra:7"
+      ],
+      "note": "NSH 执行 jpegtest，预期 `PASS JPEG bytes=713 decode=2x2 RGB888=12 bytes RGB565=8 bytes`。只验证固定 2×2 样本 JPEG 编解码和 RGB888/RGB565，不依赖摄像头，也不代表 Camera 实采通过。",
+      "profile": "xts-flat-jpeg-rgb",
+      "retained_defconfig_sha256": "2cfb5690930bf10574f54e95efaaf62ff14e7a28af711d85a3bc07c50b4268fc",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "JPEG 编码/解码与 RGB888/RGB565"
+    },
+    "rgb565-display": {
+      "case_evidence_id": "sha256:98faacad784bf218c9ff8ef1fc5214fe4003a8cdc1cf04313216709dfdd69c47",
+      "evidence_ids": [
+        "sha256:1f7b38d5cdb35a638abe6984ac1a427511f86a00dd5212b94b6f186422e08cce",
+        "sha256:2a45de9dfa2b200af8913cfd899399bfd0724fc5eb66bbca7fc25a2a32f5159e",
+        "sha256:2c7226a76d3e3e22dd27eec04760946b080825597514821cf134b10caa80b371",
+        "sha256:847b096cdb5ba3de607859e4fd09358f4e6755d58bd132b60afb771b9dcc91ea",
+        "sha256:94c624f54ba503d31c601edf4d16321802d803f6ec1897fd90663e09919a7760",
+        "sha256:a2360cbd4d3b2ebd878c0b22bf89530572f337a51a757080b2402618879c0012",
+        "sha256:b81f3acdae613d367bc9a16ef5e7d849e3373ed561300974b4b6a5d6cbd6be81",
+        "sha256:ee3f5a1e4904a2f3cb7fc36d221a941e9361157f148f2db267275ce5609a2eea",
+        "sha256:f7730d5a99a1a8a1b3c630061309c961f929f11f56cc74791bfb6e3a618c234c"
+      ],
+      "keys": [
+        "extra:7"
+      ],
+      "kind": "accepted",
+      "profile": "korvo-rgb565",
+      "retained_defconfig_sha256": "cb3a2b183c7ae11fc612341efe5599d38c32898b4c433d66ac46ce3e2195d15e",
+      "summary": "队友旧固件已通过 RGB565 自检、七种画面循环和至少 100 帧更新，用户确认“已正常循环，颜色和位置正常”。新公开源码另包含后续 LCD/CAM 共享资源修复；新构建结果须与旧实板固件区别记录。本例程是 Korvo-1 + SUB3 独立单核 FLAT 演示，不扩大到 Function 板接线或 SMP/MMU。",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Korvo + SUB3 RGB565 实屏循环演示"
+    },
+    "simd-pie": {
+      "case_evidence_id": "sha256:9e8a93ba3aeb976e4dd8b8cb6301829f292554ab3d159a5f9c31deb212ff3b6d",
+      "evidence_ids": [
+        "sha256:15918bd4b424a4116fb6cc6299ab5b44bf39a1e34f7a3399fce24777b2b2c69d",
+        "sha256:1a760dfaba821676835c99108d750da27fc23586db2560c0311441ea5a27d0b6",
+        "sha256:2569ad14e4a12cdb0b8d2ec0d625a91105dd214abb38502887bed0712a4fdbad",
+        "sha256:3fe25b612cb9bc2901dfd1b7bc60d17f4ea8ba0d36a12c2087d3ba399d0753c7",
+        "sha256:56851c43dda5dbf77cd527aff4368f5683fe3fc1bf4827baac33f0d328055c75",
+        "sha256:59d40378442afbcf0e9e33bfcbb391f5cfc343834a30cbdd31f101f5ba6b8f5f",
+        "sha256:63621b2c781bc0c2ec7609eaa0b63108f2834fa8e984ac8d039a40ab85f8d92c",
+        "sha256:7352849bba7162d0bf2c2a0b625bfde6bf7285909170527305d397ccf1ebc3a1",
+        "sha256:8d2022c366de8c0d028ad2d97ff2cf7236892464919945a014ae569995a826fc",
+        "sha256:957319a1504f59d806a55364e3fb1934870650b8cc05707bdcb16c54f89abbb2",
+        "sha256:a4bde3ec89e1bb93da71abd4bc09c590f478de29659402effb6450e8e3499e3d",
+        "sha256:a7c163a4dc97140ea8d68364d3303ba204aefc42747a431a92f78be890775b14",
+        "sha256:dcba1d85d7c700efe1b147cde3a4d641a03215472f79b7e5556c4154aa8ec6f7",
+        "sha256:e23849249dae0874794a3f45b4d2bb8b94e09b3d060207c7ef33ae68d1452728",
+        "sha256:f52c7559ce6651326a10121fa5690c0c7e9ad17c944f285880c609719073d9ad"
+      ],
+      "keys": [
+        "extra:2"
+      ],
+      "note": "NSH 执行 s31simd；两线程各 100 轮向量加法/INT8 点积和 PIE 全寄存器保护，各 20 次绑核迁移。200 组点积须与标量对照一致；不宣称 AI 模型或加速倍数。",
+      "profile": "demo-rmt-bttool-coex-pie",
+      "retained_defconfig_sha256": "fc0fb3fc6c0052e43b2c3069c96cba6637dff342724dbcbf9ab3a995c6d0761b",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "SIMD指令集与PIE上下文保护"
+    },
+    "spi-c6": {
+      "case_evidence_id": "sha256:cd48cc636ad81dfca4b37666ccc6c5e9927b60102590699d24a33f7422ae539d",
+      "evidence_ids": [
+        "sha256:3590d2676150425ac10f374a72062d95cdd1a114537b4cf303e02e8e0e83af88",
+        "sha256:8f827f91699aa5dbabbaff6b11d26e191dbdc8b36e60874c43c5476e5de197e0",
+        "sha256:9c4e7ed6d2c5b3963b0bd777a9231732d4277e373f537de630da7ae388445e55",
+        "sha256:f23828b360f0fd77409eef39b6cc2a026ae3387d35b78f6ea9a7f98e2f3a47cf"
+      ],
+      "keys": [
+        "common:1.3.7"
+      ],
+      "note": "采用用户指定的 S31 主机 ↔ C6 从机通用通信验收；不声称原始传感器用例通过。",
+      "profile": "xts-flat-spi-c6",
+      "retained_defconfig_sha256": "65b3f27106c472daa6e8815d0537c1535febc2c2d6f7c647a96992d83e72aab0",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "SPI 通用主从通信（S31 ↔ C6）"
+    },
+    "wifi-rate-diagnostics": {
+      "case_evidence_id": "sha256:2e188a4eba6166e0aef48f9bfa8f9bcf7ecdcffb39ba1c42ddad063f7567a2da",
+      "evidence_ids": [
+        "sha256:0035456316e9a69b910c5ede8175322d00710ae1878d08f1299fe7e4e2260447",
+        "sha256:011adbb51b0e8633111b11b54165a63f7d5d44c9894b1197bf6709230ee70fa6",
+        "sha256:019b3df33dd47b0644a98783c1f130e432ce13c65d0ceba1b59ba56685a93da9",
+        "sha256:03e9a89445c2f66d79553e8d72739136be84d7f410d4491234b462b3cbeda304",
+        "sha256:0449f97092d9ae9c279e6b1afaa3325c79c93ebcd67bf7f273d85569269b2052",
+        "sha256:0616a7b610badc6587e69192b3ab01def6d4c46bd8acd57323640c5c9c6d7963",
+        "sha256:063bf5f157695b48a50a21fbc7b47a8ffaf4c7ee348c42cd41b4e390175111db",
+        "sha256:06c64221b0b3fd32847ec67be09af712da891e576796dbcef81f3d18ae123ddf",
+        "sha256:06eb2e9814c106d7d5266158d2db893f911409c2a3ba61cdba8b12602590c1e1",
+        "sha256:07051e74d0dc28b8f87b7da3e3d106e952574e53aec35d611076c3457f8092e4",
+        "sha256:07b41ca3c76568142686962d5bd3e9523acdc5abfa2158a0e16e4f58b77d3f24",
+        "sha256:07d89d6d2718dfb10f06cd2251238c03952ff23f9bf56e547dedf439fe174327",
+        "sha256:08ca0f3acd71285fbfc0a9fee1e8a24521c111ecb4c95a35f832e08f6c9cf351",
+        "sha256:09558e90ca3e8bd2f3f12d9439531ab74c51b65127b6182b398c03ae2ca8995a",
+        "sha256:09b71758c200d05098fa3eaaf82bf028d6e58e0d4807b1099ce3cf1628e0ba8f",
+        "sha256:0a1fec32819896d49a033fc8a60d7483f678a768cda4c21b957503b9ae225a1b",
+        "sha256:0ac241034479f0ab9f3e637ac66617b00602a4dce5b950f90bbd5fb56d510ceb",
+        "sha256:0b8cd8e98be77774fce193233d36da2790ba31de6aadb79ed32f8fe2abb1926d",
+        "sha256:0bbc1fdd9e0b6f04b9f5950737871df0edc13ca98db2abdb9eef424b47e04956",
+        "sha256:0c32630a7210b68219a37fcb9423bc45169b03bdd1e42b950e432d4373726294",
+        "sha256:0c9ffad2b72da7c918cd8b4dcbb6b029d7999530d61bad67d8c92e7711738e94",
+        "sha256:0ee9907393ef137aa85274c78b91f0118674ab1db8ad17a4ecfb23a7fea2ec93",
+        "sha256:10fdf4c3528bd267fd4607e115610164ded186767da79d1b2fe09f9878522313",
+        "sha256:11bd2e7c43134650d70e377f7d2f2b69eb3a90856e9eac0a2adbc796267c0cef",
+        "sha256:136e500ea7b035c528b33b303e0a067914d49c6d04f6994b1c585b4a4384777e",
+        "sha256:13e2588cd3a7193540b83de5d7ca64dead3c0fbfbf0f8d8f8d497110ca4d44ef",
+        "sha256:14130b116bf0e0f022ed3bc20a79220c93c5c228e43c0145f3291b5a0af7c66b",
+        "sha256:141a1d7736553067c5bb412b8271589f38ebeaa9158937dd3eaf03387c5a6e35",
+        "sha256:16a5d7c8ea361bd8e954a5526ef108caad8abf93df593eba23f5cc0235f7a6e6",
+        "sha256:1aa6793347261d3886000116989bea3ca033d0c9a8876c81362769f4b05acac1",
+        "sha256:1b204eb2f8e6ce02eb99516c2351f020fee1506855c852d91dbd72422d84f683",
+        "sha256:1b3ec99ed20b72bdfa72fd1d91884f3303fa3feaabfaf7a1969c48ca5680b309",
+        "sha256:1d4c40762b15aa8cbaa6ca56d6c2cb7cb51f1fbc30f5420fe7d1b13a319c3bc3",
+        "sha256:2043d8d76b8ae9d5b18c0dae4dd593904b72ad7a32b628bad1af43730382028d",
+        "sha256:2136132e05e7a098dbf63c8e9d061d05bc896c8ec89f00c052ed166f96f74c12",
+        "sha256:22e77c566987d5954f0610119ba53644f0bf9c5d8babfc3be83e26bdf4316e55",
+        "sha256:2583bd2b89c3926ff0c93c9f302137bf24b5166fb9cec1dcdaafb2298b1ae077",
+        "sha256:26042be09a071bd05ad0c89d5b0a193d70eeac25859e12a094ad3a22e5af8de9",
+        "sha256:26c4f781ef341e182a73f38fada7e8381df367d78ea619995c35605cf35d390e",
+        "sha256:29a8d2186b685e640d408793f0f5a5c5bdddcb253b95d2ccc0d6922c52990131",
+        "sha256:2b13139508fa104ea1145abcb66058eb99baf1bf6c3cdc76f2dc86383d72940c",
+        "sha256:2b7318343860419b4dc8854d0a877ed6fe4db8f467b242c0606c727100ac571f",
+        "sha256:2d7eb71b4876f766ba296e734fe8cc17b3188ff9edb14531c6c85f11f976888c",
+        "sha256:2da8ab5891cd5388a4547f595436a10c91295ac7c06378d5c17b54940bc39b34",
+        "sha256:2e732be4af9f3f052aae9aa40bbc9981c22e829bfea58de78450a7e386a172dc",
+        "sha256:2e8ffa6fbaccad830052e9c3efab7a9f1f4d944ab69566a4778b1075e174d23f",
+        "sha256:2eb099346212af3ef753189efb910b92bca717e9a707e551153b1785c13320ca",
+        "sha256:2ff7948dd2053b4c3ce824dcecbf2a18169a06b3f42e1aba7580a067cb2cb9b7",
+        "sha256:305ef823ecb7588a74065e94389228ef5a0869e229fe9a051714e91a983d0fed",
+        "sha256:3109272d3901ee5a3401683167a3c6cce5b6693d9e6e0e81301d15e4b0650284",
+        "sha256:321cb3d37e85cd6afd8b14d709326c1d0cfbf2e9be8888ecdbd75cb82bf80c9a",
+        "sha256:3309036f55a660cbe13a37840266bdd666b1851b8229922bad31339cd2da4ea6",
+        "sha256:349dca1b0679e966a50feba4d1ded76e296b2d1e1b6f09c7c83e972cf2223bf2",
+        "sha256:34ba9ffe10d0655b55b3ae526084070952ba1bfe2a2695687ecf64a7e8ebe7f8",
+        "sha256:3529626543b86f3f553d82f18cacc463f7a640742035fcd3448fa1fc99adb7c2",
+        "sha256:35e3570e8158e0b8cdab9902384ee28de800e19154a15d17c5e8adaff97806cf",
+        "sha256:35f95cbf7ac3c2c570cb4fec411f1d6359235b681e7b05d6898376569f1160c4",
+        "sha256:37bbe9285c7f9cd34070a48b9b3b36959bbf7512741c3132e43ab8db86082d7b",
+        "sha256:3812d98d9ac3c350185cef95798c2bfbe4f3c93c3b4cc5c6ea14971f31a49591",
+        "sha256:38e4f245f47a8c16b954fddf20701a08ead642a1a397817dd71debffe2eaaa08",
+        "sha256:3a9409f005451d0c5bb0a17835c56e145de60685fcf86beb9c68ab4ba4d7bf54",
+        "sha256:3b080228765e0032421d6ef69312fcbe61e345f501ec200d8d3df1f390c14d7b",
+        "sha256:3b5068075cbe9a3cd2645a7bfa31a38a3c6170552b083441db4bc8c61a1c2855",
+        "sha256:3e85a7178f12392dc7b03e91e826c3e994a74329a41df37599c0b8bede93d7ae",
+        "sha256:40441da5a87179719e437d3a643b4b190bebd9446cfac6b818f55f3a3355991c",
+        "sha256:405ee4e4221c1f6cad5680ca12e25ad8a3403bab043f87c0adc76b356bbd6494",
+        "sha256:4176677976910730461b88a8152dbad403d7ca568982d02496b40a1a6149c2d3",
+        "sha256:42fc2aa3c856117ff2a3780a3f006c9fc143b689734916153e2d603c3e30d8a2",
+        "sha256:430e3c5be562475e2df33810e47f87196e7418abc3f3bf75874e2850f13f5b34",
+        "sha256:434b4742c021531f0e9632c734ff7b05f8b866277b5d13da3f02933ca4a95d01",
+        "sha256:43e2fcc6e21f82e6c162dea08b869e7ff97d9c30f319873a879d6d4c477f921d",
+        "sha256:44e08648f7fa320d71299566e11fbb033c7251a25837239f8f6f9d5880b8587b",
+        "sha256:459c6c0d1b910fc1bd71c60ea29265be59e3d884521e679d28ac395a51b53553",
+        "sha256:482253552875135352a53e804fcdbe2511f85722317ec5cb0477d3b407472840",
+        "sha256:489d5167b2f3a8140e33965167ab438c247331e704f47f9ce6d0388d0f3ef458",
+        "sha256:49714357121819a7749cd7280917ade4f14da423eeb85496c41c051df92eb071",
+        "sha256:4a9c97c067b8450d267d30a9e5679bf193a5f42fbe251e0325e0f15dea5efe5f",
+        "sha256:4b62d896febef76f0b305219a8664423ad500e4052caf94e9a2cbe911660f0a5",
+        "sha256:4bf34a59a9817633cc16c42d358ac21fed9afead09fa372b464602cde0b06d5e",
+        "sha256:4d1a55d12f543d2bcccfdd4113624457551a476af12aa465d241fff8ce0b3210",
+        "sha256:4d2eafe54c8764e7894cd1862b4d2a5d8d7d2478dea17db2d62a9e61085278f1",
+        "sha256:4e6c2112acf87457726fc37194e99d7429eec91d055a0c747bec26116ea4966a",
+        "sha256:4f01ae8c424162e8b90bb4c2ce1016369893fcfebf3f9b21f427a39eb31e1c70",
+        "sha256:4fcadd216ebd3a50abb46fbac9e8dd1938c6e1282760f911efb903428093415e",
+        "sha256:511d7fc2841a07617b5a338b558a0cdd3d9d8b731191e5018353619f9159c1e8",
+        "sha256:516ad883efc52fd6eb6b56c50cd65bff843cd1bdf200b6393b7230701f0037ee",
+        "sha256:535b3dd091d2740378e6d761afd32ea6d5458b1f326e2f0fc75fd7322c92ad7a",
+        "sha256:5387e8497e20c1941ab51a76d9b7638d89e3b34bc78d71dfec77fbb937db753c",
+        "sha256:53fd57829a3eeca16592b759d6c9827c2a80392ac4dd4d3810ef703ed44d4349",
+        "sha256:5461462920d0e513741a5afeaa2a346b4cc8119afd73c05df72e16f2c7104366",
+        "sha256:54942e125fc2d2e1eb13b6690994d4183289d91c9c750ad4750d32951c64952f",
+        "sha256:563098d3a5f0b3f5525f578c131bc0bb06c763287df61204bb09dcbbc881224c",
+        "sha256:56b54c6c2c69eb4fdcaf817c06bdd3fc0eca27081e4d1d4b44b02efe3afac63e",
+        "sha256:573c7babc6c93d30d9aa1c7ee9f402969ca61d8a14cd87df1e83ca1b0eb0959d",
+        "sha256:57ac4347e3a84fed7f1244c9c2e8f24c256f5a25b84db7ddda9e74d063666469",
+        "sha256:582cb7d71db44158abd1bf637afcd0d5d0e39653e3f8aa499f3fd98ff395eb7e",
+        "sha256:588f3160c5a245fc9528413e43f521325d1a5031d3c9a53a044ac3eb29de7355",
+        "sha256:58d9bd6fe1729a711b495cc799ecf7ad039e8e2a6d4b6f5044afcbf532ba8fd0",
+        "sha256:5a23a095804de264454ae41c66173daa9d14de1f984c4717460fcb93993b6781",
+        "sha256:5bce7b7ca4e33af0a15fb037fe3e77eea6e9971d3b8e2a613d54ea80849fc426",
+        "sha256:5bef44d678a6a1093d707b269c3f73a038d80c46534b98416e2273b875266541",
+        "sha256:5d9570f3978ad02dbb30d445bc36229d959a233f752e9a7ba3c293c1d23548d5",
+        "sha256:5f093cb69dc8143729a7c349eae106cab6900515b33de4d738e78910d84c37e3",
+        "sha256:5f635f5c0fe6fbfdada5021a69fb26ebcfe41fa9c8736d7cc85b56b5db8d2750",
+        "sha256:6154ae8d340b852f6c301d06dd47297f6614beb2c137238a1f718b6ce1fecdbd",
+        "sha256:647bcb1b075257765cbb4cdaec091a7f3044b6c3fd1b550bd4c4f4931573fc86",
+        "sha256:64a243142d6d9ca0b706ed3ffab9004000951be344fa558589b069809de2ee9b",
+        "sha256:6516baa7c6ddb4a800185ec478aed0e394fe0b5cc48a948f1b05206f5b58bddc",
+        "sha256:66cbdbd4e0c2ad22ffa98caada5382212ab1fec4d002c41563aa880e8f97de09",
+        "sha256:68968e89f1f3ca716b5aabb59e1661b4ce8c9717bcb0bbc165761e6c26ab3b7f",
+        "sha256:6cfe02d9d8aa8c9a1ac57b9e95a6c188ced826e07fc4b14ea283e8a5ea92e777",
+        "sha256:6d2e3b5c11314b10e26ae63390f7bf189db5e82b9d8f6d7562dd1a70a6449f14",
+        "sha256:6fb94ae03f9752e63d521875b4386bb4e9d582a2b353e6663db26f159dabea2c",
+        "sha256:7260ec27108ad8dd02c40c35f6125296e36f90b12393d1e110ff382ad2663bb2",
+        "sha256:726c780364cf34536befa4b91588bd39fda091d38797a96a3b40952109d5655a",
+        "sha256:72867f25d81372462228892a8503bd498f99829664d37e4ce5c2dd8d3f558e62",
+        "sha256:72db77b351b73639995f73831e18f2ec3e7e9d8557457c808b0ed24ba9c64ff7",
+        "sha256:731446ab4ba96859d5710c40ca2d3188645dfa631698ddd4c69fadd235755869",
+        "sha256:752d49e617aee05266aa63ccda77ef8c64805f21faa5f7ec333c9596e48e276e",
+        "sha256:75ca50c40b4374aa4bfdb33857d2cb33063a9ac1c0cbdae3aea8019698c8cb54",
+        "sha256:7623ec8f8a81eba97d2093fd059b2fe441b101b149c2ef7c8c69e9ac5e5a6ebc",
+        "sha256:76c79e7cf1a19e636801a0ef261c65b4fa248d14e1a6ee302aab86a3535ddfd5",
+        "sha256:77768c2f4bb4073891849128ebe417ae6822fec4c2b63f818da13ec950e238ae",
+        "sha256:782e20636cbdd86f097f2cb6925489b9bf10daf9df630664b9bbfaec74339781",
+        "sha256:783f2003bdb09ccd8832c4075998ac01a4b6437973cf8ef2b753326c1c05c1d7",
+        "sha256:7844c4ce4208fd02f945c3fd9d1401eb851a8eb3a972fcfffcbbc361f91fcdaa",
+        "sha256:792b8ee1a3b5ee01437d2a50fd4a9967430ab30b8a80d9552f2410a4f3d46a89",
+        "sha256:7b7fff4557093e559cff26418e6aba13d9f7208a4adbe78c020a90d2b6cba145",
+        "sha256:7e2b75b10e8cb33d289a35f7801e9394c169b3230bd2316c34c8d9db815c14f6",
+        "sha256:7fb7752b75bdd8bbdb05f5d0c411cc3f411540474019936f4781ac0ec725b58d",
+        "sha256:812a0f2ec51594e048b7f70d207259e53ddfbc4753dd869ef2c79fb8ae01441e",
+        "sha256:84b5dd64dfd707e7b5ce417d650710cbde57e352d904fac48de937a5f6a7bedc",
+        "sha256:85d6a4d8f3a554ade78b702143ce5ab110e6ab3f51749b8cb36af7db447cda5a",
+        "sha256:865ef80dfed0a2f82b7e28514b33da6e78a28b2571973640f3bf718a2a39d2db",
+        "sha256:867d29ad8fc8a9e59c84544a3998c22806133c66fa4014c256d2539912c51f89",
+        "sha256:86bec76314619b038c662fab06cb9b23efe25f3736f3a0e1255276ffdea31801",
+        "sha256:876c93a8793abc60a466e3e3eac4f43fa528dadc155a745f0aa4f01307a4e2cc",
+        "sha256:8996375f797fcde3bb2459498560a62016cb46a0eb6ded6c9f195cec2ca5fcab",
+        "sha256:8adf42ad9be8a00cf8d253f1cb9d04c25a0ca7a8e9f23ee7879abc8997034a8b",
+        "sha256:8b06a2eae95dc0860d95242f96d83ffc3aba8559f5a586b7806f1a93242899aa",
+        "sha256:8c266162167ac3f59c8ca4c0669937995a30f159dba9bac91dfdd397875a999a",
+        "sha256:8d2411058a1fbe9230613e371fc98102a20a4d85a7d58b34e19e4897236ef86a",
+        "sha256:8d41392c6c7ee0896efa2afc95904c63c64d763406bd90eb4931efcf9a3fc06d",
+        "sha256:8e2c4de3cb677d46e066edd26c429121d4f4bc86c37fca2388d0ea21b97566a0",
+        "sha256:8f30741e0689c90f2cf3a7330a22c269d145e3b257326b892c58624398bcd1b4",
+        "sha256:911849a4e802c0d709648037f4683d0a8373a6614c6716ea245fd0dc3dce0ac3",
+        "sha256:914e16ad7a068693fad018758a5f729a3d846ee46c69831c25e2be2b115882c4",
+        "sha256:916f384d8912ed3e706899ec58d4ae18903de3d09099d175191924f6d71e97bc",
+        "sha256:9311eb13c8bc8541924c7ce20a92ad75d1ead9a75f6afa9403bc6697c8c829fe",
+        "sha256:93b547b00c0ee33bdc2082a98a6cbe4c9da89321cb8bb00943b9557e92e53e49",
+        "sha256:940728d9f40b4db60e2d942201b8f8380756e2de3dcd67df40ea241ccb401736",
+        "sha256:9464313f0ef89ece8d05ae440764c7912c8115f2122151bc37660505160a5793",
+        "sha256:95613928b5b67bf3791c9de4a40aa73976a68eb573130ff0e2a4d0ff48be14cc",
+        "sha256:9578e599472a6ea0d7cdeba09d0caf20b781c3c8922efff5fc2e8b8e06e20777",
+        "sha256:970d167952e1be360716098f9cb6d63ab3b556878ea43ffedcf185120e8f1478",
+        "sha256:97fe8c8158f2d9e7b732e8bd0316b12e98dfb0c3d8262c8ca30a4df80174bca8",
+        "sha256:9a27dc7ff1f9b857be75680688bf80af9f2284f551264b2a7a59ae08a26d976b",
+        "sha256:9abb634f3cd13e4e981a8d64964ac7be9d4032ca951f8e0fe993a75c1f26fc0f",
+        "sha256:9c0ba1f05546386dc4395be7bee385fc59132bf6b5afd92e65da10c1cd160ef6",
+        "sha256:9df361259be517fe77d657febd52007a358728ebe970eb03838252827bdb7de4",
+        "sha256:9f9c622877eba90f56932dea172eebcbcef66c513f5e08929179c54ae6134c5a",
+        "sha256:9fb6bf3e559bbd4e5914cfba4312c1066e4d43c846a9a2dc568468aabcebc9c1",
+        "sha256:a336aa9653c17c2140aaab4da899b57d6602393ba14ca21d70e0cae9e6ad2012",
+        "sha256:a3669a8f5740c369a5a98d9b88c979092345efae31ccbe975208979ffaf02292",
+        "sha256:a3e3834641ce3e7c02e496da9204b3152f3803a503cfb7ec0b1f43c61ae7eeba",
+        "sha256:a42480a8328094b2dafb842dda20a36e5a03ef667cab7908544f9dc72b713423",
+        "sha256:a427a04fc82bb254247755fd4659f7f3148476425ba3d7d9fca10d9e4341f631",
+        "sha256:a44bfb21ca9c218ce379e4a162677409e190f7fe09d94655a644f15495514508",
+        "sha256:a4e1088d475e0714935ffe2e589c482abf1e55124b1c4b98529d156d3c71885f",
+        "sha256:a59f95bb61230c4b51aa348e908a78adf360717ae84ab88ce05ef9aaefc711e9",
+        "sha256:a711816ac20b5c595e4507f8396c6c0dc38b4a7c293e476355188da48bb68f62",
+        "sha256:a784d40a81ca3ff14efaa700ad523bf490d679d2de5320f568ce907e5b238652",
+        "sha256:a7a94bec9f352d2bb0f191ffd40ffcee58dfabc23193abaad351209abf6b87c5",
+        "sha256:a83c2c9acf3a5d38adcee7d9b34aee833224b57f73b8923aa6ee46efc23148e2",
+        "sha256:a840e7f53953ac41e409f394f738965089272a3ace42f3d5f34498c158d52abb",
+        "sha256:a84e312f15b331396590a419c3e76ff914896703eb42a7f6ef4d9c57d0022288",
+        "sha256:a8c1c490b09f8688e9a81478b752d7591d95bdf10f79af2fff883ade872e46a3",
+        "sha256:a8f9e11aa107590e08c4fd1cce8690865be86fa92dd6f29575b92ff1f6e3e5b2",
+        "sha256:aa78bb457a54e82da9b4fea1850cc47feb4831ee980074e392bfeb54c1eb6712",
+        "sha256:ad1224b864464ff62dfce45cb1ec8d85c14ee5b0855371af322907e6a60e435b",
+        "sha256:af33ca42c5fc4d6afb11cadf47270d78c25f734935c30974995ace3b2513bcb5",
+        "sha256:af6c4fa2e2a932e75ac1c029022d8a375568d84576ac22df3e16d91c317f4369",
+        "sha256:af8990ed262c79774857cd3841610a74c51fd628260d1cc5c6f5a739615d969f",
+        "sha256:b12b25f71673a0a647c2ae0e81425c4283dd7fa986df3fc91bef9777a3c2a382",
+        "sha256:b169ed055fcf16aa0016f3ef3b91ae3e935394e0f5bf66d3f5d0b80f07ecf230",
+        "sha256:b188f6ac5846a2ab8f8111f32149542de783965cb0e47b6cf400bdb7058127b3",
+        "sha256:b28e0c823749bd019d26eaece17ecb74479972c93e2bf64fb7169152c001b9d8",
+        "sha256:b303e749533fc739cd682b46bf4c6f4d5806fc369428368ff505bd3d7b458e87",
+        "sha256:b3258ff0fd9b78c852ec20951ac86247649abc26948fe1dcaa85b9c357081959",
+        "sha256:b3e1ad5b330e5d26b0fec6c6c42ff936294e68c9c2d66c32f695175843358e5d",
+        "sha256:b3e2b99300985f13cafa5a020d1363ddc935a39f91bd681b688c034c9cb35576",
+        "sha256:b4e19392238f08e921feb4d26059c977f7d16a905927a88f216331e6bac66d2d",
+        "sha256:b6cb984b64fa7105ca219ef7b0bbbcd76e0a816f0010f33428dc4ac9b141917f",
+        "sha256:b979ad4eceb8988383567f9dd4dd762e473b537b70c6640f93244c8e206dd776",
+        "sha256:ba939cd1b8931b940a8f5703646062bb6490ef1019d5b24afc819509ea704181",
+        "sha256:babae9d3d482b3ff658e645b786d3eaeefacff3627557a2947618557c3a65ba2",
+        "sha256:bbe22f6817d26ab9bb5873e1faa2cb175c4fe02f8c7e086e8de854debfe2c12f",
+        "sha256:bc6116e7b39c88b1f09f4dcd2f561926f085c2cbbc86588d6772ada7baa7b381",
+        "sha256:bd64e43df5d9600b1b73322edeaa8b5d668f465ec151284bba65d5d19d8c7ac7",
+        "sha256:bdfc8c6151734d0ee8d21fd2c72874e652b1e2f2f1dc3462878b87b18c6a6e14",
+        "sha256:be2afa32be2e744926f476abb481efad295a3c9045e05a8b08702bd8bb5c5093",
+        "sha256:bf3b37e1742865f467e8dbc7a33bef300ee009024250c8c8a010786e9fdb8c34",
+        "sha256:c0389577b802f2f6d3fa85e417d810cfcb999e46735f5797ad498b15b2b6b14a",
+        "sha256:c054a25b99b4ffbc947169b7a87d2489b11a73e3c7deed57695fc8f4d004d7f2",
+        "sha256:c1693f3fdc629ec79c3d503e2c7b4308b3ed795931326736534ca7e7b7c2e48b",
+        "sha256:c199e8ea66dbc2020b225d572a2171753490f73ac0e0c9fbc970c6fd08f8f4e8",
+        "sha256:c1c36cc779ec6cba3bff2ba60e3d93373682cd6c2c41c40537a3d723baa74cef",
+        "sha256:c1d29565a5fd699da8bdefd734d6337e4f2156b97c422d47099db32f396a3243",
+        "sha256:c23203b91953b4e2a88b36134e9ad0a8d3c70fbb1e17be32c1793515aad00cb8",
+        "sha256:c294c97fbb7972bbbb0fd323341c371c4e61811bab0653ff3e8ef7aa01209dea",
+        "sha256:c2b1af0a4ec295f853db12d113478ff93e21a06aa3cfdfe83a276f4f3eba34cc",
+        "sha256:c2d66f0bc9754c7de2a75221e300074ac509ea3192aef8d227573d5ac1a54110",
+        "sha256:c316fedf1e5961e2a05e6f2223304a7ca2f73ceee98f292daeaac2bb1cac6fa8",
+        "sha256:c3d23c684f098c4f74d56ea20633f50f5b37ff45a8682f196d836a514044a068",
+        "sha256:c5f1a635d2fbb23f10f0c5855e132ca8087ef13aab91ff9f583817a504c30892",
+        "sha256:c60af8fe56ae4c20cef1c5822a50a3ece4ce27be68dbcbeeeb70b6990a2f3872",
+        "sha256:c6bee6de821620770df26e2ec518f9a696b023e89a662a7cac010c2359a8581d",
+        "sha256:c7c608643abb0cd4ca1ffc4a23bff5cf1dd3fb500d6f5ff1ed961edfc87d2696",
+        "sha256:c91b3b29394007f0c7dd481ca73226d09bc64fc89aa0eb5053cdf32179de94d6",
+        "sha256:c9220e194c320a430b48abcdeeb49a7e1e39175b072b5bfb149a40428e7a14c3",
+        "sha256:c98030547ad35c51c5aee434f5e7c8d4b53d3823ff5edb2869c57faaaf29f081",
+        "sha256:ca7341ee9820b5bd41df86a6f207f36dc1f8a1b28241fde2e837a0b41c6f7e63",
+        "sha256:cb3b25babbbc5de4d88b11f8889ecd3cc567db820c86635a4cb7ccfc8903c450",
+        "sha256:cbdc54d6f9b7c5d0b810b5c8c299b801e49f695a7c65d37c4b700097209efbd2",
+        "sha256:cc459a311604cad65c0dcd7d12799168aa470e4a701674dca964e256e0bb3e24",
+        "sha256:cd9b1f4a164eea65314b08e5c45cda29960950c07d7b71fbe5efa8090251967d",
+        "sha256:cd9e42a35d8d438f62a8c7823f9a01ba6ee22a03c66753bc984311b2c21e95b4",
+        "sha256:cffab2a3a883ed068aa9873ae46310371498a00cda60d7a547d8735a0a98e333",
+        "sha256:d1d71fcfc010ef101ddbf42fcea51f3941457a15f7ea9165a93da7c992fd5e3d",
+        "sha256:d3776b045cebe9a44f951f6da7c9bd4c5e2d08ebb7a9234a28160b8dbe338cf5",
+        "sha256:d3a1f3f32f29390ae6d472f5d90d20de36ffef44a4e7ecfa29168478e48f0bd2",
+        "sha256:d6fefa19bbd501a2adc1ebd2d99bddc98446ef7571b50378fad626b24de5821a",
+        "sha256:d9063c11ef6c9f5ba07ba6a355016d349d0ba81d067cf4a08fadfcf4e5db8929",
+        "sha256:db98c5d195b29de36fdb32e2b6e8edadc67ecd4db692d5aac2a4589cc2cb8a0b",
+        "sha256:dc14b1df7422efac749769bf812321df43300435de3fad0a78eb1d64f4f54485",
+        "sha256:dc8d61959044d660634733df25e3519ff90e5a86960f6301c21dfb4003a32303",
+        "sha256:dd291365d4afd3721da816103e20bc9853422e4ebd1fc1441773106b20621505",
+        "sha256:dd4b57cb666ff03b1d0bdf3ebe02a5f66fc24abb9e32f82fc72c749fc8ace776",
+        "sha256:de983f212395aac0f02495ca98675ef2a8f32531a1776c23bbf00a5d2f5820e4",
+        "sha256:df1b843ee84c652695da268221fad2f09f5827734608d0f5afd3306bc002d8cf",
+        "sha256:e0978ec12df962297691e365465ff9697fede931e25081f575a6bd3c174c370e",
+        "sha256:e0afa18f0fa184082c3c631adb9c1a5d1dcd567ec0a9b6de857d6f285f805938",
+        "sha256:e11a64ce189c52fb1c94eec722d0d01a082ea32ebf48874898fb77f45b2f6327",
+        "sha256:e305d215ba2fe4910126b67916503022b506ccde9b0f9eae21f8da6e2167f25d",
+        "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256:e406f10e7a17a7e4e22ba559431d5b20a7d8f0de0b9e7e6d1c28bc6b5cb29d2d",
+        "sha256:e4f13ca29ae20d0146bfa6297dfbcba86095f7bfc1afbd8af1da7f4f0e5eddd6",
+        "sha256:e532914d963d987bbc4fdee5daad56516ab7b4ffaf8e4176d444cbbb550c6547",
+        "sha256:e571ed578778230b0d29bcba395c3596e17be3703c2577d84cbff0e2f30d6258",
+        "sha256:e6f3d4a64009203235f631088beede1cdd26c6c97ecae12b0dce9ef303a714aa",
+        "sha256:e990ab2ccdcbdbd19b2850e10ea6d5dc27ef44c939632af83f0ef025137903e5",
+        "sha256:edbbd79212598f47bb4dadfe8fd6e330bb7077e508d7e03501974084734e375b",
+        "sha256:edce2fc5906c2685770cd1e30fd20ebf5b76c1efd0e7d0e5453fc4fa1dd979d7",
+        "sha256:ee81b494e9b691c681e49c5f72fe3cfca2ed57abee79a10a44f913bd150b0131",
+        "sha256:f129ff7ffa7c5c1b90c2166eeb68f23c3345d16791eb6be20219784b26ada6de",
+        "sha256:f24b4a4b5bf37181c07aef958dedd392cfe011aa12eb17d700ac46712c7da058",
+        "sha256:f45d596640c64293a583ae084bcd685d23918f95586c2c9d962236f9bc2df879",
+        "sha256:f708a72c4db8b3ff2df8c4418f079105c2340b94f509131e6a003cccb7b4ea44",
+        "sha256:f8c16180f578f2f0d63b08e74b1120df9af77db8724f161813c634557c340a5a",
+        "sha256:f8ff4d7f5bd36ca18176e017338287d0233061230ae5d9a6bfb9eb84dbbf5ea7",
+        "sha256:f9cad04ef30587a7ed1807725791957586a1a712859f2d6e16a19b7dd6480bff",
+        "sha256:fa6bd06fd3c92f4a77d73c75280a917184d8be1cb4c054300d8bd56e086d2904",
+        "sha256:fa8cdc851cb64ac71c1098fcd37bec89ba609a2430ecf6e302da175e973ffdbb",
+        "sha256:fad97fda7e0486050bb2b53633bcc929926eccb5afe0e2ce0f5fe95a1d0a9596",
+        "sha256:fcc01be93b5a9f4d50ad54bcdb920ffc7f7873be68fa447168fc91368ff371d0",
+        "sha256:fe6796f5e8474aa0b6f7c556d67ea5aa55d6e5b35230cd3670109569d2211f1d"
+      ],
+      "keys": [
+        "category:5.1.22",
+        "category:5.1.23",
+        "category:5.1.24",
+        "category:5.1.25"
+      ],
+      "kind": "measured-not-accepted",
+      "profile": "demo-wifi-rate-window64",
+      "retained_defconfig_sha256": "627af03c37f8fc32ba91d2d0ba8dc504580768ae4cdc46ac35fbed5b79ad1f17",
+      "summary": "仅为诊断例程，不计新增 xTS 通过。64KiB 候选 TCP RX 完成双端 225MiB、6.29Mbit/s、300 秒；UDP RX 9.86Mbit/s、76% 丢包且最终 ACK 缺失，随后 TCP/UDP TX 未完成，IOB 128 个仅剩 1 个可用。历史完整 TCP TX 3.38、UDP TX 对端 3.77Mbit/s 属于较早候选和环境，不能拼成同一镜像四向通过。",
+      "tested_identity": "See original_artifact_records for available hashes; do not infer missing identities or merge different receipts.",
+      "title": "Wi-Fi 四方向 300 秒速率实测与失败记录"
+    }
+  },
+  "diagnostic_records": [
+    {
+      "case": "5.1.22",
+      "demo": "wifi-rate-diagnostics",
+      "direction_from_board": "rx",
+      "end": "2026-09-20T01:24:25.704985+08:00",
+      "evidence_id": "sha256:a336aa9653c17c2140aaab4da899b57d6602393ba14ca21d70e0cae9e6ad2012",
+      "log_evidence_hashes": [
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "protocol": "TCP",
+      "requested_duration_seconds": 300,
+      "start": "2026-09-20T01:23:58.748932+08:00",
+      "status": "ERROR"
+    },
+    {
+      "case": "5.1.23",
+      "demo": "wifi-rate-diagnostics",
+      "direction_from_board": "tx",
+      "end": "2026-09-20T01:24:32.550092+08:00",
+      "evidence_id": "sha256:a336aa9653c17c2140aaab4da899b57d6602393ba14ca21d70e0cae9e6ad2012",
+      "log_evidence_hashes": [
+        "3b080228765e0032421d6ef69312fcbe61e345f501ec200d8d3df1f390c14d7b",
+        "b188f6ac5846a2ab8f8111f32149542de783965cb0e47b6cf400bdb7058127b3"
+      ],
+      "protocol": "TCP",
+      "requested_duration_seconds": 300,
+      "start": "2026-09-20T01:24:25.706184+08:00",
+      "status": "INCOMPLETE"
+    },
+    {
+      "case": "5.1.24",
+      "demo": "wifi-rate-diagnostics",
+      "direction_from_board": "rx",
+      "end": "2026-09-20T01:24:59.635125+08:00",
+      "evidence_id": "sha256:a336aa9653c17c2140aaab4da899b57d6602393ba14ca21d70e0cae9e6ad2012",
+      "log_evidence_hashes": [
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "protocol": "UDP",
+      "requested_duration_seconds": 300,
+      "start": "2026-09-20T01:24:32.550926+08:00",
+      "status": "ERROR"
+    },
+    {
+      "case": "5.1.25",
+      "demo": "wifi-rate-diagnostics",
+      "direction_from_board": "tx",
+      "end": "2026-09-20T01:30:05.048201+08:00",
+      "evidence_id": "sha256:a336aa9653c17c2140aaab4da899b57d6602393ba14ca21d70e0cae9e6ad2012",
+      "log_evidence_hashes": [
+        "867d29ad8fc8a9e59c84544a3998c22806133c66fa4014c256d2539912c51f89",
+        "8c266162167ac3f59c8ca4c0669937995a30f159dba9bac91dfdd397875a999a"
+      ],
+      "protocol": "UDP",
+      "requested_duration_seconds": 300,
+      "start": "2026-09-20T01:24:59.635914+08:00",
+      "status": "RECORDED"
+    },
+    {
+      "case": "5.1.22",
+      "demo": "wifi-rate-diagnostics",
+      "evidence_id": "sha256:c1c36cc779ec6cba3bff2ba60e3d93373682cd6c2c41c40537a3d723baa74cef",
+      "log_evidence_hashes": [
+        "3309036f55a660cbe13a37840266bdd666b1851b8229922bad31339cd2da4ea6",
+        "8adf42ad9be8a00cf8d253f1cb9d04c25a0ca7a8e9f23ee7879abc8997034a8b"
+      ],
+      "review_status": "INCOMPLETE_TCP_RX_TIMEOUT"
+    },
+    {
+      "case": "5.1.23",
+      "demo": "wifi-rate-diagnostics",
+      "evidence_id": "sha256:c1c36cc779ec6cba3bff2ba60e3d93373682cd6c2c41c40537a3d723baa74cef",
+      "log_evidence_hashes": [
+        "305ef823ecb7588a74065e94389228ef5a0869e229fe9a051714e91a983d0fed",
+        "f8c16180f578f2f0d63b08e74b1120df9af77db8724f161813c634557c340a5a"
+      ],
+      "review_status": "INCOMPLETE_TCP_TX_DISCONNECT"
+    },
+    {
+      "case": "5.1.24",
+      "demo": "wifi-rate-diagnostics",
+      "evidence_id": "sha256:c1c36cc779ec6cba3bff2ba60e3d93373682cd6c2c41c40537a3d723baa74cef",
+      "log_evidence_hashes": [
+        "916f384d8912ed3e706899ec58d4ae18903de3d09099d175191924f6d71e97bc",
+        "babae9d3d482b3ff658e645b786d3eaeefacff3627557a2947618557c3a65ba2"
+      ],
+      "review_status": "UDP_RX_ABNORMAL_MISSING_FIN_ACK"
+    },
+    {
+      "case": "5.1.25",
+      "demo": "wifi-rate-diagnostics",
+      "evidence_id": "sha256:c1c36cc779ec6cba3bff2ba60e3d93373682cd6c2c41c40537a3d723baa74cef",
+      "log_evidence_hashes": [
+        "867d29ad8fc8a9e59c84544a3998c22806133c66fa4014c256d2539912c51f89",
+        "8c266162167ac3f59c8ca4c0669937995a30f159dba9bac91dfdd397875a999a"
+      ],
+      "review_status": "COMPLETE_MEASUREMENT"
+    },
+    {
+      "case": "5.1.22",
+      "demo": "wifi-rate-diagnostics",
+      "direction_from_board": "rx",
+      "end": "2026-09-20T01:24:25.704985+08:00",
+      "evidence_id": "sha256:11bd2e7c43134650d70e377f7d2f2b69eb3a90856e9eac0a2adbc796267c0cef",
+      "log_evidence_hashes": [
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "protocol": "TCP",
+      "requested_duration_seconds": 300,
+      "start": "2026-09-20T01:23:58.748932+08:00",
+      "status": "ERROR"
+    },
+    {
+      "case": "5.1.23",
+      "demo": "wifi-rate-diagnostics",
+      "direction_from_board": "tx",
+      "end": "2026-09-20T01:24:32.550092+08:00",
+      "evidence_id": "sha256:de983f212395aac0f02495ca98675ef2a8f32531a1776c23bbf00a5d2f5820e4",
+      "log_evidence_hashes": [
+        "3b080228765e0032421d6ef69312fcbe61e345f501ec200d8d3df1f390c14d7b",
+        "b188f6ac5846a2ab8f8111f32149542de783965cb0e47b6cf400bdb7058127b3"
+      ],
+      "protocol": "TCP",
+      "requested_duration_seconds": 300,
+      "start": "2026-09-20T01:24:25.706184+08:00",
+      "status": "INCOMPLETE"
+    },
+    {
+      "case": "5.1.24",
+      "demo": "wifi-rate-diagnostics",
+      "direction_from_board": "rx",
+      "end": "2026-09-20T01:24:59.635125+08:00",
+      "evidence_id": "sha256:5387e8497e20c1941ab51a76d9b7638d89e3b34bc78d71dfec77fbb937db753c",
+      "log_evidence_hashes": [
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "protocol": "UDP",
+      "requested_duration_seconds": 300,
+      "start": "2026-09-20T01:24:32.550926+08:00",
+      "status": "ERROR"
+    },
+    {
+      "case": "5.1.25",
+      "demo": "wifi-rate-diagnostics",
+      "direction_from_board": "tx",
+      "end": "2026-09-20T01:30:05.048201+08:00",
+      "evidence_id": "sha256:13e2588cd3a7193540b83de5d7ca64dead3c0fbfbf0f8d8f8d497110ca4d44ef",
+      "log_evidence_hashes": [
+        "867d29ad8fc8a9e59c84544a3998c22806133c66fa4014c256d2539912c51f89",
+        "8c266162167ac3f59c8ca4c0669937995a30f159dba9bac91dfdd397875a999a"
+      ],
+      "protocol": "UDP",
+      "requested_duration_seconds": 300,
+      "start": "2026-09-20T01:24:59.635914+08:00",
+      "status": "RECORDED"
+    }
+  ],
+  "identity_rule": "Snapshot label is copied from the historical catalog, not a claim that every later demo used that revision. Missing tested-image/config hashes are unknown. Local defconfig hashes identify retained source, not a tested final .config.",
+  "original_artifact_records": [
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "sha256": "f74db48a0f23a532474af41a2fd2d0b78da39bb8d50e21795d4609efb5e6d27f"
+        },
+        {
+          "artifact": "appfs.img",
+          "sha256": "74f0e7423afc32dc17e5bc513a035e94981755832f9cac470bcae00673e9fcdf"
+        }
+      ],
+      "demo": "ble-controller-info",
+      "evidence_id": "sha256:5f221842db6490a0e9530134aed9ac085ba73c364f3a800bc692865fc7df315e",
+      "scope": "historical receipt; association is not inferred across receipts"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 298196,
+          "sha256": "b38087502aff3465b8d49e02f4256d2ff581a3ab0a2ac3fe1596be8501d95efc"
+        }
+      ],
+      "demo": "camera-ov3660",
+      "scope": "bundled historical firmware bytes; board result remains limited to original case summary"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "sha256": "06b55d57672dfb270fdb63c2352be0036f05cbe27fbe3ac4da9ce456643cfe15"
+        }
+      ],
+      "demo": "common-1.3.6",
+      "evidence_id": "sha256:a5c090a1e90db9b6cc77806e7fb9b6f42c23fc0e0b3dd4c54618b5241018693c",
+      "scope": "historical receipt; association is not inferred across receipts"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "sha256": "3ac287693ab70f19ba422ee7eeb4014edca697b46c0b9c22bcc292cdb9d27122"
+        },
+        {
+          "artifact": "appfs.img",
+          "sha256": "73ede5a35213c189aa423f4df1272afa0254caa4b522d02e4749228ddaae9cde"
+        }
+      ],
+      "demo": "common-1.3.6",
+      "evidence_id": "sha256:c664fb7938106e587a468d2f2f8dc00873f84b4e765ae368afbff71329630bf7",
+      "scope": "historical receipt; association is not inferred across receipts"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "sha256": "bd2e946355eb33da6805bdf1697fc598a0f04ef5362104f57bc69a45b2662108"
+        },
+        {
+          "artifact": "appfs.img",
+          "sha256": "a76743915aea68aa5e84a573a72a4b4d4c3a589ce842d94666991097d0fae353"
+        }
+      ],
+      "demo": "common-1.3.6",
+      "evidence_id": "sha256:8291363c885c74706e29efef1bfce0e92d07b3d58c9829a133708be9ee77108d",
+      "scope": "historical receipt; association is not inferred across receipts"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "appfs.img",
+          "bytes": 2552832,
+          "sha256": "a76743915aea68aa5e84a573a72a4b4d4c3a589ce842d94666991097d0fae353"
+        },
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 1609116,
+          "sha256": "bd2e946355eb33da6805bdf1697fc598a0f04ef5362104f57bc69a45b2662108"
+        }
+      ],
+      "demo": "common-1.3.6",
+      "scope": "bundled historical firmware bytes; board result remains limited to original case summary"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 258464,
+          "sha256": "397707e8d01460791e0d6ec3d328c0fe93ef3907884bee57762481a1b322e40e"
+        }
+      ],
+      "demo": "rgb565-display",
+      "scope": "bundled historical firmware bytes; board result remains limited to original case summary"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": ".config",
+          "sha256": "7eb05befefbef8aed0d79477db951f35cc1a7e414ccd24b60690ee9812f50488"
+        },
+        {
+          "artifact": "nuttx.bin",
+          "sha256": "deaf920ad4bf82044ba5fd7957e36be313ed8f2a6eea51542d98bf7a278abf7b"
+        },
+        {
+          "artifact": "appfs.img",
+          "sha256": "f5c6600b2177b5d15bf5f09318b4be3e54cd03dda01d8a33fe24581b1258009d"
+        }
+      ],
+      "demo": "wifi-rate-diagnostics",
+      "evidence_id": "sha256:573c7babc6c93d30d9aa1c7ee9f402969ca61d8a14cd87df1e83ca1b0eb0959d",
+      "scope": "historical receipt; association is not inferred across receipts"
+    },
+    {
+      "build": "886",
+      "demo": "common-1.3.6",
+      "evidence_id": "sha256:be886fbd3f6a2cea9b58df83c43487f1d179b7c3538828a8a62c13df5e47fbf6",
+      "hashes": {
+        "kernel_sha256": "a6aaf394ef8579b56ab8bde3a21768827e7ae1424262a67e37915359f9f8797e"
+      },
+      "profile": "xts-flat-gpio",
+      "scope": "historical original record"
+    },
+    {
+      "created_utc": "20260919T155038Z",
+      "demo": "rgb565-display",
+      "evidence_id": "sha256:1f7b38d5cdb35a638abe6984ac1a427511f86a00dd5212b94b6f186422e08cce",
+      "hashes": {
+        "image_sha256": "397707e8d01460791e0d6ec3d328c0fe93ef3907884bee57762481a1b322e40e"
+      },
+      "scope": "historical original record"
+    },
+    {
+      "demo": "rgb565-display",
+      "evidence_id": "sha256:a2360cbd4d3b2ebd878c0b22bf89530572f337a51a757080b2402618879c0012",
+      "hashes": {
+        "firmware_sha256": "397707e8d01460791e0d6ec3d328c0fe93ef3907884bee57762481a1b322e40e"
+      },
+      "recorded_utc": "2026-09-19T15:54:28.381604+00:00",
+      "scope": "historical original record"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "sha256": "1f5a7a04728a594b1f31d41ca38e6aa67f7ab5cfbdee11bd19d7bb4a69ded1ae"
+        },
+        {
+          "artifact": "appfs.img",
+          "sha256": "4a195b935c87255c4aa688b577d7101b431a28075a8caa181d4fad71b845e4b7"
+        },
+        {
+          "artifact": ".config",
+          "sha256": "7eb05befefbef8aed0d79477db951f35cc1a7e414ccd24b60690ee9812f50488"
+        }
+      ],
+      "demo": "wifi-rate-diagnostics",
+      "evidence_id": "sha256:b979ad4eceb8988383567f9dd4dd762e473b537b70c6640f93244c8e206dd776",
+      "hashes": {},
+      "scope": "historical original record"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "sha256": "f74db48a0f23a532474af41a2fd2d0b78da39bb8d50e21795d4609efb5e6d27f"
+        },
+        {
+          "artifact": "appfs.img",
+          "sha256": "74f0e7423afc32dc17e5bc513a035e94981755832f9cac470bcae00673e9fcdf"
+        }
+      ],
+      "demo": "ble-controller-info",
+      "evidence_id": "sha256:8b44503f33480ba2df40d0c1cdb34965bf46d80a21b9b9da6abef4c75394fac4",
+      "hashes": {},
+      "scope": "CONTROLLER_VERSION_EVIDENCE_NOT_XTS_PASS",
+      "status": "HCI_CONTROLLER_LOG_CAPTURED"
+    },
+    {
+      "demo": "camera-ov3660",
+      "evidence_id": "sha256:38d18cf7d6e6058ade838577019fc537275f2a01ab9fbdc586d51f3962d4ea83",
+      "scope": "original tested source manifest, including original defconfig",
+      "source_hashes": {
+        "openvela-dev/apps/examples/s31preview/s31preview_main.c": "5a7ce9201f5a9bc0bd1c13596354db24e66a03c29c76a39b21b35bfcbc23154b",
+        "openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_camera_dvp.c": "df5d4e363c484e358b9ec29f828a29e99d51a6480c921cb7a2af40259519fdf6",
+        "openvela-dev/nuttx/arch/risc-v/src/esp32s31/esp32s31_lcd.c": "a4ee4ab6afb3e1d92618adfb8ddaadd4da2df056be73680b5c8fa15e38e22033",
+        "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/Kconfig": "14e8bc8ddd3cb2a8a91901bfd3e8b5fec67b1fa0863e32f07778f3b8cb214f49",
+        "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/korvo-camera-preview/defconfig": "0401499c965a56f531657b00a7b6fbb72470b22a722f276a2c68df8ad3229c08",
+        "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_camera_v4l2.c": "9e67419ea4b01b7f9be66ee7a5428d6dcbd2a558222fa5342564b5c5e200d56d",
+        "openvela-dev/nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/src/esp32s31_ov3660.c": "d49625f78749da0513647904ed7cbe90c89a964a440b74697bf6d39f9da0c8c8",
+        "s31-reference/deps/esp-hal-3rdparty/components/upper_hal_cam/dvp/src/esp_cam_ctlr_dvp_cam.c": "fd15918ee20420b0f3e78751bc84e651f723fcb9619102da803274216a954ad9",
+        "s31-reference/deps/esp-hal-3rdparty/components/upper_hal_dma/src/gdma.c": "5eb7803bdf050b81756727360931120f0ba2afed1d810ff8ad53f36679d9ac6d",
+        "s31-reference/deps/esp-hal-3rdparty/components/upper_hal_dma/src/gdma_nuttx_irq.h": "4b65b70969a25e6a678a6f1ebd961da300b15e8242ca92cb2da2064a8ac5408e"
+      }
+    }
+  ],
+  "record_rule": "Original case fields are exact historical text, including old failure qualifiers. Embedded document names are archival text, not maintained links. No result is promoted to current firmware acceptance.",
+  "reproduction_builds": [
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 1189260,
+          "sha256": "26b4e2500f77b253cf5fdee5e994438bb9893a0c619e1f2f1cc77729fb45a9bb"
+        },
+        {
+          "artifact": "appfs.img",
+          "bytes": 2348032,
+          "sha256": "6fa1ad11d58db35ebbedee5d8419a34b4516107df041719dfc52dfb52bae8dc0"
+        }
+      ],
+      "build": "PASS",
+      "config_sha256": "74f65f803296f12c802044d8ec6aa6ed0dacde0a2955dd94151fa0fd46794951",
+      "date": "2026-09-19",
+      "evidence_id": "sha256:aae2ac5e8fc69e0b95cb5488a4e2e13d653ff051b1fc4a690d2e27a5af336f38",
+      "new_board_test": false,
+      "profile": "demo-rmt-netapps-competition",
+      "scope": "historical build-only"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 218796,
+          "sha256": "b948cc08c404ccd34def3c146a283bc8a12370bb59fff903c60497687af7501e"
+        }
+      ],
+      "build": "PASS",
+      "config_sha256": "223e0d5dd001843c59c7410583a10af344a6ab79d1002b852c77d64ae467593a",
+      "date": "2026-09-19",
+      "evidence_id": "sha256:aae2ac5e8fc69e0b95cb5488a4e2e13d653ff051b1fc4a690d2e27a5af336f38",
+      "new_board_test": false,
+      "profile": "nsh",
+      "scope": "historical build-only"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 614692,
+          "sha256": "2c34d094187a0770063bb62dcc536379f72c6aa42c529de5088b55bd9e15c41c"
+        }
+      ],
+      "build": "PASS",
+      "config_sha256": "3bd28d2269382d882c72c4ac8199cc738a6cabe168bf1ad9b6f28d69e64a460f",
+      "date": "2026-09-19",
+      "evidence_id": "sha256:aae2ac5e8fc69e0b95cb5488a4e2e13d653ff051b1fc4a690d2e27a5af336f38",
+      "new_board_test": false,
+      "profile": "xts-flat-camera",
+      "scope": "historical build-only"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 1609116,
+          "sha256": "485c11d4e52778bf8053cffd1b7ed5e8543cfdc038681f459d1ad9cc2df9a942"
+        },
+        {
+          "artifact": "nuttx",
+          "bytes": 2099892,
+          "sha256": "1940d36e34460d7c43597f9635babedad877a33baf18686fe539ee1be9796c13"
+        },
+        {
+          "artifact": ".config",
+          "bytes": 98136,
+          "sha256": "2648f3d6946d86c545deece918cdfa8c9148a9f275d3bcaa4ba45b9c09346344"
+        },
+        {
+          "artifact": "appfs.img",
+          "bytes": 2552832,
+          "sha256": "1983935a0c8889d2ee5ea385aa6a867ded8c4e4ea13af53471d6db09660967f8"
+        }
+      ],
+      "build": "PASS",
+      "date": "2026-09-20",
+      "demo": "common-1.3.6",
+      "evidence_id": "sha256:c28a36cd1bf682b164f718878d77a9bb4e4560207009e6e7bb70a965d8647bd3",
+      "new_board_test": false,
+      "profile": "demo-gpio-loopback",
+      "scope": "historical build-only"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 258356,
+          "sha256": "9e4612543e427d9d9880f49fad0f6f67e228054446c2e06de19a9ee9395cda32"
+        },
+        {
+          "artifact": "nuttx",
+          "bytes": 368916,
+          "sha256": "0c4812e2720370555bc36e60d376b4738f417faf40e71fa164aec17548e2b081"
+        },
+        {
+          "artifact": ".config",
+          "bytes": 54536,
+          "sha256": "d23f2da62a5da8e625000a3efdc22c6afb748a635188f2dfebb9ad7cc1280c3e"
+        }
+      ],
+      "build": "PASS",
+      "date": "2026-09-20",
+      "demo": "rgb565-display",
+      "evidence_id": "sha256:c28a36cd1bf682b164f718878d77a9bb4e4560207009e6e7bb70a965d8647bd3",
+      "new_board_test": false,
+      "profile": "korvo-rgb565",
+      "scope": "historical build-only"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 298196,
+          "sha256": "7cfaeb75960eda29b99100e9fe8cdc50bc0c2500ea4b494fb5ff4462347c0984"
+        },
+        {
+          "artifact": "nuttx",
+          "bytes": 429512,
+          "sha256": "261b0c60c3b4f1fc21f93e95d5f54a762d1787c19f852c2c59cf48c7fee16896"
+        },
+        {
+          "artifact": ".config",
+          "bytes": 56843,
+          "sha256": "4375b1d69c419fb564b4c08a175f3b864d93086dffe6145b1c5069bd6797db00"
+        }
+      ],
+      "build": "PASS",
+      "date": "2026-09-20",
+      "demo": "camera-ov3660",
+      "evidence_id": "sha256:c28a36cd1bf682b164f718878d77a9bb4e4560207009e6e7bb70a965d8647bd3",
+      "new_board_test": false,
+      "profile": "korvo-camera-preview",
+      "scope": "historical build-only"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 1606988,
+          "sha256": "67a8e946eef1b678b0d838f98f770d7ce238f320bc3a7bf49b674a9ae67deb40"
+        },
+        {
+          "artifact": "nuttx",
+          "bytes": 2098528,
+          "sha256": "ffd8f8156ce9145d8c9cde8188831ea92d0a5511a8061abeca420b445513cc05"
+        },
+        {
+          "artifact": ".config",
+          "bytes": 97855,
+          "sha256": "4f3f09b4c297fe3bc7d7fbbb77ac1920e2956fb401ef4c0c17f72d953a35e607"
+        },
+        {
+          "artifact": "appfs.img",
+          "bytes": 3089408,
+          "sha256": "45ab204eb2269864df09c4b18c9e57bee2fce9c62b69bcb7524a2907d8644575"
+        }
+      ],
+      "build": "PASS",
+      "date": "2026-09-20",
+      "demo": "wifi-rate-diagnostics",
+      "evidence_id": "sha256:c28a36cd1bf682b164f718878d77a9bb4e4560207009e6e7bb70a965d8647bd3",
+      "new_board_test": false,
+      "profile": "demo-wifi-rate-window64",
+      "scope": "historical build-only"
+    },
+    {
+      "artifacts": [
+        {
+          "artifact": "nuttx.bin",
+          "bytes": 970788,
+          "sha256": "170cfdc94e163abd4745bcb5ce1893632fe0223b5035769daa256a44c0357a03"
+        },
+        {
+          "artifact": "nuttx",
+          "bytes": 1280852,
+          "sha256": "176c45350092dd19dbab183db75a5d6900bb17cee9a12a38ced35aeb2767f793"
+        },
+        {
+          "artifact": ".config",
+          "bytes": 92630,
+          "sha256": "94bbf837275eca6d998ec469a3c8c2d456e49b25971f68d3c00438e9a7cbf2cf"
+        },
+        {
+          "artifact": "appfs.img",
+          "bytes": 2004992,
+          "sha256": "b85c12767cf996d815869462cbac4cd142f099cfe3d6ed785ae852e97dab1c1f"
+        }
+      ],
+      "build": "PASS",
+      "date": "2026-09-20",
+      "demo": "ble-controller-info",
+      "evidence_id": "sha256:c28a36cd1bf682b164f718878d77a9bb4e4560207009e6e7bb70a965d8647bd3",
+      "new_board_test": false,
+      "profile": "demo-rmt-bttool-kernel",
+      "scope": "historical build-only"
+    }
+  ],
+  "schema": 1,
+  "scope": "historical-only",
+  "source_snapshot_label": "6c1859d",
+  "unresolved_evidence_rule": "unresolved-id values identify stale metadata references whose file is absent; they are not content hashes or verified evidence."
+}

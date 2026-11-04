@@ -2,8 +2,40 @@
 
 set(SRCS esp32s31_boot.c esp32s31_bringup.c)
 
+if(CONFIG_ESP32S31_LPI2C_CODEC_TEST)
+  list(APPEND SRCS esp32s31_lpi2c_test.c)
+endif()
+
+if(CONFIG_ESP32S31_LPUART_LOOPBACK_TEST)
+  list(APPEND SRCS esp32s31_lpuart_test.c)
+endif()
+
+if(CONFIG_ESP32S31_CANFD_LOOPBACK_TEST)
+  list(APPEND SRCS esp32s31_canfd_test.c)
+endif()
+
+if(CONFIG_ESP32S31_COMP_LOOPBACK_TEST)
+  list(APPEND SRCS esp32s31_comp_test.c)
+endif()
+
+if(CONFIG_ESP32S31_MCPWM_LOOPBACK_TEST)
+  list(APPEND SRCS esp32s31_mcpwm_test.c)
+endif()
+
+if(CONFIG_ESP32S31_PCNT_MATRIX_TEST)
+  list(APPEND SRCS esp32s31_pcnt_test.c)
+endif()
+
+if(CONFIG_ESP32S31_KORVO_ADC_BUTTONS)
+  list(APPEND SRCS esp32s31_adc_buttons.c)
+endif()
+
 if(CONFIG_ESP32S31_AUDIO)
   list(APPEND SRCS esp32s31_audio.c)
+endif()
+
+if(CONFIG_ESP32S31_KORVO_AUDIO)
+  list(APPEND SRCS esp32s31_korvo_audio.c esp32s31_pcm.c esp32s31_es8389.c)
 endif()
 
 if(CONFIG_ESP32S31_CAMERA_OV2640 OR CONFIG_ESP32S31_CAMERA_OV3660)
@@ -36,6 +68,10 @@ endif()
 
 if(CONFIG_ESP32S31_XTS_FLASH)
   list(APPEND SRCS esp32s31_xts_flash.c)
+endif()
+
+if(CONFIG_ESP32S31_KORVO_HMI_DATA)
+  list(APPEND SRCS esp32s31_hmi_storage.c)
 endif()
 
 if(CONFIG_BOARDCTL_RESET OR CONFIG_BOARDCTL_RESET_CAUSE)
@@ -106,8 +142,14 @@ elseif(CONFIG_BUILD_KERNEL)
     OUTPUT ${ROMFS_BOOT_SOURCE}
     COMMAND genromfs -f romfs.img -d ${CMAKE_BINARY_DIR}/bin -V NuttXBootVol
     COMMAND xxd -i romfs.img romfs_boot.c
+    COMMAND sed -i
+            -e "1i#include <nuttx/compiler.h>"
+            -e "s/romfs_img/g_s31_appromfs/g"
+            -e "s/^unsigned char/const unsigned char aligned_data(4)/"
+            -e "s/^unsigned int/const unsigned int/" romfs_boot.c
     DEPENDS $<TARGET_PROPERTY:nuttx,NUTTX_LOADABLE_APPS>
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    VERBATIM)
   add_custom_target(board_romfs DEPENDS ${ROMFS_BOOT_SOURCE})
   add_dependencies(board board_romfs)
 
@@ -122,6 +164,108 @@ endif()
 
 if(CONFIG_ESP32S31_XTS_MEDIA_VOLUME)
   list(APPEND SRCS esp32s31_xts_media_volume.c)
+endif()
+
+if(CONFIG_ESP32S31_KORVO_TOUCH)
+  list(APPEND SRCS esp32s31_touch.c)
+endif()
+
+# Register MEDIA assets before the HMI creates /etc. Both services share one
+# ROMFS; only the standalone qualification uses the minimal MEDIA startup.
+if(CONFIG_ESP32S31_KORVO_MEDIA)
+  if(NOT CONFIG_ESP32S31_KORVO_HMI AND NOT CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
+    add_board_rcraws(
+      ${CMAKE_CURRENT_LIST_DIR}/etc/init.d/rc.sysinit
+      ${CMAKE_CURRENT_LIST_DIR}/etc/init.d/rcS)
+  endif()
+  if(CONFIG_XMSDEMO_FACTORY)
+    add_board_rcraws(
+      ${CMAKE_CURRENT_LIST_DIR}/factory/etc/media/graph.conf
+      ${CMAKE_CURRENT_LIST_DIR}/factory/etc/media/criteria.txt
+      ${CMAKE_CURRENT_LIST_DIR}/factory/etc/media/settings.pfw)
+  else()
+    add_board_rcraws(
+      ${CMAKE_CURRENT_LIST_DIR}/etc/media/graph.conf
+      ${CMAKE_CURRENT_LIST_DIR}/etc/media/criteria.txt
+      ${CMAKE_CURRENT_LIST_DIR}/etc/media/settings.pfw)
+  endif()
+  if(CONFIG_BLUETOOTH_LEAUDIO_SERVER)
+    add_board_rcraws(
+      ${CMAKE_CURRENT_LIST_DIR}/etc/media-lea/graph.conf
+      ${CMAKE_CURRENT_LIST_DIR}/etc/media-lea/criteria.txt
+      ${CMAKE_CURRENT_LIST_DIR}/etc/media-lea/settings.pfw)
+  endif()
+endif()
+
+if(CONFIG_ESP32S31_KORVO_HMI OR CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
+  # PackageManager scans the real board ROMFS, independently of the upstream
+  # demos' simulator resource copies. configure_file tracks manifest changes.
+  set(HMI_DEMOS ${NUTTX_APPS_DIR}/frameworks/runtimes/services/xmsdemo)
+  set(HMI_APPS launcher)
+  if(CONFIG_XMSDEMO_LVGLDEMO)
+    list(APPEND HMI_APPS lvgldemo)
+  endif()
+  if(CONFIG_XMSDEMO_PLATFORM)
+    list(APPEND HMI_APPS platform)
+  endif()
+  if(CONFIG_XMSDEMO_FACTORY)
+    list(APPEND HMI_APPS factory)
+    add_board_rcraws(${HMI_DEMOS}/factory/assets/etc/factory-demo)
+  endif()
+  foreach(HMI_APP ${HMI_APPS})
+    if(HMI_APP STREQUAL "launcher")
+      set(HMI_NAME xmslauncher)
+    elseif(HMI_APP STREQUAL "lvgldemo")
+      set(HMI_NAME xmslvgl)
+    elseif(HMI_APP STREQUAL "factory")
+      set(HMI_NAME s31factory)
+    else()
+      set(HMI_NAME s31product)
+    endif()
+    configure_file(${HMI_DEMOS}/${HMI_APP}/manifest.json
+                   ${CMAKE_CURRENT_BINARY_DIR}/etc/app/${HMI_NAME}/manifest.json
+                   COPYONLY)
+    list(APPEND HMI_MANIFESTS
+         ${CMAKE_CURRENT_BINARY_DIR}/etc/app/${HMI_NAME}/manifest.json)
+  endforeach()
+  if(CONFIG_EXAMPLES_S31FOUNDATION OR CONFIG_XMSDEMO_PLATFORM)
+    set(FOUNDATION_ASSETS ${NUTTX_APPS_DIR}/examples/s31foundation/assets)
+    foreach(FOUNDATION_ASSET Montserrat-Regular.ttf OFL.txt)
+      configure_file(${FOUNDATION_ASSETS}/${FOUNDATION_ASSET}
+                     ${CMAKE_CURRENT_BINARY_DIR}/etc/fonts/${FOUNDATION_ASSET}
+                     COPYONLY)
+      list(APPEND HMI_MANIFESTS
+           ${CMAKE_CURRENT_BINARY_DIR}/etc/fonts/${FOUNDATION_ASSET})
+    endforeach()
+  endif()
+  if(CONFIG_LIB_CURL)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/hmi/certs/ISRG_Root_X1.pem
+                   ${CMAKE_CURRENT_BINARY_DIR}/etc/ssl/curl/ca-certificates.crt
+                   COPYONLY)
+    list(APPEND HMI_MANIFESTS
+         ${CMAKE_CURRENT_BINARY_DIR}/etc/ssl/curl/ca-certificates.crt)
+  endif()
+  if(CONFIG_XMSDEMO_PLATFORM_MEDIA)
+    configure_file(${HMI_DEMOS}/platform/assets/demo-tone.wav
+                   ${CMAKE_CURRENT_BINARY_DIR}/etc/media/demo-tone.wav COPYONLY)
+    list(APPEND HMI_MANIFESTS
+         ${CMAKE_CURRENT_BINARY_DIR}/etc/media/demo-tone.wav)
+  endif()
+  set(HMI_INIT ${CMAKE_CURRENT_SOURCE_DIR}/hmi/etc/init.d)
+  if(CONFIG_ESP32S31_KORVO_SMP_HMI_QUALIFICATION)
+    set(HMI_INIT ${CMAKE_CURRENT_SOURCE_DIR}/smp-hmi/etc/init.d)
+    add_board_rcraws(${HMI_INIT}/start-system)
+  endif()
+  nuttx_add_romfs(
+    NAME etc
+    MOUNTPOINT etc
+    RCSRCS ${HMI_INIT}/rc.sysinit
+           ${HMI_INIT}/rcS
+    RCRAWS ${CMAKE_CURRENT_SOURCE_DIR}/hmi/etc/package.cfg
+           ${CMAKE_CURRENT_SOURCE_DIR}/hmi/etc/build.prop
+    DEPENDS ${HMI_MANIFESTS}
+    PATH ${CMAKE_CURRENT_BINARY_DIR}/etc)
+  target_link_libraries(board PRIVATE romfs_etc)
 endif()
 
 target_sources(board PRIVATE ${SRCS})

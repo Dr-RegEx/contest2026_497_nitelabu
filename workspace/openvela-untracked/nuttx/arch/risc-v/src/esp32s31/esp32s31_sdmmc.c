@@ -11,9 +11,11 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 #include <nuttx/mmcsd.h>
+#include <nuttx/irq.h>
 #include <nuttx/mutex.h>
 #include <nuttx/sdio.h>
 
@@ -134,6 +136,20 @@ static int sdmmc_host_prepare(struct esp32s31_sdmmc_dev_s *priv)
       return sdmmc_error(error);
     }
 
+  /* NuttX may request CLOCK_IDMODE before attach has created the HAL slot.
+   * Initialize the identification clock before the first command. */
+  error = priv->host.set_card_clk(priv->host.slot, 400);
+  if (error != ESP_OK)
+    {
+      sdmmc_host_deinit_slot(priv->host.slot);
+      return sdmmc_error(error);
+    }
+  error = priv->host.set_bus_width(priv->host.slot, 1);
+  if (error != ESP_OK)
+    {
+      sdmmc_host_deinit_slot(priv->host.slot);
+      return sdmmc_error(error);
+    }
   priv->slot_ready = true;
   return OK;
 }
@@ -382,6 +398,7 @@ static int sdmmc_sendcmd(struct sdio_dev_s *dev, uint32_t cmd,
     }
 
 done:
+  if (ret != OK) printf("SD bridge: CMD%u bytes=%zu blocks=%lu error=%d\n", priv->command.opcode, priv->nbytes, (unsigned long)priv->blockcount, ret);
   heap_caps_free(bounce);
   priv->command.data = NULL;
   if (data)
@@ -514,6 +531,54 @@ static sdio_eventset_t sdmmc_eventwait(struct sdio_dev_s *dev)
   return events != 0 ? events : SDIOWAIT_ERROR;
 }
 
+#if defined(CONFIG_ESP32S31_SDMMC_IDF_HOST) && \
+    defined(CONFIG_SDIO_IO_INTERRUPT)
+static int sdmmc_waitirq(struct sdio_dev_s *dev, uint32_t timeout_ms)
+{
+  struct esp32s31_sdmmc_dev_s *priv = sdmmc_priv(dev);
+  irqstate_t flags;
+  uint32_t ticks;
+  esp_err_t error;
+
+  /* The generic helper owns the bus mutex for the complete wait.  This
+   * fixed-slot bridge is !SMP; no command or DAT1 data transfer can race
+   * the HAL's level check and interrupt arming sequence.
+   */
+
+  if (!priv->slot_ready)
+    {
+      return -ENODEV;
+    }
+
+  if (timeout_ms > INT_MAX)
+    {
+      return -EINVAL;
+    }
+
+  ticks = ((uint64_t)timeout_ms + portTICK_PERIOD_MS - 1) /
+          portTICK_PERIOD_MS;
+  error = priv->host.io_int_enable(priv->host.slot);
+  if (error != ESP_OK)
+    {
+      return sdmmc_error(error);
+    }
+
+  error = priv->host.io_int_wait(priv->host.slot, ticks);
+
+  /* The pinned HAL leaves the interrupt armed after a timeout.  Disarm it
+   * on every exit before releasing the bus for a data transfer.  Only the
+   * host latch is cleared: an unacknowledged card keeps DAT1 asserted, so
+   * the next wait still observes it.  Preserve command/DMA interrupt bits.
+   */
+
+  flags = enter_critical_section();
+  sdmmc_ll_enable_interrupt(&SDMMC, SDMMC_INTMASK_IO_SLOT0, false);
+  sdmmc_ll_clear_interrupt(&SDMMC, SDMMC_INTMASK_IO_SLOT0);
+  leave_critical_section(flags);
+  return sdmmc_error(error);
+}
+#endif
+
 static void sdmmc_callbackenable(struct sdio_dev_s *dev,
                                  sdio_eventset_t eventset)
 {
@@ -570,6 +635,10 @@ static struct esp32s31_sdmmc_dev_s g_sdmmc =
       .registercallback = sdmmc_registercallback,
 #endif
       .gotextcsd = sdmmc_gotextcsd,
+#if defined(CONFIG_ESP32S31_SDMMC_IDF_HOST) && \
+    defined(CONFIG_SDIO_IO_INTERRUPT)
+      .waitirq = sdmmc_waitirq,
+#endif
     },
   .host = SDMMC_HOST_DEFAULT(),
   .slot = SDMMC_SLOT_CONFIG_DEFAULT(),

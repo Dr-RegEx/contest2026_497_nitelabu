@@ -1,0 +1,594 @@
+diff --git a/CPUID.sln b/CPUID.sln
+index 6679db50ff9fe7eb10cc573a74239ac8ae88fc00..085366982294a6cc3269b1cb105642f05a6ed708 100644
+--- a/CPUID.sln
++++ b/CPUID.sln
+@@ -1,31 +1,31 @@
+-﻿
+-Microsoft Visual Studio Solution File, Format Version 12.00
+-# Visual Studio Version 17
+-VisualStudioVersion = 17.8.34408.163
+-MinimumVisualStudioVersion = 10.0.40219.1
+-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CPUID", "msvc\CPUID.vcxproj", "{CAAB524F-BE60-450D-9842-16942EAC88DC}"
+-EndProject
+-Global
+-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+-		Debug|Win32 = Debug|Win32
+-		Debug|x64 = Debug|x64
+-		Release|Win32 = Release|Win32
+-		Release|x64 = Release|x64
+-	EndGlobalSection
+-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+-		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Debug|Win32.ActiveCfg = Debug|Win32
+-		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Debug|Win32.Build.0 = Debug|Win32
+-		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Debug|x64.ActiveCfg = Debug|x64
+-		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Debug|x64.Build.0 = Debug|x64
+-		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Release|Win32.ActiveCfg = Release|Win32
+-		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Release|Win32.Build.0 = Release|Win32
+-		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Release|x64.ActiveCfg = Release|x64
+-		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Release|x64.Build.0 = Release|x64
+-	EndGlobalSection
+-	GlobalSection(SolutionProperties) = preSolution
+-		HideSolutionNode = FALSE
+-	EndGlobalSection
+-	GlobalSection(ExtensibilityGlobals) = postSolution
+-		SolutionGuid = {5A8B69E0-F743-41D6-9849-16CBB91B6071}
+-	EndGlobalSection
+-EndGlobal
++﻿
++Microsoft Visual Studio Solution File, Format Version 12.00
++# Visual Studio Version 17
++VisualStudioVersion = 17.8.34408.163
++MinimumVisualStudioVersion = 10.0.40219.1
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CPUID", "msvc\CPUID.vcxproj", "{CAAB524F-BE60-450D-9842-16942EAC88DC}"
++EndProject
++Global
++	GlobalSection(SolutionConfigurationPlatforms) = preSolution
++		Debug|Win32 = Debug|Win32
++		Debug|x64 = Debug|x64
++		Release|Win32 = Release|Win32
++		Release|x64 = Release|x64
++	EndGlobalSection
++	GlobalSection(ProjectConfigurationPlatforms) = postSolution
++		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Debug|Win32.ActiveCfg = Debug|Win32
++		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Debug|Win32.Build.0 = Debug|Win32
++		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Debug|x64.ActiveCfg = Debug|x64
++		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Debug|x64.Build.0 = Debug|x64
++		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Release|Win32.ActiveCfg = Release|Win32
++		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Release|Win32.Build.0 = Release|Win32
++		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Release|x64.ActiveCfg = Release|x64
++		{CAAB524F-BE60-450D-9842-16942EAC88DC}.Release|x64.Build.0 = Release|x64
++	EndGlobalSection
++	GlobalSection(SolutionProperties) = preSolution
++		HideSolutionNode = FALSE
++	EndGlobalSection
++	GlobalSection(ExtensibilityGlobals) = postSolution
++		SolutionGuid = {5A8B69E0-F743-41D6-9849-16CBB91B6071}
++	EndGlobalSection
++EndGlobal
+diff --git a/msvc/CPUID.vcxproj b/msvc/CPUID.vcxproj
+index 76bbe7ad680f604c2b0cc345ea92867603fb2f2d..957f582533545021257fe6058e2ff6a2af6f8077 100644
+--- a/msvc/CPUID.vcxproj
++++ b/msvc/CPUID.vcxproj
+@@ -1,261 +1,261 @@
+-﻿<?xml version="1.0" encoding="utf-8"?>
+-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+-  <ItemGroup Label="ProjectConfigurations">
+-    <ProjectConfiguration Include="Debug|Win32">
+-      <Configuration>Debug</Configuration>
+-      <Platform>Win32</Platform>
+-    </ProjectConfiguration>
+-    <ProjectConfiguration Include="Debug|x64">
+-      <Configuration>Debug</Configuration>
+-      <Platform>x64</Platform>
+-    </ProjectConfiguration>
+-    <ProjectConfiguration Include="Release|Win32">
+-      <Configuration>Release</Configuration>
+-      <Platform>Win32</Platform>
+-    </ProjectConfiguration>
+-    <ProjectConfiguration Include="Release|x64">
+-      <Configuration>Release</Configuration>
+-      <Platform>x64</Platform>
+-    </ProjectConfiguration>
+-  </ItemGroup>
+-  <PropertyGroup Label="Globals">
+-    <ProjectGuid>{CAAB524F-BE60-450D-9842-16942EAC88DC}</ProjectGuid>
+-    <RootNamespace>CPUID</RootNamespace>
+-    <Keyword>Win32Proj</Keyword>
+-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+-  </PropertyGroup>
+-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+-    <ConfigurationType>Application</ConfigurationType>
+-    <CharacterSet>Unicode</CharacterSet>
+-    <WholeProgramOptimization>true</WholeProgramOptimization>
+-    <PlatformToolset>v143</PlatformToolset>
+-  </PropertyGroup>
+-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+-    <ConfigurationType>Application</ConfigurationType>
+-    <CharacterSet>Unicode</CharacterSet>
+-    <PlatformToolset>v143</PlatformToolset>
+-  </PropertyGroup>
+-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+-    <ConfigurationType>Application</ConfigurationType>
+-    <CharacterSet>Unicode</CharacterSet>
+-    <WholeProgramOptimization>false</WholeProgramOptimization>
+-    <PlatformToolset>v143</PlatformToolset>
+-  </PropertyGroup>
+-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+-    <ConfigurationType>Application</ConfigurationType>
+-    <CharacterSet>Unicode</CharacterSet>
+-    <WholeProgramOptimization>false</WholeProgramOptimization>
+-    <PlatformToolset>v143</PlatformToolset>
+-  </PropertyGroup>
+-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+-  <ImportGroup Label="ExtensionSettings">
+-  </ImportGroup>
+-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+-  </ImportGroup>
+-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+-  </ImportGroup>
+-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+-  </ImportGroup>
+-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+-  </ImportGroup>
+-  <PropertyGroup Label="UserMacros" />
+-  <PropertyGroup>
+-    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+-  </PropertyGroup>
+-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+-    <OutDir>$(ProjectDir)\$(Configuration)\$(Platform)\</OutDir>
+-    <IntDir>$(ProjectDir)\$(Configuration)\$(Platform)\obj\</IntDir>
+-    <LinkIncremental>true</LinkIncremental>
+-  </PropertyGroup>
+-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+-    <OutDir>$(ProjectDir)\$(Configuration)\$(Platform)\</OutDir>
+-    <IntDir>$(ProjectDir)\$(Configuration)\$(Platform)\obj\</IntDir>
+-    <LinkIncremental>true</LinkIncremental>
+-  </PropertyGroup>
+-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+-    <OutDir>$(ProjectDir)\$(Configuration)\$(Platform)\</OutDir>
+-    <IntDir>$(ProjectDir)\$(Configuration)\$(Platform)\obj\</IntDir>
+-    <LinkIncremental>false</LinkIncremental>
+-  </PropertyGroup>
+-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+-    <OutDir>$(ProjectDir)\$(Configuration)\$(Platform)\</OutDir>
+-    <IntDir>$(ProjectDir)\$(Configuration)\$(Platform)\obj\</IntDir>
+-    <LinkIncremental>false</LinkIncremental>
+-  </PropertyGroup>
+-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+-    <PreBuildEvent>
+-      <Message>Generating build.h and license.h</Message>
+-      <Command>set PATH="%PATH%;$(CommonExecutablePath);C:\Strawberry\perl\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\cmd"
+-cd "$(ProjectDir).."
+-perl tools/build.pl build.h
+-perl tools/license.pl LICENSE license.h
+-</Command>
+-    </PreBuildEvent>
+-    <ClCompile>
+-      <Optimization>Disabled</Optimization>
+-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..;$(ProjectDir)\..\getopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+-      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+-      <PrecompiledHeader>Use</PrecompiledHeader>
+-      <PrecompiledHeaderFile>prefix.h</PrecompiledHeaderFile>
+-      <WarningLevel>Level3</WarningLevel>
+-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+-    </ClCompile>
+-    <Link>
+-      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+-      <GenerateDebugInformation>true</GenerateDebugInformation>
+-      <SubSystem>Console</SubSystem>
+-      <TargetMachine>MachineX86</TargetMachine>
+-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+-    </Link>
+-  </ItemDefinitionGroup>
+-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+-    <PreBuildEvent>
+-      <Message>Generating build.h and license.h</Message>
+-      <Command>set PATH="%PATH%;$(CommonExecutablePath);C:\Strawberry\perl\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\cmd"
+-cd "$(ProjectDir).."
+-perl tools/build.pl build.h
+-perl tools/license.pl LICENSE license.h
+-</Command>
+-    </PreBuildEvent>
+-    <Midl>
+-      <TargetEnvironment>X64</TargetEnvironment>
+-    </Midl>
+-    <ClCompile>
+-      <Optimization>Disabled</Optimization>
+-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..;$(ProjectDir)\..\getopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+-      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+-      <PrecompiledHeader>Use</PrecompiledHeader>
+-      <PrecompiledHeaderFile>prefix.h</PrecompiledHeaderFile>
+-      <ProgramDataBaseFileName>$(TargetDir)\$(TargetName).pdb</ProgramDataBaseFileName>
+-      <WarningLevel>Level3</WarningLevel>
+-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+-    </ClCompile>
+-    <Link>
+-      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+-      <GenerateDebugInformation>true</GenerateDebugInformation>
+-      <ProgramDatabaseFile>$(TargetDir)\$(TargetName).pdb</ProgramDatabaseFile>
+-      <SubSystem>Console</SubSystem>
+-      <TargetMachine>MachineX64</TargetMachine>
+-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+-    </Link>
+-  </ItemDefinitionGroup>
+-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+-    <PreBuildEvent>
+-      <Message>Generating build.h and license.h</Message>
+-      <Command>set PATH="%PATH%;$(CommonExecutablePath);C:\Strawberry\perl\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\cmd"
+-cd "$(ProjectDir).."
+-perl tools/build.pl build.h
+-perl tools/license.pl LICENSE license.h
+-</Command>
+-    </PreBuildEvent>
+-    <ClCompile>
+-      <Optimization>MaxSpeed</Optimization>
+-      <IntrinsicFunctions>true</IntrinsicFunctions>
+-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..;$(ProjectDir)\..\getopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+-      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+-      <PrecompiledHeader>Use</PrecompiledHeader>
+-      <PrecompiledHeaderFile>prefix.h</PrecompiledHeaderFile>
+-      <WarningLevel>Level3</WarningLevel>
+-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+-      <FunctionLevelLinking>false</FunctionLevelLinking>
+-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+-    </ClCompile>
+-    <Link>
+-      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+-      <GenerateDebugInformation>true</GenerateDebugInformation>
+-      <SubSystem>Console</SubSystem>
+-      <OptimizeReferences>true</OptimizeReferences>
+-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+-      <TargetMachine>MachineX86</TargetMachine>
+-      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+-    </Link>
+-  </ItemDefinitionGroup>
+-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+-    <PreBuildEvent>
+-      <Message>Generating build.h and license.h</Message>
+-      <Command>set PATH="%PATH%;$(CommonExecutablePath);C:\Strawberry\perl\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\cmd"
+-cd "$(ProjectDir).."
+-perl tools/build.pl build.h
+-perl tools/license.pl LICENSE license.h
+-</Command>
+-    </PreBuildEvent>
+-    <Midl>
+-      <TargetEnvironment>X64</TargetEnvironment>
+-    </Midl>
+-    <ClCompile>
+-      <Optimization>MaxSpeed</Optimization>
+-      <IntrinsicFunctions>true</IntrinsicFunctions>
+-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..;$(ProjectDir)\..\getopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+-      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+-      <PrecompiledHeader>Use</PrecompiledHeader>
+-      <PrecompiledHeaderFile>prefix.h</PrecompiledHeaderFile>
+-      <ProgramDataBaseFileName>$(TargetDir)\$(TargetName).pdb</ProgramDataBaseFileName>
+-      <WarningLevel>Level3</WarningLevel>
+-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+-      <FunctionLevelLinking>false</FunctionLevelLinking>
+-      <WholeProgramOptimization>true</WholeProgramOptimization>
+-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+-    </ClCompile>
+-    <Link>
+-      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+-      <GenerateDebugInformation>true</GenerateDebugInformation>
+-      <ProgramDatabaseFile>$(TargetDir)\$(TargetName).pdb</ProgramDatabaseFile>
+-      <SubSystem>Console</SubSystem>
+-      <OptimizeReferences>true</OptimizeReferences>
+-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+-      <TargetMachine>MachineX64</TargetMachine>
+-      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+-    </Link>
+-  </ItemDefinitionGroup>
+-  <ItemGroup>
+-    <ClCompile Include="..\cache.c" />
+-    <ClCompile Include="..\clock.c" />
+-    <ClCompile Include="..\cpuid.c" />
+-    <ClCompile Include="..\feature.c" />
+-    <ClCompile Include="..\getopt\getopt_long.c" />
+-    <ClCompile Include="..\handlers.c" />
+-    <ClCompile Include="..\main.c" />
+-    <ClCompile Include="..\sanity.c" />
+-    <ClCompile Include="..\threads.c" />
+-    <ClCompile Include="..\util.c" />
+-    <ClCompile Include="..\version.c" />
+-    <ClCompile Include="prefix.c">
+-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+-    </ClCompile>
+-  </ItemGroup>
+-  <ItemGroup>
+-    <ClInclude Include="..\cache.h" />
+-    <ClInclude Include="..\clock.h" />
+-    <ClInclude Include="..\cpuid.h" />
+-    <ClInclude Include="..\feature.h" />
+-    <ClInclude Include="..\getopt\getopt.h" />
+-    <ClInclude Include="..\handlers.h" />
+-    <ClInclude Include="..\platform.h" />
+-    <ClInclude Include="..\prefix.h" />
+-    <ClInclude Include="..\sanity.h" />
+-    <ClInclude Include="..\state.h" />
+-    <ClInclude Include="..\threads.h" />
+-    <ClInclude Include="..\util.h" />
+-    <ClInclude Include="..\vendor.h" />
+-    <ClInclude Include="..\version.h" />
+-  </ItemGroup>
+-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+-  <ImportGroup Label="ExtensionTargets">
+-  </ImportGroup>
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|Win32">
++      <Configuration>Debug</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|Win32">
++      <Configuration>Release</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <ProjectGuid>{CAAB524F-BE60-450D-9842-16942EAC88DC}</ProjectGuid>
++    <RootNamespace>CPUID</RootNamespace>
++    <Keyword>Win32Proj</Keyword>
++    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++    <WholeProgramOptimization>true</WholeProgramOptimization>
++    <PlatformToolset>v143</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++    <PlatformToolset>v143</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++    <WholeProgramOptimization>false</WholeProgramOptimization>
++    <PlatformToolset>v143</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++    <WholeProgramOptimization>false</WholeProgramOptimization>
++    <PlatformToolset>v143</PlatformToolset>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup>
++    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <OutDir>$(ProjectDir)\$(Configuration)\$(Platform)\</OutDir>
++    <IntDir>$(ProjectDir)\$(Configuration)\$(Platform)\obj\</IntDir>
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <OutDir>$(ProjectDir)\$(Configuration)\$(Platform)\</OutDir>
++    <IntDir>$(ProjectDir)\$(Configuration)\$(Platform)\obj\</IntDir>
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <OutDir>$(ProjectDir)\$(Configuration)\$(Platform)\</OutDir>
++    <IntDir>$(ProjectDir)\$(Configuration)\$(Platform)\obj\</IntDir>
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <OutDir>$(ProjectDir)\$(Configuration)\$(Platform)\</OutDir>
++    <IntDir>$(ProjectDir)\$(Configuration)\$(Platform)\obj\</IntDir>
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <PreBuildEvent>
++      <Message>Generating build.h and license.h</Message>
++      <Command>set PATH="%PATH%;$(CommonExecutablePath);C:\Strawberry\perl\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\cmd"
++cd "$(ProjectDir).."
++perl tools/build.pl build.h
++perl tools/license.pl LICENSE license.h
++</Command>
++    </PreBuildEvent>
++    <ClCompile>
++      <Optimization>Disabled</Optimization>
++      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..;$(ProjectDir)\..\getopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
++      <PrecompiledHeader>Use</PrecompiledHeader>
++      <PrecompiledHeaderFile>prefix.h</PrecompiledHeaderFile>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
++      <MultiProcessorCompilation>true</MultiProcessorCompilation>
++    </ClCompile>
++    <Link>
++      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <TargetMachine>MachineX86</TargetMachine>
++      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <PreBuildEvent>
++      <Message>Generating build.h and license.h</Message>
++      <Command>set PATH="%PATH%;$(CommonExecutablePath);C:\Strawberry\perl\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\cmd"
++cd "$(ProjectDir).."
++perl tools/build.pl build.h
++perl tools/license.pl LICENSE license.h
++</Command>
++    </PreBuildEvent>
++    <Midl>
++      <TargetEnvironment>X64</TargetEnvironment>
++    </Midl>
++    <ClCompile>
++      <Optimization>Disabled</Optimization>
++      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..;$(ProjectDir)\..\getopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
++      <PrecompiledHeader>Use</PrecompiledHeader>
++      <PrecompiledHeaderFile>prefix.h</PrecompiledHeaderFile>
++      <ProgramDataBaseFileName>$(TargetDir)\$(TargetName).pdb</ProgramDataBaseFileName>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <MultiProcessorCompilation>true</MultiProcessorCompilation>
++    </ClCompile>
++    <Link>
++      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <ProgramDatabaseFile>$(TargetDir)\$(TargetName).pdb</ProgramDatabaseFile>
++      <SubSystem>Console</SubSystem>
++      <TargetMachine>MachineX64</TargetMachine>
++      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <PreBuildEvent>
++      <Message>Generating build.h and license.h</Message>
++      <Command>set PATH="%PATH%;$(CommonExecutablePath);C:\Strawberry\perl\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\cmd"
++cd "$(ProjectDir).."
++perl tools/build.pl build.h
++perl tools/license.pl LICENSE license.h
++</Command>
++    </PreBuildEvent>
++    <ClCompile>
++      <Optimization>MaxSpeed</Optimization>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..;$(ProjectDir)\..\getopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
++      <PrecompiledHeader>Use</PrecompiledHeader>
++      <PrecompiledHeaderFile>prefix.h</PrecompiledHeaderFile>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <MultiProcessorCompilation>true</MultiProcessorCompilation>
++    </ClCompile>
++    <Link>
++      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OptimizeReferences>true</OptimizeReferences>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <TargetMachine>MachineX86</TargetMachine>
++      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <PreBuildEvent>
++      <Message>Generating build.h and license.h</Message>
++      <Command>set PATH="%PATH%;$(CommonExecutablePath);C:\Strawberry\perl\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\cmd"
++cd "$(ProjectDir).."
++perl tools/build.pl build.h
++perl tools/license.pl LICENSE license.h
++</Command>
++    </PreBuildEvent>
++    <Midl>
++      <TargetEnvironment>X64</TargetEnvironment>
++    </Midl>
++    <ClCompile>
++      <Optimization>MaxSpeed</Optimization>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..;$(ProjectDir)\..\getopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
++      <PrecompiledHeader>Use</PrecompiledHeader>
++      <PrecompiledHeaderFile>prefix.h</PrecompiledHeaderFile>
++      <ProgramDataBaseFileName>$(TargetDir)\$(TargetName).pdb</ProgramDataBaseFileName>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <WholeProgramOptimization>true</WholeProgramOptimization>
++      <MultiProcessorCompilation>true</MultiProcessorCompilation>
++    </ClCompile>
++    <Link>
++      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <ProgramDatabaseFile>$(TargetDir)\$(TargetName).pdb</ProgramDatabaseFile>
++      <SubSystem>Console</SubSystem>
++      <OptimizeReferences>true</OptimizeReferences>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <TargetMachine>MachineX64</TargetMachine>
++      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <ClCompile Include="..\cache.c" />
++    <ClCompile Include="..\clock.c" />
++    <ClCompile Include="..\cpuid.c" />
++    <ClCompile Include="..\feature.c" />
++    <ClCompile Include="..\getopt\getopt_long.c" />
++    <ClCompile Include="..\handlers.c" />
++    <ClCompile Include="..\main.c" />
++    <ClCompile Include="..\sanity.c" />
++    <ClCompile Include="..\threads.c" />
++    <ClCompile Include="..\util.c" />
++    <ClCompile Include="..\version.c" />
++    <ClCompile Include="prefix.c">
++      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
++      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
++      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
++      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
++    </ClCompile>
++  </ItemGroup>
++  <ItemGroup>
++    <ClInclude Include="..\cache.h" />
++    <ClInclude Include="..\clock.h" />
++    <ClInclude Include="..\cpuid.h" />
++    <ClInclude Include="..\feature.h" />
++    <ClInclude Include="..\getopt\getopt.h" />
++    <ClInclude Include="..\handlers.h" />
++    <ClInclude Include="..\platform.h" />
++    <ClInclude Include="..\prefix.h" />
++    <ClInclude Include="..\sanity.h" />
++    <ClInclude Include="..\state.h" />
++    <ClInclude Include="..\threads.h" />
++    <ClInclude Include="..\util.h" />
++    <ClInclude Include="..\vendor.h" />
++    <ClInclude Include="..\version.h" />
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
+ </Project>
+\ No newline at end of file

@@ -1,0 +1,6 @@
+# Diagnostic gate: exercise real payload with stock-IDF HE/MIN_MODEM.
+# No buffer growth or product-default change; all other budgets use E115.
+#include "../korvo-idf-network-budget-match/defconfig"
+CONFIG_ESPRESSIF_WIFI_STA_11AX=y
+# CONFIG_ESP_POWER_SAVE_NONE is not set
+CONFIG_ESP_POWER_SAVE_MIN_MODEM=y

@@ -1,0 +1,9 @@
+# Korvo BLE central privacy and owned-peer interoperability.
+# This inherits the separate single-core FLAT Bluetooth qualification scope.
+# Debug events expose the local RPA selected for each connection; they are
+# functional evidence, not discovery-latency or product-coexistence results.
+#include "../korvo-ble-multi/defconfig"
+
+CONFIG_BT_CENTRAL_FORCE_IDENTITY_ADDR=n
+CONFIG_BT_DEBUG_LOG=y
+CONFIG_BT_DEBUG_LOG_LEVEL=7

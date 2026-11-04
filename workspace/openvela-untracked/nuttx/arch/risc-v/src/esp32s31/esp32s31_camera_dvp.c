@@ -129,10 +129,31 @@ static void esp32s31_camera_copy_work(FAR void *arg)
 
       const uint8_t *source = camera->frame[index];
       size_t pixel;
+#ifdef CONFIG_ESP32S31_KORVO_RGB565
+      /* Rotation plus RGB565 byte swapping reverses all bytes. Use aligned
+       * words to avoid four PSRAM byte transactions per 32-bit pixel pair. */
+      if ((((uintptr_t)target | (uintptr_t)source | copied) & 3) == 0)
+        {
+          volatile uint32_t *dst32 = (volatile uint32_t *)target;
+          const uint32_t *src32 = (const uint32_t *)source;
+          size_t words = copied / 4;
+          for (pixel = 0; pixel < words; pixel++)
+            dst32[pixel] = __builtin_bswap32(src32[words - 1 - pixel]);
+        }
+      else
+#endif
       for (pixel = 0; pixel < copied; pixel += 2)
         {
-          target[pixel] = source[pixel + 1];
-          target[pixel + 1] = source[pixel];
+#ifdef CONFIG_ESP32S31_KORVO_RGB565
+          /* The Korvo camera mounting is rotated 180 degrees relative to
+           * the display. Normalize capture orientation for both preview
+           * and recording; touch coordinates remain in display space. */
+          size_t srcpixel = copied - 2 - pixel;
+#else
+          size_t srcpixel = pixel;
+#endif
+          target[pixel] = source[srcpixel + 1];
+          target[pixel + 1] = source[srcpixel];
         }
 #else
       memcpy(target, camera->frame[index], copied);

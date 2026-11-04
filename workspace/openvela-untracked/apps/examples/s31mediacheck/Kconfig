@@ -1,0 +1,12 @@
+config EXAMPLES_S31MEDIACHECK
+	bool "S31 bounded synthetic MEDIA playback check"
+	depends on MEDIA && MEDIA_SERVER && ESP32S31_KORVO_MEDIA
+	depends on ESP32S31_FFMPEG_PSRAM_BSS || (BUILD_KERNEL && ARCH_ADDRENV && MM_PGALLOC)
+	depends on FS_TMPFS
+	default n
+	help
+		Generate a short low-amplitude stereo WAV at an exclusive new
+		path (default /tmp), exercise the
+		public Player API three times, and remove the owned file. No
+		microphone, camera, network or business data is used. A completed
+		MEDIA event is digital evidence, not human listening acceptance.

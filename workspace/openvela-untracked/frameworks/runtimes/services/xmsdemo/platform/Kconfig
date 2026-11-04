@@ -1,0 +1,18 @@
+config XMSDEMO_PLATFORM
+	bool "Native platform product demo"
+	depends on SYSTEM_SERVER && SYSTEM_ACTIVITY_SERVICE
+	depends on SYSTEM_WINDOW_SERVICE && SYSTEM_PACKAGE_SERVICE_COMMAND
+	depends on XMSDEMO_LVGLDEMO && UIKIT_FONT_MANAGER && KVDB
+	default n
+	help
+		A native activity with live device/storage/network status,
+		persistent appearance settings, and standard AM navigation.
+
+config XMSDEMO_PLATFORM_MEDIA
+	bool "Device demo audio controls"
+	depends on XMSDEMO_PLATFORM && MEDIA && MEDIA_SERVER && MEDIA_GRAPH
+	default n
+	help
+		Play a packaged synthetic tone through the public MEDIA Player API.
+		One process-owned 8 KiB worker is reserved after first use; switching
+		away closes the Player without blocking the activity/UI thread.

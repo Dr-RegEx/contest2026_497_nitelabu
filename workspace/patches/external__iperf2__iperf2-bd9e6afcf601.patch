@@ -1,0 +1,495 @@
+diff --git a/include/packet_ring.h b/include/packet_ring.h
+index 1d339e559ee49651f9f8b337ef9ac2d125725413..16cb7b03d05067fb55f38295c01187dd60f60732 100644
+--- a/include/packet_ring.h
++++ b/include/packet_ring.h
+@@ -87,9 +87,8 @@ struct ReportStruct {
+ };
+ 
+ struct PacketRing {
+-    // producer and consumer
+-    // must be an atomic type, e.g. int
+-    // otherwise reads/write can be torn
++    // SPSC indices are published and observed with acquire/release atomics.
++    // The last returned consumer slot remains protected until the next dequeue.
+     int producer;
+     int consumer;
+     int maxcount;
+@@ -98,6 +97,14 @@ struct PacketRing {
+     int mutex_enable;
+     int bytes;
+ 
++    // Single-owner, saturating diagnostics; read after consumer completion.
++    unsigned int enqueued;
++    unsigned int dequeued;
++    unsigned int full_events;
++    unsigned int recheck_skips;
++    unsigned int observed_peak;
++    uint64_t wait_us;
++
+     // Use a condition variables
+     // o) awake_producer - producer waits for the consumer thread to
+     //    make space or end (signaled by the consumer)
+@@ -113,6 +120,7 @@ extern void packetring_enqueue(struct PacketRing *pr, struct ReportStruct *metap
+ extern struct ReportStruct *packetring_dequeue(struct PacketRing * pr);
+ extern void enqueue_ackring(struct PacketRing *pr, struct ReportStruct *metapacket);
+ extern struct ReportStruct *dequeue_ackring(struct PacketRing * pr);
++extern void packetring_consumer_done(struct PacketRing *pr);
+ extern void packetring_free(struct PacketRing *pr);
+ extern void free_ackring(struct PacketRing *pr);
+ #ifdef HAVE_THREAD_DEBUG
+diff --git a/src/Client.cpp b/src/Client.cpp
+index a7a45c1e66a694cf893d8216fb54dd94919b07d8..105b33ea30695601582c26d458b8f5c90d0de741 100644
+--- a/src/Client.cpp
++++ b/src/Client.cpp
+@@ -1614,8 +1614,12 @@ void Client::AwaitServerFinPacket () {
+ 	    }
+         }
+     }
+-    if ((!ack_success) && (mSettings->mReportMode != kReport_CSV))
+-	fprintf(stderr, warn_no_ack, mySocket, (isModeTime(mSettings) ? 10 : 1));
++    // Keep CSV data on stdout, but make the final handshake observable too.
++    if (mSettings->mReportMode == kReport_CSV)
++	fprintf(stderr, "[%3d] UDP final ACK: %s\n", mySocket,
++		ack_success ? "received" : "timeout");
++    if (!ack_success)
++	fprintf(stderr, warn_no_ack, mySocket, RETRYCOUNT);
+ }
+ 
+ 
+diff --git a/src/Listener.cpp b/src/Listener.cpp
+index 0f93664efe48bf5c0ab52f6b476a36c264871111..7aefa7f4b41673a56319a1c60dfbfad02d1e86db 100644
+--- a/src/Listener.cpp
++++ b/src/Listener.cpp
+@@ -83,6 +83,10 @@
+ #include "SocketAddr.h"
+ #include "payloads.h"
+ #include "delay.h"
++#ifdef __NuttX__
++#include <nuttx/config.h>
++#include <time.h>
++#endif
+ 
+ /* -------------------------------------------------------------------
+ 
+@@ -204,7 +208,44 @@ void Listener::Run () {
+ 	    }
+ 	    FD_ZERO(&set);
+ 	    FD_SET(ListenSocket, &set);
+-	    if (!(select(ListenSocket + 1, &set, NULL, NULL, &timeout) > 0)) {
++#ifdef __NuttX__
++            const bool select_trace = !isUDP(mSettings);
++            const int select_entry_errno = errno;
++            struct timespec select_time;
++            long long select_begin_us = -1;
++#ifdef CONFIG_NET_TCPBACKLOG
++            const int select_backlog = 1;
++            const int select_backlog_conns = CONFIG_NET_TCPBACKLOG_CONNS;
++#else
++            const int select_backlog = 0;
++            const int select_backlog_conns = 0;
++#endif
++            if (select_trace) {
++                if (clock_gettime(CLOCK_MONOTONIC, &select_time) == 0)
++                    select_begin_us = (long long)select_time.tv_sec * 1000000 + select_time.tv_nsec / 1000;
++                fprintf(stderr, "TCP_LISTENER_SELECT pre mono_us=%lld fd=%d port=%u wait_us=%lld backlog=%d backlog_conns=%d\n",
++                        select_begin_us, ListenSocket, (unsigned)mSettings->mPort,
++                        (long long)timeout.tv_sec * 1000000 + timeout.tv_usec,
++                        select_backlog, select_backlog_conns);
++            }
++            errno = select_entry_errno;
++#endif
++            const int select_rc = select(ListenSocket + 1, &set, NULL, NULL, &timeout);
++#ifdef __NuttX__
++            const int select_errno = errno; // Capture before clock or output calls.
++            if (select_trace) {
++                long long select_end_us = -1;
++                if (clock_gettime(CLOCK_MONOTONIC, &select_time) == 0)
++                    select_end_us = (long long)select_time.tv_sec * 1000000 + select_time.tv_nsec / 1000;
++                fprintf(stderr, "TCP_LISTENER_SELECT post mono_us=%lld fd=%d port=%u rc=%d errno_valid=%d errno=%d elapsed_us=%lld readable=%d\n",
++                        select_end_us, ListenSocket, (unsigned)mSettings->mPort,
++                        select_rc, select_rc < 0, select_rc < 0 ? select_errno : 0,
++                        select_begin_us >= 0 && select_end_us >= select_begin_us ? select_end_us - select_begin_us : -1,
++                        select_rc >= 0 ? !!FD_ISSET(ListenSocket, &set) : -1);
++            }
++            errno = select_errno;
++#endif
++            if (!(select_rc > 0)) {
+ #ifdef HAVE_THREAD_DEBUG
+ 		thread_debug("Listener select timeout");
+ #endif
+diff --git a/src/Locale.c b/src/Locale.c
+index 716b569febf9f5ea62cef56003e4b44d0783eb10..b8b0a8552060f6a00a2d6acdf3353f91721eb1aa 100644
+--- a/src/Locale.c
++++ b/src/Locale.c
+@@ -633,7 +633,7 @@ const char reportCSV_bw_format[] =
+ "%s,%s,%d,%.1f-%.1f,%" PRIdMAX ",%" PRIdMAX "\n";
+ 
+ const char reportCSV_bw_jitter_loss_format[] =
+-"%s,%s,%d,%.1f-%.1f,%" PRIdMAX ",%" PRIdMAX ",%.3f,%d,%d,%.3f,%d\n";
++"%s,%s,%d,%.1f-%.1f,%" PRIdMAX ",%" PRIdMAX ",%.3f,%" PRIdMAX ",%" PRIdMAX ",%.3f,%" PRIdMAX "\n";
+ 
+  /* -------------------------------------------------------------------
+  * warnings
+diff --git a/src/PerfSocket.cpp b/src/PerfSocket.cpp
+index 2d396ed4b9381b2cf83ecac4d849a09a6cacda16..8601c85236b93303e1b6224a36c0b90a8fd9c924 100644
+--- a/src/PerfSocket.cpp
++++ b/src/PerfSocket.cpp
+@@ -85,6 +85,17 @@ void SetSocketOptions (struct thread_Settings *inSettings) {
+     // must occur before call to accept() for large window sizes
+     setsock_tcp_windowsize(inSettings->mSock, inSettings->mTCPWin,
+                             (inSettings->mThreadMode == kMode_Client ? 1 : 0));
++#ifdef __NuttX__
++    // One startup readback per socket; requested -w values may be clamped.
++    // Keep this outside the timed packet loop and preserve CSV reports.
++    {
++        const int sending = inSettings->mThreadMode == kMode_Client;
++        const int actual = getsock_tcp_windowsize(inSettings->mSock, sending);
++        fprintf(stderr, "IPERF_SOCKET_BUFFER fd=%d side=%s requested=%d actual=%d\n",
++                (int)inSettings->mSock, sending ? "send" : "receive",
++                (int)inSettings->mTCPWin, actual);
++    }
++#endif
+ 
+     if (isCongestionControl(inSettings)) {
+ #ifdef TCP_CONGESTION
+diff --git a/src/ReportOutputs.c b/src/ReportOutputs.c
+index 6d124de0147f3777b15670386b0eb34ca98a82fd..a8329f5423ef304382d1c31e983829dd40f7929b 100644
+--- a/src/ReportOutputs.c
++++ b/src/ReportOutputs.c
+@@ -1170,7 +1170,8 @@ void udp_output_basic_csv (struct TransferInfo *stats) {
+ 	    (stats->jitter * 1e3),
+ 	    stats->cntError,
+ 	    stats->cntDatagrams,
+-	    (100.0 * stats->cntError) / stats->cntDatagrams, stats->cntOutofOrder );
++	    stats->cntDatagrams > 0 ? (100.0 * stats->cntError) / stats->cntDatagrams : 0.0,
++	    stats->cntOutofOrder );
+ }
+ void tcp_output_basic_csv (struct TransferInfo *stats) {
+     format_timestamp(&stats->ts.nextTime, isEnhanced(stats->common));
+diff --git a/src/Reporter.c b/src/Reporter.c
+index cf7c562bcbc11ebc7302621d313fc3d4150dd472..8cc7f3cfb7519063f4d89f25aa714d53f8b0943c 100644
+--- a/src/Reporter.c
++++ b/src/Reporter.c
+@@ -626,9 +626,8 @@ inline int reporter_process_report (struct ReportHeader *reporthdr) {
+ 	if (done) {
+ 	    struct ReporterData *tmp = (struct ReporterData *)reporthdr->this_report;
+ 	    struct PacketRing *pr = tmp->packetring;
+-	    pr->consumerdone = 1;
+-	    // Data Reports are special because the traffic thread needs to free them, just signal
+-	    Condition_Signal(pr->awake_producer);
++	    // Publish completion and signal under the producer's condition lock.
++	    packetring_consumer_done(pr);
+ 	}
+ 	break;
+     case CONNECTION_REPORT:
+diff --git a/src/Reports.c b/src/Reports.c
+index 9c44ace3ec0f8bf4c898ffef58d05eaba53e7183..fd1753031d84eb1b5f75a4acc38ee0a90d952ce0 100644
+--- a/src/Reports.c
++++ b/src/Reports.c
+@@ -894,6 +894,12 @@ void write_UDP_AckFIN (struct TransferInfo *stats, int len) {
+     int readlen = ((ackpacket_length * 2) > len * 2) ? (ackpacket_length * 2) : (len * 2);
+     char *ackPacket = (char *) calloc(1, readlen);
+     int success = 0;
++#ifdef __NuttX__
++    int ack_writes = 0;
++    int ack_write_errors = 0;
++    int retry_reads = 0;
++    int last_write_errno = 0;
++#endif
+     assert(ackPacket);
+     fd_set readSet;
+     int rc = 1;
+@@ -960,6 +966,13 @@ void write_UDP_AckFIN (struct TransferInfo *stats, int len) {
+ 	    rc = write(((stats->common->socketdrop > 0) ? stats->common->socketdrop : stats->common->socket), ackPacket, ackpacket_length);
+ #else
+ 	    rc = write(stats->common->socket, ackPacket, ackpacket_length);
++#endif
++#ifdef __NuttX__
++	    ack_writes++;
++	    if (rc != ackpacket_length) {
++		ack_write_errors++;
++		last_write_errno = (rc < 0) ? errno : 0;
++	    }
+ #endif
+ 	    WARN_errno(rc < 0, "write-ackfin");
+ 	    // wait here is for silence, no more packets from the client
+@@ -976,7 +989,16 @@ void write_UDP_AckFIN (struct TransferInfo *stats, int len) {
+ 		success = 1;
+ 		break;
+ 	    }
+-	    rc = read(stats->common->socket, ackPacket, readlen);
++	    /* Keep the server report intact for retransmission. The allocation
++	     * is twice max(report length, payload length), so its trailing
++	     * region still accommodates a full client termination datagram.
++	     */
++	    rc = read(stats->common->socket, ackPacket + ackpacket_length,
++		      readlen - ackpacket_length);
++#ifdef __NuttX__
++	    if (rc > 0)
++		retry_reads++;
++#endif
+ 	    // WARN_errno(rc < 0, "ack await silence");
+ 	    if ((rc < 0) && FATALUDPREADERR(errno)) {
+ 		break;
+@@ -989,6 +1011,12 @@ void write_UDP_AckFIN (struct TransferInfo *stats, int len) {
+ 	}
+ 	free(ackPacket);
+     }
++#ifdef __NuttX__
++    /* Socket acceptance and client silence do not prove peer receipt. */
++    fprintf(stderr, "[%3d] UDP server final report: writes=%d errors=%d errno=%d retry_reads=%d silence=%d\n",
++	    stats->common->socket, ack_writes, ack_write_errors,
++	    last_write_errno, retry_reads, success);
++#endif
+     if (!success)
+ 	fprintf(stderr, warn_ack_failed, stats->common->socket);
+ }
+diff --git a/src/Write_ack.cpp b/src/Write_ack.cpp
+index 3df30e2ce5589cb48bd0f8f6447d068adceb11a2..fd5b4ae3d110cb8642af73fd52dba9fcf2eaa734 100644
+--- a/src/Write_ack.cpp
++++ b/src/Write_ack.cpp
+@@ -112,8 +112,7 @@ void WriteAck::RunServer(void) {
+   thread_debug("Write ack got final packet %p so signal cond %p (%p)", (void *) packet, \
+ 	       (void *) mSettings->ackring->awake_producer, (void *) mSettings);
+ #endif
+-  mSettings->ackring->consumerdone = 1;
+-  Condition_Signal(mSettings->ackring->awake_producer);
++  packetring_consumer_done(mSettings->ackring);
+ };
+ 
+ void WriteAck::RunClient(void) {
+diff --git a/src/packet_ring.c b/src/packet_ring.c
+index 93e757858fb2c57f1682e9b6d9a4997e55268c36..42e25f0bf9e0c428dd28296619216f606e3dc8bb 100644
+--- a/src/packet_ring.c
++++ b/src/packet_ring.c
+@@ -48,6 +48,9 @@
+ #include "packet_ring.h"
+ #include "Condition.h"
+ #include "Thread.h"
++#include <limits.h>
++#include <stdint.h>
++#include <time.h>
+ 
+ #ifdef HAVE_THREAD_DEBUG
+ #include "Mutex.h"
+@@ -57,6 +60,7 @@ Mutex packetringdebug_mutex;
+ 
+ struct PacketRing * packetring_init (int count, struct Condition *awake_consumer, struct Condition *awake_producer) {
+     assert(awake_consumer != NULL);
++    assert(count >= 2);
+     struct PacketRing *pr = NULL;
+     if ((pr = (struct PacketRing *) calloc(1, sizeof(struct PacketRing)))) {
+         pr->bytes = sizeof(struct PacketRing);
+@@ -88,66 +92,85 @@ struct PacketRing * packetring_init (int count, struct Condition *awake_consumer
+     return (pr);
+ }
+ 
++static void ring_count(unsigned int *counter) {
++    if (*counter < UINT_MAX)
++        ++*counter;
++}
++
++static int ring_next(struct PacketRing *pr, int index) {
++    return index + 1 == pr->maxcount ? 0 : index + 1;
++}
++
++static uint64_t ring_clock_us(void) {
++    struct timespec now;
++    if (clock_gettime(CLOCK_MONOTONIC, &now) != 0)
++        return 0;
++    return (uint64_t)now.tv_sec * 1000000u + now.tv_nsec / 1000;
++}
++
+ inline void packetring_enqueue (struct PacketRing *pr, struct ReportStruct *metapacket) {
+-    while (((pr->producer == pr->maxcount) && (pr->consumer == 0)) || \
+-	   ((pr->producer + 1) == pr->consumer)) {
+-	// Signal the consumer thread to process a full queue
+-	if (pr->mutex_enable) {
+-	    assert(pr->awake_consumer != NULL);
+-	    Condition_Signal(pr->awake_consumer);
+-	    // Wait for the consumer to create some queue space
+-	    assert(pr->awake_producer != NULL);
+-	    Condition_Lock((*(pr->awake_producer)));
+-	    pr->awaitcounter++;
+-#ifdef HAVE_THREAD_DEBUG_PERF
+-	    {
+-		struct timeval now;
+-		static struct timeval prev={0, 0};
+-		gettimeofday( &now, NULL );
+-		if (!prev.tv_sec || (TimeDifference(now, prev) > 1.0)) {
+-		    prev = now;
+-		    thread_debug( "Not good, traffic's packet ring %p stalled per %p", (void *)pr, (void *)&pr->awake_producer);
+-		}
+-	    }
+-#endif
+-	    Condition_TimedWait(pr->awake_producer, 1);
+-	    Condition_Unlock((*(pr->awake_producer)));
+-	}
++    int producer = __atomic_load_n(&pr->producer, __ATOMIC_RELAXED);
++    int writeindex = ring_next(pr, producer);
++    int consumer = __atomic_load_n(&pr->consumer, __ATOMIC_ACQUIRE);
++    if (writeindex == consumer) {
++        ring_count(&pr->full_events);
++        if (pr->mutex_enable) {
++            assert(pr->awake_consumer != NULL);
++            assert(pr->awake_producer != NULL);
++            Condition_Signal(pr->awake_consumer);
++            Condition_Lock((*(pr->awake_producer)));
++            // The consumer may have drained after the first full observation.
++            consumer = __atomic_load_n(&pr->consumer, __ATOMIC_ACQUIRE);
++            if (writeindex != consumer)
++                ring_count(&pr->recheck_skips);
++            while (writeindex == consumer) {
++                uint64_t started = ring_clock_us();
++                if (pr->awaitcounter < INT_MAX)
++                    ++pr->awaitcounter;
++                Condition_TimedWait(pr->awake_producer, 1);
++                uint64_t stopped = ring_clock_us();
++                if (stopped >= started && started != 0) {
++                    uint64_t elapsed = stopped - started;
++                    pr->wait_us = UINT64_MAX - pr->wait_us < elapsed ?
++                        UINT64_MAX : pr->wait_us + elapsed;
++                }
++                consumer = __atomic_load_n(&pr->consumer, __ATOMIC_ACQUIRE);
++            }
++            Condition_Unlock((*(pr->awake_producer)));
++        } else {
++            while (writeindex == consumer)
++                consumer = __atomic_load_n(&pr->consumer, __ATOMIC_ACQUIRE);
++        }
+     }
+-    int writeindex;
+-    if ((pr->producer + 1) == pr->maxcount)
+-	writeindex = 0;
+-    else
+-	writeindex = (pr->producer  + 1);
+-
+-    /* Next two lines must be maintained as is */
+-    memcpy((pr->data + writeindex), metapacket, sizeof(struct ReportStruct));
+-    pr->producer = writeindex;
++    unsigned int depth = writeindex >= consumer ? writeindex - consumer :
++        pr->maxcount - consumer + writeindex;
++    if (depth > pr->observed_peak)
++        pr->observed_peak = depth;
++    memcpy(pr->data + writeindex, metapacket, sizeof(struct ReportStruct));
++    ring_count(&pr->enqueued);
++    // Publishing the index makes the complete ReportStruct visible.
++    __atomic_store_n(&pr->producer, writeindex, __ATOMIC_RELEASE);
+ }
+ 
+ inline struct ReportStruct *packetring_dequeue (struct PacketRing *pr) {
+-    struct ReportStruct *packet = NULL;
+-    if (pr->producer == pr->consumer)
+-	return NULL;
+-
+-    int readindex;
+-    if ((pr->consumer + 1) == pr->maxcount)
+-	readindex = 0;
+-    else
+-	readindex = (pr->consumer + 1);
+-    packet = (pr->data + readindex);
+-    // advance the consumer pointer last
+-    pr->consumer = readindex;
+-    if (pr->mutex_enable) {
+-	// Signal the traffic thread assigned to this ring
+-	// when the ring goes from having something to empty
+-	if (pr->producer == pr->consumer) {
+-#ifdef HAVE_THREAD_DEBUG
+-	    // thread_debug( "Consumer signal packet ring %p empty per %p", (void *)pr, (void *)&pr->awake_producer);
+-#endif
+-	    assert(pr->awake_producer);
+-	    Condition_Signal(pr->awake_producer);
+-	}
++    int consumer = __atomic_load_n(&pr->consumer, __ATOMIC_RELAXED);
++    int producer = __atomic_load_n(&pr->producer, __ATOMIC_ACQUIRE);
++    if (producer == consumer)
++        return NULL;
++    int readindex = ring_next(pr, consumer);
++    struct ReportStruct *packet = pr->data + readindex;
++    ring_count(&pr->dequeued);
++    // This frees the PREVIOUS returned slot. The producer's next-index full
++    // check protects readindex until this consumer calls dequeue again.
++    __atomic_store_n(&pr->consumer, readindex, __ATOMIC_RELEASE);
++    if (pr->mutex_enable &&
++        __atomic_load_n(&pr->producer, __ATOMIC_ACQUIRE) == readindex) {
++        assert(pr->awake_producer != NULL);
++        // Pair with the producer's locked predicate recheck and wait so a
++        // signal cannot slip between its check and pthread_cond_timedwait.
++        Condition_Lock((*(pr->awake_producer)));
++        Condition_Signal(pr->awake_producer);
++        Condition_Unlock((*(pr->awake_producer)));
+     }
+     return packet;
+ }
+@@ -159,7 +182,9 @@ inline void enqueue_ackring (struct PacketRing *pr, struct ReportStruct *metapac
+ #ifdef HAVE_THREAD_DEBUG
+     // thread_debug( "Producer signal consumer ackring=%p per %p", (void *)pr, (void *)&pr->awake_consumer);
+ #endif
++    Condition_Lock((*(pr->awake_consumer)));
+     Condition_Signal(pr->awake_consumer);
++    Condition_Unlock((*(pr->awake_consumer)));
+ }
+ 
+ inline struct ReportStruct *dequeue_ackring (struct PacketRing *pr) {
+@@ -172,13 +197,32 @@ inline struct ReportStruct *dequeue_ackring (struct PacketRing *pr) {
+     if (packet) {
+ 	// Signal the producer thread for low latency
+ 	// indication of space available
++	Condition_Lock((*(pr->awake_producer)));
+ 	Condition_Signal(pr->awake_producer);
++	Condition_Unlock((*(pr->awake_producer)));
+     }
+     return packet;
+ }
+ 
++void packetring_consumer_done(struct PacketRing *pr) {
++    // The producer may free the ring as soon as it sees consumerdone.
++    // Hold the same mutex through the last use of pr and its condition.
++    struct Condition *producer = pr->awake_producer;
++    Condition_Lock((*producer));
++    pr->consumerdone = 1;
++    Condition_Signal(producer);
++    Condition_Unlock((*producer));
++}
++
+ void packetring_free (struct PacketRing *pr) {
+     if (pr) {
++#ifdef __NuttX__
++        fprintf(stderr, "IPERF_RING size=%d enqueued=%u dequeued=%u "
++                "peak_sample=%u full_events=%u waits=%d recheck_skips=%u "
++                "wait_us=%llu\n", pr->maxcount, pr->enqueued, pr->dequeued,
++                pr->observed_peak, pr->full_events, pr->awaitcounter,
++                pr->recheck_skips, (unsigned long long)pr->wait_us);
++#endif
+ 	if (pr->awaitcounter > 1000) fprintf(stderr, "WARN: Reporter thread may be too slow, await counter=%d, " \
+ 					     "consider increasing NUM_REPORT_STRUCTS\n", pr->awaitcounter);
+ 	if (pr->data) {
+@@ -196,8 +240,9 @@ void packetring_free (struct PacketRing *pr) {
+ }
+ 
+ void free_ackring(struct PacketRing *pr) {
++    struct Condition *consumer = pr->awake_consumer;
+     packetring_free(pr);
+-    Condition_Destroy(pr->awake_consumer);
++    Condition_Destroy(consumer);
+ }
+ 
+ /*
+@@ -207,11 +252,13 @@ void free_ackring(struct PacketRing *pr) {
+  */
+ #ifdef HAVE_THREAD_DEBUG
+ inline int packetring_getcount (struct PacketRing *pr) {
++    int producer = __atomic_load_n(&pr->producer, __ATOMIC_ACQUIRE);
++    int consumer = __atomic_load_n(&pr->consumer, __ATOMIC_ACQUIRE);
+     int depth = 0;
+-    if (pr->producer != pr->consumer) {
+-        depth = (pr->producer > pr->consumer) ? \
+-	    (pr->producer - pr->consumer) :  \
+-	    ((pr->maxcount - pr->consumer) + pr->producer);
++    if (producer != consumer) {
++        depth = (producer > consumer) ? \
++	    (producer - consumer) :  \
++	    ((pr->maxcount - consumer) + producer);
+         // printf("DEBUG: Depth=%d for packet ring %p\n", depth, (void *)pr);
+     }
+     return depth;

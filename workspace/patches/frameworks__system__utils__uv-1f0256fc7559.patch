@@ -1,0 +1,1046 @@
+diff --git a/include/uv_ext.h b/include/uv_ext.h
+index 548e92220e5650337f605e85ffc7cacb16ba681a..6a6544ccd7895d4e75da920609ae984062fb6e91 100644
+--- a/include/uv_ext.h
++++ b/include/uv_ext.h
+@@ -2233,7 +2233,9 @@ typedef struct app_verify_s app_verify_t;
+  * Name: app_verify_init
+  *
+  * Description:
+- *   Resources required for initialization.
++ *   Open an RPK for verification/extraction. Keep its contents immutable until
++ *   close. The destination must be a private staging directory; remove it on
++ *   extraction failure, and publish it only after successful verification.
+  *
+  * Input Parameters:
+  *   app_path   - rpk file path
+@@ -2264,7 +2266,8 @@ int app_verify_unzip(app_verify_t* app_verify_info);
+  * Name: app_pre_unzip
+  *
+  * Description:
+- *   Pre decompress a single file in RPK
++ *   Verify the complete RPK, then decompress a single named file. Missing
++ *   members and invalid packages fail without extracting another member.
+  *
+  * Input Parameters:
+  *   app_verify_info   - app verify info structure
+@@ -2286,7 +2289,9 @@ int app_pre_unzip(app_verify_t* app_verify_info, const char* filename);
+  *   app_verify_info   - app verify info structure
+  *
+  * Returned Value:
+- *   SHA1 result pointer (32-bit length), NULL is fail
++ *   A handle-owned 20-byte SHA1 certificate fingerprint, NULL on failure or
++ *   before verification. Valid until the next verification or handle close.
++ *   This compatibility identifier does not establish publisher trust.
+  ****************************************************************************/
+ 
+ uint8_t* app_get_fingerprint(app_verify_t* app_verify_info);
+diff --git a/src/app_verify.c b/src/app_verify.c
+index cb1d5592975e37a199a29d24ecca3bbff093f898..21053fbd19e3ef78b9eba1fef00e1eb0aa5e3299 100644
+--- a/src/app_verify.c
++++ b/src/app_verify.c
+@@ -1,566 +1,538 @@
+-#include "mbedtls/base64.h"
+ #include "mbedtls/md.h"
+ #include "mbedtls/pk.h"
++#include "mbedtls/x509_crt.h"
+ #include "unzip.h"
+ 
+-#include <assert.h>
++#include <errno.h>
++#include <fcntl.h>
++#include <limits.h>
++#include <stdbool.h>
+ #include <stdint.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+-
+-#include <errno.h>
+-#include <fcntl.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
+ 
+-#define assert_res(x)                                                                       \
+-    do {                                                                                    \
+-        if (!(x)) {                                                                         \
+-            printf("errno %s, %s:%d >> \t(%s)\n", strerror(errno), __FILE__, __LINE__, #x); \
+-            goto error;                                                                     \
+-        }                                                                                   \
+-    } while (0)
++/* RPK v2 has its own magic/ID, and uses the chunked ZIP content digest.
++ * Bound untrusted allocations; hash package contents through a 4 KiB buffer.
++ * The certificate/fingerprint API supports one signer, not multiple identities.
++ */
++#define RPK_SIGNER_ID 0x01000101u
++#define RPK_MAX_SIGNING_BLOCK (1024u * 1024u)
++#define RPK_DIGEST_CHUNK (1024u * 1024u)
++#define RPK_IO_SIZE 4096u
+ 
+ typedef struct app_verify_s {
+-    char* app_path;
+     char* pkg_path;
++    int fd;
+     unzFile zFile;
+     unz_global_info64 zGlobalInfo;
+     uint8_t* fingerprint;
+     uint8_t* certificate;
+-    ssize_t certificate_len;
++    size_t certificate_len;
+ } app_verify_t;
+ 
+-// length - data block
+ typedef struct data_block_s {
+-    uint8_t* data;
+-    uint32_t length;
++    const uint8_t* data;
++    size_t length;
+ } data_block_t;
+ 
+ typedef struct app_block_s {
+-    data_block_t data_block;
+-    data_block_t signature_block;
+-    data_block_t central_directory_block;
+-    data_block_t eocd_block;
+-
++    uint8_t* signing;
++    size_t signing_len;
++    uint32_t signing_offset;
++    uint32_t directory_offset;
++    uint32_t directory_len;
++    uint32_t eocd_offset;
++    uint32_t eocd_len;
+ } app_block_t;
+ 
+-// signature block data structure
+-
+-/*---------------------
+-
+-    signature_block_s
+-    |
+-    |---- signed_data
+-    |     |---- digests
+-    |     |---- certificate
+-    |
+-    |---- signatures
+-    |     |---- signatures_algorithm_id
+-    |     |---- signatures_content
+-    |
+-    |---- public_key
+-
+-------------------------*/
+-
+-typedef struct signature_block_s {
+-    data_block_t one_sign_block;
+-    data_block_t signed_data;
+-    data_block_t signatures;
+-    data_block_t public_key;
+-    data_block_t digests;
+-    uint32_t digests_signatures_algorithm_id;
+-    data_block_t one_digest;
+-    data_block_t certificate;
+-    uint32_t signatures_algorithm_id;
+-    data_block_t signatures_content;
+-} signature_block_t;
++void app_verify_close(app_verify_t* info);
+ 
+-/**
+- * @brief Create folder recursively
+- */
+-static int recursion_mkdir(const char* path)
++static uint32_t read_le32(const uint8_t* p)
+ {
+-    char data[PATH_MAX];
+-    char* ret;
+-    int res;
+-
+-    if ((strcmp(path, ".") == 0) || (strcmp(path, "/") == 0))
+-        return 0;
+-
+-    res = access(path, F_OK);
+-
+-    if (res == 0) {
+-        return 0;
+-    } else {
+-        strcpy(data, path);
+-        ret = strrchr(data, '/');
+-        if (ret != 0) {
+-            *ret = 0;
+-            recursion_mkdir(data);
+-        }
+-    }
++    return (uint32_t)p[0] | (uint32_t)p[1] << 8 | (uint32_t)p[2] << 16 | (uint32_t)p[3] << 24;
++}
+ 
+-    res = mkdir(path, 0777);
++static uint64_t read_le64(const uint8_t* p)
++{
++    return read_le32(p) | (uint64_t)read_le32(p + 4) << 32;
++}
+ 
+-    return res;
++static void write_le32(uint8_t* p, uint32_t n)
++{
++    for (unsigned i = 0; i < 4; ++i) p[i] = (uint8_t)(n >> (8 * i));
+ }
+ 
+-/**
+- * @brief Create a file and its folder
+- */
+-static int mkfile(const char* path)
++static int read_exact(int fd, void* buffer, size_t length, off_t offset)
+ {
+-    char* ret;
+-    char fileName[PATH_MAX];
+-    strcpy(fileName, path);
+-    ret = strrchr(fileName, '/');
+-    if (ret == 0) {
+-        return open(path, O_RDWR | O_CREAT, 0777);
++    uint8_t* p = buffer;
++    while (length) {
++        ssize_t n = pread(fd, p, length, offset);
++        if (n < 0 && errno == EINTR) continue;
++        if (n <= 0) return -1;
++        p += n;
++        length -= n;
++        offset += n;
+     }
+-    *ret++ = 0;
+-
+-    recursion_mkdir(fileName);
+-
+-    return open(path, O_RDWR | O_CREAT, 0777);
++    return 0;
+ }
+ 
+-/**
+- * @brief analysis len-data block
+- */
+-static uint8_t* parse_block(uint8_t* data, data_block_t* block)
++static int take_block(data_block_t* input, data_block_t* output)
+ {
+-    uint32_t len;
+-    assert(data && block);
+-    uint8_t* offset = data;
+-
+-    memcpy(&len, data, sizeof(len));
+-    block->length = len;
+-    offset += 4;
+-    block->data = offset;
+-    offset += block->length;
+-
+-    return offset;
++    uint32_t n;
++    if (input->length < 4) return -1;
++    n = read_le32(input->data);
++    if (n > input->length - 4) return -1;
++    output->data = input->data + 4;
++    output->length = n;
++    input->data += 4 + (size_t)n;
++    input->length -= 4 + (size_t)n;
++    return 0;
+ }
+ 
+-/**
+- * @brief analysis len-id-data block
+- */
+-static uint8_t* parse_kv_block(uint8_t* data, uint64_t* key, uint8_t** value)
++static int parse_app_block(app_verify_t* info, app_block_t* block)
+ {
+-    assert(data && key);
+-
+-    uint8_t* offset = data;
+-    uint64_t length = 0;
+-    memcpy(&length, data, sizeof(uint64_t));
+-
+-    offset += 8;
+-
+-    memcpy(key, offset, sizeof(uint32_t));
+-    offset += 4;
+-    *value = offset;
+-    offset += length - 4;
+-
+-    return offset;
++    struct stat st;
++    uint8_t eocd[22], footer[24], header[8];
++    uint64_t size;
++    if (fstat(info->fd, &st) || st.st_size < 22 || (uint64_t)st.st_size > INT32_MAX
++        || info->zGlobalInfo.size_comment > (uint64_t)st.st_size - 22) return -1;
++    block->eocd_len = 22 + info->zGlobalInfo.size_comment;
++    block->eocd_offset = st.st_size - block->eocd_len;
++    if (read_exact(info->fd, eocd, sizeof(eocd), block->eocd_offset)
++        || read_le32(eocd) != 0x06054b50 || read_le32(eocd + 4) != 0
++        || memcmp(eocd + 8, eocd + 10, 2)
++        || (eocd[8] == 0xff && eocd[9] == 0xff)
++        || ((uint32_t)eocd[20] | (uint32_t)eocd[21] << 8) != info->zGlobalInfo.size_comment) return -1;
++    block->directory_offset = read_le32(eocd + 16);
++    block->directory_len = read_le32(eocd + 12);
++    if (block->directory_offset < 32 || block->directory_offset > block->eocd_offset
++        || block->directory_len != block->eocd_offset - block->directory_offset
++        || read_exact(info->fd, footer, sizeof(footer), block->directory_offset - 24)
++        || memcmp(footer + 8, "RPK Sig Block 42", 16)) return -1;
++    size = read_le64(footer);
++    if (size < 24 || size > RPK_MAX_SIGNING_BLOCK || size > block->directory_offset - 8) return -1;
++    block->signing_offset = block->directory_offset - (uint32_t)size - 8;
++    if (read_exact(info->fd, header, sizeof(header), block->signing_offset)
++        || read_le64(header) != size) return -1;
++    block->signing_len = size - 24;
++    if (!block->signing_len || !(block->signing = malloc(block->signing_len))) return -1;
++    return read_exact(info->fd, block->signing, block->signing_len, block->signing_offset + 8);
+ }
+-static app_block_t parse_app_block(const char* app_path, ssize_t comment_len)
+-{
+-    int fd = -1;
+-
+-    app_block_t app_block = { 0 };
+-    off_t central_directory_offset = 0;
+-    off_t file_offset;
+-
+-    assert_res((fd = open(app_path, O_RDONLY)) > 0);
+-
+-    // Get Central_Directory start offset
+-    off_t central_directory_ptr_offset = -comment_len - 4 - 2;
+-    lseek(fd, central_directory_ptr_offset, SEEK_END);
+-    assert_res(read(fd, &central_directory_offset, 4) == 4);
+-
+-    // Get the length of the signature block
+-    off_t signature_block_len_offset = central_directory_offset - 16 - 8;
+-    lseek(fd, signature_block_len_offset, SEEK_SET);
+-    assert_res(read(fd, &app_block.signature_block.length, 4) == 4);
+-
+-    // Read the signature block
+-    off_t signature_block_offset = central_directory_offset - app_block.signature_block.length;
+-    file_offset = lseek(fd, signature_block_offset, SEEK_SET);
+-    assert_res((app_block.signature_block.data = malloc(app_block.signature_block.length)) != NULL);
+-    assert_res((read(fd, app_block.signature_block.data,
+-                   app_block.signature_block.length))
+-        == app_block.signature_block.length);
+-
+-    // Read EOCD
+-    off_t ecod_start_offset = central_directory_ptr_offset - 16;
+-    lseek(fd, ecod_start_offset, SEEK_END);
+-    app_block.eocd_block.length = -1 * ecod_start_offset;
+-    ecod_start_offset = lseek(fd, 0, SEEK_CUR);
+-    app_block.eocd_block.data = (uint8_t*)(long)ecod_start_offset;
+ 
+-    // Read Central_Directory
+-    file_offset = lseek(fd, central_directory_offset, SEEK_SET);
+-    app_block.central_directory_block.length = ecod_start_offset - central_directory_offset;
+-    app_block.central_directory_block.data = (uint8_t*)(long)file_offset;
+-
+-    // Read the zip content
+-    app_block.data_block.length = signature_block_offset;
+-    app_block.data_block.data = app_block.signature_block.data;
+-
+-error:
+-    if (fd >= 0) {
+-        close(fd);
++static int find_signer(app_block_t* block, data_block_t* signer)
++{
++    data_block_t pairs = { block->signing, block->signing_len }, value, signers;
++    bool found = false;
++    while (pairs.length) {
++        uint64_t n;
++        if (pairs.length < 12) return -1;
++        n = read_le64(pairs.data);
++        if (n < 4 || n > pairs.length - 8) return -1;
++        if (read_le32(pairs.data + 8) == RPK_SIGNER_ID) {
++            if (found) return -1;
++            found = true;
++            value.data = pairs.data + 12;
++            value.length = n - 4;
++            if (take_block(&value, &signers) || value.length
++                || take_block(&signers, signer) || signers.length) return -1;
++        }
++        pairs.data += 8 + (size_t)n;
++        pairs.length -= 8 + (size_t)n;
+     }
+-
+-    return app_block;
++    return found ? 0 : -1;
+ }
+ 
+-/**
+- * @brief Get the signature piece information
+- */
+-static uint8_t* get_signature_info(uint8_t* data, signature_block_t* info)
++static mbedtls_md_type_t algorithm_md(uint32_t algorithm)
+ {
+-    uint8_t *offset, *ret;
+-
+-    // Get the current signature block
+-    offset = parse_block(data, &info->one_sign_block);
+-
+-    // Get the current signature data block
+-    offset = parse_block(info->one_sign_block.data, &info->signed_data);
+-    offset = parse_block(offset, &info->signatures);
+-    offset = parse_block(offset, &info->public_key);
+-    ret = offset;
+-
+-    // get signed_data
+-    offset = parse_block(info->signed_data.data, &info->digests);
+-
+-    memcpy(&info->digests_signatures_algorithm_id, (info->digests.data + 4), sizeof(uint32_t));
+-    offset = parse_block(info->digests.data + 8, &info->one_digest);
+-
+-    offset = parse_block(offset, &info->certificate);
+-    offset = parse_block(info->certificate.data, &info->certificate);
+-
+-    // get signatures
+-    offset = parse_block(info->signatures.data, &info->signatures_content);
+-    memcpy(&info->signatures_algorithm_id, info->signatures_content.data, sizeof(uint32_t));
+-    offset = parse_block(info->signatures.data + 8, &info->signatures_content);
+-
+-    return ret;
++    switch (algorithm) {
++    case 0x101: case 0x103: case 0x201: return MBEDTLS_MD_SHA256;
++    case 0x102: case 0x104: case 0x202: return MBEDTLS_MD_SHA512;
++    default: return MBEDTLS_MD_NONE;
++    }
+ }
+ 
+-/**
+- * @brief Verify the signature on the app
+- */
+-static int verify_block_signature(data_block_t* pubkey, data_block_t* raw_data, data_block_t* signature)
++static int hash_section(int fd, uint32_t offset, uint32_t length, bool eocd,
++    uint32_t signing_offset, mbedtls_md_context_t* root, mbedtls_md_context_t* leaf, uint8_t* buffer)
+ {
+-    unsigned char* md = NULL;
+-    int res = -1;
+-    mbedtls_pk_context pk;
+-
+-    // Initial public key
+-    mbedtls_pk_init(&pk);
+-    assert_res((res = mbedtls_pk_parse_public_key(&pk, pubkey->data, pubkey->length)) == 0);
+-
+-    // The calculation method of the specific summary
+-    const mbedtls_md_info_t* mdinfo = mbedtls_md_info_from_type(MBEDTLS_MD_SHA256);
+-    assert_res((md = malloc(mbedtls_md_get_size(mdinfo))) != NULL);
+-
+-    // Verify the data digest
+-    assert_res((res = mbedtls_md(mdinfo, raw_data->data, raw_data->length, md)) == 0);
+-
+-    // Verify the signature
+-    assert_res((res = mbedtls_pk_verify(&pk, mbedtls_md_get_type(mdinfo),
+-                    md, mbedtls_md_get_size(mdinfo), signature->data, signature->length))
+-        == 0);
+-
+-error:
+-    free(md);
+-    mbedtls_pk_free(&pk);
+-    return res;
++    uint8_t header[5], digest[MBEDTLS_MD_MAX_SIZE];
++    uint32_t position = 0;
++    while (position < length) {
++        uint32_t count = length - position, done = 0;
++        if (count > RPK_DIGEST_CHUNK) count = RPK_DIGEST_CHUNK;
++        header[0] = 0xa5;
++        write_le32(header + 1, count);
++        if (mbedtls_md_starts(leaf) || mbedtls_md_update(leaf, header, sizeof(header))) return -1;
++        while (done < count) {
++            size_t n = count - done;
++            if (n > RPK_IO_SIZE) n = RPK_IO_SIZE;
++            if (read_exact(fd, buffer, n, (off_t)offset + position + done)) return -1;
++            /* Hash the EOCD's original central-directory offset. */
++            if (eocd && position == 0 && done == 0) write_le32(buffer + 16, signing_offset);
++            if (mbedtls_md_update(leaf, buffer, n)) return -1;
++            done += n;
++        }
++        if (mbedtls_md_finish(leaf, digest)
++            || mbedtls_md_update(root, digest, mbedtls_md_get_size(leaf->md_info))) return -1;
++        position += count;
++    }
++    return 0;
+ }
+ 
+-/**
+- * @brief Verify the app Digest
+- */
+-static int app_block_digest_verification(app_verify_t* app_verift_info, data_block_t* digest)
++static int verify_content(app_verify_t* info, app_block_t* block, data_block_t digest,
++    const mbedtls_md_info_t* mdinfo)
+ {
++    mbedtls_md_context_t root, leaf;
++    uint8_t header[5], actual[MBEDTLS_MD_MAX_SIZE];
++    uint8_t* buffer = NULL;
++    uint32_t chunks = (block->signing_offset + RPK_DIGEST_CHUNK - 1) / RPK_DIGEST_CHUNK
++        + (block->directory_len + RPK_DIGEST_CHUNK - 1) / RPK_DIGEST_CHUNK
++        + (block->eocd_len + RPK_DIGEST_CHUNK - 1) / RPK_DIGEST_CHUNK;
+     int res = -1;
+-    unsigned char* md = NULL;
+-
+-    const mbedtls_md_info_t* mdinfo = mbedtls_md_info_from_type(MBEDTLS_MD_SHA256);
+-
+-    assert_res(md = malloc(mbedtls_md_get_size(mdinfo)));
+-    //   assert_res(mbedtls_md_file(mdinfo, app_verift_info->app_path,md));
+-
+-    //   memcmp(md, digest->data, mbedtls_md_get_size(mdinfo));
++    mbedtls_md_init(&root);
++    mbedtls_md_init(&leaf);
++    if (digest.length != mbedtls_md_get_size(mdinfo) || !(buffer = malloc(RPK_IO_SIZE))
++        || mbedtls_md_setup(&root, mdinfo, 0) || mbedtls_md_setup(&leaf, mdinfo, 0)) goto end;
++    header[0] = 0x5a;
++    write_le32(header + 1, chunks);
++    if (mbedtls_md_starts(&root) || mbedtls_md_update(&root, header, sizeof(header))
++        || hash_section(info->fd, 0, block->signing_offset, false, 0, &root, &leaf, buffer)
++        || hash_section(info->fd, block->directory_offset, block->directory_len, false, 0, &root, &leaf, buffer)
++        || hash_section(info->fd, block->eocd_offset, block->eocd_len, true, block->signing_offset, &root, &leaf, buffer)
++        || mbedtls_md_finish(&root, actual) || memcmp(actual, digest.data, digest.length)) goto end;
+     res = 0;
+-error:
+-    free(md);
++end:
++    free(buffer);
++    mbedtls_md_free(&leaf);
++    mbedtls_md_free(&root);
+     return res;
+ }
+ 
+-/**
+- * @brief app Signature verification
+- */
+-static int app_verification(app_verify_t* app_verify_info)
++static int app_verification(app_verify_t* info)
+ {
++    app_block_t block = { 0 };
++    data_block_t signer, signed_data, signatures, public_key, fields, digests, certificates, attributes;
++    data_block_t certificate, digest = { 0 }, signature = { 0 };
++    mbedtls_pk_context key;
++    mbedtls_x509_crt crt;
++    const mbedtls_md_info_t* mdinfo;
++    uint32_t selected = 0;
++    uint8_t hash[MBEDTLS_MD_MAX_SIZE];
+     int res = -1;
+-    uint64_t id;
+-    app_block_t app_block = { 0 };
+-    signature_block_t signature_info;
+-    // get APK Signing Block
+-    app_block = parse_app_block(app_verify_info->app_path, app_verify_info->zGlobalInfo.size_comment);
+-
+-    uint8_t* offset;
+-    // parse Signing Block
+-    parse_kv_block(app_block.signature_block.data, &id, &offset);
+-    parse_block(offset, &app_block.signature_block);
+-    get_signature_info(app_block.signature_block.data, &signature_info);
+-
+-    app_verify_info->certificate = malloc(signature_info.certificate.length);
+-    app_verify_info->certificate_len = signature_info.certificate.length;
+-    memcpy(app_verify_info->certificate, signature_info.certificate.data, signature_info.certificate.length);
+-
+-    // Verify block signature
+-    assert_res((res = verify_block_signature(&signature_info.public_key, &signature_info.signed_data,
+-                    &signature_info.signatures_content))
+-        == 0);
+-
+-    // Compare whether the signature algorithms are consistent
+-    assert_res(signature_info.digests_signatures_algorithm_id == signature_info.signatures_algorithm_id);
+-
+-    // Compare whether the app summary is consistent with the signature block summary
+-    assert_res(app_block_digest_verification(app_verify_info, &signature_info.one_digest) == 0);
+-error:
+-    free(app_block.data_block.data);
++    if (!info) return -1;
++    free(info->certificate);
++    info->certificate = NULL;
++    info->certificate_len = 0;
++    free(info->fingerprint);
++    info->fingerprint = NULL;
++    mbedtls_pk_init(&key);
++    mbedtls_x509_crt_init(&crt);
++    if (parse_app_block(info, &block) || find_signer(&block, &signer)
++        || take_block(&signer, &signed_data) || take_block(&signer, &signatures)
++        || take_block(&signer, &public_key) || signer.length) goto end;
++    fields = signed_data;
++    if (take_block(&fields, &digests) || take_block(&fields, &certificates)
++        || take_block(&fields, &attributes) || fields.length
++        || take_block(&certificates, &certificate) || !certificate.length) goto end;
++    /* Bound additional certificates/attributes. They are not trust anchors. */
++    while (certificates.length) {
++        data_block_t extra;
++        if (take_block(&certificates, &extra) || !extra.length) goto end;
++    }
++    while (attributes.length) {
++        data_block_t attribute;
++        if (take_block(&attributes, &attribute) || attribute.length < 4) goto end;
++    }
++    /* Match ordered algorithm lists, including unknown algorithm IDs. */
++    while (signatures.length || digests.length) {
++        data_block_t s, d, sv, dv;
++        uint32_t algorithm;
++        if (take_block(&signatures, &s) || take_block(&digests, &d)
++            || s.length < 4 || d.length < 4 || read_le32(s.data) != read_le32(d.data)) goto end;
++        algorithm = read_le32(s.data);
++        s.data += 4; s.length -= 4;
++        d.data += 4; d.length -= 4;
++        if (take_block(&s, &sv) || s.length || take_block(&d, &dv) || d.length) goto end;
++        if (algorithm_md(algorithm) != MBEDTLS_MD_NONE) {
++            if (algorithm == selected) goto end;
++            if (!selected || (algorithm_md(algorithm) == MBEDTLS_MD_SHA512
++                                 && algorithm_md(selected) != MBEDTLS_MD_SHA512)) {
++                selected = algorithm;
++                digest = dv;
++                signature = sv;
++            }
++        }
++    }
++    mdinfo = mbedtls_md_info_from_type(algorithm_md(selected));
++    if (!mdinfo || !signature.length || digest.length != mbedtls_md_get_size(mdinfo)
++        || mbedtls_pk_parse_public_key(&key, public_key.data, public_key.length)
++        || mbedtls_x509_crt_parse_der(&crt, certificate.data, certificate.length)
++        || crt.pk_raw.len != public_key.length || memcmp(crt.pk_raw.p, public_key.data, public_key.length)
++        || mbedtls_md(mdinfo, signed_data.data, signed_data.length, hash)) goto end;
++    if (selected == 0x101 || selected == 0x102) {
++        mbedtls_pk_rsassa_pss_options options;
++        options.mgf1_hash_id = algorithm_md(selected);
++        options.expected_salt_len = mbedtls_md_get_size(mdinfo);
++        if (mbedtls_pk_verify_ext(MBEDTLS_PK_RSASSA_PSS, &options, &key, algorithm_md(selected),
++                hash, mbedtls_md_get_size(mdinfo), signature.data, signature.length)) goto end;
++    } else {
++        mbedtls_pk_type_t type = selected >= 0x200 ? MBEDTLS_PK_ECDSA : MBEDTLS_PK_RSA;
++        if (!mbedtls_pk_can_do(&key, type)
++            || mbedtls_pk_verify(&key, algorithm_md(selected), hash, mbedtls_md_get_size(mdinfo),
++                signature.data, signature.length)) goto end;
++    }
++    if (verify_content(info, &block, digest, mdinfo)
++        || !(info->certificate = malloc(certificate.length))) goto end;
++    memcpy(info->certificate, certificate.data, certificate.length);
++    info->certificate_len = certificate.length;
++    res = 0;
++end:
++    free(block.signing);
++    mbedtls_x509_crt_free(&crt);
++    mbedtls_pk_free(&key);
+     return res;
+ }
+ 
+-/**
+- * @brief app unzip
+- */
+-static int app_unzip(unzFile zFile, const char* pkg_path)
++static bool safe_member(const char* name)
+ {
+-    int res = 0, fd = -1;
+-    char path[PATH_MAX];
+-    char *fileData = NULL, *fileName = path;
+-    int fileLength = 0;
+-    int chunkSize = 0;
+-    int totalSize = 0;
+-
+-    unz_global_info64 zGlobalInfo;
+-
+-    assert_res(unzGetGlobalInfo64(zFile, &zGlobalInfo) == UNZ_OK);
+-    unzGoToFirstFile(zFile);
+-
+-    for (int i = 0; i < zGlobalInfo.number_entry; ++i) {
+-        unz_file_info64 zFileInfo;
+-
+-        strcpy(path, pkg_path);
+-        fileName += strlen(pkg_path);
+-        *fileName++ = '/';
+-        *fileName = '\0';
+-
+-        // Get current compressed file information
+-        assert_res(unzGetCurrentFileInfo64(zFile, &zFileInfo, fileName,
+-                       sizeof(path) - strlen(path), NULL, 0, NULL, 0)
+-            == UNZ_OK);
+-
+-        if (0 == zFileInfo.uncompressed_size) {
+-            recursion_mkdir(path);
+-            goto next;
+-        }
+-
+-        assert_res(unzOpenCurrentFile(zFile) == UNZ_OK);
+-
+-        assert_res((res = fd = mkfile(path)) > 0);
+-
+-        fileLength = zFileInfo.uncompressed_size;
+-        chunkSize = fileLength > CONFIG_LIBUV_EXTENSION_UNZIP_FILE_CHUNKSIZE ? CONFIG_LIBUV_EXTENSION_UNZIP_FILE_CHUNKSIZE : fileLength;
+-        totalSize = 0;
+-        assert_res((fileData = malloc(chunkSize)) != NULL);
+-
+-        do {
+-            // unzip file
+-            assert_res((res = unzReadCurrentFile(zFile, (voidp)fileData, chunkSize)) >= 0);
+-            totalSize += res;
+-            assert_res((res = write(fd, fileData, res)) > 0);
+-        } while (totalSize < fileLength);
+-    next:
+-        // Close the current compressed file and switch to the next file
+-        unzCloseCurrentFile(zFile);
+-        unzGoToNextFile(zFile);
+-        if (fd >= 0) {
+-            close(fd);
+-            fd = -1;
++    const char* component = name;
++    if (!*name || *name == '/') return false;
++    for (const char* p = name; ; ++p) {
++        if (*p == '\\') return false;
++        if (!*p || *p == '/') {
++            size_t n = p - component;
++            if (!n || (n == 1 && component[0] == '.')
++                || (n == 2 && component[0] == '.' && component[1] == '.')) return false;
++            if (!*p || !p[1]) return true;
++            component = p + 1;
+         }
++    }
++}
+ 
+-        if (fileData != NULL) {
+-            free(fileData);
+-            fileData = NULL;
+-        }
++static int member_info(unzFile zip, unz_file_info64* info, char* name)
++{
++    unsigned type;
++    if (unzGetCurrentFileInfo64(zip, info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK
++        || info->size_filename >= PATH_MAX || !info->size_filename
++        || unzGetCurrentFileInfo64(zip, info, name, PATH_MAX, NULL, 0, NULL, 0) != UNZ_OK
++        || strlen(name) != info->size_filename || !safe_member(name)) return -1;
++    type = (info->external_fa >> 16) & S_IFMT;
++    if (type && type != S_IFREG && type != S_IFDIR) return -1;
++    if (name[strlen(name) - 1] == '/' && info->uncompressed_size) return -1;
++    return 0;
++}
+ 
+-        fileName = path;
+-    }
+-    res = 0;
+-error:
+-    if (fileData != NULL) {
+-        free(fileData);
+-    }
++/* Use directory descriptors, reject links, and create new files exclusively.
++ * Pre-extracted files are reused only after exact decompressed-byte comparison.
++ * The caller owns a private staging directory and removes it on failure;
++ * a partial directory must never be published as an installed package.
++ */
++static int open_directory(int parent, const char* name)
++{
++    if (mkdirat(parent, name, 0700) && errno != EEXIST) return -1;
++    return openat(parent, name, O_RDONLY | O_DIRECTORY | O_NOFOLLOW);
++}
+ 
+-    if (fd >= 0) {
++static int destination_root(const char* path)
++{
++    char copy[PATH_MAX];
++    char *p, *next;
++    int fd;
++    if (!path || !*path || strlen(path) >= sizeof(copy)) return -1;
++    strcpy(copy, path);
++    fd = open(*path == '/' ? "/" : ".", O_RDONLY | O_DIRECTORY | O_NOFOLLOW);
++    p = copy + (*path == '/');
++    while (fd >= 0 && *p) {
++        int child;
++        next = strchr(p, '/');
++        if (next) *next = 0;
++        if (!*p || !strcmp(p, ".") || !strcmp(p, "..")) { close(fd); return -1; }
++        child = open_directory(fd, p);
+         close(fd);
++        fd = child;
++        if (!next) break;
++        p = next + 1;
+     }
+-
+-    return res;
++    return fd;
+ }
+ 
+-int app_pre_unzip(app_verify_t* app_verify_info, const char* unzip_filename)
++static int extract_current(unzFile zip, int root)
+ {
+-    int res = -1, fd = -1;
+-    char path[PATH_MAX];
+-    char *fileData = NULL, *fileName = path;
+-    int fileLength = 0;
+-    int chunkSize = 0;
+-    int totalSize = 0;
+-
+-    unz_file_info64 zFileInfo;
+-    unz_global_info64 zGlobalInfo;
+-
+-    assert_res(unzip_filename);
+-    assert_res(app_verify_info);
+-    assert_res(unzGetGlobalInfo64(app_verify_info->zFile, &zGlobalInfo) == UNZ_OK);
+-    unzGoToFirstFile(app_verify_info->zFile);
+-
+-    strcpy(path, app_verify_info->pkg_path);
+-    fileName += strlen(app_verify_info->pkg_path);
+-    *fileName++ = '/';
+-    *fileName = '\0';
+-
+-    for (int i = 0; i < zGlobalInfo.number_entry; ++i) {
+-
+-        assert_res(unzGetCurrentFileInfo64(app_verify_info->zFile, &zFileInfo, fileName,
+-                       sizeof(path) - strlen(path), NULL, 0, NULL, 0)
+-            == UNZ_OK);
+-
+-        if (strcmp(unzip_filename, fileName) != 0) {
+-            unzGoToNextFile(app_verify_info->zFile);
++    unz_file_info64 info;
++    char name[PATH_MAX];
++    char *p = NULL, *slash;
++    uint8_t *buffer = NULL, *existing = NULL;
++    uint64_t total = 0;
++    size_t chunk_size = CONFIG_LIBUV_EXTENSION_UNZIP_FILE_CHUNKSIZE;
++    int parent = -1, fd = -1, res = -1;
++    bool opened = false, created = false;
++    if (CONFIG_LIBUV_EXTENSION_UNZIP_FILE_CHUNKSIZE <= 0) return -1;
++    /* The setting is an upper bound, not a mandatory allocation. */
++    if (chunk_size > RPK_IO_SIZE) chunk_size = RPK_IO_SIZE;
++    if (member_info(zip, &info, name) || (parent = dup(root)) < 0) goto end;
++    p = name;
++    while ((slash = strchr(p, '/')) != NULL) {
++        int child;
++        *slash = 0;
++        child = open_directory(parent, p);
++        close(parent);
++        parent = child;
++        if (parent < 0) goto end;
++        p = slash + 1;
++    }
++    if (!*p) { res = 0; goto end; }
++    if (unzOpenCurrentFile(zip) != UNZ_OK) goto end;
++    opened = true;
++    fd = openat(parent, p, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
++    if (fd < 0) {
++        struct stat st;
++        if (errno != EEXIST || (fd = openat(parent, p, O_RDONLY | O_NOFOLLOW)) < 0
++            || fstat(fd, &st) || !S_ISREG(st.st_mode) || st.st_size < 0
++            || (uint64_t)st.st_size != info.uncompressed_size
++            || !(existing = malloc(chunk_size))) goto end;
++    } else {
++        created = true;
++    }
++    if (!(buffer = malloc(chunk_size))) goto end;
++    for (;;) {
++        int n = unzReadCurrentFile(zip, buffer, chunk_size);
++        size_t written = 0;
++        if (n < 0) goto end;
++        if (!n) break;
++        if ((uint64_t)n > info.uncompressed_size - total) goto end;
++        if (existing) {
++            if (read_exact(fd, existing, n, total) || memcmp(buffer, existing, n)) goto end;
++            total += n;
+             continue;
+-        } else {
+-            assert_res(i != zGlobalInfo.number_entry);
+-            break;
+         }
++        while (written < (size_t)n) {
++            ssize_t count = write(fd, buffer + written, n - written);
++            if (count < 0 && errno == EINTR) continue;
++            if (count <= 0) goto end;
++            written += count;
++        }
++        total += n;
+     }
+-
+-    assert_res(unzOpenCurrentFile(app_verify_info->zFile) == UNZ_OK);
+-    assert_res((res = fd = mkfile(path)) > 0);
+-
+-    fileLength = zFileInfo.uncompressed_size;
+-
+-    chunkSize = fileLength > CONFIG_LIBUV_EXTENSION_UNZIP_FILE_CHUNKSIZE ? CONFIG_LIBUV_EXTENSION_UNZIP_FILE_CHUNKSIZE : fileLength;
+-    totalSize = 0;
+-    assert_res((fileData = malloc(chunkSize)) != NULL);
+-
+-    do {
+-        // unzip file
+-        assert_res((res = unzReadCurrentFile(app_verify_info->zFile, (voidp)fileData, chunkSize)) >= 0);
+-        totalSize += res;
+-        assert_res((res = write(fd, fileData, res)) > 0);
+-    } while (totalSize < fileLength);
+-    res = 0;
+-error:
+-    if (app_verify_info != NULL) {
+-        unzCloseCurrentFile(app_verify_info->zFile);
++    if (total != info.uncompressed_size) goto end;
++    {
++        int closed = unzCloseCurrentFile(zip);
++        opened = false;
++        if (closed != UNZ_OK) goto end;
+     }
+-
+-    if (fileData != NULL) {
+-        free(fileData);
++    {
++        int closed = close(fd);
++        fd = -1;
++        if (closed) goto end;
+     }
++    res = 0;
++end:
++    if (opened) unzCloseCurrentFile(zip);
++    if (fd >= 0) close(fd);
++    if (res && created) unlinkat(parent, p, 0);
++    if (parent >= 0) close(parent);
++    free(buffer);
++    free(existing);
++    return res;
++}
+ 
+-    if (fd >= 0) {
+-        close(fd);
++static int extract_package(app_verify_t* info, const char* selected)
++{
++    char name[PATH_MAX];
++    unz_file_info64 entry;
++    uint64_t count = info->zGlobalInfo.number_entry;
++    bool found = false;
++    int root, res = -1;
++    if (!count || unzGoToFirstFile(info->zFile) != UNZ_OK) return -1;
++    /* Check every member before writing anything, even for pre-unzip. */
++    for (uint64_t i = 0; i < count; ++i) {
++        if (member_info(info->zFile, &entry, name)) return -1;
++        if (!selected || !strcmp(selected, name)) found = true;
++        if (i + 1 < count && unzGoToNextFile(info->zFile) != UNZ_OK) return -1;
+     }
+-
++    if (!found || (root = destination_root(info->pkg_path)) < 0) return -1;
++    if (unzGoToFirstFile(info->zFile) != UNZ_OK) goto end;
++    for (uint64_t i = 0; i < count; ++i) {
++        if (member_info(info->zFile, &entry, name)) goto end;
++        if ((!selected || !strcmp(selected, name)) && extract_current(info->zFile, root)) goto end;
++        if (i + 1 < count && unzGoToNextFile(info->zFile) != UNZ_OK) goto end;
++    }
++    res = 0;
++end:
++    close(root);
+     return res;
+ }
+ 
+-/**
+- * @brief app verify & unzip
+- */
+-int app_verify_unzip(app_verify_t* app_verify_info)
++int app_verify_unzip(app_verify_t* info)
+ {
+-    int res = -1;
+-
+-    assert_res(app_verify_info);
+-    // Verify app legitimacy
+-    assert_res(app_verification(app_verify_info) == 0);
+-
+-    // unzip app
+-    assert_res((res = app_unzip(app_verify_info->zFile, app_verify_info->pkg_path)) == 0);
+-error:
+-    return res;
++    if (app_verification(info)) return -1;
++    return extract_package(info, NULL);
+ }
+ 
+-uint8_t* app_get_fingerprint(app_verify_t* app_verify_info)
++int app_pre_unzip(app_verify_t* info, const char* filename)
+ {
+-    int res;
+-    assert_res(app_verify_info);
++    if (!filename || !safe_member(filename) || app_verification(info)) return -1;
++    return extract_package(info, filename);
++}
+ 
++uint8_t* app_get_fingerprint(app_verify_t* info)
++{
+     const mbedtls_md_info_t* mdinfo = mbedtls_md_info_from_type(MBEDTLS_MD_SHA1);
+-    assert_res((app_verify_info->fingerprint = malloc(mbedtls_md_get_size(mdinfo))) != NULL);
+-
+-    res = mbedtls_md(mdinfo, app_verify_info->certificate, app_verify_info->certificate_len,
+-        app_verify_info->fingerprint);
+-    assert_res(res == 0);
+-    free(app_verify_info->certificate);
+-
+-    return app_verify_info->fingerprint;
+-error:
+-    app_verify_info->fingerprint = NULL;
+-    free(app_verify_info->certificate);
+-    free(app_verify_info->fingerprint);
+-    return NULL;
++    if (!info || !info->certificate || !mdinfo) return NULL;
++    if (info->fingerprint) return info->fingerprint;
++    info->fingerprint = malloc(20);
++    if (!info->fingerprint) return NULL;
++    if (mbedtls_md(mdinfo, info->certificate, info->certificate_len, info->fingerprint)) {
++        free(info->fingerprint);
++        info->fingerprint = NULL;
++    }
++    return info->fingerprint;
+ }
+ 
+-/**
+- * @brief app verify init
++/* Minizip and verification must use the same opened inode. pread does not
++ * disturb minizip's FILE offset. Keep contents immutable for this handle's
++ * lifetime: this is not a snapshot of concurrently writable package bytes.
+  */
+-app_verify_t* app_verify_init(const char* app_path, const char* pkg_path)
++static voidpf ZCALLBACK package_open(voidpf opaque, const void* filename, int mode)
+ {
+-    app_verify_t* app_verify_info = NULL;
+-
+-    assert_res(app_path);
+-    assert_res(pkg_path);
+-
+-    assert_res(app_verify_info = (app_verify_t*)calloc(1, sizeof(app_verify_t)));
+-
+-    assert_res(access(app_path, F_OK) == 0);
+-    assert_res((app_verify_info->zFile = unzOpen64(app_path)) != NULL);
+-    assert_res(unzGetGlobalInfo64(app_verify_info->zFile,
+-                   &app_verify_info->zGlobalInfo)
+-        == UNZ_OK);
+-
+-    assert_res(app_verify_info->app_path = strdup(app_path));
+-    assert_res(app_verify_info->pkg_path = strdup(pkg_path));
++    app_verify_t* info = opaque;
++    FILE* stream;
++    int fd;
++    (void)filename;
++    if ((mode & ZLIB_FILEFUNC_MODE_WRITE) || (fd = dup(info->fd)) < 0) return NULL;
++    stream = fdopen(fd, "rb");
++    if (!stream) close(fd);
++    return stream;
++}
+ 
+-    return app_verify_info;
++app_verify_t* app_verify_init(const char* app_path, const char* pkg_path)
++{
++    app_verify_t* info;
++    zlib_filefunc64_def functions;
++    if (!app_path || !pkg_path || !*pkg_path || strlen(pkg_path) >= PATH_MAX) return NULL;
++    info = calloc(1, sizeof(*info));
++    if (!info) return NULL;
++    info->fd = open(app_path, O_RDONLY | O_NOFOLLOW);
++    if (info->fd < 0 || !(info->pkg_path = strdup(pkg_path))) goto error;
++    fill_fopen64_filefunc(&functions);
++    functions.zopen64_file = package_open;
++    functions.opaque = info;
++    info->zFile = unzOpen2_64(app_path, &functions);
++    if (!info->zFile || unzGetGlobalInfo64(info->zFile, &info->zGlobalInfo) != UNZ_OK) goto error;
++    return info;
+ error:
+-    if (app_verify_info != NULL) {
+-        unzClose(app_verify_info->zFile);
+-        free(app_verify_info->pkg_path);
+-        free(app_verify_info->app_path);
+-        free(app_verify_info);
+-    }
+-
++    app_verify_close(info);
+     return NULL;
+ }
+ 
+-void app_verify_close(app_verify_t* app_verify_info)
++void app_verify_close(app_verify_t* info)
+ {
+-    free(app_verify_info->app_path);
+-    free(app_verify_info->pkg_path);
+-    free(app_verify_info->fingerprint);
+-    unzClose(app_verify_info->zFile);
+-    free(app_verify_info);
++    if (!info) return;
++    if (info->zFile) unzClose(info->zFile);
++    if (info->fd >= 0) close(info->fd);
++    free(info->pkg_path);
++    free(info->certificate);
++    free(info->fingerprint);
++    free(info);
+ }

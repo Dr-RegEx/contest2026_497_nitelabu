@@ -1,0 +1,9 @@
+# Korvo Bluetooth advertising with two concurrent connectable instances.
+# Each connectable advertisement reserves one host connection object.
+# Mount temporary /data before starting bttool; no automatic association.
+#include "../korvo-ble-gatt/defconfig"
+
+CONFIG_BT_PRIVACY=y
+CONFIG_BT_MAX_CONN=2
+CONFIG_BT_EXT_ADV_MAX_ADV_SET=2
+CONFIG_BLUETOOTH_LE_ADVERTISER_MAX_NUM=2

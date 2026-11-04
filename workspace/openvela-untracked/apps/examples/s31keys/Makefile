@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: Apache-2.0
+include $(APPDIR)/Make.defs
+PROGNAME = s31keys
+PRIORITY = SCHED_PRIORITY_DEFAULT
+STACKSIZE = $(CONFIG_EXAMPLES_S31KEYS_STACKSIZE)
+MODULE = $(CONFIG_EXAMPLES_S31KEYS)
+MAINSRC = s31keys_main.c
+include $(APPDIR)/Application.mk

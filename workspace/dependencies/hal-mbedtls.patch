@@ -1,5 +1,5 @@
 diff --git a/configs/config-ccm-psk-dtls1_2.h b/configs/config-ccm-psk-dtls1_2.h
-index 6712c331b0..61afa31772 100644
+index 6712c331b0fe1e1ab9194723494ef5a9d356aac2..61afa31772d8702e0104ed6671347f387039a728 100644
 --- a/configs/config-ccm-psk-dtls1_2.h
 +++ b/configs/config-ccm-psk-dtls1_2.h
 @@ -10,7 +10,7 @@
@@ -21,7 +21,7 @@ index 6712c331b0..61afa31772 100644
   * See README.txt for usage instructions.
   */
 diff --git a/configs/config-ccm-psk-tls1_2.h b/configs/config-ccm-psk-tls1_2.h
-index 5fb67fe4b8..39c0bf9f17 100644
+index 5fb67fe4b86f3e922fb3f2efe1113f157bab77c4..39c0bf9f17ff97820c2b78f9737a08e359762210 100644
 --- a/configs/config-ccm-psk-tls1_2.h
 +++ b/configs/config-ccm-psk-tls1_2.h
 @@ -10,7 +10,7 @@
@@ -34,7 +34,7 @@ index 5fb67fe4b8..39c0bf9f17 100644
   *   and low RAM usage.
   * - No asymmetric cryptography (no certificates, no Diffie-Hellman key
 diff --git a/configs/config-suite-b.h b/configs/config-suite-b.h
-index c08d5d1a6c..6dad0a8a6f 100644
+index c08d5d1a6cf6bf905ebc47faaa32b93a47e0df52..6dad0a8a6fe73106db94904106f68c80b538097b 100644
 --- a/configs/config-suite-b.h
 +++ b/configs/config-suite-b.h
 @@ -10,7 +10,7 @@
@@ -47,7 +47,7 @@ index c08d5d1a6c..6dad0a8a6f 100644
   * - optimized for low RAM usage
   *
 diff --git a/configs/config-thread.h b/configs/config-thread.h
-index 95f588eddf..60b17297a6 100644
+index 95f588eddf0df0d717680fd41332308be4287e46..60b17297a6cbc19f69748baa8997be7680c59eab 100644
 --- a/configs/config-thread.h
 +++ b/configs/config-thread.h
 @@ -12,7 +12,7 @@
@@ -60,7 +60,7 @@ index 95f588eddf..60b17297a6 100644
   * - no X.509
   * - support for experimental EC J-PAKE key exchange
 diff --git a/configs/crypto-config-suite-b.h b/configs/crypto-config-suite-b.h
-index 4bae5a45c6..72b422181f 100644
+index 4bae5a45c61cb9ca460021854b87281f375b64aa..72b422181fd7f390e741eb6673139e93d5066b9c 100644
 --- a/configs/crypto-config-suite-b.h
 +++ b/configs/crypto-config-suite-b.h
 @@ -12,7 +12,7 @@
@@ -73,7 +73,7 @@ index 4bae5a45c6..72b422181f 100644
   * - optimized for low RAM usage
   *
 diff --git a/configs/crypto-config-thread.h b/configs/crypto-config-thread.h
-index 1b2621cf58..a2e40b7f97 100644
+index 1b2621cf588587cea2fe94970ad7a3715b9ff93d..a2e40b7f97facedcccb1046e5dcded6fafbb694b 100644
 --- a/configs/crypto-config-thread.h
 +++ b/configs/crypto-config-thread.h
 @@ -12,7 +12,7 @@
@@ -86,7 +86,7 @@ index 1b2621cf58..a2e40b7f97 100644
   * - no X.509
   * - support for experimental EC J-PAKE key exchange
 diff --git a/configs/ext/tfm_mbedcrypto_config_profile_medium.h b/configs/ext/tfm_mbedcrypto_config_profile_medium.h
-index ee62cf6e01..aa001dbf87 100644
+index ee62cf6e017095389322b8928d4539d125f7ae5a..aa001dbf874995a2362964b0201aad6b2695b8fc 100644
 --- a/configs/ext/tfm_mbedcrypto_config_profile_medium.h
 +++ b/configs/ext/tfm_mbedcrypto_config_profile_medium.h
 @@ -4,7 +4,7 @@
@@ -99,7 +99,7 @@ index ee62cf6e01..aa001dbf87 100644
   */
  /*
 diff --git a/doxygen/input/doc_encdec.h b/doxygen/input/doc_encdec.h
-index 068e716bf4..928ab213ad 100644
+index 068e716bf40ac7e66a1da02221cd34c2024bcca0..928ab213adadb0c172d6396c7eec7ab4c23c1186 100644
 --- a/doxygen/input/doc_encdec.h
 +++ b/doxygen/input/doc_encdec.h
 @@ -24,25 +24,25 @@
@@ -140,7 +140,7 @@ index 068e716bf4..928ab213ad 100644
   * This module provides encryption/decryption which can be used to provide
   * secrecy.
 diff --git a/doxygen/input/doc_hashing.h b/doxygen/input/doc_hashing.h
-index 83613bfa92..651336d655 100644
+index 83613bfa925a6666aa96e010584b9c4646e87c5f..651336d65509a6ef7a4321fb4acf0f809f20121b 100644
 --- a/doxygen/input/doc_hashing.h
 +++ b/doxygen/input/doc_hashing.h
 @@ -19,7 +19,7 @@
@@ -153,7 +153,7 @@ index 83613bfa92..651336d655 100644
   * The following hashing-algorithms are provided:
   * - MD5 128-bit one-way hash function by Ron Rivest.
 diff --git a/doxygen/input/doc_rng.h b/doxygen/input/doc_rng.h
-index 22608a879b..ee525a89de 100644
+index 22608a879babdcd50ce93b9a4f95e334cc5f46a9..ee525a89de46bb876825302be4337b65d5a76e92 100644
 --- a/doxygen/input/doc_rng.h
 +++ b/doxygen/input/doc_rng.h
 @@ -13,11 +13,11 @@
@@ -171,7 +171,7 @@ index 22608a879b..ee525a89de 100644
   *
   * Meaning that there seems to be no practical algorithm that can guess
 diff --git a/doxygen/input/doc_ssltls.h b/doxygen/input/doc_ssltls.h
-index 5757574f3b..c01c9e5764 100644
+index 5757574f3b1c25f006d7a2de55ced2f2309c9bc3..c01c9e57647b62e4eac852b2fdbef3650b6d9fac 100644
 --- a/doxygen/input/doc_ssltls.h
 +++ b/doxygen/input/doc_ssltls.h
 @@ -16,10 +16,10 @@
@@ -190,7 +190,7 @@ index 5757574f3b..c01c9e5764 100644
   * Many aspects of such a channel are set through parameters and callback
   * functions:
 diff --git a/doxygen/input/doc_tcpip.h b/doxygen/input/doc_tcpip.h
-index f8d8c6905b..caaa04606a 100644
+index f8d8c6905bf74871fb14ba00e21dd43521c0a6fc..caaa04606a9c51c9aa14725f3eeb9f1dd3252331 100644
 --- a/doxygen/input/doc_tcpip.h
 +++ b/doxygen/input/doc_tcpip.h
 @@ -19,10 +19,10 @@
@@ -209,7 +209,7 @@ index f8d8c6905b..caaa04606a 100644
   * This way you have the means to, for example, implement and use an UDP or
   * IPSec communication solution as a basis.
 diff --git a/doxygen/input/doc_x509.h b/doxygen/input/doc_x509.h
-index 945830f110..dee3bcdff2 100644
+index 945830f1103baccdeabc8d7012002ad7be56ecb9..dee3bcdff2fb4b58db5388539e8063a04afe3536 100644
 --- a/doxygen/input/doc_x509.h
 +++ b/doxygen/input/doc_x509.h
 @@ -15,15 +15,15 @@
@@ -235,7 +235,7 @@ index 945830f110..dee3bcdff2 100644
   * This module can be used to build a certificate authority (CA) chain and
   * verify its signature. It is also used to generate Certificate Signing
 diff --git a/include/mbedtls/debug.h b/include/mbedtls/debug.h
-index bdfc597e0c..e43bd26fb1 100644
+index bdfc597e0cb8aa83ee9bb5202e31cb33559f7253..e43bd26fb19aa8cf7218f243ff8b70fd2dc6812f 100644
 --- a/include/mbedtls/debug.h
 +++ b/include/mbedtls/debug.h
 @@ -19,19 +19,19 @@
@@ -272,7 +272,7 @@ index bdfc597e0c..e43bd26fb1 100644
  #ifdef __cplusplus
  }
 diff --git a/include/mbedtls/error.h b/include/mbedtls/error.h
-index ee3d093c93..f704c3831a 100644
+index ee3d093c938227dc01528d3235c91ab7842ce5e1..f704c3831a06617e493ed33f4eea106e1f13243e 100644
 --- a/include/mbedtls/error.h
 +++ b/include/mbedtls/error.h
 @@ -28,7 +28,7 @@ extern "C" {
@@ -285,7 +285,7 @@ index ee3d093c93..f704c3831a 100644
  #ifdef __cplusplus
  }
 diff --git a/include/mbedtls/mbedtls_config.h b/include/mbedtls/mbedtls_config.h
-index ad843c70c3..b95da196aa 100644
+index ad843c70c3ce73ef807dfac6d7ee92eb599b4fa9..b95da196aa234ef426a75735cf992c972d5309c9 100644
 --- a/include/mbedtls/mbedtls_config.h
 +++ b/include/mbedtls/mbedtls_config.h
 @@ -4,7 +4,7 @@
@@ -538,7 +538,7 @@ index ad843c70c3..b95da196aa 100644
   * This module is required for the X.509 parsing modules.
   */
 diff --git a/include/mbedtls/net_sockets.h b/include/mbedtls/net_sockets.h
-index f4eb683d3a..24f8faa268 100644
+index f4eb683d3a67694f6fa6e722b39dfc8e18375cbe..24f8faa2688f3131daa550612f30b2eb43e799dd 100644
 --- a/include/mbedtls/net_sockets.h
 +++ b/include/mbedtls/net_sockets.h
 @@ -66,8 +66,8 @@
@@ -670,7 +670,7 @@ index f4eb683d3a..24f8faa268 100644
  #ifdef __cplusplus
  }
 diff --git a/include/mbedtls/oid.h b/include/mbedtls/oid.h
-index d769ff2180..6e1fe02a18 100644
+index d769ff2180f81c1c191bdda2f9db8208df7ef31d..6e1fe02a183de7f97fa2d0e96189e822f6a47e04 100644
 --- a/include/mbedtls/oid.h
 +++ b/include/mbedtls/oid.h
 @@ -202,15 +202,15 @@
@@ -721,7 +721,7 @@ index d769ff2180..6e1fe02a18 100644
  
  #endif /* oid.h */
 diff --git a/include/mbedtls/pkcs7.h b/include/mbedtls/pkcs7.h
-index 957ca53d71..59f5ab8e54 100644
+index 957ca53d71a760704ebf722ea850e0aae5f065f0..59f5ab8e54d830c2dce23bdb0483193b252ef724 100644
 --- a/include/mbedtls/pkcs7.h
 +++ b/include/mbedtls/pkcs7.h
 @@ -106,14 +106,14 @@ mbedtls_pkcs7_type;
@@ -833,7 +833,7 @@ index 957ca53d71..59f5ab8e54 100644
  #ifdef __cplusplus
  }
 diff --git a/include/mbedtls/ssl.h b/include/mbedtls/ssl.h
-index 02e527cdf5..8e2048a732 100644
+index 02e527cdf5c7fc2a878437bcb9d2d080e35b6a50..8e2048a732edccf307b31806c7e4c22d482477eb 100644
 --- a/include/mbedtls/ssl.h
 +++ b/include/mbedtls/ssl.h
 @@ -89,11 +89,11 @@
@@ -4222,7 +4222,7 @@ index 02e527cdf5..8e2048a732 100644
                                         const char *label, const size_t label_len,
                                         const unsigned char *context, const size_t context_len,
 diff --git a/include/mbedtls/ssl_cache.h b/include/mbedtls/ssl_cache.h
-index a1307b4508..ec70787e47 100644
+index a1307b450876236c7a7e10d53c895a002443d049..ec70787e47c3039a89e5bac247f1d074c80ecc25 100644
 --- a/include/mbedtls/ssl_cache.h
 +++ b/include/mbedtls/ssl_cache.h
 @@ -49,27 +49,27 @@ typedef struct mbedtls_ssl_cache_entry mbedtls_ssl_cache_entry;
@@ -4338,7 +4338,7 @@ index a1307b4508..ec70787e47 100644
  #ifdef __cplusplus
  }
 diff --git a/include/mbedtls/ssl_ciphersuites.h b/include/mbedtls/ssl_ciphersuites.h
-index dfd369416b..3ad4236ad3 100644
+index dfd369416b27f5e092b692322a2e9ac7fb7824fa..3ad4236ad3830cff7ccfd98678dc7e107d962815 100644
 --- a/include/mbedtls/ssl_ciphersuites.h
 +++ b/include/mbedtls/ssl_ciphersuites.h
 @@ -265,37 +265,37 @@ typedef struct mbedtls_ssl_ciphersuite_t mbedtls_ssl_ciphersuite_t;
@@ -4397,7 +4397,7 @@ index dfd369416b..3ad4236ad3 100644
  #ifdef __cplusplus
  }
 diff --git a/include/mbedtls/ssl_cookie.h b/include/mbedtls/ssl_cookie.h
-index ec54f614d3..de6bb2424e 100644
+index ec54f614d354d703ee61c8454d30579bd0306792..de6bb2424ef34c4e241566aa10f05dbd9d7643d8 100644
 --- a/include/mbedtls/ssl_cookie.h
 +++ b/include/mbedtls/ssl_cookie.h
 @@ -37,12 +37,12 @@ extern "C" {
@@ -4460,7 +4460,7 @@ index ec54f614d3..de6bb2424e 100644
  #ifdef __cplusplus
  }
 diff --git a/include/mbedtls/ssl_ticket.h b/include/mbedtls/ssl_ticket.h
-index 5a2e4876e5..d9da8539cf 100644
+index 5a2e4876e555fbdcfb15a76e0616533a1d146679..d9da8539cfa3db7762dc14afb356d083a1769402 100644
 --- a/include/mbedtls/ssl_ticket.h
 +++ b/include/mbedtls/ssl_ticket.h
 @@ -42,19 +42,19 @@ extern "C" {
@@ -4578,7 +4578,7 @@ index 5a2e4876e5..d9da8539cf 100644
  #ifdef __cplusplus
  }
 diff --git a/include/mbedtls/timing.h b/include/mbedtls/timing.h
-index 62ae1022d9..8449ab9926 100644
+index 62ae1022d91d355edb71e5694e8e347d6059f07f..8449ab9926e3e5c011f35f38df3bc5f46d89331d 100644
 --- a/include/mbedtls/timing.h
 +++ b/include/mbedtls/timing.h
 @@ -27,16 +27,16 @@ extern "C" {
@@ -4644,7 +4644,7 @@ index 62ae1022d9..8449ab9926 100644
  
  #ifdef __cplusplus
 diff --git a/include/mbedtls/version.h b/include/mbedtls/version.h
-index 4a0b216e3b..26b97a31fb 100644
+index 4a0b216e3b2d9521f305ec62d3801521d63c4b6b..26b97a31fbe8e88ac524783750df94cb6cb4a338 100644
 --- a/include/mbedtls/version.h
 +++ b/include/mbedtls/version.h
 @@ -29,17 +29,17 @@ extern "C" {
@@ -4678,7 +4678,7 @@ index 4a0b216e3b..26b97a31fb 100644
  #ifdef __cplusplus
  }
 diff --git a/include/mbedtls/x509.h b/include/mbedtls/x509.h
-index 8b6a1daee5..6115e12df3 100644
+index 8b6a1daee50d26f7b93b7fec9c234e2337d603ff..6115e12df32baf2c5f1b9a77c9a302a3a7d62c2a 100644
 --- a/include/mbedtls/x509.h
 +++ b/include/mbedtls/x509.h
 @@ -83,7 +83,7 @@
@@ -4818,7 +4818,7 @@ index 8b6a1daee5..6115e12df3 100644
  #define MBEDTLS_X509_SAFE_SNPRINTF                          \
      do {                                                    \
 diff --git a/include/mbedtls/x509_crl.h b/include/mbedtls/x509_crl.h
-index 095cb5d9a5..e7e6f0d590 100644
+index 095cb5d9a50d8985729057cf6cd0bd0eb2f70062..e7e6f0d590ce380bd9a30cafbcf4cbe7786d0860 100644
 --- a/include/mbedtls/x509_crl.h
 +++ b/include/mbedtls/x509_crl.h
 @@ -79,10 +79,10 @@ typedef struct mbedtls_x509_crl {
@@ -4916,7 +4916,7 @@ index 095cb5d9a5..e7e6f0d590 100644
  /** \} name Structures and functions for parsing CRLs */
  /** \} addtogroup x509_module */
 diff --git a/include/mbedtls/x509_crt.h b/include/mbedtls/x509_crt.h
-index 3352e3824a..176c7ca106 100644
+index 3352e3824ad28515349b63cce5f30d6ceb370b00..176c7ca1066b7b009fcfc5479db1c8fe5c7cb20f 100644
 --- a/include/mbedtls/x509_crt.h
 +++ b/include/mbedtls/x509_crt.h
 @@ -39,7 +39,7 @@ extern "C" {
@@ -5720,7 +5720,7 @@ index 3352e3824a..176c7ca106 100644
  #endif /* MBEDTLS_X509_CRT_WRITE_C */
  
 diff --git a/include/mbedtls/x509_csr.h b/include/mbedtls/x509_csr.h
-index 60a553f55d..bd55854b19 100644
+index 60a553f55d617921986d3e712d67b5a19df2017d..bd55854b19cbb692e94f1dce87c7ebebe94f9f55 100644
 --- a/include/mbedtls/x509_csr.h
 +++ b/include/mbedtls/x509_csr.h
 @@ -48,14 +48,14 @@ typedef struct mbedtls_x509_csr {
@@ -5977,7 +5977,7 @@ index 60a553f55d..bd55854b19 100644
  #endif /* MBEDTLS_X509_CSR_WRITE_C */
  
 diff --git a/library/debug.c b/library/debug.c
-index 94b1c2778f..2c0d88fc44 100644
+index 94b1c2778faa300c55e00d8453d84a0d005ede30..2c0d88fc44ae55380f37df37fa9ab03ca0d5fb8f 100644
 --- a/library/debug.c
 +++ b/library/debug.c
 @@ -21,17 +21,17 @@
@@ -6454,7 +6454,7 @@ index 94b1c2778f..2c0d88fc44 100644
          crt = crt->next;
      }
 diff --git a/library/debug_internal.h b/library/debug_internal.h
-index 79a4c4540c..587bc60f22 100644
+index 79a4c4540ca5d099d4097c86bc038ac5a3c2bc9f..587bc60f22018c1d7a6283aac3e8518bec1dc0ec 100644
 --- a/library/debug_internal.h
 +++ b/library/debug_internal.h
 @@ -27,7 +27,7 @@
@@ -6503,7 +6503,7 @@ index 79a4c4540c..587bc60f22 100644
                               const char *text, const mbedtls_x509_crt *crt);
  #endif
 diff --git a/library/error.c b/library/error.c
-index c5b0f5c764..6f2a441f43 100644
+index c5b0f5c76494e40b1dcde43b5c4c051af9ffcbee..6f2a441f433430fcad92ee2cf5f6be98c4981961 100644
 --- a/library/error.c
 +++ b/library/error.c
 @@ -84,7 +84,7 @@
@@ -6601,7 +6601,7 @@ index c5b0f5c764..6f2a441f43 100644
      ((void) ret);
  
 diff --git a/library/mbedtls_check_config.h b/library/mbedtls_check_config.h
-index 3107c11077..519b56bbea 100644
+index 3107c110774dbc6a488005df00f6ffecc3283778..519b56bbeadb07fbe7fd3fec8c27f07335eb7cf3 100644
 --- a/library/mbedtls_check_config.h
 +++ b/library/mbedtls_check_config.h
 @@ -311,7 +311,7 @@
@@ -6614,7 +6614,7 @@ index 3107c11077..519b56bbea 100644
  #if defined(MBEDTLS_HAVEGE_C) //no-check-names
  #error "MBEDTLS_HAVEGE_C was removed in Mbed TLS 3.0. See https://github.com/Mbed-TLS/mbedtls/issues/2599"
 diff --git a/library/mps_error.h b/library/mps_error.h
-index 016a84ce49..913d34b1a4 100644
+index 016a84ce49e02be109444d7f0628160fc4472989..913d34b1a43df7422033678fe678ef1215a27002 100644
 --- a/library/mps_error.h
 +++ b/library/mps_error.h
 @@ -62,7 +62,7 @@
@@ -6627,7 +6627,7 @@ index 016a84ce49..913d34b1a4 100644
   *  read requests that led to the pausing. */
  #define MBEDTLS_ERR_MPS_READER_NEED_MORE             MBEDTLS_MPS_READER_MAKE_ERROR(0x3)
 diff --git a/library/mps_reader.c b/library/mps_reader.c
-index 0fe7dfe95f..e2ed6afa2f 100644
+index 0fe7dfe95f702e0aac6848631a08640a2a291e96..e2ed6afa2fadd20441fd5af3f13d6b2c2ed5f0a5 100644
 --- a/library/mps_reader.c
 +++ b/library/mps_reader.c
 @@ -16,7 +16,7 @@
@@ -6856,7 +6856,7 @@ index 0fe7dfe95f..e2ed6afa2f 100644
              rd->end = commit;
              rd->pending = 0;
 diff --git a/library/mps_reader.h b/library/mps_reader.h
-index 3193a5e334..baf1902304 100644
+index 3193a5e334e329998680de0fddcd848beb1b5677..baf190230443721d47cc2c596cfa531396a0c8f6 100644
 --- a/library/mps_reader.h
 +++ b/library/mps_reader.h
 @@ -46,12 +46,12 @@
@@ -7074,7 +7074,7 @@ index 3193a5e334..baf1902304 100644
  
  #endif /* MBEDTLS_READER_H */
 diff --git a/library/mps_trace.c b/library/mps_trace.c
-index 98449b5f77..02177e386d 100644
+index 98449b5f773be0936949ff13822e9cf9e17d1fbf..02177e386d040ddfba14050800b172db21b0c957 100644
 --- a/library/mps_trace.c
 +++ b/library/mps_trace.c
 @@ -16,7 +16,7 @@
@@ -7177,7 +7177,7 @@ index 98449b5f77..02177e386d 100644
  
          default:
 diff --git a/library/mps_trace.h b/library/mps_trace.h
-index ac2b75f6ba..61e32d2cd1 100644
+index ac2b75f6ba0e14fa79845bfe52492650558828b6..61e32d2cd1477a00cb662f04a1d498e8cbc3dd93 100644
 --- a/library/mps_trace.h
 +++ b/library/mps_trace.h
 @@ -97,40 +97,40 @@ typedef enum {
@@ -7237,7 +7237,7 @@ index ac2b75f6ba..61e32d2cd1 100644
  
  #define MBEDTLS_MPS_TRACE_RETURN(val)         \
 diff --git a/library/net_sockets.c b/library/net_sockets.c
-index ca70f3797b..5e1e9a0131 100644
+index ca70f3797bc9b46a3c52f729be3f49c0e097f6b0..5e1e9a01317bbfe5356e9fab68be6e5b95fc079e 100644
 --- a/library/net_sockets.c
 +++ b/library/net_sockets.c
 @@ -6,7 +6,7 @@
@@ -7536,7 +7536,7 @@ index ca70f3797b..5e1e9a0131 100644
      if (ctx == NULL || ctx->fd == -1) {
          return;
 diff --git a/library/pkcs7.c b/library/pkcs7.c
-index 3481cbdb1b..9bec3e7608 100644
+index 3481cbdb1bd9054641e64e04d95ac39f1ab605cb..9bec3e7608fac7a188af5aa29e76e51fcfb74654 100644
 --- a/library/pkcs7.c
 +++ b/library/pkcs7.c
 @@ -31,17 +31,17 @@
@@ -8140,7 +8140,7 @@ index 3481cbdb1b..9bec3e7608 100644
  
      pkcs7->raw.p = NULL;
 diff --git a/library/ssl_cache.c b/library/ssl_cache.c
-index 28d0cfbb7d..68acef7077 100644
+index 28d0cfbb7d6377bbb5707d334d8d208186018bdc..68acef7077c38f97d2b3c21d5b3389a4d7ead936 100644
 --- a/library/ssl_cache.c
 +++ b/library/ssl_cache.c
 @@ -20,7 +20,7 @@
@@ -8418,7 +8418,7 @@ index 28d0cfbb7d..68acef7077 100644
      cache->chain = NULL;
  }
 diff --git a/library/ssl_ciphersuites.c b/library/ssl_ciphersuites.c
-index d61932cb95..aa0415ab0c 100644
+index d61932cb95d64be418ae2ab2c61b82143d93a727..aa0415ab0c8110f38db94eaa7cf4600cf90c5890 100644
 --- a/library/ssl_ciphersuites.c
 +++ b/library/ssl_ciphersuites.c
 @@ -32,7 +32,7 @@
@@ -8626,7 +8626,7 @@ index d61932cb95..aa0415ab0c 100644
      switch (info->key_exchange) {
          case MBEDTLS_KEY_EXCHANGE_PSK:
 diff --git a/library/ssl_ciphersuites_internal.h b/library/ssl_ciphersuites_internal.h
-index 524e419f47..8870f1c40e 100644
+index 524e419f47c2c344395b4372b3e21a590d25bb7c..8870f1c40ee72c347e275080bbd8ade3f8f9e874 100644
 --- a/library/ssl_ciphersuites_internal.h
 +++ b/library/ssl_ciphersuites_internal.h
 @@ -16,19 +16,19 @@
@@ -8719,7 +8719,7 @@ index 524e419f47..8870f1c40e 100644
          case MBEDTLS_KEY_EXCHANGE_ECDHE_ECDSA:
              return 1;
 diff --git a/library/ssl_client.c b/library/ssl_client.c
-index 307da0fabb..04c4b81fa3 100644
+index 307da0fabb8ba07ed17a5ecc7262e1ac6230d628..04c4b81fa3b6216c71873a8b45358f83cc6f894a 100644
 --- a/library/ssl_client.c
 +++ b/library/ssl_client.c
 @@ -22,7 +22,7 @@
@@ -9154,7 +9154,7 @@ index 307da0fabb..04c4b81fa3 100644
  #endif
      }
 diff --git a/library/ssl_client.h b/library/ssl_client.h
-index 56e9bf8575..563a3751ec 100644
+index 56e9bf857535fd759751d5c435577a47bc8b5e15..563a3751ec4187992764535af8f8cc17755e335c 100644
 --- a/library/ssl_client.h
 +++ b/library/ssl_client.h
 @@ -13,6 +13,6 @@
@@ -9166,7 +9166,7 @@ index 56e9bf8575..563a3751ec 100644
  
  #endif /* MBEDTLS_SSL_CLIENT_H */
 diff --git a/library/ssl_cookie.c b/library/ssl_cookie.c
-index 11811ee30f..3d78020498 100644
+index 11811ee30f01a0b011a6f86a836a13a61d104bbf..3d78020498d530b142d895656540f5b349c8ea87 100644
 --- a/library/ssl_cookie.c
 +++ b/library/ssl_cookie.c
 @@ -25,13 +25,13 @@
@@ -9363,7 +9363,7 @@ index 11811ee30f..3d78020498 100644
          ret = PSA_TO_MBEDTLS_ERR(status);
      }
 diff --git a/library/ssl_debug_helpers.h b/library/ssl_debug_helpers.h
-index 6f843404c7..025e866a5c 100644
+index 6f843404c7546ef3895ed78610839a1b6bfd94f9..025e866a5c98ee1d89257c42e63970898962ae6b 100644
 --- a/library/ssl_debug_helpers.h
 +++ b/library/ssl_debug_helpers.h
 @@ -17,53 +17,53 @@
@@ -9436,7 +9436,7 @@ index 6f843404c7..025e866a5c 100644
  
  #else
 diff --git a/library/ssl_debug_helpers_generated.c b/library/ssl_debug_helpers_generated.c
-index afbfa87d26..ad053ce6bc 100644
+index afbfa87d26cfbb0b30a5cf1b31bf146f4377053b..ad053ce6bcfbb90bee19301c4fc01284b9b58e76 100644
 --- a/library/ssl_debug_helpers_generated.c
 +++ b/library/ssl_debug_helpers_generated.c
 @@ -18,7 +18,7 @@
@@ -9503,7 +9503,7 @@ index afbfa87d26..ad053ce6bc 100644
      switch (in) {
          case MBEDTLS_SSL_KEY_EXPORT_TLS12_MASTER_SECRET:
 diff --git a/library/ssl_misc.h b/library/ssl_misc.h
-index 5b852bdd19..03d8b6fd38 100644
+index 5b852bdd1916ea732d7966b0aeaeeeb44c1321ea..03d8b6fd385ca5a178ee1c44dd8736798a284120 100644
 --- a/library/ssl_misc.h
 +++ b/library/ssl_misc.h
 @@ -23,7 +23,7 @@
@@ -10989,7 +10989,7 @@ index 5b852bdd19..03d8b6fd38 100644
                      const unsigned char *add_data,
                      size_t add_data_len,
 diff --git a/library/ssl_msg.c b/library/ssl_msg.c
-index 731cbc8ece..c5d0daf3af 100644
+index 731cbc8eceb3aabcc4fdcdc3e7a976a84debcb80..c5d0daf3af8c728b334a20be6ff6451352fb0919 100644
 --- a/library/ssl_msg.c
 +++ b/library/ssl_msg.c
 @@ -35,13 +35,13 @@
@@ -14248,7 +14248,7 @@ index 731cbc8ece..c5d0daf3af 100644
                                    int alert_reason)
  {
 diff --git a/library/ssl_ticket.c b/library/ssl_ticket.c
-index 7b0391924a..3e25ab2d26 100644
+index 7b0391924a31162e9390570a217044565ceed56c..3e25ab2d266ecca58470d63c4926ec9d6505aea1 100644
 --- a/library/ssl_ticket.c
 +++ b/library/ssl_ticket.c
 @@ -19,23 +19,23 @@
@@ -14600,7 +14600,7 @@ index 7b0391924a..3e25ab2d26 100644
  
  #endif /* MBEDTLS_SSL_TICKET_C */
 diff --git a/library/ssl_tls.c b/library/ssl_tls.c
-index 75c59a96ad..d8ca954036 100644
+index 75c59a96ad3921c17e207dbb9295f75c6178bee6..d8ca9540360f4d77d080ae797aed2429aaff0995 100644
 --- a/library/ssl_tls.c
 +++ b/library/ssl_tls.c
 @@ -39,35 +39,35 @@
@@ -20427,7 +20427,7 @@ index 75c59a96ad..d8ca954036 100644
                                                              out,
                                                              key_len,
 diff --git a/library/ssl_tls12_client.c b/library/ssl_tls12_client.c
-index 7675f95e37..40f9698a4b 100644
+index 7675f95e376727e48262a39444f70a3f67dc6fbc..40f9698a4b94beae3c30e487fea8c635ef21a899 100644
 --- a/library/ssl_tls12_client.c
 +++ b/library/ssl_tls12_client.c
 @@ -22,13 +22,13 @@
@@ -22354,7 +22354,7 @@ index 7675f95e37..40f9698a4b 100644
  
          default:
 diff --git a/library/ssl_tls12_server.c b/library/ssl_tls12_server.c
-index 07641cb3e8..13bb3f8c0a 100644
+index 07641cb3e8fa0ecf2377f892b8cbb22efd4a365a..13bb3f8c0a4d15b395a58c59211f7cf4badeba5a 100644
 --- a/library/ssl_tls12_server.c
 +++ b/library/ssl_tls12_server.c
 @@ -23,13 +23,13 @@
@@ -24595,7 +24595,7 @@ index 07641cb3e8..13bb3f8c0a 100644
      conf->respect_cli_pref = order;
  }
 diff --git a/library/ssl_tls13_client.c b/library/ssl_tls13_client.c
-index b7b075cc97..8ed6304087 100644
+index b7b075cc97f7ee70d4d4aa2ceda983fc0270b216..8ed63040878dfb2716bbfb52f02e25d28d3f4090 100644
 --- a/library/ssl_tls13_client.c
 +++ b/library/ssl_tls13_client.c
 @@ -23,26 +23,26 @@
@@ -26619,7 +26619,7 @@ index b7b075cc97..8ed6304087 100644
  #endif /* MBEDTLS_SSL_SESSION_TICKETS */
  
 diff --git a/library/ssl_tls13_generic.c b/library/ssl_tls13_generic.c
-index e88c00a564..3017972b3b 100644
+index e88c00a5645e5cf77aeb32c904c8136189b5c3ae..3017972b3b48f2d643fc71848a295963d029164e 100644
 --- a/library/ssl_tls13_generic.c
 +++ b/library/ssl_tls13_generic.c
 @@ -29,31 +29,31 @@
@@ -27534,7 +27534,7 @@ index e88c00a564..3017972b3b 100644
      return 0;
  }
 diff --git a/library/ssl_tls13_invasive.h b/library/ssl_tls13_invasive.h
-index 73e0e304f9..ef04f61fae 100644
+index 73e0e304f96180cf3b2076fceb9f6db83efe1857..ef04f61faed99c21d1787fe548638d0696877ea4 100644
 --- a/library/ssl_tls13_invasive.h
 +++ b/library/ssl_tls13_invasive.h
 @@ -13,7 +13,7 @@
@@ -27547,7 +27547,7 @@ index 73e0e304f9..ef04f61fae 100644
                                          const unsigned char *end);
  #endif /* MBEDTLS_TEST_HOOKS */
 diff --git a/library/ssl_tls13_keys.c b/library/ssl_tls13_keys.c
-index 865e02c2dc..9ad75ca60e 100644
+index 865e02c2dc89938c37272d18815836cc33317c0b..9ad75ca60edb2b6c10bffa8e7f1749c1a7466296 100644
 --- a/library/ssl_tls13_keys.c
 +++ b/library/ssl_tls13_keys.c
 @@ -24,18 +24,18 @@
@@ -28920,7 +28920,7 @@ index 865e02c2dc..9ad75ca60e 100644
  }
  #endif /* defined(MBEDTLS_SSL_KEYING_MATERIAL_EXPORT) */
 diff --git a/library/ssl_tls13_keys.h b/library/ssl_tls13_keys.h
-index 1509e9a4d4..af7ca6c831 100644
+index 1509e9a4d4945813d836bfb4d6b3209d1461f1dd..af7ca6c831cfd03fc016e72a7d292256c841e3dd 100644
 --- a/library/ssl_tls13_keys.h
 +++ b/library/ssl_tls13_keys.h
 @@ -52,13 +52,13 @@ struct mbedtls_ssl_tls13_labels_struct {
@@ -29207,7 +29207,7 @@ index 1509e9a4d4..af7ca6c831 100644
                                 const unsigned char *label, const size_t label_len,
                                 const unsigned char *context_value, const size_t context_len,
 diff --git a/library/ssl_tls13_server.c b/library/ssl_tls13_server.c
-index 982e6f8c3b..6cdd40507d 100644
+index 982e6f8c3b8588bf00403f30a40f90baf5924d53..6cdd40507d955068249e9ff20d4549617e00e4ba 100644
 --- a/library/ssl_tls13_server.c
 +++ b/library/ssl_tls13_server.c
 @@ -20,17 +20,17 @@
@@ -31328,7 +31328,7 @@ index 982e6f8c3b..6cdd40507d 100644
              }
              break;
 diff --git a/library/timing.c b/library/timing.c
-index 1ed88639ef..d8173dce6d 100644
+index 1ed88639ef01457a0c63aa0237170e7473e364f0..d8173dce6d696412543a408074a8c997caf8ae4c 100644
 --- a/library/timing.c
 +++ b/library/timing.c
 @@ -63,7 +63,7 @@ struct _hr_time {
@@ -31394,7 +31394,7 @@ index 1ed88639ef..d8173dce6d 100644
  {
      return data->fin_ms;
 diff --git a/library/version.c b/library/version.c
-index e828673c0d..04c7b932c0 100644
+index e828673c0d3a4921beeb96d4cecbc2955858b73e..04c7b932c0ad80564b695ea72913e55faa2dac56 100644
 --- a/library/version.c
 +++ b/library/version.c
 @@ -12,17 +12,17 @@
@@ -31419,7 +31419,7 @@ index e828673c0d..04c7b932c0 100644
      return MBEDTLS_VERSION_STRING_FULL;
  }
 diff --git a/library/version_features.c b/library/version_features.c
-index c59575405b..b576106114 100644
+index c59575405bb70448dfd53d252e2d1d492959d7b4..b5761061142809cfd92a0a51792a1c4833bb0271 100644
 --- a/library/version_features.c
 +++ b/library/version_features.c
 @@ -13,7 +13,7 @@
@@ -31444,7 +31444,7 @@ index c59575405b..b576106114 100644
      if (*idx == NULL) {
          return -2;
 diff --git a/library/x509.c b/library/x509.c
-index 1adff8fafc..26e2d5ef30 100644
+index 1adff8fafc4c8b710826450c0b8404dc124f9085..26e2d5ef30b216f2f8800948b4295955af5e6d64 100644
 --- a/library/x509.c
 +++ b/library/x509.c
 @@ -61,7 +61,7 @@
@@ -32535,7 +32535,7 @@ index 1adff8fafc..26e2d5ef30 100644
  {
      int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
 diff --git a/library/x509_create.c b/library/x509_create.c
-index 370eb9b2e1..0867ee3399 100644
+index 370eb9b2e19d175ffa56c6c036a1e2d5bf344d47..0867ee3399a3482e287c0e53254bde02bd26d90a 100644
 --- a/library/x509_create.c
 +++ b/library/x509_create.c
 @@ -38,7 +38,7 @@ typedef struct {
@@ -33008,7 +33008,7 @@ index 370eb9b2e1..0867ee3399 100644
      }
  
 diff --git a/library/x509_crl.c b/library/x509_crl.c
-index 0b98ba4664..a7a4d262ef 100644
+index 0b98ba4664426c9cd04f646f86d0d35321c9fc88..a7a4d262effe1c38004fb95c64d3cfb04923d34d 100644
 --- a/library/x509_crl.c
 +++ b/library/x509_crl.c
 @@ -47,13 +47,13 @@
@@ -33571,7 +33571,7 @@ index 0b98ba4664..a7a4d262ef 100644
      }
  }
 diff --git a/library/x509_crt.c b/library/x509_crt.c
-index e6b9252859..efbb399dca 100644
+index e6b9252859b181247a39c66f840f691547f784c1..efbb399dcac1e13b40fece3b1946a54bdcaa2f14 100644
 --- a/library/x509_crt.c
 +++ b/library/x509_crt.c
 @@ -85,7 +85,7 @@ typedef struct {
@@ -35549,7 +35549,7 @@ index e6b9252859..efbb399dca 100644
      return MBEDTLS_ERR_X509_INVALID_EXTENSIONS;
  }
 diff --git a/library/x509_csr.c b/library/x509_csr.c
-index 32a3bb2e78..48ef516656 100644
+index 32a3bb2e78ecf19a9d5fae830f972b2d052cc84f..48ef51665682af4ef5b9d47588c4c69808e23b85 100644
 --- a/library/x509_csr.c
 +++ b/library/x509_csr.c
 @@ -40,13 +40,13 @@
@@ -36074,7 +36074,7 @@ index 32a3bb2e78..48ef516656 100644
  
  #endif /* MBEDTLS_X509_CSR_PARSE_C */
 diff --git a/library/x509_internal.h b/library/x509_internal.h
-index 5505b9778c..b4db2d56e6 100644
+index 5505b9778c1a56dd5e173d714587b457aaad95f6..b4db2d56e6863a272c3afbe8a49709208daaad9a 100644
 --- a/library/x509_internal.h
 +++ b/library/x509_internal.h
 @@ -22,64 +22,64 @@
@@ -36166,7 +36166,7 @@ index 5505b9778c..b4db2d56e6 100644
  
  #endif /* MBEDTLS_X509_INTERNAL_H */
 diff --git a/library/x509_oid.c b/library/x509_oid.c
-index cc0063bcd3..7c0745c92c 100644
+index cc0063bcd3ea5ff178de531eb7e855a2bfeddf23..7c0745c92ce0e535d1ea3551e6e5bc93bdbd83cb 100644
 --- a/library/x509_oid.c
 +++ b/library/x509_oid.c
 @@ -43,7 +43,7 @@
@@ -36327,7 +36327,7 @@ index cc0063bcd3..7c0745c92c 100644
  #endif /* MBEDTLS_X509_OID_HAVE_GET_MD_ALG */
  
 diff --git a/library/x509_oid.h b/library/x509_oid.h
-index 0752953aac..6cf76a0061 100644
+index 0752953aac776d76bafd58cc3dc16a66b2c7418b..6cf76a0061d7d48e9649e5463a36f960cb2706b1 100644
 --- a/library/x509_oid.h
 +++ b/library/x509_oid.h
 @@ -35,11 +35,11 @@ extern "C" {
@@ -36419,7 +36419,7 @@ index 0752953aac..6cf76a0061 100644
  
  #ifdef __cplusplus
 diff --git a/library/x509write.c b/library/x509write.c
-index 0906a5a9d1..5b1b229d4e 100644
+index 0906a5a9d1397aad55a6c6d55794c81d390f15f5..5b1b229d4ed2dc294edca3ea84047b1c4aa3eda8 100644
 --- a/library/x509write.c
 +++ b/library/x509write.c
 @@ -36,7 +36,7 @@
@@ -36510,7 +36510,7 @@ index 0906a5a9d1..5b1b229d4e 100644
  }
  
 diff --git a/library/x509write_crt.c b/library/x509write_crt.c
-index 663b308d62..2c0e582546 100644
+index 663b308d623716d3df3b87d11c337305207337e4..2c0e582546e17334fc3d8fee8e7f387c850bed61 100644
 --- a/library/x509write_crt.c
 +++ b/library/x509write_crt.c
 @@ -35,65 +35,65 @@
@@ -37069,7 +37069,7 @@ index 663b308d62..2c0e582546 100644
                                          buf, size, &olen)) != 0) {
          return ret;
 diff --git a/library/x509write_csr.c b/library/x509write_csr.c
-index 8e37278f95..9b56eb965f 100644
+index 8e37278f9575968c104f0bcfa759d2d4357b04e5..9b56eb965f6a6e1681ae1f7189059281d5f538d5 100644
 --- a/library/x509write_csr.c
 +++ b/library/x509write_csr.c
 @@ -34,56 +34,56 @@
@@ -37374,7 +37374,7 @@ index 8e37278f95..9b56eb965f 100644
                                          ret, buf, size, &olen)) != 0) {
          return ret;
 diff --git a/programs/fuzz/fuzz_client.c b/programs/fuzz/fuzz_client.c
-index 70eb656487..5c7d7c07c5 100644
+index 70eb6564875c6f0c50b75c75de11c06bded2ce8a..5c7d7c07c5de6f6a29af94b8c6d2a0cff7a47db4 100644
 --- a/programs/fuzz/fuzz_client.c
 +++ b/programs/fuzz/fuzz_client.c
 @@ -49,8 +49,8 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
@@ -37522,7 +37522,7 @@ index 70eb656487..5c7d7c07c5 100644
  #else
      (void) Data;
 diff --git a/programs/fuzz/fuzz_dtlsclient.c b/programs/fuzz/fuzz_dtlsclient.c
-index c83f314138..11cdef5874 100644
+index c83f314138dd3f31dd5b985c105e1c75bfb49833..11cdef5874f65c5d68206f0715e797a57ddc68ee 100644
 --- a/programs/fuzz/fuzz_dtlsclient.c
 +++ b/programs/fuzz/fuzz_dtlsclient.c
 @@ -45,8 +45,8 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
@@ -37628,7 +37628,7 @@ index c83f314138..11cdef5874 100644
  #else
      (void) Data;
 diff --git a/programs/fuzz/fuzz_dtlsserver.c b/programs/fuzz/fuzz_dtlsserver.c
-index dd2a8b644b..2544337567 100644
+index dd2a8b644be9e72d8d83ce709c6f2f146322abec..25443375671ba11a3d02fa43fbe4b54ae8689945 100644
 --- a/programs/fuzz/fuzz_dtlsserver.c
 +++ b/programs/fuzz/fuzz_dtlsserver.c
 @@ -48,22 +48,22 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
@@ -37789,7 +37789,7 @@ index dd2a8b644b..2544337567 100644
  #else
      (void) Data;
 diff --git a/programs/fuzz/fuzz_pkcs7.c b/programs/fuzz/fuzz_pkcs7.c
-index f236190c2c..2ca3b11530 100644
+index f236190c2c5240a02c27a6eeac7e2f8eb6de5afc..2ca3b11530c77b7e258bdb7de9590639538333e5 100644
 --- a/programs/fuzz/fuzz_pkcs7.c
 +++ b/programs/fuzz/fuzz_pkcs7.c
 @@ -9,11 +9,11 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
@@ -37808,7 +37808,7 @@ index f236190c2c..2ca3b11530 100644
      (void) Data;
      (void) Size;
 diff --git a/programs/fuzz/fuzz_server.c b/programs/fuzz/fuzz_server.c
-index 3b1054e16a..94b9d33462 100644
+index 3b1054e16a5e4bdb779f9ef5fb03c40a6081abd6..94b9d334626509767b5c6fe1b855627d7fdf98ba 100644
 --- a/programs/fuzz/fuzz_server.c
 +++ b/programs/fuzz/fuzz_server.c
 @@ -56,23 +56,23 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
@@ -37991,7 +37991,7 @@ index 3b1054e16a..94b9d33462 100644
      (void) Data;
      (void) Size;
 diff --git a/programs/fuzz/fuzz_x509crl.c b/programs/fuzz/fuzz_x509crl.c
-index af50e25f13..ed8d9ad775 100644
+index af50e25f136a87f38d69c0da4b8f45c300f6fade..ed8d9ad775e5e10f28a4252c8a377790814a19b7 100644
 --- a/programs/fuzz/fuzz_x509crl.c
 +++ b/programs/fuzz/fuzz_x509crl.c
 @@ -11,15 +11,15 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
@@ -38026,7 +38026,7 @@ index af50e25f13..ed8d9ad775 100644
      (void) Data;
      (void) Size;
 diff --git a/programs/fuzz/fuzz_x509crt.c b/programs/fuzz/fuzz_x509crt.c
-index 709fd200f9..b379f55bc7 100644
+index 709fd200f975cfd5fc82a26cc1c521530430b621..b379f55bc789496419d7e79d801b78431df84b18 100644
 --- a/programs/fuzz/fuzz_x509crt.c
 +++ b/programs/fuzz/fuzz_x509crt.c
 @@ -11,15 +11,15 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
@@ -38061,7 +38061,7 @@ index 709fd200f9..b379f55bc7 100644
      (void) Data;
      (void) Size;
 diff --git a/programs/fuzz/fuzz_x509csr.c b/programs/fuzz/fuzz_x509csr.c
-index 1c26e6f082..1cb9d763f7 100644
+index 1c26e6f0823945d184daf51d3ad95e2497163042..1cb9d763f7e5294fcdb3cc05e2b8040d2c8fb41a 100644
 --- a/programs/fuzz/fuzz_x509csr.c
 +++ b/programs/fuzz/fuzz_x509csr.c
 @@ -11,15 +11,15 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
@@ -38096,7 +38096,7 @@ index 1c26e6f082..1cb9d763f7 100644
      (void) Data;
      (void) Size;
 diff --git a/programs/ssl/dtls_client.c b/programs/ssl/dtls_client.c
-index bb1d5af2e3..a990550040 100644
+index bb1d5af2e37b777900bed2edb6b8421ca72dcd23..a990550040d3507facf257e53c029abf7f8ea16b 100644
 --- a/programs/ssl/dtls_client.c
 +++ b/programs/ssl/dtls_client.c
 @@ -17,12 +17,12 @@
@@ -38445,7 +38445,7 @@ index bb1d5af2e3..a990550040 100644
  
  #endif /* configuration allows running this program */
 diff --git a/programs/ssl/dtls_server.c b/programs/ssl/dtls_server.c
-index 479b5430f9..ac23dac8ac 100644
+index 479b5430f987237416bcc08fff17db79fbc4df2e..ac23dac8ac63a8f7c72b3f363170ff7a84116b2d 100644
 --- a/programs/ssl/dtls_server.c
 +++ b/programs/ssl/dtls_server.c
 @@ -27,13 +27,13 @@
@@ -38795,7 +38795,7 @@ index 479b5430f9..ac23dac8ac 100644
  
  #endif /* configuration allows running this program */
 diff --git a/programs/ssl/mini_client.c b/programs/ssl/mini_client.c
-index 96d41b35ba..3719e15966 100644
+index 96d41b35ba14524f290ed3b2c772e7218e6efcb2..3719e159669b19abaf959e781cb005233e18ed86 100644
 --- a/programs/ssl/mini_client.c
 +++ b/programs/ssl/mini_client.c
 @@ -32,10 +32,10 @@
@@ -38936,7 +38936,7 @@ index 96d41b35ba..3719e15966 100644
  }
  #endif
 diff --git a/programs/ssl/ssl_client1.c b/programs/ssl/ssl_client1.c
-index c56ff0702f..257f001a59 100644
+index c56ff0702f7d6f2ad94c0e77f07545bd6400f6bb..257f001a595bd6f89cff3b0e0a668613bfb373ec 100644
 --- a/programs/ssl/ssl_client1.c
 +++ b/programs/ssl/ssl_client1.c
 @@ -16,11 +16,11 @@
@@ -39246,7 +39246,7 @@ index c56ff0702f..257f001a59 100644
  
  #endif /* configuration allows running this program */
 diff --git a/programs/ssl/ssl_client2.c b/programs/ssl/ssl_client2.c
-index b099fded5a..e7bda7b020 100644
+index b099fded5ae916e0cb64382e6429d4c9bfe044b3..e7bda7b020b04be61a897026017a7fcdc13fb421 100644
 --- a/programs/ssl/ssl_client2.c
 +++ b/programs/ssl/ssl_client2.c
 @@ -16,18 +16,18 @@
@@ -41376,7 +41376,7 @@ index b099fded5a..e7bda7b020 100644
  }
  #endif /* !MBEDTLS_SSL_TEST_IMPOSSIBLE && MBEDTLS_SSL_CLI_C */
 diff --git a/programs/ssl/ssl_context_info.c b/programs/ssl/ssl_context_info.c
-index 7bcd50fe65..2f6031a2ef 100644
+index 7bcd50fe652b02e0fc8e9c2a09a043d6ed9a733e..2f6031a2efca0f49a1521f771e943119996db6cc 100644
 --- a/programs/ssl/ssl_context_info.c
 +++ b/programs/ssl/ssl_context_info.c
 @@ -454,10 +454,10 @@ static void print_deserialized_ssl_cert(const uint8_t *ssl, uint32_t len)
@@ -41503,7 +41503,7 @@ index 7bcd50fe65..2f6031a2ef 100644
      return 0;
  }
 diff --git a/programs/ssl/ssl_fork_server.c b/programs/ssl/ssl_fork_server.c
-index ff1c877ee2..2f6dcb87f5 100644
+index ff1c877ee2dccefcc3c1b32521e49ae1a7143800..2f6dcb87f5a7274f18e37c452e702cd45a847a4c 100644
 --- a/programs/ssl/ssl_fork_server.c
 +++ b/programs/ssl/ssl_fork_server.c
 @@ -16,18 +16,18 @@
@@ -41918,7 +41918,7 @@ index ff1c877ee2..2f6dcb87f5 100644
  #endif /* MBEDTLS_BIGNUM_C && MBEDTLS_ENTROPY_C &&
            MBEDTLS_SSL_TLS_C && MBEDTLS_SSL_SRV_C && MBEDTLS_NET_C &&
 diff --git a/programs/ssl/ssl_mail_client.c b/programs/ssl/ssl_mail_client.c
-index 0c2822cb30..116265a0ea 100644
+index 0c2822cb30543d4e2771c6f0595e542bf8f36a94..116265a0ea189c5ff0bd0f8d49f72700bad73443 100644
 --- a/programs/ssl/ssl_mail_client.c
 +++ b/programs/ssl/ssl_mail_client.c
 @@ -6,7 +6,7 @@
@@ -42613,7 +42613,7 @@ index 0c2822cb30..116265a0ea 100644
  #endif /* MBEDTLS_BIGNUM_C && MBEDTLS_ENTROPY_C && MBEDTLS_SSL_TLS_C &&
            MBEDTLS_SSL_CLI_C && MBEDTLS_NET_C && MBEDTLS_RSA_C **
 diff --git a/programs/ssl/ssl_pthread_server.c b/programs/ssl/ssl_pthread_server.c
-index 867926d98c..52a27d1e87 100644
+index 867926d98c534c7eceeac4e077bcb6b45d8deb08..52a27d1e8762c8c6cb546145024c30f6f79e9bab 100644
 --- a/programs/ssl/ssl_pthread_server.c
 +++ b/programs/ssl/ssl_pthread_server.c
 @@ -17,17 +17,17 @@
@@ -43077,7 +43077,7 @@ index 867926d98c..52a27d1e87 100644
  
  #endif /* configuration allows running this program */
 diff --git a/programs/ssl/ssl_server.c b/programs/ssl/ssl_server.c
-index fd9da18490..2e4715fb1c 100644
+index fd9da184900dfbe3ed1024198947bee9bdb936d9..2e4715fb1c49c89d9299ca827b58449a701bad70 100644
 --- a/programs/ssl/ssl_server.c
 +++ b/programs/ssl/ssl_server.c
 @@ -16,11 +16,11 @@
@@ -43462,7 +43462,7 @@ index fd9da18490..2e4715fb1c 100644
  
  #endif /* configuration allows running this program */
 diff --git a/programs/ssl/ssl_server2.c b/programs/ssl/ssl_server2.c
-index 64fd45952f..9dca8a2309 100644
+index 64fd45952f501a8871d66280ec96550c30f6c263..9dca8a2309745b7d1cc87e9a1bf42484fb013230 100644
 --- a/programs/ssl/ssl_server2.c
 +++ b/programs/ssl/ssl_server2.c
 @@ -12,14 +12,14 @@
@@ -46092,7 +46092,7 @@ index 64fd45952f..9dca8a2309 100644
  }
  #endif /* !MBEDTLS_SSL_TEST_IMPOSSIBLE && MBEDTLS_SSL_SRV_C */
 diff --git a/programs/ssl/ssl_test_common_source.c b/programs/ssl/ssl_test_common_source.c
-index e194b58dff..bbfab1c895 100644
+index e194b58dffc22cf18bdf7a892711f3fa60bb0e66..bbfab1c895eb7087b678450c1b8b2b9fccb8416d 100644
 --- a/programs/ssl/ssl_test_common_source.c
 +++ b/programs/ssl/ssl_test_common_source.c
 @@ -76,10 +76,10 @@ static void nss_keylog_export(void *p_expkey,
@@ -46297,7 +46297,7 @@ index e194b58dff..bbfab1c895 100644
  }
  #endif /* MBEDTLS_SSL_HANDSHAKE_WITH_CERT_ENABLED */
 diff --git a/programs/ssl/ssl_test_lib.c b/programs/ssl/ssl_test_lib.c
-index 9d47e5249a..cbdcab22b3 100644
+index 9d47e5249a0b1305b597e81fc61fdf94cff5aa31..cbdcab22b3f803ee73c309f96cf74dddc0b2b35d 100644
 --- a/programs/ssl/ssl_test_lib.c
 +++ b/programs/ssl/ssl_test_lib.c
 @@ -33,7 +33,7 @@ void my_debug(void *ctx, int level,
@@ -46573,7 +46573,7 @@ index 9d47e5249a..cbdcab22b3 100644
              return -1;
          }
 diff --git a/programs/test/cmake_package/cmake_package.c b/programs/test/cmake_package/cmake_package.c
-index cd050e97bc..d5448d35f8 100644
+index cd050e97bc1834ca1552fe5fe264906b562ea9cd..d5448d35f808b4aa351b855a5ec99cf7d6b7e4d5 100644
 --- a/programs/test/cmake_package/cmake_package.c
 +++ b/programs/test/cmake_package/cmake_package.c
 @@ -18,9 +18,9 @@
@@ -46589,7 +46589,7 @@ index cd050e97bc..d5448d35f8 100644
      return 0;
  }
 diff --git a/programs/test/cmake_package_install/cmake_package_install.c b/programs/test/cmake_package_install/cmake_package_install.c
-index a63f7dbb0f..113f52c144 100644
+index a63f7dbb0fe3d3195f34b26eb4ab69fb4dc90c82..113f52c144a3ef0a5509a5013aabb648fadd853a 100644
 --- a/programs/test/cmake_package_install/cmake_package_install.c
 +++ b/programs/test/cmake_package_install/cmake_package_install.c
 @@ -19,9 +19,9 @@
@@ -46605,7 +46605,7 @@ index a63f7dbb0f..113f52c144 100644
      return 0;
  }
 diff --git a/programs/test/cmake_subproject/cmake_subproject.c b/programs/test/cmake_subproject/cmake_subproject.c
-index 69b5d0b819..bc79272b4e 100644
+index 69b5d0b819c587134690df2c897c8e5a98aa9f04..bc79272b4eab715e5032f39dd938a0d611e3d213 100644
 --- a/programs/test/cmake_subproject/cmake_subproject.c
 +++ b/programs/test/cmake_subproject/cmake_subproject.c
 @@ -19,9 +19,9 @@
@@ -46621,7 +46621,7 @@ index 69b5d0b819..bc79272b4e 100644
      return 0;
  }
 diff --git a/programs/test/dlopen.c b/programs/test/dlopen.c
-index 2a67635f0d..5fbb9293e0 100644
+index 2a67635f0d3a05769d4cdace314eb1ca9f2933cb..5fbb9293e0943d71ee257dc69b2dc695dfa7ba14 100644
 --- a/programs/test/dlopen.c
 +++ b/programs/test/dlopen.c
 @@ -36,7 +36,7 @@
@@ -46708,7 +46708,7 @@ index 2a67635f0d..5fbb9293e0 100644
  
  
 diff --git a/programs/test/selftest.c b/programs/test/selftest.c
-index 0e906ab4a3..76a0d39de4 100644
+index 0e906ab4a3023a26d550e3308fe79b1cafee4b6a..76a0d39de4b3673ba7c5d5a30685309ef3caddaf 100644
 --- a/programs/test/selftest.c
 +++ b/programs/test/selftest.c
 @@ -55,87 +55,87 @@
@@ -47177,7 +47177,7 @@ index 0e906ab4a3..76a0d39de4 100644
 +    esp_mbedtls_exit(MBEDTLS_EXIT_SUCCESS);
  }
 diff --git a/programs/test/udp_proxy.c b/programs/test/udp_proxy.c
-index efa003da0d..eb0e606311 100644
+index efa003da0dff157d6041b8eb019eec37b0f135bd..eb0e606311daaca1258f3f256346e85865933f3d 100644
 --- a/programs/test/udp_proxy.c
 +++ b/programs/test/udp_proxy.c
 @@ -24,12 +24,12 @@
@@ -47531,7 +47531,7 @@ index efa003da0d..eb0e606311 100644
  
  #endif /* MBEDTLS_NET_C */
 diff --git a/programs/util/pem2der.c b/programs/util/pem2der.c
-index 9515ed43d2..71114966d0 100644
+index 9515ed43d2813732c2571a6cff53eebbc7529a33..71114966d0d8d658c90c856e208689051ce05d2e 100644
 --- a/programs/util/pem2der.c
 +++ b/programs/util/pem2der.c
 @@ -33,8 +33,8 @@
@@ -47656,7 +47656,7 @@ index 9515ed43d2..71114966d0 100644
  }
  #endif /* MBEDTLS_BASE64_C && MBEDTLS_FS_IO */
 diff --git a/programs/util/strerror.c b/programs/util/strerror.c
-index e20bed6e8f..4a95cdee84 100644
+index e20bed6e8f93042b2658bff046bef606000a87a5..4a95cdee84c7abeb75b5c3bf770b73249b8b1dc8 100644
 --- a/programs/util/strerror.c
 +++ b/programs/util/strerror.c
 @@ -26,8 +26,8 @@
@@ -47704,7 +47704,7 @@ index e20bed6e8f..4a95cdee84 100644
  }
  #endif /* MBEDTLS_ERROR_C */
 diff --git a/programs/x509/cert_app.c b/programs/x509/cert_app.c
-index 2f31a8e3ae..0ce3faa8d0 100644
+index 2f31a8e3ae5fcc2e6f64197cf1f157d0a0b7366f..0ce3faa8d06e99516bc0ea10c0c3ee86ac82fe56 100644
 --- a/programs/x509/cert_app.c
 +++ b/programs/x509/cert_app.c
 @@ -18,12 +18,12 @@
@@ -48085,7 +48085,7 @@ index 2f31a8e3ae..0ce3faa8d0 100644
  #endif /* MBEDTLS_BIGNUM_C && MBEDTLS_ENTROPY_C && MBEDTLS_SSL_TLS_C &&
            MBEDTLS_SSL_CLI_C && MBEDTLS_NET_C && MBEDTLS_RSA_C &&
 diff --git a/programs/x509/cert_req.c b/programs/x509/cert_req.c
-index c20f08d569..3b6fc0e624 100644
+index c20f08d56905058410b0c61c79a8603d8167384d..3b6fc0e62481c86cd8081a3e05bc1a3fb2b6bea2 100644
 --- a/programs/x509/cert_req.c
 +++ b/programs/x509/cert_req.c
 @@ -20,11 +20,11 @@
@@ -48391,7 +48391,7 @@ index c20f08d569..3b6fc0e624 100644
  #endif /* MBEDTLS_X509_CSR_WRITE_C && MBEDTLS_PK_PARSE_C && MBEDTLS_FS_IO &&
            MBEDTLS_ENTROPY_C && MBEDTLS_CTR_DRBG_C && MBEDTLS_PEM_WRITE_C */
 diff --git a/programs/x509/cert_write.c b/programs/x509/cert_write.c
-index 2ed63f08de..b9bdb0fd82 100644
+index 2ed63f08def5bb47dbb186f3b9bdde170f11d7a2..b9bdb0fd8209e96baf0200e64f28e753269a1f49 100644
 --- a/programs/x509/cert_write.c
 +++ b/programs/x509/cert_write.c
 @@ -20,11 +20,11 @@
@@ -49116,7 +49116,7 @@ index 2ed63f08de..b9bdb0fd82 100644
  #endif /* MBEDTLS_X509_CRT_WRITE_C && MBEDTLS_X509_CRT_PARSE_C &&
            MBEDTLS_FS_IO && MBEDTLS_ENTROPY_C && MBEDTLS_CTR_DRBG_C &&
 diff --git a/programs/x509/crl_app.c b/programs/x509/crl_app.c
-index bb518adeef..5e4b2ec99d 100644
+index bb518adeef7c02251c9a80c2081312d5d74b65fe..5e4b2ec99de31e520dc664ebd915de83a7ffc658 100644
 --- a/programs/x509/crl_app.c
 +++ b/programs/x509/crl_app.c
 @@ -16,10 +16,10 @@
@@ -49209,7 +49209,7 @@ index bb518adeef..5e4b2ec99d 100644
  #endif /* MBEDTLS_BIGNUM_C && MBEDTLS_RSA_C && MBEDTLS_X509_CRL_PARSE_C &&
            MBEDTLS_FS_IO */
 diff --git a/programs/x509/load_roots.c b/programs/x509/load_roots.c
-index 34d3508459..dd78077113 100644
+index 34d3508459a87db55220c48ff4124f1c577dd547..dd78077113465c35c7368a7dde771ebc5511ea62 100644
 --- a/programs/x509/load_roots.c
 +++ b/programs/x509/load_roots.c
 @@ -15,9 +15,9 @@
@@ -49322,7 +49322,7 @@ index 34d3508459..dd78077113 100644
  }
  #endif /* necessary configuration */
 diff --git a/programs/x509/req_app.c b/programs/x509/req_app.c
-index b960818a09..dd09affe11 100644
+index b960818a090189e22805f2c8d5250b8af50c7b0e..dd09affe11ad9bb518d22c97f3f3244d22b226b0 100644
 --- a/programs/x509/req_app.c
 +++ b/programs/x509/req_app.c
 @@ -16,10 +16,10 @@
@@ -49415,7 +49415,7 @@ index b960818a09..dd09affe11 100644
  #endif /* MBEDTLS_BIGNUM_C && MBEDTLS_RSA_C && MBEDTLS_X509_CSR_PARSE_C &&
            MBEDTLS_FS_IO */
 diff --git a/tests/configs/tls13-only.h b/tests/configs/tls13-only.h
-index 8260ef5e12..73e895f2e2 100644
+index 8260ef5e12a84ace3615e25248332b408b1db383..73e895f2e26c2aa8516b73e56bd958d46650dfb7 100644
 --- a/tests/configs/tls13-only.h
 +++ b/tests/configs/tls13-only.h
 @@ -10,11 +10,11 @@
@@ -49433,7 +49433,7 @@ index 8260ef5e12..73e895f2e2 100644
  #undef MBEDTLS_SSL_EXTENDED_MASTER_SECRET
  #undef MBEDTLS_SSL_RENEGOTIATION
 diff --git a/tests/include/test/ssl_helpers.h b/tests/include/test/ssl_helpers.h
-index d019c5065e..0df19db074 100644
+index d019c5065eeddf3b5897358dc12ae48ead94c75a..0df19db074265272e2a4033bb86b33570c887151 100644
 --- a/tests/include/test/ssl_helpers.h
 +++ b/tests/include/test/ssl_helpers.h
 @@ -32,8 +32,8 @@
@@ -49503,7 +49503,7 @@ index d019c5065e..0df19db074 100644
                 PSA_ERROR_NOT_SUPPORTED);
  
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_aead_encrypt.c b/tests/psa-client-server/psasim/src/aut_psa_aead_encrypt.c
-index 64463f57fc..084053d2fe 100644
+index 64463f57fc83322bd1f15c16ab86a592976c0331..084053d2feb1910c626b5d87c676d0a0e29e6333 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_aead_encrypt.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_aead_encrypt.c
 @@ -101,13 +101,13 @@ static psa_status_t aead_prepare(const char *info,
@@ -49595,7 +49595,7 @@ index 64463f57fc..084053d2fe 100644
  exit:
      return status == PSA_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE;
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_aead_encrypt_decrypt.c b/tests/psa-client-server/psasim/src/aut_psa_aead_encrypt_decrypt.c
-index 87ef39a9ed..4c80f27d53 100644
+index 87ef39a9edcbce7fac99d1b4ac6c32099d8255c6..4c80f27d5397c581b96fbfaee754b334d14994e9 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_aead_encrypt_decrypt.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_aead_encrypt_decrypt.c
 @@ -48,31 +48,31 @@ int psa_aead_encrypt_decrypt_main(void)
@@ -49679,7 +49679,7 @@ index 87ef39a9ed..4c80f27d53 100644
      return 0;
  }
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_asymmetric_encrypt_decrypt.c b/tests/psa-client-server/psasim/src/aut_psa_asymmetric_encrypt_decrypt.c
-index 02d8cf486d..6db3697328 100644
+index 02d8cf486d437c33178022a3a1d5130873710533..6db3697328395246b98a04c5ab911810df6d2d85 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_asymmetric_encrypt_decrypt.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_asymmetric_encrypt_decrypt.c
 @@ -29,43 +29,43 @@ int psa_asymmetric_encrypt_decrypt_main(void)
@@ -49751,7 +49751,7 @@ index 02d8cf486d..6db3697328 100644
      return 0;
  }
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_cipher_encrypt_decrypt.c b/tests/psa-client-server/psasim/src/aut_psa_cipher_encrypt_decrypt.c
-index 82bdca54dc..77e5d422f7 100644
+index 82bdca54dc7a23758483446aed8784a794e59b76..77e5d422f752656c6a9d4bc39b4c937eb28aaf72 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_cipher_encrypt_decrypt.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_cipher_encrypt_decrypt.c
 @@ -32,43 +32,43 @@ int psa_cipher_encrypt_decrypt_main(void)
@@ -49823,7 +49823,7 @@ index 82bdca54dc..77e5d422f7 100644
      return 0;
  }
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_hash.c b/tests/psa-client-server/psasim/src/aut_psa_hash.c
-index b429c0bc58..27136fe6c0 100644
+index b429c0bc5820d168e4e43291b8143165f8020272..27136fe6c0c976d9c482a83260f67514dfdfb719 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_hash.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_hash.c
 @@ -36,57 +36,57 @@ int psa_hash_main(void)
@@ -49997,7 +49997,7 @@ index b429c0bc58..27136fe6c0 100644
      return EXIT_FAILURE;
  }
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_hash_compute.c b/tests/psa-client-server/psasim/src/aut_psa_hash_compute.c
-index 959e0c38ab..03c16a37a8 100644
+index 959e0c38ab4016be14bda14d71acfa2aadcc4cfc..03c16a37a83c2c1b9cae5074ff34118ff93045fc 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_hash_compute.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_hash_compute.c
 @@ -34,11 +34,11 @@ int psa_hash_compute_main(void)
@@ -50058,7 +50058,7 @@ index 959e0c38ab..03c16a37a8 100644
  
  cleanup:
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_hkdf.c b/tests/psa-client-server/psasim/src/aut_psa_hkdf.c
-index 891fdb3f92..3c1e7cec95 100644
+index 891fdb3f92bc733c124c0c01caefc3f2453f7c84..3c1e7cec959879a702a3acd75aea8854de569c64 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_hkdf.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_hkdf.c
 @@ -46,58 +46,58 @@ int psa_hkdf_main(void)
@@ -50148,7 +50148,7 @@ index 891fdb3f92..3c1e7cec95 100644
      return EXIT_SUCCESS;
  }
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_key_agreement.c b/tests/psa-client-server/psasim/src/aut_psa_key_agreement.c
-index 4a0aab1477..9aea791ce9 100644
+index 4a0aab1477721709209e55d51484ecd422cf53de..9aea791ce93f2521ad455ff3eec8d48988977131 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_key_agreement.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_key_agreement.c
 @@ -44,103 +44,103 @@ int psa_key_agreement_main(void)
@@ -50294,7 +50294,7 @@ index 4a0aab1477..9aea791ce9 100644
      return EXIT_SUCCESS;
  }
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_mac.c b/tests/psa-client-server/psasim/src/aut_psa_mac.c
-index 18b4b571a3..3470f1d6bc 100644
+index 18b4b571a3b512bc6090154e12ac7bd78f50eb73..3470f1d6bce3a82d59a79d182dfcb6ef5caedcbf 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_mac.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_mac.c
 @@ -47,26 +47,26 @@ int psa_mac_main(void)
@@ -50427,7 +50427,7 @@ index 18b4b571a3..3470f1d6bc 100644
      return EXIT_SUCCESS;
  }
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_random.c b/tests/psa-client-server/psasim/src/aut_psa_random.c
-index 203f4d44ba..2a8cded17a 100644
+index 203f4d44bae73ddf55ff581690ceba88a4d142ab..2a8cded17ac5049581da84f8515a5e2ec8f6d778 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_random.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_random.c
 @@ -19,15 +19,15 @@ int psa_random_main(void)
@@ -50459,7 +50459,7 @@ index 203f4d44ba..2a8cded17a 100644
      return 0;
  }
 diff --git a/tests/psa-client-server/psasim/src/aut_psa_sign_verify.c b/tests/psa-client-server/psasim/src/aut_psa_sign_verify.c
-index 98df9e5162..38d544635a 100644
+index 98df9e5162e03b78c95d233c284e63e3a1c5243d..38d544635a53d554a271dd0279272bc1406abe64 100644
 --- a/tests/psa-client-server/psasim/src/aut_psa_sign_verify.c
 +++ b/tests/psa-client-server/psasim/src/aut_psa_sign_verify.c
 @@ -38,56 +38,56 @@ int psa_sign_verify_main(void)
@@ -50538,7 +50538,7 @@ index 98df9e5162..38d544635a 100644
      return EXIT_SUCCESS;
  }
 diff --git a/tests/psa-client-server/psasim/src/client.c b/tests/psa-client-server/psasim/src/client.c
-index 4c63abf5a3..effbd7e5cc 100644
+index 4c63abf5a3868e6b23190007809f4d5fcf70d1bc..effbd7e5ccb84f47673e4d450d1fcfcbe96832a0 100644
 --- a/tests/psa-client-server/psasim/src/client.c
 +++ b/tests/psa-client-server/psasim/src/client.c
 @@ -11,13 +11,13 @@
@@ -50560,7 +50560,7 @@ index 4c63abf5a3..effbd7e5cc 100644
      return 0;
  }
 diff --git a/tests/psa-client-server/psasim/src/psa_sim_crypto_client.c b/tests/psa-client-server/psasim/src/psa_sim_crypto_client.c
-index 9051f20535..7132488a72 100644
+index 9051f2053542e9b570546faa3d6a4c37c059bb49..7132488a7287e76cac822cfc973d3918aee5e2de 100644
 --- a/tests/psa-client-server/psasim/src/psa_sim_crypto_client.c
 +++ b/tests/psa-client-server/psasim/src/psa_sim_crypto_client.c
 @@ -71,14 +71,14 @@ int psa_crypto_call(int function,
@@ -51400,7 +51400,7 @@ index 9051f20535..7132488a72 100644
      psa_algorithm_t alg,
      const uint8_t *input, size_t  input_length,
 diff --git a/tests/psa-client-server/psasim/src/psa_sim_crypto_server.c b/tests/psa-client-server/psasim/src/psa_sim_crypto_server.c
-index bd121c5433..ef9de09372 100644
+index bd121c543374233b93b2b5ef5258f6ea09f1c14e..ef9de09372d3d63b5a6d6bfb4ec4606d695e21d9 100644
 --- a/tests/psa-client-server/psasim/src/psa_sim_crypto_server.c
 +++ b/tests/psa-client-server/psasim/src/psa_sim_crypto_server.c
 @@ -37,7 +37,7 @@ int psa_crypto_init_wrapper(
@@ -52223,7 +52223,7 @@ index bd121c5433..ef9de09372 100644
          alg,
          input, input_length,
 diff --git a/tests/psa-client-server/psasim/src/server.c b/tests/psa-client-server/psasim/src/server.c
-index aa0c75a488..067a011f91 100644
+index aa0c75a48856a497cd027213fa7a3b584660a63b..067a011f91628a44625af8f23568fb0884f214e6 100644
 --- a/tests/psa-client-server/psasim/src/server.c
 +++ b/tests/psa-client-server/psasim/src/server.c
 @@ -56,7 +56,7 @@ int psa_server_main(int argc, char *argv[])
@@ -52236,7 +52236,7 @@ index aa0c75a488..067a011f91 100644
  #endif
  
 diff --git a/tests/src/test_helpers/ssl_helpers.c b/tests/src/test_helpers/ssl_helpers.c
-index 83dac17419..7223f38a49 100644
+index 83dac17419558fc90c25a866f74f65dfc11f1284..7223f38a49f1122fbd57b8abc071ab3ec291ca1f 100644
 --- a/tests/src/test_helpers/ssl_helpers.c
 +++ b/tests/src/test_helpers/ssl_helpers.c
 @@ -85,9 +85,9 @@ void mbedtls_test_init_handshake_options(
@@ -53390,7 +53390,7 @@ index 83dac17419..7223f38a49 100644
  
      ok = 1;
 diff --git a/tf-psa-crypto/configs/ext/crypto_config_profile_medium.h b/tf-psa-crypto/configs/ext/crypto_config_profile_medium.h
-index 119651c90b..a297fcfb00 100644
+index 119651c90b70d6be72e5028f448fb8c99ab1f410..a297fcfb004bcf8d32a87482200d5bb9eddde72d 100644
 --- a/tf-psa-crypto/configs/ext/crypto_config_profile_medium.h
 +++ b/tf-psa-crypto/configs/ext/crypto_config_profile_medium.h
 @@ -105,7 +105,7 @@
@@ -53449,7 +53449,7 @@ index 119651c90b..a297fcfb00 100644
   * if you need an entropy source and the built-in entropy callback
   * provided by #MBEDTLS_PSA_BUILTIN_GET_ENTROPY does not work on your platform.
 diff --git a/tf-psa-crypto/core/alignment.h b/tf-psa-crypto/core/alignment.h
-index a17001dd91..1e64868458 100644
+index a17001dd91b1247f83213a80442800dbb2614604..1e6486845899b3f08a0ed3e0fc5d74659dccc951 100644
 --- a/tf-psa-crypto/core/alignment.h
 +++ b/tf-psa-crypto/core/alignment.h
 @@ -112,7 +112,7 @@ typedef struct {
@@ -53712,7 +53712,7 @@ index a17001dd91..1e64868458 100644
      }
  
 diff --git a/tf-psa-crypto/core/psa_crypto.c b/tf-psa-crypto/core/psa_crypto.c
-index 2d3b07ea24..f336f978b3 100644
+index 2d3b07ea24270b9578556c9595ca6188b3b74292..f336f978b312a069c7b7665573e87570cbecae56 100644
 --- a/tf-psa-crypto/core/psa_crypto.c
 +++ b/tf-psa-crypto/core/psa_crypto.c
 @@ -82,7 +82,7 @@
@@ -60283,7 +60283,7 @@ index 2d3b07ea24..f336f978b3 100644
      local_output->length = 0;
  
 diff --git a/tf-psa-crypto/core/psa_crypto_client.c b/tf-psa-crypto/core/psa_crypto_client.c
-index b0b615e726..d3c232c6fd 100644
+index b0b615e7261086d24a2b1afeddc37bac598ff17c..d3c232c6fd0357f634d23b34743cf3a6699c5923 100644
 --- a/tf-psa-crypto/core/psa_crypto_client.c
 +++ b/tf-psa-crypto/core/psa_crypto_client.c
 @@ -14,7 +14,7 @@
@@ -60296,7 +60296,7 @@ index b0b615e726..d3c232c6fd 100644
      memset(attributes, 0, sizeof(*attributes));
  }
 diff --git a/tf-psa-crypto/core/psa_crypto_core.h b/tf-psa-crypto/core/psa_crypto_core.h
-index cccecc9a02..a6a8e2a03c 100644
+index cccecc9a02cacbbd3aabd30c2d4bc79cfdf0598e..a6a8e2a03cd14185ed06d8f72da738b0c66d3ad0 100644
 --- a/tf-psa-crypto/core/psa_crypto_core.h
 +++ b/tf-psa-crypto/core/psa_crypto_core.h
 @@ -36,17 +36,17 @@ typedef struct {
@@ -60746,7 +60746,7 @@ index cccecc9a02..a6a8e2a03c 100644
  
  #endif /* PSA_CRYPTO_CORE_H */
 diff --git a/tf-psa-crypto/core/psa_crypto_core_common.h b/tf-psa-crypto/core/psa_crypto_core_common.h
-index 98fce2cca4..e689a77228 100644
+index 98fce2cca4e44051921b6dcdb6786cb859ff8fc3..e689a77228ca6e0a975f2a3f102c42f97124248e 100644
 --- a/tf-psa-crypto/core/psa_crypto_core_common.h
 +++ b/tf-psa-crypto/core/psa_crypto_core_common.h
 @@ -26,7 +26,7 @@
@@ -60777,7 +60777,7 @@ index 98fce2cca4..e689a77228 100644
  {
      return p == NULL ? NULL : p + n;
 diff --git a/tf-psa-crypto/core/psa_crypto_driver_wrappers.h b/tf-psa-crypto/core/psa_crypto_driver_wrappers.h
-index d6dba487cb..82077e5bf7 100644
+index d6dba487cb373b63ceea4fc8d385c9f61088ff09..82077e5bf74cf5fc239cc88fcd4ebc0bbd99fdd7 100644
 --- a/tf-psa-crypto/core/psa_crypto_driver_wrappers.h
 +++ b/tf-psa-crypto/core/psa_crypto_driver_wrappers.h
 @@ -110,7 +110,7 @@
@@ -62275,7 +62275,7 @@ index d6dba487cb..82077e5bf7 100644
  
  #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
 diff --git a/tf-psa-crypto/core/psa_crypto_driver_wrappers_no_static.c b/tf-psa-crypto/core/psa_crypto_driver_wrappers_no_static.c
-index 702a446bbb..fda0e6e735 100644
+index 702a446bbbdb8e140164fa075948c0a8a4adf623..fda0e6e7350890d72acb91f23fdf19a122a5d310 100644
 --- a/tf-psa-crypto/core/psa_crypto_driver_wrappers_no_static.c
 +++ b/tf-psa-crypto/core/psa_crypto_driver_wrappers_no_static.c
 @@ -78,13 +78,13 @@
@@ -62365,7 +62365,7 @@ index 702a446bbb..fda0e6e735 100644
      {
  #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
 diff --git a/tf-psa-crypto/core/psa_crypto_driver_wrappers_no_static.h b/tf-psa-crypto/core/psa_crypto_driver_wrappers_no_static.h
-index cd617f60ee..3140cc609a 100644
+index cd617f60ee6c958c4959b30e09544d444d31ecf8..3140cc609aba1df66adc68b78b15168404d84d5b 100644
 --- a/tf-psa-crypto/core/psa_crypto_driver_wrappers_no_static.h
 +++ b/tf-psa-crypto/core/psa_crypto_driver_wrappers_no_static.h
 @@ -12,16 +12,16 @@
@@ -62389,7 +62389,7 @@ index cd617f60ee..3140cc609a 100644
      psa_key_attributes_t *attributes,
      uint8_t *key_buffer, size_t key_buffer_size, size_t *key_buffer_length);
 diff --git a/tf-psa-crypto/core/psa_crypto_invasive.h b/tf-psa-crypto/core/psa_crypto_invasive.h
-index 5132c562ed..54712c7245 100644
+index 5132c562ed8a3f12fda9e7ee03f3a333a04311b2..54712c72454ea723c88a83d848a1e3e1c0a8cd28 100644
 --- a/tf-psa-crypto/core/psa_crypto_invasive.h
 +++ b/tf-psa-crypto/core/psa_crypto_invasive.h
 @@ -26,9 +26,9 @@
@@ -62466,7 +62466,7 @@ index 5132c562ed..54712c7245 100644
  #endif /* MBEDTLS_TEST_HOOKS && MBEDTLS_PSA_CRYPTO_C */
  
 diff --git a/tf-psa-crypto/core/psa_crypto_its.h b/tf-psa-crypto/core/psa_crypto_its.h
-index 877063b878..b09cc6263f 100644
+index 877063b87866c5c0ee49e88216f0e2226f1cf986..b09cc6263fa030071a5699fed422baf83ae4419b 100644
 --- a/tf-psa-crypto/core/psa_crypto_its.h
 +++ b/tf-psa-crypto/core/psa_crypto_its.h
 @@ -62,7 +62,7 @@ struct psa_storage_info_t {
@@ -62506,7 +62506,7 @@ index 877063b878..b09cc6263f 100644
  #ifdef __cplusplus
  }
 diff --git a/tf-psa-crypto/core/psa_crypto_random_impl.h b/tf-psa-crypto/core/psa_crypto_random_impl.h
-index d8cf3b430d..b409b6245c 100644
+index d8cf3b430d5e025a91230c37bc4351e90aadccfe..b409b6245c8771e4ef53758b6c3b502e7bc834db 100644
 --- a/tf-psa-crypto/core/psa_crypto_random_impl.h
 +++ b/tf-psa-crypto/core/psa_crypto_random_impl.h
 @@ -35,7 +35,7 @@ MBEDTLS_STATIC_ASSERT((MBEDTLS_PSA_CRYPTO_RNG_HASH == PSA_ALG_SHA_256) || \
@@ -62598,7 +62598,7 @@ index d8cf3b430d..b409b6245c 100644
  }
  
 diff --git a/tf-psa-crypto/core/psa_crypto_slot_management.c b/tf-psa-crypto/core/psa_crypto_slot_management.c
-index c207bd8a17..3f12370281 100644
+index c207bd8a17c1766ce1335939cfa9149c512c88fa..3f123702813d7b49d0486b173bc2497c387246b2 100644
 --- a/tf-psa-crypto/core/psa_crypto_slot_management.c
 +++ b/tf-psa-crypto/core/psa_crypto_slot_management.c
 @@ -124,10 +124,10 @@ MBEDTLS_STATIC_ASSERT(PSA_KEY_ID_VOLATILE_MAX < MBEDTLS_PSA_KEY_ID_BUILTIN_MIN |
@@ -63442,7 +63442,7 @@ index c207bd8a17..3f12370281 100644
              }
              if (PSA_KEY_LIFETIME_IS_VOLATILE(slot->attr.lifetime)) {
 diff --git a/tf-psa-crypto/core/psa_crypto_slot_management.h b/tf-psa-crypto/core/psa_crypto_slot_management.h
-index 545cfd9a78..8a65295b13 100644
+index 545cfd9a78feb8839c7c89daf5a859d3eb45e33b..8a65295b13877ab4b4904ec496f22eb08e493f1e 100644
 --- a/tf-psa-crypto/core/psa_crypto_slot_management.h
 +++ b/tf-psa-crypto/core/psa_crypto_slot_management.h
 @@ -44,7 +44,7 @@
@@ -63621,7 +63621,7 @@ index 545cfd9a78..8a65295b13 100644
  
  #endif /* PSA_CRYPTO_SLOT_MANAGEMENT_H */
 diff --git a/tf-psa-crypto/core/psa_crypto_storage.c b/tf-psa-crypto/core/psa_crypto_storage.c
-index 05755c3122..18549510e6 100644
+index 05755c31226087133cefce9ea31d37f1f5cd6794..18549510e6babe86203979c8ba3f16e3b71da78f 100644
 --- a/tf-psa-crypto/core/psa_crypto_storage.c
 +++ b/tf-psa-crypto/core/psa_crypto_storage.c
 @@ -37,7 +37,7 @@
@@ -63885,7 +63885,7 @@ index 05755c3122..18549510e6 100644
  }
  
 diff --git a/tf-psa-crypto/core/psa_crypto_storage.h b/tf-psa-crypto/core/psa_crypto_storage.h
-index 7719a1a6d8..1ff5548d50 100644
+index 7719a1a6d84ae43a4750340dff90b69aabf9685d..1ff5548d5059fc7cc6fe1efdd31a163ad0b25fb4 100644
 --- a/tf-psa-crypto/core/psa_crypto_storage.h
 +++ b/tf-psa-crypto/core/psa_crypto_storage.h
 @@ -66,7 +66,7 @@ extern "C" {
@@ -63976,7 +63976,7 @@ index 7719a1a6d8..1ff5548d50 100644
                                               uint8_t **key_data,
                                               size_t *key_data_length,
 diff --git a/tf-psa-crypto/core/psa_its_file.c b/tf-psa-crypto/core/psa_its_file.c
-index 79290b29eb..4dc4e1bf3d 100644
+index 79290b29ebf1ea2063c2f123920729bb97dd54b1..4dc4e1bf3d41eb1e00dde59242a22dd7a57edfa4 100644
 --- a/tf-psa-crypto/core/psa_its_file.c
 +++ b/tf-psa-crypto/core/psa_its_file.c
 @@ -59,11 +59,11 @@ typedef struct {
@@ -64093,7 +64093,7 @@ index 79290b29eb..4dc4e1bf3d 100644
      if (stream == NULL) {
          return PSA_ERROR_DOES_NOT_EXIST;
 diff --git a/tf-psa-crypto/core/tf_psa_crypto_common.h b/tf-psa-crypto/core/tf_psa_crypto_common.h
-index 3dab11d908..691cfaf56b 100644
+index 3dab11d908aafa3e828675b0226412c953bc4c3f..691cfaf56b6caf4e85c8ab2769913ed03f9adc5e 100644
 --- a/tf-psa-crypto/core/tf_psa_crypto_common.h
 +++ b/tf-psa-crypto/core/tf_psa_crypto_common.h
 @@ -49,12 +49,12 @@
@@ -64271,7 +64271,7 @@ index 3dab11d908..691cfaf56b 100644
  #if defined(__IAR_SYSTEMS_ICC__)
      if (n % 4 == 0) {
 diff --git a/tf-psa-crypto/core/tf_psa_crypto_version.c b/tf-psa-crypto/core/tf_psa_crypto_version.c
-index c8af5c09a1..68b56498e9 100644
+index c8af5c09a11f310aa44222aaab0b94f70f49fd93..68b56498e9b847bd64e6ee58eb4c5383bced7325 100644
 --- a/tf-psa-crypto/core/tf_psa_crypto_version.c
 +++ b/tf-psa-crypto/core/tf_psa_crypto_version.c
 @@ -10,17 +10,17 @@
@@ -64296,7 +64296,7 @@ index c8af5c09a1..68b56498e9 100644
      return TF_PSA_CRYPTO_VERSION_STRING_FULL;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/config_adjust_legacy_crypto.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/config_adjust_legacy_crypto.h
-index fa9606d048..0fa616dc95 100644
+index fa9606d04886c6932d6f522e34aad3e4828b5fd2..0fa616dc95263e8b9be6834c32575b92f4d7324c 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/config_adjust_legacy_crypto.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/config_adjust_legacy_crypto.h
 @@ -317,7 +317,7 @@
@@ -64309,7 +64309,7 @@ index fa9606d048..0fa616dc95 100644
   *   Both of them are temporary dependencies:
   *   - PK_PARSE_EC_EXTENDED will be removed after #7779 and #7789
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/aes.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/aes.h
-index 7d913c934a..7eabfc1cc6 100644
+index 7d913c934a0c42490a4914bb9b4cadd9a4c1dc71..7eabfc1cc60255d3f9a850757810fa13c2ada5d0 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/aes.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/aes.h
 @@ -58,14 +58,14 @@ extern "C" {
@@ -64555,7 +64555,7 @@ index 7d913c934a..7eabfc1cc6 100644
  #endif /* MBEDTLS_SELF_TEST */
  
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/aria.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/aria.h
-index be7e7e9569..00f1ab59ba 100644
+index be7e7e95699ea58563d1ebf0b524fd81dddc0fe1..00f1ab59bafec7a3f09f61309fd97633b77977b7 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/aria.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/aria.h
 @@ -50,9 +50,9 @@ extern "C" {
@@ -64692,7 +64692,7 @@ index be7e7e9569..00f1ab59ba 100644
  
  #endif /* MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/bignum.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/bignum.h
-index 8276c897f6..5e941284ce 100644
+index 8276c897f6c87fc44c798ba34791d16147f8223a..5e941284ce296a24faf464b3b5f4e9adddba86a9 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/bignum.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/bignum.h
 @@ -78,8 +78,8 @@
@@ -65241,7 +65241,7 @@ index 8276c897f6..5e941284ce 100644
  
  #ifdef __cplusplus
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/block_cipher.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/block_cipher.h
-index 70e9d955cb..9a0faed801 100644
+index 70e9d955cbd2e8fc13a0a1414f5d4a2cab0cc887..9a0faed801247bc44591926d25a9b952a83a3d39 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/block_cipher.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/block_cipher.h
 @@ -50,23 +50,23 @@ typedef enum {
@@ -65276,7 +65276,7 @@ index 70e9d955cb..9a0faed801 100644
  
  #ifdef __cplusplus
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/camellia.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/camellia.h
-index b8de21a0c0..8ecf49addd 100644
+index b8de21a0c06b39011f229c07a788a9a1981b6da1..8ecf49addd201497a022806cd16ae037ce434f10 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/camellia.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/camellia.h
 @@ -37,8 +37,8 @@ extern "C" {
@@ -65390,7 +65390,7 @@ index b8de21a0c0..8ecf49addd 100644
  #endif /* MBEDTLS_SELF_TEST */
  
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ccm.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ccm.h
-index 2eca976695..4a95e7aefe 100644
+index 2eca976695db27aa350ab0c41579931d280dd291..4a95e7aefe3fb9e522d1e779c6befedf9b221f4f 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ccm.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ccm.h
 @@ -65,29 +65,29 @@ extern "C" {
@@ -65672,7 +65672,7 @@ index 2eca976695..4a95e7aefe 100644
  
  #endif /* MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/chacha20.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/chacha20.h
-index 3cc2d20442..f41b121bb7 100644
+index 3cc2d20442edd3f71292faaa8b2929776dc7e666..f41b121bb746b8df86a5720a925c486c444de5e8 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/chacha20.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/chacha20.h
 @@ -34,9 +34,9 @@ extern "C" {
@@ -65782,7 +65782,7 @@ index 3cc2d20442..f41b121bb7 100644
  
  #endif /* MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/chachapoly.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/chachapoly.h
-index 0e4efc84dd..807986e28a 100644
+index 0e4efc84dd991299fd086f7b053d82f35baf31cb..807986e28aae4a170c01ae40b5f909339b9d38db 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/chachapoly.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/chachapoly.h
 @@ -44,12 +44,12 @@ mbedtls_chachapoly_mode_t;
@@ -66021,7 +66021,7 @@ index 0e4efc84dd..807986e28a 100644
  
  #endif /* MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/cipher.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/cipher.h
-index ba29e2fb2d..aebe5ccdfa 100644
+index ba29e2fb2d3733ba633c9da21536acd0700f0733..aebe5ccdfa004c7275e3748f27c258592e5d7205 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/cipher.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/cipher.h
 @@ -226,10 +226,10 @@ typedef struct mbedtls_cmac_context_t mbedtls_cmac_context_t;
@@ -66773,7 +66773,7 @@ index ba29e2fb2d..aebe5ccdfa 100644
                                      const unsigned char *ad, size_t ad_len,
                                      const unsigned char *input, size_t ilen,
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/cmac.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/cmac.h
-index f5dd240dfd..4ecb864982 100644
+index f5dd240dfdc97fa9102546d893a235d1840a6ea0..4ecb864982b6f1b45fce6a611577c92d5ca4bd1b 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/cmac.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/cmac.h
 @@ -59,14 +59,14 @@ extern "C" {
@@ -66911,7 +66911,7 @@ index f5dd240dfd..4ecb864982 100644
  
  #endif /* MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/config_psa.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/config_psa.h
-index 4ea863780a..7222d83560 100644
+index 4ea863780ae8a34ec2a5ef38d826eb594ac1b680..7222d8356029d1757a594a5e7e20025c94172ab7 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/config_psa.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/config_psa.h
 @@ -30,7 +30,7 @@
@@ -66924,7 +66924,7 @@ index 4ea863780a..7222d83560 100644
  #if defined(MBEDTLS_CONFIG_ADJUST_TEST_ACCELERATORS) //no-check-names
  #include "mbedtls/private/config_adjust_test_accelerators.h"
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ctr_drbg.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ctr_drbg.h
-index 328ba08c6a..dc406f733c 100644
+index 328ba08c6a4c63e18016b5daa3de64b3f3cc3c43..dc406f733c5e70c2271803efb18339fb15d76e26 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ctr_drbg.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ctr_drbg.h
 @@ -17,7 +17,7 @@
@@ -67260,7 +67260,7 @@ index 328ba08c6a..dc406f733c 100644
  #endif /* MBEDTLS_SELF_TEST */
  
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecdh.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecdh.h
-index 8c544df18f..24a5ff1053 100644
+index 8c544df18f401b1986cb420d45048dd1449d902e..24a5ff105363cf00be5cf39a2c1965a8cdc56218 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecdh.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecdh.h
 @@ -87,13 +87,13 @@ typedef enum {
@@ -67591,7 +67591,7 @@ index 8c544df18f..24a5ff1053 100644
  
  #endif /* MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecdsa.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecdsa.h
-index 8d846c1461..ea8c16f7f5 100644
+index 8d846c1461829d877cead57b57f6b4b598586748..ea8c16f7f5a742095a1dc1be68c067c832ac0fc4 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecdsa.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecdsa.h
 @@ -64,7 +64,7 @@ extern "C" {
@@ -67958,7 +67958,7 @@ index 8d846c1461..ea8c16f7f5 100644
  
  #endif /* MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecjpake.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecjpake.h
-index 92cddeb74d..41ca544c42 100644
+index 92cddeb74d0afe1a9517d086943bcfcaa77db4f9..41ca544c422f7545134e654f55559963fc74e7d5 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecjpake.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecjpake.h
 @@ -57,21 +57,21 @@ typedef enum {
@@ -68104,7 +68104,7 @@ index 92cddeb74d..41ca544c42 100644
  #endif /* MBEDTLS_SELF_TEST */
  
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecp.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecp.h
-index 1b60167352..4e4c424a82 100644
+index 1b6016735236fee74a12a583e69adeac26f63950..4e4c424a82a1b891d9b90301e2aac548b8b423f1 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecp.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ecp.h
 @@ -79,7 +79,7 @@ extern "C" {
@@ -68986,7 +68986,7 @@ index 1b60167352..4e4c424a82 100644
  #endif /* MBEDTLS_SELF_TEST */
  
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/entropy.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/entropy.h
-index 14eecc2c63..ff347f7d5d 100644
+index 14eecc2c634dbe9a45e34be7fbe1789c5650a009..ff347f7d5d6d2c25648eeab82c142d6946a9dc1a 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/entropy.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/entropy.h
 @@ -79,11 +79,11 @@ typedef int (*mbedtls_entropy_f_source_ptr)(void *data, unsigned char *output, s
@@ -69148,7 +69148,7 @@ index 14eecc2c63..ff347f7d5d 100644
  #endif /* MBEDTLS_SELF_TEST */
  
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/error_common.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/error_common.h
-index 4867e47896..2c2f76474a 100644
+index 4867e4789654947da3ec9c478041368633b88298..2c2f76474a4cf17cefb173e9408c8d50de1e1792 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/error_common.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/error_common.h
 @@ -31,11 +31,11 @@ extern "C" {
@@ -69175,7 +69175,7 @@ index 4867e47896..2c2f76474a 100644
      /* We give priority to the lower-level error code, because this
       * is usually the right choice. For example, if a low-level module
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/gcm.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/gcm.h
-index 481605b214..f5e0688888 100644
+index 481605b214b3427bd034d0a299a185de7c878347..f5e06888883e4cb8bc901cc9636ea8ece3d605a0 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/gcm.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/gcm.h
 @@ -57,20 +57,20 @@ extern "C" {
@@ -69370,7 +69370,7 @@ index 481605b214..f5e0688888 100644
  #endif /* MBEDTLS_SELF_TEST */
  
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/hmac_drbg.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/hmac_drbg.h
-index c3dfb68538..2dea37148d 100644
+index c3dfb68538b149e744cfb4271e08a84375b27205..2dea37148d2c5dbb849b14f48b9b0dfe4de92311 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/hmac_drbg.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/hmac_drbg.h
 @@ -64,48 +64,48 @@ extern "C" {
@@ -69641,7 +69641,7 @@ index c3dfb68538..2dea37148d 100644
  
  #ifdef __cplusplus
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/md5.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/md5.h
-index 577d729ecb..037ff511c3 100644
+index 577d729ecb1cdba53c20ec5cdc1ee9e879969d74..037ff511c3e3426328be713ebb7b2abf867f0a4a 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/md5.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/md5.h
 @@ -33,9 +33,9 @@ extern "C" {
@@ -69736,7 +69736,7 @@ index 577d729ecb..037ff511c3 100644
 -#endif /* mbedtls_md5.h */
 +#endif /* esp_mbedtls_md5.h */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/pkcs5.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/pkcs5.h
-index e4628dc88c..d6624a22f7 100644
+index e4628dc88c4ed7678b5ec62274d3561d153d08a3..d6624a22f7b6263ee9fae8dd07f54124d7b7e0f9 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/pkcs5.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/pkcs5.h
 @@ -49,7 +49,7 @@ extern "C" {
@@ -69803,7 +69803,7 @@ index e4628dc88c..d6624a22f7 100644
  #endif /* MBEDTLS_SELF_TEST */
  
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/poly1305.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/poly1305.h
-index 35387c6583..ddd661de6b 100644
+index 35387c658335f889517eaeb9dcd10d47d94053a2..ddd661de6bb752e6b3eab5bfb7cb60f3f3336011 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/poly1305.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/poly1305.h
 @@ -34,11 +34,11 @@ extern "C" {
@@ -69899,7 +69899,7 @@ index 35387c6583..ddd661de6b 100644
  
  #endif /* MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ripemd160.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ripemd160.h
-index 7f080a2b71..9f2a617e1d 100644
+index 7f080a2b71ed6e2beaeb040470864aa6901dd7a6..9f2a617e1da71e5f314c488e00593c384d7bff54 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ripemd160.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/ripemd160.h
 @@ -24,9 +24,9 @@ extern "C" {
@@ -69993,7 +69993,7 @@ index 7f080a2b71..9f2a617e1d 100644
 -#endif /* mbedtls_ripemd160.h */
 +#endif /* esp_mbedtls_ripemd160.h */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/rsa.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/rsa.h
-index cd4c6745cc..acd4441c9f 100644
+index cd4c6745cc3a803e8b93498d288bee911d6c22d1..acd4441c9f2f08563e4fc2e9579a89a3019180dc 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/rsa.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/rsa.h
 @@ -79,41 +79,41 @@ extern "C" {
@@ -70552,7 +70552,7 @@ index cd4c6745cc..acd4441c9f 100644
  #endif /* MBEDTLS_SELF_TEST */
  
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha1.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha1.h
-index f3594a7df9..2d6f3a5e7c 100644
+index f3594a7df96a9582d77b823e8b317970f2e7959f..2d6f3a5e7c68a04fd8c73148ad77eeb71a59cd5f 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha1.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha1.h
 @@ -39,9 +39,9 @@ extern "C" {
@@ -70647,7 +70647,7 @@ index f3594a7df9..2d6f3a5e7c 100644
 -#endif /* mbedtls_sha1.h */
 +#endif /* esp_mbedtls_sha1.h */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha256.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha256.h
-index 1697f8468d..e66fb46814 100644
+index 1697f8468d71fc13934fe8bbe0a8f8929f2914f0..e66fb468143262bad9ae11a79f1d9f6ca701338b 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha256.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha256.h
 @@ -31,14 +31,14 @@ extern "C" {
@@ -70758,7 +70758,7 @@ index 1697f8468d..e66fb46814 100644
 -#endif /* mbedtls_sha256.h */
 +#endif /* esp_mbedtls_sha256.h */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha3.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha3.h
-index e1d5b95158..9b1e96a1a4 100644
+index e1d5b951581b44d495efa79bf8a493095d870b92..9b1e96a1a4f0642042c8393ff717d86b4f672784 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha3.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha3.h
 @@ -50,10 +50,10 @@ typedef enum {
@@ -70855,7 +70855,7 @@ index e1d5b95158..9b1e96a1a4 100644
 -#endif /* mbedtls_sha3.h */
 +#endif /* esp_mbedtls_sha3.h */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha512.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha512.h
-index fa803d4e44..02486e03eb 100644
+index fa803d4e4408ad848ea31dd03bdf05bc3e401caf..02486e03eb55aabe4dd59756c8fc7666cee1c9f3 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha512.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private/sha512.h
 @@ -30,14 +30,14 @@ extern "C" {
@@ -70966,7 +70966,7 @@ index fa803d4e44..02486e03eb 100644
 -#endif /* mbedtls_sha512.h */
 +#endif /* esp_mbedtls_sha512.h */
 diff --git a/tf-psa-crypto/drivers/builtin/include/mbedtls/private_access.h b/tf-psa-crypto/drivers/builtin/include/mbedtls/private_access.h
-index 7232a91415..df2ceabeb7 100644
+index 7232a9141543c8a923c1b21368be3b255ece4386..df2ceabeb7d87be63f88bd245798907df4b0fe52 100644
 --- a/tf-psa-crypto/drivers/builtin/include/mbedtls/private_access.h
 +++ b/tf-psa-crypto/drivers/builtin/include/mbedtls/private_access.h
 @@ -23,18 +23,18 @@
@@ -70992,7 +70992,7 @@ index 7232a91415..df2ceabeb7 100644
  /* Activate declarations guarded by this macro.
   *
 diff --git a/tf-psa-crypto/drivers/builtin/src/aes.c b/tf-psa-crypto/drivers/builtin/src/aes.c
-index 0bb4ff4896..bed69f5949 100644
+index 0bb4ff489609e1d1d51662da87da86ac24e54a57..bed69f5949382a0ffb949609b2993d056ea5b13f 100644
 --- a/tf-psa-crypto/drivers/builtin/src/aes.c
 +++ b/tf-psa-crypto/drivers/builtin/src/aes.c
 @@ -52,7 +52,7 @@
@@ -72604,7 +72604,7 @@ index 0bb4ff4896..bed69f5949 100644
      return ret;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/aesce.c b/tf-psa-crypto/drivers/builtin/src/aesce.c
-index f12f86c4d3..02e2e504b8 100644
+index f12f86c4d30e74c0eeeb86ccbdebb2fdf3f54350..02e2e504b803a70b5d4ca25dd3643e40d0a4704c 100644
 --- a/tf-psa-crypto/drivers/builtin/src/aesce.c
 +++ b/tf-psa-crypto/drivers/builtin/src/aesce.c
 @@ -114,13 +114,13 @@
@@ -72929,7 +72929,7 @@ index f12f86c4d3..02e2e504b8 100644
  }
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/aesce.h b/tf-psa-crypto/drivers/builtin/src/aesce.h
-index ba8fccb3f0..9a2c6394ed 100644
+index ba8fccb3f0c28c9210dac95d8d2bb44efc06684c..9a2c6394ed9ad201b2ac00a26d2b4deab16e9c7d 100644
 --- a/tf-psa-crypto/drivers/builtin/src/aesce.h
 +++ b/tf-psa-crypto/drivers/builtin/src/aesce.h
 @@ -34,18 +34,18 @@ extern "C" {
@@ -72993,7 +72993,7 @@ index ba8fccb3f0..9a2c6394ed 100644
                               size_t bits);
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/aesni.c b/tf-psa-crypto/drivers/builtin/src/aesni.c
-index dc4bd5d80c..f0a7723057 100644
+index dc4bd5d80c7ff43b0dfd5bda695f5c9c9da8cade..f0a77230570bdc2b39f335f799f7f2aa607a170b 100644
 --- a/tf-psa-crypto/drivers/builtin/src/aesni.c
 +++ b/tf-psa-crypto/drivers/builtin/src/aesni.c
 @@ -46,7 +46,7 @@
@@ -73285,7 +73285,7 @@ index dc4bd5d80c..f0a7723057 100644
          default: return MBEDTLS_ERR_AES_INVALID_KEY_LENGTH;
      }
 diff --git a/tf-psa-crypto/drivers/builtin/src/aesni.h b/tf-psa-crypto/drivers/builtin/src/aesni.h
-index d48cf298ed..b8164942d0 100644
+index d48cf298edf2f6e58f30dafae05980e034326038..b8164942d099ad1fda810c2e65230bb2f8977e6b 100644
 --- a/tf-psa-crypto/drivers/builtin/src/aesni.h
 +++ b/tf-psa-crypto/drivers/builtin/src/aesni.h
 @@ -79,9 +79,9 @@ extern "C" {
@@ -73337,7 +73337,7 @@ index d48cf298ed..b8164942d0 100644
                               size_t bits);
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/aria.c b/tf-psa-crypto/drivers/builtin/src/aria.c
-index da56de7b94..446f183246 100644
+index da56de7b9403245e59855712d34039843f877e7b..446f1832466373b598f834ff9b0873f04e7fc31a 100644
 --- a/tf-psa-crypto/drivers/builtin/src/aria.c
 +++ b/tf-psa-crypto/drivers/builtin/src/aria.c
 @@ -37,22 +37,22 @@
@@ -73961,7 +73961,7 @@ index da56de7b94..446f183246 100644
  }
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/asn1parse.c b/tf-psa-crypto/drivers/builtin/src/asn1parse.c
-index 46e62d72a9..9134e32378 100644
+index 46e62d72a9487e6917785b88cc1a640ad165dfc5..9134e323780af03f3ac713153d288ab9050131da 100644
 --- a/tf-psa-crypto/drivers/builtin/src/asn1parse.c
 +++ b/tf-psa-crypto/drivers/builtin/src/asn1parse.c
 @@ -25,7 +25,7 @@
@@ -74283,7 +74283,7 @@ index 46e62d72a9..9134e32378 100644
  {
      while (list != NULL) {
 diff --git a/tf-psa-crypto/drivers/builtin/src/asn1write.c b/tf-psa-crypto/drivers/builtin/src/asn1write.c
-index dbbb97a70c..c5bbe38a39 100644
+index dbbb97a70c991076b9684e0e4f853ff246f7351e..c5bbe38a393648cd21bbe03208d12f5119dadc9c 100644
 --- a/tf-psa-crypto/drivers/builtin/src/asn1write.c
 +++ b/tf-psa-crypto/drivers/builtin/src/asn1write.c
 @@ -22,7 +22,7 @@
@@ -74653,7 +74653,7 @@ index dbbb97a70c..c5bbe38a39 100644
  
      return asn1_frame_size;
 diff --git a/tf-psa-crypto/drivers/builtin/src/base64.c b/tf-psa-crypto/drivers/builtin/src/base64.c
-index 4ccadc588c..538300d5bf 100644
+index 4ccadc588c9b5506db76d85ac37a4a3c9f3e95c1..538300d5bfe00ed7499075aeb06fd5fda53b84a5 100644
 --- a/tf-psa-crypto/drivers/builtin/src/base64.c
 +++ b/tf-psa-crypto/drivers/builtin/src/base64.c
 @@ -24,33 +24,33 @@
@@ -74845,7 +74845,7 @@ index 4ccadc588c..538300d5bf 100644
  
      return 0;
 diff --git a/tf-psa-crypto/drivers/builtin/src/base64_internal.h b/tf-psa-crypto/drivers/builtin/src/base64_internal.h
-index ee7f2325b9..6936036a47 100644
+index ee7f2325b99e6c7b83981671b6eceeb4a88d5c84..6936036a479fe3e468e0a484dd1f3db4b8fe8009 100644
 --- a/tf-psa-crypto/drivers/builtin/src/base64_internal.h
 +++ b/tf-psa-crypto/drivers/builtin/src/base64_internal.h
 @@ -24,7 +24,7 @@
@@ -74867,7 +74867,7 @@ index ee7f2325b9..6936036a47 100644
  #endif /* MBEDTLS_TEST_HOOKS */
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/bignum.c b/tf-psa-crypto/drivers/builtin/src/bignum.c
-index 02786bd451..2c90421112 100644
+index 02786bd451e481de33376f0e16be9ea078e6a435..2c90421112d098c200bc5f4c1e9bb3f838e5dd8d 100644
 --- a/tf-psa-crypto/drivers/builtin/src/bignum.c
 +++ b/tf-psa-crypto/drivers/builtin/src/bignum.c
 @@ -46,16 +46,16 @@
@@ -77079,7 +77079,7 @@ index 02786bd451..2c90421112 100644
  
      return ret;
 diff --git a/tf-psa-crypto/drivers/builtin/src/bignum_core.c b/tf-psa-crypto/drivers/builtin/src/bignum_core.c
-index 07f0f8c19b..34416c76e5 100644
+index 07f0f8c19b513767e0c1040943c210244e804158..34416c76e57f2770e47452651203e4ed079362d8 100644
 --- a/tf-psa-crypto/drivers/builtin/src/bignum_core.c
 +++ b/tf-psa-crypto/drivers/builtin/src/bignum_core.c
 @@ -22,7 +22,7 @@
@@ -77920,7 +77920,7 @@ index 07f0f8c19b..34416c76e5 100644
      }
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/bignum_core.h b/tf-psa-crypto/drivers/builtin/src/bignum_core.h
-index bd29ef60c8..839d374248 100644
+index bd29ef60c8afaf2e5b9d534530a7c66b11e944da..839d374248523324e7827478fb1158f5147ee6b7 100644
 --- a/tf-psa-crypto/drivers/builtin/src/bignum_core.h
 +++ b/tf-psa-crypto/drivers/builtin/src/bignum_core.h
 @@ -125,7 +125,7 @@
@@ -78330,7 +78330,7 @@ index bd29ef60c8..839d374248 100644
                                       const mbedtls_mpi_uint *A,
                                       size_t A_limbs,
 diff --git a/tf-psa-crypto/drivers/builtin/src/bignum_core_invasive.h b/tf-psa-crypto/drivers/builtin/src/bignum_core_invasive.h
-index a9d447f792..fe744dd4e9 100644
+index a9d447f792b06bc033aae441dfaa1eb8f723bdd5..fe744dd4e9f47b5ae16a7c0c6994abeb087ef1c4 100644
 --- a/tf-psa-crypto/drivers/builtin/src/bignum_core_invasive.h
 +++ b/tf-psa-crypto/drivers/builtin/src/bignum_core_invasive.h
 @@ -17,8 +17,8 @@
@@ -78354,7 +78354,7 @@ index a9d447f792..fe744dd4e9 100644
                                     size_t limbs);
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/bignum_internal.h b/tf-psa-crypto/drivers/builtin/src/bignum_internal.h
-index ba1c69d6b1..d225f09bcd 100644
+index ba1c69d6b1a71331714551011f2e43172fa44570..d225f09bcd1ed4f086eefb1ce9301a5116071058 100644
 --- a/tf-psa-crypto/drivers/builtin/src/bignum_internal.h
 +++ b/tf-psa-crypto/drivers/builtin/src/bignum_internal.h
 @@ -30,11 +30,11 @@
@@ -78408,7 +78408,7 @@ index ba1c69d6b1..d225f09bcd 100644
                                        mbedtls_mpi const *N);
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/bignum_mod.c b/tf-psa-crypto/drivers/builtin/src/bignum_mod.c
-index 63d0c483d9..86cf7cd7c2 100644
+index 63d0c483d9eac4199af13e4c8e56e510a4600779..86cf7cd7c2d8b92e8512e355de20828f9cf86bfa 100644
 --- a/tf-psa-crypto/drivers/builtin/src/bignum_mod.c
 +++ b/tf-psa-crypto/drivers/builtin/src/bignum_mod.c
 @@ -22,12 +22,12 @@
@@ -78784,7 +78784,7 @@ index 63d0c483d9..86cf7cd7c2 100644
  
      return ret;
 diff --git a/tf-psa-crypto/drivers/builtin/src/bignum_mod.h b/tf-psa-crypto/drivers/builtin/src/bignum_mod.h
-index 0be5ecde25..8127e45418 100644
+index 0be5ecde2521e384225a8382a7b2dce6d4de833d..8127e45418cd3cfc0b5c4cb2c89686a4dacc887f 100644
 --- a/tf-psa-crypto/drivers/builtin/src/bignum_mod.h
 +++ b/tf-psa-crypto/drivers/builtin/src/bignum_mod.h
 @@ -148,7 +148,7 @@ typedef struct {
@@ -78970,7 +78970,7 @@ index 0be5ecde25..8127e45418 100644
                            unsigned char *buf,
                            size_t buflen,
 diff --git a/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw.c b/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw.c
-index 559408f768..d63e089413 100644
+index 559408f76862ed5a4d19965a7f2fa274696c675a..d63e08941348801320590a355ea5ba6855cba302 100644
 --- a/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw.c
 +++ b/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw.c
 @@ -23,23 +23,23 @@
@@ -79262,7 +79262,7 @@ index 559408f768..d63e089413 100644
  
  #endif /* MBEDTLS_BIGNUM_C && MBEDTLS_ECP_WITH_MPI_UINT */
 diff --git a/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw.h b/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw.h
-index a49d9b6b15..b2f4759645 100644
+index a49d9b6b15033c3adcafbcaa2f07c20ae66b509e..b2f4759645d9659ab1e46139356a02a4f289ca99 100644
 --- a/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw.h
 +++ b/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw.h
 @@ -97,7 +97,7 @@
@@ -79428,7 +79428,7 @@ index a49d9b6b15..b2f4759645 100644
                               const mbedtls_mpi_mod_modulus *N);
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw_invasive.h b/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw_invasive.h
-index 338ca582a4..d64b2f5cc1 100644
+index 338ca582a455658a547c562da49388932ce5138a..d64b2f5cc18d4cedc09ce798151011c8ac67710d 100644
 --- a/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw_invasive.h
 +++ b/tf-psa-crypto/drivers/builtin/src/bignum_mod_raw_invasive.h
 @@ -26,7 +26,7 @@
@@ -79441,7 +79441,7 @@ index 338ca582a4..d64b2f5cc1 100644
  
  #endif /* MBEDTLS_TEST_HOOKS */
 diff --git a/tf-psa-crypto/drivers/builtin/src/block_cipher.c b/tf-psa-crypto/drivers/builtin/src/block_cipher.c
-index 90662637e3..d09ac89dd3 100644
+index 90662637e3256c34915beace867d48ca3bb505a2..d09ac89dd30db69390cd383d44cd399082ab71d9 100644
 --- a/tf-psa-crypto/drivers/builtin/src/block_cipher.c
 +++ b/tf-psa-crypto/drivers/builtin/src/block_cipher.c
 @@ -22,7 +22,7 @@
@@ -79637,7 +79637,7 @@ index 90662637e3..d09ac89dd3 100644
                                                input, output);
  #endif
 diff --git a/tf-psa-crypto/drivers/builtin/src/block_cipher_internal.h b/tf-psa-crypto/drivers/builtin/src/block_cipher_internal.h
-index a6226d195f..9fa91b1a65 100644
+index a6226d195fdd07b6482ff6c16d6929e7c8682934..9fa91b1a650a6ab8d9002ce23a95d8852c439942 100644
 --- a/tf-psa-crypto/drivers/builtin/src/block_cipher_internal.h
 +++ b/tf-psa-crypto/drivers/builtin/src/block_cipher_internal.h
 @@ -27,14 +27,14 @@ extern "C" {
@@ -79694,7 +79694,7 @@ index a6226d195f..9fa91b1a65 100644
  #ifdef __cplusplus
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/camellia.c b/tf-psa-crypto/drivers/builtin/src/camellia.c
-index 0007f792ac..c912bed6f5 100644
+index 0007f792acce7998ac005fe05a6b44d6a5f0b4dd..c912bed6f5d0f5b988c3e27a737589c03e3542a3 100644
 --- a/tf-psa-crypto/drivers/builtin/src/camellia.c
 +++ b/tf-psa-crypto/drivers/builtin/src/camellia.c
 @@ -22,7 +22,7 @@
@@ -80376,7 +80376,7 @@ index 0007f792ac..c912bed6f5 100644
  }
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/ccm.c b/tf-psa-crypto/drivers/builtin/src/ccm.c
-index 6b55cfc0f3..adbad342c2 100644
+index 6b55cfc0f3d8f18c6e8f8b57af02ef03e532f275..adbad342c2afbd267b8b366bd184a9a6fc6d32d5 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ccm.c
 +++ b/tf-psa-crypto/drivers/builtin/src/ccm.c
 @@ -34,19 +34,19 @@
@@ -80992,7 +80992,7 @@ index 6b55cfc0f3..adbad342c2 100644
  
      return 0;
 diff --git a/tf-psa-crypto/drivers/builtin/src/chacha20.c b/tf-psa-crypto/drivers/builtin/src/chacha20.c
-index 32147a2113..bd6689e540 100644
+index 32147a2113ca798e5b29881f02a1cf48eea41f49..bd6689e5409c4e98652521a323a153f1435d129e 100644
 --- a/tf-psa-crypto/drivers/builtin/src/chacha20.c
 +++ b/tf-psa-crypto/drivers/builtin/src/chacha20.c
 @@ -44,7 +44,7 @@
@@ -81280,7 +81280,7 @@ index 32147a2113..bd6689e540 100644
  
      return 0;
 diff --git a/tf-psa-crypto/drivers/builtin/src/chachapoly.c b/tf-psa-crypto/drivers/builtin/src/chachapoly.c
-index 22aa7cdcc2..9d7e59c958 100644
+index 22aa7cdcc2bc9690cb3a14d108989793900a4968..9d7e59c9582dd185826563462e40aa0e7b5ec9fb 100644
 --- a/tf-psa-crypto/drivers/builtin/src/chachapoly.c
 +++ b/tf-psa-crypto/drivers/builtin/src/chachapoly.c
 @@ -29,7 +29,7 @@
@@ -81709,7 +81709,7 @@ index 22aa7cdcc2..9d7e59c958 100644
  
      return 0;
 diff --git a/tf-psa-crypto/drivers/builtin/src/cipher.c b/tf-psa-crypto/drivers/builtin/src/cipher.c
-index 54e67c156f..13d3afbf51 100644
+index 54e67c156f9b5aef1b4e9838f6a7b37f1da6bca3..13d3afbf51bd5f8204bbb4e304926ed8d104ba59 100644
 --- a/tf-psa-crypto/drivers/builtin/src/cipher.c
 +++ b/tf-psa-crypto/drivers/builtin/src/cipher.c
 @@ -50,22 +50,22 @@
@@ -82687,7 +82687,7 @@ index 54e67c156f..13d3afbf51 100644
                                         input + ilen - tag_len, tag_len);
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/cipher_invasive.h b/tf-psa-crypto/drivers/builtin/src/cipher_invasive.h
-index cc995147e4..2941b6c723 100644
+index cc995147e48d0e7e967ecf443cfd0ddc1541bcbb..2941b6c723658ac15b2875d0cef5651d3a7bcd96 100644
 --- a/tf-psa-crypto/drivers/builtin/src/cipher_invasive.h
 +++ b/tf-psa-crypto/drivers/builtin/src/cipher_invasive.h
 @@ -18,7 +18,7 @@
@@ -82700,7 +82700,7 @@ index cc995147e4..2941b6c723 100644
                                                       size_t *data_len,
                                                       size_t *invalid_padding);
 diff --git a/tf-psa-crypto/drivers/builtin/src/cipher_wrap.c b/tf-psa-crypto/drivers/builtin/src/cipher_wrap.c
-index 4d45d6f6f5..35a34f2fed 100644
+index 4d45d6f6f5d56786fa832a39ee15cc91daa39c00..35a34f2fed9e7cdf24369bb7224c7b430fbe3760 100644
 --- a/tf-psa-crypto/drivers/builtin/src/cipher_wrap.c
 +++ b/tf-psa-crypto/drivers/builtin/src/cipher_wrap.c
 @@ -91,21 +91,21 @@ enum mbedtls_cipher_base_index {
@@ -84483,7 +84483,7 @@ index 4d45d6f6f5..35a34f2fed 100644
  };
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/cipher_wrap.h b/tf-psa-crypto/drivers/builtin/src/cipher_wrap.h
-index 6948f7f49c..f688a77bdf 100644
+index 6948f7f49cb32ee1532ddefef98303ad64e518bd..f688a77bdf0be299f683534ab50526d9a4d95f60 100644
 --- a/tf-psa-crypto/drivers/builtin/src/cipher_wrap.h
 +++ b/tf-psa-crypto/drivers/builtin/src/cipher_wrap.h
 @@ -160,11 +160,11 @@ typedef struct {
@@ -84502,7 +84502,7 @@ index 6948f7f49c..f688a77bdf 100644
  #ifdef __cplusplus
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/cmac.c b/tf-psa-crypto/drivers/builtin/src/cmac.c
-index 626cdf8920..1676aa3d25 100644
+index 626cdf8920c9c65bd2c736aeaa0d3c3353dada95..1676aa3d2595f38adb534143561edb79e5edd718 100644
 --- a/tf-psa-crypto/drivers/builtin/src/cmac.c
 +++ b/tf-psa-crypto/drivers/builtin/src/cmac.c
 @@ -50,7 +50,7 @@
@@ -85256,7 +85256,7 @@ index 626cdf8920..1676aa3d25 100644
  
      return 0;
 diff --git a/tf-psa-crypto/drivers/builtin/src/constant_time.c b/tf-psa-crypto/drivers/builtin/src/constant_time.c
-index f90f477f00..c7a77b7406 100644
+index f90f477f003876c66943897b1f351001f0140a88..c7a77b74060c09f8d77da107517fff8810688de7 100644
 --- a/tf-psa-crypto/drivers/builtin/src/constant_time.c
 +++ b/tf-psa-crypto/drivers/builtin/src/constant_time.c
 @@ -27,7 +27,7 @@
@@ -85440,7 +85440,7 @@ index f90f477f00..c7a77b7406 100644
  #endif
      for (; i < len; i++) {
 diff --git a/tf-psa-crypto/drivers/builtin/src/constant_time_impl.h b/tf-psa-crypto/drivers/builtin/src/constant_time_impl.h
-index ded4f8cc62..a23aa35e43 100644
+index ded4f8cc62503f979cb322c9b6b50eb0bf4e4d20..a23aa35e4323fdd9cc35be7ee8ce82825ad73839 100644
 --- a/tf-psa-crypto/drivers/builtin/src/constant_time_impl.h
 +++ b/tf-psa-crypto/drivers/builtin/src/constant_time_impl.h
 @@ -66,7 +66,7 @@
@@ -85732,7 +85732,7 @@ index ded4f8cc62..a23aa35e43 100644
      return (mbedtls_ct_condition_t) (~x);
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/constant_time_internal.h b/tf-psa-crypto/drivers/builtin/src/constant_time_internal.h
-index 53bb8ce0d5..4fb0e49ac8 100644
+index 53bb8ce0d52b0d79935fd1c7a51862c1b4df0ff4..4fb0e49ac874aae5d7616b5d7ec18cd7f3f25c38 100644
 --- a/tf-psa-crypto/drivers/builtin/src/constant_time_internal.h
 +++ b/tf-psa-crypto/drivers/builtin/src/constant_time_internal.h
 @@ -28,19 +28,19 @@
@@ -86106,7 +86106,7 @@ index 53bb8ce0d5..4fb0e49ac8 100644
                                size_t n,
                                size_t skip_head,
 diff --git a/tf-psa-crypto/drivers/builtin/src/crypto_oid.h b/tf-psa-crypto/drivers/builtin/src/crypto_oid.h
-index e62ca9cbe3..584aa577c9 100644
+index e62ca9cbe3c2cd3a3e5c36d2befbec7fe6ef622e..584aa577c9007d94b0ddf9ee6e9c93efdd917715 100644
 --- a/tf-psa-crypto/drivers/builtin/src/crypto_oid.h
 +++ b/tf-psa-crypto/drivers/builtin/src/crypto_oid.h
 @@ -223,15 +223,15 @@
@@ -86222,7 +86222,7 @@ index e62ca9cbe3..584aa577c9 100644
  
  #ifdef __cplusplus
 diff --git a/tf-psa-crypto/drivers/builtin/src/ctr.h b/tf-psa-crypto/drivers/builtin/src/ctr.h
-index 1f466cc17e..326d90ce3d 100644
+index 1f466cc17e3920c246e4911455e0db3b62f8c351..326d90ce3d57fd0a908a6673dad283a2e151d9d4 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ctr.h
 +++ b/tf-psa-crypto/drivers/builtin/src/ctr.h
 @@ -18,7 +18,7 @@
@@ -86235,7 +86235,7 @@ index 1f466cc17e..326d90ce3d 100644
      // The 32-bit version seems to perform about the same as a 64-bit version
      // on 64-bit architectures, so no need to define a 64-bit version.
 diff --git a/tf-psa-crypto/drivers/builtin/src/ctr_drbg.c b/tf-psa-crypto/drivers/builtin/src/ctr_drbg.c
-index a1922b12fa..ce42aa5d67 100644
+index a1922b12fadefa6c36467b4f71568d517d62beff..ce42aa5d67abcbd515cb0a7b1188f246304ea97c 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ctr_drbg.c
 +++ b/tf-psa-crypto/drivers/builtin/src/ctr_drbg.c
 @@ -34,36 +34,36 @@
@@ -87129,7 +87129,7 @@ index a1922b12fa..ce42aa5d67 100644
  
      return 0;
 diff --git a/tf-psa-crypto/drivers/builtin/src/ecdh.c b/tf-psa-crypto/drivers/builtin/src/ecdh.c
-index 3cc6511f3d..4692a354e4 100644
+index 3cc6511f3db5c8a6bdfc9090ce14b22f2ea42f03..4692a354e4b6fd706898d0940d5e0b814e56ae5b 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ecdh.c
 +++ b/tf-psa-crypto/drivers/builtin/src/ecdh.c
 @@ -26,7 +26,7 @@
@@ -87745,7 +87745,7 @@ index 3cc6511f3d..4692a354e4 100644
                                               restart_enabled);
          default:
 diff --git a/tf-psa-crypto/drivers/builtin/src/ecdsa.c b/tf-psa-crypto/drivers/builtin/src/ecdsa.c
-index 90a5fe17cf..083be6e902 100644
+index 90a5fe17cf92215291994561231ef1d17c377368..083be6e902a9e2b2a07b11656b27c4250e27f465 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ecdsa.c
 +++ b/tf-psa-crypto/drivers/builtin/src/ecdsa.c
 @@ -46,26 +46,26 @@ struct mbedtls_ecdsa_restart_ver {
@@ -88480,7 +88480,7 @@ index 90a5fe17cf..083be6e902 100644
  #endif
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/ecjpake.c b/tf-psa-crypto/drivers/builtin/src/ecjpake.c
-index ad1baefd5c..462d8eca9b 100644
+index ad1baefd5c6e1c0c8315252e5f964d5dcdabfa96..462d8eca9b42b7008a17eda61e03df8c2768e750 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ecjpake.c
 +++ b/tf-psa-crypto/drivers/builtin/src/ecjpake.c
 @@ -23,72 +23,72 @@
@@ -89627,7 +89627,7 @@ index ad1baefd5c..462d8eca9b 100644
  
      return ret;
 diff --git a/tf-psa-crypto/drivers/builtin/src/ecp.c b/tf-psa-crypto/drivers/builtin/src/ecp.c
-index bc04700265..1d8342f0f5 100644
+index bc0470026537ecb6fe23fe8117ecc36b973838dc..1d8342f0f5fa66b52ef73243a40c955ab1d90895 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ecp.c
 +++ b/tf-psa-crypto/drivers/builtin/src/ecp.c
 @@ -53,9 +53,9 @@
@@ -92595,7 +92595,7 @@ index bc04700265..1d8342f0f5 100644
  
      return ret;
 diff --git a/tf-psa-crypto/drivers/builtin/src/ecp_curves.c b/tf-psa-crypto/drivers/builtin/src/ecp_curves.c
-index 387871edf8..6adc3f0c48 100644
+index 387871edf85aa2bb5bc94f677b71f9b9ccdace24..6adc3f0c4841359513dded48afe0e2ed17754317 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ecp_curves.c
 +++ b/tf-psa-crypto/drivers/builtin/src/ecp_curves.c
 @@ -29,7 +29,7 @@
@@ -97525,7 +97525,7 @@ index 387871edf8..6adc3f0c48 100644
      return MBEDTLS_ECP_VARIANT_WITH_MPI_STRUCT;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/ecp_curves_new.c b/tf-psa-crypto/drivers/builtin/src/ecp_curves_new.c
-index eae9ff4219..b1c2feea32 100644
+index eae9ff42199ce8f4493a90df5a1d1248a44c3eff..b1c2feea32d723d7cb648734715db672a2ed4cfa 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ecp_curves_new.c
 +++ b/tf-psa-crypto/drivers/builtin/src/ecp_curves_new.c
 @@ -34,7 +34,7 @@
@@ -102847,7 +102847,7 @@ index eae9ff4219..b1c2feea32 100644
      return MBEDTLS_ECP_VARIANT_WITH_MPI_UINT;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/ecp_invasive.h b/tf-psa-crypto/drivers/builtin/src/ecp_invasive.h
-index e4abcf74d5..7581684866 100644
+index e4abcf74d532efdb8e493469d859b2db3445b7d2..7581684866c457e8610d652af4826406f6c01485 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ecp_invasive.h
 +++ b/tf-psa-crypto/drivers/builtin/src/ecp_invasive.h
 @@ -41,7 +41,7 @@ typedef enum {
@@ -102958,7 +102958,7 @@ index e4abcf74d5..7581684866 100644
                                const mbedtls_ecp_modulus_type ctype);
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/entropy.c b/tf-psa-crypto/drivers/builtin/src/entropy.c
-index d69837186d..bad37b726c 100644
+index d69837186d3e8dd597f9039575c7617990c30cb6..bad37b726c72e54c42ec4921f93f78fbd6db8d14 100644
 --- a/tf-psa-crypto/drivers/builtin/src/entropy.c
 +++ b/tf-psa-crypto/drivers/builtin/src/entropy.c
 @@ -24,17 +24,17 @@
@@ -103537,7 +103537,7 @@ index d69837186d..bad37b726c 100644
  
      return ret != 0;
 diff --git a/tf-psa-crypto/drivers/builtin/src/entropy_poll.c b/tf-psa-crypto/drivers/builtin/src/entropy_poll.c
-index df26c3e079..0e9ebaae15 100644
+index df26c3e0795c0f31add8acfeccf70d18fff4b71d..0e9ebaae1598c5893d173d2a747e71bff01e3713 100644
 --- a/tf-psa-crypto/drivers/builtin/src/entropy_poll.c
 +++ b/tf-psa-crypto/drivers/builtin/src/entropy_poll.c
 @@ -31,7 +31,7 @@
@@ -103577,7 +103577,7 @@ index df26c3e079..0e9ebaae15 100644
      }
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/entropy_poll.h b/tf-psa-crypto/drivers/builtin/src/entropy_poll.h
-index 931fdf141c..52b09dae38 100644
+index 931fdf141c1445dcf0c3c1a510cef662b41069a5..52b09dae38c3a33e6e4dfcd2b0bc9ea5501558f7 100644
 --- a/tf-psa-crypto/drivers/builtin/src/entropy_poll.h
 +++ b/tf-psa-crypto/drivers/builtin/src/entropy_poll.h
 @@ -25,7 +25,7 @@ extern "C" {
@@ -103599,7 +103599,7 @@ index 931fdf141c..52b09dae38 100644
  #endif
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/gcm.c b/tf-psa-crypto/drivers/builtin/src/gcm.c
-index b9412a7b6d..12204d5c22 100644
+index b9412a7b6dc20f96e76edc363eb6cd27ca347220..12204d5c2284a94c567ea82831721629db6c3ae6 100644
 --- a/tf-psa-crypto/drivers/builtin/src/gcm.c
 +++ b/tf-psa-crypto/drivers/builtin/src/gcm.c
 @@ -48,12 +48,12 @@
@@ -104672,7 +104672,7 @@ index b9412a7b6d..12204d5c22 100644
  
      return ret;
 diff --git a/tf-psa-crypto/drivers/builtin/src/hmac_drbg.c b/tf-psa-crypto/drivers/builtin/src/hmac_drbg.c
-index 721a996611..ea88c5156c 100644
+index 721a996611989ad3d0287bb6bd5d26bb90a176ed..ea88c5156cc49ad51720e49400f02ca87410b1ab 100644
 --- a/tf-psa-crypto/drivers/builtin/src/hmac_drbg.c
 +++ b/tf-psa-crypto/drivers/builtin/src/hmac_drbg.c
 @@ -30,7 +30,7 @@
@@ -105247,7 +105247,7 @@ index 721a996611..ea88c5156c 100644
  
      return 0;
 diff --git a/tf-psa-crypto/drivers/builtin/src/lmots.c b/tf-psa-crypto/drivers/builtin/src/lmots.c
-index cba4d6a459..0d1705914d 100644
+index cba4d6a4594e649b25206d559449e6894153bbb1..0d1705914d1724c1e5612207215bab546963b4f6 100644
 --- a/tf-psa-crypto/drivers/builtin/src/lmots.c
 +++ b/tf-psa-crypto/drivers/builtin/src/lmots.c
 @@ -35,13 +35,13 @@
@@ -105785,7 +105785,7 @@ index cba4d6a459..0d1705914d 100644
      return ret;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/lmots.h b/tf-psa-crypto/drivers/builtin/src/lmots.h
-index fb8743842b..4b274696fe 100644
+index fb8743842bd5283afc689d8e41a0194765cbc546..4b274696fe95cad7ebaee1ede3a9348413f0a4ca 100644
 --- a/tf-psa-crypto/drivers/builtin/src/lmots.h
 +++ b/tf-psa-crypto/drivers/builtin/src/lmots.h
 @@ -41,7 +41,7 @@ extern "C" {
@@ -105915,7 +105915,7 @@ index fb8743842b..4b274696fe 100644
                         unsigned char *sig, size_t sig_size, size_t *sig_len);
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/lms.c b/tf-psa-crypto/drivers/builtin/src/lms.c
-index 679a1e5a32..2a1a613adc 100644
+index 679a1e5a3272b6ecf80eb51bc5c1041317f646de..2a1a613adc14ab70f1d387b14a6a2833eb4e3333 100644
 --- a/tf-psa-crypto/drivers/builtin/src/lms.c
 +++ b/tf-psa-crypto/drivers/builtin/src/lms.c
 @@ -36,13 +36,13 @@
@@ -106374,7 +106374,7 @@ index 679a1e5a32..2a1a613adc 100644
                            sig + SIG_PATH_OFFSET(ctx->params.otstype));
      if (ret != 0) {
 diff --git a/tf-psa-crypto/drivers/builtin/src/md.c b/tf-psa-crypto/drivers/builtin/src/md.c
-index e73d58ed38..e544a0c97b 100644
+index e73d58ed3821d143a4b594a9047eda6f3bcd3652..e544a0c97b853f3d2813e0e00821025c233615f9 100644
 --- a/tf-psa-crypto/drivers/builtin/src/md.c
 +++ b/tf-psa-crypto/drivers/builtin/src/md.c
 @@ -71,117 +71,117 @@
@@ -107350,7 +107350,7 @@ index e73d58ed38..e544a0c97b 100644
      return ret;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/md5.c b/tf-psa-crypto/drivers/builtin/src/md5.c
-index 01397b70d2..d8e4f611ed 100644
+index 01397b70d2bceb62603b9271407d873342dc834f..d8e4f611ede0a913a5894616e9f68b87d0e04f5f 100644
 --- a/tf-psa-crypto/drivers/builtin/src/md5.c
 +++ b/tf-psa-crypto/drivers/builtin/src/md5.c
 @@ -22,21 +22,21 @@
@@ -107577,7 +107577,7 @@ index 01397b70d2..d8e4f611ed 100644
  
      return ret;
 diff --git a/tf-psa-crypto/drivers/builtin/src/md_psa.h b/tf-psa-crypto/drivers/builtin/src/md_psa.h
-index 039778c35b..11e6a817af 100644
+index 039778c35b965d284f91055a82f95fe514596d21..11e6a817afba5177dc7342eac81c9ad2d1324aa0 100644
 --- a/tf-psa-crypto/drivers/builtin/src/md_psa.h
 +++ b/tf-psa-crypto/drivers/builtin/src/md_psa.h
 @@ -21,6 +21,6 @@
@@ -107589,7 +107589,7 @@ index 039778c35b..11e6a817af 100644
  
  #endif /* MBEDTLS_MD_PSA_H */
 diff --git a/tf-psa-crypto/drivers/builtin/src/memory_buffer_alloc.c b/tf-psa-crypto/drivers/builtin/src/memory_buffer_alloc.c
-index df9da87439..2e0133b775 100644
+index df9da8743975f130749d1b99987c5edf777f67a3..2e0133b7752c0db4ce5df452dbd820f92cfccd54 100644
 --- a/tf-psa-crypto/drivers/builtin/src/memory_buffer_alloc.c
 +++ b/tf-psa-crypto/drivers/builtin/src/memory_buffer_alloc.c
 @@ -65,84 +65,84 @@ typedef struct {
@@ -108328,7 +108328,7 @@ index df9da87439..2e0133b775 100644
      return ret;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/nist_kw.c b/tf-psa-crypto/drivers/builtin/src/nist_kw.c
-index 0a56fdadd0..fbe53e4618 100644
+index 0a56fdadd078b5bb6dc894fd101e696fcf6d09e6..fbe53e46187f95086c0ba465f0773c85295ed67f 100644
 --- a/tf-psa-crypto/drivers/builtin/src/nist_kw.c
 +++ b/tf-psa-crypto/drivers/builtin/src/nist_kw.c
 @@ -35,15 +35,15 @@
@@ -108622,7 +108622,7 @@ index 0a56fdadd0..fbe53e4618 100644
      return ret;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/oid.c b/tf-psa-crypto/drivers/builtin/src/oid.c
-index 67ddf166ef..533d097c75 100644
+index 67ddf166efab4f66a27f2d34deb58af2d917928c..533d097c75cf9871697666abe03eedd56c979906 100644
 --- a/tf-psa-crypto/drivers/builtin/src/oid.c
 +++ b/tf-psa-crypto/drivers/builtin/src/oid.c
 @@ -39,7 +39,7 @@
@@ -108793,7 +108793,7 @@ index 67ddf166ef..533d097c75 100644
                          md_alg)
  #endif /* MBEDTLS_RSA_C && MBEDTLS_PKCS1_V15 */
 diff --git a/tf-psa-crypto/drivers/builtin/src/pem.c b/tf-psa-crypto/drivers/builtin/src/pem.c
-index 9934de9c03..12326a16ef 100644
+index 9934de9c0378ca95e12bfbd680322b92761063c2..12326a16ef40da95379a324f89d2b08eed2c7a94 100644
 --- a/tf-psa-crypto/drivers/builtin/src/pem.c
 +++ b/tf-psa-crypto/drivers/builtin/src/pem.c
 @@ -32,7 +32,7 @@
@@ -109097,7 +109097,7 @@ index 9934de9c03..12326a16ef 100644
  }
  #endif /* MBEDTLS_PEM_WRITE_C */
 diff --git a/tf-psa-crypto/drivers/builtin/src/pk.c b/tf-psa-crypto/drivers/builtin/src/pk.c
-index 4faf511164..71707b9743 100644
+index 4faf511164563a1e7383717eebb65d85c0323be2..71707b9743c72d65146fc977dda2d5f0a245eca7 100644
 --- a/tf-psa-crypto/drivers/builtin/src/pk.c
 +++ b/tf-psa-crypto/drivers/builtin/src/pk.c
 @@ -45,11 +45,11 @@
@@ -110136,7 +110136,7 @@ index 4faf511164..71707b9743 100644
      if (ctx == NULL || ctx->pk_info == NULL) {
          return MBEDTLS_PK_NONE;
 diff --git a/tf-psa-crypto/drivers/builtin/src/pk_ecc.c b/tf-psa-crypto/drivers/builtin/src/pk_ecc.c
-index 73c805bc40..68d654c4cd 100644
+index 73c805bc4049b49998a4036cafa8df927d328179..68d654c4cd2c9e3a2d7924b86146c7e1b96b3e00 100644
 --- a/tf-psa-crypto/drivers/builtin/src/pk_ecc.c
 +++ b/tf-psa-crypto/drivers/builtin/src/pk_ecc.c
 @@ -17,10 +17,10 @@
@@ -110293,7 +110293,7 @@ index 73c805bc40..68d654c4cd 100644
      }
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/pk_internal.h b/tf-psa-crypto/drivers/builtin/src/pk_internal.h
-index 84deb05c3a..04fd577dc2 100644
+index 84deb05c3a85f3b3d66ab426a0afc5cea2d50bfc..04fd577dc265d76f5053a3d5497aee316b1553a8 100644
 --- a/tf-psa-crypto/drivers/builtin/src/pk_internal.h
 +++ b/tf-psa-crypto/drivers/builtin/src/pk_internal.h
 @@ -24,13 +24,13 @@
@@ -110472,7 +110472,7 @@ index 84deb05c3a..04fd577dc2 100644
  
  #endif /* MBEDTLS_PK_INTERNAL_H */
 diff --git a/tf-psa-crypto/drivers/builtin/src/pk_rsa.c b/tf-psa-crypto/drivers/builtin/src/pk_rsa.c
-index 47b8c846dc..1625e98f23 100644
+index 47b8c846dc5b6e8504c3ce0436eb8bb040a03624..1625e98f237418f618bf54ef8f1c494f7a341d9a 100644
 --- a/tf-psa-crypto/drivers/builtin/src/pk_rsa.c
 +++ b/tf-psa-crypto/drivers/builtin/src/pk_rsa.c
 @@ -13,48 +13,48 @@
@@ -110597,7 +110597,7 @@ index 47b8c846dc..1625e98f23 100644
      return PSA_PK_TO_MBEDTLS_ERR(status);
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/pk_wrap.c b/tf-psa-crypto/drivers/builtin/src/pk_wrap.c
-index 1ada0e99ef..1aacff2762 100644
+index 1ada0e99effe977957308b7820a180c35804ba67..1aacff2762946271b561abe5f4cf557bd869e890 100644
 --- a/tf-psa-crypto/drivers/builtin/src/pk_wrap.c
 +++ b/tf-psa-crypto/drivers/builtin/src/pk_wrap.c
 @@ -42,18 +42,18 @@
@@ -111366,7 +111366,7 @@ index 1ada0e99ef..1aacff2762 100644
      .verify_rs_func = NULL,
      .sign_rs_func = NULL,
 diff --git a/tf-psa-crypto/drivers/builtin/src/pk_wrap.h b/tf-psa-crypto/drivers/builtin/src/pk_wrap.h
-index 3c9fa13cdd..a9b57bcae0 100644
+index 3c9fa13cddc347a789ad05842db1d81a543f3a69..a9b57bcae050f10cdc22a53edeecf1eff8d34e3a 100644
 --- a/tf-psa-crypto/drivers/builtin/src/pk_wrap.h
 +++ b/tf-psa-crypto/drivers/builtin/src/pk_wrap.h
 @@ -90,23 +90,23 @@ struct mbedtls_pk_info_t {
@@ -111401,7 +111401,7 @@ index 3c9fa13cdd..a9b57bcae0 100644
                                  const unsigned char *hash, size_t hash_len,
                                  unsigned char *sig, size_t sig_size,
 diff --git a/tf-psa-crypto/drivers/builtin/src/pkcs5.c b/tf-psa-crypto/drivers/builtin/src/pkcs5.c
-index 2870c980e2..2187137564 100644
+index 2870c980e2025b44495968e3091c922bfc7d291e..21871375644c8eeee4c9486a3eb219eee10d11e5 100644
 --- a/tf-psa-crypto/drivers/builtin/src/pkcs5.c
 +++ b/tf-psa-crypto/drivers/builtin/src/pkcs5.c
 @@ -37,7 +37,7 @@
@@ -111824,7 +111824,7 @@ index 2870c980e2..2187137564 100644
  
  exit:
 diff --git a/tf-psa-crypto/drivers/builtin/src/pkparse.c b/tf-psa-crypto/drivers/builtin/src/pkparse.c
-index 6244519485..df92151c57 100644
+index 6244519485cfd0baa5fd21e05229046b6c335d83..df92151c57f5583a7e196a77d14c711293016274 100644
 --- a/tf-psa-crypto/drivers/builtin/src/pkparse.c
 +++ b/tf-psa-crypto/drivers/builtin/src/pkparse.c
 @@ -42,7 +42,7 @@
@@ -112972,7 +112972,7 @@ index 6244519485..df92151c57 100644
      return ret;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/pkwrite.c b/tf-psa-crypto/drivers/builtin/src/pkwrite.c
-index 2884b7106b..d92ad19028 100644
+index 2884b7106b0e6f104e4ba8ec49c3af226e20b5e9..d92ad19028ec6f2be58b6bb8d75c4ab3bec61768 100644
 --- a/tf-psa-crypto/drivers/builtin/src/pkwrite.c
 +++ b/tf-psa-crypto/drivers/builtin/src/pkwrite.c
 @@ -49,28 +49,28 @@
@@ -113475,7 +113475,7 @@ index 2884b7106b..d92ad19028 100644
  }
  #endif /* MBEDTLS_PEM_WRITE_C */
 diff --git a/tf-psa-crypto/drivers/builtin/src/platform.c b/tf-psa-crypto/drivers/builtin/src/platform.c
-index 047a311aeb..873e8e4c2a 100644
+index 047a311aebec9d75a0e7b8175c14fafb999f6f0d..873e8e4c2a1d91e2cab6a31bff681f4f3e8ca36c 100644
 --- a/tf-psa-crypto/drivers/builtin/src/platform.c
 +++ b/tf-psa-crypto/drivers/builtin/src/platform.c
 @@ -15,50 +15,50 @@
@@ -113872,7 +113872,7 @@ index 047a311aeb..873e8e4c2a 100644
      (void) ctx;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/platform_util.c b/tf-psa-crypto/drivers/builtin/src/platform_util.c
-index ae2fca0eea..820a3dee1c 100644
+index ae2fca0eea1982344b9df11c69332260d8cc503a..820a3dee1c4bea878f97a9eb305736d42efa6178 100644
 --- a/tf-psa-crypto/drivers/builtin/src/platform_util.c
 +++ b/tf-psa-crypto/drivers/builtin/src/platform_util.c
 @@ -8,7 +8,7 @@
@@ -114093,7 +114093,7 @@ index ae2fca0eea..820a3dee1c 100644
      read_len = fread(output, 1, output_size, file);
      if (read_len != output_size) {
 diff --git a/tf-psa-crypto/drivers/builtin/src/poly1305.c b/tf-psa-crypto/drivers/builtin/src/poly1305.c
-index ba5299844d..97c12df49f 100644
+index ba5299844d86723d2ea5549c67190447298a1525..97c12df49fef181501d10528a3c34b15fe33f609 100644
 --- a/tf-psa-crypto/drivers/builtin/src/poly1305.c
 +++ b/tf-psa-crypto/drivers/builtin/src/poly1305.c
 @@ -25,7 +25,7 @@
@@ -114377,7 +114377,7 @@ index ba5299844d..97c12df49f 100644
  
      return 0;
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_aead.c b/tf-psa-crypto/drivers/builtin/src/psa_crypto_aead.c
-index 9842f840cb..0197dfb4e4 100644
+index 9842f840cbf2710d50a22367ccfb791667a12642..0197dfb4e4845eff562adf4d9ef132e8b66f80f1 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_aead.c
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_aead.c
 @@ -23,7 +23,7 @@
@@ -114851,7 +114851,7 @@ index 9842f840cb..0197dfb4e4 100644
  #endif /* MBEDTLS_PSA_BUILTIN_ALG_CHACHA20_POLY1305 */
      }
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_aead.h b/tf-psa-crypto/drivers/builtin/src/psa_crypto_aead.h
-index a3392199f6..2354f1fee2 100644
+index a3392199f61a8b9ef62fcfab063d936ee5a2ab0b..2354f1fee2162cc3063dc48bf375843fa32c8906 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_aead.h
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_aead.h
 @@ -64,7 +64,7 @@
@@ -115112,7 +115112,7 @@ index a3392199f6..2354f1fee2 100644
  
  #endif /* PSA_CRYPTO_AEAD_H */
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_cipher.c b/tf-psa-crypto/drivers/builtin/src/psa_crypto_cipher.c
-index b3e1ee614d..c7d1543758 100644
+index b3e1ee614d53cc6be820c982c3097df2470702e2..c7d154375899356cee17c62871c446be8433832a 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_cipher.c
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_cipher.c
 @@ -20,14 +20,14 @@
@@ -115524,7 +115524,7 @@ index b3e1ee614d..c7d1543758 100644
       * state, in which case we'd expect finish to fail with the same error.
       * So it doesn't matter much which call's error code we pick when both
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_cipher.h b/tf-psa-crypto/drivers/builtin/src/psa_crypto_cipher.h
-index b565137c9b..417a2d59e7 100644
+index b565137c9b4003a497256cfb97a5b72931272b66..417a2d59e7d3e542113c9722b1f35780ba3f0149 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_cipher.h
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_cipher.h
 @@ -27,7 +27,7 @@
@@ -115618,7 +115618,7 @@ index b565137c9b..417a2d59e7 100644
                                          size_t key_buffer_size,
                                          psa_algorithm_t alg,
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_ecp.c b/tf-psa-crypto/drivers/builtin/src/psa_crypto_ecp.c
-index 76569ca1b6..005e8dd5c2 100644
+index 76569ca1b689b3f5c0f3a4436d3f00962457928e..005e8dd5c28bf62b5faebbc2d85b667062f209ed 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_ecp.c
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_ecp.c
 @@ -37,7 +37,7 @@
@@ -116432,7 +116432,7 @@ index 76569ca1b6..005e8dd5c2 100644
  }
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_ecp.h b/tf-psa-crypto/drivers/builtin/src/psa_crypto_ecp.h
-index 2745f3a458..ce41dc7b11 100644
+index 2745f3a458bea775a69cd84e282fceb88ebcf02b..ce41dc7b1156be4ecad3d7c2788fe6abff69c001 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_ecp.h
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_ecp.h
 @@ -30,7 +30,7 @@
@@ -116625,7 +116625,7 @@ index 2745f3a458..ce41dc7b11 100644
      const uint8_t *key_buffer, size_t key_buffer_size,
      psa_algorithm_t alg, const uint8_t *peer_key, size_t peer_key_length,
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_ffdh.c b/tf-psa-crypto/drivers/builtin/src/psa_crypto_ffdh.c
-index ec046abf25..e55de7757a 100644
+index ec046abf25b22f7539513ecc3393c6cf72741cdc..e55de7757a629045d21ed643a19b8cc03288f4df 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_ffdh.c
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_ffdh.c
 @@ -447,7 +447,7 @@
@@ -116847,7 +116847,7 @@ index ec046abf25..e55de7757a 100644
  
      return status;
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_ffdh.h b/tf-psa-crypto/drivers/builtin/src/psa_crypto_ffdh.h
-index 79accd15ac..0dc795f3b1 100644
+index 79accd15ac89aa3d53e8392691f37738f7da4925..0dc795f3b1c4568f647d370aecdfaf19d1c5b8ce 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_ffdh.h
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_ffdh.h
 @@ -37,7 +37,7 @@
@@ -116887,7 +116887,7 @@ index 79accd15ac..0dc795f3b1 100644
      const uint8_t *data, size_t data_length,
      uint8_t *key_buffer, size_t key_buffer_size,
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_hash.c b/tf-psa-crypto/drivers/builtin/src/psa_crypto_hash.c
-index 909dd0ffaf..7b9f61b46f 100644
+index 909dd0ffafd0474adf2f905331a60b5da0b5bf25..7b9f61b46ff612c53f3933013b47639db40deba4 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_hash.c
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_hash.c
 @@ -18,7 +18,7 @@
@@ -117309,7 +117309,7 @@ index 909dd0ffaf..7b9f61b46f 100644
          return abort_status;
      } else {
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_hash.h b/tf-psa-crypto/drivers/builtin/src/psa_crypto_hash.h
-index 0a7be80552..d74f049dd5 100644
+index 0a7be805520192845de777acaf3e4766f7c839b2..d74f049dd5a333f3b5fd8b8826fe5de281611f8f 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_hash.h
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_hash.h
 @@ -37,7 +37,7 @@
@@ -117449,7 +117449,7 @@ index 0a7be80552..d74f049dd5 100644
  
  #endif /* PSA_CRYPTO_HASH_H */
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_mac.c b/tf-psa-crypto/drivers/builtin/src/psa_crypto_mac.c
-index 82a3a79daa..c816ed7dbf 100644
+index 82a3a79daa7410c179420c2c17b4be957fce664c..c816ed7dbf00c318e7445317b86d6b72683211f5 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_mac.c
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_mac.c
 @@ -21,14 +21,14 @@
@@ -117859,7 +117859,7 @@ index 82a3a79daa..c816ed7dbf 100644
      return status;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_mac.h b/tf-psa-crypto/drivers/builtin/src/psa_crypto_mac.h
-index 2f614bcc6e..c0dd24d1b3 100644
+index 2f614bcc6e7ec4277ca919e1184e3bc7e800f500..c0dd24d1b36f6f62bf1710ec39a6c3592bdac32c 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_mac.h
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_mac.h
 @@ -23,7 +23,7 @@
@@ -118038,7 +118038,7 @@ index 2f614bcc6e..c0dd24d1b3 100644
  
  #endif /* PSA_CRYPTO_MAC_H */
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_pake.c b/tf-psa-crypto/drivers/builtin/src/psa_crypto_pake.c
-index 8476761229..e2cbc4042c 100644
+index 84767612294775fa622d235604ce4ad888234fac..e2cbc4042c9a9a3fc93856d78eecfd6cc949b235 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_pake.c
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_pake.c
 @@ -25,45 +25,45 @@
@@ -118506,7 +118506,7 @@ index 8476761229..e2cbc4042c 100644
  #endif
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_pake.h b/tf-psa-crypto/drivers/builtin/src/psa_crypto_pake.h
-index 3d3ee0cc9a..07cd81977d 100644
+index 3d3ee0cc9af14fdb56d422284231beaaa8321789..07cd81977da21614f4ecf5b423881f4077ad6cd7 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_pake.h
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_pake.h
 @@ -34,7 +34,7 @@
@@ -118554,7 +118554,7 @@ index 3d3ee0cc9a..07cd81977d 100644
  
  #endif /* PSA_CRYPTO_PAKE_H */
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_rsa.c b/tf-psa-crypto/drivers/builtin/src/psa_crypto_rsa.c
-index ddf4ce1feb..fca888b557 100644
+index ddf4ce1feb66a85ed622b1ce547f4a01c0dec7dc..fca888b55775c4488fe6e6a6f3ec7ebe1eec0a7e 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_rsa.c
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_rsa.c
 @@ -37,44 +37,44 @@
@@ -119136,7 +119136,7 @@ index ddf4ce1feb..fca888b557 100644
          * defined(MBEDTLS_PSA_BUILTIN_ALG_RSA_OAEP) */
      } else {
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_crypto_rsa.h b/tf-psa-crypto/drivers/builtin/src/psa_crypto_rsa.h
-index 87f64b471c..3a4dbd6b85 100644
+index 87f64b471c5d38dda2e00d6f948e136e6a3311b1..3a4dbd6b8542c07dad302fd1346b18c6f4497bab 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_crypto_rsa.h
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_crypto_rsa.h
 @@ -22,7 +22,7 @@
@@ -119231,7 +119231,7 @@ index 87f64b471c..3a4dbd6b85 100644
                                              size_t key_buffer_size,
                                              psa_algorithm_t alg,
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_util.c b/tf-psa-crypto/drivers/builtin/src/psa_util.c
-index 08e47002bb..6152752711 100644
+index 08e47002bbc26d044870c88621d7e81847695dca..6152752711fc781aeb73a6f1ec1a715973c4c324 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_util.c
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_util.c
 @@ -49,7 +49,7 @@
@@ -119466,7 +119466,7 @@ index 08e47002bb..6152752711 100644
      if (ret < 0) {
          return ret;
 diff --git a/tf-psa-crypto/drivers/builtin/src/psa_util_internal.h b/tf-psa-crypto/drivers/builtin/src/psa_util_internal.h
-index 76e52fea51..50a5e807dc 100644
+index 76e52fea5176f416ad6210d8c2096af576b7796f..50a5e807dc6e780934a9e4648f607cbade784088 100644
 --- a/tf-psa-crypto/drivers/builtin/src/psa_util_internal.h
 +++ b/tf-psa-crypto/drivers/builtin/src/psa_util_internal.h
 @@ -55,45 +55,45 @@ typedef struct {
@@ -119544,7 +119544,7 @@ index 76e52fea51..50a5e807dc 100644
  #endif /* PSA_WANT_KEY_TYPE_ECC_PUBLIC_KEY */
  #endif /* MBEDTLS_PSA_UTIL_INTERNAL_H */
 diff --git a/tf-psa-crypto/drivers/builtin/src/ripemd160.c b/tf-psa-crypto/drivers/builtin/src/ripemd160.c
-index b63e0859a5..0035c6364e 100644
+index b63e0859a51b61ce8137d3426ffe561f21fa756c..0035c6364e200d2a24a0693daf31e8d7b5135612 100644
 --- a/tf-psa-crypto/drivers/builtin/src/ripemd160.c
 +++ b/tf-psa-crypto/drivers/builtin/src/ripemd160.c
 @@ -7,7 +7,7 @@
@@ -119878,7 +119878,7 @@ index b63e0859a5..0035c6364e 100644
  
      return ret;
 diff --git a/tf-psa-crypto/drivers/builtin/src/rsa.c b/tf-psa-crypto/drivers/builtin/src/rsa.c
-index aafda66957..de04ee2126 100644
+index aafda66957e88f0c8e55e07c035290470b5eee91..de04ee2126bd8e99dd75c74b6e8f40ada6e7249b 100644
 --- a/tf-psa-crypto/drivers/builtin/src/rsa.c
 +++ b/tf-psa-crypto/drivers/builtin/src/rsa.c
 @@ -49,41 +49,41 @@
@@ -122467,7 +122467,7 @@ index aafda66957..de04ee2126 100644
      ((void) verbose);
  #endif /* MBEDTLS_PKCS1_V15 */
 diff --git a/tf-psa-crypto/drivers/builtin/src/rsa_alt_helpers.c b/tf-psa-crypto/drivers/builtin/src/rsa_alt_helpers.c
-index 95e995db3c..7b9f5c07e0 100644
+index 95e995db3c771f0ac24ce41acda9992b21ab354d..7b9f5c07e0a2bb0dab3f3dc3de5f5fff049609e2 100644
 --- a/tf-psa-crypto/drivers/builtin/src/rsa_alt_helpers.c
 +++ b/tf-psa-crypto/drivers/builtin/src/rsa_alt_helpers.c
 @@ -28,18 +28,18 @@
@@ -122948,7 +122948,7 @@ index 95e995db3c..7b9f5c07e0 100644
      return ret;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/rsa_alt_helpers.h b/tf-psa-crypto/drivers/builtin/src/rsa_alt_helpers.h
-index b26edb34e4..2bad416344 100644
+index b26edb34e459c584b376075149b0d1f00a29b068..2bad41634475a34fcb62c1d0e1e28a8e309b4fe7 100644
 --- a/tf-psa-crypto/drivers/builtin/src/rsa_alt_helpers.h
 +++ b/tf-psa-crypto/drivers/builtin/src/rsa_alt_helpers.h
 @@ -27,15 +27,15 @@
@@ -123022,7 +123022,7 @@ index b26edb34e4..2bad416344 100644
                               const mbedtls_mpi *DQ, const mbedtls_mpi *QP);
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/rsa_internal.h b/tf-psa-crypto/drivers/builtin/src/rsa_internal.h
-index fd52b9d9d8..a6565eb585 100644
+index fd52b9d9d8f1ee0e42ca11c015be826c9d12a7dc..a6565eb585f77b47a7a128c7249341582e878102 100644
 --- a/tf-psa-crypto/drivers/builtin/src/rsa_internal.h
 +++ b/tf-psa-crypto/drivers/builtin/src/rsa_internal.h
 @@ -31,7 +31,7 @@
@@ -123083,7 +123083,7 @@ index fd52b9d9d8..a6565eb585 100644
                                                void *p_rng,
                                                mbedtls_md_type_t md_alg,
 diff --git a/tf-psa-crypto/drivers/builtin/src/sha1.c b/tf-psa-crypto/drivers/builtin/src/sha1.c
-index 643206af7f..caa524d196 100644
+index 643206af7f11c352bd1ba78bfc8c11e6991c4de9..caa524d196992c8472aeaa890d28f30171eeacfc 100644
 --- a/tf-psa-crypto/drivers/builtin/src/sha1.c
 +++ b/tf-psa-crypto/drivers/builtin/src/sha1.c
 @@ -22,21 +22,21 @@
@@ -123415,7 +123415,7 @@ index 643206af7f..caa524d196 100644
      return ret;
  }
 diff --git a/tf-psa-crypto/drivers/builtin/src/sha256.c b/tf-psa-crypto/drivers/builtin/src/sha256.c
-index 9a12040903..ba1220b633 100644
+index 9a120409033a82e0de4bfdd4dc0cb3f94805bada..ba1220b633397ca14381e930121fe7c1861596b8 100644
 --- a/tf-psa-crypto/drivers/builtin/src/sha256.c
 +++ b/tf-psa-crypto/drivers/builtin/src/sha256.c
 @@ -137,17 +137,17 @@
@@ -124045,7 +124045,7 @@ index 9a12040903..ba1220b633 100644
  #endif /* MBEDTLS_SHA224_C */
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/sha3.c b/tf-psa-crypto/drivers/builtin/src/sha3.c
-index dd02363862..68eaffffe2 100644
+index dd023638624479bf07413efaa38ec71ad2f78f21..68eaffffe29ebe3f2088d3bef6f0bd0beab31d33 100644
 --- a/tf-psa-crypto/drivers/builtin/src/sha3.c
 +++ b/tf-psa-crypto/drivers/builtin/src/sha3.c
 @@ -76,7 +76,7 @@
@@ -124614,7 +124614,7 @@ index dd02363862..68eaffffe2 100644
  
      return 0;
 diff --git a/tf-psa-crypto/drivers/builtin/src/sha512.c b/tf-psa-crypto/drivers/builtin/src/sha512.c
-index 756c5c9cbe..3b7900f524 100644
+index 756c5c9cbe7cac6ef0a1849daaeeff2170b176e5..3b7900f524ffaaf6265746ea50dc8786a379795e 100644
 --- a/tf-psa-crypto/drivers/builtin/src/sha512.c
 +++ b/tf-psa-crypto/drivers/builtin/src/sha512.c
 @@ -126,7 +126,7 @@
@@ -125395,7 +125395,7 @@ index 756c5c9cbe..3b7900f524 100644
  #endif /* MBEDTLS_SHA384_C */
  
 diff --git a/tf-psa-crypto/drivers/builtin/src/threading.c b/tf-psa-crypto/drivers/builtin/src/threading.c
-index d5ec41df57..146324fd75 100644
+index d5ec41df57272a06ddbc0a68171b697548804509..146324fd7534fd956ff5557eef17be8b856ae523 100644
 --- a/tf-psa-crypto/drivers/builtin/src/threading.c
 +++ b/tf-psa-crypto/drivers/builtin/src/threading.c
 @@ -7,7 +7,7 @@
@@ -125757,7 +125757,7 @@ index d5ec41df57..146324fd75 100644
  
  #endif /* MBEDTLS_THREADING_C */
 diff --git a/tf-psa-crypto/drivers/builtin/src/threading_internal.h b/tf-psa-crypto/drivers/builtin/src/threading_internal.h
-index 8669a285e5..1e8f93ed35 100644
+index 8669a285e50c8124bb63a93747f74453be64f7cd..1e8f93ed35fc9a3c93193108a630093009cad780 100644
 --- a/tf-psa-crypto/drivers/builtin/src/threading_internal.h
 +++ b/tf-psa-crypto/drivers/builtin/src/threading_internal.h
 @@ -34,10 +34,10 @@
@@ -125810,7 +125810,7 @@ index 8669a285e5..1e8f93ed35 100644
  #endif
  
 diff --git a/tf-psa-crypto/drivers/everest/include/tf-psa-crypto/private/everest/everest.h b/tf-psa-crypto/drivers/everest/include/tf-psa-crypto/private/everest/everest.h
-index d82053bf14..302e44fd6f 100644
+index d82053bf1474bb53e6fd33dbd1edd8be0a1feffb..302e44fd6f46060796ca9156f2a2264c22a41eb1 100644
 --- a/tf-psa-crypto/drivers/everest/include/tf-psa-crypto/private/everest/everest.h
 +++ b/tf-psa-crypto/drivers/everest/include/tf-psa-crypto/private/everest/everest.h
 @@ -47,9 +47,9 @@ typedef struct {
@@ -125861,7 +125861,7 @@ index d82053bf14..302e44fd6f 100644
   * \see             ecp.h
   *
 diff --git a/tf-psa-crypto/drivers/everest/library/x25519.c b/tf-psa-crypto/drivers/everest/library/x25519.c
-index 1f07a9540c..919668f485 100644
+index 1f07a9540c1a4ffd857a4533336181a6576b9641..919668f48500a5bea4b5d075a6833e754dd1140a 100644
 --- a/tf-psa-crypto/drivers/everest/library/x25519.c
 +++ b/tf-psa-crypto/drivers/everest/library/x25519.c
 @@ -41,7 +41,7 @@
@@ -125906,7 +125906,7 @@ index 1f07a9540c..919668f485 100644
      if( memcmp( buf, ctx->our_secret, MBEDTLS_X25519_KEY_SIZE_BYTES) == 0 )
          return MBEDTLS_ERR_ECP_RANDOM_FAILED;
 diff --git a/tf-psa-crypto/drivers/p256-m/p256-m/p256-m.c b/tf-psa-crypto/drivers/p256-m/p256-m/p256-m.c
-index 42c35b5bf5..50ce2efa36 100644
+index 42c35b5bf57840e06b160dd8564966bd48a90aa5..50ce2efa3626c37e857f85476fa1d93c7a8bf1df 100644
 --- a/tf-psa-crypto/drivers/p256-m/p256-m/p256-m.c
 +++ b/tf-psa-crypto/drivers/p256-m/p256-m/p256-m.c
 @@ -18,7 +18,7 @@
@@ -125928,7 +125928,7 @@ index 42c35b5bf5..50ce2efa36 100644
      if (ret != 0){
          return P256_RANDOM_FAILED;
 diff --git a/tf-psa-crypto/drivers/p256-m/p256-m_driver_entrypoints.c b/tf-psa-crypto/drivers/p256-m/p256-m_driver_entrypoints.c
-index d272dcbb1e..8fe4bb1771 100644
+index d272dcbb1e04898a0cc9fa64b26ebbba3208f3b8..8fe4bb1771362af00fb6e80a5c8020b582872b2b 100644
 --- a/tf-psa-crypto/drivers/p256-m/p256-m_driver_entrypoints.c
 +++ b/tf-psa-crypto/drivers/p256-m/p256-m_driver_entrypoints.c
 @@ -72,7 +72,7 @@ psa_status_t p256_transparent_import_key(const psa_key_attributes_t *attributes,
@@ -125979,7 +125979,7 @@ index d272dcbb1e..8fe4bb1771 100644
          key_buffer,
          key_buffer_size,
 diff --git a/tf-psa-crypto/drivers/p256-m/p256-m_driver_entrypoints.h b/tf-psa-crypto/drivers/p256-m/p256-m_driver_entrypoints.h
-index c740c4522d..ebf4572b03 100644
+index c740c4522dab78e3cf316af4e4846d7fb2c26d77..ebf4572b0351aec63c89ee40b4fa9da90977e09c 100644
 --- a/tf-psa-crypto/drivers/p256-m/p256-m_driver_entrypoints.h
 +++ b/tf-psa-crypto/drivers/p256-m/p256-m_driver_entrypoints.h
 @@ -181,7 +181,7 @@ psa_status_t p256_transparent_sign_hash(
@@ -125992,7 +125992,7 @@ index c740c4522d..ebf4572b03 100644
   *
   * \param[in]  attributes       The attributes of the key to use for the
 diff --git a/tf-psa-crypto/include/mbedtls/asn1.h b/tf-psa-crypto/include/mbedtls/asn1.h
-index 53bd5d207c..b51cb548ab 100644
+index 53bd5d207c15a9d655542f7f21df7fac73212d52..b51cb548abc4f419806793655a285b9726be5d76 100644
 --- a/tf-psa-crypto/include/mbedtls/asn1.h
 +++ b/tf-psa-crypto/include/mbedtls/asn1.h
 @@ -189,7 +189,7 @@ typedef struct mbedtls_asn1_named_data {
@@ -126221,7 +126221,7 @@ index 53bd5d207c..b51cb548ab 100644
  /** \} name Functions to parse ASN.1 data structures */
  /** \} addtogroup asn1_module */
 diff --git a/tf-psa-crypto/include/mbedtls/asn1write.h b/tf-psa-crypto/include/mbedtls/asn1write.h
-index d5cdb76b19..facc4d9d90 100644
+index d5cdb76b194eb7480c6b6ae8d281d045e1d465d9..facc4d9d90052beb5ea5e127d995af25b01451ed 100644
 --- a/tf-psa-crypto/include/mbedtls/asn1write.h
 +++ b/tf-psa-crypto/include/mbedtls/asn1write.h
 @@ -50,7 +50,7 @@ extern "C" {
@@ -126396,7 +126396,7 @@ index d5cdb76b19..facc4d9d90 100644
                                 const unsigned char *integer,
                                 size_t integer_length);
 diff --git a/tf-psa-crypto/include/mbedtls/base64.h b/tf-psa-crypto/include/mbedtls/base64.h
-index 737c3efa4e..c979b52188 100644
+index 737c3efa4e122576a32d1dfc03614e28d5fd197f..c979b521884318d0e6d246ee1d100fd88a3a934e 100644
 --- a/tf-psa-crypto/include/mbedtls/base64.h
 +++ b/tf-psa-crypto/include/mbedtls/base64.h
 @@ -41,7 +41,7 @@ extern "C" {
@@ -126427,7 +126427,7 @@ index 737c3efa4e..c979b52188 100644
  #endif /* MBEDTLS_SELF_TEST */
  
 diff --git a/tf-psa-crypto/include/mbedtls/constant_time.h b/tf-psa-crypto/include/mbedtls/constant_time.h
-index d31bff677e..3f139dcae5 100644
+index d31bff677e9dd444ce01dec8d526b6bae94592fb..3f139dcae54c155e2c45efac8e2ca2d7f0d1dcc6 100644
 --- a/tf-psa-crypto/include/mbedtls/constant_time.h
 +++ b/tf-psa-crypto/include/mbedtls/constant_time.h
 @@ -29,7 +29,7 @@
@@ -126440,7 +126440,7 @@ index d31bff677e..3f139dcae5 100644
                        size_t n);
  
 diff --git a/tf-psa-crypto/include/mbedtls/lms.h b/tf-psa-crypto/include/mbedtls/lms.h
-index e5197d7db3..42765219e1 100644
+index e5197d7db313a4b29cba434358df4564035b15b5..42765219e1c99874c00321768fc9692e4c562f96 100644
 --- a/tf-psa-crypto/include/mbedtls/lms.h
 +++ b/tf-psa-crypto/include/mbedtls/lms.h
 @@ -89,12 +89,12 @@ typedef enum {
@@ -126633,7 +126633,7 @@ index e5197d7db3..42765219e1 100644
                       unsigned int msg_size, unsigned char *sig, size_t sig_size,
                       size_t *sig_len);
 diff --git a/tf-psa-crypto/include/mbedtls/md.h b/tf-psa-crypto/include/mbedtls/md.h
-index 07adb21898..b71c03bf3e 100644
+index 07adb2189846f19df402d3b8435764d254c20bed..b71c03bf3ed488f18a4e5330947a25c006d84957 100644
 --- a/tf-psa-crypto/include/mbedtls/md.h
 +++ b/tf-psa-crypto/include/mbedtls/md.h
 @@ -86,10 +86,10 @@ typedef enum {
@@ -127013,7 +127013,7 @@ index 07adb21898..b71c03bf3e 100644
                      unsigned char *output);
  
 diff --git a/tf-psa-crypto/include/mbedtls/memory_buffer_alloc.h b/tf-psa-crypto/include/mbedtls/memory_buffer_alloc.h
-index fa5ebe2731..e593ce761e 100644
+index fa5ebe2731e3d2a8f1bfdc4a4cae63facca7e580..e593ce761ee8d42b264dc10d90dfb1495ee9f78d 100644
 --- a/tf-psa-crypto/include/mbedtls/memory_buffer_alloc.h
 +++ b/tf-psa-crypto/include/mbedtls/memory_buffer_alloc.h
 @@ -42,23 +42,23 @@ extern "C" {
@@ -127121,7 +127121,7 @@ index fa5ebe2731..e593ce761e 100644
  
  #ifdef __cplusplus
 diff --git a/tf-psa-crypto/include/mbedtls/nist_kw.h b/tf-psa-crypto/include/mbedtls/nist_kw.h
-index eb919ce18f..66e68d0c0e 100644
+index eb919ce18f4186918a3fbf8e0fcc56caa09c11c0..66e68d0c0ee67a2b9c6cc39590ded7c192ae183f 100644
 --- a/tf-psa-crypto/include/mbedtls/nist_kw.h
 +++ b/tf-psa-crypto/include/mbedtls/nist_kw.h
 @@ -61,7 +61,7 @@ typedef enum {
@@ -127143,7 +127143,7 @@ index eb919ce18f..66e68d0c0e 100644
                                      const unsigned char *input, size_t input_length,
                                      unsigned char *output, size_t output_size,
 diff --git a/tf-psa-crypto/include/mbedtls/pem.h b/tf-psa-crypto/include/mbedtls/pem.h
-index 0664087a13..1f1747ba50 100644
+index 0664087a13aabd87ef65e2b8ed0e525203a0dedd..1f1747ba5067d83ec604affc25f492ca167df969 100644
 --- a/tf-psa-crypto/include/mbedtls/pem.h
 +++ b/tf-psa-crypto/include/mbedtls/pem.h
 @@ -47,9 +47,9 @@ extern "C" {
@@ -127215,7 +127215,7 @@ index 0664087a13..1f1747ba50 100644
                               unsigned char *buf, size_t buf_len, size_t *olen);
  #endif /* MBEDTLS_PEM_WRITE_C */
 diff --git a/tf-psa-crypto/include/mbedtls/pk.h b/tf-psa-crypto/include/mbedtls/pk.h
-index 8074346f12..4d9c4d1b9f 100644
+index 8074346f12378461e45e10a03f46d64d81ed98d6..4d9c4d1b9f6e6dd69d0d4dae3bafe3cb7c4b28d3 100644
 --- a/tf-psa-crypto/include/mbedtls/pk.h
 +++ b/tf-psa-crypto/include/mbedtls/pk.h
 @@ -58,7 +58,7 @@ typedef enum {
@@ -127789,7 +127789,7 @@ index 8074346f12..4d9c4d1b9f 100644
  #endif /* MBEDTLS_PK_WRITE_C */
  
 diff --git a/tf-psa-crypto/include/mbedtls/platform.h b/tf-psa-crypto/include/mbedtls/platform.h
-index dae1301b84..b67c0e5342 100644
+index dae1301b848b3691df9db2f1e7e8f1d2adf41a9c..b67c0e5342f7d84c49288b9822abe7b60e5e1e48 100644
 --- a/tf-psa-crypto/include/mbedtls/platform.h
 +++ b/tf-psa-crypto/include/mbedtls/platform.h
 @@ -64,14 +64,14 @@ extern "C" {
@@ -128161,7 +128161,7 @@ index dae1301b84..b67c0e5342 100644
  #ifdef __cplusplus
  }
 diff --git a/tf-psa-crypto/include/mbedtls/platform_time.h b/tf-psa-crypto/include/mbedtls/platform_time.h
-index bd976ff80b..a83a4faf74 100644
+index bd976ff80bb07dd995948de78b542bf7d73f8645..a83a4faf74a3e353a53030c8179fb3b36c560fcf 100644
 --- a/tf-psa-crypto/include/mbedtls/platform_time.h
 +++ b/tf-psa-crypto/include/mbedtls/platform_time.h
 @@ -48,13 +48,13 @@ typedef int64_t mbedtls_ms_time_t;
@@ -128197,7 +128197,7 @@ index bd976ff80b..a83a4faf74 100644
  #endif /* MBEDTLS_PLATFORM_TIME_ALT */
  
 diff --git a/tf-psa-crypto/include/mbedtls/platform_util.h b/tf-psa-crypto/include/mbedtls/platform_util.h
-index 1805914032..4607a58055 100644
+index 180591403275451926e9d6559d3b626e09aa0b10..4607a5805562071bb7c17a3e10ff506f4d8efd91 100644
 --- a/tf-psa-crypto/include/mbedtls/platform_util.h
 +++ b/tf-psa-crypto/include/mbedtls/platform_util.h
 @@ -131,7 +131,7 @@ MBEDTLS_DEPRECATED typedef int mbedtls_deprecated_numeric_constant_t;
@@ -128255,7 +128255,7 @@ index 1805914032..4607a58055 100644
  #endif /* MBEDTLS_HAVE_TIME_DATE */
  
 diff --git a/tf-psa-crypto/include/mbedtls/private/pk_private.h b/tf-psa-crypto/include/mbedtls/private/pk_private.h
-index 28a70221ca..cbba9fb086 100644
+index 28a70221cab6802794594cdff4617780c32a3e48..cbba9fb0860e0898786a969a06c93bc0bb577c37 100644
 --- a/tf-psa-crypto/include/mbedtls/private/pk_private.h
 +++ b/tf-psa-crypto/include/mbedtls/private/pk_private.h
 @@ -55,9 +55,9 @@ typedef enum {
@@ -128420,7 +128420,7 @@ index 28a70221ca..cbba9fb086 100644
                            size_t hash_len, const unsigned char *sig, size_t sig_len);
  
 diff --git a/tf-psa-crypto/include/mbedtls/psa_util.h b/tf-psa-crypto/include/mbedtls/psa_util.h
-index 929c9ed0a2..227fcab5d9 100644
+index 929c9ed0a2f81ee0666f6377cd150cb916bfff9e..227fcab5d9e2e617a8d292626ba3db404a3892c6 100644
 --- a/tf-psa-crypto/include/mbedtls/psa_util.h
 +++ b/tf-psa-crypto/include/mbedtls/psa_util.h
 @@ -32,9 +32,9 @@
@@ -128471,7 +128471,7 @@ index 929c9ed0a2..227fcab5d9 100644
  
  #endif /* PSA_HAVE_ALG_SOME_ECDSA */
 diff --git a/tf-psa-crypto/include/mbedtls/threading.h b/tf-psa-crypto/include/mbedtls/threading.h
-index 8c94ec9987..8fccebf77c 100644
+index 8c94ec99877fb78282fd38f6d822cc26d140fb2a..8fccebf77c5f7e38d4a8bf19dc82756fa1bfe263 100644
 --- a/tf-psa-crypto/include/mbedtls/threading.h
 +++ b/tf-psa-crypto/include/mbedtls/threading.h
 @@ -50,7 +50,7 @@ typedef pthread_cond_t mbedtls_platform_condition_variable_t;
@@ -128775,7 +128775,7 @@ index 8c94ec9987..8fccebf77c 100644
  extern mbedtls_threading_mutex_t mbedtls_threading_gmtime_mutex;
  #endif /* MBEDTLS_HAVE_TIME_DATE && !MBEDTLS_PLATFORM_GMTIME_R_ALT */
 diff --git a/tf-psa-crypto/include/psa/crypto.h b/tf-psa-crypto/include/psa/crypto.h
-index 22b8970e60..eebfe29165 100644
+index 22b8970e6070ef9270338e09428af21b0d76f4cb..eebfe29165b7b5e10464a26141005cf45b145092 100644
 --- a/tf-psa-crypto/include/psa/crypto.h
 +++ b/tf-psa-crypto/include/psa/crypto.h
 @@ -84,7 +84,7 @@ extern "C" {
@@ -132483,7 +132483,7 @@ index 22b8970e60..eebfe29165 100644
  /**@}*/
  
 diff --git a/tf-psa-crypto/include/psa/crypto_adjust_auto_enabled.h b/tf-psa-crypto/include/psa/crypto_adjust_auto_enabled.h
-index 590343ba4f..7f7c7d65b1 100644
+index 590343ba4f5945da55cf8b272e42bb221a43371d..7f7c7d65b1cb857d977d44cb619cd705eab882ca 100644
 --- a/tf-psa-crypto/include/psa/crypto_adjust_auto_enabled.h
 +++ b/tf-psa-crypto/include/psa/crypto_adjust_auto_enabled.h
 @@ -1,10 +1,10 @@
@@ -132500,7 +132500,7 @@ index 590343ba4f..7f7c7d65b1 100644
   */
  /*
 diff --git a/tf-psa-crypto/include/psa/crypto_adjust_config_derived.h b/tf-psa-crypto/include/psa/crypto_adjust_config_derived.h
-index 14417d7fb9..c0424d7cfe 100644
+index 14417d7fb92668713e528a9001d0721728bb476a..c0424d7cfe4459e2d057d7932fb871975aa8e259 100644
 --- a/tf-psa-crypto/include/psa/crypto_adjust_config_derived.h
 +++ b/tf-psa-crypto/include/psa/crypto_adjust_config_derived.h
 @@ -21,7 +21,7 @@
@@ -132513,7 +132513,7 @@ index 14417d7fb9..c0424d7cfe 100644
  /* Define auxiliary macros, because in standard C, defined(xxx) is only
   * allowed directly on an #if or #elif line, not in recursive expansion. */
 diff --git a/tf-psa-crypto/include/psa/crypto_adjust_config_key_pair_types.h b/tf-psa-crypto/include/psa/crypto_adjust_config_key_pair_types.h
-index c33d7771eb..d6b24fd469 100644
+index c33d7771eb57f6ed2e5d5c90c0ff886181fcc09f..d6b24fd4698bd765e2fedaf69fcff3a289819365 100644
 --- a/tf-psa-crypto/include/psa/crypto_adjust_config_key_pair_types.h
 +++ b/tf-psa-crypto/include/psa/crypto_adjust_config_key_pair_types.h
 @@ -78,10 +78,10 @@
@@ -132530,7 +132530,7 @@ index c33d7771eb..d6b24fd469 100644
  #if defined(PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_BASIC)
  #define PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_IMPORT 1
 diff --git a/tf-psa-crypto/include/psa/crypto_adjust_config_synonyms.h b/tf-psa-crypto/include/psa/crypto_adjust_config_synonyms.h
-index c5a652e743..66c8fd4e8d 100644
+index c5a652e743f1788f4b9a1ca0604cc028c719da2f..66c8fd4e8d0983515be67983d126fbf9f8ee032d 100644
 --- a/tf-psa-crypto/include/psa/crypto_adjust_config_synonyms.h
 +++ b/tf-psa-crypto/include/psa/crypto_adjust_config_synonyms.h
 @@ -4,7 +4,7 @@
@@ -132543,7 +132543,7 @@ index c5a652e743..66c8fd4e8d 100644
   * possible configurations.
   */
 diff --git a/tf-psa-crypto/include/psa/crypto_builtin_composites.h b/tf-psa-crypto/include/psa/crypto_builtin_composites.h
-index 82ca4be8f3..c8f4aa2c56 100644
+index 82ca4be8f32f74027108efbff3f06db9c31e683c..c8f4aa2c56f9f06ec6a0ef358465860a0850d002 100644
 --- a/tf-psa-crypto/include/psa/crypto_builtin_composites.h
 +++ b/tf-psa-crypto/include/psa/crypto_builtin_composites.h
 @@ -50,27 +50,27 @@
@@ -132752,7 +132752,7 @@ index 82ca4be8f3..c8f4aa2c56 100644
  } mbedtls_psa_export_public_key_iop_t;
  
 diff --git a/tf-psa-crypto/include/psa/crypto_builtin_key_derivation.h b/tf-psa-crypto/include/psa/crypto_builtin_key_derivation.h
-index 1115b50792..727ae6e5b2 100644
+index 1115b50792897da503d7a172523551156e9c986a..727ae6e5b22278b0cc0463ba0e420a649543917d 100644
 --- a/tf-psa-crypto/include/psa/crypto_builtin_key_derivation.h
 +++ b/tf-psa-crypto/include/psa/crypto_builtin_key_derivation.h
 @@ -30,25 +30,25 @@
@@ -132859,7 +132859,7 @@ index 1115b50792..727ae6e5b2 100644
  #endif /* PSA_HAVE_SOFT_PBKDF2 */
  
 diff --git a/tf-psa-crypto/include/psa/crypto_builtin_primitives.h b/tf-psa-crypto/include/psa/crypto_builtin_primitives.h
-index f32ede2cf7..fdbe74d322 100644
+index f32ede2cf7ed8c17e6e9ff4a4c55a68e22fc5f98..fdbe74d322da85d40081c675b760986fbd4ed04a 100644
 --- a/tf-psa-crypto/include/psa/crypto_builtin_primitives.h
 +++ b/tf-psa-crypto/include/psa/crypto_builtin_primitives.h
 @@ -52,7 +52,7 @@
@@ -132901,7 +132901,7 @@ index f32ede2cf7..fdbe74d322 100644
  
  #define MBEDTLS_PSA_CIPHER_OPERATION_INIT { 0, 0, 0, { 0 } }
 diff --git a/tf-psa-crypto/include/psa/crypto_compat.h b/tf-psa-crypto/include/psa/crypto_compat.h
-index 881516b8d5..6cffdaf6ae 100644
+index 881516b8d5e5846d4fed978e2a3b01e5b909cb33..6cffdaf6aed08276d42d7e11be8ef9ce2b0345ba 100644
 --- a/tf-psa-crypto/include/psa/crypto_compat.h
 +++ b/tf-psa-crypto/include/psa/crypto_compat.h
 @@ -34,7 +34,7 @@ extern "C" {
@@ -132914,7 +132914,7 @@ index 881516b8d5..6cffdaf6ae 100644
  /* This defition is required to provide compatibility with the PSA arch
   * tests. Without it building the tests will fail. To remove it we would
 diff --git a/tf-psa-crypto/include/psa/crypto_config.h b/tf-psa-crypto/include/psa/crypto_config.h
-index 5c6d1d37e4..73f02e0fa3 100644
+index 5c6d1d37e4cc4686a2516702bea6f20d40752e07..73f02e0fa34d7f3e0885528edd4b74ac891137f4 100644
 --- a/tf-psa-crypto/include/psa/crypto_config.h
 +++ b/tf-psa-crypto/include/psa/crypto_config.h
 @@ -126,7 +126,7 @@
@@ -133201,7 +133201,7 @@ index 5c6d1d37e4..73f02e0fa3 100644
   *   ECDHE-ECDSA key exchange (not other key exchanges) to make all ECC
   *   computations restartable:
 diff --git a/tf-psa-crypto/include/psa/crypto_driver_contexts_key_derivation.h b/tf-psa-crypto/include/psa/crypto_driver_contexts_key_derivation.h
-index f43d850a9b..2490560bc6 100644
+index f43d850a9b873143a3956c4c86fb72257986fe68..2490560bc6b83fcafe9e2fafa9550827daa23a20 100644
 --- a/tf-psa-crypto/include/psa/crypto_driver_contexts_key_derivation.h
 +++ b/tf-psa-crypto/include/psa/crypto_driver_contexts_key_derivation.h
 @@ -36,17 +36,17 @@ typedef union {
@@ -133227,7 +133227,7 @@ index f43d850a9b..2490560bc6 100644
  } psa_driver_key_derivation_context_t;
  
 diff --git a/tf-psa-crypto/include/psa/crypto_extra.h b/tf-psa-crypto/include/psa/crypto_extra.h
-index f80889cc6c..efbbf4c50b 100644
+index f80889cc6c57786a92c3b4edad539b34bca23f0f..efbbf4c50be2e2631275bd6654ca3e94e4a8c58f 100644
 --- a/tf-psa-crypto/include/psa/crypto_extra.h
 +++ b/tf-psa-crypto/include/psa/crypto_extra.h
 @@ -50,12 +50,12 @@ extern "C" {
@@ -134257,7 +134257,7 @@ index f80889cc6c..efbbf4c50b 100644
      const struct psa_pake_operation_s v = PSA_PAKE_OPERATION_INIT;
      return v;
 diff --git a/tf-psa-crypto/include/psa/crypto_platform.h b/tf-psa-crypto/include/psa/crypto_platform.h
-index 10f109e4c1..5c8797c1f0 100644
+index 10f109e4c1b766ff2fe2aa17b16ed49a6635d6a2..5c8797c1f0857e026061eee8de6f272ee5948c8f 100644
 --- a/tf-psa-crypto/include/psa/crypto_platform.h
 +++ b/tf-psa-crypto/include/psa/crypto_platform.h
 @@ -31,7 +31,7 @@
@@ -134301,7 +134301,7 @@ index 10f109e4c1..5c8797c1f0 100644
  #endif /* MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG */
  
 diff --git a/tf-psa-crypto/include/psa/crypto_sizes.h b/tf-psa-crypto/include/psa/crypto_sizes.h
-index 431bccde11..3ff25f057f 100644
+index 431bccde111831c1cbeae1f8721fcfd481d5b61e..3ff25f057f99bf193eb51c2e8e4439278c9d24de 100644
 --- a/tf-psa-crypto/include/psa/crypto_sizes.h
 +++ b/tf-psa-crypto/include/psa/crypto_sizes.h
 @@ -31,16 +31,16 @@
@@ -134829,7 +134829,7 @@ index 431bccde11..3ff25f057f 100644
   *
   * See also #PSA_CIPHER_FINISH_OUTPUT_SIZE(\p key_type, \p alg).
 diff --git a/tf-psa-crypto/include/psa/crypto_struct.h b/tf-psa-crypto/include/psa/crypto_struct.h
-index 0cc32e7f8b..27f3618bec 100644
+index 0cc32e7f8bdbaf9e87228139806658ec58313c7b..27f3618bec98f0fb3d5a01ba2134bc41ee1fbb8b 100644
 --- a/tf-psa-crypto/include/psa/crypto_struct.h
 +++ b/tf-psa-crypto/include/psa/crypto_struct.h
 @@ -70,8 +70,8 @@ struct psa_hash_operation_s {
@@ -135309,7 +135309,7 @@ index 0cc32e7f8b..27f3618bec 100644
      const struct psa_export_public_key_iop_s v = PSA_EXPORT_PUBLIC_KEY_IOP_INIT;
  
 diff --git a/tf-psa-crypto/include/psa/crypto_types.h b/tf-psa-crypto/include/psa/crypto_types.h
-index c4760fd4c0..0206b20f21 100644
+index c4760fd4c0323edfbd42c42768233848bc8de8d3..0206b20f214e1548fc242c29192639b3d70abeab 100644
 --- a/tf-psa-crypto/include/psa/crypto_types.h
 +++ b/tf-psa-crypto/include/psa/crypto_types.h
 @@ -23,7 +23,7 @@
@@ -135419,7 +135419,7 @@ index c4760fd4c0..0206b20f21 100644
   *
   * Once a key has been created, it is impossible to change its attributes.
 diff --git a/tf-psa-crypto/include/psa/crypto_values.h b/tf-psa-crypto/include/psa/crypto_values.h
-index 33c35e5faf..b832ab4698 100644
+index 33c35e5fafd720c72b9d07322739578426cd48ae..b832ab4698966b5ee48a3752e1622b2ed3de26b6 100644
 --- a/tf-psa-crypto/include/psa/crypto_values.h
 +++ b/tf-psa-crypto/include/psa/crypto_values.h
 @@ -242,7 +242,7 @@
@@ -135833,7 +135833,7 @@ index 33c35e5faf..b832ab4698 100644
   *  function in a single call.
   */
 diff --git a/tf-psa-crypto/include/tf-psa-crypto/version.h b/tf-psa-crypto/include/tf-psa-crypto/version.h
-index ef768f6471..d4e42ac610 100644
+index ef768f6471f21b4f381a0d1455525ddf4322db87..d4e42ac610bac4dfce6130a47760d5053a8f5650 100644
 --- a/tf-psa-crypto/include/tf-psa-crypto/version.h
 +++ b/tf-psa-crypto/include/tf-psa-crypto/version.h
 @@ -25,19 +25,19 @@
@@ -135860,7 +135860,7 @@ index ef768f6471..d4e42ac610 100644
  #endif /* TF_PSA_CRYPTO_VERSION */
  
 diff --git a/tf-psa-crypto/programs/fuzz/fuzz_common.c b/tf-psa-crypto/programs/fuzz/fuzz_common.c
-index 538e81ad53..b5ef5b8917 100644
+index 538e81ad53968e2951476dfeca49b3c666bbc0cd..b5ef5b8917d23af84f3377ca2c81a2d546941b75 100644
 --- a/tf-psa-crypto/programs/fuzz/fuzz_common.c
 +++ b/tf-psa-crypto/programs/fuzz/fuzz_common.c
 @@ -18,7 +18,7 @@ mbedtls_time_t dummy_constant_time(mbedtls_time_t *time)
@@ -135899,7 +135899,7 @@ index 538e81ad53..b5ef5b8917 100644
          //replace result with pseudo random
          output[i] = (unsigned char) rand();
 diff --git a/tf-psa-crypto/programs/fuzz/fuzz_privkey.c b/tf-psa-crypto/programs/fuzz/fuzz_privkey.c
-index 4cee4eb5c0..9fb3a0bec7 100644
+index 4cee4eb5c05bc6b0b9144e2b6070241dc60fd04c..9fb3a0bec79251893f08d95b57de9ffec88a6246 100644
 --- a/tf-psa-crypto/programs/fuzz/fuzz_privkey.c
 +++ b/tf-psa-crypto/programs/fuzz/fuzz_privkey.c
 @@ -30,51 +30,51 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
@@ -135989,7 +135989,7 @@ index 4cee4eb5c0..9fb3a0bec7 100644
      (void) Data;
      (void) Size;
 diff --git a/tf-psa-crypto/programs/fuzz/fuzz_pubkey.c b/tf-psa-crypto/programs/fuzz/fuzz_pubkey.c
-index c46fc15abd..35a988764f 100644
+index c46fc15abd624c64f3b8bb3e26dd8ce65cf189fd..35a988764f24fc76a09172769a57ea4c0aac23d8 100644
 --- a/tf-psa-crypto/programs/fuzz/fuzz_pubkey.c
 +++ b/tf-psa-crypto/programs/fuzz/fuzz_pubkey.c
 @@ -12,46 +12,46 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
@@ -136087,7 +136087,7 @@ index c46fc15abd..35a988764f 100644
      (void) Data;
      (void) Size;
 diff --git a/tf-psa-crypto/programs/psa/aead_demo.c b/tf-psa-crypto/programs/psa/aead_demo.c
-index c5a0e1854c..913ca07d00 100644
+index c5a0e1854cdb5f92e839381616adfdb6780415b3..913ca07d00f0d3af0f9dd125f42ffad3b364100e 100644
 --- a/tf-psa-crypto/programs/psa/aead_demo.c
 +++ b/tf-psa-crypto/programs/psa/aead_demo.c
 @@ -144,13 +144,13 @@ static psa_status_t aead_prepare(const char *info,
@@ -136179,7 +136179,7 @@ index c5a0e1854c..913ca07d00 100644
  exit:
      return status == PSA_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE;
 diff --git a/tf-psa-crypto/programs/psa/crypto_examples.c b/tf-psa-crypto/programs/psa/crypto_examples.c
-index b755f09ef2..711708da5a 100644
+index b755f09ef2eacdd3f1ef21ee7ce461fa901567d6..711708da5a28b8eec7e7a3b37453c21c656dfd83 100644
 --- a/tf-psa-crypto/programs/psa/crypto_examples.c
 +++ b/tf-psa-crypto/programs/psa/crypto_examples.c
 @@ -63,7 +63,7 @@ static psa_status_t cipher_operation(psa_cipher_operation_t *operation,
@@ -136354,7 +136354,7 @@ index b755f09ef2..711708da5a 100644
  }
  #endif /* MBEDTLS_PSA_CRYPTO_C && MBEDTLS_AES_C && MBEDTLS_CIPHER_MODE_CBC &&
 diff --git a/tf-psa-crypto/programs/psa/hmac_demo.c b/tf-psa-crypto/programs/psa/hmac_demo.c
-index 54aaa5b834..40163588fe 100644
+index 54aaa5b8344f307c633be66fc954e999fc8005b4..40163588fece01d7d3a889e70d3f24c6df60a703 100644
 --- a/tf-psa-crypto/programs/psa/hmac_demo.c
 +++ b/tf-psa-crypto/programs/psa/hmac_demo.c
 @@ -28,7 +28,7 @@
@@ -136436,7 +136436,7 @@ index 54aaa5b834..40163588fe 100644
  exit:
      return status == PSA_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE;
 diff --git a/tf-psa-crypto/programs/psa/key_ladder_demo.c b/tf-psa-crypto/programs/psa/key_ladder_demo.c
-index 97887d5f81..4dfd3ace9e 100644
+index 97887d5f811ffa5db51f4dd9de39b7d6e5706b3b..4dfd3ace9e4859f8e4f8313c142e15c13cc89885 100644
 --- a/tf-psa-crypto/programs/psa/key_ladder_demo.c
 +++ b/tf-psa-crypto/programs/psa/key_ladder_demo.c
 @@ -20,7 +20,7 @@
@@ -136774,7 +136774,7 @@ index 97887d5f81..4dfd3ace9e 100644
      } else if (strcmp(argv[1], "wrap") == 0) {
          mode = MODE_WRAP;
 diff --git a/tf-psa-crypto/programs/psa/psa_hash.c b/tf-psa-crypto/programs/psa/psa_hash.c
-index 2c0163f4a0..61028e2d0f 100644
+index 2c0163f4a09db1a7440db078f7aca4e8113ffe27..61028e2d0f468319ce00ae6a7405a0b1ae668636 100644
 --- a/tf-psa-crypto/programs/psa/psa_hash.c
 +++ b/tf-psa-crypto/programs/psa/psa_hash.c
 @@ -2,9 +2,9 @@
@@ -136923,7 +136923,7 @@ index 2c0163f4a0..61028e2d0f 100644
  }
  #endif /* !MBEDTLS_PSA_CRYPTO_C || !PSA_WANT_ALG_SHA_256 */
 diff --git a/tf-psa-crypto/programs/test/benchmark.c b/tf-psa-crypto/programs/test/benchmark.c
-index 83062be99f..725cf0fecf 100644
+index 83062be99fc0f8b4cdc824f16016548b015254cc..725cf0fecf82711a67e58a531bd4b8dbe98fbe77 100644
 --- a/tf-psa-crypto/programs/test/benchmark.c
 +++ b/tf-psa-crypto/programs/test/benchmark.c
 @@ -14,8 +14,8 @@
@@ -137769,7 +137769,7 @@ index 83062be99f..725cf0fecf 100644
  
  #endif /* MBEDTLS_HAVE_TIME */
 diff --git a/tf-psa-crypto/programs/test/cmake_package/cmake_package.c b/tf-psa-crypto/programs/test/cmake_package/cmake_package.c
-index c12ae7b9c2..b95a3d10c9 100644
+index c12ae7b9c296e2765b648dfd8598e8d7ff7d51fb..b95a3d10c9dd723f21efdc17cb37ec09bda772ff 100644
 --- a/tf-psa-crypto/programs/test/cmake_package/cmake_package.c
 +++ b/tf-psa-crypto/programs/test/cmake_package/cmake_package.c
 @@ -13,7 +13,7 @@
@@ -137782,7 +137782,7 @@ index c12ae7b9c2..b95a3d10c9 100644
      return 0;
  }
 diff --git a/tf-psa-crypto/programs/test/cmake_package_install/cmake_package_install.c b/tf-psa-crypto/programs/test/cmake_package_install/cmake_package_install.c
-index 082ca27e7f..98e6e3cb4b 100644
+index 082ca27e7f12017a08ed227f7ef88141a6eeb024..98e6e3cb4ba084b6bc2e7cd5c6d47793a6cd1b5a 100644
 --- a/tf-psa-crypto/programs/test/cmake_package_install/cmake_package_install.c
 +++ b/tf-psa-crypto/programs/test/cmake_package_install/cmake_package_install.c
 @@ -13,7 +13,7 @@
@@ -137795,7 +137795,7 @@ index 082ca27e7f..98e6e3cb4b 100644
      return 0;
  }
 diff --git a/tf-psa-crypto/programs/test/cmake_subproject/cmake_subproject.c b/tf-psa-crypto/programs/test/cmake_subproject/cmake_subproject.c
-index d82f0acd84..b11e1add16 100644
+index d82f0acd84029d45f26472b963baaad5bfeece63..b11e1add16c0212d6413dfee57003e3fcae11d6d 100644
 --- a/tf-psa-crypto/programs/test/cmake_subproject/cmake_subproject.c
 +++ b/tf-psa-crypto/programs/test/cmake_subproject/cmake_subproject.c
 @@ -13,7 +13,7 @@
@@ -137808,7 +137808,7 @@ index d82f0acd84..b11e1add16 100644
      return 0;
  }
 diff --git a/tf-psa-crypto/programs/test/tfpsacrypto_dlopen.c b/tf-psa-crypto/programs/test/tfpsacrypto_dlopen.c
-index 376a974932..88f4245bd9 100644
+index 376a9749325330488a613ad1dbca2c9d940ca98e..88f4245bd9c17ed695153642ff681a2e41d8e48a 100644
 --- a/tf-psa-crypto/programs/test/tfpsacrypto_dlopen.c
 +++ b/tf-psa-crypto/programs/test/tfpsacrypto_dlopen.c
 @@ -26,7 +26,7 @@
@@ -137862,7 +137862,7 @@ index 376a974932..88f4245bd9 100644
  
      dlclose(crypto_so);
 diff --git a/tf-psa-crypto/programs/test/which_aes.c b/tf-psa-crypto/programs/test/which_aes.c
-index f900d4760f..0993de5ca5 100644
+index f900d4760f477d4b7521e1fec949963ee1956be9..0993de5ca562afdda2a6a3f71174a6c0605dac9f 100644
 --- a/tf-psa-crypto/programs/test/which_aes.c
 +++ b/tf-psa-crypto/programs/test/which_aes.c
 @@ -17,28 +17,28 @@
@@ -137902,7 +137902,7 @@ index f900d4760f..0993de5ca5 100644
      return 0;
  }
 diff --git a/tf-psa-crypto/tests/configs/user-config-zeroize-memset.h b/tf-psa-crypto/tests/configs/user-config-zeroize-memset.h
-index 270d12584b..79396562b5 100644
+index 270d12584ba84a7fd8440692ff3faf428653a2c3..79396562b56e07499074d5c5a9201a97abb35436 100644
 --- a/tf-psa-crypto/tests/configs/user-config-zeroize-memset.h
 +++ b/tf-psa-crypto/tests/configs/user-config-zeroize-memset.h
 @@ -1,4 +1,4 @@
@@ -137918,7 +137918,7 @@ index 270d12584b..79396562b5 100644
 -#define mbedtls_platform_zeroize(buf, len) memset(buf, 0, len)
 +#define esp_mbedtls_platform_zeroize(buf, len) memset(buf, 0, len)
 diff --git a/tf-psa-crypto/tests/include/test/psa_test_wrappers.h b/tf-psa-crypto/tests/include/test/psa_test_wrappers.h
-index c8d1328c4d..58e3af9ea6 100644
+index c8d1328c4dbd94cc4b7463dd763937562c2a8398..58e3af9ea69aa10e5ec490ee3dce38fa828ee379 100644
 --- a/tf-psa-crypto/tests/include/test/psa_test_wrappers.h
 +++ b/tf-psa-crypto/tests/include/test/psa_test_wrappers.h
 @@ -26,13 +26,13 @@ psa_status_t mbedtls_test_wrap_mbedtls_psa_platform_get_builtin_key(
@@ -138718,7 +138718,7 @@ index c8d1328c4d..58e3af9ea6 100644
  
  #endif /* defined(MBEDTLS_PSA_CRYPTO_C) && defined(MBEDTLS_TEST_HOOKS) && \
 diff --git a/tf-psa-crypto/tests/src/psa_test_wrappers.c b/tf-psa-crypto/tests/src/psa_test_wrappers.c
-index ca4d812173..d488223735 100644
+index ca4d812173484e88194f1a1d9b5d4e09320a9ee6..d488223735ab3a6bf3e15b66a2ef3342daaf2974 100644
 --- a/tf-psa-crypto/tests/src/psa_test_wrappers.c
 +++ b/tf-psa-crypto/tests/src/psa_test_wrappers.c
 @@ -14,27 +14,27 @@

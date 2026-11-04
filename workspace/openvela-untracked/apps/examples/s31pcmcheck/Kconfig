@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: Apache-2.0
+config EXAMPLES_S31PCMCHECK
+	tristate "S31 standard ALSA process lifecycle qualification"
+	default n
+	depends on BUILD_KERNEL && SMP && AUDIO_PROCESS_OWNERSHIP
+	depends on ESP32S31_KORVO_AUDIO
+	depends on AUDIOUTILS_ALSA_LIB && AUDIOUTILS_ALSA_LIB_DEVICE_HW
+	help
+		Play only generated PCM through public ALSA APIs. Check normal
+		drain/close and prepared/playing/paused process exits on one CPU.
+		No microphone, camera, file recording or network access.
+
+if EXAMPLES_S31PCMCHECK
+config EXAMPLES_S31PCMCHECK_STACKSIZE
+	int "Main task stack size"
+	default 16384
+endif

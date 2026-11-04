@@ -1,59 +1,33 @@
 {
-  "name": "category-4.1.29",
+  "canonical_profile": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-netapps-competition/defconfig",
+  "canonical_source_root": "platform-root/openvela-dev",
+  "current_build": "Use the canonical BSP profile in a restored platform tree; local copies are historical source references.",
+  "historical_record": {
+    "demo": "category-4.1.29",
+    "path": "../../../../docs/validation/historical.json"
+  },
   "keys": [
     "category:4.1.29"
   ],
+  "license_rule": "Retain source headers and all original LICENSE/NOTICE/UPSTREAM attributions.",
+  "licenses": [
+    "licenses/apps/LICENSE",
+    "licenses/apps/NOTICE"
+  ],
+  "local_config": "config/demo-rmt-netapps-competition/defconfig",
+  "local_sources": [
+    {
+      "origin": "apps/wireless/wapi",
+      "path": "src/wapi"
+    }
+  ],
+  "name": "category-4.1.29",
   "profile": "demo-rmt-netapps-competition",
+  "schema": 2,
+  "scope": "historical-source-reference",
   "sources": [
     "apps/wireless/wapi"
   ],
-  "evidence_ids": [
-    1325
-  ],
-  "note": "需要自己的 2.4GHz WPA2 AP，按原文使用设备名 wlan0。SSID、密码、主机 IP 在本机设置，归档日志脱敏；扫描/连接压力保持原文 100 轮，不缩减为短测。",
-  "original": "4.1.29",
-  "evidence": [
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/SHA256SUMS",
-    "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1325-reboot-reconnect.log",
-    "workspace/evidence/backups-2026-09-10-scan-stress/network1325-reboot-reconnect-result.json",
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect.log",
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect-result.json",
-    "docs/acceptance/xts-category-status.md"
-  ],
   "title": "WiFi--2.4G--wapi config保存后设备reboot再reconnect",
-  "original_line": 3778,
-  "config_inheritance_verified": true,
-  "local_sources": [
-    {
-      "path": "src/wapi",
-      "origin": "apps/wireless/wapi"
-    }
-  ],
-  "local_config": "config/demo-rmt-netapps-competition/defconfig",
-  "local_evidence": [
-    {
-      "path": "evidence/docs/acceptance/xts-category-status.md",
-      "origin": "docs/acceptance/xts-category-status.md"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/SHA256SUMS",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/SHA256SUMS"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect-result.json",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect-result.json"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint1325-reboot-reconnect/network1325-reboot-reconnect.log"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/network1325-reboot-reconnect.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/network1325-reboot-reconnect.log"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/network1325-reboot-reconnect-result.json",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/network1325-reboot-reconnect-result.json"
-    }
-  ]
+  "validation_index": "../../../../docs/validation/index.json"
 }

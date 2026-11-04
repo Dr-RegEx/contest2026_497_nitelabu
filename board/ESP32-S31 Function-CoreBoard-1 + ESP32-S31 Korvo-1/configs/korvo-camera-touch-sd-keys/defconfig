@@ -1,0 +1,5 @@
+#include "../korvo-camera-touch-sd/defconfig"
+# ADC keys qualification only. Raw thresholds require actual-board calibration.
+CONFIG_ESP32S31_KORVO_ADC_BUTTONS=y
+CONFIG_ESP32S31_KORVO_KEYS_TRACE=y
+CONFIG_EXAMPLES_S31KEYS=y

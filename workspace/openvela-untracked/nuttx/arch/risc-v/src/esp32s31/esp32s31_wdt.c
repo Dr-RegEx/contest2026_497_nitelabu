@@ -16,6 +16,7 @@
 #include <syslog.h>
 
 #include <nuttx/clock.h>
+#include <nuttx/arch.h>
 #include <nuttx/irq.h>
 #include <nuttx/spinlock.h>
 #include <nuttx/timers/watchdog.h>
@@ -28,6 +29,15 @@
 #include "soc/interrupts.h"
 #include "soc/rtc.h"
 #include "esp32s31_wdt.h"
+
+#ifdef CONFIG_ESP32S31_KORVO_HMI_NETDIAG
+#  include "esp_cpu.h"
+#  include "esp_flash_diag.h"
+#  include "hal/systimer_ll.h"
+#  include "soc/uart_struct.h"
+#  include "soc/clic_reg.h"
+#  include "soc/interrupt_core0_reg.h"
+#endif
 
 /****************************************************************************
  * Pre-processor Definitions
@@ -223,6 +233,48 @@ static int s31_wdt_interrupt(int irq, void *context, void *arg)
 
   wdt_hal_write_protect_enable(&g_hal);
   syslog(LOG_EMERG, "S31 RWDT timeout; hardware reset after panic dump\n");
+#ifdef CONFIG_ESP32S31_KORVO_HMI_NETDIAG
+  /* PANIC saves the assertion site's registers. Capture the interrupted
+   * context first, and read timer state without requesting a snapshot:
+   * the normal counter helper may itself be the stalled operation.
+   */
+
+  syslog(LOG_EMERG, "NETDIAG interrupted context; timer conf=%08lx "
+         "unit0=%08lx unit1=%08lx\n",
+         (unsigned long)SYSTIMER.conf.val,
+         (unsigned long)SYSTIMER.unit_op[0].val,
+         (unsigned long)SYSTIMER.unit_op[1].val);
+  up_dump_register(context);
+  esp32s31_timer_stall_dump();
+  for (unsigned bank = 0; bank < (ESP_NSOURCES + 31) / 32; bank++)
+    {
+      uint32_t routed_to_tick = 0;
+      uint32_t tick_route = REG_READ(DR_REG_INTERRUPT_CORE0_BASE +
+                                    4 * ETS_SYSTIMER_TARGET0_INTR_SOURCE);
+      for (unsigned bit = 0; bit < 32 && bank * 32 + bit < ESP_NSOURCES;
+           bit++)
+        {
+          uint32_t route = REG_READ(DR_REG_INTERRUPT_CORE0_BASE +
+                                    4 * (bank * 32 + bit));
+          if ((route & 0x3f) == (tick_route & 0x3f))
+            {
+              routed_to_tick |= 1u << bit;
+            }
+        }
+
+      syslog(LOG_EMERG, "NETDIAG route bank=%u tick_shared=%08lx "
+             "tick_route=%08lx clic=%08lx\n", bank,
+             (unsigned long)routed_to_tick, (unsigned long)tick_route,
+             (unsigned long)REG_READ(CLIC_INT_CTRL_REG(tick_route & 0x3f)));
+    }
+  syslog(LOG_EMERG, "NETDIAG UART raw=%08lx status=%08lx enable=%08lx "
+         "fifo=%08lx cpu_unmask=%08lx\n",
+         (unsigned long)UART0.int_raw.val,
+         (unsigned long)UART0.int_st.val,
+         (unsigned long)UART0.int_ena.val,
+         (unsigned long)UART0.status.val,
+         (unsigned long)esp_cpu_intr_get_enabled_mask());
+#endif
   PANIC();
   for (; ; )
     {

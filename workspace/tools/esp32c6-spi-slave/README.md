@@ -43,4 +43,4 @@ S31：配置 `esp32s31-core-function-board:xts-flat-spi-c6`；实测固件 `open
 python3 tools/esp32c6-spi-slave/verify_spi.py --master /dev/ttyUSB0 --slave /dev/ttyACM1 --log /tmp/spi-new.log
 ```
 
-串口编号必须按实际连接确认；日志路径必须不存在。首次返回内容仅记录，后续13帧必须逐字节等于上一帧发送内容，且全部14帧都必须有C6串口接收证据。本次结果见 `../../backups/2026-09-10-scan-stress/spi-c6-result.md`。
+串口编号必须按实际连接确认；日志路径必须不存在。首次返回内容仅记录，后续13帧必须逐字节等于上一帧发送内容，且全部14帧都必须有C6串口接收证据。历史结果见比赛交付仓 `docs/validation/historical.json` 中的 `spi-c6` 与 `common:1.3.7`；当前镜像资格见同仓 `docs/validation/README.md`。

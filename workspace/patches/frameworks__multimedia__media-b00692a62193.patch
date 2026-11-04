@@ -1,0 +1,4667 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 96e3b30dbe3666199c6bf49c568b63cc928768d2..b4d3348333895e25d0bc5a9bfebe099fdc650ffb 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -115,7 +115,9 @@ if(CONFIG_MEDIA)
+   nuttx_include_directories(${INCDIR})
+   nuttx_add_dependencies(TARGET libmedia DEPENDS ffmpeg)
+ 
+-  if(CONFIG_FEATURE_FRAMEWORK)
++  # These adapters resolve hap:// paths through the quickapp application
++  # namespace. Native MEDIA can coexist with the standalone Feature library.
++  if(CONFIG_FEATURE_FRAMEWORK AND CONFIG_QUICKAPP)
+     set(FEATURE_SRCS ${CMAKE_CURRENT_LIST_DIR}/feature/audio_impl.c
+                      ${CMAKE_CURRENT_LIST_DIR}/feature/volume_impl.c
+                      ${CMAKE_CURRENT_LIST_DIR}/feature/session_impl.c
+@@ -139,7 +141,7 @@ if(CONFIG_MEDIA)
+       ${FEATURE_NAMES}
+       OUT_SRC_EXT
+       c)
+-  endif() # CONFIG_MEDIA_FEATURE
++  endif()
+ 
+   set_property(
+     TARGET nuttx
+diff --git a/Kconfig b/Kconfig
+index 7d496faec65e554dfa072f6a01b6b49c0275ccb7..746e6ddc182303e52fda3cffaa3ab5954060e4bf 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -6,9 +6,18 @@
+ config MEDIA
+ 	tristate "Enable media"
+ 	default n
++	select EVENT_FD
+ 
+ if MEDIA
+ 
++config MEDIA_CLIENT_CONNECT_TIMEOUT_MS
++	int "Synchronous buffer connection timeout (ms)"
++	default 5000
++	range 100 60000
++	help
++	  Limit waiting for the server to connect to a buffer-mode data socket.
++	  Stop/close cancels this wait. This does not bound control RPC or AVIO.
++
+ choice
+ 	prompt "MEDIA log level"
+ 	default MEDIA_LOG_INFO
+diff --git a/Makefile b/Makefile
+index 64fcc79ca0f2bb77d9ab92a1d21bae8030510f9e..401358a912f34bfb5c8e44a23746d9d4b7456dcb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -32,7 +32,8 @@ endif
+ 
+ CSRCS += $(wildcard utils/*.c)
+ 
+-ifeq ($(CONFIG_FEATURE_FRAMEWORK),y)
++# These adapters require the quickapp application namespace (HAP_APP_PATH).
++ifeq ($(CONFIG_FEATURE_FRAMEWORK)$(CONFIG_QUICKAPP),yy)
+ depend::
+ 	$(APPDIR)/../prebuilts/tools/rust/bin/jidl/jidl_gen_cpp \
+ 		$(APPDIR)/frameworks/multimedia/media/feature/volume.jidl --out-dir \
+@@ -56,7 +57,7 @@ depend::
+   CSRCS  += feature/session_impl.c
+   CSRCS  += feature/record.c
+   CSRCS  += feature/record_impl.c
+-endif # CONFIG_FEATURE_FRAMEWORK
++endif # CONFIG_FEATURE_FRAMEWORK && CONFIG_QUICKAPP
+ 
+ ifneq ($(CONFIG_MEDIA_FOCUS),)
+   CSRCS += server/media_focus.c server/focus_stack.c
+diff --git a/client/media_graph.c b/client/media_graph.c
+index 62c701ac0bb0bf881cdda068a3ebe9dd234f5013..e00d58e8d2cb2c20ad12d7ce699449dc648abdc0 100644
+--- a/client/media_graph.c
++++ b/client/media_graph.c
+@@ -25,12 +25,16 @@
+ #include <errno.h>
+ #include <media_api.h>
+ #include <netpacket/rpmsg.h>
++#include <poll.h>
++#include <pthread.h>
+ #include <semaphore.h>
+ #include <stdatomic.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <sys/un.h>
++#include <sys/eventfd.h>
++#include <time.h>
+ #include <unistd.h>
+ 
+ #include "media_common.h"
+@@ -45,7 +49,20 @@ typedef struct MediaIOPriv {
+     void* cookie;
+     media_event_callback event;
+     atomic_int refs;
++    atomic_bool closing;
++    pthread_mutex_t event_mutex;
++    pthread_mutex_t registration_mutex;
++    pthread_cond_t event_idle;
++    pthread_t event_thread;
++    int event_active;
++    bool event_installed;
+     sem_t sem;
++    pthread_mutex_t data_mutex;
++    int data_users;
++    int data_cancel;
++    int prepare_error;
++    bool data_closing;
++    bool preparing;
+     int socket_fd;
+     int socket;
+     int result;
+@@ -55,6 +72,41 @@ typedef struct MediaIOPriv {
+  * Private Functions
+  ****************************************************************************/
+ 
++#ifndef CONFIG_MEDIA_CLIENT_CONNECT_TIMEOUT_MS
++#define CONFIG_MEDIA_CLIENT_CONNECT_TIMEOUT_MS 5000
++#endif
++
++/* data_mutex protects ownership. Never close/reuse a descriptor while a data
++ * operation or prepare still holds it; cancellation wakes its nonblocking I/O.
++ */
++static void media_data_cleanup_locked(MediaIOPriv* priv)
++{
++    if (priv->socket >= 0)
++        close(priv->socket);
++    if (priv->socket_fd >= 0)
++        close(priv->socket_fd);
++    if (priv->data_cancel >= 0)
++        close(priv->data_cancel);
++    priv->socket = -1;
++    priv->socket_fd = -1;
++    priv->data_cancel = -1;
++}
++
++static void media_data_cancel_locked(MediaIOPriv* priv)
++{
++    uint64_t wake = 1;
++    int ret;
++
++    priv->data_closing = true;
++    if (priv->data_cancel >= 0) {
++        do {
++            ret = write(priv->data_cancel, &wake, sizeof(wake));
++        } while (ret < 0 && errno == EINTR);
++    }
++    if (!priv->data_users)
++        media_data_cleanup_locked(priv);
++}
++
+ static void media_recorder_take_picture_cb(void* cookie, int event, int result,
+     const char* extra)
+ {
+@@ -82,6 +134,11 @@ static void media_release_cb(void* handle)
+     MediaIOPriv* priv = handle;
+ 
+     if (atomic_fetch_sub(&priv->refs, 1) == 1) {
++        media_data_cleanup_locked(priv);
++        pthread_mutex_destroy(&priv->data_mutex);
++        pthread_cond_destroy(&priv->event_idle);
++        pthread_mutex_destroy(&priv->registration_mutex);
++        pthread_mutex_destroy(&priv->event_mutex);
+         free(priv->cpu);
+         free(priv);
+     }
+@@ -95,30 +152,46 @@ static void* media_open(int control, const char* params)
+     if (!priv)
+         return NULL;
+ 
++    priv->socket = priv->socket_fd = -1;
++    priv->data_cancel = -1;
++    if (pthread_mutex_init(&priv->event_mutex, NULL))
++        goto err_free;
++    if (pthread_mutex_init(&priv->registration_mutex, NULL))
++        goto err_event;
++    if (pthread_cond_init(&priv->event_idle, NULL))
++        goto err_registration;
++    if (pthread_mutex_init(&priv->data_mutex, NULL))
++        goto err_cond;
++    atomic_store(&priv->refs, 1);
+     if (media_proxy(control, priv, NULL, "open", params, 0, NULL, 0) < 0)
+         goto err;
+ 
+-    atomic_store(&priv->refs, 1);
+-    media_proxy_set_release_cb(priv->proxy, media_default_release_cb, priv);
++    media_proxy_set_release_cb(priv->proxy, media_release_cb, priv);
+     return priv;
+ 
+ err:
+-    media_default_release_cb(priv);
++    media_release_cb(priv);
++    return NULL;
++err_cond:
++    pthread_cond_destroy(&priv->event_idle);
++err_registration:
++    pthread_mutex_destroy(&priv->registration_mutex);
++err_event:
++    pthread_mutex_destroy(&priv->event_mutex);
++err_free:
++    free(priv);
+     return NULL;
+ }
+ 
+ static void media_close_socket(void* handle)
+ {
+     MediaIOPriv* priv = handle;
+-    int socket;
+ 
+-    if (atomic_load(&priv->refs) == 1 && priv->socket) {
+-        socket = priv->socket;
+-        priv->socket = 0;
+-        close(socket);
+-        if (priv->socket_fd > 0)
+-            close(priv->socket_fd);
+-    }
++    if (!priv)
++        return;
++    pthread_mutex_lock(&priv->data_mutex);
++    media_data_cancel_locked(priv);
++    pthread_mutex_unlock(&priv->data_mutex);
+ }
+ 
+ static int media_close(void* handle, int pending_stop)
+@@ -127,11 +200,16 @@ static int media_close(void* handle, int pending_stop)
+     char tmp[32];
+     int ret;
+ 
++    if (!priv)
++        return -EINVAL;
++    atomic_store(&priv->closing, true);
++    media_proxy_begin_close(priv->proxy);
+     snprintf(tmp, sizeof(tmp), "%d", pending_stop);
+     ret = media_proxy_once(priv, NULL, "close", tmp, 0, NULL, 0);
+     if (ret < 0)
+-        return ret;
++        media_proxy_abort(priv->proxy, ret);
+ 
++    /* Close consumes the client even when the transport is already broken. */
+     media_close_socket(priv);
+     media_proxy_disconnect(priv->proxy);
+     return ret;
+@@ -169,7 +247,7 @@ static int media_bind_socket(void* handle)
+     if (ret < 0)
+         return ret;
+ 
+-    fd = socket(addr.ss_family, SOCK_STREAM | SOCK_CLOEXEC, 0);
++    fd = socket(addr.ss_family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
+     if (fd < 0)
+         return -errno;
+ 
+@@ -184,51 +262,132 @@ static int media_bind_socket(void* handle)
+     return fd;
+ 
+ out:
++    ret = -errno;
+     close(fd);
+-    return -errno;
++    return ret;
+ }
+ 
+ static int media_prepare(void* handle, const char* url, const char* options)
+ {
+     MediaIOPriv* priv = handle;
+     const char* cpu = NULL;
++    struct timespec now;
++    struct pollfd fds[2];
++    void* proxy;
++    int64_t deadline;
++    bool buffer = !url || !url[0];
++    bool sent = false;
+     int ret = -EINVAL;
++    int accepted;
+     char addr[32];
+-    int fd = 0;
+ 
+-    if (!priv || priv->socket > 0)
++    if (!priv)
+         return ret;
+-
+-    if (!url || !url[0]) {
+-        /* Buffer mode, create listener and send cpuname and sockname. */
+-        fd = media_bind_socket(handle);
+-        if (fd < 0)
+-            return fd;
+-
++    proxy = priv->proxy;
++    media_proxy_ref(proxy);
++    pthread_mutex_lock(&priv->data_mutex);
++    if (priv->socket >= 0 || priv->socket_fd >= 0 || priv->data_users) {
++        ret = -EBUSY;
++        goto unlock;
++    }
++    if (atomic_load(&priv->closing)) {
++        ret = -ECANCELED;
++        goto unlock;
++    }
++    priv->data_closing = false;
++    priv->prepare_error = 0;
++    if (buffer) {
++        ret = media_bind_socket(handle);
++        if (ret < 0)
++            goto unlock;
++        priv->socket_fd = ret;
++        priv->data_cancel = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
++        if (priv->data_cancel < 0) {
++            ret = -errno;
++            media_data_cleanup_locked(priv);
++            goto unlock;
++        }
++        priv->preparing = true;
++        priv->data_users++;
++        fds[0] = (struct pollfd){ .fd = priv->socket_fd, .events = POLLIN };
++        fds[1] = (struct pollfd){ .fd = priv->data_cancel, .events = POLLIN };
+         cpu = CONFIG_RPMSG_LOCAL_CPUNAME;
+         snprintf(addr, sizeof(addr), MEDIA_GRAPH_SOCKADDR_NAME, priv);
+         url = addr;
+     }
++    pthread_mutex_unlock(&priv->data_mutex);
+ 
+     if (options && options[0] != '\0') {
+         ret = media_proxy_once(priv, NULL, "set_options", options, 0, NULL, 0);
+         if (ret < 0)
+             goto out;
+     }
+-    ret = media_proxy_once(priv, cpu, "prepare", url, 0, NULL, 0);
+-    if (ret < 0)
++    ret = atomic_load(&priv->closing) ? -ECANCELED
++        : media_proxy_once(priv, cpu, "prepare", url, 0, NULL, 0);
++    if (ret < 0 || !buffer)
+         goto out;
+-
+-    if (fd > 0) {
+-        priv->socket_fd = fd;
+-        priv->socket = accept4(fd, NULL, NULL, SOCK_CLOEXEC);
+-        if (priv->socket < 0) {
+-            priv->socket = 0;
++    sent = true;
++    clock_gettime(CLOCK_MONOTONIC, &now);
++    deadline = (int64_t)now.tv_sec * 1000 + now.tv_nsec / 1000000
++        + CONFIG_MEDIA_CLIENT_CONNECT_TIMEOUT_MS;
++    while (1) {
++        pthread_mutex_lock(&priv->data_mutex);
++        ret = priv->data_closing ? -ECANCELED : 0;
++        pthread_mutex_unlock(&priv->data_mutex);
++        if (ret < 0)
++            break;
++        accepted = accept4(fds[0].fd, NULL, NULL, SOCK_CLOEXEC);
++        if (accepted >= 0) {
++            pthread_mutex_lock(&priv->data_mutex);
++            if (priv->data_closing) {
++                close(accepted);
++                ret = -ECANCELED;
++            } else {
++                priv->socket = accepted;
++                ret = 0;
++            }
++            pthread_mutex_unlock(&priv->data_mutex);
++            break;
++        }
++        if (errno == EINTR)
++            continue;
++        if (errno != EAGAIN && errno != EWOULDBLOCK) {
+             ret = -errno;
++            break;
++        }
++        clock_gettime(CLOCK_MONOTONIC, &now);
++        ret = deadline - ((int64_t)now.tv_sec * 1000 + now.tv_nsec / 1000000);
++        if (ret <= 0) {
++            ret = -ETIMEDOUT;
++            break;
++        }
++        ret = poll(fds, 2, ret);
++        if (ret < 0 && errno != EINTR) {
++            ret = -errno;
++            break;
+         }
+     }
+ 
+ out:
++    if (buffer) {
++        pthread_mutex_lock(&priv->data_mutex);
++        if (priv->prepare_error < 0)
++            ret = priv->prepare_error;
++        priv->preparing = false;
++        priv->data_users--;
++        if (ret < 0)
++            media_data_cancel_locked(priv);
++        if (priv->data_closing && !priv->data_users)
++            media_data_cleanup_locked(priv);
++        pthread_mutex_unlock(&priv->data_mutex);
++        if (sent && ret < 0 && ret != -ECANCELED && !atomic_load(&priv->closing))
++            media_proxy_once(priv, NULL, "stop", NULL, 0, NULL, 0);
++    }
++    media_proxy_unref(proxy);
++    return ret;
++unlock:
++    pthread_mutex_unlock(&priv->data_mutex);
++    media_proxy_unref(proxy);
+     return ret;
+ }
+ 
+@@ -236,44 +395,64 @@ static ssize_t media_process_data(void* handle, bool player,
+     void* data, size_t len)
+ {
+     MediaIOPriv* priv = handle;
+-    int ret = -EINVAL;
++    struct pollfd fds[2];
++    ssize_t ret = -EINVAL;
++    bool failed = false;
+ 
+     if (!handle || !data || !len)
+         return ret;
+-
+     atomic_fetch_add(&priv->refs, 1);
+-
+-    if (priv->socket <= 0)
++    pthread_mutex_lock(&priv->data_mutex);
++    if (priv->data_closing || priv->socket < 0) {
++        ret = priv->data_closing ? -ECANCELED : -ENOTCONN;
++        pthread_mutex_unlock(&priv->data_mutex);
+         goto out;
+-
+-    if (player) {
+-        ret = send(priv->socket, data, len, 0);
+-        if (ret == len)
+-            goto out;
+-        else if (ret == 0)
+-            errno = ECONNRESET;
+-        else if (ret < 0 && errno == EINTR) {
+-            ret = -errno;
+-            goto out;
+-        }
+-    } else {
+-        ret = recv(priv->socket, data, len, 0);
++    }
++    priv->data_users++;
++    fds[0] = (struct pollfd){ .fd = priv->socket,
++        .events = player ? POLLOUT : POLLIN };
++    fds[1] = (struct pollfd){ .fd = priv->data_cancel, .events = POLLIN };
++    pthread_mutex_unlock(&priv->data_mutex);
++
++    while (1) {
++        pthread_mutex_lock(&priv->data_mutex);
++        ret = priv->data_closing ? -ECANCELED : 0;
++        pthread_mutex_unlock(&priv->data_mutex);
++        if (ret < 0)
++            break;
++        ret = player ? send(fds[0].fd, data, len, MSG_DONTWAIT | MSG_NOSIGNAL)
++                     : recv(fds[0].fd, data, len, MSG_DONTWAIT);
+         if (ret > 0)
+-            goto out;
+-        else if (ret == 0)
+-            errno = ECONNRESET;
+-        else if (ret < 0 && errno == EINTR) {
++            break; /* A short write is progress; caller sends the remainder. */
++        if (!ret) {
++            ret = -ECONNRESET;
++            failed = true;
++            break;
++        }
++        ret = -errno; /* Preserve the I/O error across descriptor cleanup. */
++        if (ret == -EINTR)
++            break;
++        if (ret != -EAGAIN && ret != -EWOULDBLOCK) {
++            failed = true;
++            break;
++        }
++        ret = poll(fds, 2, -1);
++        if (ret < 0) {
+             ret = -errno;
+-            goto out;
++            failed = ret != -EINTR;
++            break;
+         }
+     }
+ 
+-    close(priv->socket);
+-    priv->socket = 0;
+-    if (priv->socket_fd > 0)
+-        close(priv->socket_fd);
+-    ret = -errno;
+-
++    pthread_mutex_lock(&priv->data_mutex);
++    if (ret < 0 && priv->data_closing)
++        ret = -ECANCELED;
++    if (failed)
++        media_data_cancel_locked(priv);
++    priv->data_users--;
++    if (priv->data_closing && !priv->data_users)
++        media_data_cleanup_locked(priv);
++    pthread_mutex_unlock(&priv->data_mutex);
+ out:
+     media_release_cb(priv);
+     return ret;
+@@ -285,10 +464,35 @@ static void media_event_cb(void* cookie, media_parcel* msg)
+     const char* extra;
+     int32_t event;
+     int32_t ret;
++    media_event_callback callback;
++    void* event_cookie;
+ 
+-    if (priv->event) {
+-        media_parcel_read_scanf(msg, "%i%i%s", &event, &ret, &extra);
+-        priv->event(priv->cookie, event, ret, extra);
++    if (media_parcel_read_scanf(msg, "%i%i%s", &event, &ret, &extra) < 0)
++        return;
++    if (event == MEDIA_EVENT_PREPARED && ret < 0) {
++        pthread_mutex_lock(&priv->data_mutex);
++        if (priv->preparing) {
++            priv->prepare_error = ret;
++            media_data_cancel_locked(priv);
++        } else if (priv->socket >= 0) {
++            media_data_cancel_locked(priv);
++        }
++        pthread_mutex_unlock(&priv->data_mutex);
++    }
++    pthread_mutex_lock(&priv->event_mutex);
++    callback = priv->event;
++    event_cookie = priv->cookie;
++    if (callback) {
++        priv->event_active++;
++        priv->event_thread = pthread_self();
++    }
++    pthread_mutex_unlock(&priv->event_mutex);
++    if (callback) {
++        callback(event_cookie, event, ret, extra);
++        pthread_mutex_lock(&priv->event_mutex);
++        priv->event_active--;
++        pthread_cond_broadcast(&priv->event_idle);
++        pthread_mutex_unlock(&priv->event_mutex);
+     }
+ }
+ 
+@@ -296,33 +500,85 @@ static int media_set_event_cb(void* handle, void* cookie,
+     media_event_callback event_cb)
+ {
+     MediaIOPriv* priv = handle;
++    media_event_callback old_event;
++    void* old_cookie;
++    void* proxy;
++    bool initial;
+     int ret;
+ 
+     if (!priv)
+         return -EINVAL;
+ 
+-    ret = media_proxy_set_event_cb(priv->proxy, priv->cpu, media_event_cb, priv);
+-    if (ret < 0)
+-        return ret;
+-
+-    ret = media_proxy_once(handle, NULL, "set_event", NULL, 0, NULL, 0);
+-    if (ret < 0)
+-        return ret;
++    /* Never wait for ourselves or a concurrent registrar that is joining
++     * this callback. Ordinary callback RPCs use neither of these locks.
++     */
++    pthread_mutex_lock(&priv->event_mutex);
++    ret = priv->event_active && pthread_equal(priv->event_thread, pthread_self());
++    pthread_mutex_unlock(&priv->event_mutex);
++    if (ret)
++        return -EDEADLK;
++
++    proxy = priv->proxy;
++    media_proxy_ref(proxy);
++    pthread_mutex_lock(&priv->registration_mutex);
++    if (atomic_load(&priv->closing)) {
++        ret = -ECANCELED;
++        goto out;
++    }
+ 
+-    priv->event = event_cb;
+-    priv->cookie = cookie;
++    pthread_mutex_lock(&priv->event_mutex);
++    initial = !priv->event_installed;
++    old_event = priv->event;
++    old_cookie = priv->cookie;
++    if (initial) {
++        /* A first listener can fail/deliver before setup returns. Publish
++         * the first pair before starting it; the proxy pin covers close.
++         */
++        priv->event = event_cb;
++        priv->cookie = cookie;
++        priv->event_installed = true;
++    }
++    pthread_mutex_unlock(&priv->event_mutex);
++    ret = media_proxy_set_event_cb(priv->proxy, priv->cpu, media_event_cb, priv);
++    if (ret >= 0) {
++        ret = atomic_load(&priv->closing) ? -ECANCELED
++            : media_proxy_once(handle, NULL, "set_event", NULL, 0, NULL, 0);
++    }
+ 
++    /* Join the previous listener before waiting here: its error callback
++     * may need to issue RPCs while the external registrar is in join.
++     */
++    pthread_mutex_lock(&priv->event_mutex);
++    while (priv->event_active)
++        pthread_cond_wait(&priv->event_idle, &priv->event_mutex);
++    if (atomic_load(&priv->closing))
++        ret = -ECANCELED;
++    if (ret >= 0) {
++        priv->event = event_cb;
++        priv->cookie = cookie;
++    } else if (initial) {
++        priv->event = old_event;
++        priv->cookie = old_cookie;
++        priv->event_installed = false;
++    }
++    pthread_mutex_unlock(&priv->event_mutex);
++out:
++    pthread_mutex_unlock(&priv->registration_mutex);
++    media_proxy_unref(proxy);
+     return ret;
+ }
+ 
+ static int media_get_socket(void* handle)
+ {
+     MediaIOPriv* priv = handle;
++    int fd;
+ 
+-    if (!priv || priv->socket <= 0)
++    if (!priv)
+         return -EINVAL;
+-
+-    return priv->socket;
++    pthread_mutex_lock(&priv->data_mutex);
++    fd = priv->data_closing || priv->socket < 0 ? -EINVAL : priv->socket;
++    pthread_mutex_unlock(&priv->data_mutex);
++    return fd;
+ }
+ 
+ /****************************************************************************
+diff --git a/client/media_proxy.c b/client/media_proxy.c
+index ab141ac65dcf25b6f9456ed1c49f95c39c7ca0f9..949329f29ac8a37b3dfed6cd4edb2554bd23bd1f 100644
+--- a/client/media_proxy.c
++++ b/client/media_proxy.c
+@@ -26,15 +26,18 @@
+ #include <errno.h>
+ #include <netpacket/rpmsg.h>
+ #include <pthread.h>
++#include <poll.h>
+ #include <stdatomic.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <sys/socket.h>
++#include <sys/eventfd.h>
+ #include <sys/un.h>
+ #include <unistd.h>
+ 
+ #include "media_common.h"
++#include "media_defs.h"
+ #include "media_proxy.h"
+ 
+ /****************************************************************************
+@@ -44,8 +47,14 @@
+ typedef struct MediaClientPriv {
+     int fd;
+     int listenfd;
++    int cancel_fd;
+     pthread_t thread;
+     pthread_mutex_t mutex;
++    pthread_mutex_t listener_mutex;
++    int error;
++    atomic_bool listener_exited;
++    atomic_bool listener_joining;
++    atomic_bool closing;
+     void* event_cookie;
+     void* release_cookie;
+     media_proxy_event_cb event_cb;
+@@ -61,14 +70,14 @@ typedef struct MediaProxyPriv {
+  * Private Functions
+  ****************************************************************************/
+ 
+-static void media_proxy_ref(void* handle)
++void media_proxy_ref(void* handle)
+ {
+     MediaClientPriv* priv = handle;
+ 
+     atomic_fetch_add(&priv->refs, 1);
+ }
+ 
+-static void media_proxy_unref(void* handle)
++void media_proxy_unref(void* handle)
+ {
+     MediaClientPriv* priv = handle;
+ 
+@@ -76,11 +85,61 @@ static void media_proxy_unref(void* handle)
+         if (priv->release_cb)
+             priv->release_cb(priv->release_cookie);
+ 
++        if (priv->cancel_fd >= 0)
++            close(priv->cancel_fd);
+         pthread_mutex_destroy(&priv->mutex);
++        pthread_mutex_destroy(&priv->listener_mutex);
+         free(priv);
+     }
+ }
+ 
++/* Caller holds mutex. Closing the descriptor also makes failure independent
++ * of shutdown support; error stays latched until this handle is released.
++ */
++static void media_proxy_quarantine(MediaClientPriv* priv, int error)
++{
++    uint64_t cancel = 1;
++    int ret;
++
++    if (!priv->error)
++        priv->error = error;
++    if (priv->fd >= 0) {
++        close(priv->fd);
++        priv->fd = -1;
++    }
++    if (priv->cancel_fd >= 0) {
++        do {
++            ret = write(priv->cancel_fd, &cancel, sizeof(cancel));
++        } while (ret < 0 && errno == EINTR);
++    }
++}
++
++static int media_proxy_send_locked(MediaClientPriv* priv, media_parcel* parcel, uint32_t code)
++{
++    uint32_t sent;
++    int ret;
++
++    if (priv->error)
++        return priv->error;
++    ret = media_parcel_send_progress(parcel, priv->fd, code, 0, &sent);
++    if (ret < 0 && (sent || ret == -ECONNRESET || ret == -EBADF))
++        media_proxy_quarantine(priv, ret);
++    return ret;
++}
++
++static void media_proxy_deliver_event(MediaClientPriv* priv, media_parcel* parcel)
++{
++    media_proxy_event_cb cb;
++    void* cookie;
++
++    pthread_mutex_lock(&priv->mutex);
++    cb = priv->event_cb;
++    cookie = priv->event_cookie;
++    pthread_mutex_unlock(&priv->mutex);
++    if (cb)
++        cb(cookie, parcel);
++}
++
+ static void media_proxy_get_sockaddr(int* family, socklen_t* len, void* addr,
+     const char* cpu, const char* key)
+ {
+@@ -106,72 +165,112 @@ static int media_proxy_create_listenfd(MediaClientPriv* priv, const char* cpu)
+ {
+     struct sockaddr_storage addr;
+     socklen_t socklen;
+-    media_parcel parcel;
+     char key[32];
+     int family;
+     int ret;
+ 
+     snprintf(key, sizeof(key), "md_%p", priv);
+     media_proxy_get_sockaddr(&family, &socklen, &addr, cpu, key);
+-
+-    priv->listenfd = socket(family, SOCK_STREAM | SOCK_CLOEXEC, 0);
++    priv->listenfd = socket(family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
+     if (priv->listenfd < 0)
+-        return priv->listenfd;
+-
+-    media_parcel_init(&parcel);
++        return -errno;
+ 
+     ret = bind(priv->listenfd, (struct sockaddr*)&addr, socklen);
+-    if (ret < 0)
+-        goto err;
++    if (ret >= 0)
++        ret = listen(priv->listenfd, 2);
++    if (ret < 0) {
++        ret = -errno;
++        close(priv->listenfd);
++        priv->listenfd = -1;
++    }
++    return ret;
++}
+ 
+-    ret = listen(priv->listenfd, 2);
+-    if (ret < 0)
+-        goto err;
++static int media_proxy_connect_notify(MediaClientPriv* priv)
++{
++    media_parcel parcel;
++    char key[32];
++    int ret;
+ 
++    snprintf(key, sizeof(key), "md_%p", priv);
++    media_parcel_init(&parcel);
+     media_parcel_append_string(&parcel, key);
+     media_parcel_append_string(&parcel, CONFIG_RPMSG_LOCAL_CPUNAME);
+-    ret = media_parcel_send(&parcel, priv->fd, MEDIA_PARCEL_CREATE_NOTIFY, 0);
+-
+-err:
++    pthread_mutex_lock(&priv->mutex);
++    ret = media_proxy_send_locked(priv, &parcel, MEDIA_PARCEL_CREATE_NOTIFY);
++    pthread_mutex_unlock(&priv->mutex);
+     media_parcel_deinit(&parcel);
+-    if (ret < 0)
+-        close(priv->listenfd);
+     return ret;
+ }
+ 
+ static void* media_proxy_listen_thread(void* pvarg)
+ {
+     MediaClientPriv* priv = pvarg;
++    struct pollfd fds[2] = {
++        { .fd = priv->cancel_fd, .events = POLLIN },
++        { .fd = priv->listenfd, .events = POLLIN },
++    };
+     media_parcel parcel;
+-    uint32_t code;
+-    int acceptfd;
++    uint32_t offset = 0;
++    int acceptfd = -1;
+     int ret;
+ 
+-    acceptfd = accept4(priv->listenfd, NULL, NULL, SOCK_CLOEXEC);
+-    if (acceptfd <= 0)
+-        goto thread_error;
+-
++    media_parcel_init(&parcel);
+     while (1) {
+-        media_parcel_init(&parcel);
+-        ret = media_parcel_recv(&parcel, acceptfd, NULL, 0);
+-        if (ret == -EINTR)
+-            continue;
+-        else if (ret < 0)
++        ret = poll(fds, 2, -1);
++        if (ret < 0) {
++            if (errno == EINTR)
++                continue;
++            ret = -errno;
+             break;
+-
+-        code = media_parcel_get_code(&parcel);
+-        if (code != MEDIA_PARCEL_SEND)
++        }
++        if (fds[0].revents) {
++            ret = 0; /* explicit setup cancellation or control quarantine */
+             break;
++        }
++        if (!fds[1].revents)
++            continue;
++        if (acceptfd < 0) {
++            acceptfd = accept4(priv->listenfd, NULL, NULL, SOCK_NONBLOCK | SOCK_CLOEXEC);
++            if (acceptfd < 0) {
++                if (errno == EAGAIN || errno == EINTR)
++                    continue;
++                ret = -errno;
++                break;
++            }
++            fds[1].fd = acceptfd;
++            continue;
++        }
+ 
+-        priv->event_cb(priv->event_cookie, &parcel);
+-        media_parcel_deinit(&parcel);
++        ret = media_parcel_recv(&parcel, acceptfd, &offset, MSG_DONTWAIT);
++        if (ret == -EAGAIN || ret == -EINTR)
++            continue; /* retain a partially received parcel and offset */
++        if (ret < 0)
++            break;
++        if (media_parcel_get_code(&parcel) != MEDIA_PARCEL_SEND) {
++            ret = -EPROTO;
++            break;
++        }
++        media_proxy_deliver_event(priv, &parcel);
++        media_parcel_reinit(&parcel);
++        offset = 0;
+     }
+ 
+-    media_parcel_deinit(&parcel);
+-    close(acceptfd);
+-
+-thread_error:
++    if (acceptfd >= 0)
++        close(acceptfd);
+     close(priv->listenfd);
++    atomic_store(&priv->listener_exited, true);
++    if (ret < 0 && !atomic_load(&priv->closing)) {
++        media_parcel_reinit(&parcel);
++        if (media_parcel_append_printf(&parcel, "%i%i%s", MEDIA_EVENT_NOP, ret,
++                "notification transport closed") == 0)
++            media_proxy_deliver_event(priv, &parcel);
++    }
++    media_parcel_deinit(&parcel);
++    /* The client reference owns cancel_fd until this thread has joined.
++     * Keeping it open prevents cancellation from writing a reused FD if
++     * accept/receive has already failed in this thread.
++     */
+     media_proxy_unref(priv);
+     return NULL;
+ }
+@@ -192,16 +291,22 @@ void* media_proxy_connect(const char* cpu)
+     if (priv == NULL)
+         return NULL;
+ 
++    priv->cancel_fd = -1;
+     snprintf(key, sizeof(key), MEDIA_SOCKADDR_NAME, cpu);
+     media_proxy_get_sockaddr(&family, &len, &addr, cpu, key);
+     priv->fd = socket(family, SOCK_STREAM | SOCK_CLOEXEC, 0);
+-    if (priv->fd <= 0)
++    if (priv->fd < 0)
+         goto socket_error;
+ 
+     if (connect(priv->fd, (struct sockaddr*)&addr, len) < 0)
+         goto connect_error;
+ 
+-    pthread_mutex_init(&priv->mutex, NULL);
++    if (pthread_mutex_init(&priv->mutex, NULL))
++        goto connect_error;
++    if (pthread_mutex_init(&priv->listener_mutex, NULL)) {
++        pthread_mutex_destroy(&priv->mutex);
++        goto connect_error;
++    }
+     atomic_store(&priv->refs, 1);
+     return priv;
+ 
+@@ -215,24 +320,54 @@ socket_error:
+ int media_proxy_disconnect(void* handle)
+ {
+     MediaClientPriv* priv = handle;
+-    int ret;
+ 
+     if (priv == NULL)
+         return -EINVAL;
+ 
+-    ret = pthread_join(priv->thread, NULL);
+-    if (ret == EDEADLK)
+-        pthread_detach(priv->thread);
++    if (priv->thread && pthread_equal(priv->thread, pthread_self())) {
++        /* An external registrar may already be joining this error callback.
++         * Detaching then would invalidate its join and lifetime barrier.
++         */
++        if (!atomic_load(&priv->listener_joining))
++            pthread_detach(priv->thread);
++    } else {
++        pthread_mutex_lock(&priv->listener_mutex);
++        if (priv->thread) {
++            atomic_store(&priv->listener_joining, true);
++            pthread_join(priv->thread, NULL);
++            atomic_store(&priv->listener_joining, false);
++        }
++        pthread_mutex_unlock(&priv->listener_mutex);
++    }
+ 
+-    if (priv->fd > 0) {
++    pthread_mutex_lock(&priv->mutex);
++    if (priv->fd >= 0) {
+         close(priv->fd);
+-        priv->fd = 0;
+-        media_proxy_unref(handle);
++        priv->fd = -1;
+     }
++    pthread_mutex_unlock(&priv->mutex);
++    media_proxy_unref(handle);
+ 
+     return 0;
+ }
+ 
++void media_proxy_begin_close(void* handle)
++{
++    MediaClientPriv* priv = handle;
++    if (priv)
++        atomic_store(&priv->closing, true);
++}
++
++void media_proxy_abort(void* handle, int error)
++{
++    MediaClientPriv* priv = handle;
++    if (!priv)
++        return;
++    pthread_mutex_lock(&priv->mutex);
++    media_proxy_quarantine(priv, error < 0 ? error : -ECANCELED);
++    pthread_mutex_unlock(&priv->mutex);
++}
++
+ int media_proxy_send(void* handle, media_parcel* in)
+ {
+     MediaClientPriv* priv = handle;
+@@ -243,7 +378,7 @@ int media_proxy_send(void* handle, media_parcel* in)
+ 
+     pthread_mutex_lock(&priv->mutex);
+ 
+-    ret = media_parcel_send(in, priv->fd, MEDIA_PARCEL_SEND, 0);
++    ret = media_proxy_send_locked(priv, in, MEDIA_PARCEL_SEND);
+ 
+     pthread_mutex_unlock(&priv->mutex);
+     return ret;
+@@ -259,16 +394,19 @@ int media_proxy_send_with_ack(void* handle, media_parcel* in, media_parcel* out)
+ 
+     pthread_mutex_lock(&priv->mutex);
+ 
+-    ret = media_parcel_send(in, priv->fd, MEDIA_PARCEL_SEND_ACK, 0);
++    ret = media_proxy_send_locked(priv, in, MEDIA_PARCEL_SEND_ACK);
+     if (ret < 0)
+         goto out;
+ 
+     ret = media_parcel_recv(out, priv->fd, NULL, 0);
+-    if (ret < 0)
++    if (ret < 0) {
++        media_proxy_quarantine(priv, ret);
+         goto out;
++    }
+ 
+     if (media_parcel_get_code(out) != MEDIA_PARCEL_REPLY) {
+         ret = -EIO;
++        media_proxy_quarantine(priv, ret);
+         goto out;
+     }
+ out:
+@@ -286,35 +424,107 @@ int media_proxy_set_event_cb(void* handle, const char* cpu, void* event_cb, void
+     if (priv == NULL || event_cb == NULL)
+         return -EINVAL;
+ 
+-    pthread_mutex_lock(&priv->mutex);
++    /* A failed listener cannot join itself. Callers may retry from another
++     * thread after the error callback returns. Ordinary RPCs remain usable.
++     */
++    if (priv->thread && pthread_equal(priv->thread, pthread_self())
++        && atomic_load(&priv->listener_exited))
++        return -EDEADLK;
++
++    pthread_mutex_lock(&priv->listener_mutex);
+ 
++    pthread_mutex_lock(&priv->mutex);
++    ret = atomic_load(&priv->closing) ? -ECANCELED : priv->error;
+     priv->event_cb = event_cb;
+     priv->event_cookie = cookie;
+-    if (priv->thread > 0) {
++    pthread_mutex_unlock(&priv->mutex);
++    if (ret < 0)
++        goto out;
++    if (priv->thread) {
++        if (!atomic_load(&priv->listener_exited)) {
++            ret = 0;
++            goto out;
++        }
++        /* Do not hold the control mutex while joining: an error callback
++         * may query the Player or issue another ordinary RPC.
++         */
++        atomic_store(&priv->listener_joining, true);
++        pthread_join(priv->thread, NULL);
++        atomic_store(&priv->listener_joining, false);
++        pthread_mutex_lock(&priv->mutex);
++        close(priv->cancel_fd);
++        priv->cancel_fd = -1;
++        priv->thread = 0;
++        priv->listenfd = -1;
+         pthread_mutex_unlock(&priv->mutex);
+-        return 0;
++        if (atomic_load(&priv->closing)) {
++            ret = -ECANCELED;
++            goto out;
++        }
+     }
+ 
+     ret = media_proxy_create_listenfd(priv, cpu);
+     if (ret < 0) {
+-        pthread_mutex_unlock(&priv->mutex);
+-        return ret;
++        goto out;
+     }
+ 
++    pthread_mutex_lock(&priv->mutex);
++    priv->cancel_fd = eventfd(0, EFD_CLOEXEC | EFD_NONBLOCK);
++    ret = priv->cancel_fd < 0 ? -errno : 0;
++    pthread_mutex_unlock(&priv->mutex);
++    if (priv->cancel_fd < 0) {
++        close(priv->listenfd);
++        priv->listenfd = -1;
++        goto out;
++    }
+     media_proxy_ref(handle);
+ 
+     pthread_attr_init(&pattr);
+     pthread_attr_setstacksize(&pattr, CONFIG_MEDIA_PROXY_LISTEN_STACKSIZE);
+     param.sched_priority = CONFIG_MEDIA_PROXY_LISTEN_PRIORITY;
+     pthread_attr_setschedparam(&pattr, &param);
++    atomic_store(&priv->listener_exited, false);
+     ret = pthread_create(&priv->thread, &pattr, media_proxy_listen_thread, priv);
+-    if (ret < 0) {
++    if (ret != 0) {
++        pthread_mutex_lock(&priv->mutex);
++        close(priv->cancel_fd);
++        priv->cancel_fd = -1;
+         close(priv->listenfd);
++        priv->listenfd = -1;
++        priv->thread = 0;
++        pthread_mutex_unlock(&priv->mutex);
+         media_proxy_unref(handle);
++        ret = -ret;
++    } else {
++        pthread_setname_np(priv->thread, "proxy_listen");
++        /* Advertise only after the listener thread exists. Otherwise a
++         * failed create followed by retry can connect two sockets to the
++         * same listener and strand notifications on the unaccepted one.
++         */
++        ret = media_proxy_connect_notify(priv);
++        if (ret < 0) {
++            uint64_t cancel = 1;
++            /* Interrupt both accept and partial-notification receive without
++             * depending on socket shutdown semantics or a peer's response.
++             */
++            int cancel_ret;
++            do {
++                cancel_ret = write(priv->cancel_fd, &cancel, sizeof(cancel));
++            } while (cancel_ret < 0 && errno == EINTR);
++            atomic_store(&priv->listener_joining, true);
++            pthread_join(priv->thread, NULL);
++            atomic_store(&priv->listener_joining, false);
++            pthread_mutex_lock(&priv->mutex);
++            close(priv->cancel_fd);
++            priv->cancel_fd = -1;
++            priv->thread = 0;
++            priv->listenfd = -1;
++            pthread_mutex_unlock(&priv->mutex);
++        }
+     }
+-    pthread_setname_np(priv->thread, "proxy_listen");
+     pthread_attr_destroy(&pattr);
+-    pthread_mutex_unlock(&priv->mutex);
++out:
++    pthread_mutex_unlock(&priv->listener_mutex);
+ 
+     return ret;
+ }
+diff --git a/client/media_proxy.h b/client/media_proxy.h
+index 991dea6bceb80a7a5e88e0680e172f246c2178af..0092f426f87fcb8086aed8afc325cdda861eacec 100644
+--- a/client/media_proxy.h
++++ b/client/media_proxy.h
+@@ -55,7 +55,17 @@ typedef void (*media_proxy_release_cb)(void* cookie);
+  ****************************************************************************/
+ 
+ void* media_proxy_connect(const char* cpu);
++/* Pin an existing proxy across operations whose callback may close it.
++ * This does not make acquiring a reference through an already closed handle
++ * valid; the caller must still serialize ordinary lifecycle operations.
++ */
++void media_proxy_ref(void* handle);
++void media_proxy_unref(void* handle);
+ int media_proxy_disconnect(void* handle);
++/* Suppress the expected notification EOF for an explicit client close. */
++void media_proxy_begin_close(void* handle);
++/* Discard a failed close connection and cancel its listener before release. */
++void media_proxy_abort(void* handle, int error);
+ 
+ int media_proxy_send(void* handle, media_parcel* in);
+ int media_proxy_send_with_ack(void* handle, media_parcel* in, media_parcel* out);
+diff --git a/client/media_session.c b/client/media_session.c
+index 0514e6fc64da3c56701ba80175441a4b5acb2ecf..72eb824c68286649c316853ad2d904c6b3f49a05 100644
+--- a/client/media_session.c
++++ b/client/media_session.c
+@@ -52,6 +52,8 @@ static void media_release_cb(void* cookie)
+ {
+     MediaSessionPriv* priv = cookie;
+ 
++    /* The notification listener is no longer using the cached metadata. */
++    media_metadata_deinit(&priv->data);
+     free(priv->cpu);
+     free(priv);
+ }
+@@ -125,17 +127,17 @@ int media_session_set_event_callback(void* handle, void* cookie,
+ int media_session_close(void* handle)
+ {
+     MediaSessionPriv* priv = handle;
+-    int ret;
++    int ret, close_ret;
+ 
+     if (!handle)
+         return -EINVAL;
+ 
++    media_proxy_begin_close(priv->proxy);
+     ret = media_proxy_once(priv, NULL, "close", NULL, 0, NULL, 0);
+     if (ret < 0)
+-        return ret;
+-
+-    media_metadata_deinit(&priv->data);
+-    return media_proxy_disconnect(priv->proxy);
++        media_proxy_abort(priv->proxy, ret);
++    close_ret = media_proxy_disconnect(priv->proxy);
++    return ret < 0 ? ret : close_ret;
+ }
+ 
+ int media_session_start(void* handle)
+@@ -350,14 +352,15 @@ int media_session_update(void* handle, const media_metadata_t* data)
+ int media_session_unregister(void* handle)
+ {
+     MediaSessionPriv* priv = handle;
+-    int ret;
++    int ret, close_ret;
+ 
+     if (!handle)
+         return -EINVAL;
+ 
++    media_proxy_begin_close(priv->proxy);
+     ret = media_proxy_once(priv, NULL, "unregister", NULL, 0, NULL, 0);
+     if (ret < 0)
+-        return ret;
+-
+-    return media_proxy_disconnect(priv->proxy);
++        media_proxy_abort(priv->proxy, ret);
++    close_ret = media_proxy_disconnect(priv->proxy);
++    return ret < 0 ? ret : close_ret;
+ }
+diff --git a/include/media_defs.h b/include/media_defs.h
+index 53c9e9757eaaa43c43b058f8c55392ee83212020..88b6e7403bf94e3039ecc8fd0fa2bb3be85c27bf 100644
+--- a/include/media_defs.h
++++ b/include/media_defs.h
+@@ -58,6 +58,11 @@ extern "C" {
+  ****************************************************************************/
+ 
+ #define MEDIA_EVENT_NOP 0
++/* Synchronous clients also use NOP with a negative result when the notification
++ * transport is lost. Re-register from another thread after that callback;
++ * registration from the exiting listener returns -EDEADLK. No missed event
++ * replay is implied. Ordinary control queries may be used to recover state.
++ */
+ 
+ /* Stream status change, used by player&recorder. */
+ 
+diff --git a/include/media_player.h b/include/media_player.h
+index 6cb71a89fa309807acdb0c6cd181f0e9b27a2b05..554d99ddfaf41fb78b5df0b1da040763de3d24cc 100644
+--- a/include/media_player.h
++++ b/include/media_player.h
+@@ -78,6 +78,8 @@ void* media_player_open(const char* stream);
+  *                          Setting this parameter to 1 for video player does not have
+  *                          the pending_stop function.
+  * @return int  Zero on success; a negated errno value on failure.
++ * @note This synchronous close consumes the handle even if the transport has
++ *       failed. Do not retry close or use the handle after it returns.
+  */
+ int media_player_close(void* handle, int pending_stop);
+ 
+@@ -88,6 +90,13 @@ int media_player_close(void* handle, int pending_stop);
+  * @param[in] event_cookie  Callback argument.
+  * @param[out] on_event     Callback to receive events about stream status change.
+  * @return int  Zero on success; a negated errno value on failure.
++ * @note NOP with a negative result reports notification transport loss. Query
++ *       state or re-register from another thread; missed events are not replayed.
++ *       Serialize registration/close for a handle with other lifecycle calls.
++ *       Successful replacement waits for the old callback to finish; its
++ *       cookie may then be released. On failure the old pair stays installed.
++ *       Registration from a callback returns -EDEADLK. A callback may close
++ *       the Player; if this happens during registration it returns -ECANCELED.
+  *
+  * @code
+  *  void user_on_event(void* cookie, int event, int result, const char* extra) {
+@@ -122,7 +131,11 @@ int media_player_set_event_callback(void* handle, void* event_cookie,
+  *                      (e.g. "format=s16le,sample_rate=44100,channels=2")
+  * @return int  Zero on success; a negated errno value on failure.
+  *
+- * @note The api mentioned for buffer mode are all thread-safe.
++ * @note Buffer connection wait is bounded by
++ * CONFIG_MEDIA_CLIENT_CONNECT_TIMEOUT_MS; this does not bound RPC or demux I/O.
++ * Stop/reset/close_socket cancel owned data I/O. Join data workers before
++ * preparing another stream; serialize other lifecycle calls and never start
++ * a new call after close consumes the handle.
+  */
+ int media_player_prepare(void* handle, const char* url, const char* options);
+ 
+@@ -151,8 +164,11 @@ int media_player_reset(void* handle);
+  * @param[in] len       Buffer length to write.
+  * @return ssize_t  Sent length on success; a negated errno value on failure.
+  *
+- * @note This api is thread-safe, in buffer mode, you might need this
+- * in your worker thread.
++ * @note A positive short return is progress; send the remainder. Retry -EINTR.
++ * Backpressure waits for readiness or cancellation. Stop/reset/close_socket
++ * wake owned waits with -ECANCELED. Fatal I/O errors invalidate the data socket.
++ * A call already in progress retains its resources through control close;
++ * callers must prevent new calls once close begins.
+  */
+ ssize_t media_player_write_data(void* handle, const void* data, size_t len);
+ 
+@@ -171,8 +187,9 @@ int media_player_get_sockaddr(void* handle, struct sockaddr_storage* addr);
+  * @param[in] handle    Player handle.
+  * @return int  Socket fd, negative errno on failure.
+  *
+- * @note This api is thread-safe, in buffer mode, you can get socket fd
+- * for data transaction in your worker thread.
++ * @note The descriptor is borrowed. Direct I/O requires caller synchronization
++ * with stop/reset/close_socket/close and is outside the owned-I/O cancellation
++ * guarantee. Do not close the borrowed descriptor directly.
+  */
+ int media_player_get_socket(void* handle);
+ 
+@@ -181,8 +198,9 @@ int media_player_get_socket(void* handle);
+  *
+  * @param[in] handle    Player handle.
+  *
+- * @note This api is thread-safe, in buffer mode, you can finalize data
+- * transaction by this api in your worker thread.
++ * @note Cancels pending buffer connection/owned I/O, then releases descriptors
++ * when their active users exit. After the last successful write, use this to
++ * signal end of input. A successful in-flight write may still report progress.
+  */
+ void media_player_close_socket(void* handle);
+ 
+@@ -192,7 +210,10 @@ void media_player_close_socket(void* handle);
+  * @param[in] handle    Player handle.
+  * @return int  Zero on success; a negated errno value on failure.
+  *
+- * @note This api would generates MEDIA_EVENT_STARTED event.
++ * @note Zero means the control request was accepted. MEDIA_EVENT_STARTED
++ * carries the operation result. A rejected resume leaves the player paused
++ * and may be retried; a successful resume continues the existing source,
++ * including a short final decode queue.
+  */
+ int media_player_start(void* handle);
+ 
+@@ -212,7 +233,12 @@ int media_player_stop(void* handle);
+  * @param[in] handle    Player handle.
+  * @return int  Zero on success; a negated errno value on failure.
+  *
+- * @note This api would generates MEDIA_EVENT_PAUSED event.
++ * @note Zero means the control request was accepted. MEDIA_EVENT_PAUSED
++ * carries the operation result. Invalid state or failure to queue the graph
++ * command leaves the playback state unchanged. Pending initial prefetch may
++ * fill its bounded queue while paused, but must not start the source.
++ * Samples already downstream may finish; this event does not promise an
++ * immediate hardware/DMA freeze.
+  */
+ int media_player_pause(void* handle);
+ 
+diff --git a/include/media_recorder.h b/include/media_recorder.h
+index 8f2170bc07bd2c72daad2822f9cf3c60f885180a..8b7088007e6b2eed6a02706354f380f546d2e140 100644
+--- a/include/media_recorder.h
++++ b/include/media_recorder.h
+@@ -71,6 +71,7 @@ void* media_recorder_open(const char* params);
+  *
+  * @param[in] handle    Recorder handle
+  * @return int Zero on success; a negative errno value on failure.
++ * @note Synchronous close consumes the handle even after transport failure.
+  */
+ int media_recorder_close(void* handle);
+ 
+@@ -83,6 +84,10 @@ int media_recorder_close(void* handle);
+  *                      after calling event_cb and usually be modified
+  * @param[in] on_event  Event callback
+  * @return int Zero on success; a negative errno value on failure.
++ * @note Replacement waits for the previous callback to finish; on failure its
++ *       function/cookie remains installed. Registration from a callback returns
++ *       -EDEADLK. Serialize lifecycle calls and retain the cookie until close or
++ *       successful replacement returns. Close during registration cancels it.
+  */
+ int media_recorder_set_event_callback(void* handle, void* cookie,
+     media_event_callback event_cb);
+@@ -109,6 +114,9 @@ int media_recorder_set_event_callback(void* handle, void* cookie,
+  *                      (e.g. "format=opusraw:sample_rate=16000:ch_layout=mono:b=32000:
+  *                              vbr=0:level=1")
+  * @return int Zero on success; a negative errno value on failure.
++ * @note Buffer connection wait uses CONFIG_MEDIA_CLIENT_CONNECT_TIMEOUT_MS;
++ * RPC and encoder I/O are not covered by this deadline. Join data workers
++ * before reprepare and serialize other lifecycle calls.
+  */
+ int media_recorder_prepare(void* handle, const char* url, const char* options);
+ 
+@@ -133,8 +141,9 @@ int media_recorder_reset(void* handle);
+  * @param[in] len       Buffer length to read.
+  * @return Read length on success; a negative errno value on failure.
+  *
+- * @note This api is thread-safe, in buffer mode, you might need this
+- * in your worker thread.
++ * @note Positive short reads are progress; retry -EINTR. Readiness waits can
++ * be canceled by stop/reset/close_socket. Calls already in progress retain
++ * resources through close; prevent new calls once close begins.
+  */
+ ssize_t media_recorder_read_data(void* handle, void* data, size_t len);
+ 
+@@ -155,6 +164,8 @@ int media_recorder_get_sockaddr(void* handle, struct sockaddr_storage* addr);
+  *
+  * @param[in] handle    Recorder handle.
+  * @return int Socket fd on success; a negative errno value on failure.
++ * @note Borrowed descriptor: synchronize direct I/O with lifecycle operations.
++ * Direct reads are outside owned-I/O cancellation; do not close this fd directly.
+  */
+ int media_recorder_get_socket(void* handle);
+ 
+@@ -163,8 +174,8 @@ int media_recorder_get_socket(void* handle);
+  *
+  * @param[in] handle    Recorder handle.
+  *
+- * @note This api is thread-safe, in buffer mode, you can finalize data
+- * transaction by this api in your worker thread.
++ * @note Cancels pending connection/owned reads; descriptors are released after
++ * active users exit. A successful in-flight read may still report progress.
+  */
+ void media_recorder_close_socket(void* handle);
+ 
+diff --git a/include/media_session.h b/include/media_session.h
+index f4c73aadac611b55e827370865a0140fbf7ab15a..f006cd634d57dfb5437968842d3acf0716d6f446 100644
+--- a/include/media_session.h
++++ b/include/media_session.h
+@@ -69,6 +69,8 @@ void* media_session_open(const char* params);
+  *
+  * @param[in] handle    Controller handle
+  * @return int  Zero on success; a negative errno value on failure.
++ * @note This call consumes the handle, including when the service is gone
++ * and a negative transport error is returned. Do not reuse the handle.
+  */
+ int media_session_close(void* handle);
+ 
+@@ -281,6 +283,8 @@ void* media_session_register(void* cookie, media_event_callback on_event);
+  *
+  * @param[in] handle    Controllee handle.
+  * @return int  Zero on success; a negative errno value on failure.
++ * @note This call consumes the handle, including when the service is gone
++ * and a negative transport error is returned. Do not reuse the handle.
+  */
+ int media_session_unregister(void* handle);
+ 
+diff --git a/include/media_trigger.h b/include/media_trigger.h
+index 75214b45e47261b64d8ba17379b5975b28532bbd..eb755e50c6bd77379058ef444265790555d06e14 100644
+--- a/include/media_trigger.h
++++ b/include/media_trigger.h
+@@ -77,6 +77,10 @@ void* media_trigger_open(const char* params);
+  * @param[in] event_cookie  Callback argument.
+  * @param[out] on_event     Callback to receive events about stream status change.
+  * @return int  Zero on success; a negated errno value on failure.
++ * @note Replacement waits for the previous callback to finish; on failure its
++ *       function/cookie remains installed. Registration from a callback returns
++ *       -EDEADLK. Serialize lifecycle calls and retain the cookie until close or
++ *       successful replacement returns. Close during registration cancels it.
+  *
+  */
+ int media_trigger_set_event_callback(void* handle, void* event_cookie,
+@@ -122,6 +126,7 @@ int media_trigger_unload_sound_model(void* handle);
+  *
+  * @param[in] handle    media trigger handle which is to be closed.
+  * @return int  Zero on success; a negated errno value on failure.
++ * @note Synchronous close consumes the handle even after transport failure.
+  */
+ int media_trigger_close(void* handle);
+ 
+diff --git a/server/audio_graph.c b/server/audio_graph.c
+index 09fdf00ffe1af036e3e6fdd312e5a8d5fae7f61c..800c6d9a977fbff4111d09b16659f4ced66a97b2 100644
+--- a/server/audio_graph.c
++++ b/server/audio_graph.c
+@@ -66,6 +66,8 @@ typedef struct MediaCommand {
+     char* cmd;
+     char* arg;
+     char* res;
++    bool reserved;
++    bool queued;
+ 
+     TAILQ_ENTRY(MediaCommand)
+     entries;
+@@ -77,10 +79,15 @@ typedef struct MediaGraphPriv {
+     void* pollfts[MAX_POLL_FILTERS];
+     int pollftn;
+     int* occupied;
++    MediaCommand* stops;
+ 
+     TAILQ_HEAD(, MediaCommand)
+     cmdq;
+     pthread_mutex_t qlock;
++    /* Filter activation and synchronous commands share mutable FFmpeg state.
++     * Callbacks may enqueue commands, so keep this separate from qlock.
++     */
++    pthread_mutex_t graphlock;
+ } MediaGraphPriv;
+ 
+ /****************************************************************************
+@@ -223,6 +230,18 @@ static int audio_graph_load(MediaGraphPriv* priv, char* conf)
+     int ret;
+     int fd;
+ 
++    /* FFmpeg has its own default; apply the MEDIA policy before loading filters. */
++#if defined(CONFIG_MEDIA_LOG_DEBUG)
++    av_log_set_level(AV_LOG_DEBUG);
++#elif defined(CONFIG_MEDIA_LOG_WARN)
++    av_log_set_level(AV_LOG_WARNING);
++#elif defined(CONFIG_MEDIA_LOG_ERR)
++    av_log_set_level(AV_LOG_ERROR);
++#elif defined(CONFIG_MEDIA_LOG_SLIENT)
++    av_log_set_level(AV_LOG_QUIET);
++#else
++    av_log_set_level(AV_LOG_INFO);
++#endif
+     av_log_set_callback(audio_graph_log_callback);
+ #ifdef CONFIG_MEDIA_TRACE
+     av_trace_set_callback(media_trace_begin, media_trace_end);
+@@ -261,6 +280,11 @@ static int audio_graph_load(MediaGraphPriv* priv, char* conf)
+         goto out;
+     }
+ 
++    if (!priv->graph->nb_filters) {
++        ret = -EINVAL;
++        goto out;
++    }
++
+     avfilter_inout_free(&input);
+     avfilter_inout_free(&output);
+ 
+@@ -338,18 +362,20 @@ static int audio_graph_load(MediaGraphPriv* priv, char* conf)
+         AVFilterContext* filter = priv->graph->filters[fd];
+ 
+         if ((filter->filter->flags & AVFILTER_FLAG_SUPPORT_POLL) != 0) {
+-            priv->pollfts[priv->pollftn++] = filter;
+-            if (priv->pollftn > MAX_POLL_FILTERS) {
++            if (priv->pollftn >= MAX_POLL_FILTERS) {
+                 MEDIA_ERR("%s, media graph too many pollfds\n", __func__);
+                 ret = -EINVAL;
+                 goto out;
+             }
++            priv->pollfts[priv->pollftn++] = filter;
+         }
+     }
+ 
+     MEDIA_INFO("%s, loadgraph succeed\n", __func__);
+     return 0;
+ out:
++    avfilter_inout_free(&input);
++    avfilter_inout_free(&output);
+     avfilter_graph_free(&priv->graph);
+     return ret;
+ }
+@@ -364,6 +390,18 @@ static int audio_graph_init(MediadPlugin* ctx)
+     MediaGraphPriv* priv = ctx->priv;
+     int ret;
+ 
++    priv->fd = -1;
++    TAILQ_INIT(&priv->cmdq);
++    ret = pthread_mutex_init(&priv->qlock, NULL);
++    if (ret)
++        return -ret;
++
++    ret = pthread_mutex_init(&priv->graphlock, NULL);
++    if (ret) {
++        pthread_mutex_destroy(&priv->qlock);
++        return -ret;
++    }
++
+     priv->fd = eventfd(0, EFD_CLOEXEC);
+     if (priv->fd < 0) {
+         ret = -errno;
+@@ -380,15 +418,31 @@ static int audio_graph_init(MediadPlugin* ctx)
+         goto err;
+     }
+ 
+-    TAILQ_INIT(&priv->cmdq);
+-    pthread_mutex_init(&priv->qlock, NULL);
++    /* Every filter has an allocation-free unlink request. STOP must remain
++     * possible when transient command allocation is exhausted.
++     */
++    priv->stops = av_mallocz(priv->graph->nb_filters * sizeof(*priv->stops));
++    if (!priv->stops) {
++        ret = -ENOMEM;
++        goto err;
++    }
++    for (int i = 0; i < priv->graph->nb_filters; i++) {
++        priv->stops[i].filter = priv->graph->filters[i];
++        priv->stops[i].cmd = "unlink";
++        priv->stops[i].reserved = true;
++    }
+ 
+     return 0;
+ err:
+-    if (priv->fd > 0) {
++    avfilter_graph_free(&priv->graph);
++    av_freep(&priv->occupied);
++    av_freep(&priv->stops);
++    if (priv->fd >= 0) {
+         close(priv->fd);
+         priv->fd = -1;
+     }
++    pthread_mutex_destroy(&priv->qlock);
++    pthread_mutex_destroy(&priv->graphlock);
+ 
+     return ret;
+ }
+@@ -427,6 +481,8 @@ static MediaCommand* audio_graph_create_command(const char* cmd, const char* arg
+         return NULL;
+     }
+ 
++    newcmd->reserved = false;
++    newcmd->queued = true;
+     newcmd->cmd = cmd_dup;
+     newcmd->arg = arg_dup;
+     newcmd->res = res;
+@@ -449,12 +505,14 @@ static int audio_graph_queue_command(MediaGraphPriv* priv, AVFilterContext* filt
+     int ret = 0;
+ 
+     if (audio_graph_immediate_cmd(cmd)) {
++        pthread_mutex_lock(&priv->graphlock);
+         if (!strcmp(cmd, "volume")) {
+             snprintf(msg, sizeof(msg), "volume=%.*s", (int)(sizeof(msg) - 8), arg ? arg : "");
+-            return avfilter_process_command(filter, "set_parameter", msg, res, res_len, 0);
+-        }
+-
+-        return avfilter_process_command(filter, cmd, arg, res, res_len, flags);
++            ret = avfilter_process_command(filter, "set_parameter", msg, res, res_len, 0);
++        } else
++            ret = avfilter_process_command(filter, cmd, arg, res, res_len, flags);
++        pthread_mutex_unlock(&priv->graphlock);
++        return ret;
+     }
+ 
+     newcmd = audio_graph_create_command(cmd, arg, res, filter);
+@@ -537,9 +595,15 @@ static int audio_graph_dequeue_command(MediaGraphPriv* priv, bool process)
+     pthread_mutex_unlock(&priv->qlock);
+ 
+ exit:
+-    free(cmd->cmd);
+-    free(cmd->arg);
+-    free(cmd);
++    if (cmd->reserved) {
++        pthread_mutex_lock(&priv->qlock);
++        cmd->queued = false;
++        pthread_mutex_unlock(&priv->qlock);
++    } else {
++        free(cmd->cmd);
++        free(cmd->arg);
++        free(cmd);
++    }
+     return ret;
+ }
+ 
+@@ -554,6 +618,13 @@ static int audio_graph_uninit(MediadPlugin* ctx)
+ 
+     avfilter_graph_free(&priv->graph);
+     av_freep(&priv->occupied);
++    av_freep(&priv->stops);
++    if (priv->fd >= 0) {
++        close(priv->fd);
++        priv->fd = -1;
++    }
++    pthread_mutex_destroy(&priv->qlock);
++    pthread_mutex_destroy(&priv->graphlock);
+ 
+     return 0;
+ }
+@@ -647,15 +718,20 @@ static int audio_graph_run_once(MediadPlugin* ctx)
+     MediaGraphPriv* priv = ctx->priv;
+     int ret;
+ 
++    pthread_mutex_lock(&priv->graphlock);
+     ret = audio_graph_run_all(priv->graph);
+     if (ret < 0)
+-        return ret;
++        goto out;
+ 
+     do {
+         ret = audio_graph_dequeue_command(priv, true);
+     } while (ret >= 0);
+ 
+-    return ret == -EAGAIN ? 0 : ret;
++    if (ret == -EAGAIN)
++        ret = 0;
++out:
++    pthread_mutex_unlock(&priv->graphlock);
++    return ret;
+ }
+ 
+ static int audio_graph_dump_link(AVBPrint* buf, AVFilterLink* link, const char* filter_ext_info)
+@@ -821,7 +897,9 @@ static int audio_graph_handler(MediadPlugin* ctx, struct media_server_conn* conn
+         conn, target, cmd, arg, flags, res, res_len);
+ 
+     if (!target && !strcmp(cmd, "dump")) {
++        pthread_mutex_lock(&priv->graphlock);
+         dump = audio_graph_server_dump(priv->graph, NULL);
++        pthread_mutex_unlock(&priv->graphlock);
+         if (dump)
+             MEDIA_INFO("\n%s\n", dump);
+ 
+@@ -927,19 +1005,43 @@ int audio_graph_start(AVFilterContext* src, int format, int sample_rate, int cha
+     return 0;
+ }
+ 
+-int audio_graph_stop(AVFilterContext* src)
++static int audio_graph_queue_stop(AVFilterContext* src, const char* arg)
+ {
+     MediaGraphPriv* priv = audio_graph_plugin.priv;
+-    int ret;
+-
+-    ret = audio_graph_queue_command(priv, src, "unlink",
+-        NULL, NULL, 0, 0);
+-    if (ret < 0)
+-        MEDIA_ERR("unlink %s failed: %d\n", src->name, ret);
++    int ret = -EINVAL;
+ 
++    pthread_mutex_lock(&priv->qlock);
++    for (int i = 0; i < priv->graph->nb_filters; i++) {
++        MediaCommand* stop = &priv->stops[i];
++        if (stop->filter != src)
++            continue;
++        if (!stop->queued) {
++            stop->queued = true;
++            stop->arg = (char*)arg; /* static strings, owned by the reserve */
++            TAILQ_INSERT_TAIL(&priv->cmdq, stop, entries);
++        } else if (arg) {
++            /* A pending natural drain must not mask explicit cancellation. */
++            stop->arg = (char*)arg;
++        }
++        ret = 0;
++        break;
++    }
++    pthread_mutex_unlock(&priv->qlock);
++    if (ret == 0)
++        audio_graph_try_touch(priv);
+     return ret;
+ }
+ 
++int audio_graph_stop(AVFilterContext* src)
++{
++    return audio_graph_queue_stop(src, NULL);
++}
++
++int audio_graph_abort(AVFilterContext* src)
++{
++    return audio_graph_queue_stop(src, "abort");
++}
++
+ int audio_graph_close(AVFilterContext** src)
+ {
+     MediaGraphPriv* priv = audio_graph_plugin.priv;
+@@ -1016,6 +1118,11 @@ int audio_graph_get_parameter(AVFilterContext* src, const char* key, char* res,
+     ret = audio_graph_queue_command(priv, src, "get_parameter", msg, res, res_len, 0);
+     if (ret < 0)
+         MEDIA_ERR("%s get_parameter failed ret:%d\n", src->name, ret);
++    else if (!strcmp(key, "drain_status"))
++        /* The query schedules a nonblocking sink drain retry. Wake the
++         * service even if a lost DMA completion produced no poll event.
++         */
++        audio_graph_try_touch(priv);
+ 
+     return ret;
+ }
+diff --git a/server/audio_graph.h b/server/audio_graph.h
+index a71ea84cd8fa417827addb6c8d67d792fdfcc36e..2480de6daa7ed19bb6e5b785f2ad9a9baabfee79 100644
+--- a/server/audio_graph.h
++++ b/server/audio_graph.h
+@@ -71,6 +71,12 @@ int audio_graph_start(AVFilterContext* src, int format, int sample_rate, int cha
+  */
+ int audio_graph_stop(AVFilterContext* src);
+ 
++/* Discard graph-owned samples after output progress has timed out. The
++ * downstream PCM close retains any DMA-owned buffers until safe recovery.
++ * Like stop, this enqueues a reserved request without allocating memory.
++ */
++int audio_graph_abort(AVFilterContext* src);
++
+ /*
+  * Release a audio stream.
+  * @ctx: [in,out] audio stream context
+diff --git a/server/audio_negotiation.c b/server/audio_negotiation.c
+index b4110d6b7612f4c2bab9e09b422d38c7e6b2858d..eecc4fa42f59d7174fa3784d6e46065c1708a338 100644
+--- a/server/audio_negotiation.c
++++ b/server/audio_negotiation.c
+@@ -87,6 +87,8 @@ static int audio_query_formats(AVFilterContext* ctx)
+         if (ret != AVERROR(EAGAIN))
+             MEDIA_INFO("Query format failed for '%s': %s\n",
+                 ctx->name, av_err2str(ret));
++        av_freep(&cfg_in_dyn);
++        av_freep(&cfg_out_dyn);
+         return ret;
+     }
+ 
+@@ -213,90 +215,112 @@ static int audio_set_format_config(AVFilterLink* link, int fmt, int rate, int ch
+     return ret;
+ }
+ 
+-static AVFilterFormats* audio_create_merged_formats(AVFilterFormats* a, AVFilterFormats* b)
++static int audio_create_merged_formats(const AVFilterFormats* a,
++    const AVFilterFormats* b, bool any_rate, AVFilterFormats** result)
+ {
+-    AVFilterFormats* merged = NULL;
+-    int common_formats[65] = { 0 };
+-    int count = 0;
+-    int i, j;
++    int ret, i, j;
+ 
+     if (!a || !b)
+-        return NULL;
++        return 0;
++
++    /* Only sample-rate lists use an empty list to mean any rate. */
++    if (any_rate && !a->nb_formats)
++        a = b;
++    if (any_rate && !b->nb_formats)
++        b = a;
++    if (any_rate && !a->nb_formats) {
++        *result = ff_all_samplerates();
++        return *result ? 0 : AVERROR(ENOMEM);
++    }
+ 
+-    for (i = 0; i < a->nb_formats && count < 64; i++) {
++    for (i = 0; i < a->nb_formats; i++) {
+         for (j = 0; j < b->nb_formats; j++) {
+-            if (a->formats[i] == b->formats[j]) {
+-                common_formats[count++] = a->formats[i];
+-                break;
+-            }
++            if (a->formats[i] != b->formats[j])
++                continue;
++            ret = ff_add_format(result, a->formats[i]);
++            if (ret < 0)
++                return ret;
++            break;
+         }
+     }
+-
+-    if (count == 0)
+-        return NULL;
+-
+-    common_formats[count] = -1;
+-    merged = ff_make_format_list(common_formats);
+-    return merged;
++    return 0;
+ }
+ 
+-static AVFilterChannelLayouts* audio_create_merged_channel_layouts(
+-    AVFilterChannelLayouts* a, AVFilterChannelLayouts* b)
++static int audio_create_merged_channel_layouts(const AVFilterChannelLayouts* a,
++    const AVFilterChannelLayouts* b, AVFilterChannelLayouts** result)
+ {
+-    AVFilterChannelLayouts* merged = NULL;
+-    AVChannelLayout layouts[64] = { 0 };
+-    int i, j, count = 0;
+-    int ret = 0;
++    int i, j, k, ret;
+ 
+     if (!a || !b)
+-        return NULL;
++        return 0;
+ 
+-    for (i = 0; i < a->nb_channel_layouts; i++) {
+-        for (j = 0; j < b->nb_channel_layouts; j++) {
+-            if (av_channel_layout_compare(&a->channel_layouts[i],
+-                    &b->channel_layouts[j])
+-                == 0) {
+-                ret = av_channel_layout_copy(&layouts[count], &a->channel_layouts[i]);
+-                if (ret != 0)
+-                    goto fail;
+-                count++;
+-                break;
+-            }
+-        }
++    if (a->all_layouts && b->all_layouts) {
++        *result = a->all_counts && b->all_counts
++            ? ff_all_channel_counts() : ff_all_channel_layouts();
++        return *result ? 0 : AVERROR(ENOMEM);
+     }
+ 
+-    for (i = 0; i < count; i++) {
+-        ret = ff_add_channel_layout(&merged, &layouts[i]);
+-        if (ret < 0)
+-            goto fail;
++    /* Keep a explicit, so any-layout and any-count are handled once. */
++    if (a->all_layouts) {
++        const AVFilterChannelLayouts* tmp = a;
++        a = b;
++        b = tmp;
+     }
+ 
+-fail:
+-    for (i = 0; i < count; i++)
+-        av_channel_layout_uninit(&layouts[i]);
+-    return merged;
++    for (i = 0; i < a->nb_channel_layouts; i++) {
++        const AVChannelLayout* layout = &a->channel_layouts[i];
++        const AVChannelLayout* common = NULL;
++        if (b->all_counts || (b->all_layouts && KNOWN(layout)))
++            common = layout;
++        else {
++            for (j = 0; j < b->nb_channel_layouts; j++) {
++                const AVChannelLayout* other = &b->channel_layouts[j];
++                if (!av_channel_layout_compare(layout, other))
++                    common = layout;
++                else if (layout->nb_channels == other->nb_channels) {
++                    if (!KNOWN(layout))
++                        common = other;
++                    else if (!KNOWN(other))
++                        common = layout;
++                }
++                if (!common)
++                    continue;
++                /* Explicit lists can contain several layouts of one count. */
++                for (k = 0; *result && k < (*result)->nb_channel_layouts; k++)
++                    if (!av_channel_layout_compare(common, &(*result)->channel_layouts[k]))
++                        break;
++                if (!*result || k == (*result)->nb_channel_layouts) {
++                    ret = ff_add_channel_layout(result, common);
++                    if (ret < 0)
++                        return ret;
++                }
++                common = NULL;
++            }
++        }
++        if (common) {
++            ret = ff_add_channel_layout(result, common);
++            if (ret < 0)
++                return ret;
++        }
++    }
++    return 0;
+ }
+ 
+-// Calculate intersection of two format configurations
+-static void audio_calculate_intersection(
+-    AVFilterFormatsConfig* a,
+-    AVFilterFormatsConfig* b,
+-    AVFilterFormatsConfig* result)
++static int audio_calculate_intersection(const AVFilterFormatsConfig* a,
++    const AVFilterFormatsConfig* b, AVFilterFormatsConfig* result)
+ {
++    int ret;
+     if (!a || !b)
+-        return;
++        return 0;
+ 
+-    memset(result, 0, sizeof(AVFilterFormatsConfig));
+-
+-    if (a->formats && b->formats)
+-        result->formats = audio_create_merged_formats(a->formats, b->formats);
+-
+-    if (a->samplerates && b->samplerates)
+-        result->samplerates = audio_create_merged_formats(a->samplerates, b->samplerates);
+-
+-    if (a->channel_layouts && b->channel_layouts)
+-        result->channel_layouts = audio_create_merged_channel_layouts(
+-            a->channel_layouts, b->channel_layouts);
++    ret = audio_create_merged_formats(a->formats, b->formats, false, &result->formats);
++    if (ret < 0)
++        return ret;
++    ret = audio_create_merged_formats(a->samplerates, b->samplerates, true, &result->samplerates);
++    if (ret < 0)
++        return ret;
++    return audio_create_merged_channel_layouts(a->channel_layouts,
++        b->channel_layouts, &result->channel_layouts);
+ }
+ 
+ static void audio_get_max_format(AVFilterFormatsConfig* config, int* fmt)
+@@ -517,13 +541,19 @@ static int audio_negotiate_link(
+     AVFilterFormatsConfig final_config = { 0 };
+     AVFilterFormatsConfig sink_config = { 0 };
+     AVFilterFormatsConfig src_config = { 0 };
+-    int i;
++    int i, ret = 0;
+ 
+     // Stage 1: Calculate internal format intersections for both links
+-    if (isrc_link)
+-        audio_calculate_intersection(&isrc_link->outcfg, &isrc_link->incfg, &src_config);
+-    if (isink_link)
+-        audio_calculate_intersection(&isink_link->outcfg, &isink_link->incfg, &sink_config);
++    if (isrc_link) {
++        ret = audio_calculate_intersection(&isrc_link->outcfg, &isrc_link->incfg, &src_config);
++        if (ret < 0)
++            goto out;
++    }
++    if (isink_link) {
++        ret = audio_calculate_intersection(&isink_link->outcfg, &isink_link->incfg, &sink_config);
++        if (ret < 0)
++            goto out;
++    }
+ 
+ #if defined(CONFIG_MEDIA_LOG_DEBUG)
+     MEDIA_INFO("[Intersection Debug] After src_link (outcfg & incfg):\n");
+@@ -533,7 +563,9 @@ static int audio_negotiate_link(
+ #endif
+ 
+     // Stage 2: Calculate final intersection between source and sink configurations
+-    audio_calculate_intersection(&src_config, &sink_config, &final_config);
++    ret = audio_calculate_intersection(&src_config, &sink_config, &final_config);
++    if (ret < 0)
++        goto out;
+ 
+ #if defined(CONFIG_MEDIA_LOG_DEBUG)
+     MEDIA_INFO("[Intersection Debug] After final intersection (src_config & sink_config):\n");
+@@ -646,11 +678,12 @@ static int audio_negotiate_link(
+         }
+     }
+ 
++out:
+     audio_free_formats_config(&src_config);
+     audio_free_formats_config(&sink_config);
+     audio_free_formats_config(&final_config);
+ 
+-    return 0;
++    return ret;
+ }
+ 
+ static int audio_negotiation_enabled_outputs(int enabled_count, AVFilterLink** enabled_outputs)
+diff --git a/server/media_daemon.c b/server/media_daemon.c
+index e87dd05e44c8180a118b087ab659cdc432f0343d..c5ca06e7c4d8e548df395435a3ea6ae1eda34b14 100644
+--- a/server/media_daemon.c
++++ b/server/media_daemon.c
+@@ -25,6 +25,8 @@
+ #include <assert.h>
+ #include <errno.h>
+ #include <poll.h>
++#include <pthread.h>
++#include <signal.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
+@@ -53,6 +55,19 @@ typedef struct MediaPriv {
+ /****************************************************************************
+  * Private Data
+  ****************************************************************************/
++
++/* FLAT builds share plugin state between task invocations. Reject a second
++ * instance before it can replace the running daemon's plugin allocations.
++ */
++static pthread_mutex_t g_instance_lock = PTHREAD_MUTEX_INITIALIZER;
++static volatile sig_atomic_t g_stop_requested;
++
++static void media_daemon_signal(int signo)
++{
++    if (signo == SIGTERM)
++        g_stop_requested = 1;
++}
++
+ #ifdef CONFIG_MEDIA_FOCUS
+ extern MediadPlugin media_focus_plugin;
+ #endif
+@@ -112,11 +127,42 @@ MediadPlugin* media_plugin_get(const char* name)
+ int main(int argc, char* argv[])
+ {
+     MediaPriv* priv;
+-    int ret, n, i;
++    struct sigaction action = { 0 }, previous_action;
++    sigset_t blocked, previous_mask, wait_mask;
++    int ret, n, i, initialized = 0;
++    bool stopping = false;
++
++    ret = pthread_mutex_trylock(&g_instance_lock);
++    if (ret != 0) {
++        MEDIA_ERR("media daemon already active or unavailable: %d\n", ret);
++        return -ret;
++    }
+ 
+     priv = zalloc(sizeof(MediaPriv));
+-    if (!priv)
+-        return -ENOMEM;
++    if (!priv) {
++        ret = -ENOMEM;
++        goto unlock;
++    }
++
++    /* Workers inherit SIGTERM blocked. Only the service ppoll temporarily
++     * unmasks it; the handler never touches plugin state or descriptors.
++     */
++    sigemptyset(&blocked);
++    sigaddset(&blocked, SIGTERM);
++    ret = pthread_sigmask(SIG_BLOCK, &blocked, &previous_mask);
++    if (ret) {
++        ret = -ret;
++        goto free_priv;
++    }
++    g_stop_requested = 0;
++    action.sa_handler = media_daemon_signal;
++    sigemptyset(&action.sa_mask);
++    if (sigaction(SIGTERM, &action, &previous_action) < 0) {
++        ret = -errno;
++        goto restore_mask;
++    }
++    wait_mask = previous_mask;
++    sigdelset(&wait_mask, SIGTERM);
+ 
+     for (i = 0; i < ARRAY_SIZE(g_media); i++) {
+         ret = mediad_plugin_init(g_media[i]);
+@@ -124,9 +170,39 @@ int main(int argc, char* argv[])
+             MEDIA_ERR("%s create failed ret:%d\n", g_media[i]->name, ret);
+             goto out;
+         }
++        initialized++;
+     }
+ 
+     while (1) {
++        if (g_stop_requested && !stopping) {
++            /* Reject dispatch and wake pending internal RPC before waiting
++             * for workers which may themselves be MEDIA clients.
++             */
++            if (media_server_plugin.request_stop)
++                media_server_plugin.request_stop(&media_server_plugin);
++            for (i = 0; i < ARRAY_SIZE(g_media); i++) {
++                if (g_media[i] != &media_server_plugin && g_media[i]->request_stop)
++                    g_media[i]->request_stop(g_media[i]);
++            }
++            stopping = true;
++        }
++        if (stopping) {
++            bool drained = true;
++            for (i = 0; i < ARRAY_SIZE(g_media); i++) {
++                if (!g_media[i]->drained)
++                    continue;
++                ret = g_media[i]->drained(g_media[i]);
++                if (ret <= 0) {
++                    drained = false;
++                    if (ret < 0)
++                        MEDIA_ERR("%s drain failed %d\n", g_media[i]->name, ret);
++                }
++            }
++            if (drained) {
++                ret = 0;
++                break;
++            }
++        }
+         for (n = i = 0; i < ARRAY_SIZE(g_media); i++) {
+             if (!g_media[i]->get)
+                 continue;
+@@ -141,9 +217,18 @@ int main(int argc, char* argv[])
+                 priv->idx[n++] = i;
+         }
+ 
+-        assert(n > 0 && n < MAX_POLLFDS);
++        assert(n >= 0 && n <= MAX_POLLFDS);
+ 
+-        poll(priv->fds, n, -1);
++        ret = ppoll(priv->fds, n, NULL, &wait_mask);
++        if (ret < 0) {
++            if (errno != EINTR) {
++                MEDIA_ERR("media daemon ppoll failed %d\n", errno);
++                g_stop_requested = 1;
++            }
++            continue;
++        }
++        if (g_stop_requested && !stopping)
++            continue; /* discard ready RPC entries before beginning stop */
+ 
+         for (i = 0; i < n; i++) {
+             if (!priv->fds[i].revents)
+@@ -167,9 +252,29 @@ int main(int argc, char* argv[])
+ 
+ out:
+     MEDIA_INFO("media daemon exit\n");
+-    for (i = 0; i < ARRAY_SIZE(g_media); i++)
+-        mediad_plugin_uinit(g_media[i]);
++    /* Startup failure has no accepted clients. Runtime shutdown keeps the
++     * server's connection cookies alive through Session/Focus destruction.
++     */
++    for (i = initialized; i > 0; i--) {
++        int release_ret;
++        if (stopping && g_media[i - 1] == &media_server_plugin)
++            continue;
++        release_ret = mediad_plugin_uinit(g_media[i - 1]);
++        if (release_ret < 0) {
++            ret = release_ret;
++            goto restore_action; /* never free a refused plugin's dependencies */
++        }
++    }
++    if (stopping)
++        ret = mediad_plugin_uinit(&media_server_plugin);
+ 
++restore_action:
++    sigaction(SIGTERM, &previous_action, NULL);
++restore_mask:
++    pthread_sigmask(SIG_SETMASK, &previous_mask, NULL);
++free_priv:
+     free(priv);
+-    return 0;
++unlock:
++    pthread_mutex_unlock(&g_instance_lock);
++    return ret;
+ }
+diff --git a/server/media_player.c b/server/media_player.c
+index 54f9f054fb5a85e5fb49576c5c9863de20d34c71..8e880a69de209d7b9990dcdc3359a717eed35607 100644
+--- a/server/media_player.c
++++ b/server/media_player.c
+@@ -27,6 +27,7 @@
+ #include <netpacket/rpmsg.h>
+ #include <poll.h>
+ #include <pthread.h>
++#include <stdatomic.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -120,6 +121,7 @@ typedef struct OutputStream {
+ } OutputStream;
+ 
+ typedef struct MediaPlayerContext MediaPlayerContext;
++typedef struct MediaPlayerPriv MediaPlayerPriv;
+ 
+ typedef struct MediaPlayerPoll {
+     const char* name;
+@@ -128,8 +130,13 @@ typedef struct MediaPlayerPoll {
+ } MediaPlayerPoll;
+ 
+ typedef struct MediaPlayerContext {
++    /* The service owns the joinable worker, including its final epilogue. */
++    MediaPlayerPriv* owner;
++    pthread_t thread;
+     /* communication with media client */
+     int tran_fd;
++    atomic_int connection_state; /* 0: server-owned, 1: committed, -1: canceled */
++    atomic_bool cancel_requested;
+     int notify_fd;
+     int event_fd;
+     int poll_timeout; /** < timeout for poll, default is -1, set for fbdev in global_opt */
+@@ -138,11 +145,19 @@ typedef struct MediaPlayerContext {
+ 
+     int event;
+     int cmd_max;
+-    int state;
++    atomic_int state;
+     int exit;
+     int loop_count;
+     int offload;
+     int pending_stop;
++    int decoder_done;
++    int completion_result;
++    int64_t output_deadline;
++    uint32_t output_progress;
++    uint32_t output_seen;
++    int audio_draining;
++    int audio_linked;
++    int stop_notify;
+     int live_stream; /** < default is false, when set to true, avsync is disabled */
+     uint32_t aframe_cnt;
+     uint32_t vframe_cnt;
+@@ -152,6 +167,8 @@ typedef struct MediaPlayerContext {
+     pthread_mutex_t mutex;
+     char* protocol_map;
+     struct PlayerCmdQueue cmd_queue;
++    PlayerCmd* control_cmd;
++    int control_queued;
+     float volume;
+     int interrupt;
+ 
+@@ -181,9 +198,12 @@ typedef struct MediaPlayerContext {
+     MediaVOutputContext* video_output;
+ } MediaPlayerContext;
+ 
+-typedef struct MediaPlayerPriv {
++struct MediaPlayerPriv {
+     MediaPlayerContext ctxs[CONFIG_MEDIA_PLAYER_MAX_CNT];
+-} MediaPlayerPriv;
++    int completed_fd;
++    pthread_mutex_t lifecycle_lock;
++    bool stopping;
++};
+ 
+ /****************************************************************************
+  * Function declaration
+@@ -192,6 +212,7 @@ static int media_player_seek(MediaPlayerContext* ctx, uint32_t ms, int flush);
+ static int media_player_start(MediaPlayerContext* ctx);
+ static int media_player_stop(MediaPlayerContext* ctx);
+ static void media_player_poll(MediaPlayerContext* ctx);
++static int media_player_get_latency(MediaPlayerContext* ctx, char* res, int res_len);
+ static AVFrame* media_player_queue_pop(MediaPlayerContext* ctx, int type);
+ static int media_player_queue_cnt(MediaPlayerContext* ctx, int type);
+ static int media_player_get_pollfd(MediaPlayerContext* ctx, struct pollfd* fds, int count);
+@@ -209,7 +230,8 @@ static inline int media_player_is_exit(MediaPlayerContext* ctx)
+ {
+     int is_exit;
+     pthread_mutex_lock(&ctx->mutex);
+-    is_exit = ctx->exit && (!ctx->audio_output_state || !ctx->audio_stream);
++    is_exit = ctx->exit && !ctx->audio_draining
++        && (!ctx->audio_output_state || !ctx->audio_stream);
+     pthread_mutex_unlock(&ctx->mutex);
+     return is_exit;
+ }
+@@ -288,6 +310,7 @@ static int media_player_on_event_cb(void* udata, int evt, int64_t args)
+         MEDIA_INFO("ctx %p received unlink event form audio_output.", ctx);
+         pthread_mutex_lock(&ctx->mutex);
+         ctx->audio_output_state = 0;
++        ctx->audio_linked = 0;
+         write(ctx->event_fd, &cnt, sizeof(cnt));
+         pthread_mutex_unlock(&ctx->mutex);
+         return 0;
+@@ -296,18 +319,21 @@ static int media_player_on_event_cb(void* udata, int evt, int64_t args)
+     frame = media_player_queue_pop(ctx, AVMEDIA_TYPE_AUDIO);
+     if (!frame) {
+         pthread_mutex_lock(&ctx->mutex);
+-        if (ctx->audio_output_state & MEDIA_AUDIO_OUTPUT_XRUN) {
++        if (ctx->decoder_done || (ctx->audio_output_state & MEDIA_AUDIO_OUTPUT_XRUN)) {
++            /* The last frame is still held by abufsrc. Wake the player to
++             * unlink it; natural EOF must not pause downstream draining.
++             */
++            write(ctx->event_fd, &cnt, sizeof(cnt));
+             pthread_mutex_unlock(&ctx->mutex);
+             return AVERROR(EAGAIN);
+         }
+ 
+         ctx->audio_output_state |= MEDIA_AUDIO_OUTPUT_XRUN;
+ 
+-        if (ctx->audio_output) {
+-            MEDIA_INFO("player %s xrun, pause audio output.", ctx->name);
+-            audio_graph_pause(ctx->audio_output);
+-        }
+-
++        /* A temporarily empty decoder queue is not a user pause. Keep
++         * abufsrc's pending frame intact and wake the producer; a pause
++         * command would fade its tail on every refill boundary. */
++        write(ctx->event_fd, &cnt, sizeof(cnt));
+         pthread_mutex_unlock(&ctx->mutex);
+ 
+         return AVERROR(EAGAIN);
+@@ -315,6 +341,9 @@ static int media_player_on_event_cb(void* udata, int evt, int64_t args)
+ 
+     av_frame_move_ref(out_frame, frame);
+     av_frame_free(&frame);
++    pthread_mutex_lock(&ctx->mutex);
++    ctx->output_progress++;
++    pthread_mutex_unlock(&ctx->mutex);
+ 
+     write(ctx->event_fd, &cnt, sizeof(cnt));
+ 
+@@ -364,7 +393,7 @@ static inline int media_player_dat_available(MediaPlayerContext* ctx)
+ {
+     int ret;
+ 
+-    if (ctx->state >= MEDIA_PLAYER_STATE_STOPPED)
++    if (ctx->state >= MEDIA_PLAYER_STATE_STOPPED || ctx->decoder_done)
+         return 0;
+ 
+     /* As long as one data queue less than nb_queue_max, continue read */
+@@ -451,11 +480,19 @@ static int media_player_read_frame(MediaPlayerContext* ctx)
+ static void media_player_notify_event(MediaPlayerContext* ctx, int event, int result, const char* extra)
+ {
+     media_parcel notify;
++    int ret;
+ 
+     media_parcel_init(&notify);
+-    media_parcel_append_printf(&notify, "%i%i%s", event, result, extra);
+-    if (ctx->notify_fd > 0)
+-        media_parcel_send(&notify, ctx->notify_fd, MEDIA_PARCEL_SEND, MSG_DONTWAIT);
++    ret = media_parcel_append_printf(&notify, "%i%i%s", event, result, extra);
++    if (ret >= 0 && ctx->notify_fd > 0)
++        ret = media_parcel_send(&notify, ctx->notify_fd, MEDIA_PARCEL_SEND, MSG_DONTWAIT);
++    if (ret < 0 && ctx->notify_fd > 0) {
++        /* A dropped or incomplete event invalidates this notification stream.
++         * EOF lets the client report loss and establish a fresh listener.
++         */
++        close(ctx->notify_fd);
++        ctx->notify_fd = 0;
++    }
+ 
+     media_parcel_deinit(&notify);
+     return;
+@@ -491,6 +528,8 @@ static int media_player_start_audio(MediaPlayerContext* ctx)
+         ctx);
+     if (ret < 0)
+         MEDIA_ERR("Failed to start audio graph: %s\n", av_err2str(ret));
++    else
++        ctx->audio_linked = 1;
+ 
+ out:
+     return ret;
+@@ -507,7 +546,7 @@ static int media_player_resume_audio(MediaPlayerContext* ctx, bool xrun)
+     if (ret < 0)
+         MEDIA_ERR("Failed to resume audio graph: %s\n", av_err2str(ret));
+ 
+-    if (!xrun)
++    if (!xrun && ret >= 0)
+         ctx->state = MEDIA_PLAYER_STATE_STARTED;
+ 
+     return ret;
+@@ -534,7 +573,8 @@ static int media_player_queue_push(MediaPlayerContext* ctx, int idx, AVFrame* fr
+ 
+     queued_cnt = ff_framequeue_queued_frames(&ctx->streams[idx]->queue);
+ 
+-    if (queued_cnt == ctx->streams[idx]->nb_queue_max) {
++    if (ctx->state == MEDIA_PLAYER_STATE_STARTED
++        && queued_cnt == ctx->streams[idx]->nb_queue_max) {
+         if (ctx->audio_output_state & MEDIA_AUDIO_OUTPUT_STARTING) {
+             ctx->audio_output_state &= ~MEDIA_AUDIO_OUTPUT_STARTING;
+             ret = media_player_start_audio(ctx);
+@@ -564,7 +604,10 @@ static void media_player_clear_queue(MediaPlayerContext* ctx, int what)
+     if (what & MEDIA_PLAYER_CMD_QUEUE_IDX) {
+         while ((msg = SIMPLEQ_FIRST(&ctx->cmd_queue)) != NULL) {
+             SIMPLEQ_REMOVE_HEAD(&ctx->cmd_queue, entry);
+-            av_freep(&msg);
++            if (msg == ctx->control_cmd)
++                ctx->control_queued = 0;
++            else
++                av_freep(&msg);
+         }
+     }
+ 
+@@ -652,6 +695,10 @@ static int media_player_interrupt(void* opaque)
+     struct pollfd* fd = &fds[0];
+     uint64_t cnt = 1;
+     int pending_stop = 0;
++    if (ctx->cancel_requested) {
++        ctx->interrupt = 1;
++        return 1;
++    }
+     fds[0].fd = ctx->tran_fd;
+     fds[0].events = POLLIN;
+     fds[0].revents = 0;
+@@ -962,7 +1009,114 @@ static void media_player_notify_finalize(MediaPlayerContext* ctx)
+     if (ctx->notify_fd > 0) {
+         close(ctx->notify_fd);
+         ctx->notify_fd = 0;
+-        ctx->offset = 0;
++    }
++}
++
++/* Complete only after the decoder, source, graph and PCM sink have drained.
++ * The unlink callback clears audio_output_state before ALSA has finished.
++ * Never hold ctx->mutex while querying the graph (its callback takes it).
++ */
++static int media_player_finish(MediaPlayerContext* ctx)
++{
++    char result[32];
++    int output_state, linked, ret, drained = 0, error = 0;
++
++    pthread_mutex_lock(&ctx->mutex);
++    output_state = ctx->audio_output_state;
++    linked = ctx->audio_linked;
++    pthread_mutex_unlock(&ctx->mutex);
++
++    if (ctx->audio_draining) {
++        if (linked)
++            return 0; /* unlink is still queued */
++        ret = audio_graph_get_parameter(ctx->audio_output, "drain_status", result, sizeof(result));
++        if (ret < 0)
++            return ret;
++        if (sscanf(result, "drained:%d:error:%d", &drained, &error) != 2)
++            return AVERROR(EIO);
++        if (!drained)
++            return 0;
++        ctx->audio_draining = 0;
++        /* A user-requested stop discards queued audio successfully. Keep
++         * transport failures distinct from that expected cancellation. */
++        if (error < 0 && !(ctx->stop_notify && error == AVERROR(ECANCELED))
++            && !ctx->completion_result)
++            ctx->completion_result = error;
++        if (ctx->stop_notify) {
++            ctx->stop_notify = 0;
++            media_player_event_cb(ctx, MEDIA_EVENT_STOPPED, ctx->completion_result, NULL);
++            ctx->completion_result = 0;
++        }
++    }
++
++    if (!ctx->decoder_done || ctx->state != MEDIA_PLAYER_STATE_STARTED)
++        return 0;
++
++    if (!media_player_is_queue_empty(ctx)) {
++        ret = 0;
++        pthread_mutex_lock(&ctx->mutex);
++        if (output_state & MEDIA_AUDIO_OUTPUT_STARTING) {
++            ctx->audio_output_state &= ~MEDIA_AUDIO_OUTPUT_STARTING;
++            ret = media_player_start_audio(ctx);
++        } else if (output_state & MEDIA_AUDIO_OUTPUT_XRUN) {
++            ctx->audio_output_state &= ~MEDIA_AUDIO_OUTPUT_XRUN;
++            ret = media_player_resume_audio(ctx, true);
++        }
++        if (ret >= 0)
++            ctx->audio_output_state |= MEDIA_AUDIO_OUTPUT_STARTED;
++        pthread_mutex_unlock(&ctx->mutex);
++        return ret;
++    }
++
++    if (linked) {
++        ret = ctx->completion_result == AVERROR(ETIMEDOUT)
++            ? audio_graph_abort(ctx->audio_output) : audio_graph_stop(ctx->audio_output);
++        if (ret < 0)
++            return ret;
++        ctx->audio_draining = 1;
++        return 0;
++    }
++
++    ctx->state = MEDIA_PLAYER_STATE_COMPLETED;
++    media_player_event_cb(ctx, MEDIA_EVENT_COMPLETED, ctx->completion_result, NULL);
++    if (ctx->pending_stop)
++        return media_player_stop(ctx);
++    return 0;
++}
++
++/* A lost output callback can fill the queues before the decoder reaches
++ * EOF. Observe source consumption during STARTED as well as final draining.
++ * User pause suspends this watchdog. It does not bound blocking demuxer I/O.
++ */
++static void media_player_check_output(MediaPlayerContext* ctx)
++{
++    uint32_t progress;
++    int linked;
++    int64_t now = av_gettime_relative();
++
++    if (ctx->state != MEDIA_PLAYER_STATE_STARTED || ctx->audio_draining)
++        return;
++    pthread_mutex_lock(&ctx->mutex);
++    linked = ctx->audio_linked;
++    progress = ctx->output_progress;
++    pthread_mutex_unlock(&ctx->mutex);
++    if (!linked)
++        return;
++
++    if (!ctx->output_deadline || progress != ctx->output_seen) {
++        int64_t latency = 0;
++        char result[32];
++        media_player_get_latency(ctx, result, sizeof(result));
++        sscanf(result, "%" SCNd64, &latency);
++        latency = av_clip64(latency, 0, 30000000);
++        ctx->output_deadline = now + 2000000 + 2 * latency;
++        ctx->output_seen = progress;
++    } else if (now >= ctx->output_deadline) {
++        media_player_clear_queue(ctx, MEDIA_PLAYER_DATA_QUEUE_IDX);
++        pthread_mutex_lock(&ctx->mutex);
++        ctx->decoder_done = 1;
++        ctx->completion_result = AVERROR(ETIMEDOUT);
++        pthread_mutex_unlock(&ctx->mutex);
+     }
+ }
+ 
+@@ -984,41 +1138,12 @@ static int media_player_proc_dat(MediaPlayerContext* ctx)
+ 
+     if (ret >= 0 || ret == AVERROR_EXIT)
+         return ret;
+-    else if (ret == AVERROR_EOF) {
+-        if (!media_player_is_queue_empty(ctx)) {
+-
+-            pthread_mutex_lock(&ctx->mutex);
+-            if (ctx->audio_output_state & MEDIA_AUDIO_OUTPUT_STARTING) {
+-                ctx->audio_output_state &= ~MEDIA_AUDIO_OUTPUT_STARTING;
+-                ret = media_player_start_audio(ctx);
+-            } else if (ctx->audio_output_state & MEDIA_AUDIO_OUTPUT_XRUN) {
+-                ctx->audio_output_state &= ~MEDIA_AUDIO_OUTPUT_XRUN;
+-                ret = media_player_resume_audio(ctx, true);
+-            }
+ 
+-            if (ret >= 0)
+-                ctx->audio_output_state |= MEDIA_AUDIO_OUTPUT_STARTED;
+-
+-            pthread_mutex_unlock(&ctx->mutex);
+-
+-            if (ret < 0) {
+-                MEDIA_ERR("audio play/resume failed: %s\n", av_err2str(ret));
+-                return ret;
+-            }
+-        }
+-    }
+-
+-    if (media_player_is_queue_empty(ctx)) {
+-        if (ret == AVERROR_EOF)
+-            ret = 0;
+-        ctx->state = MEDIA_PLAYER_STATE_COMPLETED;
+-        media_player_event_cb(ctx, MEDIA_EVENT_COMPLETED, ret, NULL);
+-    }
+-
+-    if (!ctx->pending_stop)
+-        return ret;
+-
+-    return media_player_stop(ctx);
++    pthread_mutex_lock(&ctx->mutex);
++    ctx->decoder_done = 1;
++    ctx->completion_result = ret == AVERROR_EOF ? 0 : ret;
++    pthread_mutex_unlock(&ctx->mutex);
++    return ret;
+ }
+ 
+ static int media_player_seek(MediaPlayerContext* ctx, uint32_t ms, int flush)
+@@ -1063,6 +1188,12 @@ static int media_player_seek(MediaPlayerContext* ctx, uint32_t ms, int flush)
+         avcodec_flush_buffers(ctx->streams[i]->codec_ctx);
+     }
+ 
++    pthread_mutex_lock(&ctx->mutex);
++    ctx->decoder_done = 0;
++    ctx->output_deadline = 0;
++    ctx->completion_result = 0;
++    ctx->audio_draining = 0;
++    pthread_mutex_unlock(&ctx->mutex);
+     ctx->current_ms = ms;
+     ctx->ts_base = AV_NOPTS_VALUE;
+ 
+@@ -1076,17 +1207,28 @@ end:
+     return ret;
+ }
+ 
+-static void media_player_ctx_init(MediaPlayerContext* ctx)
++static int media_player_ctx_init(MediaPlayerContext* ctx)
+ {
+     AVDictionaryEntry* tag;
++    int ret;
+ 
+     if ((tag = av_dict_get(ctx->global_opts, "cmdqmax", NULL, 0))) {
+         ctx->cmd_max = strtol(tag->value, NULL, 0);
+     } else {
+-        ctx->cmd_max = CONFIG_MEDIA_RECORDER_DATA_QUEUE_SIZE;
++        ctx->cmd_max = CONFIG_MEDIA_PLAYER_CMD_QUEUE_SIZE;
+     }
+ 
+     ctx->state = MEDIA_PLAYER_STATE_STOPPED;
++    ctx->connection_state = 0;
++    ctx->cancel_requested = false;
++    ctx->decoder_done = 0;
++    ctx->output_deadline = 0;
++    ctx->completion_result = 0;
++    ctx->audio_draining = 0;
++    ctx->audio_linked = 0;
++    ctx->output_progress = 0;
++    ctx->output_seen = 0;
++    ctx->stop_notify = 0;
+     ctx->aframe_cnt = 0;
+     ctx->vframe_cnt = 0;
+     ctx->audio_stream = NULL;
+@@ -1100,20 +1242,40 @@ static void media_player_ctx_init(MediaPlayerContext* ctx)
+     ctx->interrupt = 0;
+     SIMPLEQ_INIT(&ctx->cmd_queue);
+     media_parcel_init(&ctx->parcel);
+-    pthread_mutex_init(&ctx->mutex, NULL);
++    ctx->control_queued = 0;
++    ctx->control_cmd = av_malloc(sizeof(PlayerCmd) + 32);
++    if (!ctx->control_cmd)
++        return AVERROR(ENOMEM);
++    ret = pthread_mutex_init(&ctx->mutex, NULL);
++    if (ret) {
++        av_freep(&ctx->control_cmd);
++        return -ret;
++    }
+ 
+     ctx->event_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
++    if (ctx->event_fd < 0) {
++        ret = -errno;
++        pthread_mutex_destroy(&ctx->mutex);
++        av_freep(&ctx->control_cmd);
++        return ret;
++    }
+     ctx->poll_timeout = -1;
+ 
+     ctx->poll_cnt = 0;
+     media_player_poll_add(ctx, "media_player",
+         media_player_get_pollfd,
+         media_player_poll_available);
++    return 0;
+ }
+ 
+ static void media_player_ctx_release(MediaPlayerContext* ctx)
+ {
+-    ctx->state = MEDIA_PLAYER_STATE_IDLE;
++    MediaPlayerPriv* owner = ctx->owner;
++    int notify_fd = ctx->notify_fd;
++
++    /* Serialize the cancellation wake with closing/reusing event_fd. */
++    pthread_mutex_lock(&owner->lifecycle_lock);
++    ctx->notify_fd = 0;
+     ctx->exit = 0;
+     ctx->loop_count = 0;
+     ctx->offload = 0;
+@@ -1123,9 +1285,22 @@ static void media_player_ctx_release(MediaPlayerContext* ctx)
+     av_freep(&ctx->video_stream);
+     close(ctx->event_fd);
+     ctx->event_fd = -1;
+-    media_player_notify_finalize(ctx);
+     media_parcel_deinit(&ctx->parcel);
++    media_player_clear_queue(ctx, MEDIA_PLAYER_CMD_QUEUE_IDX);
++    av_freep(&ctx->control_cmd);
+     pthread_mutex_destroy(&ctx->mutex);
++    /* Publish availability only after the previous owner has released all
++     * resources. The server can immediately reopen this session.
++     */
++    ctx->state = MEDIA_PLAYER_STATE_IDLE;
++    pthread_mutex_unlock(&owner->lifecycle_lock);
++
++    /* A synchronous client with a listener joins on notification EOF. Do
++     * not wake it until the graph and session are reusable. No ctx access
++     * is allowed after publishing IDLE: another opener may already own it.
++     */
++    if (notify_fd > 0)
++        close(notify_fd);
+ }
+ 
+ static void media_player_conn_close(MediaPlayerContext* ctx)
+@@ -1133,11 +1308,12 @@ static void media_player_conn_close(MediaPlayerContext* ctx)
+     close(ctx->tran_fd);
+     ctx->tran_fd = -EPERM;
+     ctx->offset = 0;
+-    media_parcel_deinit(&ctx->parcel);
++    media_parcel_reinit(&ctx->parcel);
+ }
+ 
+ static void media_player_close(MediaPlayerContext* ctx)
+ {
++    media_player_close_demuxer(ctx);
+     media_player_release_stream(ctx);
+ 
+     if (ctx->audio_output)
+@@ -1154,34 +1330,45 @@ static int media_player_pause(MediaPlayerContext* ctx)
+ {
+     int ret = AVERROR(EPERM);
+ 
+-    if (ctx->state == MEDIA_PLAYER_STATE_STARTED) {
+-        ctx->state = MEDIA_PLAYER_STATE_PAUSED;
+-        ret = 0;
+-    }
++    if (ctx->state != MEDIA_PLAYER_STATE_STARTED)
++        goto out;
+ 
+     pthread_mutex_lock(&ctx->mutex);
+-    if (ctx->audio_output_state & MEDIA_AUDIO_OUTPUT_STARTING) {
+-        ctx->audio_output_state &= ~MEDIA_AUDIO_OUTPUT_STARTING;
+-        ctx->audio_output_state |= MEDIA_AUDIO_OUTPUT_STARTED;
++    /* A pending initial fill has no graph to pause. Preserve STARTING so
++     * resume can link it; prefetch must not start output while user-paused.
++     * An EOF unlink/drain already owns the remaining output.
++     */
++    ret = ctx->audio_linked && !ctx->audio_draining
++        ? audio_graph_pause(ctx->audio_output) : 0;
++    if (ret >= 0) {
++        ctx->state = MEDIA_PLAYER_STATE_PAUSED;
++        ctx->output_deadline = 0;
+     }
+     pthread_mutex_unlock(&ctx->mutex);
+ 
+-    if (ctx->audio_output)
+-        audio_graph_pause(ctx->audio_output);
+-
++out:
+     media_player_event_cb(ctx, MEDIA_EVENT_PAUSED, ret, NULL);
+-    return 0;
++    return ret;
+ }
+ 
+ static int media_player_stop(MediaPlayerContext* ctx)
+ {
++    int linked, ret;
++
+     if (ctx->state == MEDIA_PLAYER_STATE_STOPPED)
+         return 0;
+ 
+     media_player_clear_queue(ctx, MEDIA_PLAYER_DATA_QUEUE_IDX);
+-
+-    if (ctx->audio_output && ctx->audio_stream)
+-        audio_graph_stop(ctx->audio_output);
++    pthread_mutex_lock(&ctx->mutex);
++    linked = ctx->audio_linked;
++    pthread_mutex_unlock(&ctx->mutex);
++    if (linked || ctx->audio_draining) {
++        /* Explicit stop also supersedes an in-progress natural EOF drain. */
++        ret = audio_graph_abort(ctx->audio_output);
++        if (ret < 0)
++            return ret;
++        ctx->audio_draining = 1;
++    }
+ 
+     if (ctx->video_output && ctx->video_stream)
+         media_video_output_close(&ctx->video_output);
+@@ -1189,13 +1376,19 @@ static int media_player_stop(MediaPlayerContext* ctx)
+     media_player_close_demuxer(ctx);
+ 
+     pthread_mutex_lock(&ctx->mutex);
+-    ctx->audio_output_state = 0;
++    if (!linked)
++        ctx->audio_output_state = 0;
++    ctx->decoder_done = 0;
++    ctx->output_deadline = 0;
++    ctx->completion_result = 0;
+     pthread_mutex_unlock(&ctx->mutex);
+ 
+     ctx->pending_stop = 0;
+     ctx->state = MEDIA_PLAYER_STATE_STOPPED;
+-
+-    media_player_event_cb(ctx, MEDIA_EVENT_STOPPED, 0, NULL);
++    if (ctx->audio_draining)
++        ctx->stop_notify = 1;
++    else
++        media_player_event_cb(ctx, MEDIA_EVENT_STOPPED, 0, NULL);
+     return 0;
+ }
+ 
+@@ -1219,16 +1412,28 @@ static int media_player_start(MediaPlayerContext* ctx)
+     media_player_set_avsync_mode(ctx);
+ 
+     pthread_mutex_lock(&ctx->mutex);
+-    if (ctx->audio_stream
++    if (ctx->audio_draining) {
++        /* Resuming during EOF drain only releases completion. Do not link a
++         * second source or resume one whose unlink is already queued.
++         */
++    } else if (ctx->audio_linked) {
++        /* An existing source must resume even with a short/empty decode
++         * queue. Re-linking here loses the paused source and can stall EOF.
++         */
++        ret = media_player_resume_audio(ctx, false);
++        if (ret >= 0) {
++            ctx->audio_output_state &= ~(MEDIA_AUDIO_OUTPUT_STARTING | MEDIA_AUDIO_OUTPUT_XRUN);
++            ctx->audio_output_state |= MEDIA_AUDIO_OUTPUT_STARTED;
++        }
++    } else if (ctx->audio_stream
+         && ff_framequeue_queued_frames(&ctx->audio_stream->queue)
+             >= ctx->audio_stream->nb_queue_max) {
+-        if (ctx->state == MEDIA_PLAYER_STATE_PAUSED)
+-            ret = media_player_resume_audio(ctx, false);
+-        else
+-            ret = media_player_start_audio(ctx);
++        ret = media_player_start_audio(ctx);
+ 
+-        if (ret >= 0)
++        if (ret >= 0) {
++            ctx->audio_output_state &= ~(MEDIA_AUDIO_OUTPUT_STARTING | MEDIA_AUDIO_OUTPUT_XRUN);
+             ctx->audio_output_state |= MEDIA_AUDIO_OUTPUT_STARTED;
++        }
+     } else
+         ctx->audio_output_state |= MEDIA_AUDIO_OUTPUT_STARTING;
+ 
+@@ -1245,6 +1450,7 @@ static int media_player_start(MediaPlayerContext* ctx)
+         MEDIA_ERR("audio_graph_set_parameter failed.\n");
+ 
+     ctx->state = MEDIA_PLAYER_STATE_STARTED;
++    ctx->output_deadline = 0;
+     ctx->ts_base = AV_NOPTS_VALUE;
+ err:
+     media_player_event_cb(ctx, MEDIA_EVENT_STARTED, ret, NULL);
+@@ -1257,6 +1463,10 @@ static int media_player_prepare(MediaPlayerContext* ctx, const char* filename)
+ 
+     if (ctx->state != MEDIA_PLAYER_STATE_STOPPED)
+         goto out;
++    if (ctx->audio_draining) {
++        ret = AVERROR(EAGAIN);
++        goto out;
++    }
+ 
+     ctx->interrupt = 0;
+ 
+@@ -1338,9 +1548,18 @@ static int media_player_send_cmd(MediaPlayerContext* ctx, const int cmd, const v
+     PlayerCmd *msg, *tmp;
+     int cnt = 0;
+ 
+-    msg = av_malloc(sizeof(PlayerCmd) + size);
+-    if (!msg)
+-        return AVERROR(ENOMEM);
++    if (cmd >= MEDIA_PLAYER_CMD_STOP) {
++        if (size > 32)
++            return AVERROR(EINVAL);
++        if (ctx->control_queued)
++            return 0;
++        msg = ctx->control_cmd;
++        ctx->control_queued = 1;
++    } else {
++        msg = av_malloc(sizeof(PlayerCmd) + size);
++        if (!msg)
++            return AVERROR(ENOMEM);
++    }
+ 
+     msg->cmd = cmd;
+ 
+@@ -1436,7 +1655,7 @@ static void media_player_proc_cmd(MediaPlayerContext* ctx, PlayerCmd* msg)
+         }
+ 
+         if (!pending_stop)
+-            media_player_notify_finalize(ctx);
++            ctx->event = false;
+ 
+         ctx->exit = 1;
+     case MEDIA_PLAYER_CMD_STOP:
+@@ -1447,7 +1666,10 @@ static void media_player_proc_cmd(MediaPlayerContext* ctx, PlayerCmd* msg)
+         break;
+     }
+ 
+-    av_freep(&msg);
++    if (msg == ctx->control_cmd)
++        ctx->control_queued = 0;
++    else
++        av_freep(&msg);
+ }
+ 
+ int media_player_process_cmd(MediaPlayerContext* ctx, const char* target, const char* cmd, const char* arg, char* res, int res_len)
+@@ -1654,13 +1876,16 @@ static int media_player_poll_available(MediaPlayerContext* ctx, struct pollfd* f
+                 media_player_onreceive(ctx, &ctx->parcel, &ack);
+                 ret = media_parcel_send(&ack, ctx->tran_fd, MEDIA_PARCEL_REPLY, 0);
+                 media_parcel_deinit(&ack);
++                if (ret < 0)
++                    goto out;
+                 break;
+ 
+             case MEDIA_PARCEL_CREATE_NOTIFY:
+                 ret = media_player_create_notify(ctx, &ctx->parcel);
+-                if (ret > 0)
++                if (ret >= 0) {
++                    media_player_notify_finalize(ctx);
+                     ctx->notify_fd = ret;
+-                else
++                } else
+                     MEDIA_ERR("create notify failed %d\n", ret);
+                 break;
+             default:
+@@ -1680,6 +1905,13 @@ static int media_player_poll_available(MediaPlayerContext* ctx, struct pollfd* f
+ out:
+     MEDIA_DEBUG("fds:%d revent:%d\n", fds->fd, (int)fds->revents);
+     media_player_conn_close(ctx);
++    /* An unexpected peer disconnect must release the session too. Defer
++     * stopping until outside the FFmpeg I/O interrupt callback.
++     */
++    ctx->exit = 1;
++    ctx->interrupt = 1;
++    cnt = 1;
++    write(ctx->event_fd, &cnt, sizeof(cnt));
+     return 0;
+ }
+ 
+@@ -1703,7 +1935,12 @@ static void media_player_poll(MediaPlayerContext* ctx)
+     if (n < 1)
+         return;
+ 
+-    ret = poll(ctx->fds, n, ctx->poll_timeout);
++    int timeout = ctx->poll_timeout;
++    int interval = ctx->audio_draining ? 10
++        : (ctx->state == MEDIA_PLAYER_STATE_STARTED && ctx->audio_stream ? 100 : -1);
++    if (interval >= 0 && (timeout < 0 || timeout > interval))
++        timeout = interval;
++    ret = poll(ctx->fds, n, timeout);
+     if (ret < 0)
+         MEDIA_ERR("poll failed %d\n", ret);
+     else if (ret == 0)
+@@ -1720,6 +1957,25 @@ static void media_player_poll(MediaPlayerContext* ctx)
+     }
+ }
+ 
++static int media_player_join(MediaPlayerContext* ctx)
++{
++    int ret;
++
++    if (ctx->state != MEDIA_PLAYER_STATE_IDLE)
++        return -EBUSY;
++    if (!ctx->thread)
++        return 0;
++
++    /* IDLE is published after graph/session cleanup. Only the bounded thread
++     * epilogue remains, so joining here cannot wait for another graph turn.
++     */
++    ret = pthread_join(ctx->thread, NULL);
++    if (ret != 0)
++        return -ret;
++    ctx->thread = 0;
++    return 0;
++}
++
+ static MediaPlayerContext* media_player_get_available_session(MediaPlayerPriv* priv)
+ {
+     MediaPlayerContext* ctx = NULL;
+@@ -1727,11 +1983,11 @@ static MediaPlayerContext* media_player_get_available_session(MediaPlayerPriv* p
+ 
+     for (i = 0; i < CONFIG_MEDIA_PLAYER_MAX_CNT; i++) {
+         ctx = &priv->ctxs[i];
+-        if (ctx->state == MEDIA_PLAYER_STATE_IDLE)
+-            break;
++        if (ctx->state == MEDIA_PLAYER_STATE_IDLE && media_player_join(ctx) == 0)
++            return ctx;
+     }
+ 
+-    return ctx;
++    return NULL;
+ }
+ 
+ static void media_player_dump(MediaPlayerPriv* priv)
+@@ -1852,19 +2108,63 @@ static void media_player_proc_avsync(MediaPlayerContext* ctx)
+     }
+ }
+ 
++static void media_player_transfer(void* cookie, int result)
++{
++    MediaPlayerContext* ctx = cookie;
++    uint64_t cnt = 1;
++    int ret;
++
++    if (result < 0)
++        ctx->tran_fd = -1; /* the server closes the descriptor */
++
++    do {
++        ret = write(ctx->event_fd, &cnt, sizeof(cnt));
++    } while (ret < 0 && errno == EINTR);
++
++    /* Publish last: the worker can release/reuse ctx as soon as it observes
++     * cancellation. A missed/nonblocking wake is covered by its timed poll.
++     */
++    ctx->connection_state = result < 0 ? -1 : 1;
++}
++
+ static void* media_player_thread(void* arg)
+ {
+     MediaPlayerContext* ctx = (MediaPlayerContext*)arg;
++    MediaPlayerPriv* owner = ctx->owner;
+     MEDIA_INFO("ctx %p create player thread.\n", ctx);
+     PlayerCmd* msg;
+     uint64_t cnt = 1;
+ 
++    /* Never consume pipelined control or send replies before the server has
++     * finished the initial ACK. In particular, a truncated ACK must not leave
++     * this worker owning a connection that the client cannot finish opening.
++     */
++    while (ctx->connection_state == 0) {
++        struct pollfd fd = { .fd = ctx->event_fd, .events = POLLIN };
++        if (poll(&fd, 1, 100) > 0)
++            read(ctx->event_fd, &cnt, sizeof(cnt));
++    }
++    if (ctx->connection_state < 0)
++        goto out;
++
+     while (1) {
++        if (ctx->cancel_requested) {
++            ctx->exit = 1;
++            ctx->pending_stop = 0;
++        }
++        if (ctx->exit && !ctx->pending_stop)
++            media_player_stop(ctx);
+         if (media_player_is_exit(ctx))
+             break;
+ 
+         media_player_poll(ctx);
+ 
++        /* A stop cancels queued control too, including a queued restart. */
++        if (ctx->cancel_requested) {
++            media_player_finish(ctx);
++            continue;
++        }
++
+         while ((msg = SIMPLEQ_FIRST(&ctx->cmd_queue)) != NULL) {
+             SIMPLEQ_REMOVE_HEAD(&ctx->cmd_queue, entry);
+             media_player_proc_cmd(ctx, msg);
+@@ -1875,13 +2175,20 @@ static void* media_player_thread(void* arg)
+         }
+ 
+         media_player_proc_avsync(ctx);
++        media_player_check_output(ctx);
++        media_player_finish(ctx);
+     }
+ 
++out:
+     media_player_close(ctx);
+ 
+-    media_player_ctx_release(ctx);
+-
+     MEDIA_INFO("ctx %p %s player thread exit.\n", ctx, ctx->name);
++    media_player_ctx_release(ctx);
++    /* Wake the service even when no further client command arrives. The
++     * owner keeps this descriptor alive until it has joined every worker.
++     */
++    while (write(owner->completed_fd, &cnt, sizeof(cnt)) < 0 && errno == EINTR)
++        ;
+     return NULL;
+ }
+ 
+@@ -1889,7 +2196,6 @@ static int media_player_open(MediaPlayerContext* ctx, const char* name)
+ {
+     struct sched_param param;
+     pthread_attr_t attr;
+-    pthread_t thread;
+     int ret = -EINVAL;
+ 
+     if (ctx->state != MEDIA_PLAYER_STATE_IDLE || name == NULL)
+@@ -1897,9 +2203,13 @@ static int media_player_open(MediaPlayerContext* ctx, const char* name)
+ 
+     strlcpy(ctx->name, name, sizeof(ctx->name));
+ 
+-    media_player_ctx_init(ctx);
++    ret = media_player_ctx_init(ctx);
++    if (ret < 0) {
++        ctx->state = MEDIA_PLAYER_STATE_IDLE;
++        return ret;
++    }
+ 
+-    audio_graph_open(&ctx->audio_output, ctx->name);
++    ret = audio_graph_open(&ctx->audio_output, ctx->name);
+     if (ctx->audio_output == NULL) {
+         MEDIA_ERR("ctx %p open audio output failed\n", ctx);
+         goto out;
+@@ -1909,21 +2219,23 @@ static int media_player_open(MediaPlayerContext* ctx, const char* name)
+     pthread_attr_setstacksize(&attr, CONFIG_MEDIA_PLAYER_STACKSIZE);
+     param.sched_priority = CONFIG_MEDIA_PLAYER_PRIORITY;
+     pthread_attr_setschedparam(&attr, &param);
+-    ret = pthread_create(&thread, &attr, media_player_thread, ctx);
++    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
++    ret = pthread_create(&ctx->thread, &attr, media_player_thread, ctx);
+     pthread_attr_destroy(&attr);
+     if (ret != 0) {
+         MEDIA_ERR("create player thread failed, ret %d\n", ret);
++        ctx->thread = 0;
++        ret = -ret;
+         goto out;
+     }
+ 
+-    pthread_setname_np(thread, ctx->name);
+-    pthread_detach(thread);
++    pthread_setname_np(ctx->thread, ctx->name);
+ 
+     return 0;
+ 
+ out:
+     audio_graph_close(&ctx->audio_output);
+-    ctx->state = MEDIA_PLAYER_STATE_IDLE;
++    media_player_ctx_release(ctx);
+     return ret;
+ }
+ 
+@@ -1938,20 +2250,23 @@ static int media_player_handler(MediadPlugin* handle, struct media_server_conn*
+         cmd, arg ? arg : "NULL", target ? target : "NULL");
+ 
+     if (!strcmp(cmd, "open")) {
++        if (priv->stopping)
++            return -ESHUTDOWN;
+         MediaPlayerContext* ctx = media_player_get_available_session(priv);
+         if (!ctx) {
+             MEDIA_ERR("player open failed...\n");
+             return -ENOMEM;
+         }
+ 
++        if (!arg)
++            return -EINVAL;
++
+         ctx->tran_fd = media_server_get_tran_fd(conn);
+         if (ctx->tran_fd < 0) {
+             MEDIA_ERR("player get tran fd failed...\n");
+             return -EINVAL;
+         }
+ 
+-        media_server_clean_conn(conn);
+-
+         // get global options in criteria.txt
+         snprintf(option_name, sizeof(option_name), "%sParams", arg);
+         ret = media_stub_get_stream_name(option_name, options, sizeof(options));
+@@ -1959,14 +2274,23 @@ static int media_player_handler(MediadPlugin* handle, struct media_server_conn*
+             ret = av_dict_parse_string(&ctx->global_opts, options, "=", ":", 0);
+             if (ret < 0) {
+                 MEDIA_ERR("parse global options failed %d\n", ret);
++                av_dict_free(&ctx->global_opts);
+                 return ret;
+             }
+         }
+ 
+         ret = media_player_open(ctx, arg);
+-        if (ret < 0)
++        if (ret < 0) {
++            av_dict_free(&ctx->global_opts);
++            ctx->tran_fd = -1; /* the server still owns this connection */
+             return ret;
++        }
+ 
++        ret = media_server_prepare_transfer(conn, media_player_transfer, ctx);
++        if (ret < 0) {
++            media_player_transfer(ctx, ret);
++            return ret;
++        }
+         MEDIA_INFO("ctx %p open %s success...\n", ctx, ctx->name);
+     } else if (!strcmp(cmd, "dump")) {
+         media_player_dump(priv);
+@@ -1975,14 +2299,113 @@ static int media_player_handler(MediadPlugin* handle, struct media_server_conn*
+     return 0;
+ }
+ 
++static int media_player_plugin_init(MediadPlugin* plugin)
++{
++    MediaPlayerPriv* priv = plugin->priv;
++    int i, ret;
++
++    ret = pthread_mutex_init(&priv->lifecycle_lock, NULL);
++    if (ret)
++        return -ret;
++    priv->completed_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
++    if (priv->completed_fd < 0) {
++        ret = -errno;
++        pthread_mutex_destroy(&priv->lifecycle_lock);
++        return ret;
++    }
++    for (i = 0; i < CONFIG_MEDIA_PLAYER_MAX_CNT; i++)
++        priv->ctxs[i].owner = priv;
++    return 0;
++}
++
++static void media_player_request_stop(MediadPlugin* plugin)
++{
++    MediaPlayerPriv* priv = plugin->priv;
++    uint64_t count = 1;
++    int i, ret;
++
++    priv->stopping = true;
++    pthread_mutex_lock(&priv->lifecycle_lock);
++    for (i = 0; i < CONFIG_MEDIA_PLAYER_MAX_CNT; i++) {
++        MediaPlayerContext* ctx = &priv->ctxs[i];
++        if (ctx->state == MEDIA_PLAYER_STATE_IDLE)
++            continue;
++        ctx->cancel_requested = true;
++        do {
++            ret = write(ctx->event_fd, &count, sizeof(count));
++        } while (ret < 0 && errno == EINTR);
++    }
++    pthread_mutex_unlock(&priv->lifecycle_lock);
++}
++
++static int media_player_drained(MediadPlugin* plugin)
++{
++    MediaPlayerPriv* priv = plugin->priv;
++    int i, ret;
++
++    for (i = 0; i < CONFIG_MEDIA_PLAYER_MAX_CNT; i++) {
++        ret = media_player_join(&priv->ctxs[i]);
++        if (ret < 0)
++            return ret == -EBUSY ? 0 : ret;
++    }
++    return 1;
++}
++
++static int media_player_plugin_uninit(MediadPlugin* plugin)
++{
++    MediaPlayerPriv* priv = plugin->priv;
++    int i, ret;
++
++    for (i = 0; i < CONFIG_MEDIA_PLAYER_MAX_CNT; i++) {
++        ret = media_player_join(&priv->ctxs[i]);
++        if (ret < 0)
++            return ret;
++    }
++    close(priv->completed_fd);
++    priv->completed_fd = -1;
++    pthread_mutex_destroy(&priv->lifecycle_lock);
++    return 0;
++}
++
++static int media_player_completed_fds(MediadPlugin* plugin, struct pollfd* fds,
++    void** cookies, int count)
++{
++    MediaPlayerPriv* priv = plugin->priv;
++
++    if (count < 1)
++        return -ENOSPC;
++    fds[0].fd = priv->completed_fd;
++    fds[0].events = POLLIN;
++    cookies[0] = NULL;
++    return 1;
++}
++
++static int media_player_completed(MediadPlugin* plugin, struct pollfd* fd, void* cookie)
++{
++    MediaPlayerPriv* priv = plugin->priv;
++    uint64_t count;
++    int i, ret;
++
++    if (read(fd->fd, &count, sizeof(count)) < 0)
++        return -errno;
++    for (i = 0; i < CONFIG_MEDIA_PLAYER_MAX_CNT; i++) {
++        ret = media_player_join(&priv->ctxs[i]);
++        if (ret < 0 && ret != -EBUSY)
++            return ret;
++    }
++    return 0;
++}
++
+ MediadPlugin media_player_plugin = {
+     .name = "media_player",
+     .priv_size = sizeof(struct MediaPlayerPriv),
+     .priv = NULL,
+-    .init = NULL,
+-    .get = NULL,
+-    .available = NULL,
++    .init = media_player_plugin_init,
++    .request_stop = media_player_request_stop,
++    .drained = media_player_drained,
++    .get = media_player_completed_fds,
++    .available = media_player_completed,
+     .run_once = NULL,
+-    .uninit = NULL,
++    .uninit = media_player_plugin_uninit,
+     .process_command = media_player_handler,
+ };
+diff --git a/server/media_plugin.c b/server/media_plugin.c
+index 832627efdf57c809ca792926f0b8e7b3c95530c5..10e7ca18e4231167c376f50a29266f0deae71a09 100644
+--- a/server/media_plugin.c
++++ b/server/media_plugin.c
+@@ -8,6 +8,9 @@ int mediad_plugin_init(MediadPlugin* plugin)
+ {
+     int ret;
+ 
++    if (plugin->priv)
++        return -EBUSY;
++
+     plugin->priv = av_mallocz(plugin->priv_size);
+     if (!plugin->priv) {
+         return -ENOMEM;
+@@ -25,13 +28,19 @@ int mediad_plugin_init(MediadPlugin* plugin)
+     return 0;
+ }
+ 
+-void mediad_plugin_uinit(MediadPlugin* plugin)
++int mediad_plugin_uinit(MediadPlugin* plugin)
+ {
++    int ret;
++
+     if (plugin->uninit && plugin->priv) {
+-        plugin->uninit(plugin);
++        ret = plugin->uninit(plugin);
++        if (ret < 0)
++            return ret;
+     }
+ 
+     if (plugin->priv) {
+         av_freep(&plugin->priv);
+     }
++
++    return 0;
+ }
+diff --git a/server/media_plugin.h b/server/media_plugin.h
+index 204ec52eeda20dd1b58eb57931a4eeb6d8df3f90..7fffafd7485b0c5d6848c7b7301790f819257bb8 100644
+--- a/server/media_plugin.h
++++ b/server/media_plugin.h
+@@ -29,6 +29,12 @@ typedef struct MediadPlugin {
+     void* priv;
+     int (*init)(struct MediadPlugin* ctx);
+     int (*uninit)(struct MediadPlugin* ctx);
++    /* Called by the service thread. Request cancellation without waiting for
++     * graph callbacks; keep polling until drained returns 1 (0 means busy).
++     * Neither callback releases plugin storage or its dependencies.
++     */
++    void (*request_stop)(struct MediadPlugin* ctx);
++    int (*drained)(struct MediadPlugin* ctx);
+     int (*get)(struct MediadPlugin* ctx, struct pollfd* fds, void** cookies, int count);
+     int (*available)(struct MediadPlugin* ctx, struct pollfd* fds, void* cookies);
+     int (*run_once)(struct MediadPlugin* ctx);
+@@ -37,6 +43,9 @@ typedef struct MediadPlugin {
+ } MediadPlugin;
+ 
+ int mediad_plugin_init(MediadPlugin* ctx);
+-void mediad_plugin_uinit(MediadPlugin* ctx);
++/* A failed uninit retains priv; callers must not free dependencies beneath
++ * live plugin workers. A later call may retry after those workers finish.
++ */
++int mediad_plugin_uinit(MediadPlugin* ctx);
+ 
+ #endif // FRAMEWORKS_MEDIA_PLUGIN_H_
+diff --git a/server/media_recorder.c b/server/media_recorder.c
+index c5798f842a91db5bcee69e77f8ecd371ccdaa70c..bcf3e6661c533b189535920c1b2014785735325b 100644
+--- a/server/media_recorder.c
++++ b/server/media_recorder.c
+@@ -27,6 +27,7 @@
+ #include <netpacket/rpmsg.h>
+ #include <poll.h>
+ #include <pthread.h>
++#include <stdatomic.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -47,6 +48,7 @@
+ #include "libavutil/avstring.h"
+ #include "libavutil/bprint.h"
+ #include "libavutil/opt.h"
++#include "libavutil/time.h"
+ 
+ #include "audio_graph.h"
+ #include "media_common.h"
+@@ -104,9 +106,16 @@ typedef struct OutputStream {
+     AVCodecContext* enc_ctx;
+ } OutputStream;
+ 
++typedef struct MediaRecorderPriv MediaRecorderPriv;
++
+ typedef struct MediaRecorderContext {
++    MediaRecorderPriv* owner;
++    pthread_t thread;
+     /* communication with media client */
+     int tran_fd;
++    atomic_int connection_state; /* 0: server-owned, 1: committed, -1: canceled */
++    atomic_bool cancel_requested;
++    int64_t shutdown_deadline;
+     int notify_fd;
+     int event_fd;
+     uint32_t offset;
+@@ -114,7 +123,7 @@ typedef struct MediaRecorderContext {
+ 
+     int event;
+     int cmd_max;
+-    int state;
++    atomic_int state;
+     int exit;
+     int audio_idx;
+     int video_idx;
+@@ -130,13 +139,16 @@ typedef struct MediaRecorderContext {
+     const AVOutputFormat* format; /* output format */
+     struct RecorderCmdQueue cmd_queue;
+ 
+-    int audio_input_state; /** < 1: audio input is started, 0: not started */
++    atomic_int audio_input_state; /** < 1: audio input is started, 0: not started */
+     AVFilterContext* audio_input;
+ } MediaRecorderContext;
+ 
+-typedef struct MediaRecorderPriv {
++struct MediaRecorderPriv {
+     MediaRecorderContext ctxs[CONFIG_MEDIA_RECORDER_MAX_CNT];
+-} MediaRecorderPriv;
++    int completed_fd;
++    pthread_mutex_t lifecycle_lock;
++    bool stopping;
++};
+ 
+ typedef struct {
+     const char* dict_key;
+@@ -178,10 +190,9 @@ static inline int media_recorder_is_exit(MediaRecorderContext* ctx)
+ 
+ static void media_recorder_notify_finalize(MediaRecorderContext* ctx)
+ {
+-    if (ctx->notify_fd > 0) {
++    if (ctx->notify_fd >= 0) {
+         close(ctx->notify_fd);
+-        ctx->notify_fd = 0;
+-        ctx->offset = 0;
++        ctx->notify_fd = -1;
+     }
+ }
+ 
+@@ -193,7 +204,7 @@ static int media_recorder_notify_event(MediaRecorderContext* ctx, int event,
+     media_parcel_init(&notify);
+     media_parcel_append_printf(&notify, "%i%i%s", event, result, extra);
+ 
+-    if (ctx->notify_fd > 0)
++    if (ctx->notify_fd >= 0)
+         ret = media_parcel_send(&notify, ctx->notify_fd, MEDIA_PARCEL_SEND, MSG_DONTWAIT);
+ 
+     media_parcel_deinit(&notify);
+@@ -590,6 +601,7 @@ static void media_recorder_release_stream(MediaRecorderContext* ctx)
+     }
+ 
+     av_freep(&ctx->streams);
++    ctx->nb_streams = 0;
+ }
+ 
+ static int media_recorder_init_stream(MediaRecorderContext* ctx)
+@@ -649,8 +661,12 @@ static int media_recorder_on_event_cb(void* udata, int evt, int64_t args)
+ 
+     if (evt < 0) {
+         MEDIA_INFO("ctx %p received unlink event form audio_input.\n", ctx);
+-        ctx->audio_input_state = 0;
+         write(ctx->event_fd, &cnt, sizeof(cnt));
++        /* Publish last: the worker may release ctx as soon as it sees this.
++         * Closing workers use a timed poll so a wake before publication is
++         * not lost. No further ctx access is allowed in this callback.
++         */
++        ctx->audio_input_state = 0;
+         return 0;
+     }
+ 
+@@ -692,7 +708,7 @@ static void media_recorder_conn_close(MediaRecorderContext* ctx)
+     close(ctx->tran_fd);
+     ctx->tran_fd = -EPERM;
+     ctx->offset = 0;
+-    media_parcel_deinit(&ctx->parcel);
++    media_parcel_reinit(&ctx->parcel);
+ }
+ 
+ static void media_recorder_clean(MediaRecorderContext* ctx)
+@@ -712,6 +728,14 @@ static int media_recorder_interrupt(void* opaque)
+     struct pollfd fds[1];
+     struct pollfd* fd = &fds[0];
+     uint64_t cnt = 1;
++    if (ctx->cancel_requested) {
++        /* Interrupt an in-flight operation first. Once the worker starts
++         * stopping, allow bounded trailer/buffer writes so local recordings
++         * remain readable; a blocked network output must still be cancelable.
++         */
++        return !ctx->shutdown_deadline
++            || av_gettime_relative() >= ctx->shutdown_deadline;
++    }
+     fds[0].fd = ctx->tran_fd;
+     fds[0].events = POLLIN;
+     fds[0].revents = 0;
+@@ -765,7 +789,10 @@ static int media_recorder_open_muxer(MediaRecorderContext* ctx, const char* file
+     return 0;
+ 
+ out:
++    if (ctx->format_ctx->pb)
++        avio_closep(&ctx->format_ctx->pb);
+     avformat_free_context(ctx->format_ctx);
++    ctx->format_ctx = NULL;
+     return ret;
+ }
+ 
+@@ -829,9 +856,10 @@ out:
+     return ret;
+ }
+ 
+-static void media_recorder_ctx_init(MediaRecorderContext* ctx)
++static int media_recorder_ctx_init(MediaRecorderContext* ctx)
+ {
+     AVDictionaryEntry* tag;
++    int ret;
+ 
+     if ((tag = av_dict_get(ctx->global_opts, "cmdqmax", NULL, 0))) {
+         ctx->cmd_max = strtol(tag->value, NULL, 0);
+@@ -840,6 +868,11 @@ static void media_recorder_ctx_init(MediaRecorderContext* ctx)
+     }
+ 
+     ctx->state = MEDIA_RECORDER_STATE_STOPPED;
++    ctx->connection_state = 0;
++    ctx->cancel_requested = false;
++    ctx->shutdown_deadline = 0;
++    ctx->notify_fd = -1;
++    ctx->event_fd = -1;
+     ctx->audio_idx = -1;
+     ctx->video_idx = -1;
+     ctx->exit = 0;
+@@ -847,22 +880,40 @@ static void media_recorder_ctx_init(MediaRecorderContext* ctx)
+     ctx->audio_input_state = 0;
+     SIMPLEQ_INIT(&ctx->cmd_queue);
+     media_parcel_init(&ctx->parcel);
+-    pthread_mutex_init(&ctx->mutex, NULL);
++    ret = pthread_mutex_init(&ctx->mutex, NULL);
++    if (ret)
++        return -ret;
+     ctx->event_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
++    if (ctx->event_fd < 0) {
++        ret = -errno;
++        pthread_mutex_destroy(&ctx->mutex);
++        return ret;
++    }
++    return 0;
+ }
+ 
+ static void media_recorder_ctx_release(MediaRecorderContext* ctx)
+ {
+-    ctx->state = MEDIA_RECORDER_STATE_IDLE;
++    MediaRecorderPriv* owner = ctx->owner;
++    int notify_fd = ctx->notify_fd;
++
++    pthread_mutex_lock(&owner->lifecycle_lock);
++    ctx->notify_fd = -1;
+     ctx->audio_idx = -1;
+     ctx->video_idx = -1;
+     ctx->nb_streams = 0;
+     ctx->event = 0;
+-    media_recorder_notify_finalize(ctx);
++    av_dict_free(&ctx->global_opts);
++    av_dict_free(&ctx->format_opt);
+     media_parcel_deinit(&ctx->parcel);
+     pthread_mutex_destroy(&ctx->mutex);
+     close(ctx->event_fd);
+     ctx->event_fd = -1;
++    /* All session resources precede availability and notification EOF. */
++    ctx->state = MEDIA_RECORDER_STATE_IDLE;
++    pthread_mutex_unlock(&owner->lifecycle_lock);
++    if (notify_fd >= 0)
++        close(notify_fd);
+ }
+ 
+ static int media_recorder_pause(MediaRecorderContext* ctx)
+@@ -971,12 +1022,14 @@ out:
+ 
+ static void media_recorder_close(MediaRecorderContext* ctx)
+ {
++    media_recorder_close_muxer(ctx);
++    media_recorder_clear_queue(ctx, MEDIA_RECORDER_CMD_QUEUE_IDX | MEDIA_RECORDER_DATA_QUEUE_IDX);
+     media_recorder_release_stream(ctx);
+ 
+     if (ctx->audio_input)
+         audio_graph_close(&ctx->audio_input);
+ 
+-    if (ctx->tran_fd > 0)
++    if (ctx->tran_fd >= 0)
+         media_recorder_conn_close(ctx);
+ }
+ 
+@@ -1267,13 +1320,16 @@ static int media_recorder_poll_available(MediaRecorderContext* ctx, struct pollf
+                 media_recorder_onreceive(ctx, &ctx->parcel, &ack);
+                 ret = media_parcel_send(&ack, ctx->tran_fd, MEDIA_PARCEL_REPLY, 0);
+                 media_parcel_deinit(&ack);
++                if (ret < 0)
++                    goto out;
+                 break;
+ 
+             case MEDIA_PARCEL_CREATE_NOTIFY:
+                 ret = media_recorder_create_notify(ctx, &ctx->parcel);
+-                if (ret > 0)
++                if (ret >= 0) {
++                    media_recorder_notify_finalize(ctx);
+                     ctx->notify_fd = ret;
+-                else
++                } else
+                     MEDIA_ERR("ctx %p create notify failed %d\n", ctx, ret);
+                 break;
+             default:
+@@ -1293,6 +1349,23 @@ static int media_recorder_poll_available(MediaRecorderContext* ctx, struct pollf
+ out:
+     MEDIA_DEBUG("ctx %p fd:%d revent:%d\n", ctx, fd->fd, (int)fd->revents);
+     media_recorder_conn_close(ctx);
++    ctx->exit = 1;
++    return 0;
++}
++
++static int media_recorder_join(MediaRecorderContext* ctx)
++{
++    int ret;
++
++    if (ctx->state != MEDIA_RECORDER_STATE_IDLE)
++        return -EBUSY;
++    if (!ctx->thread)
++        return 0;
++    /* IDLE follows graph/session cleanup; only the thread epilogue remains. */
++    ret = pthread_join(ctx->thread, NULL);
++    if (ret)
++        return -ret;
++    ctx->thread = 0;
+     return 0;
+ }
+ 
+@@ -1303,11 +1376,11 @@ static MediaRecorderContext* media_recorder_get_available_session(MediaRecorderP
+ 
+     for (i = 0; i < CONFIG_MEDIA_RECORDER_MAX_CNT; i++) {
+         ctx = &priv->ctxs[i];
+-        if (ctx->state == MEDIA_RECORDER_STATE_IDLE)
+-            break;
++        if (ctx->state == MEDIA_RECORDER_STATE_IDLE && media_recorder_join(ctx) == 0)
++            return ctx;
+     }
+ 
+-    return ctx;
++    return NULL;
+ }
+ 
+ static void media_recorder_dump(MediaRecorderPriv* priv)
+@@ -1355,7 +1428,7 @@ static void media_recorder_poll(MediaRecorderContext* ctx)
+     fds[1].revents = 0;
+     int ret;
+ 
+-    ret = poll(fds, 2, -1);
++    ret = poll(fds, 2, ctx->exit ? 100 : -1);
+     if (ret == -1) {
+         MEDIA_ERR("ctx %p poll failed err=%d\n", ctx, -errno);
+     } else if (ret == 0)
+@@ -1371,18 +1444,53 @@ static void media_recorder_poll(MediaRecorderContext* ctx)
+     }
+ }
+ 
++static void media_recorder_transfer(void* cookie, int result)
++{
++    MediaRecorderContext* ctx = cookie;
++    uint64_t count = 1;
++    int ret;
++
++    if (result < 0)
++        ctx->tran_fd = -1; /* The server retains and closes the descriptor. */
++    do {
++        ret = write(ctx->event_fd, &count, sizeof(count));
++    } while (ret < 0 && errno == EINTR);
++    ctx->connection_state = result < 0 ? -1 : 1;
++}
++
+ static void* media_recorder_thread(void* arg)
+ {
+     MediaRecorderContext* ctx = (MediaRecorderContext*)arg;
++    MediaRecorderPriv* owner = ctx->owner;
+     RecorderCmd* msg;
++    uint64_t count = 1;
+     MEDIA_INFO("ctx %p create recorder thread.\n", ctx);
+ 
++    /* The server must finish the open ACK before this worker owns control. */
++    while (ctx->connection_state == 0) {
++        struct pollfd fd = { .fd = ctx->event_fd, .events = POLLIN };
++        if (poll(&fd, 1, 100) > 0)
++            read(ctx->event_fd, &count, sizeof(count));
++    }
++    if (ctx->connection_state < 0)
++        goto out;
++
+     while (1) {
++        if (ctx->cancel_requested) {
++            if (!ctx->shutdown_deadline)
++                ctx->shutdown_deadline = av_gettime_relative() + 5 * AV_TIME_BASE;
++            ctx->exit = 1;
++        }
++        if (ctx->exit && ctx->state != MEDIA_RECORDER_STATE_STOPPED)
++            media_recorder_stop(ctx);
+         if (media_recorder_is_exit(ctx))
+             break;
+ 
+         media_recorder_poll(ctx);
+ 
++        if (ctx->cancel_requested)
++            continue;
++
+         while ((msg = SIMPLEQ_FIRST(&ctx->cmd_queue)) != NULL) {
+             SIMPLEQ_REMOVE_HEAD(&ctx->cmd_queue, entry);
+             media_recorder_proc_cmd(ctx, msg);
+@@ -1393,11 +1501,13 @@ static void* media_recorder_thread(void* arg)
+         }
+     }
+ 
++out:
+     media_recorder_close(ctx);
+-
+-    media_recorder_ctx_release(ctx);
+-
+     MEDIA_INFO("ctx %p %s recorder thread exit.\n", ctx, ctx->name);
++    media_recorder_ctx_release(ctx);
++    count = 1;
++    while (write(owner->completed_fd, &count, sizeof(count)) < 0 && errno == EINTR)
++        ;
+     return NULL;
+ }
+ 
+@@ -1405,15 +1515,18 @@ static int media_recorder_open(MediaRecorderContext* ctx, const char* name)
+ {
+     struct sched_param param;
+     pthread_attr_t attr;
+-    pthread_t thread;
+     int ret = -EINVAL;
+ 
+     if (ctx->state != MEDIA_RECORDER_STATE_IDLE || name == NULL)
+         return ret;
+ 
+-    media_recorder_ctx_init(ctx);
++    ret = media_recorder_ctx_init(ctx);
++    if (ret < 0) {
++        ctx->state = MEDIA_RECORDER_STATE_IDLE;
++        return ret;
++    }
+ 
+-    audio_graph_open(&ctx->audio_input, name);
++    ret = audio_graph_open(&ctx->audio_input, name);
+     if (ctx->audio_input == NULL) {
+         MEDIA_ERR("ctx %p open audio input failed\n", ctx);
+         goto out;
+@@ -1423,21 +1536,23 @@ static int media_recorder_open(MediaRecorderContext* ctx, const char* name)
+     pthread_attr_setstacksize(&attr, CONFIG_MEDIA_RECORDER_STACKSIZE);
+     param.sched_priority = CONFIG_MEDIA_RECORDER_PRIORITY;
+     pthread_attr_setschedparam(&attr, &param);
+-    ret = pthread_create(&thread, &attr, media_recorder_thread, ctx);
++    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
++    ret = pthread_create(&ctx->thread, &attr, media_recorder_thread, ctx);
+     pthread_attr_destroy(&attr);
+     if (ret != 0) {
+         MEDIA_ERR("ctx %p create recorder thread failed %d\n", ctx, ret);
++        ctx->thread = 0;
++        ret = -ret;
+         goto out;
+     }
+ 
+-    pthread_setname_np(thread, ctx->name);
+-    pthread_detach(thread);
++    pthread_setname_np(ctx->thread, ctx->name);
+ 
+     return 0;
+ 
+ out:
+     audio_graph_close(&ctx->audio_input);
+-    ctx->state = MEDIA_RECORDER_STATE_IDLE;
++    media_recorder_ctx_release(ctx);
+     return ret;
+ }
+ 
+@@ -1454,6 +1569,10 @@ static int media_recorder_handler(MediadPlugin* handle, struct media_server_conn
+         cmd, arg ? arg : "NULL", target ? target : "NULL");
+ 
+     if (!strcmp(cmd, "open")) {
++        if (priv->stopping)
++            return -ESHUTDOWN;
++        if (!arg)
++            return -EINVAL;
+         MediaRecorderContext* ctx = media_recorder_get_available_session(priv);
+         if (!ctx) {
+             MEDIA_ERR("recorder open failed...\n");
+@@ -1472,8 +1591,6 @@ static int media_recorder_handler(MediadPlugin* handle, struct media_server_conn
+             return -EINVAL;
+         }
+ 
+-        media_server_clean_conn(conn);
+-
+         // get global options in criteria.txt
+         snprintf(option_name, sizeof(option_name), "%sParams", arg);
+         ret = media_stub_get_stream_name(option_name, options, sizeof(options));
+@@ -1481,13 +1598,23 @@ static int media_recorder_handler(MediadPlugin* handle, struct media_server_conn
+             ret = av_dict_parse_string(&ctx->global_opts, options, "=", ":", 0);
+             if (ret < 0) {
+                 MEDIA_ERR("parse global options failed %d\n", ret);
++                av_dict_free(&ctx->global_opts);
+                 return ret;
+             }
+         }
+ 
+         ret = media_recorder_open(ctx, arg);
+-        if (ret < 0)
++        if (ret < 0) {
++            av_dict_free(&ctx->global_opts);
++            ctx->tran_fd = -1;
+             return ret;
++        }
++
++        ret = media_server_prepare_transfer(conn, media_recorder_transfer, ctx);
++        if (ret < 0) {
++            media_recorder_transfer(ctx, ret);
++            return ret;
++        }
+ 
+         MEDIA_INFO("ctx %p open recorder success...\n", ctx);
+     } else if (!strcmp(cmd, "dump")) {
+@@ -1497,14 +1624,113 @@ static int media_recorder_handler(MediadPlugin* handle, struct media_server_conn
+     return 0;
+ }
+ 
++static int media_recorder_plugin_init(MediadPlugin* plugin)
++{
++    MediaRecorderPriv* priv = plugin->priv;
++    int i, ret;
++
++    ret = pthread_mutex_init(&priv->lifecycle_lock, NULL);
++    if (ret)
++        return -ret;
++    priv->completed_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
++    if (priv->completed_fd < 0) {
++        ret = -errno;
++        pthread_mutex_destroy(&priv->lifecycle_lock);
++        return ret;
++    }
++    for (i = 0; i < CONFIG_MEDIA_RECORDER_MAX_CNT; i++)
++        priv->ctxs[i].owner = priv;
++    return 0;
++}
++
++static void media_recorder_request_stop(MediadPlugin* plugin)
++{
++    MediaRecorderPriv* priv = plugin->priv;
++    uint64_t count = 1;
++    int i, ret;
++
++    priv->stopping = true;
++    pthread_mutex_lock(&priv->lifecycle_lock);
++    for (i = 0; i < CONFIG_MEDIA_RECORDER_MAX_CNT; i++) {
++        MediaRecorderContext* ctx = &priv->ctxs[i];
++        if (ctx->state == MEDIA_RECORDER_STATE_IDLE)
++            continue;
++        ctx->cancel_requested = true;
++        do {
++            ret = write(ctx->event_fd, &count, sizeof(count));
++        } while (ret < 0 && errno == EINTR);
++    }
++    pthread_mutex_unlock(&priv->lifecycle_lock);
++}
++
++static int media_recorder_drained(MediadPlugin* plugin)
++{
++    MediaRecorderPriv* priv = plugin->priv;
++    int i, ret;
++
++    for (i = 0; i < CONFIG_MEDIA_RECORDER_MAX_CNT; i++) {
++        ret = media_recorder_join(&priv->ctxs[i]);
++        if (ret < 0)
++            return ret == -EBUSY ? 0 : ret;
++    }
++    return 1;
++}
++
++static int media_recorder_plugin_uninit(MediadPlugin* plugin)
++{
++    MediaRecorderPriv* priv = plugin->priv;
++    int i, ret;
++
++    for (i = 0; i < CONFIG_MEDIA_RECORDER_MAX_CNT; i++) {
++        ret = media_recorder_join(&priv->ctxs[i]);
++        if (ret < 0)
++            return ret;
++    }
++    close(priv->completed_fd);
++    priv->completed_fd = -1;
++    pthread_mutex_destroy(&priv->lifecycle_lock);
++    return 0;
++}
++
++static int media_recorder_completed_fds(MediadPlugin* plugin, struct pollfd* fds,
++    void** cookies, int count)
++{
++    MediaRecorderPriv* priv = plugin->priv;
++
++    if (count < 1)
++        return -ENOSPC;
++    fds[0].fd = priv->completed_fd;
++    fds[0].events = POLLIN;
++    cookies[0] = NULL;
++    return 1;
++}
++
++static int media_recorder_completed(MediadPlugin* plugin, struct pollfd* fd, void* cookie)
++{
++    MediaRecorderPriv* priv = plugin->priv;
++    uint64_t count;
++    int i, ret;
++
++    if (read(fd->fd, &count, sizeof(count)) < 0)
++        return -errno;
++    for (i = 0; i < CONFIG_MEDIA_RECORDER_MAX_CNT; i++) {
++        ret = media_recorder_join(&priv->ctxs[i]);
++        if (ret < 0 && ret != -EBUSY)
++            return ret;
++    }
++    return 0;
++}
++
+ MediadPlugin media_recorder_plugin = {
+     .name = "media_recorder",
+     .priv_size = sizeof(struct MediaRecorderPriv),
+     .priv = NULL,
+-    .init = NULL,
+-    .get = NULL,
+-    .available = NULL,
++    .init = media_recorder_plugin_init,
++    .request_stop = media_recorder_request_stop,
++    .drained = media_recorder_drained,
++    .get = media_recorder_completed_fds,
++    .available = media_recorder_completed,
+     .run_once = NULL,
+-    .uninit = NULL,
++    .uninit = media_recorder_plugin_uninit,
+     .process_command = media_recorder_handler,
+ };
+diff --git a/server/media_server.c b/server/media_server.c
+index fa0c9dafbd88adca57f65e86877660f340c75143..4cfa8ad4d44629ed5bf3094b3119df2d99cb05bb 100644
+--- a/server/media_server.c
++++ b/server/media_server.c
+@@ -62,9 +62,12 @@ struct media_server_conn {
+     uint32_t offset;
+     pthread_mutex_t mutex;
+     void* data;
++    media_server_transfer_cb transfer;
++    void* transfer_cookie;
+ };
+ 
+ struct media_server_priv {
++    bool stopping;
+     int local_fd;
+     int rpmsg_fd;
+ #if CONFIG_MEDIA_SERVER_PORT >= 0
+@@ -92,7 +95,7 @@ static int media_server_create_notify(struct media_server_priv* priv, media_parc
+     key = media_parcel_read_string(parcel);
+     cpu = media_parcel_read_string(parcel);
+ 
+-    if (key == NULL)
++    if (key == NULL || cpu == NULL)
+         return -EINVAL;
+ 
+     if (strcmp(cpu, CONFIG_RPMSG_LOCAL_CPUNAME)) {
+@@ -123,8 +126,23 @@ static int media_server_create_notify(struct media_server_priv* priv, media_parc
+     return fd;
+ }
+ 
++static void media_server_finish_transfer(struct media_server_conn* conn, int result)
++{
++    media_server_transfer_cb callback = conn->transfer;
++    void* cookie = conn->transfer_cookie;
++
++    conn->transfer = NULL;
++    conn->transfer_cookie = NULL;
++    if (callback) {
++        if (result >= 0)
++            conn->tran_fd = -EPERM;
++        callback(cookie, result);
++    }
++}
++
+ static void media_server_conn_close(struct media_server_conn* conn)
+ {
++    media_server_finish_transfer(conn, -EPIPE);
+     MEDIA_DEBUG("%s fd:%d\n", __func__, conn->tran_fd);
+     close(conn->tran_fd);
+     conn->tran_fd = -EPERM;
+@@ -152,7 +170,8 @@ static int media_server_receive(struct media_server_priv* priv, struct pollfd* f
+         code = media_parcel_get_code(&conn->parcel);
+         switch (code) {
+         case MEDIA_PARCEL_SEND:
+-            media_stub_onreceive(conn, &conn->parcel, NULL);
++            ret = media_stub_onreceive(conn, &conn->parcel, NULL);
++            media_server_finish_transfer(conn, ret);
+             break;
+ 
+         case MEDIA_PARCEL_SEND_ACK:
+@@ -163,10 +182,19 @@ static int media_server_receive(struct media_server_priv* priv, struct pollfd* f
+             else
+                 ret = 0;
+             media_parcel_deinit(&ack);
++            media_server_finish_transfer(conn, ret);
++            if (ret < 0 && conn->tran_fd == fd->fd)
++                goto out;
+             break;
+ 
+         case MEDIA_PARCEL_CREATE_NOTIFY:
+-            conn->notify_fd = media_server_create_notify(priv, &conn->parcel);
++            ret = media_server_create_notify(priv, &conn->parcel);
++            if (ret >= 0) {
++                pthread_mutex_lock(&conn->mutex);
++                SAFE_CLOSE(conn->notify_fd);
++                conn->notify_fd = ret;
++                pthread_mutex_unlock(&conn->mutex);
++            }
+             break;
+ 
+         default:
+@@ -175,6 +203,11 @@ static int media_server_receive(struct media_server_priv* priv, struct pollfd* f
+ 
+         media_parcel_reinit(&conn->parcel);
+         conn->offset = 0;
++        /* A Player/Recorder/Trigger now owns the descriptor. Do not consume
++         * its next request or close it through a stale server poll entry.
++         */
++        if (conn->tran_fd != fd->fd)
++            return 0;
+     }
+ 
+     if (((fd->revents & POLLIN) && ret == -EPIPE) || (fd->revents & POLLHUP))
+@@ -218,6 +251,8 @@ static bool media_server_conn_init(struct media_server_conn* conn, int fd)
+         conn->tran_fd = fd;
+         conn->data = NULL;
+         conn->offset = 0;
++        conn->transfer = NULL;
++        conn->transfer_cookie = NULL;
+     }
+ 
+     MEDIA_DEBUG("%s fd:%d available:%d\n", __func__, fd, available);
+@@ -258,14 +293,15 @@ static int media_server_listen(struct media_server_priv* priv, int family)
+     struct sockaddr_in in_addr;
+ #endif
+     int fd;
+-    int len;
++    int len, ret;
++    int* listener;
+ 
+     fd = socket(family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
+     if (fd < 0)
+         return -errno;
+ 
+     if (family == PF_LOCAL) {
+-        priv->local_fd = fd;
++        listener = &priv->local_fd;
+         local_addr.sun_family = AF_LOCAL;
+         snprintf(local_addr.sun_path, UNIX_PATH_MAX,
+             MEDIA_SOCKADDR_NAME, CONFIG_RPMSG_LOCAL_CPUNAME);
+@@ -274,7 +310,7 @@ static int media_server_listen(struct media_server_priv* priv, int family)
+ #if CONFIG_MEDIA_SERVER_PORT >= 0
+     } else if (family == AF_INET) {
+         int opt = 1;
+-        priv->inet_fd = fd;
++        listener = &priv->inet_fd;
+         in_addr.sin_family = AF_INET;
+         in_addr.sin_addr.s_addr = INADDR_ANY;
+         in_addr.sin_port = htons(CONFIG_MEDIA_SERVER_PORT);
+@@ -283,7 +319,7 @@ static int media_server_listen(struct media_server_priv* priv, int family)
+         setsockopt(priv->inet_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+ #endif
+     } else {
+-        priv->rpmsg_fd = fd;
++        listener = &priv->rpmsg_fd;
+         rpmsg_addr.rp_family = AF_RPMSG;
+         snprintf(rpmsg_addr.rp_name, RPMSG_SOCKET_NAME_SIZE,
+             MEDIA_SOCKADDR_NAME, CONFIG_RPMSG_LOCAL_CPUNAME);
+@@ -292,12 +328,14 @@ static int media_server_listen(struct media_server_priv* priv, int family)
+         len = sizeof(struct sockaddr_rpmsg);
+     }
+ 
+-    if (bind(fd, addr, len) < 0)
+-        return -errno;
+-
+-    if (listen(fd, MEDIA_SERVER_MAXCONN) < 0)
+-        return -errno;
++    if (bind(fd, addr, len) < 0 || listen(fd, MEDIA_SERVER_MAXCONN) < 0) {
++        ret = -errno;
++        close(fd);
++        return ret;
++    }
+ 
++    /* A failed listener must not leak an fd or enter the daemon poll set. */
++    *listener = fd;
+     return 0;
+ }
+ 
+@@ -316,7 +354,7 @@ static int media_server_init(MediadPlugin* ctx)
+ #endif
+ 
+     if (ret1 < 0 && ret2 < 0 && ret3 < 0)
+-        return -EINVAL;
++        return ret1;
+ 
+     return 0;
+ }
+@@ -336,26 +374,53 @@ static int media_server_uinit(MediadPlugin* ctx)
+ #endif
+ 
+     for (i = 0; i < MEDIA_SERVER_MAXCONN; i++) {
++        media_server_finish_transfer(&priv->conns[i], -ECANCELED);
+         if (priv->conns[i].tran_fd > 0) {
+             media_parcel_deinit(&priv->conns[i].parcel);
+             close(priv->conns[i].tran_fd);
+-            pthread_mutex_destroy(&priv->conns[i].mutex);
+         }
+         if (priv->conns[i].notify_fd > 0)
+             close(priv->conns[i].notify_fd);
++        if (priv->conns[i].tran_fd != 0)
++            pthread_mutex_destroy(&priv->conns[i].mutex);
+     }
+ 
+     return 0;
+ }
+ 
++static void media_server_request_stop(MediadPlugin* ctx)
++{
++    struct media_server_priv* priv = ctx->priv;
++    int i;
++
++    /* Keep connection slots alive for Session/Focus notification cleanup.
++     * Transferred Player/Recorder sockets belong to their worker threads.
++     */
++    priv->stopping = true;
++    SAFE_CLOSE(priv->local_fd);
++    SAFE_CLOSE(priv->rpmsg_fd);
++#if CONFIG_MEDIA_SERVER_PORT >= 0
++    SAFE_CLOSE(priv->inet_fd);
++#endif
++    /* Internal clients may be blocked waiting for a command still owned by
++     * this dispatcher. Wake them before waiting for worker termination.
++     */
++    for (i = 0; i < MEDIA_SERVER_MAXCONN; i++) {
++        if (priv->conns[i].tran_fd > 0)
++            shutdown(priv->conns[i].tran_fd, SHUT_RDWR);
++    }
++}
++
+ static int media_server_get_pollfds(MediadPlugin* ctx, struct pollfd* fds, void** conns, int count)
+ {
+     struct media_server_priv* priv = ctx->priv;
+     int i = 0;
+     int j;
+ 
+-    if (priv == NULL || fds == NULL || count <= 2)
++    if (priv == NULL || fds == NULL || conns == NULL || count < 1)
+         return -EINVAL;
++    if (priv->stopping)
++        return 0;
+ 
+     if (priv->local_fd > 0) {
+         fds[i].fd = priv->local_fd;
+@@ -364,12 +429,16 @@ static int media_server_get_pollfds(MediadPlugin* ctx, struct pollfd* fds, void*
+     }
+ 
+     if (priv->rpmsg_fd > 0) {
++        if (i == count)
++            return -ENOSPC;
+         fds[i].fd = priv->rpmsg_fd;
+         fds[i].events = POLLIN;
+         conns[i++] = NULL;
+     }
+ #if CONFIG_MEDIA_SERVER_PORT >= 0
+     if (priv->inet_fd > 0) {
++        if (i == count)
++            return -ENOSPC;
+         fds[i].fd = priv->inet_fd;
+         fds[i].events = POLLIN;
+         conns[i++] = NULL;
+@@ -377,11 +446,12 @@ static int media_server_get_pollfds(MediadPlugin* ctx, struct pollfd* fds, void*
+ #endif
+     for (j = 0; j < MEDIA_SERVER_MAXCONN; j++) {
+         if (priv->conns[j].tran_fd > 0) {
++            if (i == count)
++                return -ENOSPC;
+             fds[i].fd = priv->conns[j].tran_fd;
+             fds[i].events = POLLIN;
+             conns[i] = &priv->conns[j];
+-            if (++i > count)
+-                return -EINVAL;
++            i++;
+         }
+     }
+ 
+@@ -393,6 +463,8 @@ static int media_server_poll_available(MediadPlugin* ctx, struct pollfd* fd, voi
+     struct media_server_priv* priv = ctx->priv;
+     if (fd == NULL)
+         return -EINVAL;
++    if (priv->stopping)
++        return -ESHUTDOWN;
+ 
+     if (conn)
+         return media_server_receive(priv, fd, conn);
+@@ -411,9 +483,14 @@ int media_server_notify(void* handle, void* cookie, media_parcel* parcel)
+ 
+     pthread_mutex_lock(&conn->mutex);
+ 
+-    if (conn->notify_fd > 0)
++    if (conn->notify_fd > 0) {
+         ret = media_parcel_send(parcel, conn->notify_fd,
+             MEDIA_PARCEL_SEND, MSG_DONTWAIT);
++        if (ret < 0) {
++            close(conn->notify_fd);
++            conn->notify_fd = 0;
++        }
++    }
+ 
+     pthread_mutex_unlock(&conn->mutex);
+ 
+@@ -453,9 +530,9 @@ void media_server_finalize(void* handle, void* cookie)
+     if (conn->notify_fd > 0) {
+         close(conn->notify_fd);
+         conn->notify_fd = 0;
+-        conn->data = NULL;
+-        conn->offset = 0;
+     }
++    conn->data = NULL;
++    conn->offset = 0;
+ 
+     pthread_mutex_unlock(&conn->mutex);
+ }
+@@ -485,9 +562,24 @@ int media_server_get_tran_fd(void* cookie)
+ void media_server_clean_conn(void* cookie)
+ {
+     struct media_server_conn* conn = cookie;
++    /* The dispatcher's request parcel remains valid until the handler
++     * returns, including dynamically allocated arguments.
++     */
+     conn->tran_fd = -EPERM;
+-    conn->offset = 0;
+-    media_parcel_deinit(&conn->parcel);
++}
++
++int media_server_prepare_transfer(void* cookie, media_server_transfer_cb callback, void* data)
++{
++    struct media_server_conn* conn = cookie;
++
++    if (!conn || conn->tran_fd <= 0 || !callback)
++        return -EINVAL;
++    if (conn->transfer)
++        return -EBUSY;
++
++    conn->transfer = callback;
++    conn->transfer_cookie = data;
++    return 0;
+ }
+ 
+ MediadPlugin media_server_plugin = {
+@@ -495,6 +587,7 @@ MediadPlugin media_server_plugin = {
+     .priv_size = sizeof(struct media_server_priv),
+     .priv = NULL,
+     .init = media_server_init,
++    .request_stop = media_server_request_stop,
+     .get = media_server_get_pollfds,
+     .available = media_server_poll_available,
+     .run_once = NULL,
+diff --git a/server/media_server.h b/server/media_server.h
+index 3340a45f94cc2098233c1d6e7b4db0a5fdaebf52..f1f79137f20b52de3ecfa92a3da602b32c192014 100644
+--- a/server/media_server.h
++++ b/server/media_server.h
+@@ -71,6 +71,12 @@ void media_server_set_data(void* cookie, void* data);
+ void* media_server_get_data(void* cookie);
+ int media_server_get_tran_fd(void* cookie);
+ void media_server_clean_conn(void* cookie);
++/* Keep server ownership until dispatch completes the synchronous open ACK.
++ * The callback runs exactly once: zero commits ownership, a negative result
++ * cancels it and leaves descriptor cleanup to the server. It must not block.
++ */
++typedef void (*media_server_transfer_cb)(void* cookie, int result);
++int media_server_prepare_transfer(void* conn, media_server_transfer_cb callback, void* cookie);
+ 
+ /****************************************************************************
+  * Focus Functions
+diff --git a/server/media_session.c b/server/media_session.c
+index 71eb00f9b6c4fe74f9bd5a752f883cc5597998ba..d1707109e1dc90a9a2addc647ecf73275d2ac94b 100644
+--- a/server/media_session.c
++++ b/server/media_session.c
+@@ -263,6 +263,23 @@ static int media_session_init(MediadPlugin* ctx)
+ 
+ static int media_session_destroy(MediadPlugin* ctx)
+ {
++    MediaSessionPriv* priv = ctx->priv;
++    MediaControllerPriv* controller;
++    MediaControlleePriv* controllee;
++
++    /* The server has stopped dispatching, but still owns these cookies.
++     * Remove controllers first so unregister cannot notify a dying client.
++     */
++    while ((controller = TAILQ_FIRST(&priv->controllers)) != NULL) {
++        media_server_set_data(controller->cookie, NULL);
++        media_stub_notify_finalize(&controller->cookie);
++        media_session_controller_close(priv, controller);
++    }
++    while ((controllee = TAILQ_FIRST(&priv->controllees)) != NULL) {
++        media_server_set_data(controllee->cookie, NULL);
++        media_stub_notify_finalize(&controllee->cookie);
++        media_session_controllee_unregister(priv, controllee);
++    }
+     return 0;
+ }
+ 
+diff --git a/server/media_trigger.c b/server/media_trigger.c
+index 9c92c3f64eb10b3d55b31d4b7c5ace6ef59b7713..3a442c3c95d2d3254ccc3089883062fb5139626b 100644
+--- a/server/media_trigger.c
++++ b/server/media_trigger.c
+@@ -32,9 +32,11 @@
+ #include <poll.h>
+ #include <pthread.h>
+ #include <sched.h>
++#include <stdatomic.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include <sys/socket.h>
++#include <sys/eventfd.h>
+ #include <sys/sysinfo.h>
+ #include <sys/un.h>
+ #include <unistd.h>
+@@ -70,6 +72,11 @@ enum {
+ typedef struct MediaTriggerPluginPriv MediaTriggerPluginPriv;
+ 
+ typedef struct MediaTriggerContext {
++    pthread_t thread;
++    atomic_int connection_state;
++    atomic_bool cancel_requested;
++    atomic_bool done;
++    int event_fd;
+     void* context;
+     void* handle;
+     int state;
+@@ -91,6 +98,8 @@ typedef struct MediaTriggerContext {
+ 
+ struct MediaTriggerPluginPriv {
+     MediaTriggerContext* instance;
++    int completed_fd;
++    bool stopping;
+ };
+ 
+ /****************************************************************************
+@@ -292,6 +301,7 @@ static void media_trigger_conn_close(MediaTriggerContext* ctx)
+     close(ctx->tran_fd);
+     ctx->tran_fd = -1;
+     ctx->offset = 0;
++    ctx->exit = true;
+     media_parcel_deinit(&ctx->parcel);
+ }
+ 
+@@ -299,10 +309,16 @@ static MediaTriggerContext* media_trigger_ctx_init(void)
+ {
+     MediaTriggerContext* ctx = NULL;
+ 
+-    ctx = malloc(sizeof(MediaTriggerContext));
++    ctx = calloc(1, sizeof(MediaTriggerContext));
+     if (!ctx)
+         return NULL;
+ 
++    ctx->event_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
++    if (ctx->event_fd < 0) {
++        free(ctx);
++        return NULL;
++    }
++
+     ctx->state = SOUND_TRIGGER_STATE_NOP;
+     ctx->context = NULL;
+     ctx->handle = NULL;
+@@ -324,6 +340,7 @@ static MediaTriggerContext* media_trigger_ctx_init(void)
+ 
+ static void media_trigger_ctx_release(MediaTriggerContext* ctx)
+ {
++    close(ctx->event_fd);
+     media_parcel_deinit(&ctx->parcel);
+     free(ctx);
+ }
+@@ -475,10 +492,7 @@ static void media_trigger_onreceive(MediaTriggerContext* ctx, media_parcel* in,
+         media_trigger_notify_finalize(ctx);
+         ctx->exit = true;
+ 
+-        /* Clear plugin instance pointer when closing */
+-        if (ctx->priv) {
+-            ctx->priv->instance = NULL;
+-        }
++        /* The service retains the instance until the worker is joined. */
+     } else if (!strcmp(cmd, "get_property")) {
+         if (resp > 0)
+             response = zalloc(resp);
+@@ -625,14 +639,17 @@ static int media_trigger_setup_poll_fds(MediaTriggerContext* ctx, struct pollfd*
+ 
+ static int media_trigger_poll(MediaTriggerContext* ctx)
+ {
+-    struct pollfd fds[3];
++    struct pollfd fds[4];
+     int nfds;
+     int ret;
+     int tran_idx, recorder_idx, model_idx;
+ 
+     nfds = media_trigger_setup_poll_fds(ctx, fds, &tran_idx, &recorder_idx, &model_idx);
++    fds[nfds++] = (struct pollfd){ .fd = ctx->event_fd, .events = POLLIN };
+ 
+     ret = poll(fds, nfds, -1);
++    if (ctx->cancel_requested)
++        return 0;
+     if (ret < 0) {
+         if (errno == EINTR) {
+             MEDIA_DEBUG("poll interrupted by signal\n");
+@@ -680,12 +697,22 @@ static int media_trigger_poll(MediaTriggerContext* ctx)
+ static void* media_trigger_thread(void* arg)
+ {
+     MediaTriggerContext* ctx = (MediaTriggerContext*)arg;
++    MediaTriggerPluginPriv* owner = ctx->priv;
++    uint64_t count = 1;
+     int ret;
+ 
+     MEDIA_INFO("create trigger thread\n");
+ 
++    while (ctx->connection_state == 0) {
++        struct pollfd fd = { .fd = ctx->event_fd, .events = POLLIN };
++        if (poll(&fd, 1, 100) > 0)
++            read(ctx->event_fd, &count, sizeof(count));
++    }
++    if (ctx->connection_state < 0)
++        goto out;
++
+     while (1) {
+-        if (media_trigger_is_exit(ctx))
++        if (ctx->cancel_requested || media_trigger_is_exit(ctx))
+             break;
+ 
+         ret = media_trigger_poll(ctx);
+@@ -694,9 +721,25 @@ static void* media_trigger_thread(void* arg)
+         }
+     }
+ 
+-    media_trigger_ctx_release(ctx);
++out:
++    if (ctx->handle) {
++        media_recorder_stop(ctx->handle);
++        media_recorder_close(ctx->handle);
++        ctx->handle = NULL;
++    }
++    if (ctx->context)
++        media_trigger_model_unload(ctx->context);
++    free(ctx->buffer);
++    media_trigger_notify_finalize(ctx);
++    if (ctx->tran_fd >= 0)
++        media_trigger_conn_close(ctx);
+     MEDIA_INFO("exit trigger thread\n");
+ 
++    ctx->done = true;
++    count = 1;
++    while (write(owner->completed_fd, &count, sizeof(count)) < 0 && errno == EINTR)
++        ;
++
+     return NULL;
+ }
+ 
+@@ -704,7 +747,6 @@ static int media_trigger_open(MediaTriggerContext* ctx)
+ {
+     struct sched_param param;
+     pthread_attr_t attr;
+-    pthread_t thread;
+     int ret;
+ 
+     pthread_attr_init(&attr);
+@@ -712,12 +754,13 @@ static int media_trigger_open(MediaTriggerContext* ctx)
+     pthread_attr_setstacksize(&attr, CONFIG_MEDIA_TRIGGER_STACKSIZE);
+     param.sched_priority = CONFIG_MEDIA_TRIGGER_PRIORITY;
+     pthread_attr_setschedparam(&attr, &param);
+-    ret = pthread_create(&thread, &attr, media_trigger_thread, ctx);
++    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
++    ret = pthread_create(&ctx->thread, &attr, media_trigger_thread, ctx);
++    pthread_attr_destroy(&attr);
+     if (ret != 0)
+-        return ret;
++        return -ret;
+ 
+-    pthread_setname_np(thread, "media_trigger");
+-    pthread_detach(thread);
++    pthread_setname_np(ctx->thread, "media_trigger");
+ 
+     return 0;
+ }
+@@ -727,25 +770,93 @@ static int media_trigger_plugin_init(struct MediadPlugin* pctx)
+     MediaTriggerPluginPriv* priv = (MediaTriggerPluginPriv*)pctx->priv;
+ 
+     priv->instance = NULL;
++    priv->completed_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
++    if (priv->completed_fd < 0)
++        return -errno;
+     MEDIA_INFO("media trigger plugin initialized\n");
+ 
+     return 0;
+ }
+ 
+-static int media_trigger_plugin_uninit(struct MediadPlugin* pctx)
++static int media_trigger_drained(struct MediadPlugin* pctx)
+ {
+     MediaTriggerPluginPriv* priv = (MediaTriggerPluginPriv*)pctx->priv;
++    MediaTriggerContext* ctx = priv->instance;
++    int ret;
+ 
+-    if (priv->instance) {
+-        MEDIA_WARN("media trigger plugin uninit: instance still exists, forcing cleanup\n");
+-        priv->instance = NULL;
+-    }
++    if (!ctx)
++        return 1;
++    if (!ctx->done)
++        return 0;
++    ret = pthread_join(ctx->thread, NULL);
++    if (ret)
++        return -ret;
++    media_trigger_ctx_release(ctx);
++    priv->instance = NULL;
++    return 1;
++}
+ 
+-    MEDIA_INFO("media trigger plugin uninitialized\n");
++static void media_trigger_request_stop(struct MediadPlugin* pctx)
++{
++    MediaTriggerPluginPriv* priv = pctx->priv;
++    uint64_t count = 1;
++    int ret;
++
++    priv->stopping = true;
++    if (!priv->instance || priv->instance->done)
++        return;
++    priv->instance->cancel_requested = true;
++    /* Only the service frees this descriptor, after joining the worker. */
++    do {
++        ret = write(priv->instance->event_fd, &count, sizeof(count));
++    } while (ret < 0 && errno == EINTR);
++}
+ 
++static int media_trigger_completed_fds(MediadPlugin* pctx, struct pollfd* fds,
++    void** cookies, int count)
++{
++    MediaTriggerPluginPriv* priv = pctx->priv;
++    if (count < 1)
++        return -ENOSPC;
++    fds[0] = (struct pollfd){ .fd = priv->completed_fd, .events = POLLIN };
++    cookies[0] = NULL;
++    return 1;
++}
++
++static int media_trigger_completed(MediadPlugin* pctx, struct pollfd* fd, void* cookie)
++{
++    uint64_t count;
++    int ret;
++    if (read(fd->fd, &count, sizeof(count)) < 0)
++        return -errno;
++    ret = media_trigger_drained(pctx);
++    return ret < 0 ? ret : 0;
++}
++
++static int media_trigger_plugin_uninit(struct MediadPlugin* pctx)
++{
++    MediaTriggerPluginPriv* priv = pctx->priv;
++    int ret = media_trigger_drained(pctx);
++
++    if (ret <= 0)
++        return ret < 0 ? ret : -EBUSY;
++    close(priv->completed_fd);
+     return 0;
+ }
+ 
++static void media_trigger_transfer(void* cookie, int result)
++{
++    MediaTriggerContext* ctx = cookie;
++    uint64_t count = 1;
++    int ret;
++    if (result < 0)
++        ctx->tran_fd = -1;
++    do {
++        ret = write(ctx->event_fd, &count, sizeof(count));
++    } while (ret < 0 && errno == EINTR);
++    ctx->connection_state = result < 0 ? -1 : 1;
++}
++
+ static int media_trigger_handler(struct MediadPlugin* pctx, struct media_server_conn* conn,
+     const char* target, const char* cmd, const char* arg, int flags, char* res, int res_len)
+ {
+@@ -757,6 +868,11 @@ static int media_trigger_handler(struct MediadPlugin* pctx, struct media_server_
+         cmd, arg ? arg : "_", flags, res ? res : "_", res_len);
+ 
+     if (!strcmp(cmd, "open")) {
++        if (priv->stopping)
++            return -ESHUTDOWN;
++        ret = media_trigger_drained(pctx);
++        if (ret < 0)
++            return ret;
+         /* Check if an instance already exists (single instance mode) */
+         if (priv->instance != NULL) {
+             MEDIA_ERR("media trigger already opened, only one instance allowed\n");
+@@ -774,7 +890,7 @@ static int media_trigger_handler(struct MediadPlugin* pctx, struct media_server_
+             return -EINVAL;
+         }
+ 
+-        media_server_clean_conn(conn);
++        ctx->priv = priv;
+         ret = media_trigger_open(ctx);
+         if (ret < 0) {
+             media_trigger_ctx_release(ctx);
+@@ -782,8 +898,12 @@ static int media_trigger_handler(struct MediadPlugin* pctx, struct media_server_
+         }
+ 
+         /* Store instance in plugin priv and set back pointer */
+-        ctx->priv = priv;
+         priv->instance = ctx;
++        ret = media_server_prepare_transfer(conn, media_trigger_transfer, ctx);
++        if (ret < 0) {
++            media_trigger_transfer(ctx, ret);
++            return ret;
++        }
+ 
+         MEDIA_INFO("media trigger open success\n");
+     }
+@@ -796,8 +916,10 @@ MediadPlugin media_trigger_plugin = {
+     .priv_size = sizeof(MediaTriggerPluginPriv),
+     .priv = NULL,
+     .init = media_trigger_plugin_init,
+-    .get = NULL,
+-    .available = NULL,
++    .get = media_trigger_completed_fds,
++    .available = media_trigger_completed,
++    .request_stop = media_trigger_request_stop,
++    .drained = media_trigger_drained,
+     .run_once = NULL,
+     .uninit = media_trigger_plugin_uninit,
+     .process_command = media_trigger_handler,
+diff --git a/utils/media_parcel.c b/utils/media_parcel.c
+index c0e3e036ba4f73d85e29e65a29ed807e1e4adb1f..e6058bd6954c2bac46be405b60dd545182f581e6 100644
+--- a/utils/media_parcel.c
++++ b/utils/media_parcel.c
+@@ -261,24 +261,40 @@ int media_parcel_append_printf(media_parcel* parcel, const char* fmt, ...)
+     return ret;
+ }
+ 
+-int media_parcel_send(media_parcel* parcel, int fd, uint32_t code, int flags)
++int media_parcel_send_progress(media_parcel* parcel, int fd, uint32_t code, int flags, uint32_t* sent)
+ {
+     const uint8_t* buf = (const uint8_t*)parcel->chunk;
+     uint32_t len = MEDIA_PARCEL_HEADER_LEN + parcel->chunk->len;
++    uint32_t tmp;
++
++    if (!sent)
++        sent = &tmp;
++    *sent = 0;
+ 
+     parcel->chunk->code = code;
+ 
+     while (len) {
+-        ssize_t ret = send(fd, buf, len, flags);
+-        if (ret < 0)
++        ssize_t ret = send(fd, buf, len, flags | MSG_NOSIGNAL);
++        if (ret < 0) {
++            if (errno == EINTR)
++                continue;
+             return -errno;
++        }
++        if (ret == 0)
++            return -EPIPE;
+         buf += ret;
+         len -= ret;
++        *sent += ret;
+     }
+ 
+     return 0;
+ }
+ 
++int media_parcel_send(media_parcel* parcel, int fd, uint32_t code, int flags)
++{
++    return media_parcel_send_progress(parcel, fd, code, flags, NULL);
++}
++
+ int media_parcel_recv(media_parcel* parcel, int fd, uint32_t* offset, int flags)
+ {
+     uint32_t len = MEDIA_PARCEL_HEADER_LEN + parcel->chunk->len;
+@@ -295,6 +311,8 @@ int media_parcel_recv(media_parcel* parcel, int fd, uint32_t* offset, int flags)
+         if (ret == 0)
+             return -EPIPE;
+ 
++        if (ret < 0 && errno == EINTR)
++            continue;
+         if (ret < 0)
+             return -errno;
+ 
+diff --git a/utils/media_parcel.h b/utils/media_parcel.h
+index eb76b3fc3b52e41daf41e791b3eb06523c6eddc8..020c0bb9c455da33679eb49954899a84514b157e 100644
+--- a/utils/media_parcel.h
++++ b/utils/media_parcel.h
+@@ -72,6 +72,10 @@ int media_parcel_append_printf(media_parcel* parcel, const char* fmt, ...);
+ int media_parcel_append_vprintf(media_parcel* parcel, const char* fmt, va_list* ap);
+ 
+ int media_parcel_send(media_parcel* parcel, int fd, uint32_t code, int flags);
++/* A failed send after *sent > 0 leaves an incomplete frame. The owner must
++ * discard that connection rather than send a new frame on the same stream.
++ */
++int media_parcel_send_progress(media_parcel* parcel, int fd, uint32_t code, int flags, uint32_t* sent);
+ int media_parcel_recv(media_parcel* parcel, int fd, uint32_t* offset, int flags);
+ ssize_t media_parcel_recvfrom(media_parcel* parcel, size_t* offset, char* buf, size_t len);
+ 

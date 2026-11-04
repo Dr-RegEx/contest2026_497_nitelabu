@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: Apache-2.0
+include $(APPDIR)/Make.defs
+
+PROGNAME = s31sdcheck
+PRIORITY = SCHED_PRIORITY_DEFAULT
+STACKSIZE = $(CONFIG_EXAMPLES_S31SDCHECK_STACKSIZE)
+MODULE = $(CONFIG_EXAMPLES_S31SDCHECK)
+MAINSRC = s31sdcheck_main.c
+
+include $(APPDIR)/Application.mk

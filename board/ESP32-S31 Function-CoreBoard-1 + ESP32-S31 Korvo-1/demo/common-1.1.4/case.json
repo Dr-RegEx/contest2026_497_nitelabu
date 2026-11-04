@@ -1,45 +1,33 @@
 {
-  "name": "common-1.1.4",
+  "canonical_profile": "nuttx/boards/risc-v/esp32s31/esp32s31-core-function-board/configs/demo-rmt-xts-ostest/defconfig",
+  "canonical_source_root": "platform-root/openvela-dev",
+  "current_build": "Use the canonical BSP profile in a restored platform tree; local copies are historical source references.",
+  "historical_record": {
+    "demo": "common-1.1.4",
+    "path": "../../../../docs/validation/historical.json"
+  },
   "keys": [
     "common:1.1.4"
   ],
+  "license_rule": "Retain source headers and all original LICENSE/NOTICE/UPSTREAM attributions.",
+  "licenses": [
+    "licenses/apps/LICENSE",
+    "licenses/apps/NOTICE"
+  ],
+  "local_config": "config/demo-rmt-xts-ostest/defconfig",
+  "local_sources": [
+    {
+      "origin": "apps/testing/ostest",
+      "path": "src/ostest"
+    }
+  ],
+  "name": "common-1.1.4",
   "profile": "demo-rmt-xts-ostest",
+  "schema": 2,
+  "scope": "historical-source-reference",
   "sources": [
     "apps/testing/ostest"
   ],
-  "evidence_ids": [
-    771,
-    775
-  ],
-  "note": "保留原始循环与线程数量，等待 ostest 正常退出。",
-  "original": "1.1.4",
-  "evidence": [
-    "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint771-xts.md",
-    "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts775-ostest-sigpending.log",
-    "docs/acceptance/xts-current-status.md"
-  ],
   "title": "Kernel-ostest测试",
-  "original_line": 142,
-  "config_inheritance_verified": true,
-  "local_sources": [
-    {
-      "path": "src/ostest",
-      "origin": "apps/testing/ostest"
-    }
-  ],
-  "local_config": "config/demo-rmt-xts-ostest/defconfig",
-  "local_evidence": [
-    {
-      "path": "evidence/docs/acceptance/xts-current-status.md",
-      "origin": "docs/acceptance/xts-current-status.md"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/checkpoint771-xts.md",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/checkpoint771-xts.md"
-    },
-    {
-      "path": "evidence/workspace/evidence/backups-2026-09-10-scan-stress/logs/xts775-ostest-sigpending.log",
-      "origin": "workspace/evidence/backups-2026-09-10-scan-stress/logs/xts775-ostest-sigpending.log"
-    }
-  ]
+  "validation_index": "../../../../docs/validation/index.json"
 }
