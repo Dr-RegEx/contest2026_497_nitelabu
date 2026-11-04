@@ -271,7 +271,7 @@
       "board": "ESP32-S31 Korvo-1",
       "mode": "KERNEL/MMU",
       "cores": 2,
-      "headline": false,
+      "headline": true,
       "build_test": {
         "status": "incremental_build_pass_after_display_fix",
         "current_front_door_full_build_tested": false,
@@ -281,10 +281,19 @@
         "record": "docs/validation/factory-vision.json"
       },
       "board_test": {
-        "status": "home_boot_and_live_capture_pass_display_fix_recheck_pending",
+        "status": "physical_factory_original_digit_roundtrip_pass",
         "image_sha256": "685b62b44ef9b48e100cad60f90d21c6d213d969c099ecbcd0116cef197bae78",
         "appfs_sha256": "906d2097302d3d9da48818f0ad12559c7f015bf36594e435e9e2dd41f2e4ef7c",
-        "record": "docs/validation/factory-vision.json"
+        "record": "docs/validation/factory-vision.json",
+        "scope": [
+          "Factory HOME autostart and live camera preview",
+          "physical button entry into original full VGA dual-core digit demo",
+          "CPU1 SIMD parity and heldout selftest 100/100",
+          "human-confirmed no flicker and normal recognition",
+          "physical Return and resumed live preview"
+        ],
+        "physical_display": true,
+        "physical_touch": true
       },
       "image_layout": {
         "kind": "kernel_and_appfs_pair",

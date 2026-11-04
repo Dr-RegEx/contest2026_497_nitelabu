@@ -2,6 +2,8 @@
 
 配置 `korvo-factory-vision` 在同一份 openvela 固件中运行 Factory 主界面和原版数字识别。上电进入 Factory，摄像头显示实时画面；点击 **Digit recognition** 进入原版 VGA 取景与识别侧栏，点击右下角 **Return** 回到 Factory。切换时协作停止摄像任务并交接显示设备，不需要重新烧录或复位。
 
+本组合已通过实板开机和用户触摸验收：识别画面不再闪烁、识别正常，Return 后实时预览恢复，精确镜像见 [验收记录](../docs/validation/factory-vision.json)。
+
 识别仍使用原来的模型、预处理、字体和 SIMD 内核：CPU0 负责摄像与显示，CPU1 负责推理。Factory 通过 openvela Activity/Window 服务接收触摸，内核 `/dev/vision` 管理原版识别任务与摄像头、LCD 的所有权。咖啡机页面保留原图片和 libpng 解码，临时解码像素通过可回收的共享页分配。
 
 ## 构建

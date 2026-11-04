@@ -2,7 +2,7 @@
   "schema": 1,
   "date": "2026-11-05",
   "profile": "korvo-factory-vision",
-  "status": "display_sync_fix_installed_waiting_for_physical_recheck",
+  "status": "physical_factory_original_digit_roundtrip_pass",
   "build": {
     "status": "BUILD_PASS",
     "fresh_output": false,
@@ -136,21 +136,14 @@
       "error": "TimeoutError('Missing executed command-completion marker: am start org.openvela.s31.factorydemo/FactoryActivity')"
     }
   ],
-  "physical_display": false,
-  "physical_touch": false,
+  "physical_display": true,
+  "physical_touch": true,
   "limits": [
-    "Previous candidate automated transitions do not establish physical acceptance of the latest image.",
+    "Physical acceptance covers the exact latest kernel/AppFS pair and the Factory/original-digit/Return flow; it does not transfer unrelated peripheral results.",
     "One previous run stalled launching the AM shell client before any coffee transition; recovery succeeded. This remains open.",
     "Latest coffee pixel allocation change needs on-board acceptance.",
     "No USB Host, SD, ADC keys, wireless, acoustic quality or sustained-load acceptance for this SMP profile."
   ],
-  "physical_feedback": {
-    "entry": true,
-    "report": "Only the camera area flickers; right-side text/buttons stable.",
-    "serial_observed_return_to_preview": true,
-    "visual_acceptance": false,
-    "applies_to": "previous public-build image"
-  },
   "public_full_build_before_display_fix": {
     "status": "BUILD_PASS",
     "fresh_output": true,
@@ -210,5 +203,40 @@
       0
     ],
     "candidate_kept_for_human": true
-  }
+  },
+  "physical_feedback_history": [
+    {
+      "entry": true,
+      "report": "Only the camera area flickers; right-side text/buttons stable.",
+      "serial_observed_return_to_preview": true,
+      "visual_acceptance": false,
+      "applies_to": "previous public-build image"
+    }
+  ],
+  "physical_feedback": {
+    "kernel_sha256": "685b62b44ef9b48e100cad60f90d21c6d213d969c099ecbcd0116cef197bae78",
+    "appfs_sha256": "906d2097302d3d9da48818f0ad12559c7f015bf36594e435e9e2dd41f2e4ef7c",
+    "entry": true,
+    "camera_flicker_resolved": true,
+    "recognition_normal": true,
+    "user_report": "不再闪烁且识别正常",
+    "return_to_factory": true,
+    "preview_restored": true,
+    "user_return_report": "已返回，预览正常"
+  },
+  "latest_runtime": {
+    "cpu1_selftest": "[CPU1] VISION AI cpu=1 SIMD parity_errors=0 heldout=100/100 elapsed_us=420000",
+    "last_digit_metric": {
+      "captured": 11400,
+      "queued": 11400,
+      "displayed": 11400,
+      "elapsed_us": 1140680000,
+      "inferred": 11399,
+      "result_frame": 11399,
+      "digit": 7
+    },
+    "after_return_status": "state=running error=0 active=1 captured=663 displayed=0 inferred=0 digit=-1 recording=off"
+  },
+  "accepted_at": "2026-11-05T04:31:02.316901+08:00",
+  "acceptance_scope": "Factory HOME -> original VGA/CPU1 SIMD digit -> Return and live preview; no reflashing or reboot between screens."
 }
